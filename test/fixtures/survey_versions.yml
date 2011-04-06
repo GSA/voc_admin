@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  survey_id: 1
+  major: 1
+  minor: 1
+  published: false
+  notes: MyText
+
+two:
+  survey_id: 1
+  major: 1
+  minor: 1
+  published: false
+  notes: MyText

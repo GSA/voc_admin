@@ -11,4 +11,6 @@ gem 'thin'
 group :development, :test do 
 	gem 'mysql2'
 	gem 'ruby-debug19'
+	gem 'nifty-generators'
+	gem 'annotate-models'
 end
