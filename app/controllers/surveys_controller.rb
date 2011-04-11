@@ -36,9 +36,15 @@ class SurveysController < ApplicationController
   # POST /surveys.xml
   def create
     @survey = Survey.new(params[:survey])
-
+    @version = @survey.survey_versions.build
+    
+    @version.major = 1
+    @version.minor = 0
+    @version.published = false
+    
+    
     respond_to do |format|
-      if @survey.save
+      if @survey.save  # Will save both survey and survey_version and run validations on both
         format.html { redirect_to(@survey, :notice => 'Survey was successfully created.') }
         format.xml  { render :xml => @survey, :status => :created, :location => @survey }
       else
@@ -48,26 +54,26 @@ class SurveysController < ApplicationController
     end
   end
   
-  # GET /surveys/edit
-  def edit
-    @survey = Survey.find(params[:id])
-    
-    respond_to do |format|
-      format.html # edit.html.erb
-      format.xml { render :xml => @survey}
-    end
-  end
-  
-  # POST /surveys/1
-  def update
-    @survey = Survey.find(params[:id])
-    
-    if @survey.update_attributes(params[:survey])
-      redirect_to survey_path(@survey)
-    else
-      render :action => :new
-    end
-  end
+#  # GET /surveys/edit
+#  def edit
+#    @survey = Survey.find(params[:id])
+#    
+#    respond_to do |format|
+#      format.html # edit.html.erb
+#      format.xml { render :xml => @survey}
+#    end
+#  end
+#  
+#  # POST /surveys/1
+#  def update
+#    @survey = Survey.find(params[:id])
+#    
+#    if @survey.update_attributes(params[:survey])
+#      redirect_to survey_path(@survey)
+#    else
+#      render :action => :new
+#    end
+#  end
 
   # DELETE /surveys/1
   # DELETE /surveys/1.xml

@@ -10,7 +10,44 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110406195219) do
+ActiveRecord::Schema.define(:version => 20110408150334) do
+
+  create_table "pages", :force => true do |t|
+    t.integer  "number"
+    t.integer  "survey_version_id"
+    t.integer  "style_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "question_contents", :force => true do |t|
+    t.string   "name"
+    t.string   "statement"
+    t.integer  "number"
+    t.string   "questionable_type"
+    t.integer  "questionable_id"
+    t.integer  "display_id"
+    t.boolean  "flow_control"
+    t.boolean  "required"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "survey_elements", :force => true do |t|
+    t.integer  "page_id"
+    t.integer  "order"
+    t.integer  "assetable_id"
+    t.string   "assetable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "survey_version_id"
+  end
+
+  create_table "survey_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "survey_versions", :force => true do |t|
     t.integer  "survey_id"
@@ -25,7 +62,13 @@ ActiveRecord::Schema.define(:version => 20110406195219) do
   create_table "surveys", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "type"
+    t.integer  "survey_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "text_questions", :force => true do |t|
+    t.string   "answer_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

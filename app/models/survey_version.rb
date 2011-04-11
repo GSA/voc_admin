@@ -15,6 +15,8 @@
 
 class SurveyVersion < ActiveRecord::Base
   belongs_to :survey
+  has_many :pages, :autosave => true
+  has_many :survey_elements
   
   attr_accessible :major, :minor, :published, :notes
   
@@ -22,5 +24,15 @@ class SurveyVersion < ActiveRecord::Base
   validates :minor, :presence => true, :numericality => true
   validates :notes, :length => {:maximum => 65535}
   
+  # Scopes for partitioning survey versions
+  scope :published, where(:published => true)
   
+  # Add methods to access the name and description of a survey from a version instance
+  # survey_version.survey_name
+  # survey_version.survey_description
+  delegate :name, :description, :to => :survey, :prefix => true
+  
+  def next_page_number
+    self.pages.count + 1
+  end
 end
