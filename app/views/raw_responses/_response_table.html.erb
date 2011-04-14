@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th>Survey</th>
+    <th>Version</th>
+		<th>Question</th>
+    <th>Answer</th>
+    <th>Client_id</th>
+
+  </tr>
+
+<% @responses.each do |response| %>
+  <tr>
+    <td><%= response.survey_version.survey.name %></td>
+    <td><%= "#{response.survey_version.major}.#{response.survey_version.minor}" %></td>
+		<td><%= response.question_content.statement %></td>
+    <td><%= response.question_content.questionable_type == "ChoiceQuestion" ? ChoiceAnswer.find(response.answer.to_i).answer : response.answer %></td>
+		<td><%= link_to "#{response.client_id[0..10]}...", raw_responses_path(:client_id => response.client_id), :class=>"client_id_field" %></td>
+  </tr>
+<% end %>
+</table>

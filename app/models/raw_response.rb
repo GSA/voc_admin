@@ -14,4 +14,11 @@
 #
 
 class RawResponse < ActiveRecord::Base
+  belongs_to :survey_version
+  belongs_to :question_content, :foreign_key => :question_id
+  
+  validates :client_id, :presence => true, :uniqueness => {:scope => :question_id}
+  validates :question_id, :presence => true, :numericality => true
+  validates :answer, :presence => true
+  validates :survey_version_id, :presence => true, :numericality => true
 end

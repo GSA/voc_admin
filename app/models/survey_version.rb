@@ -21,7 +21,6 @@ class SurveyVersion < ActiveRecord::Base
   has_many :choice_questions, :through => :survey_elements, :source => :assetable, :source_type => "ChoiceQuestion", :dependent => :destroy
   
   attr_accessible :major, :minor, :published, :notes, :survey_attributes, :version_number
-  attr_accessor :version_number
   
   accepts_nested_attributes_for :survey
 
