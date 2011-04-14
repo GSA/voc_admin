@@ -10,8 +10,8 @@
 #
 
 class TextQuestion < ActiveRecord::Base
-  has_one :survey_element, :as => :assetable
-  has_one :question_content, :as => :questionable
+  has_one :survey_element, :as => :assetable, :dependent => :destroy
+  has_one :question_content, :as => :questionable, :dependent => :destroy
   
   validates :answer_type, :presence => true
   validates :question_content, :presence => true

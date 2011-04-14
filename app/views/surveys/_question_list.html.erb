@@ -1,0 +1,21 @@
+<b>Questions:</b>
+<ol>
+<% for element in survey_version.survey_elements %>
+	<% if element.assetable_type == "TextQuestion" %>
+		<li>
+			<%= element.assetable.question_content.statement %> 
+			<%= button_to "Remove", survey_version_text_question_path(survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
+		</li>
+	<% elsif element.assetable_type == "ChoiceQuestion" %>
+		<li>
+			<%= element.assetable.question_content.statement %> 
+			<%= button_to "Remove", survey_version_choice_question_path(survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
+			<ol>
+				<% for answer in element.assetable.choice_answers %>
+				<li><%= answer.answer %></li>
+				<% end -%>
+			</ol>
+		</li>
+	<% end %>
+<% end %>
+</ol>

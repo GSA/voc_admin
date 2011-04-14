@@ -15,7 +15,7 @@ class Survey < ActiveRecord::Base
   has_many :survey_versions, :dependent => :destroy
   belongs_to :survey_type
   
-  attr_accessible :name, :description  
+  attr_accessible :name, :description, :survey_type_id
   
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}

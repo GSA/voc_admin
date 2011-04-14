@@ -1,0 +1,39 @@
+<% choice_question = @survey.newest_version.choice_questions.build %>
+
+<%= form_for [@survey.newest_version, choice_question], :remote => true do |f| %>
+	<div id="validation_errors">
+		&nbsp;
+	</div>
+	<% choice_question.build_question_content if choice_question.new_record? %>
+	<%= f.fields_for :question_content do |builder| %>
+		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder}%>
+
+	<% end -%>
+	<br/>
+	
+	<% choice_question.build_survey_element if choice_question.new_record? %>
+	<%= f.fields_for :survey_element do |builder| %>
+		<%= builder.hidden_field :order, :value => @survey.newest_version.next_element_number %>
+	<% end %>
+	
+	<% 4.times {choice_question.choice_answers.build} %>
+	<%= f.fields_for :choice_answers do |answer_builder| %>
+		<%= answer_builder.label :answer %>
+		<%= answer_builder.text_field :answer %>
+		<br/>
+	<% end %>
+	<br/>
+	<%= link_to_function "Add Answer", "add_answer_field()"%>
+	<br/>
+	
+	<%= f.label :answer_type %>
+	<%= f.radio_button :answer_type, "radio", :id => "field_radio_button" %><%= f.label :field_radio_button, "Radio Buttons" %>
+	<%= f.radio_button :answer_type, "checkbox", :id => "area_radio_button" %><%= f.label :are_radio_button, "Check Boxes" %>
+	<br/>
+	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
+	<br/>
+	
+	<br/>
+	<%= f.submit "Add Question" %>
+	<%= link_to "Cancel", nil, :class => "simplemodal-close"%>
+<% end -%>

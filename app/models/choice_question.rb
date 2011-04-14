@@ -11,10 +11,11 @@
 #
 
 class ChoiceQuestion < ActiveRecord::Base
-  has_one :survey_element, :as => :assetable
-  has_one :question_content, :as => :questionable
-  has_many :choice_answers
+  has_one :survey_element, :as => :assetable, :dependent => :destroy
+  has_one :question_content, :as => :questionable, :dependent => :destroy
+  has_many :choice_answers, :dependent => :destroy
   
+  # answer_type is how to display the choices.  radio buttons or check boxes
   validates :answer_type, :presence => true
   validates :question_content, :presence => true
   

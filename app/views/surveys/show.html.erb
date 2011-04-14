@@ -29,38 +29,3 @@
 		<%= @survey.newest_version.published ? "Yes" : "No" %>
 </div>
 
-<p class="question_list">
-	<b>Questions:</b>
-	<ol>
-	<% for element in @survey.newest_version.survey_elements %>
-		<% if element.assetable_type == "TextQuestion" %>
-			<li>
-				<%= element.assetable.question_content.statement %>
-			</li>
-		<% elsif element.assetable_type == "ChoiceQuestion" %>
-			<li>
-				<%= element.assetable.question_content.statement %>
-				<ol>
-					<% for answer in element.assetable.choice_answers %>
-					<li><%= answer.answer %></li>
-					<% end -%>
-				</ol>
-			</li>
-		<% end %>
-	<% end %>
-	</ol>
-
-	<%= link_to_function "Add a free answer question", "new_text_question()" %> | 
-	<%= link_to_function "Add a multiple-choice question", "new_choice_question()" %>
-</p>
-
-<%= link_to 'Edit', edit_survey_version_path(@survey.newest_version) %> |
-<%= link_to 'Back', surveys_path %>
-
-<div id="new_choice_question_modal" style="display:none; margin-bottom: 10px">
-	<%= render :partial => "new_choice_question" %>
-</div>
-
-<div id="new_text_question_modal" style="display:none; margin-bottom: 10px;">
-	<%= render :partial => 'new_text_question' %>
-</div>

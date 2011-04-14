@@ -19,7 +19,7 @@
 class QuestionContent < ActiveRecord::Base
   belongs_to :questionable, :polymorphic => true
   
-  validates :name, :presence => true
+  #validates :name, :presence => true
   validates :statement, :presence => true
 #  validates :number, :presence => true, :numericality => true
   

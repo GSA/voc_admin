@@ -17,8 +17,8 @@ class SurveyVersion < ActiveRecord::Base
   belongs_to :survey
   has_many :pages, :autosave => true
   has_many :survey_elements, :dependent => :destroy
-  has_many :text_questions, :through => :survey_elements, :source => :assetable, :source_type => "TextQuestion"
-  has_many :choice_questions, :through => :survey_elements, :source => :assetable, :source_type => "ChoiceQuestion"
+  has_many :text_questions, :through => :survey_elements, :source => :assetable, :source_type => "TextQuestion", :dependent => :destroy
+  has_many :choice_questions, :through => :survey_elements, :source => :assetable, :source_type => "ChoiceQuestion", :dependent => :destroy
   
   attr_accessible :major, :minor, :published, :notes, :survey_attributes, :version_number
   attr_accessor :version_number

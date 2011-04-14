@@ -685,13 +685,17 @@
 				s.d.container.hide().remove();
 				s.d.overlay.hide();
 				s.d.iframe && s.d.iframe.hide().remove();
-				setTimeout(function(){
-					// opera work-around
-					s.d.overlay.remove();
-
-					// reset the dialog object
-					s.d = {};
-				}, 10);
+				s.d.overlay.remove();
+				// reset the dialog object
+				s.d = {};
+				
+				// setTimeout(function(){
+				// 	// opera work-around
+				// 	s.d.overlay.remove();
+				// 
+				// 	// reset the dialog object
+				// 	s.d = {};
+				// }, 10);
 			}
 		}
 	};
