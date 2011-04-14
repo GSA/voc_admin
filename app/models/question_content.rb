@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110407172639
+# Schema version: 20110413183938
 #
 # Table name: question_contents
 #
@@ -11,7 +11,7 @@
 #  questionable_id   :integer(4)
 #  display_id        :integer(4)
 #  flow_control      :boolean(1)
-#  required          :boolean(1)
+#  required          :boolean(1)      default(TRUE)
 #  created_at        :datetime
 #  updated_at        :datetime
 #

@@ -13,16 +13,18 @@
 	
 	<% choice_question.build_survey_element if choice_question.new_record? %>
 	<%= f.fields_for :survey_element do |builder| %>
-		<%= builder.hidden_field :order, :value => @survey.newest_version.next_element_number %>
+		<%= builder.hidden_field :element_order, :value => @survey.newest_version.next_element_number %>
+		<%= builder.label :page_id%>
+		<%= builder.collection_select :page_id, @survey.newest_version.pages, :id, :number %>
 	<% end %>
-	
+	<p>
 	<% 4.times {choice_question.choice_answers.build} %>
 	<%= f.fields_for :choice_answers do |answer_builder| %>
 		<%= answer_builder.label :answer %>
 		<%= answer_builder.text_field :answer %>
 		<br/>
 	<% end %>
-	<br/>
+	</p>
 	<%= link_to_function "Add Answer", "add_answer_field()"%>
 	<br/>
 	

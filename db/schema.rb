@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20110413183938) do
 
   create_table "survey_elements", :force => true do |t|
     t.integer  "page_id"
-    t.integer  "order"
+    t.integer  "element_order"
     t.integer  "assetable_id"
     t.string   "assetable_type"
     t.datetime "created_at"

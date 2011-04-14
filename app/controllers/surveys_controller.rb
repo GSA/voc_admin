@@ -14,7 +14,9 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-
+    @survey_version = params[:version].blank? ? @survey.newest_version : get_survey_version(@survey, params[:version])
+    @request_id = SecureRandom.hex(64)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @survey }
@@ -47,7 +49,7 @@ class SurveysController < ApplicationController
     
     respond_to do |format|
       if @survey.save  # Will save both survey and survey_version and run validations on both
-        format.html { redirect_to(@survey, :notice => 'Survey was successfully created.') }
+        format.html { redirect_to(edit_survey_path(@survey), :notice => 'Survey was successfully created.') }
         format.xml  { render :xml => @survey, :status => :created, :location => @survey }
       else
         format.html { render :action => "new" }
@@ -87,5 +89,12 @@ class SurveysController < ApplicationController
       format.html { redirect_to(surveys_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  
+  private
+  def get_survey_version(survey, version)
+    major, minor = version.split('.')
+    survey.survey_versions.where(:major => major, :minor => minor).first
   end
 end

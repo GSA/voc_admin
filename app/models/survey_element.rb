@@ -18,5 +18,5 @@ class SurveyElement < ActiveRecord::Base
   belongs_to :assetable, :polymorphic => true
   belongs_to :survey_version
   
-  validates :order, :presence => true, :numericality => true
+  validates :element_order, :presence => true, :numericality => true
 end

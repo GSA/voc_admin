@@ -2,7 +2,7 @@ class CreateSurveyElements < ActiveRecord::Migration
   def self.up
     create_table :survey_elements do |t|
       t.integer :page_id
-      t.integer :order
+      t.integer :element_order
       t.integer :assetable_id
       t.string :assetable_type
 

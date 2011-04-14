@@ -1,31 +1,44 @@
-<p id="notice"><%= notice %></p>
+<% if @survey_version.nil? %>
+	<p>Could not find version <%= params[:version] %></p>
+	<%= link_to "View all", survey_path(@survey) %>
+<% else %>
+	<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @survey.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @survey.description %>
-</p>
-
-<p>
-  <b>Type:</b>
-  <%= @survey.survey_type_id %>
-</p>
-
-<div id="survey_versions_fields" >
 	<p>
-		<b>Major:</b>
-		<%= @survey.newest_version.major %>
+	  <b>Name:</b>
+	  <%= @survey.name %>
 	</p>
-	<p>
-		<b>Minor:</b>
-		<%= @survey.newest_version.minor %>
-	</p>
-	<p>
-		<b>Published:</b>
-		<%= @survey.newest_version.published ? "Yes" : "No" %>
-</div>
 
+	<p>
+	  <b>Description:</b>
+	  <%= @survey.description %>
+	</p>
+
+	<%= form_tag url_for(:controller => "raw_responses", :action => "create") do %>
+		<ol>
+		<% @survey_version.survey_elements.order("element_order asc").each_with_index do |element, index| %>
+			<li>
+				<%= hidden_field_tag "response[#{index}][client_id]", @request_id %>
+				<%= hidden_field_tag "response[#{index}][question_id]", element.assetable.question_content.id %>
+				<%= hidden_field_tag "response[#{index}][survey_version_id]", @survey_version.id%>
+				<%= element.assetable.question_content.statement %><br/>
+				<% if element.assetable_type == "ChoiceQuestion" %>
+					<% for answer in element.assetable.choice_answers %>
+						<%= radio_button_tag "response[#{index}][answer]", answer.id %><%= answer.answer%><br/>
+					<% end -%>
+				<% elsif element.assetable_type == "TextQuestion" %>
+					<% if element.assetable.answer_type == "field" %>
+						<%= text_field_tag "response[#{index}][answer]", nil, :class => "text_question_field" %>
+					<% elsif element.assetable.answer_type == "area" %>
+						<%= text_area_tag "response[#{index}][answer]", nil, :class => "text_question_area"%>
+					<% end -%>
+				<% end -%>
+			</li>
+		<% end -%>
+		</ol>
+	
+		<%= submit_tag "Submit answers"%>
+	<% end -%>
+
+	<%= link_to "Edit Survey", edit_survey_path(@survey)%>
+<% end -%>
