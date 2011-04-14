@@ -1,0 +1,2 @@
+module TextQuestionsHelper
+end

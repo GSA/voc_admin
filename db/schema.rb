@@ -10,7 +10,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110408150334) do
+ActiveRecord::Schema.define(:version => 20110413183938) do
+
+  create_table "choice_answers", :force => true do |t|
+    t.string   "answer"
+    t.integer  "choice_question_id"
+    t.integer  "answer_order"
+    t.integer  "next_page_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "choice_questions", :force => true do |t|
+    t.boolean  "multiselect"
+    t.string   "answer_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pages", :force => true do |t|
     t.integer  "number"
@@ -28,7 +44,17 @@ ActiveRecord::Schema.define(:version => 20110408150334) do
     t.integer  "questionable_id"
     t.integer  "display_id"
     t.boolean  "flow_control"
-    t.boolean  "required"
+    t.boolean  "required",          :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "raw_responses", :force => true do |t|
+    t.integer  "survey_version_id"
+    t.string   "client_id"
+    t.text     "answer"
+    t.integer  "question_id"
+    t.integer  "status_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

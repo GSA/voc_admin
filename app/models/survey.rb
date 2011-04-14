@@ -12,14 +12,13 @@
 #
 
 class Survey < ActiveRecord::Base
-  has_many :survey_versions
+  has_many :survey_versions, :dependent => :destroy
   belongs_to :survey_type
   
   attr_accessible :name, :description  
   
-  validates :name, :presence => true, :length => {:in => 1..255}
+  validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
-  validates :survey_versions, :presence => true
   
   def newest_version
     self.survey_versions.order('major desc, minor desc').first

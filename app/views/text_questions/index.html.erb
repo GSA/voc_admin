@@ -1,0 +1,17 @@
+<% title "Text Questions" %>
+
+<table>
+  <tr>
+    <th>Answer Type</th>
+  </tr>
+  <% for text_question in @text_questions %>
+    <tr>
+      <td><%= text_question.answer_type %></td>
+      <td><%= link_to "Show", text_question %></td>
+      <td><%= link_to "Edit", edit_text_question_path(text_question) %></td>
+      <td><%= link_to "Destroy", text_question, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Text Question", new_text_question_path %></p>

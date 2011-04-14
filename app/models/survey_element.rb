@@ -19,5 +19,4 @@ class SurveyElement < ActiveRecord::Base
   belongs_to :survey_version
   
   validates :order, :presence => true, :numericality => true
-  validates :page, :presence => true
 end

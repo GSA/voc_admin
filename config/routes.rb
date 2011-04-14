@@ -1,6 +1,10 @@
 CommentToolApp::Application.routes.draw do
   resources :surveys
-  resources :survey_versions
+  resources :survey_versions do
+    resources :text_questions
+    resources :choice_questions
+    resources :survey_elements
+  end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

@@ -1,0 +1,37 @@
+<%= form_for @survey_version do |f| %>
+  <% if @survey_version.errors.any? %>
+    <div id="error_explanation">
+      <p class="error-header"><%= pluralize(@survey_version.errors.count, "error") %> prohibited this survey from being saved:</p>
+
+      <% @survey_version.errors.full_messages.each do |msg| %>
+        <p class="error-copy"><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+	
+	
+	<% @survey_version.build_survey if @survey_version.new_record? %>
+  <%= f.fields_for :survey do |builder|%>
+	 <div class="fields">
+	 	<%= builder.label "Name:" %>
+		<%= builder.text_field :name %>
+	 </div>
+	 <div class="fields">
+	   <%= builder.label "Description:" %><br/>
+		 <%= builder.text_area :description %>
+	 </div>
+	<% end -%>
+	
+	<% @survey_version.survey_elements.each do |element| %>
+    <%= f.fields_for :survey_elements, element do |element_builder| %>
+    	<div class="fields">
+    		<%= element.assetable.question_content.statement %>
+			</div>
+		<% end -%>
+	<% end -%>
+	
+	
+	<%= link_to "Add a text question", new_survey_version_text_question_path(@survey_version)%><br/>
+	
+	<%= f.submit %>
+<% end -%>

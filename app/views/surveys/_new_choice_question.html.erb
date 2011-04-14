@@ -1,0 +1,37 @@
+<% choice_question = @survey.newest_version.choice_questions.build %>
+
+<%= form_for [@survey.newest_version, choice_question] do |f| %>
+	<%= f.label :answer_type %>
+	<%= f.radio_button :answer_type, "radio", :id => "field_radio_button" %><%= f.label :field_radio_button, "Radio Buttons" %>
+	<%= f.radio_button :answer_type, "checkbox", :id => "area_radio_button" %><%= f.label :are_radio_button, "Check Boxes" %>
+	<br/>
+	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %>
+	<br/>
+	
+	<% choice_question.build_question_content if choice_question.new_record? %>
+	<%= f.fields_for :question_content do |builder| %>
+		<%= builder.label :required %>
+		<%= builder.check_box :required, {}, true, false %>
+		<br/>
+    <%= builder.label :name %><br/>
+		<%= builder.text_field :name%><br/>
+		<%= builder.label :statement, "Question: "%><br/>
+		<%= builder.text_field :statement%><br/>
+	<% end -%>
+	<br/>
+	
+	<% choice_question.build_survey_element if choice_question.new_record? %>
+	<%= f.fields_for :survey_element do |builder| %>
+		<%= builder.hidden_field :order, :value => @survey.newest_version.next_element_number %>
+	<% end %>
+	
+	<% 4.times {choice_question.choice_answers.build} %>
+	<%= f.fields_for :choice_answers do |answer_builder| %>
+		<%= answer_builder.label :answer %>
+		<%= answer_builder.text_field :answer %>
+		<br/>
+	<% end %>
+	
+	<br/>
+	<%= f.submit "Add Question" %>
+<% end -%>

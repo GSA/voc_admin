@@ -14,3 +14,4 @@ group :development, :test do
 	gem 'nifty-generators'
 	gem 'annotate-models'
 end
+gem "mocha", :group => :test

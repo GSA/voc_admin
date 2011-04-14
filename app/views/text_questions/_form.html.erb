@@ -1,0 +1,36 @@
+<%= form_for [@survey_version, @text_question] do |f| %>
+  <%= f.error_messages %>
+	
+	<div class="fields" id="survey_element_fields">
+		<%# @text_question.build_survey_element %>
+		<%= f.fields_for :survey_element do |builder| %>
+		  <%= builder.hidden_field :survey_version_id, :value => @survey_version.id %>
+			<%= builder.hidden_field :order, :value => @survey_version.survey_elements.count+1 %>
+			
+			<% #@survey_version.pages.create(:number => 1) if @survey_version.pages.empty? %>
+			<%= builder.label :page_id, "Add question to page "%>
+			<%= builder.collection_select :page_id, @survey_version.pages, :id, :number %>
+    <% end -%>
+	</div>
+	
+	
+	<div class="fields">
+  	<%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field"%>
+  	<%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :area_radio_button, "Area" %>
+	</div>
+
+  <div id="question_content_fields">
+		<%# @text_question.build_question_content if @text_question.new_record? %>
+		<%= f.fields_for :question_content do |builder| %>
+	    <%= builder.label :name %>
+			<%= builder.text_field :name%><br/>
+			<%= builder.label :statement%>
+			<%= builder.text_field :statement%>
+			<%= builder.label :required%>
+			<%= builder.check_box :required %>
+			<br/>
+			
+		<% end -%>
+  </div>
+  <p><%= f.submit %></p>
+<% end %>

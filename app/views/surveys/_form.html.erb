@@ -17,11 +17,12 @@
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_field :description %>
+    <%= f.text_area :description, :rows => 3 %>
   </div>
   <div class="field">
 		<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
   </div>
+	
   <div class="actions">
     <%= f.submit %>
   </div>

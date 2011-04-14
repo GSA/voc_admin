@@ -8,7 +8,7 @@ class CreateQuestionContents < ActiveRecord::Migration
       t.integer :questionable_id
       t.integer :display_id
       t.boolean :flow_control
-      t.boolean :required
+      t.boolean :required,          :default => true
 
       t.timestamps
     end

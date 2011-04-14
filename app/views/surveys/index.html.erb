@@ -16,7 +16,7 @@
     <td><%= survey.description %></td>
     <td><%= survey.survey_type_id %></td>
     <td><%= link_to 'Show', survey %></td>
-    <td><%= link_to 'Edit', edit_polymorphic_path(survey.newest_version) %></td>
+    <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
     <td><%= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

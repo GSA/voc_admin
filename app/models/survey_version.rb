@@ -16,9 +16,15 @@
 class SurveyVersion < ActiveRecord::Base
   belongs_to :survey
   has_many :pages, :autosave => true
-  has_many :survey_elements
+  has_many :survey_elements, :dependent => :destroy
+  has_many :text_questions, :through => :survey_elements, :source => :assetable, :source_type => "TextQuestion"
+  has_many :choice_questions, :through => :survey_elements, :source => :assetable, :source_type => "ChoiceQuestion"
   
-  attr_accessible :major, :minor, :published, :notes
+  attr_accessible :major, :minor, :published, :notes, :survey_attributes, :version_number
+  attr_accessor :version_number
+  
+  accepts_nested_attributes_for :survey
+
   
   validates :major, :presence => true, :numericality => true
   validates :minor, :presence => true, :numericality => true
@@ -26,6 +32,7 @@ class SurveyVersion < ActiveRecord::Base
   
   # Scopes for partitioning survey versions
   scope :published, where(:published => true)
+  scope :unpublished, where(:published => false)
   
   # Add methods to access the name and description of a survey from a version instance
   # survey_version.survey_name
@@ -34,5 +41,9 @@ class SurveyVersion < ActiveRecord::Base
   
   def next_page_number
     self.pages.count + 1
+  end
+  
+  def next_element_number
+    self.survey_elements.count + 1
   end
 end
