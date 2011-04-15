@@ -34,16 +34,3 @@
 <div id="question_list">
 	<%= render :partial => 'question_list', :locals => {:survey_version => @survey.newest_version} %>
 </div>
-<div>
-<%= link_to "Add a free answer question", new_survey_version_text_question_path(@survey.newest_version), :id => "link_to_new_text_question" %> | 
-<%= link_to "Add a multiple-choice question", new_survey_version_choice_question_path(@survey.newest_version), :id => "link_to_new_choice_question" %> | 
-<%= link_to "Show", survey_path(@survey) %> | 
-<%= link_to 'Back', surveys_path %>
-</div>
-<div id="new_choice_question_modal" style="display:none; margin-bottom: 10px">
-	<%= render :partial => "choice_questions/new_choice_question" %>
-</div>
-
-<div id="new_text_question_modal" style="display:none; margin-bottom: 10px;">
-	<%= render :partial => 'text_questions/new_text_question' %>
-</div>

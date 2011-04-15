@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 20110408141158
+# Schema version: 20110413183938
 #
 # Table name: survey_elements
 #
 #  id                :integer(4)      not null, primary key
 #  page_id           :integer(4)
-#  order             :integer(4)
+#  element_order     :integer(4)
 #  assetable_id      :integer(4)
 #  assetable_type    :string(255)
 #  created_at        :datetime

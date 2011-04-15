@@ -1,3 +1,5 @@
+<% javascript 'survey.js' %>
+
 <% if @survey_version.nil? %>
 	<p>Could not find version <%= params[:version] %></p>
 	<%= link_to "View all", survey_path(@survey) %>
@@ -15,29 +17,36 @@
 	</p>
 
 	<%= form_tag url_for(:controller => "raw_responses", :action => "create") do %>
-		<ol>
-		<% @survey_version.survey_elements.order("element_order asc").each_with_index do |element, index| %>
-			<li>
-				<%= hidden_field_tag "response[#{index}][client_id]", @request_id %>
-				<%= hidden_field_tag "response[#{index}][question_id]", element.assetable.question_content.id %>
-				<%= hidden_field_tag "response[#{index}][survey_version_id]", @survey_version.id%>
-				<%= element.assetable.question_content.statement %><br/>
-				<% if element.assetable_type == "ChoiceQuestion" %>
-					<% for answer in element.assetable.choice_answers %>
-						<%= radio_button_tag "response[#{index}][answer]", answer.id %><%= answer.answer%><br/>
-					<% end -%>
-				<% elsif element.assetable_type == "TextQuestion" %>
-					<% if element.assetable.answer_type == "field" %>
-						<%= text_field_tag "response[#{index}][answer]", nil, :class => "text_question_field" %>
-					<% elsif element.assetable.answer_type == "area" %>
-						<%= text_area_tag "response[#{index}][answer]", nil, :class => "text_question_area"%>
-					<% end -%>
-				<% end -%>
-			</li>
+		<% for page in @survey_version.pages %>
+			<div class="<%= page.number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.number%>">
+				<ol>
+				<% page.survey_elements.order("element_order asc").each_with_index do |element, index| %>
+					<li>
+						<%= hidden_field_tag "response[#{index}][client_id]", @request_id %>
+						<%= hidden_field_tag "response[#{index}][question_id]", element.assetable.question_content.id %>
+						<%= hidden_field_tag "response[#{index}][survey_version_id]", @survey_version.id%>
+						<%= element.assetable.question_content.statement %><br/>
+						<% if element.assetable_type == "ChoiceQuestion" %>
+							<% for answer in element.assetable.choice_answers %>
+								<%= radio_button_tag "response[#{index}][answer]", answer.id %><%= answer.answer%><br/>
+							<% end -%>
+						<% elsif element.assetable_type == "TextQuestion" %>
+							<% if element.assetable.answer_type == "field" %>
+								<%= text_field_tag "response[#{index}][answer]", nil, :class => "text_question_field" %>
+							<% elsif element.assetable.answer_type == "area" %>
+								<%= text_area_tag "response[#{index}][answer]", nil, :class => "text_question_area"%>
+							<% end -%>
+						<% end -%>						
+					</li>
+				<% end %>
+				</ol>
+				
+				<%= link_to_function "Previous Page", "prev_page(#{page.number})" unless page.number == 1 %>
+				<%= link_to_function "Next Page", "next_page(#{page.number})" unless page.number == @survey_version.pages.count %>
+				<%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %>
+				
+				
+			</div> <!-- close page div -->
 		<% end -%>
-		</ol>
-	
-		<%= submit_tag "Submit answers"%>
 	<% end -%>
-
 <% end -%>

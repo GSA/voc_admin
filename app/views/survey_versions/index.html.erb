@@ -1,0 +1,20 @@
+<% title "Versions" %>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Version</th>
+		<th>Published</th>
+		<th>Created At</th>
+	</tr>
+	<% for version in @survey_versions %>
+	<tr>
+		<td><%= @survey.name %></td>
+		<td><%= version.version_number %></td>
+		<td><%= version.published ? "Yes" : "No" %></td>
+		<td><%= version.created_at %></td>
+	</tr>
+	<% end %>
+</table>
+
+<%= link_to "Back", @survey %>

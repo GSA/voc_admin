@@ -74,3 +74,12 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+/************  Added styles *********/
+.current_page {
+	
+}
+
+.hidden_page {
+	display: none;
+}

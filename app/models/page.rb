@@ -13,10 +13,9 @@
 
 class Page < ActiveRecord::Base
   belongs_to :survey_version
-  has_many :survey_elements
+  has_many :survey_elements, :dependent => :destroy
   
   validates :number, :presence => true, :numericality => true, :uniqueness => {:scope => :survey_version_id}
   #validates :survey_elements, :presence => true
-  
   
 end

@@ -45,4 +45,14 @@ class SurveyVersion < ActiveRecord::Base
   def next_element_number
     self.survey_elements.count + 1
   end
+  
+  def version_number
+    "#{self.major}.#{self.minor}"
+  end
+  
+  def renumber_pages(page_number)
+    pages = self.pages.where("number > ?", page_number)
+    
+    pages.each {|pg| pg.update_attributes(:number =>  (pg.number - 1))}
+  end
 end

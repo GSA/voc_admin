@@ -1,6 +1,8 @@
-<% choice_question = @survey.newest_version.choice_questions.build %>
+<h3>New Choice Question</h3>
 
-<%= form_for [@survey.newest_version, choice_question], :remote => true do |f| %>
+<% choice_question ||= survey.newest_version.choice_questions.build %>
+
+<%= form_for [survey, survey.newest_version, choice_question], :remote => true do |f| %>
 	<div id="validation_errors">
 		&nbsp;
 	</div>
@@ -11,12 +13,8 @@
 	<% end -%>
 	<br/>
 	
-	<% choice_question.build_survey_element if choice_question.new_record? %>
-	<%= f.fields_for :survey_element do |builder| %>
-		<%= builder.hidden_field :element_order, :value => @survey.newest_version.next_element_number %>
-		<%= builder.label :page_id%>
-		<%= builder.collection_select :page_id, @survey.newest_version.pages, :id, :number %>
-	<% end %>
+	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey}%>
+	
 	<p>
 	<% 4.times {choice_question.choice_answers.build} %>
 	<%= f.fields_for :choice_answers do |answer_builder| %>

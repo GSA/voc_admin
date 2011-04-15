@@ -2,11 +2,16 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 $(function(){
-	$("#link_to_new_text_question").click(function(){
+	$(".survey_element").live('dblclick', function(){
+		alert("double clicked on a question");
+	})
+	
+	$("#link_to_new_text_question").live('click', function(){
 		$("#new_text_question_modal").modal();
 		return false;
 	});
-	$("#link_to_new_choice_question").click(function(){
+	
+	$("#link_to_new_choice_question").live('click', function(){
 		$("#new_choice_question_modal").modal();
 		return false;
 	});	
@@ -51,5 +56,9 @@ $(function(){
 			$("#new_choice_question div.validation_errors").html("");
 			$.modal.close();
 		}, persist:true});
+	});
+	
+	$("#link_to_new_page").live("ajax:success", function(event, data, status, xhr){
+		$("#question_list").html(data);
 	});
 })
