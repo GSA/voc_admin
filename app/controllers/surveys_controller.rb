@@ -44,8 +44,8 @@ class SurveysController < ApplicationController
     @version.minor = 0
     @version.published = false
     
-    first_page = @version.pages.build
-    first_page.number = 1
+    # first_page = @version.pages.build
+    # first_page.number = 1
     
     respond_to do |format|
       if @survey.save  # Will save both survey and survey_version and run validations on both

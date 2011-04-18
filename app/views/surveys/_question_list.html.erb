@@ -8,12 +8,12 @@
 		<% for element in page.survey_elements.order("element_order asc") %>
 			<% if element.assetable_type == "TextQuestion" %>
 				<li>
-					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> (text_<%= element.assetable.answer_type %>)</span>
+					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> [<%= element.element_order %>](text_<%= element.assetable.answer_type %>)</span>
 					<%= button_to "Remove", survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
 				</li>
 			<% elsif element.assetable_type == "ChoiceQuestion" %>
 				<li>
-					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %></span>
+					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> [<%= element.element_order %>]</span>
 					<%= button_to "Remove", survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
 					<ol>
 						<% for answer in element.assetable.choice_answers %>
