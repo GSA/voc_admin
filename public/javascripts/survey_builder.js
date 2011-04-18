@@ -6,6 +6,11 @@ $(function(){
 		alert("double clicked on a question");
 	})
 	
+	$("#link_to_new_asset").live('click', function(){
+		$("#new_asset_modal").modal();
+		return false;
+	});
+	
 	$("#link_to_new_text_question").live('click', function(){
 		$("#new_text_question_modal").modal();
 		return false;
@@ -61,4 +66,22 @@ $(function(){
 	$("#link_to_new_page").live("ajax:success", function(event, data, status, xhr){
 		$("#question_list").html(data);
 	});
+	
+	
+	$("#new_asset").live("ajax:success", function(event, data, status, xhr){
+		$.modal.close();
+		$("#question_list").html(data);
+		$(':input', '#new_asset').not(':button, :submit, :reset, :hidden').reset();
+	});
+	
+	$("#new_asset").live("ajax:error", function(event, data, status, xhr){
+		$.modal.close();
+		$("#new_asset div.validation_errors").html(data.responseText);
+		$("#new_asset_modal").modal({onClose:function(){
+			$("#new_asset div.validation_errors").html("");
+			$.modal.close();
+		}, persist:true});
+	});
+	
+	
 })

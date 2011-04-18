@@ -1,7 +1,4 @@
 CommentToolApp::Application.routes.draw do
-  get "assets/create"
-
-  get "assets/destroy"
 
   resources :raw_responses
   resources :surveys do
@@ -10,6 +7,7 @@ CommentToolApp::Application.routes.draw do
       resources :choice_questions
       resources :survey_elements
       resources :pages
+      resources :assets
     end
   end
   # You can have the root of your site routed with "root"

@@ -25,7 +25,8 @@
 						<%= hidden_field_tag "response[#{index}][client_id]", @request_id %>
 						<%= hidden_field_tag "response[#{index}][question_id]", element.assetable.question_content.id %>
 						<%= hidden_field_tag "response[#{index}][survey_version_id]", @survey_version.id%>
-						<%= element.assetable.question_content.statement %><br/>
+						<%= element.assetable.question_content.statement %>
+						<%= "*" if element.assetable.question_content.required%><br/>
 						<% if element.assetable_type == "ChoiceQuestion" %>
 							<% for answer in element.assetable.choice_answers %>
 								<%= radio_button_tag "response[#{index}][answer]", answer.id %><%= answer.answer%><br/>

@@ -8,12 +8,14 @@
 		<% for element in page.survey_elements.order("element_order asc") %>
 			<% if element.assetable_type == "TextQuestion" %>
 				<li>
-					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> [<%= element.element_order %>](text_<%= element.assetable.answer_type %>)</span>
+					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> 
+					<%= "*" if element.assetable.question_content.required %> [<%= element.element_order %>](text_<%= element.assetable.answer_type %>)</span>
 					<%= button_to "Remove", survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
 				</li>
 			<% elsif element.assetable_type == "ChoiceQuestion" %>
 				<li>
-					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> [<%= element.element_order %>]</span>
+					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %>
+					<%= "*" if element.assetable.question_content.required %> [<%= element.element_order %>]</span>
 					<%= button_to "Remove", survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
 					<ol>
 						<% for answer in element.assetable.choice_answers %>
@@ -21,16 +23,22 @@
 						<% end -%>
 					</ol>
 				</li>
-			<% end %>			
-		<% end %>
+			<% elsif element.assetable_type == "Asset" %>
+        <li>
+        	<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.snippet %></span>
+					<%= button_to "Remove", survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_asset_button" %>
+        </li>
+			<% end # close the if statements %>			
+		<% end # close the for loop %>
 		</ol>
 	</div>
 <% end %>
 
 <div>
 <%= link_to "Add a new page", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:number => survey_version.pages.count + 1}), :id => "link_to_new_page", :remote => true, :method => :post %> | 
-<%= link_to "Add a free answer question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :id => "link_to_new_text_question" %> | 
-<%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version), :id => "link_to_new_choice_question" %> | 
+<%= link_to "Add a free answer question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :id => "link_to_new_text_question" unless survey_version.pages.count == 0%> | 
+<%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version), :id => "link_to_new_choice_question" unless survey_version.pages.count == 0%> | 
+<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :id => "link_to_new_asset" unless survey_version.pages.count == 0 %> | 
 <%= link_to "Show", survey_path(survey_version.survey) %> | 
 <%= link_to 'Back', surveys_path %>
 </div>
@@ -41,4 +49,8 @@
 
 <div id="new_text_question_modal" style="display:none; margin-bottom: 10px;">
 	<%= render :partial => 'text_questions/new_text_question', :locals => {:survey => survey_version.survey} %>
+</div>
+
+<div id="new_asset_modal" style="display:none; margin-bottom: 10px;">
+  <%= render :partial => 'assets/new_asset_fields', :locals => {:survey => survey_version.survey} %>
 </div>
