@@ -83,5 +83,13 @@ $(function(){
 		}, persist:true});
 	});
 	
+	$(".element_order_up").live("ajax:success", function(event, data, status, xhr){
+		$("#question_list").html(data);
+	});
+	
+	$(".element_order_down").live("ajax:success", function(event, data, status, xhr){
+		$("#question_list").html(data);
+	});
+	
 	
 })

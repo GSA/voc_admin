@@ -30,7 +30,12 @@ class TextQuestionsController < ApplicationController
   end
 
   def edit
-    @text_question = TextQuestion.find(params[:id])
+    @text_question = @survey_version.text_questions.find(params[:id])
+    
+    respond_to do |format|
+      format.html #
+      format.js {render :action => :edit}
+    end
   end
 
   def update
@@ -54,7 +59,8 @@ class TextQuestionsController < ApplicationController
   
   private
   def get_survey_version
-    @survey_version = SurveyVersion.find(params[:survey_version_id])
+    @survey = Survey.find(params[:survey_id])
+    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
   end
 
 end

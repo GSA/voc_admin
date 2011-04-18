@@ -5,7 +5,10 @@ CommentToolApp::Application.routes.draw do
     resources :survey_versions do
       resources :text_questions
       resources :choice_questions
-      resources :survey_elements
+      resources :survey_elements do
+        post :up, :on => :member
+        post :down, :on => :member
+      end
       resources :pages
       resources :assets
     end
