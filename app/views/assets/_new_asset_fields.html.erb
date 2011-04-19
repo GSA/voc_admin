@@ -1,9 +1,7 @@
 <% asset ||= survey.newest_version.assets.build %>
 
 <%= form_for [survey, survey.newest_version, asset], :remote => true do |f| %>
-  <div id="validation_errors">
-    &nbsp;
-  </div>
+  <div class="validation_errors"></div>
 	  
 	<%= f.label :snippet %><br/>
 	<%= f.text_area :snippet %>
