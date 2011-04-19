@@ -1,15 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>CommentToolApp</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1' %>
-	<%= yield :head %>
-  <%= csrf_meta_tag %>
-</head>
-<body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<%= yield %>
-
-</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Comment Tool Application</title>
+  	
+  	<%= stylesheet_link_tag :all %>
+  	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1' %>
+  	<%= yield :head %>
+  	<%= csrf_meta_tag %>
+  	
+  	<!-- Community Imports -->
+	<%= yield :additional_scripts %>
+	
+	</head>
+	<body>
+		<!-- Copied header and footer 3/9/2011,  -->
+		<div id="skipNav">
+			<a href="#skip">Skip Navigation to go to Content</a> 
+			<a href="#rightNav">Skip to Right Side Navigation</a>
+		</div>
+		<div id="intranetHeader">
+			<div id="hhsLogo">
+				<img src="/images/hhsLogo.jpg" alt="HHS Logo image"/>
+			</div>
+			<div id="hhsMastHead">
+				<a href="http://intranet.hhs.gov/">
+					<img src="/images/hhsMastHead.jpg" alt="HHS at Work, Helping Those That Help America"/>
+				</a>
+			</div>
+			<div id="skipNavRight">
+				<a name="rightNav">&nbsp;</a>
+			</div>
+			<div id="utilityNavigation">
+				<img src="/images/chevronUtility.jpg" alt="arrow image" width="38px" height="21px" class="floatLeft"/>
+				<div id="utilText">
+					<a href="http://intranet.hhs.gov">HHS Intranet Home</a> | 
+					<a href="http://www.hhs.gov">HHS.gov</a> | 
+					<a href="mailto:webrequests@hhs.gov">Comments</a> | 
+					<a href="http://intranet.hhs.gov/a2zSiteIndex.html">A-Z Site Index</a>
+				</div>
+			</div>
+		</div>
+		<div id="skipNav2">
+			<a name="skip">&nbsp;</a>
+		</div>
+			
+			<!-- begin main content for intranet page -->
+				<div class="background">	
+					<div class="foreground">
+						<div class="navigation">
+							<%= render :partial => 'layouts/app_nav' %>
+						</div>
+						<div class="contentArea">
+							<%= yield %>
+						</div>
+					</div>
+				</div>
+			
+			<!-- end main content for intranet page -->
+		
+		<div class="footer">		
+			<div class="intranetLastUpdated">
+				Last Updated: <%= "#{Date.today.month}/#{Date.today.day}/#{Date.today.year}" %>
+			</div>
+			<div class="intranetFooter">
+				<a href="http://intranet.hhs.gov/">HHS Intranet Home</a> | 
+				<a href="http://www.hhs.gov">HHS.gov</a> | 
+				<a href="http://intranet.hhs.gov/a2zSiteIndex.html">A-Z Site Index</a> | 
+				<a href="http://www.hhs.gov/Accessibility.html">Accessibility</a> | 
+				<a href="http://www.hhs.gov/Privacy.html">Privacy Policy</a> | 
+				<a href="http://www.hhs.gov/foia/">Freedom of Information Act</a> | 
+				<a href="http://www.hhs.gov/Disclaimer.html">Disclaimers</a>
+			</div>
+		</div>
+	</body>
 </html>

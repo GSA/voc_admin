@@ -1,4 +1,4 @@
-
+/*Scaffolding Styles automatically generated.*/
 body {
   background-color: #4B7399;
   font-family: Verdana, Helvetica, Arial;
@@ -83,3 +83,42 @@ a {
 .hidden_page {
 	display: none;
 }
+
+/** Style Guide 4/19/2011 **/
+.background {
+	width: 100%;
+	background-color: #ffd483;
+	border-top: 3px solid #0d3559;
+	border-bottom: 3px solid #0d3559;
+	margin: 0px;
+	padding: 0px;
+}
+.foreground {
+	width: 994px;
+	margin: 0px auto;
+	padding: 15px;
+	background-color: #ffffff;
+	min-height: 600px;
+	vertical-align: top;
+}
+.navigation {
+	width: 165px;
+	margin:0px;
+	padding: 0px;
+	display: inline-block;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	vertical-align: top;
+}
+.contentArea {
+	width: 805px;
+	margin:0px;
+	padding: 0px;
+	display: inline-block;
+	position: relative;
+	top: 0px;
+	left: 15px;
+	vertical-align: top;
+}
+

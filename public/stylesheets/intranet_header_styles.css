@@ -1,0 +1,95 @@
+/**** 4/19/2011 - Copied from Patient Care app.css file. ****/
+/***id's not referenced in innovations or here: skipNavRight, rightNav***/
+/*
+	Images required by the following styles:
+	- chevronUtility.jpg
+	- headerBack.jpg
+	- hhsLogo.jpg
+	- hhsMastHead.jpg
+	- utilityBack.jpg
+*/
+#skipNav2, #skipNav{
+  display:none
+}
+
+#intranetHeader {
+  font-family: georgia,times;
+  width: 100%;
+  min-width: 740px;
+  height: 61px;
+}
+
+#hhsLogo {
+  float: left;
+  width: 54px;
+}
+
+#hhsMastHead {
+  margin: 0px;
+  padding: 0px;
+  background: url(/images/headerBack.jpg);
+}
+
+#utilityNavigation{
+  position:absolute;
+  right:0px;
+  top:28px;
+  height:21px;
+  background:url(/images/utilityBack.jpg);
+  padding-right:10px;
+  min-width:24em
+}
+
+.floatLeft {
+  float: left;
+  position: relative;
+}
+
+#utilText{
+  font:0.7em georgia,times;
+  margin-top:0.3em
+}
+
+.footer { /* margin & padding edited 4/19/11 */
+  margin: 5px 0px 0px;
+  padding: 0px 0px 0px;
+  clear: both; 
+  width: 100%;
+  min-width: 740px;
+}
+
+.intranetLastUpdated {
+  color: #808080;
+  font-size: 0.6em;
+  margin: 0px 0px 0px 20px;
+}
+
+.intranetFooter{ /* margin & padding edited 4/19/11 */
+  border-top: 1px solid Silver;
+  font: 0.7em trebuchet ms,helvetica;
+  margin: 5px 0px 0px;
+  padding: 5px 0px 0px;
+  text-align: center;
+  color: #FF0000;
+}
+
+#hhsMastHead {
+	/* Fixes HHS logo bar height at top of page. */
+	height: 61px;
+}
+
+/****  Our CSS  3/9/2011 ****/
+body{
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+img{
+  border: none 0px;
+}
+
+td {
+	font-size: 13px;
+	padding: 5px 10px 5px 0px;
+}
