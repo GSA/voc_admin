@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110419173936
+# Schema version: 20110420181413
 #
 # Table name: response_categories
 #
@@ -8,7 +8,6 @@
 #  process_response_id :integer(4)      not null
 #  created_at          :datetime
 #  updated_at          :datetime
-#  display_field_id    :integer(4)      not null
 #  survey_version_id   :integer(4)      not null
 #
 
