@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 20110419173936
+#
+# Table name: processed_responses
+#
+#  id                :integer(4)      not null, primary key
+#  survey_version_id :integer(4)      not null
+#  client_id         :string(255)     not null
+#  answer            :text
+#  question_id       :integer(4)      not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  worker_name       :string(255)
+#  status_id         :integer(4)      default(1), not null
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 # This model initially had no columns defined.  If you add columns to the
