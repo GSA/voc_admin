@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ChoiceRuleTest < ActiveSupport::TestCase
+class ActionTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
