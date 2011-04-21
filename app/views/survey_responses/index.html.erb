@@ -1,7 +1,13 @@
+<% javascript 'survey_responses' %>
+
 <h2>Survey Responses</h2>
 
-<% for response in @survey_responses %>
-  <%= response.survey_version.survey.name %>
-	<%= link_to response.client_id[0..10], raw_responses_path(:client_id => response.client_id) %>
-	<br/>
-<% end -%>
+<%= label_tag "survey_id", "Survey" %>
+<%= select_tag "survey_id", options_from_collection_for_select(Survey.all, :id, :name), :include_blank => true %>
+
+<%= label_tag "survey_version_id", "Version"%>
+<%= select_tag "survey_version_id", nil %>
+
+<div id="survey_response_list">
+	<%= render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version_id} %>
+</div>

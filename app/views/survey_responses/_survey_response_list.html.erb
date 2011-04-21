@@ -1,0 +1,25 @@
+<%  unless version_id.nil? %>	
+<table>
+	<tr>
+		<th>client_id</th>
+		<% headers = SurveyVersion.find(version_id).questions.collect {|q| q.assetable.question_content.statement} %>
+		<% headers.each do |header| %>
+		<th><%= header %></th>
+		<% end -%>
+	</tr>
+	
+	<% objects.each do |survey_response| %>
+	 <tr>
+	 	<td><%= survey_response.client_id[0..5] %></td>
+	 	<% survey_response.raw_responses.each do |question_response| %>
+		  <td><%= display_question_answer(question_response)%></td>
+		<% end -%>
+		<% if survey_response.raw_responses.count < headers.count %>
+		  <% (headers.count - survey_response.raw_responses.count).times do %>
+			 <td>N/A</td>
+			<% end -%>
+		<% end -%>
+	 </tr>
+	<% end %>
+</table>
+<% end %>

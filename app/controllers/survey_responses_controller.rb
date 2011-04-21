@@ -1,6 +1,12 @@
 class SurveyResponsesController < ApplicationController
   def index
-    @survey_responses = SurveyResponse.all
+    @survey_version_id = params[:survey_version_id]
+    @survey_responses = SurveyResponse.where("survey_version_id = ?", @survey_version_id)
+    
+    respond_to do |format|
+      format.html #
+      format.js {render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version_id}}
+    end
   end
   
   def create
