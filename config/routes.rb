@@ -1,6 +1,7 @@
 CommentToolApp::Application.routes.draw do
 
   resources :raw_responses
+  resources :processed_responses
   resources :surveys do
     resources :survey_versions do
       resources :text_questions
