@@ -1,0 +1,4 @@
+class DisplayFieldsController < ApplicationController
+  
+  
+end

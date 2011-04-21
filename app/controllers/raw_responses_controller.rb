@@ -1,5 +1,6 @@
 class RawResponsesController < ApplicationController
   def index
+   
     @responses = params[:client_id].blank? ? RawResponse.all : RawResponse.where(:client_id => params[:client_id]).all
     
     respond_to do |format|
@@ -9,6 +10,7 @@ class RawResponsesController < ApplicationController
   end
   
   def create
+    
     @responses = {}
     params[:response].each do |index, response|
       @responses[index] = RawResponse.create response

@@ -25,8 +25,7 @@
 	<br/>
 	
 	<%= f.label :answer_type %>
-	<%= f.radio_button :answer_type, "radio", :id => "field_radio_button" %><%= f.label :field_radio_button, "Radio Buttons" %>
-	<%= f.radio_button :answer_type, "checkbox", :id => "area_radio_button" %><%= f.label :are_radio_button, "Check Boxes" %>
+	<%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT]]), :id => "answer_type_dropdown" %>
 	<br/>
 	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
 	<br/>

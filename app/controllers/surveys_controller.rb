@@ -15,7 +15,6 @@ class SurveysController < ApplicationController
   def show
     @survey = Survey.find(params[:id])
     @survey_version = params[:version].blank? ? @survey.newest_version : get_survey_version(@survey, params[:version])
-    @request_id = SecureRandom.hex(64)
     
     respond_to do |format|
       format.html # show.html.erb
