@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110420193126
+# Schema version: 20110421150712
 #
 # Table name: rules
 #
@@ -8,6 +8,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  survey_version_id :integer(4)      not null
+#  rule_order        :integer(4)      not null
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
