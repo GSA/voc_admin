@@ -1,25 +1,28 @@
 <%  unless version_id.nil? %>	
+<% version = SurveyVersion.find(version_id) %>
 <table>
 	<tr>
+		<th>Date</th>
 		<th>client_id</th>
-		<% headers = SurveyVersion.find(version_id).questions.collect {|q| q.assetable.question_content.statement} %>
-		<% headers.each do |header| %>
-		<th><%= header %></th>
+		<% questions = version.questions.collect {|q| q.assetable.question_content} %>
+		<% questions.each do |question| %>
+		<th><%= question.statement %>(<%= question.id %>)</th>
 		<% end -%>
 	</tr>
 	
 	<% objects.each do |survey_response| %>
 	 <tr>
+		<td><%= survey_response.created_at.strftime("%m-%d-%Y") %></td>
 	 	<td><%= survey_response.client_id[0..5] %></td>
-	 	<% survey_response.raw_responses.each do |question_response| %>
-		  <td><%= display_question_answer(question_response)%></td>
-		<% end -%>
-		<% if survey_response.raw_responses.count < headers.count %>
-		  <% (headers.count - survey_response.raw_responses.count).times do %>
-			 <td>N/A</td>
-			<% end -%>
+		<% for question in questions %>
+		  <td>
+				<%= display_question_answer(survey_response.raw_responses.find_by_question_id(question.id)) %>
+		  </td>
 		<% end -%>
 	 </tr>
 	<% end %>
 </table>
+
+<%= link_to "Add New Rule", survey_survey_version_rules_path(version.survey, version) %> | 
+<%= link_to "Manage Display Fields", nil %>
 <% end %>

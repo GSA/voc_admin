@@ -1,11 +1,5 @@
 <% javascript 'reporting_display.js'%>
 
-<%= label_tag "survey_id", "Survey" %>
-<%= select_tag "survey_id", options_from_collection_for_select(Survey.all, :id, :name) %>
-
-<%= label_tag "survey_version_id", "Version" %>
-<%= select_tag "survey_version_id", options_from_collection_for_select(SurveyVersion.all, :id, :version_number)%>
-
 <h1>Listing responses</h1>
 
 <div id="response_table">

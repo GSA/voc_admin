@@ -44,7 +44,6 @@
 										<%= label_tag "answer_#{answer.id}", answer.answer %>
 									<% end -%>
 								<% end %>
-							
 							<% elsif element.assetable_type == "TextQuestion" %>
 								<% if element.assetable.answer_type == "field" %>
 									<%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field" %>

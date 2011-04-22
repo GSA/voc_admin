@@ -1,10 +1,13 @@
 CommentToolApp::Application.routes.draw do
 
+  resources :categories
   resources :survey_responses
   resources :raw_responses
   resources :processed_responses
   resources :surveys do
     resources :survey_versions do
+      resources :rules
+      resources :display_fields
       resources :text_questions
       resources :choice_questions
       resources :survey_elements do
