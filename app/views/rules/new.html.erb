@@ -1,0 +1,21 @@
+<% javascript 'rules.js' %>
+
+<h2>New Rule</h2>
+
+<%= form_for [@survey, @survey_version, @rule] do |f| %>
+  <%= f.label :name %>
+	<%= f.text_field :name%>
+	<br/>
+
+  <% criterion = @rule.criteria.build %>
+  <div id="criteria">
+	<%= f.fields_for :criteria do |builder| %>
+    <%= render :partial => "criterion_fields", :locals => {:f => builder} %>
+		
+	<% end -%>
+	 <%= link_to_add_fields "Add Criteria", f, :criteria %>
+	</div>
+	
+	<br/>
+	<%= f.submit %>
+<% end -%>

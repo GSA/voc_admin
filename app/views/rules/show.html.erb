@@ -1,0 +1,24 @@
+<h2>Rule: <%= @rule.name %></h2>
+
+<b>Name:</b><%= @rule.name%><br/>
+<b>Order:</b><%= @rule.rule_order%><br/>
+
+<b>Criteria</b>
+<ol>
+<% for criterion in @rule.criteria %>
+  <li>
+    <%= criterion.source.question_content.statement %> <%= criterion.conditional.name %>  <%= criterion.value %>
+	</li>
+<% end %>
+</ol>
+
+<b>Actions</b>
+<ol>
+<% for action in @rule.actions %>
+  <li>
+  	Set <%= action.display_field.name %> to <%= action.value %>
+	</li>
+<% end %>
+</ol>
+
+<%= link_to "All Rules", survey_survey_version_rules_path(@survey, @survey_version)%>

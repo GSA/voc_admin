@@ -1,0 +1,19 @@
+<h2>Rules for <%= @survey.name %> <%= @survey_version.version_number%></h2>
+
+<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version)%>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+	</tr>
+<% @rules.each do |rule| %>
+  <tr>
+  	<td><%= rule.id %></td>
+  	<td><%= rule.name %></td>
+		<td><%= link_to "Show", [@survey, @survey_version, rule] %></td>
+		<td><%= link_to "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
+		<td><%= link_to "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
