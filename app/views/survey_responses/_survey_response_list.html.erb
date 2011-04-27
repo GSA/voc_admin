@@ -1,5 +1,31 @@
 <%  unless version_id.nil? %>	
 <% version = SurveyVersion.find(version_id) %>
+
+
+
+<table border="1px">
+  <tr>
+  	<th>Date</th>
+  	<% version.display_fields.each do |df| %>
+		  <th><%= df.name %></th>
+		<% end -%>
+		<% version.survey_responses.order("created_at desc").each do |sr| %>
+		  <tr>
+		  	<td><%= sr.created_at.strftime("%m/%d/%Y") %></td>
+		  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
+				  <td>
+				  	<%= dfv.value %>
+				  </td>
+				<% end -%>
+		  </tr>
+		<% end -%>
+  </tr>
+</table>
+
+
+
+
+<br/><br/>
 <table>
 	<tr>
 		<th>Date</th>
@@ -24,5 +50,5 @@
 </table>
 
 <%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version) %> | 
-<%= link_to "Manage Display Fields", nil %>
+<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version) %>
 <% end %>

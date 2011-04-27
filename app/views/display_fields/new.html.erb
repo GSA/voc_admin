@@ -1,0 +1,18 @@
+<h2>New Display Field</h2>
+
+<%= form_for [@survey, @survey_version, @display_field] do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+		<%= f.check_box :required %><%= f.label :required %>
+		<%= f.check_box :searchable %><%= f.label :searchable %>
+		<br/>
+		<%= f.label :type %>
+		<%= f.select :type, DisplayField.select_options %>
+		<br/>
+		<%= f.label :default_value, "Default Value" %>
+		<%= f.text_field :default_value %>
+		<br/>
+		
+		<%= f.submit%>
+<% end %>

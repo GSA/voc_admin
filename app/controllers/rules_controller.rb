@@ -11,8 +11,8 @@ class RulesController < ApplicationController
   
   def new
     @rule = @survey_version.rules.build
-    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable_id},#{q.assetable_type}", q.assetable.question_content.statement]}
-    @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name]})
+    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable_id},#{q.assetable_type}", q.assetable.question_content.statement + "(question)"]}
+    @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})
   end
   
   def create
@@ -23,6 +23,21 @@ class RulesController < ApplicationController
       redirect_to [@survey, @survey_version,@rule]
     else
       render :new
+    end
+  end
+  
+  def edit
+    @rule = @survey_version.rules.find(params[:id])
+    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable_id},#{q.assetable_type}", q.assetable.question_content.statement + "(question)"]}
+  end
+  
+  def update
+    @rule = @survey_version.rules.find(params[:id])
+    
+    if @rule.update_attributes(params[:rule])
+      redirect_to survey_survey_version_rule_path(@rule)
+    else
+      render :edit
     end
   end
   

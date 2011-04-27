@@ -1,8 +1,6 @@
 <p>
- <% if f.object.new_record? %>
    <%= f.collection_select :source_select, @source_array, :first, :last %>
    <%= f.collection_select :conditional_id, Conditional.all, :id, :name%>
     
    <%= f.text_field :value%>
- <% end -%>
  </p>

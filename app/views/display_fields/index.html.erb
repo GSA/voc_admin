@@ -1,0 +1,21 @@
+<h2>Display Fields</h2>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Type</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	
+	<% @display_fields.each do |df| %>
+	 <tr>
+	 	<td><%= df.name %></td>
+		<td><%= df.type %></td>
+		<td><%= link_to "Remove", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
+	 </tr>
+	<% end %>
+</table>
+
+<%= link_to "New Dispaly Field", new_survey_survey_version_display_field_path(@survey, @survey_version) %>

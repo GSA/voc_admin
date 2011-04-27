@@ -1,6 +1,6 @@
 <% javascript 'rules.js' %>
 
-<h2>New Rule</h2>
+<h2>Edit Rule</h2>
 
 <%= form_for [@survey, @survey_version, @rule] do |f| %>
   <p>
@@ -9,7 +9,6 @@
   </p>  
 
   <b>Criteria: </b>
-  <% criterion = @rule.criteria.build %>
   <div id="criteria">
 	<%= f.fields_for :criteria do |builder| %>
     <%= render :partial => "criterion_fields", :locals => {:f => builder} %>
@@ -21,7 +20,6 @@
 	<br/>
 	
 	<b>Actions:</b>
-	<% action = @rule.actions.build %>
 	<div id="actions">
 	<%= f.fields_for :actions do |builder| %>
 	 <%= render :partial => "action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
