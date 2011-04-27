@@ -7,7 +7,7 @@
 <ol>
 <% for criterion in @rule.criteria %>
   <li>
-    <%= criterion.source.question_content.statement %> <%= criterion.conditional.name %>  <%= criterion.value %>
+    <%= criterion.source.statement %> <%= criterion.conditional.name %>  <%= criterion.value %>
 	</li>
 <% end %>
 </ol>
