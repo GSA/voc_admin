@@ -12,7 +12,7 @@
   <% criterion = @rule.criteria.build %>
   <div id="criteria">
 	<%= f.fields_for :criteria do |builder| %>
-    <%= render :partial => "criterion_fields", :locals => {:f => builder} %>
+    <%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
 		
 	<% end -%>
 	 <%= link_to_add_fields "Add Criteria", f, :criteria %>
@@ -24,7 +24,7 @@
 	<% action = @rule.actions.build %>
 	<div id="actions">
 	<%= f.fields_for :actions do |builder| %>
-	 <%= render :partial => "action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
+	 <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
 	<% end %>
 	
 	 <%= link_to_add_fields "Add Action", f, :actions %>

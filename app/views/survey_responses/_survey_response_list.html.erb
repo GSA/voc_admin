@@ -21,34 +21,8 @@
 		<% end -%>
   </tr>
 </table>
-
-
-
-
-<br/><br/>
-<table>
-	<tr>
-		<th>Date</th>
-		<th>client_id</th>
-		<% questions = version.questions.collect {|q| q.assetable.question_content} %>
-		<% questions.each do |question| %>
-		<th><%= question.statement %>(<%= question.id %>)</th>
-		<% end -%>
-	</tr>
-	
-	<% objects.each do |survey_response| %>
-	 <tr>
-		<td><%= survey_response.created_at.strftime("%m-%d-%Y") %></td>
-	 	<td><%= survey_response.client_id[0..5] %></td>
-		<% for question in questions %>
-		  <td>
-				<%= display_question_answer(survey_response.raw_responses.find_by_question_id(question.id)) %>
-		  </td>
-		<% end -%>
-	 </tr>
-	<% end %>
-</table>
-
-<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version) %> | 
-<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version) %>
+<p>
+	<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version) %> | 
+	<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version) %>
+</p>
 <% end %>

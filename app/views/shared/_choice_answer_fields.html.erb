@@ -1,0 +1,8 @@
+<p class="answer_fields">
+	<%= f.label :answer %>
+	<%= f.text_field :answer %>
+	<%= f.label :next_page_id, "Next Page"%>
+	<%= f.collection_select :next_page_id, survey.newest_version.pages, :id, :number %>
+	<%= f.hidden_field :_destroy %>
+	<%= link_to_function "Remove Answer", "remove_fields(this)" %>
+</p>

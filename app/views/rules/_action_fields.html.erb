@@ -1,7 +1,0 @@
-<p>
-  <%= f.label :display_field_id, "Update" %>
-  <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
-	<%= f.label :value, " with "%>
-	<%= f.select :value, @survey_version.questions.map {|x| [x.assetable.question_content.statement + " response", x.assetable.question_content.id]}, :include_blank => true %>
-
- </p>
