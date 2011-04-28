@@ -4,10 +4,6 @@ class CreateStatuses < ActiveRecord::Migration
       t.string :name, :null=>false
       t.timestamps
     end
-    
-    execute("insert into statuses (id,name) values (1,'new')")
-    execute("insert into statuses (id,name) values (2,'processing')")
-    execute("insert into statuses (id,name) values (3,'error')")
   end
 
   def self.down
