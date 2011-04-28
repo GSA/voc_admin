@@ -32,5 +32,5 @@
 </div>
 
 <div id="question_list">
-	<%= render :partial => 'question_list', :locals => {:survey_version => @survey.newest_version} %>
+	<%= render :partial => 'question_list', :locals => {:survey_version => @survey.newest_version, :survey => @survey} %>
 </div>

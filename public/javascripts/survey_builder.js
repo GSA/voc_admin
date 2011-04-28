@@ -2,6 +2,16 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 $(function(){
+	
+	/* Functions for managing the select boxes for page and next_page 
+	 * for multiple choice questions.
+	 */
+	$("#new_choice_question .question_page_select").live("change", function(){
+		$("#new_choice_question .next_page_select").val()
+	});
+	
+	
+	/* Modal control functions */
 	$(".survey_element").live('dblclick', function(){
 		alert("double clicked on a question");
 	})
