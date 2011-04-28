@@ -1,0 +1,7 @@
+configuration:
+  instance_name: dev_env
+  number: 5
+  environment: development
+  log_level: 1
+  log_file_path: ../log
+  redirect_out: false 

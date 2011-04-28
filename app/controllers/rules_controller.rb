@@ -16,6 +16,8 @@ class RulesController < ApplicationController
   end
   
   def create
+    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable.question_content.id},QuestionContent", q.assetable.question_content.statement + "(question)"]}
+    @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})
     @rule = @survey_version.rules.build params[:rule]
     @rule.rule_order = @survey_version.rules.count + 1
     
@@ -28,7 +30,8 @@ class RulesController < ApplicationController
   
   def edit
     @rule = @survey_version.rules.find(params[:id])
-    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable_id},#{q.assetable_type}", q.assetable.question_content.statement + "(question)"]}
+    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable.question_content.id},QuestionContent", q.assetable.question_content.statement + "(question)"]}
+    @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})
   end
   
   def update

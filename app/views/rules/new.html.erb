@@ -4,9 +4,19 @@
 
 <%= form_for [@survey, @survey_version, @rule] do |f| %>
   <p>
-  <%= f.label :name %>
+  	<%= f.label :name %>
 	<%= f.text_field :name%>
   </p>  
+  
+  <b>This rule will execute when a survey is: </b>
+  <p>
+  	<% @rule.execution_trigger_rules.build %>
+  	<%= f.fields_for :execution_trigger_rules do |etr| %>
+	  	<%= etr.radio_button :execution_trigger_id, "1" %> Added
+	  	<%= etr.radio_button :execution_trigger_id, "2" %> Changed
+	  	<%= etr.radio_button :execution_trigger_id, "4" %> Nightly
+  	<% end %>
+  </p>
 
   <b>Criteria: </b>
   <% criterion = @rule.criteria.build %>

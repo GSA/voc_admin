@@ -81,16 +81,16 @@ Dir["../app/models/*.rb"].each {|file| require file }
   
 #check for orphaned children
 log_event("Checking for orphaned records",3)
-RawResponse.transaction do
-  abandoned_items = RawResponse.lock(true).find_all_by_worker_name(who_am_i)
-  log_event("Found #{abandoned_items.size} items",3)
-  abandoned_items.each do |ai| 
-    ai.update_attributes(:status)
-    
-  end
-end
-#
-#log_event("Starting Main Loop", 2)
+#RawResponse.transaction do
+#  abandoned_items = RawResponse.lock(true).find_all_by_worker_name(who_am_i)
+#  log_event("Found #{abandoned_items.size} items",3)
+#  abandoned_items.each do |ai| 
+#    ai.update_attributes(:status)
+#    
+#  end
+#end
+
+log_event("Starting Main Loop", 2)
 #loop do
 #  
 #end

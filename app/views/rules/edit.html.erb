@@ -7,11 +7,20 @@
   <%= f.label :name %>
 	<%= f.text_field :name%>
   </p>  
+	
+  <b>This rule will execute when a survey is: </b>
+  <p>
+  	<%= f.fields_for :execution_trigger_rules do |etr| %>
+	  	<%= etr.radio_button :execution_trigger_id, "1" %> Added
+	  	<%= etr.radio_button :execution_trigger_id, "2" %> Changed
+	  	<%= etr.radio_button :execution_trigger_id, "4" %> Nightly
+  	<% end %>
+  </p>
 
   <b>Criteria: </b>
   <div id="criteria">
 	<%= f.fields_for :criteria do |builder| %>
-    <%= render :partial => "criterion_fields", :locals => {:f => builder} %>
+    <%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
 		
 	<% end -%>
 	 <%= link_to_add_fields "Add Criteria", f, :criteria %>
@@ -22,7 +31,7 @@
 	<b>Actions:</b>
 	<div id="actions">
 	<%= f.fields_for :actions do |builder| %>
-	 <%= render :partial => "action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
+	 <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
 	<% end %>
 	
 	 <%= link_to_add_fields "Add Action", f, :actions %>

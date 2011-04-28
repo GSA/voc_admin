@@ -24,3 +24,8 @@ Status.create! :id=>1, :name=>"new"
 Status.create! :id=>2, :name=>"processing"
 Status.create! :id=>3, :name=>"error"
 Status.create! :id=>4, :name=>"done"
+
+ExecutionTrigger.create! :id=>1, :name=>"add"
+ExecutionTrigger.create! :id=>2, :name=>"update"
+ExecutionTrigger.create! :id=>3, :name=>"delete"
+ExecutionTrigger.create! :id=>4, :name=>"nightly"
