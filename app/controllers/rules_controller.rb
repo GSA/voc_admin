@@ -35,7 +35,7 @@ class RulesController < ApplicationController
     @rule = @survey_version.rules.find(params[:id])
     
     if @rule.update_attributes(params[:rule])
-      redirect_to survey_survey_version_rule_path(@rule)
+      redirect_to survey_survey_version_rule_path(@survey, @survey_version, @rule)
     else
       render :edit
     end
