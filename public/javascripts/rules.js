@@ -34,4 +34,13 @@ $(function(){
 		});
 	});
 
+
+	/* Reload the fields when editing */
+	$(".ActionTargetSelect").each(function(index){
+		if($(this).prev("input[type=hidden]").val() == "Response") {
+			$(this).val($(this).siblings(".HiddenValueField").val());
+		} else {
+			$(this).next("input[type=text]").val($(this).siblings(".HiddenValueField").val());
+		}
+	})
 });

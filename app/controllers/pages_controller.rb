@@ -8,14 +8,13 @@ class PagesController < ApplicationController
       if @page.save
         format.js {render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version}}
       else
-        format.js {render :partial => "question_errors", :locals => {:object => @page}}
+        format.js {render :partial => "shared/question_errors", :locals => {:object => @page}}
       end
     end
   end
   
   def destroy
     @page = @survey_version.pages.find(params[:id])
-    @survey_version.renumber_pages(@page.number) unless @page.number == @survey_version.pages.count
     @page.destroy
   
     respond_to do |format|
