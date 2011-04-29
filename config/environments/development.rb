@@ -31,7 +31,7 @@ CommentToolApp::Application.configure do
     display_field_float display_field_integer display_field_percent display_field_person display_field_phone 
     display_field_rtf display_field_text_multi display_field_text display_field_url_as_link 
     display_field_url display_field_value].each do |c|
-   require_dependency File.join("app", "models", "display_field_models", "#{c}.rb")
+   require_dependency File.join(Rails.root,"app", "models", "display_field_models", "#{c}.rb")
  end
 end
 

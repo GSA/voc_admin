@@ -3,6 +3,7 @@ require "rubygems"
 require "active_record"
 require 'yaml'
 
+
 def log_event(message, level)
   level_text = ''
   case level
@@ -54,7 +55,7 @@ trigger_string = arg_hash["-triggers"] || parseryaml["configuration"]["triggers"
 trigger_id = trigger_string.split(",") if arg_hash["-triggers"]
   
 #set mode (new, nightly) 
-@mode = arg_hash["-mode"] || parseryaml["mode"]["triggers"] || "new"
+mode = arg_hash["-mode"] || parseryaml["configuration"]["triggers"] || "new"
                
 #check for redirect to file and redirect outpuf if needed
 if (arg_hash["-redirect_out"] == "true") || ((parseryaml["configuration"]["redirect_out"] == true ) if parseryaml["configuration"])
@@ -72,25 +73,37 @@ if @log_level > 0
   puts "with:"
   puts "\tLog Level: #{@log_level}"
   puts "\tRails Env: #{railsenv}"
-  puts "\tTrigers:   #{trigger_string.blank? "All" : trigger_string}"
+  puts "\tTrigers:   #{trigger_string  == "" ? "All" : trigger_string}"
   puts ""
 end
   
 #create connection to DB and Load models
-log_event("Opening DB Connection",3)
-ActiveRecord::Base.establish_connection(dbyaml[railsenv])
-
-#Load Models
-log_event("Loading Models",2)
-Dir["../app/models/*.rb"].each {|file| require file }
+log_event("Starting Rails",3)
+require File.dirname(__FILE__) + "/../config/application"
+Rails.application.require_environment!
   
+def process_nightly(who_am_i)
+  
+end
+  
+def process_new(who_am_i)
+  loop do
+    sr = SurveyResponse.get_next_response(who_am_i, "new")
+    unless sr
+      sleep 5
+      next
+    end
+    sr.process_me(1)
+  end
+end
 
-#start processing
-#while true
-#  SurveyResponse.get_next_response(who_am_i, mode).try(:process_me,1)
-#end
-
-
+if mode == "new"
+  process_new(who_am_i)
+elsif mode == "nightly"
+  process_nightly(who_am_i)
+else
+  raise "Invalid Mode (#{mode}) specified, try 'new' or 'nightly'"
+end
 
 
 
