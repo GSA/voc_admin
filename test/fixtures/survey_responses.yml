@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110421150712
+# Schema version: 20110428194741
 #
 # Table name: survey_responses
 #
@@ -8,6 +8,9 @@
 #  survey_version_id :integer(4)
 #  created_at        :datetime
 #  updated_at        :datetime
+#  status_id         :integer(4)      default(1), not null
+#  last_processed    :datetime
+#  worker_name       :string(255)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

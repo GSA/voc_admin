@@ -20,7 +20,6 @@ def log_event(message, level)
   puts "#{Time.now.to_s} - #{level_text}: " + message if @log_level <= level && @log_level != 0
 end
 
-
 #Process Command Line Args
 arg_hash = {}
 ARGV.each do|a|
@@ -50,7 +49,13 @@ dbyaml = YAML::load(File.open(dbyaml_path))
 # 5 = Error
 @log_level = (arg_hash["-log_level"].to_i if arg_hash["-log_level"]) ||
             (parseryaml["configuration"]["log_level"] if parseryaml["configuration"]) || 1
- 
+              
+trigger_string = arg_hash["-triggers"] || parseryaml["configuration"]["triggers"] || ""
+trigger_id = trigger_string.split(",") if arg_hash["-triggers"]
+  
+#set mode (new, nightly) 
+@mode = arg_hash["-mode"] || parseryaml["mode"]["triggers"] || "new"
+               
 #check for redirect to file and redirect outpuf if needed
 if (arg_hash["-redirect_out"] == "true") || ((parseryaml["configuration"]["redirect_out"] == true ) if parseryaml["configuration"])
   log_path = arg_hash["-log_file_path"] || (parseryaml["configuration"]["log_file_path"] if parseryaml["configuration"]) || ''
@@ -67,7 +72,7 @@ if @log_level > 0
   puts "with:"
   puts "\tLog Level: #{@log_level}"
   puts "\tRails Env: #{railsenv}"
-  puts ""
+  puts "\tTrigers:   #{trigger_string.blank? "All" : trigger_string}"
   puts ""
 end
   
@@ -79,24 +84,11 @@ ActiveRecord::Base.establish_connection(dbyaml[railsenv])
 log_event("Loading Models",2)
 Dir["../app/models/*.rb"].each {|file| require file }
   
-#check for orphaned children
-log_event("Checking for orphaned records",3)
-#RawResponse.transaction do
-#  abandoned_items = RawResponse.lock(true).find_all_by_worker_name(who_am_i)
-#  log_event("Found #{abandoned_items.size} items",3)
-#  abandoned_items.each do |ai| 
-#    ai.update_attributes(:status)
-#    
-#  end
-#end
 
-log_event("Starting Main Loop", 2)
-#loop do
-#  
+#start processing
+#while true
+#  SurveyResponse.get_next_response(who_am_i, mode).try(:process_me,1)
 #end
-#
-#puts "How did I get here?"
-
 
 
 
