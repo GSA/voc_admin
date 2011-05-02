@@ -6,7 +6,7 @@
   <div class="validation_errors"></div>
 	<% choice_question.build_question_content if choice_question.new_record? %>
 	<%= f.fields_for :question_content do |builder| %>
-		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder}%>
+		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
 	<% end -%>
 	<br/>
 	
