@@ -1,0 +1,10 @@
+configuration:
+  instance_name: dev_env
+  environment: development
+  log_level: 1
+  log_file_path: log
+  pid_path: tmp/pids
+  redirect_out: true
+  new: 1
+  nightly: 1
+  nightly_run_hour: 1

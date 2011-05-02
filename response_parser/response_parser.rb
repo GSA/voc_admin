@@ -1,3 +1,4 @@
+
 #load models and gems
 require "rubygems"
 require "active_record"
@@ -33,29 +34,14 @@ end
 #Load everything & setup
 who_am_i = arg_hash["-instance_name"] || "response_parser"
 parseryaml = YAML::load(File.open(arg_hash["-config_yml_path"] || '../config/parser.yml'))
-railsenv = arg_hash["-rails_env"] || 
-           (parseryaml["configuration"]["environment"] if parseryaml["configuration"]) || 
-           ((ENV['RAILS_ENV'] != nil && ENV['RAILS_ENV'] != '') ? ENV['RAILS_ENV'] : 'development')
-dbyaml_path = arg_hash["-db_yml_path"] || 
-              (parseryaml["configuration"]["db_yml_path"] if parseryaml["configuration"]) || 
-              '../config/database.yml'
+railsenv = arg_hash["-rails_env"] || (parseryaml["configuration"]["environment"] if parseryaml["configuration"]) || ((ENV['RAILS_ENV'] != nil && ENV['RAILS_ENV'] != '') ? ENV['RAILS_ENV'] : 'development')
+dbyaml_path = arg_hash["-db_yml_path"] || (parseryaml["configuration"]["db_yml_path"] if parseryaml["configuration"]) || '../config/database.yml'
 dbyaml = YAML::load(File.open(dbyaml_path))
-
-#set log level
-# 0 = Silent
-# 1 = Verbose
-# 2 = Notice
-# 3 = DB
-# 4 = Warning
-# 5 = Error
-@log_level = (arg_hash["-log_level"].to_i if arg_hash["-log_level"]) ||
-            (parseryaml["configuration"]["log_level"] if parseryaml["configuration"]) || 1
-              
-trigger_string = arg_hash["-triggers"] || parseryaml["configuration"]["triggers"] || ""
-trigger_id = trigger_string.split(",") if arg_hash["-triggers"]
-  
+nightly_run_hour = arg_hash["-nightly_run_hour"] || (parseryaml["configuration"]["nightly_run_hour"] if parseryaml["configuration"]) || "0"
 #set mode (new, nightly) 
 mode = arg_hash["-mode"] || parseryaml["configuration"]["triggers"] || "new"
+#set log level 0 = Silent, 1 = Verbose, 2 = Notice, 3 = DB, 4 = Warning, 5 = Error
+@log_level = (arg_hash["-log_level"].to_i if arg_hash["-log_level"]) || (parseryaml["configuration"]["log_level"] if parseryaml["configuration"]) || 1
                
 #check for redirect to file and redirect outpuf if needed
 if (arg_hash["-redirect_out"] == "true") || ((parseryaml["configuration"]["redirect_out"] == true ) if parseryaml["configuration"])
@@ -73,19 +59,43 @@ if @log_level > 0
   puts "with:"
   puts "\tLog Level: #{@log_level}"
   puts "\tRails Env: #{railsenv}"
-  puts "\tTrigers:   #{trigger_string  == "" ? "All" : trigger_string}"
+  if mode == "nightly"
+    puts "\tMode:      #{mode} @ #{nightly_run_hour}"
+  else
+    puts "\tMode:      #{mode}"
+  end
   puts ""
 end
   
-#create connection to DB and Load models
+#Load rails
 log_event("Starting Rails",3)
 require File.dirname(__FILE__) + "/../config/application"
 Rails.application.require_environment!
   
-def process_nightly(who_am_i)
+#define nightly process
+def process_nightly(who_am_i, nightly_run_hour)
+  #set date of last run to yesterday to force check of system
+  date_last_run = Date.today - 1.day
   
+  loop do
+    #check time
+    if Time.now.hour > nightly_run_hour.to_i && Date.today > date_last_run
+      #set new run times
+      date_last_run = Date.today
+      
+      #start processing
+      loop do
+        sr = SurveyResponse.get_next_response(who_am_i, "nightly", date_last_run)
+        if sr.nil?
+          break
+        end 
+        sr.process_me(4)
+      end
+    end
+  end
 end
   
+#define new process
 def process_new(who_am_i)
   loop do
     sr = SurveyResponse.get_next_response(who_am_i, "new")
@@ -97,10 +107,11 @@ def process_new(who_am_i)
   end
 end
 
+#pick a process
 if mode == "new"
   process_new(who_am_i)
 elsif mode == "nightly"
-  process_nightly(who_am_i)
+  process_nightly(who_am_i, nightly_run_hour)
 else
   raise "Invalid Mode (#{mode}) specified, try 'new' or 'nightly'"
 end
