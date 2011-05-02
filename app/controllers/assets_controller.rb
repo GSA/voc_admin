@@ -28,6 +28,7 @@ class AssetsController < ApplicationController
 
   private
   def get_survey_version
+    @survey = Survey.find(params[:survey_id])
     @survey_version = SurveyVersion.find(params[:survey_version_id])
   end
   

@@ -1,9 +1,10 @@
-<%= f.label :statement, "Question: "%><%= f.label :required %>
+<%= f.label :statement, "Question: "%>
 <%= f.check_box :required, {:checked => false}, true, false %>
-
-<%= f.hidden_field :flow_control, :value => false %>
-<%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
-<%= f.label :flow_control_checkbox, "Flow Control"%>
-
+<%= f.label :required %>
+<div id="flow_control_settings" style="display:inline">
+  <%= f.hidden_field :flow_control, :value => false %>
+  <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
+	 <%= f.label :flow_control_checkbox, "Flow Control"%>
+</div>
 <br/>
 <%= f.text_area :statement, :rows => 3%><br/>

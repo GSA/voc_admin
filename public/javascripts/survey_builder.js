@@ -6,8 +6,23 @@ $(function(){
 	/* Functions for managing the select boxes for page and next_page 
 	 * for multiple choice questions.
 	 */
-	$("#new_choice_question .question_page_select").live("change", function(){
-		$("#new_choice_question .next_page_select").val()
+	$("#flow_control_checkbox").live('change', function(){
+		/* If checkbox is selected then hide the next page dropdown for answers. */
+		if(!$(this).is(':checked')){
+			$(".answer_fields .next_page_select").hide();
+			$(".simplemodal-container").css("height", "auto");
+		} else {
+			/* Checkbox has been checked so show the page selections */
+			$(".answer_fields .next_page_select").show();
+		}
+	});
+	
+	$(".answer_fields .next_page_select").each(function(index){
+		$(this).val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
+	});
+	
+	$("#choice_question_survey_element_attributes_page_id").bind('change', function(){
+		$(".answer_fields .next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
 	});
 	
 	
