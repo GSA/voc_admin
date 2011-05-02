@@ -1,6 +1,6 @@
 class SurveyResponsesController < ApplicationController
   def index
-    @survey_version_id = params[:survey_version_id]
+    @survey_version_id = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
     @survey_responses = SurveyResponse.where("survey_version_id = ?", @survey_version_id).order("created_at desc")
     
     respond_to do |format|

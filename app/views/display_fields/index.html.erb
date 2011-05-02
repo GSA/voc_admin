@@ -18,4 +18,5 @@
 	<% end %>
 </table>
 
-<%= link_to "New Dispaly Field", new_survey_survey_version_display_field_path(@survey, @survey_version) %>
+<%= link_to "New Dispaly Field", new_survey_survey_version_display_field_path(@survey, @survey_version) %> | 
+<%= link_to "Back", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id)%>
