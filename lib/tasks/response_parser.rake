@@ -83,7 +83,12 @@ namespace :response_parser do
   task :stop do
     parseryaml = YAML::load(File.open('config/response_parser.yml'))
     pid_path = (parseryaml["configuration"]["pid_path"] if parseryaml["configuration"]) || 'tmp/pids'
-    pidfile = File.new(File.join(pid_path,"response_parser.pids"), 'r')
+    begin
+      pidfile = File.new(File.join(pid_path,"response_parser.pids"), 'r')
+    rescue
+      puts "No pid file found - did you start the response parser?"
+      exit
+    end
     pidfile.readlines.each do |pid|
       puts "Stopping #{pid}"
       begin
