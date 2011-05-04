@@ -121,6 +121,10 @@ a img {
 	vertical-align: top;
 }
 
+textarea {
+	font-family: Verdana, Helvetica, Arial, san-serif;
+}
+
 /* Navigation */
 .navTitle {
 	border-bottom: 1px solid #243b7c;
@@ -159,6 +163,14 @@ div.pageNav {
 	margin: 10px 0px 0px;
 	padding: 5px 0px 0px;
 	border-top: 6px double #eef1fc;
+}
+
+div.pageNav-upper {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: -30px 0px 20px;
+	padding: 3px 0px 0px;
 }
 
 a.pageNav, a.pageNav:link, a.pageNav:visited {
@@ -292,6 +304,11 @@ a.pageNav:hover, a.pageNav:active {
 .blue {
 	background-color: #eef1fc;
 	border-bottom: 1px solid #ffde9a;
+}
+
+/* New Survey Page */
+#newSurvey {
+	margin: 0px 0px 10px;
 }
 
 /* Pages */

@@ -1,4 +1,7 @@
 <p class="pageTitle">All Survey's</p>
+<div class="pageNav-upper">
+	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
+</div>
 
 <table id="surveyTable">
   <tr>
@@ -20,7 +23,6 @@
 <% end %>
 </table>
 
-<br />
 <div class="pageNav">
 	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
 </div>
