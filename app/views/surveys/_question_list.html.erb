@@ -3,7 +3,7 @@
 <% for page in survey_version.pages.order("number asc") %>
 	<div class="page" id="page_<%=page.number%>" style="border: 1px solid black">
 		<b>Page <%= page.number %></b>
-		<%= button_to "Remove Page", survey_survey_version_page_path(survey_version.survey, survey_version, page), :method =>:delete, :confirm => "All items on page #{page.number} will be removed as well?", :remote => true, :class => "remove_page_button" %>
+		<%= link_to "Remove Page", survey_survey_version_page_path(survey_version.survey, survey_version, page), :remote => true, :method => :delete, :confirm => "All items on page #{page.number} will be removed as well.", :class => "remove_page_link" %>
 		<ol>
 		<% for element in page.survey_elements.order("element_order asc") %>
 			<% if element.assetable_type == "TextQuestion" %>
@@ -12,7 +12,7 @@
 					<%= "*" if element.assetable.question_content.required %> (text_<%= element.assetable.answer_type %>)</span>
           <%= link_to "Up", up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
           <%= link_to "Down", down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= button_to "Remove", survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
+					<%= link_to "Remove", survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link" %>
 				</li>
 			<% elsif element.assetable_type == "ChoiceQuestion" %>
 				<li>
@@ -20,7 +20,7 @@
 					<%= "*" if element.assetable.question_content.required %> </span>
           <%= link_to "Up", up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
           <%= link_to "Down", down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= button_to "Remove", survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
+					<%= link_to "Remove", survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link" %>
 					<ol>
 						<% for answer in element.assetable.choice_answers %>
 						<li><%= answer.answer %></li>
@@ -32,7 +32,7 @@
         	<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.snippet %></span>
 					<%= link_to "Up", up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
 					<%= link_to "Down", down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= button_to "Remove", survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_asset_button" %>
+					<%= link_to "Remove", survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link" %>
         </li>
 			<% end # close the if statements %>			
 		<% end # close the for loop %>

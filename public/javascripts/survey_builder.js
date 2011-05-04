@@ -71,7 +71,12 @@ $(function(){
 		return false;
 	});	
 	
-	$(".button_to").live("ajax:success", function(event, data, status, xhr) {
+	$(".remove_question_link").live("ajax:success", function(event, data, status, xhr) {
+		$.modal.close();
+	    $("#question_list").html(data);
+	});
+	
+	$(".remove_page_link").live("ajax:success", function(event, data, status, xhr) {
 		$.modal.close();
 	    $("#question_list").html(data);
 	});
