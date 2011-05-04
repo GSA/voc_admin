@@ -2,8 +2,8 @@
   <%= f.label :display_field_id, "Update" %>
   <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
 	<%= f.label :value, " with "%>
-	<%= f.hidden_field :value_type, :value => "Text"%>
+	<%= f.hidden_field :value_type, :value => f.object.value_type || "Text" %>
 	<%= select_tag :value_target , options_for_select(@survey_version.questions.map {|x| [x.assetable.question_content.statement + " response", x.assetable.question_content.id]}), :include_blank => true, :class => "ActionTargetSelect" %>
 	<%= text_field_tag :value_text, nil ,{:class => "ActionManualValue"} %>
-	<%= f.hidden_field :value, :value => "", :class => "HiddenValueField" %>
+	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
 </p>
