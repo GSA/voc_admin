@@ -17,19 +17,20 @@
 	</p>
 
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
+	  <% index = 0%>
 		<% for page in @survey_version.pages %>
 
 			<div class="<%= page.number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.number%>">
 	      <%= hidden_field_tag :next_page, page.next_page.try(:number), :id => "page_#{page.number}_next_page" %>
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
 				<ol>
-				<% page.survey_elements.order("element_order asc").each_with_index do |element, index| %>
+				<% page.survey_elements.order("element_order asc").each do |element| %>
 					<li>
-						
 						<% unless element.assetable_type == "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][survey_version_id]", @survey_version.id%>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
+							
 							<%= element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%><br/>
 							<% if element.assetable_type == "ChoiceQuestion" %>
@@ -64,6 +65,7 @@
               <%= element.assetable.snippet.html_safe%>
 						<% end %>			
 					</li>
+					<% index = index + 1%>
 				<% end %>
 				</ol>
 				
