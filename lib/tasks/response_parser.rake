@@ -118,6 +118,7 @@ namespace :response_parser do
       level_text = 'Error'
     end
     puts "#{Time.now.to_s} - #{level_text}: " + message if @log_level <= level && @log_level != 0
+    $stdout.flush
   end
   
   #define nightly process
