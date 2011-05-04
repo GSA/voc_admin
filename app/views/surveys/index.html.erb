@@ -1,29 +1,26 @@
-<h1>Listing surveys</h1>
+<p class="pageTitle">All Survey's</p>
 
-<table>
+<table id="surveyTable">
   <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Survey Type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-		<th></th>
+    <th class="col1">Name</th>
+    <th class="col2">Description</th>
+    <th colspan="5">Type</th>
   </tr>
 
 <% @surveys.each do |survey| %>
-  <tr>
-    <td><%= survey.name %></td>
-    <td><%= survey.description %></td>
-    <td><%= survey.survey_type.name.titleize %></td>
-    <td><%= link_to 'Show', survey %></td>
-		<td><%= link_to 'Versions', survey_survey_versions_path(survey) %></td>
-    <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
-    <td><%= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle('white','blue') %>">
+    <td class="col1"><%= survey.name %></td>
+    <td class="col2"><%= survey.description %></td>
+    <td class="col3"><%= survey.survey_type.name.titleize %></td>
+    <td class="col4-7"><%= link_to 'Show', survey %></td>
+		<td class="col4-7"><%= link_to 'Versions', survey_survey_versions_path(survey) %></td>
+    <td class="col4-7"><%= link_to 'Edit', edit_survey_path(survey) %></td>
+    <td class="col4-7"><%= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
-
-<%= link_to 'New Survey', new_survey_path %>
+<div class="pageNav">
+	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
+</div>

@@ -21,8 +21,8 @@
 		<% end -%>
   </tr>
 </table>
-<p>
-	<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version) %> | 
-	<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version) %>
-</p>
+<div class="pageNav">
+	<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> | 
+	<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %>
+</div>
 <% end %>

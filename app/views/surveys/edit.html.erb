@@ -1,3 +1,5 @@
+<p class="pageTitle">Edit Survey</p>
+
 <% javascript 'survey_builder.js' %>
 
 <p id="notice"><%= notice %></p>
@@ -14,16 +16,13 @@
 
 <p>
   <b>Type:</b>
-  <%= @survey.survey_type_id %>
+  <%= @survey.survey_type.name.capitalize %>
 </p>
 
 <div id="survey_versions_fields" >
 	<p>
-		<b>Major:</b>
-		<%= @survey.newest_version.major %>
-	</p>
-	<p>
-		<b>Minor:</b>
+		<b>Version:</b>
+		<%= @survey.newest_version.major %>.
 		<%= @survey.newest_version.minor %>
 	</p>
 	<p>

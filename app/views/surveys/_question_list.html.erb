@@ -9,7 +9,7 @@
 			<% if element.assetable_type == "TextQuestion" %>
 				<li>
 					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> 
-					<%= "*" if element.assetable.question_content.required %> [<%= element.element_order %>](text_<%= element.assetable.answer_type %>)</span>
+					<%= "*" if element.assetable.question_content.required %> (text_<%= element.assetable.answer_type %>)</span>
           <%= link_to "Up", up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
           <%= link_to "Down", down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
 					<%= button_to "Remove", survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
@@ -17,7 +17,7 @@
 			<% elsif element.assetable_type == "ChoiceQuestion" %>
 				<li>
 					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %>
-					<%= "*" if element.assetable.question_content.required %> [<%= element.element_order %>]</span>
+					<%= "*" if element.assetable.question_content.required %> </span>
           <%= link_to "Up", up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
           <%= link_to "Down", down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
 					<%= button_to "Remove", survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_button" %>
@@ -29,7 +29,7 @@
 				</li>
 			<% elsif element.assetable_type == "Asset" %>
         <li>
-        	<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.snippet %>[<%= element.element_order %>]</span>
+        	<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.snippet %></span>
 					<%= link_to "Up", up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
 					<%= link_to "Down", down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
 					<%= button_to "Remove", survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_asset_button" %>
@@ -44,9 +44,7 @@
 <%= link_to "Add a new page", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:number => survey_version.pages.count + 1}), :id => "link_to_new_page", :remote => true, :method => :post %> | 
 <%= link_to "Add a free answer question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :id => "link_to_new_text_question" unless survey_version.pages.count == 0%> | 
 <%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version), :id => "link_to_new_choice_question" unless survey_version.pages.count == 0%> | 
-<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :id => "link_to_new_asset" unless survey_version.pages.count == 0 %> | 
-<%= link_to "Show", survey_path(survey_version.survey) %> | 
-<%= link_to 'Back', surveys_path %>
+<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :id => "link_to_new_asset" unless survey_version.pages.count == 0 %>
 </div>
 
 <div id="new_choice_question_modal" style="display:none; margin-bottom: 10px">
@@ -59,4 +57,9 @@
 
 <div id="new_asset_modal" style="display:none; margin-bottom: 10px;">
   <%= render :partial => 'assets/new_asset_fields', :locals => {:survey => survey_version.survey} %>
+</div>
+
+<div class="pageNav">
+	<%= link_to "Show Survey", survey_path(survey_version.survey), :class=>"pageNav" %> | 
+	<%= link_to 'View All', surveys_path, :class=>"pageNav" %>
 </div>

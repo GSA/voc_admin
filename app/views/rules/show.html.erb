@@ -21,4 +21,6 @@
 <% end %>
 </ol>
 
-<%= link_to "All Rules", survey_survey_version_rules_path(@survey, @survey_version)%>
+<div class="pageNav">
+	<%= link_to "All Rules", survey_survey_version_rules_path(@survey, @survey_version), :class=>"pageNav"%>
+</div>

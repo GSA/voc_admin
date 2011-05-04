@@ -1,8 +1,7 @@
-<% title "Edit Category" %>
+<p class="pageTitle">Edit Category</p>
 
 <%= render 'form' %>
 
-<p>
-  <%= link_to "Show", @category %> |
-  <%= link_to "View All", categories_path %>
-</p>
+<div class="pageNav">
+	<%= link_to "Cancel", @category, :class => "pageNav" %>
+</div>

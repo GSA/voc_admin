@@ -1,12 +1,12 @@
-<% title "Category" %>
+<p class="pageTitle">View Category</p>
 
 <p>
   <strong>Name:</strong>
   <%= @category.name %>
 </p>
 
-<p>
-  <%= link_to "Edit", edit_category_path(@category) %> |
-  <%= link_to "Destroy", @category, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", categories_path %>
-</p>
+<div class="pageNav">
+  <%= link_to "Edit", edit_category_path(@category), :class => "pageNav" %> |
+  <%= link_to "Destroy", @category, :confirm => 'Are you sure?', :method => :delete, :class => "pageNav" %> |
+  <%= link_to "View All", categories_path, :class => "pageNav" %>
+</div>

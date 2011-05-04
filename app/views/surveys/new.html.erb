@@ -1,5 +1,7 @@
-<h1>New survey</h1>
+<p class="pageTitle">New Survey</p>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', surveys_path %>
+<div class="pageNav">
+	<%= link_to 'Cancel', surveys_url, :class=>"pageNav" %>
+</div>

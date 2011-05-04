@@ -1,51 +1,15 @@
 /*Scaffolding Styles automatically generated.*/
-body {
-  background-color: #4B7399;
-  font-family: Verdana, Helvetica, Arial;
-  font-size: 14px;
-}
 
-a img {
-  border: none;
-}
 
-a {
-  color: #0000FF;
-}
-
-.clear {
-  clear: both;
-  height: 0;
-  overflow: hidden;
-}
-
-#container {
+/* #container {
+	do we need this?
   width: 75%;
   margin: 0 auto;
   background-color: #FFF;
   padding: 20px 40px;
   border: solid 1px black;
   margin-top: 20px;
-}
-
-#flash_notice, #flash_error, #flash_alert {
-  padding: 5px 8px;
-  margin: 10px 0;
-}
-
-#flash_notice {
-  background-color: #CFC;
-  border: solid 1px #6C6;
-}
-
-#flash_error, #flash_alert {
-  background-color: #FCC;
-  border: solid 1px #C66;
-}
-
-.fieldWithErrors {
-  display: inline;
-}
+} */
 
 .error_messages {
   width: 400px;
@@ -75,35 +39,70 @@ a {
   margin: 0;
 }
 
-/************  Added styles *********/
-.current_page {
-	
+#notice {
+  color: green;
 }
 
-.hidden_page {
-	display: none;
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
 }
 
-/** Style Guide 4/19/2011 **/
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+div.field, div.actions {
+	/* can get rid of. */
+  margin-bottom: 10px;
+}
+
+/** Style Guide (Last Updated: 5/2/2011 Created: 4/19/2011) **/
+body {
+  background-color: #FFFFFF;
+  font-family: Verdana, Helvetica, Arial, san-serif;
+  font-size: 13px;
+}
+
+a img {
+  border: 0 none;
+}
+
 .background {
 	width: 100%;
-	background-color: #ffd483;
-	border-top: 3px solid #0d3559;
-	border-bottom: 3px solid #0d3559;
+	background-color: #ffde9a;
+	border-top: 3px solid #243b7c;
+	border-bottom: 3px solid #243b7c;
 	margin: 0px;
 	padding: 0px;
 }
 .foreground {
 	width: 994px;
 	margin: 0px auto;
-	padding: 15px;
+	padding: 30px 15px;
 	background-color: #ffffff;
 	min-height: 600px;
 	vertical-align: top;
 }
 .navigation {
 	width: 165px;
-	margin:0px;
+	margin: 2px 0px 0px;
 	padding: 0px;
 	display: inline-block;
 	position: relative;
@@ -122,3 +121,195 @@ a {
 	vertical-align: top;
 }
 
+/* Navigation */
+.navTitle {
+	border-bottom: 1px solid #243b7c;
+	/* background-color: #cad3f6; */
+	margin: 0px 0px /* 7px */;
+	padding: 0px 0px 3px;
+	color: #243b7c;
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+p.nav {
+	border-bottom: 1px solid #243b7c;
+	margin: 0px 0px /* 7px */;
+	padding: 5px 5px;
+	color: #243b7c;
+}
+
+a.nav:link, a.nav:visited {
+	color: #243b7c;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+a.nav:hover, a.nav:active {
+	color: #243b7c;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+div.pageNav {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: 10px 0px 0px;
+	padding: 5px 0px 0px;
+	border-top: 6px double #eef1fc;
+}
+
+a.pageNav, a.pageNav:link, a.pageNav:visited {
+	color: #243b7c;
+	text-decoration: none;
+}
+
+a.pageNav:hover, a.pageNav:active {
+	color: #ffad05;
+	text-decoration: underline;
+}
+
+/* General */
+.pageTitle {
+	font-size: 1.9em;
+	font-weight: bold;
+	margin: 0px 0px 30px;
+	padding: 0px 0px 3px;
+	color: #243b7c;
+	border-bottom: 6px double #eef1fc;
+}
+
+/* 
+	Survey Index Page
+	Survey Version Index Page 
+	Category Index Page
+	Manage Rules Page
+	Display Fields Page
+*/
+#surveyTable, #versionTable, #categoryTable, 
+#rulesTable, #displayFieldsTable {
+	margin: 0px 0px 10px;
+	padding: 0px;
+	border-collapse: collapse;
+}
+
+#surveyTable th, #versionTable th, #categoryTable th, 
+#rulesTable th, #displayFieldsTable th {
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 0px 9px 1px 1px;
+	border-bottom: 2px solid #243b7c;
+	color: #000000;
+}
+
+#surveyTable td, #versionTable td, #categoryTable td, 
+#rulesTable td, #displayFieldsTable td {
+	text-align: left;
+	font-size: 1em;
+	font-weight: normal;
+	border-bottom: 1px solid #243b7c;
+	vertical-align: top;
+}
+
+#surveyTable .col1, #versionTable .col1, 
+#displayFieldsTable .col2 {
+	width: 185px;
+	padding: 5px 9px 5px 1px;
+}
+
+#categoryTable .col1, #surveyTable .col2 {
+	width: 310px;
+	padding: 5px 9px 5px 1px;
+}
+
+#surveyTable .col3 {
+	text-align: center;
+	width: 30px;
+	padding: 5px;
+}
+
+#surveyTable .col4-7, #categoryTable .col2-4, 
+#rulesTable .col3-5, #displayFieldsTable .col3 {
+	text-align: center;
+	width: 65px;
+	padding: 5px 0px;
+}
+
+#versionTable .col2 {
+	width: 70px;
+	text-align: center;
+	padding: 5px 0px;
+}
+
+#versionTable .col3 {
+	width: 130px;
+	text-align: center;
+	padding: 5px 0px;
+}
+
+#versionTable .col4 {
+	width: 200px;
+	padding: 5px 0px;
+}
+
+#surveyTable a, #surveyTable a:link, #surveyTable a:visited,
+#versionTable a, #versionTable a:link, #versionTable a:visited, 
+#categoryTable a, #categoryTable a:link, #categoryTable a:visited, 
+#rulesTable a, #rulesTable a:link, #rulesTable a:visited,
+#displayFieldsTable a, #displayFieldsTable a:link, #displayFieldsTable a:visited {
+	color: #243b7c;
+	text-decoration: none;
+}
+
+#surveyTable a:hover, #surveyTable a:active,
+#versionTable a:hover, #versionTable a:active,
+#categoryTable a:hover, #categoryTable a:active, 
+#rulesTable a:hover, #rulesTable a:active,
+#displayFieldsTable a:hover, #displayFieldsTable a:active {
+	color: #243b7c;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+#rulesTable .col1 {
+	padding: 5px 10px 5px 1px;
+}
+
+#rulesTable .col2, #displayFieldsTable .col1 {
+	width: 400px;
+	padding: 5px 10px 5px 1px;
+}
+
+/* Cycle */
+.white {
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #ffde9a;
+}
+
+.blue {
+	background-color: #eef1fc;
+	border-bottom: 1px solid #ffde9a;
+}
+
+/* Pages */
+.current_page {
+	
+}
+
+.hidden_page {
+	display: none;
+}
+
+/* Links - General, must remain below any other links. */
+/* a, a:link, a:visited {
+	color: #243b7c;
+	text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #ffad05;
+	text-decoration: underline;
+} */

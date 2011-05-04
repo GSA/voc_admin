@@ -1,3 +1,5 @@
+<p class="pageTitle">View Survey</p>
+
 <% javascript 'survey.js' %>
 
 <% if @survey_version.nil? %>
@@ -15,6 +17,24 @@
 	  <b>Description:</b>
 	  <%= @survey.description %>
 	</p>
+	
+	<p>
+	  <b>Type:</b>
+	  <%= @survey.survey_type.name.capitalize %>
+	</p>
+	
+	<div id="survey_versions_fields" >
+		<p>
+			<b>Version:</b>
+			<%= @survey.newest_version.major %>.
+			<%= @survey.newest_version.minor %>
+		</p>
+		<p>
+			<b>Published:</b>
+			<%= @survey.newest_version.published ? "Yes" : "No" %>
+		</p>
+	</div>
+
 
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <% index = 0%>
@@ -78,3 +98,8 @@
 		<% end -%>
 	<% end -%>
 <% end -%>
+
+<div class="pageNav">
+	<%= link_to "View All", surveys_url, :class => "pageNav" %> |
+	<%= link_to "Edit Survey", edit_survey_url, :class => "pageNav" %>
+</div>

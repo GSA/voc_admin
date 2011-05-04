@@ -1,5 +1,7 @@
-<% title "New Category" %>
+<p class="pageTitle">New Category</p>
 
 <%= render 'form' %>
 
-<p><%= link_to "Back to List", categories_path %></p>
+<div class="pageNav">
+	<%= link_to "Cancel", categories_path, :class=>"pageNav" %>
+</div>

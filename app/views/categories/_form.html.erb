@@ -1,7 +1,7 @@
 <%= form_for @category do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :name %><br />
+    <%= f.label :name, "Name:" %><br />
     <%= f.text_field :name %>
   </p>
   <p><%= f.submit %></p>

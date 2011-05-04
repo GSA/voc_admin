@@ -1,6 +1,5 @@
 <% javascript 'survey_responses' %>
-
-<h2>Survey Responses</h2>
+<p class="pageTitle">Survey Responses</p>
 
 <%= label_tag "survey_id", "Survey" %>
 <%= select_tag "survey_id", options_from_collection_for_select(Survey.all, :id, :name), :include_blank => true %>

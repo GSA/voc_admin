@@ -1,20 +1,23 @@
-<% title "Versions" %>
+<p class="pageTitle">Survey Versions</p>
 
-<table>
+<table id="versionTable">
 	<tr>
-		<th>Name</th>
-		<th>Version</th>
-		<th>Published</th>
-		<th>Created At</th>
+		<th class="col1">Name</th>
+		<th class="col2">Version</th>
+		<th class="col3">Published</th>
+		<th class="col4">Created At</th>
 	</tr>
 	<% for version in @survey_versions %>
-	<tr>
-		<td><%= @survey.name %></td>
-		<td><%= version.version_number %></td>
-		<td><%= version.published ? "Yes" : "No" %></td>
-		<td><%= version.created_at %></td>
+	<tr class="<%= cycle('white','blue') %>">
+		<td class="col1"><%= @survey.name %></td>
+		<td class="col2"><%= version.version_number %></td>
+		<td class="col3"><%= version.published ? "Yes" : "No" %></td>
+		<td class="col4"><%= version.created_at %></td>
 	</tr>
 	<% end %>
 </table>
 
-<%= link_to "Back", @survey %>
+<div class="pageNav">
+	<%= link_to "View All", surveys_url, :class => "pageNav" %> |
+	<%= link_to "Show Survey", @survey, :class => "pageNav" %>
+</div>

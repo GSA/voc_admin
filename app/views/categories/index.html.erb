@@ -1,19 +1,19 @@
-<% title "Categories" %>
+<p class="pageTitle">All Categories</p>
 
-<h2>Categories</h2>
-
-<table>
+<table id="categoryTable">
   <tr>
-    <th>Name</th>
+    <th class="col1" colspan="4">Name</th>
   </tr>
   <% for category in @categories %>
-    <tr>
-      <td><%= category.name %></td>
-      <td><%= link_to "Show", category %></td>
-      <td><%= link_to "Edit", edit_category_path(category) %></td>
-      <td><%= link_to "Destroy", category, :confirm => 'Are you sure?', :method => :delete %></td>
+    <tr class="<%= cycle('white','blue') %>">
+      <td class="col1"><%= category.name %></td>
+      <td class="col2-4"><%= link_to "Show", category %></td>
+      <td class="col2-4"><%= link_to "Edit", edit_category_path(category) %></td>
+      <td class="col2-4"><%= link_to "Destroy", category, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New Category", new_category_path %></p>
+<div class="pageNav">
+	<%= link_to "New Category", new_category_path, :class => "pageNav" %>
+</div>

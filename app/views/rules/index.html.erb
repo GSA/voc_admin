@@ -1,21 +1,21 @@
-<h2>Rules for <%= @survey.name %> <%= @survey_version.version_number%></h2>
+<p class="pageTitle">Rules for <%= @survey.name %>, version <%= @survey_version.version_number%></p>
 
-<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version)%>
-<table>
+<table id="rulesTable">
 	<tr>
-		<th>ID</th>
-		<th>Name</th>
+		<th class="col1">ID</th>
+		<th colspan="4">Name</th>
 	</tr>
 <% @rules.each do |rule| %>
-  <tr>
-  	<td><%= rule.id %></td>
-  	<td><%= rule.name %></td>
-		<td><%= link_to "Show", [@survey, @survey_version, rule] %></td>
-		<td><%= link_to "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
-		<td><%= link_to "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
+  <tr class="<%= cycle('white','blue') %>">
+  	<td class="col1"><%= rule.id %></td>
+  	<td class="col2"><%= rule.name %></td>
+		<td class="col3-5"><%= link_to "Show", [@survey, @survey_version, rule] %></td>
+		<td class="col3-5"><%= link_to "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
+		<td class="col3-5"><%= link_to "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<%= link_to "Back", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id)%>
-
+<div class="pageNav">
+	<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> | 
+	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
+</div>
