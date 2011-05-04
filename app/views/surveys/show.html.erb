@@ -70,7 +70,7 @@
 				</ol>
 				
 				<%= link_to_function "Previous Page", "prev_page(#{page.number})" unless page.number == 1 %>
-				<%= link_to_function "Next Page", "next_page(#{page.number})" unless page.number == @survey_version.pages.count %>
+				<%= link_to_function "Next Page", "show_next_page(#{page.number})" unless page.number == @survey_version.pages.count %>
 				<%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %>
 				
 				

@@ -1,4 +1,4 @@
-function next_page(page){
+function show_next_page(page){
 	var unanswered_question = false;
 	
 	$("#page_"+page+" .required_question").each(function(index){
@@ -19,16 +19,14 @@ function next_page(page){
 	
 	if (!unanswered_question){
 		$("#page_"+page).hide();
+		var next_page = $("#page_" + page + "_next_page").val();
 		$("#page_"+ $("#page_"+page+"_next_page").val()).show();		
 	}
-
-	return false;
 }
 
 function prev_page(page){
 	$("#page_"+page).hide();
 	$("#page_"+(page -1)).show();
-	return false;
 }
 
 function set_next_page(current_page, next_page) {
