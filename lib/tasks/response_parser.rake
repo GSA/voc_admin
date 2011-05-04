@@ -86,7 +86,11 @@ namespace :response_parser do
     pidfile = File.new(File.join(pid_path,"response_parser.pids"), 'r')
     pidfile.readlines.each do |pid|
       puts "Stopping #{pid}"
-      Process.kill("HUP", pid.to_i)
+      begin
+        Process.kill("HUP", pid.to_i)
+      rescue
+        puts "Error while stopping #{pid} - #{$!.to_s}"
+      end
     end
     pidfile.close
     File.delete(File.join(pid_path,"response_parser.pids"))
@@ -113,12 +117,14 @@ namespace :response_parser do
   
   #define nightly process
   def process_nightly(who_am_i, nightly_run_hour)
+    log_event("Starting Main Loop",2)
     #set date of last run to yesterday to force check of system
     date_last_run = Date.today - 1.day
     
     loop do
       #check time
       if Time.now.hour > nightly_run_hour.to_i && Date.today > date_last_run
+        log_event("Starting Nightly run",2)
         #set new run times
         date_last_run = Date.today
         
@@ -128,7 +134,13 @@ namespace :response_parser do
           if sr.nil?
             break
           end 
+          log_event("Processing survey response #{sr.id}",2)
           sr.process_me(4)
+          if sr.status_id == 3
+            log_event("Error processing #{sr.id}",4)
+          else
+            log_event("Finished processing #{sr.id}",2)
+          end
         end
       end
     end
@@ -136,13 +148,20 @@ namespace :response_parser do
     
   #define new process
   def process_new(who_am_i)
+    log_event("Starting Main Loop",2)
     loop do
       sr = SurveyResponse.get_next_response(who_am_i, "new")
       unless sr
         sleep 5
         next
       end
+      log_event("Processing survey response #{sr.id}",2)
       sr.process_me(1)
+      if sr.status_id == 3
+        log_event("Error processing #{sr.id}",4)
+      else
+        log_event("Finished processing #{sr.id}",2)
+      end
     end
   end
 end
