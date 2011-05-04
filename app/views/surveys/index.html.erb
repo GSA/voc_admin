@@ -4,7 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
-    <th>Type</th>
+    <th>Survey Type</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,7 +15,7 @@
   <tr>
     <td><%= survey.name %></td>
     <td><%= survey.description %></td>
-    <td><%= survey.survey_type_id %></td>
+    <td><%= survey.survey_type.name.titleize %></td>
     <td><%= link_to 'Show', survey %></td>
 		<td><%= link_to 'Versions', survey_survey_versions_path(survey) %></td>
     <td><%= link_to 'Edit', edit_survey_path(survey) %></td>

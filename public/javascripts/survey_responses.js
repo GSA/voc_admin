@@ -53,6 +53,7 @@ function setSurveyVersionSelect(survey_version_id){
 }
 
 function refreshSurveyResponseTable(){
+	$("#survey_response_list").html("Refreshing table...");
 	getSurveyDisplayTable($("#survey_version_id").val());
 }
 
