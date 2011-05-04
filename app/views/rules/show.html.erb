@@ -2,7 +2,12 @@
 
 <b>Name:</b><%= @rule.name%><br/>
 <b>Order:</b><%= @rule.rule_order%><br/>
-
+<b>Triggers:</b>
+<ul>
+	<% @rule.execution_triggers.each do |et| %>
+		<li><%= et.name.capitalize %></li>
+	<% end %>
+</ul>
 <b>Criteria</b>
 <ol>
 <% for criterion in @rule.criteria %>

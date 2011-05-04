@@ -3,6 +3,11 @@
 <h2>Edit Rule</h2>
 
 <%= form_for [@survey, @survey_version, @rule] do |f| %>
+  <% if @rule.errors.any? %>
+    <div id="error_explanation">
+      <%= render :partial => 'shared/question_errors', :locals => {:object => @rule} %>
+    </div>
+  <% end %>
   <p>
   <%= f.label :name %>
 	<%= f.text_field :name%>
@@ -10,18 +15,18 @@
 	
   <b>This rule will execute when a survey is: </b>
   <p>
-  	<%= f.fields_for :execution_trigger_rules do |etr| %>
-	  	<%= etr.radio_button :execution_trigger_id, "1" %> Added
-	  	<%= etr.radio_button :execution_trigger_id, "2" %> Changed
-	  	<%= etr.radio_button :execution_trigger_id, "4" %> Nightly
+  	<input name="rule[execution_trigger_ids][]" type='hidden' />
+  	<% ExecutionTrigger.all.each do |et| %>
+  		<% unless et.id == 3 %>
+  			<%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]") %><%= et.name.capitalize %>
+  		<% end %>
   	<% end %>
   </p>
 
   <b>Criteria: </b>
   <div id="criteria">
 	<%= f.fields_for :criteria do |builder| %>
-    <%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
-		
+    	<%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
 	<% end -%>
 	 <%= link_to_add_fields "Add Criteria", f, :criteria %>
 	</div>
@@ -31,7 +36,7 @@
 	<b>Actions:</b>
 	<div id="actions">
 	<%= f.fields_for :actions do |builder| %>
-	 <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
+		<%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
 	<% end %>
 	
 	 <%= link_to_add_fields "Add Action", f, :actions %>
