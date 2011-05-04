@@ -7,24 +7,49 @@ $(function(){
 	 * for multiple choice questions.
 	 */
 	$("#flow_control_checkbox").live('change', function(){
+
 		/* If checkbox is selected then hide the next page dropdown for answers. */
 		if(!$(this).is(':checked')){
-			$(".answer_fields .next_page_select").hide();
 			$(".simplemodal-container").css("height", "auto");
+			$(".simplemodal-container").css("width", "auto");
+			$(".next_pages").hide();
 		} else {
+			$(".simplemodal-container").css("height", "auto");
+			$(".simplemodal-container").css("width", "auto");
 			/* Checkbox has been checked so show the page selections */
-			$(".answer_fields .next_page_select").show();
+			$(".next_pages").show();
 		}
+		$(window).resize();
 	});
 	
-	$(".answer_fields .next_page_select").each(function(index){
+	/*
+	 * When a page is chosen from the page selection for the question, remove that option
+	 * from the flow control page select dropdown.
+	 */
+//	$("#choice_question_survey_element_attributes_page_id").live('change', function(){
+//		$(".answer_fields .next_page_select option[value='" + 
+//		$("#choice_question_survey_element_attributes_page_id option:selected").val() + "']").remove();
+//	});
+	
+	$(".next_page_select").each(function(index){
 		$(this).val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
 	});
 	
 	$("#choice_question_survey_element_attributes_page_id").bind('change', function(){
-		$(".answer_fields .next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
+		$(".next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
 	});
 	
+	/*
+	 * If the checkbox option is selected then show the allow multiple
+	 * answers checkbox.
+	 */
+	$("#choice_question_answer_type").live('change', function(){
+		if($(this).val() == "checkbox") {
+			$(".simplemodal-container").css("height", "auto");
+			$("#allow_multiple").show();
+		}
+		$(window).resize();
+	});
 	
 	/* Modal control functions */
 	$(".survey_element").live('dblclick', function(){
@@ -129,5 +154,6 @@ function add_fields(link, association, content) {
   $(link).prev().after(content.replace(regexp, new_id));  
 	if (association == "choice_answers") {
 		$(".simplemodal-container").css("height", "auto");
+		$(window).resize();
 	}
 }

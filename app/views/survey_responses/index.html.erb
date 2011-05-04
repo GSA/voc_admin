@@ -8,6 +8,8 @@
 <%= label_tag "survey_version_id", "Version"%>
 <%= select_tag "survey_version_id", nil %>
 
+<%= link_to_function "Refresh", "refreshSurveyResponseTable()"%>
+
 <div id="survey_response_list">
 	<%= render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version_id} %>
 </div>

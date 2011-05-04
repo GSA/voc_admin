@@ -4,15 +4,6 @@
 
 
 $(function(){
-	/* if params exist preset the selects to those versions */
-	var params = getUrlParams();
-	/* If there are params passed then pre-populate the select boxes */
-	if(params["survey_id"] && params["survey_version_id"]){
-		$("#survey_id").val(params["survey_id"]);
-		getSurveyVersionList($("#survey_id").val());
-		$("#survey_version_id").val(params["survey_version_id"]);
-	}
-	
 	/* Populate the version select box based on the survey selection */
 	$("#survey_id").change(function(){
 		var survey_id = $(this).val()
@@ -22,7 +13,7 @@ $(function(){
 		$("#survey_response_list").html("");
 		/* Get the new list of versions if a survey was selected */
 		if (survey_id != "") {
-			getSurveyVersionList(survey_id);
+			getSurveyVersionList($("#survey_id").val());
 		}
 	});
 	
@@ -38,16 +29,42 @@ $(function(){
 		if(survey_version_id == ""){
 			$("#survey_response_list").html("");
 		} else {
-			$.ajax({
-				url: "survey_responses.js",
-				data: "survey_version_id=" + $("#survey_version_id").val(),
-				success: function(data){
-					$("#survey_response_list").html(data);
-				}
-			})
+			getSurveyDisplayTable($("#survey_version_id").val());
 		}
 	});
+
+	/* if params exist preset the selects to those versions */
+	var params = getUrlParams();
+	/* If there are params passed then pre-populate the select boxes */
+	if(params["survey_id"] && params["survey_version_id"]){
+		$("#survey_id").val(params["survey_id"]);
+		getSurveyVersionList($("#survey_id").val());
+		/* This has to be done for some reason in order to give time for the DOM to register the
+		 * previous insertion of select options.
+		 */
+		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 300);
+
+	}
+
 });
+
+function setSurveyVersionSelect(survey_version_id){
+	$("#survey_version_id option[value='" + survey_version_id + "']").attr('selected', 'selected');
+}
+
+function refreshSurveyResponseTable(){
+	getSurveyDisplayTable($("#survey_version_id").val());
+}
+
+function getSurveyDisplayTable(survey_version_id){
+	$.ajax({
+		url: "survey_responses.js",
+		data: "survey_version_id=" + survey_version_id,
+		success: function(data){
+			$("#survey_response_list").html(data);
+		}
+	})
+}
 
 function getUrlParams(){
 	// get the current URL

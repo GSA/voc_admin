@@ -25,7 +25,9 @@
 	<%= f.label :answer_type %>
 	<%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT]]), :id => "answer_type_dropdown" %>
 	<br/>
-	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
+	<div id="allow_multiple" style="display:none">
+  	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
+	</div>
 	<br/>
 	
 	<br/>
