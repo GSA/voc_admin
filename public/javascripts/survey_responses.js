@@ -26,7 +26,7 @@ $(function(){
 		 * remove currently displayed responses if no version selected.  Otherwise 
 		 * make an ajax call to get the display table for the selected version
 		 */
-		if(survey_version_id == ""){
+		if(survey_version_id == "0"){
 			$("#survey_response_list").html("");
 		} else {
 			getSurveyDisplayTable($("#survey_version_id").val());
