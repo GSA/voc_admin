@@ -1,4 +1,4 @@
-<h3>New Choice Question</h3>
+<p class="modalTitle">New Choice Question</p>
 
 <% choice_question ||= survey.newest_version.choice_questions.build %>
 
@@ -9,8 +9,10 @@
 		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
 	<% end -%>
 	<br/>
+	<br/>
+	<%= f.label :answer_type %>
+	<%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT]]), :id => "answer_type_dropdown" %>
 	
-	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey}%>
 	
 
 	<% 4.times {choice_question.choice_answers.build} %>
@@ -18,19 +20,15 @@
 		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey} %>
 	<% end %>
 	
-	<%= link_to_add_fields "Add Answer", f, :choice_answers %>
+	<span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
 	
 	<br/>
-	
-	<%= f.label :answer_type %>
-	<%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT]]), :id => "answer_type_dropdown" %>
-	<br/>
-	<div id="allow_multiple" style="display:none">
+	<div id="allow_multiple" class="displayNone">
   	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
 	</div>
-	<br/>
-	
-	<br/>
+	<br/><br/>
+	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey}%>
+	<br/><br/>
 	<%= f.submit "Add Question" %>
-	<%= link_to "Cancel", nil, :class => "simplemodal-close"%>
+	<%= link_to "Cancel", nil, :class => "simplemodal-close" %>
 <% end -%>

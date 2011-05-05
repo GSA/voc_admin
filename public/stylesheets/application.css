@@ -76,7 +76,7 @@ div.field, div.actions {
 /** Style Guide (Last Updated: 5/2/2011 Created: 4/19/2011) **/
 body {
   background-color: #FFFFFF;
-  font-family: Verdana, Helvetica, Arial, san-serif;
+  font-family: Arial,Helvetica,sans-serif;
   font-size: 13px;
 }
 
@@ -123,6 +123,7 @@ a img {
 
 textarea {
 	font-family: Verdana, Helvetica, Arial, san-serif;
+	font-size: 11px;
 }
 
 /* Navigation */
@@ -160,7 +161,7 @@ div.pageNav {
 	color: #ffad05;
 	font-weight: bold;
 	font-size: 11px;
-	margin: 10px 0px 0px;
+	margin: 10px 0px;
 	padding: 5px 0px 0px;
 	border-top: 6px double #eef1fc;
 }
@@ -183,14 +184,61 @@ a.pageNav:hover, a.pageNav:active {
 	text-decoration: underline;
 }
 
-/* General */
-.pageTitle {
-	font-size: 1.9em;
+div.surveyNav {
+	color: #000000;
+	text-decoration: none;
 	font-weight: bold;
-	margin: 0px 0px 30px;
-	padding: 0px 0px 3px;
+	font-size: 1em;
+	margin: 15px 0px 10px;
+	padding: 0px;
+	text-align: center;
+}
+
+span.surveyNav1 {
+	width: 110px;
+	display: inline-block;
+	
+}
+span.surveyNav2 {
+	width: 175px;
+	display: inline-block;
+}
+span.surveyNav3 {
+	width: 195px;
+	display: inline-block;
+}
+span.surveyNav4 {
+	width: 85px;
+	display: inline-block;
+}
+
+span.surveyNavPrev {
+	width: 105px;
+	display: inline-block;
+}
+
+span.surveyNavNext {
+	width: 85px;
+	display: inline-block;
+}
+
+span.surveyNavSub {
+	text-align: left;
+	display: inline-block;
+	padding: 0px 0px 0px 10px;
+}
+
+a.surveyNav, a.surveyNav:link, a.surveyNav:visited,
+a.simplemodal-close, a.simplemodal-close:link, a.simplemodal-close:visited {
+	font-weight: normal;
 	color: #243b7c;
-	border-bottom: 6px double #eef1fc;
+	text-decoration: none;
+}
+
+a.surveyNav:hover, a.surveyNav:active,
+a.simplemodal-close:hover, .simplemodal-close:active {
+	text-decoration: underline;
+	font-weight: bold;
 }
 
 /* 
@@ -199,7 +247,8 @@ a.pageNav:hover, a.pageNav:active {
 	Category Index Page
 	Manage Rules Page
 	Display Fields Page
-*/
+	Survey Response Table */
+
 #surveyTable, #versionTable, #categoryTable, 
 #rulesTable, #displayFieldsTable {
 	margin: 0px 0px 10px;
@@ -250,7 +299,7 @@ a.pageNav:hover, a.pageNav:active {
 	padding: 5px 0px;
 }
 
-#versionTable .col2 {
+#versionTable .col2, #rulesTable .col6 {
 	width: 70px;
 	text-align: center;
 	padding: 5px 0px;
@@ -295,6 +344,50 @@ a.pageNav:hover, a.pageNav:active {
 	padding: 5px 10px 5px 1px;
 }
 
+#survey_response_list  {
+	width: 805px;
+	margin: 10px 0px;
+	max-height: 600px;
+	overflow: auto;
+}
+
+#survey_response_list table {
+		border-collapse: collapse;
+}
+
+#survey_response_list th.date {
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 5px 10px 5px 1px;
+	border-bottom: 2px solid #243b7c;
+	color: #000000;
+	min-width: 90px;
+	max-width: 90px;
+	vertical-align: bottom;
+}
+
+#survey_response_list th.questions {
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 5px 10px 5px 1px;
+	border-bottom: 2px solid #243b7c;
+	color: #000000;
+	min-width: 150px;
+	max-width: 200px;
+	vertical-align: bottom;
+}
+
+#survey_response_list td {
+	text-align: left;
+	font-size: 1em;
+	font-weight: normal;
+	border-bottom: 1px solid #243b7c;
+	padding: 0px 9px 1px 1px;
+	vertical-align: top;
+}
+
 /* Cycle */
 .white {
 	background-color: #FFFFFF;
@@ -311,7 +404,118 @@ a.pageNav:hover, a.pageNav:active {
 	margin: 0px 0px 10px;
 }
 
+/* Text, OL, UL, LI */
+.pageTitle {
+	font-size: 1.9em;
+	font-weight: bold;
+	margin: 0px 0px 30px;
+	padding: 0px 0px 3px;
+	color: #243b7c;
+	border-bottom: 6px double #eef1fc;
+}
+
+.copy {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 0px 0px 15px;
+}
+
+.copyBold {
+	font-weight: bold;
+	color: #000;
+	padding: 0px;
+	margin: 0px;
+}
+
+ol.outter, ul.outter {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 10px 0px 0px 40px;
+}
+
+ol.inner, ul.inner {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 0px 0px 2px 20px;
+}
+
+li.outter {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 0px 0px 20px;
+}
+
+li.inner {
+	font-weight: normal;
+	color: #000;
+	line-height: normal;
+	padding: 0px;
+	margin: 0px 0px 2px;
+}
+
+/* Modals */
+.modalTitle {
+	color: #243b7c;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0px 0px 15px;
+}
+
+.modalErrorBox {
+	border: 2px solid #980024;
+	background: #fbeff3;
+	padding: 5px 10px;
+	margin: 5px 0px 10px;
+}
+
+.modalErrorTitle {
+	color: #980024;
+	font-size: 1.1em;
+	font-weight:bold;
+	margin: 0px 0px 5px;
+	padding: 0px;
+}
+
+ul.modalList {
+	color: #980024;
+	font-size: 1em;
+	margin: 0px;
+	padding: 0px;
+}
+
+li.modalList {
+	color: #980024;
+	font-size: 1em;
+	margin: 0px 0px 0px 25px;
+	padding: 0px 0px 3px;
+}
+
+#new_choice_question_modal { 
+	padding: 10px;
+	min-width: 380px;
+}
+
+#new_asset_modal, #new_text_question_modal {
+	padding: 10px;
+}
+
 /* Pages */
+.page {
+	border: 1px solid #243b7c;
+	background-color: #eef1fc;
+	margin: 5px 0px 10px;
+	padding: 5px;
+	width: 793px;
+}
+
 .current_page {
 	
 }
@@ -320,6 +524,15 @@ a.pageNav:hover, a.pageNav:active {
 	display: none;
 }
 
+/* Links */
+.remove_page_link {
+	float: right;
+	display: inline-block;
+}
+
+.displayNone {
+	display:none; 
+}
 /* Links - General, must remain below any other links. */
 /* a, a:link, a:visited {
 	color: #243b7c;

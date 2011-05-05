@@ -8,29 +8,29 @@
 <% else %>
 	<p id="notice"><%= notice %></p>
 
-	<p>
-	  <b>Name:</b>
+	<p class="copy">
+	   <span class="copyBold">Name:</span>
 	  <%= @survey.name %>
 	</p>
 
-	<p>
-	  <b>Description:</b>
+	<p class="copy">
+	   <span class="copyBold">Description:</span>
 	  <%= @survey.description %>
 	</p>
 	
-	<p>
-	  <b>Type:</b>
+	<p class="copy">
+	   <span class="copyBold">Type:</span>
 	  <%= @survey.survey_type.name.capitalize %>
 	</p>
 	
 	<div id="survey_versions_fields" >
-		<p>
-			<b>Version:</b>
+		<p class="copy">
+			 <span class="copyBold">Version:</span>
 			<%= @survey.newest_version.major %>.
 			<%= @survey.newest_version.minor %>
 		</p>
-		<p>
-			<b>Published:</b>
+		<p class="copy">
+			 <span class="copyBold">Published:</span>
 			<%= @survey.newest_version.published ? "Yes" : "No" %>
 		</p>
 	</div>
@@ -43,9 +43,9 @@
 			<div class="<%= page.number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.number%>">
 	      <%= hidden_field_tag :next_page, page.next_page.try(:number), :id => "page_#{page.number}_next_page" %>
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
-				<ol>
+				<ol class="outter">
 				<% page.survey_elements.order("element_order asc").each do |element| %>
-					<li>
+					<li class="outter">
 						<% unless element.assetable_type == "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][survey_version_id]", @survey_version.id%>
@@ -88,11 +88,15 @@
 					<% index = index + 1%>
 				<% end %>
 				</ol>
-				
-				<%= link_to_function "Previous Page", "prev_page(#{page.number})" unless page.number == 1 %>
-				<%= link_to_function "Next Page", "show_next_page(#{page.number})" unless page.number == @survey_version.pages.count %>
-				<%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %>
-				
+				<div class="surveyNav">
+					<% unless page.number == 1 %>
+						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "prev_page(#{page.number})", :class=>"surveyNav"  %></span> |
+					<% end %>
+					<% unless page.number == @survey_version.pages.count %>
+						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.number})", :class=>"surveyNav" %></span>
+					<% end %>
+					<span class="surveyNavSub"><%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %></span>
+				</div>
 				
 			</div> <!-- close page div -->
 		<% end -%>

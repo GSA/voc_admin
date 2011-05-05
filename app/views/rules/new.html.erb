@@ -1,6 +1,6 @@
 <% javascript 'rules.js' %>
 
-<h2>New Rule</h2>
+<p class="pageTitle">New Rule</p>
 
 <%= form_for [@survey, @survey_version, @rule] do |f| %>
   <% if @rule.errors.any? %>
@@ -8,13 +8,13 @@
       <%= render :partial => 'shared/question_errors', :locals => {:object => @rule} %>
     </div>
   <% end %>
-  <p>
-  	<%= f.label :name %>
-	<%= f.text_field :name%>
+  <p class="copy">
+  	<span class="copyBold"><%= f.label :name, "Name: " %></span><br />
+		<%= f.text_field :name%>
   </p>  
   
-  <b>This rule will execute when a survey is: </b>
-  <p>
+  <p class="copyBold">This rule will execute when a survey is: </p>
+  <p class="copy">
   	<% ExecutionTrigger.all.each do |et| %>
   		<% unless et.id == 3 %>
   			<%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]") %><%= et.name.capitalize %>
@@ -22,24 +22,23 @@
   	<% end %>
   </p>
 
-  <b>Criteria: </b>
-  <div id="criteria">
-	<%= f.fields_for :criteria do |builder| %>
-    <%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
-		
-	<% end -%>
-	 <%= link_to_add_fields "Add Criteria", f, :criteria %>
-	</div>
+  <p class="copyBold">Criteria:</p>
+	  <div id="criteria">
+				<%= f.fields_for :criteria do |builder| %>
+		    	<%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
+				<% end -%>
+				<div style="margin-top: 10px"><%= link_to_add_fields "Add Criteria", f, :criteria %></div>
+		</div>
+
 	
 	<br/>
 	
-	<b>Actions:</b>
+	<p class="copyBold">Actions:</p>
 	<div id="actions">
-	<%= f.fields_for :actions do |builder| %>
-	 <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
-	<% end %>
-	
-	 <%= link_to_add_fields "Add Action", f, :actions %>
+		<%= f.fields_for :actions do |builder| %>
+		 <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
+		<% end %>
+	 	<div style="margin-top: 10px"><%= link_to_add_fields "Add Action", f, :actions %></div>
 	</div>
 	
 	<br/>

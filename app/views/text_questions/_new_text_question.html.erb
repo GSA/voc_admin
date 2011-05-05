@@ -1,4 +1,4 @@
-<h3>New Text Question</h3>
+<p class="modalTitle">New Text Question</p>
 
 <% text_question ||= survey.newest_version.text_questions.build %>
 
@@ -16,7 +16,7 @@
 	<br/>
 	
 	<%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => text_question, :survey => survey} %>
-
+	<br />
 	<br/>
 	<%= f.submit "Add Question" %>
 	<%= link_to "Cancel", nil, :class => "simplemodal-close"%>

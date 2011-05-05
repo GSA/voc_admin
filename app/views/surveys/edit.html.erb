@@ -4,29 +4,29 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
+<p class="copy">
+  <span class="copyBold">Name:</span>
   <%= @survey.name %>
 </p>
 
-<p>
-  <b>Description:</b>
+<p class="copy">
+  <span class="copyBold">Description:</span>
   <%= @survey.description %>
 </p>
 
-<p>
-  <b>Type:</b>
+<p class="copy">
+  <span class="copyBold">Type:</span>
   <%= @survey.survey_type.name.capitalize %>
 </p>
 
 <div id="survey_versions_fields" >
-	<p>
-		<b>Version:</b>
+	<p class="copy">
+		<span class="copyBold">Version:</span>
 		<%= @survey.newest_version.major %>.
 		<%= @survey.newest_version.minor %>
 	</p>
-	<p>
-		<b>Published:</b>
+	<p class="copy">
+		<span class="copyBold">Published:</span>
 		<%= @survey.newest_version.published ? "Yes" : "No" %>
 	</p>
 </div>

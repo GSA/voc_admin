@@ -1,7 +1,9 @@
-<h2><%= pluralize(object.errors.count, "error") %> prohibited this question from being saved:</h2>
-
-<ul>
-<% object.errors.full_messages.each do |msg| %>
-  <li><%= msg %></li>
-<% end %>
-</ul>
+<div class="modalErrorBox">
+	<p class="modalErrorTitle"><%= pluralize(object.errors.count, "error") %> prohibited this question from being saved:</h2>
+	
+	<ul class="modalList">
+	<% object.errors.full_messages.each do |msg| %>
+	  <li class="modalList"><%= msg %></li>
+	<% end %>
+	</ul>
+</div>

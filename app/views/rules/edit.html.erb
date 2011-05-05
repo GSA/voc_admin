@@ -28,7 +28,7 @@
 	<%= f.fields_for :criteria do |builder| %>
     	<%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
 	<% end -%>
-	 <%= link_to_add_fields "Add Criteria", f, :criteria %>
+	 <span><%= link_to_add_fields "Add Criteria", f, :criteria %></span>
 	</div>
 	
 	<br/>
@@ -39,7 +39,7 @@
 		<%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
 	<% end %>
 	
-	 <%= link_to_add_fields "Add Action", f, :actions %>
+	 <span><%= link_to_add_fields "Add Action", f, :actions %></span>
 	</div>
 	
 	<br/>
