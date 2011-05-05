@@ -9,7 +9,7 @@
   	<% version.display_fields.each do |df| %>
 		  <th><%= df.name %></th>
 		<% end -%>
-		<% version.survey_responses.order("created_at desc").each do |sr| %>
+		<% objects.each do |sr| %>
 		  <tr>
 		  	<td><%= sr.created_at.strftime("%m/%d/%Y") %></td>
 		  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
