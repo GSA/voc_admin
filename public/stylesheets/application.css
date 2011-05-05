@@ -429,6 +429,13 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	margin: 0px;
 }
 
+.copyBoldMargin {
+	font-weight: bold;
+	color: #000;
+	padding: 0px;
+	margin: 35px 0px 0px;
+}
+
 ol.outter, ul.outter {
 	font-weight: normal;
 	color: #000;
@@ -532,6 +539,10 @@ li.modalList {
 
 .displayNone {
 	display:none; 
+}
+
+.surveyNavMargin {
+	margin: 5px 0px 35px;
 }
 /* Links - General, must remain below any other links. */
 /* a, a:link, a:visited {
