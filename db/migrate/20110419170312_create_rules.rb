@@ -5,7 +5,7 @@ class CreateRules < ActiveRecord::Migration
       t.string  :type, :null=>false
       t.integer :display_field_id, :null=>false
       t.string  :regex        #needed to match a text question
-      t.integer :question_id  #needed to match a text question
+      t.integer :question_content_id  #needed to match a text question
       t.integer :answer_id    #needed to match a choice question
       t.integer :category_id  #needed to match a choice question
       t.timestamps

@@ -47,7 +47,7 @@
 				<% page.survey_elements.order("element_order asc").each do |element| %>
 					<li>
 						<% unless element.assetable_type == "Asset" %>
-							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_id]", element.assetable.question_content.id %>
+							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][survey_version_id]", @survey_version.id%>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							

@@ -141,11 +141,11 @@ namespace :response_parser do
             break
           end 
           log_event("Processing survey response #{sr.id}",2)
-          sr.process_me(4)
-          if sr.status_id == 3
-            log_event("Error processing #{sr.id}",4)
-          else
+          begin
+            sr.process_me(4)
             log_event("Finished processing #{sr.id}",2)
+          rescue
+            log_event("Error processing #{sr.id} - #{$!.to_s}",4)
           end
         end
       end
@@ -162,11 +162,11 @@ namespace :response_parser do
         next
       end
       log_event("Processing survey response #{sr.id}",2)
-      sr.process_me(1)
-      if sr.status_id == 3
-        log_event("Error processing #{sr.id}",4)
-      else
+      begin
+        sr.process_me(1)
         log_event("Finished processing #{sr.id}",2)
+      rescue
+        log_event("Error processing #{sr.id} - #{$!.to_s}",4)
       end
     end
   end

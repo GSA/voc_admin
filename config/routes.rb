@@ -6,7 +6,9 @@ CommentToolApp::Application.routes.draw do
   resources :processed_responses
   resources :surveys do
     resources :survey_versions do
-      resources :rules
+      resources :rules do
+        get :do_now, :on => :member
+      end
       resources :display_fields
       resources :text_questions
       resources :choice_questions

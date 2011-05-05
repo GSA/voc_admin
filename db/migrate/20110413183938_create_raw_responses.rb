@@ -4,7 +4,7 @@ class CreateRawResponses < ActiveRecord::Migration
       t.integer :survey_version_id
       t.string :client_id
       t.text :answer
-      t.integer :question_id
+      t.integer :question_content_id
       t.integer :status_id
 
       t.timestamps

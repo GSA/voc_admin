@@ -54,6 +54,15 @@ class RulesController < ApplicationController
     redirect_to survey_survey_version_rules_path(@survey, @survey_version)
   end
   
+  def do_now
+    @rule = Rule.find(params[:id])
+      
+    SurveyResponse.find_all_by_survey_version_id(params[:survey_version_id]).each do |sr|
+      @rule.apply_me(sr)
+    end
+    render :text => "done"
+  end
+  
   private
   def get_survey_version
     @survey = Survey.find(params[:survey_id])

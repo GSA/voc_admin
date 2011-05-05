@@ -4,7 +4,7 @@ class CreateProcessedResponses < ActiveRecord::Migration
       t.integer :survey_version_id, :null=>false
       t.string :client_id, :null=>false
       t.text :answer
-      t.integer :question_id, :null=>false
+      t.integer :question_content_id, :null=>false
       t.timestamps
     end
         

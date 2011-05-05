@@ -2,7 +2,7 @@ class UpdateRules < ActiveRecord::Migration
   def self.up
     remove_column :rules, :display_field_id
     remove_column :rules, :regex
-    remove_column :rules,:question_id
+    remove_column :rules,:question_content_id
     remove_column :rules,:answer_id
     remove_column :rules,:category_id
     remove_column :rules,:type
@@ -14,7 +14,7 @@ class UpdateRules < ActiveRecord::Migration
   def self.down
     add_column :rules, :display_field_id, :integer
     add_column :rules, :regex, :string
-    add_column :rules,:question_id, :integer
+    add_column :rules,:question_content_id, :integer
     add_column :rules,:answer_id, :integer
     add_column :rules,:category_id, :integer
     add_column :rules, :type, :string
