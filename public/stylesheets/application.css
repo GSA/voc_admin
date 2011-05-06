@@ -126,121 +126,6 @@ textarea {
 	font-size: 11px;
 }
 
-/* Navigation */
-.navTitle {
-	border-bottom: 1px solid #243b7c;
-	/* background-color: #cad3f6; */
-	margin: 0px 0px /* 7px */;
-	padding: 0px 0px 3px;
-	color: #243b7c;
-	text-align: center;
-	font-size: 1.3em;
-	font-weight: bold;
-}
-
-p.nav {
-	border-bottom: 1px solid #243b7c;
-	margin: 0px 0px /* 7px */;
-	padding: 5px 5px;
-	color: #243b7c;
-}
-
-a.nav:link, a.nav:visited {
-	color: #243b7c;
-	text-decoration: none;
-	font-weight: normal;
-}
-
-a.nav:hover, a.nav:active {
-	color: #243b7c;
-	text-decoration: underline;
-	font-weight: bold;
-}
-
-div.pageNav {
-	color: #ffad05;
-	font-weight: bold;
-	font-size: 11px;
-	margin: 10px 0px;
-	padding: 5px 0px 0px;
-	border-top: 6px double #eef1fc;
-}
-
-div.pageNav-upper {
-	color: #ffad05;
-	font-weight: bold;
-	font-size: 11px;
-	margin: -30px 0px 20px;
-	padding: 3px 0px 0px;
-}
-
-a.pageNav, a.pageNav:link, a.pageNav:visited {
-	color: #243b7c;
-	text-decoration: none;
-}
-
-a.pageNav:hover, a.pageNav:active {
-	color: #ffad05;
-	text-decoration: underline;
-}
-
-div.surveyNav {
-	color: #000000;
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 1em;
-	margin: 15px 0px 10px;
-	padding: 0px;
-	text-align: center;
-}
-
-span.surveyNav1 {
-	width: 110px;
-	display: inline-block;
-	
-}
-span.surveyNav2 {
-	width: 175px;
-	display: inline-block;
-}
-span.surveyNav3 {
-	width: 195px;
-	display: inline-block;
-}
-span.surveyNav4 {
-	width: 85px;
-	display: inline-block;
-}
-
-span.surveyNavPrev {
-	width: 105px;
-	display: inline-block;
-}
-
-span.surveyNavNext {
-	width: 85px;
-	display: inline-block;
-}
-
-span.surveyNavSub {
-	text-align: left;
-	display: inline-block;
-	padding: 0px 0px 0px 10px;
-}
-
-a.surveyNav, a.surveyNav:link, a.surveyNav:visited,
-a.simplemodal-close, a.simplemodal-close:link, a.simplemodal-close:visited {
-	font-weight: normal;
-	color: #243b7c;
-	text-decoration: none;
-}
-
-a.surveyNav:hover, a.surveyNav:active,
-a.simplemodal-close:hover, .simplemodal-close:active {
-	text-decoration: underline;
-	font-weight: bold;
-}
-
 /* 
 	Survey Index Page
 	Survey Version Index Page 
@@ -386,7 +271,7 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	font-size: 1em;
 	font-weight: normal;
 	border-bottom: 1px solid #243b7c;
-	padding: 0px 9px 1px 1px;
+	padding: 5px 9px 5px 1px;
 	vertical-align: top;
 }
 
@@ -561,13 +446,154 @@ li.modalList {
 	margin: 25px 0px 0px;
 }
 
-/* Links - General, must remain below any other links. */
-/* a, a:link, a:visited {
+/* Navigation */
+.navTitle {
+	border-bottom: 1px solid #243b7c;
+	/* background-color: #cad3f6; */
+	margin: 0px 0px /* 7px */;
+	padding: 0px 0px 3px;
+	color: #243b7c;
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+p.nav {
+	border-bottom: 1px solid #243b7c;
+	margin: 0px 0px /* 7px */;
+	padding: 5px 5px;
+	color: #243b7c;
+}
+
+a.nav:link, a.nav:visited {
+	color: #243b7c;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+a.nav:hover, a.nav:active {
+	color: #243b7c;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+div.pageNav {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: 10px 0px;
+	padding: 5px 0px 0px;
+	border-top: 6px double #eef1fc;
+}
+
+div.pageNav-upper {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: -30px 0px 20px;
+	padding: 3px 0px 0px;
+}
+
+a.pageNav, a.pageNav:link, a.pageNav:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
 
-a:hover, a:active {
+a.pageNav:hover, a.pageNav:active {
 	color: #ffad05;
 	text-decoration: underline;
-} */
+}
+
+div.surveyNav {
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1em;
+	margin: 15px 0px 10px;
+	padding: 0px;
+	text-align: center;
+}
+
+span.surveyNav1 {
+	width: 110px;
+	display: inline-block;
+	
+}
+span.surveyNav2 {
+	width: 175px;
+	display: inline-block;
+}
+span.surveyNav3 {
+	width: 200px;
+	display: inline-block;
+}
+span.surveyNav4 {
+	width: 85px;
+	display: inline-block;
+}
+
+span.surveyNavPrev {
+	width: 105px;
+	display: inline-block;
+}
+
+span.surveyNavNext {
+	width: 85px;
+	display: inline-block;
+}
+
+span.surveyNavSub {
+	text-align: left;
+	display: inline-block;
+	padding: 0px 0px 0px 10px;
+}
+
+a.surveyNav, a.surveyNav:link, a.surveyNav:visited,
+a.simplemodal-close, a.simplemodal-close:link, a.simplemodal-close:visited {
+	font-weight: normal;
+	color: #243b7c;
+	text-decoration: none;
+}
+
+a.surveyNav:hover, a.surveyNav:active,
+a.simplemodal-close:hover, .simplemodal-close:active {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+/* Pagination */
+.pagination {
+	margin: 10px 0px;
+}
+
+span.first, span.last, span.prev, span.next {
+	color: #243b7c;
+	font-weight: bold;
+	font-size: 12px;
+	margin: 10px 0px;
+	padding: 0px 10px 0px 0px;
+	display: inline-block;
+	width: 40px;
+}
+
+span.pageNum {
+	color: #243b7c;
+	font-weight: bold;
+	font-size: 12px;
+	margin: 10px 0px;
+	padding: 0px 10px 0px 0px;
+	display: inline-block;
+}
+
+.pagination a, .pagination a:link, .pagination a:visited {
+	font-weight: normal;
+	color: #243b7c;
+	text-decoration: unerline;
+}
+
+.pagination a:hover, .pagination a:active {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.gap {}
