@@ -3,7 +3,7 @@ function show_next_page(page){
 	var required_unanswered = false;
 	
 	$("#page_"+page+" input[type=hidden].required_question").each(function(index){
-		alert($(this).attr('id') + " " + $(this).val());
+//		alert($(this).attr('id') + " " + $(this).val());
 		if($(this).val() == 'true'){
 //			alert('inside if statement');
 //			/* if the element is a radio button that is required then check to make sure one is checked */
