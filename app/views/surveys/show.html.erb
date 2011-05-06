@@ -42,6 +42,8 @@
 
 			<div class="<%= page.number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.number%>">
 	      <%= hidden_field_tag :next_page, page.next_page.try(:number), :id => "page_#{page.number}_next_page" %>
+				<%= hidden_field_tag :prev_page, page.prev_page.try(:number), :id => "page_#{page.number}_prev_page" %>
+				
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
 				<ol class="outter">
 				<% page.survey_elements.order("element_order asc").each do |element| %>
@@ -62,10 +64,10 @@
 									<% end -%>
 									
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
-								  <%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :onchange => generate_next_page_on_change(element)%>
-									
+								  <%#= select_tag "response[raw_responses_attributes][#{index}][answer]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :onchange => generate_next_page_on_change(element)%>
+									<%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_for_select(element.assetable.choice_answers.collect {|a| [a.answer, a.id]}),:include_blank => true, :onchange => generate_next_page_on_change(element)%>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
-								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true %>
+								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true, :style => "width: 100px" %>
 								
 								<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX %>
 								  <% for answer in element.assetable.choice_answers %>
