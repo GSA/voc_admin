@@ -3,24 +3,24 @@
 <% for page in survey_version.pages.order("number asc") %>
 	<div class="page" id="page_<%=page.number%>">
 		<span class="copyBold">Page <%= page.number %></span>
-		<%= link_to image_tag("red_x.png", :alt=>"Remove Page"), survey_survey_version_page_path(survey_version.survey, survey_version, page), :remote => true, :method => :delete, :confirm => "All items on page #{page.number} will be removed as well.", :class => "remove_page_link" %>
+		<%= link_to image_tag("red_x.png", :alt=>"Remove Page"), survey_survey_version_page_path(survey_version.survey, survey_version, page), :remote => true, :method => :delete, :confirm => "All items on page #{page.number} will be removed as well.", :class => "remove_page_link", :title => "Remove page" %>
 		<ol class="outter">
 		<% for element in page.survey_elements.order("element_order asc") %>
 			<% if element.assetable_type == "TextQuestion" %>
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> 
 					<%= "*" if element.assetable.question_content.required %> (text_<%= element.assetable.answer_type %>)</span>
-          <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-          <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link" %>
+          <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
+          <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
+					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
 				</li>
 			<% elsif element.assetable_type == "ChoiceQuestion" %>
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %>
 					<%= "*" if element.assetable.question_content.required %> </span>
-          <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-          <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link" %>
+          <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
+          <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
+					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
 					<ol class="inner">
 						<% for answer in element.assetable.choice_answers %>
 						<li class="inner"><%= answer.answer %></li>
@@ -30,9 +30,9 @@
 			<% elsif element.assetable_type == "Asset" %>
         <li class="outter">
         	<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.snippet %></span>
-					<%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up" %>
-					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link" %>
+					<%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
+					<%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
+					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
         </li>
 			<% end # close the if statements %>			
 		<% end # close the for loop %>

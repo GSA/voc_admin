@@ -45,6 +45,11 @@ $(function(){
 		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 300);
 
 	}
+	
+	/* Make the pagination links ajax calls */
+	$("nav span a").live('ajax:success', function(event, data, status, xhr){
+		$("#survey_response_list").html(data);
+	})
 
 });
 
