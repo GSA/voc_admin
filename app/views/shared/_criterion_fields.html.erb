@@ -2,4 +2,7 @@
    <%= f.collection_select :conditional_id, Conditional.all, :id, :name%>
     
    <%= f.text_field :value%>
+	 
+	  <%= f.hidden_field :_destroy, :value => "" %>
+    <%= link_to_function "Remove", "remove_fields(this)" %>
    <br /><br />

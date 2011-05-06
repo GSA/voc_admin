@@ -7,4 +7,7 @@
 	<%= f.label :value, " or "%>
 	<%= text_field_tag :value_text, nil ,{:class => "ActionManualValue"} %>
 	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
+	
+	<%= f.hidden_field :_destroy, :value => "" %>
+	<%= link_to_function "Remove", "remove_fields(this)" %>
 	<br /><br />
