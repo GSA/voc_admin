@@ -7,7 +7,7 @@
 		  <th class="questions"><%= df.name %></th>
 		<% end -%>
 		<% objects.each do |sr| %>
-		  <tr class="<% cycle('white','blue')%>">
+		  <tr class="<%= cycle('white','blue')%>">
 		  	<td><%= sr.created_at.strftime("%m/%d/%Y") %></td>
 		  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
 				  <td>

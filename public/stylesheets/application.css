@@ -335,13 +335,15 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	font-weight: bold;
 }
 
-#rulesTable .col1 {
+#rulesTable .col1, #displayFieldsTable .col1 {
+	width: 400px;
 	padding: 5px 10px 5px 1px;
 }
 
-#rulesTable .col2, #displayFieldsTable .col1 {
-	width: 400px;
-	padding: 5px 10px 5px 1px;
+#rulesTable .col2 {
+	text-align: center;
+	width: 35px;
+	padding: 5px 0px;
 }
 
 #survey_response_list  {
@@ -433,7 +435,7 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	font-weight: bold;
 	color: #000;
 	padding: 0px;
-	margin: 35px 0px 0px;
+	margin: 25px 0px 0px;
 }
 
 ol.outter, ul.outter {
@@ -444,20 +446,19 @@ ol.outter, ul.outter {
 	margin: 10px 0px 0px 40px;
 }
 
-ol.inner, ul.inner {
+/* ol.inner, ul.inner,  */ul.showList, ol.showList {
 	font-weight: normal;
 	color: #000;
 	line-height: normal;
 	padding: 0px;
-	margin: 0px 0px 2px 20px;
+	margin: 3px 0px 0px 30px;
 }
 
 li.outter {
-	font-weight: normal;
-	color: #000;
-	line-height: normal;
+	margin: 0px 0px 15px 10px;
 	padding: 0px;
-	margin: 0px 0px 20px;
+	list-style-type: decimal;
+	list-style-position: outside;
 }
 
 li.inner {
@@ -466,6 +467,17 @@ li.inner {
 	line-height: normal;
 	padding: 0px;
 	margin: 0px 0px 2px;
+}
+
+li.showList-ul {
+	padding: 0px 0px 3px;
+	list-style-type: none;
+}
+
+li.showList-ol {
+	padding: 0px 0px 3px;
+	list-style-type: decimal;
+	list-style-position: inside;
 }
 
 /* Modals */
@@ -531,7 +543,7 @@ li.modalList {
 	display: none;
 }
 
-/* Links */
+/* General */
 .remove_page_link {
 	float: right;
 	display: inline-block;
@@ -544,6 +556,11 @@ li.modalList {
 .surveyNavMargin {
 	margin: 5px 0px 35px;
 }
+
+.sumbitButton {
+	margin: 25px 0px 0px;
+}
+
 /* Links - General, must remain below any other links. */
 /* a, a:link, a:visited {
 	color: #243b7c;

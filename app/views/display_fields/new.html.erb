@@ -1,23 +1,24 @@
-<h2>New Display Field</h2>
+<p class="pageTitle">New Display Field</p>
 
 <%= form_for [@survey, @survey_version, @display_field] do |f| %>
-		
-		 <p class="copy">
-    	<%= f.label :name, "Name: " %><br />
+	<p class="copyBold">
+   	<%= f.label :name, "Name: " %><br />
+    <span class="copy">	
     	<%= f.text_field :name %>
 			<%= f.check_box :required %><%= f.label :required %>
 			<%= f.check_box :searchable %><%= f.label :searchable %>
-		</p>
-		<p class="copy">
-			<%= f.label :type, "Type: " %>
-			<%= f.select :type, DisplayField.select_options %>
-		</p>
-		<p class="copy">
-			<%= f.label :default_value, "Default Value: " %><br />
-			<%= f.text_field :default_value %>
-		</p>
+		</span>
+	</p>
+	<p class="copyBoldMargin">
+		<%= f.label :type, "Type: " %>
+		<%= f.select :type, DisplayField.select_options %>
+	</p>
+	<p class="copyBoldMargin">
+		<%= f.label :default_value, "Default Value: " %><br />
+		<%= f.text_field :default_value %>
+	</p>
 		
-		<%= f.submit%>
+	<p class="sumbitButton"><%= f.submit %></p>
 <% end %>
 
 <div class="pageNav">

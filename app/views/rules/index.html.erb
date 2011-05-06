@@ -6,13 +6,14 @@
 
 <table id="rulesTable">
 	<tr>
-		<th class="col1">ID</th>
-		<th class="col2" colspan="5">Name</th>
+		
+		<th class="col1">Name</th>
+		<th colspan="5">Order</th>
 	</tr>
 <% @rules.each do |rule| %>
   <tr class="<%= cycle('white','blue') %>">
-  	<td class="col1"><%= rule.id %></td>
-  	<td class="col2"><%= rule.name %></td>
+  	<td class="col1"><%= rule.name %></td>
+  	<td class="col2"><%= rule.rule_order%></td>
 		<td class="col3-5"><%= link_to "Show", [@survey, @survey_version, rule] %></td>
 		<td class="col3-5"><%= link_to "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
 		<td class="col3-5"><%= link_to "Delete", [@survey, @survey_version, rule], :method => :delete %></td>

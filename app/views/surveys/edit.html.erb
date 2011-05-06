@@ -9,25 +9,27 @@
   <%= @survey.name %>
 </p>
 
-<p class="copy">
-  <span class="copyBold">Description:</span>
-  <%= @survey.description %>
+<p class="copyBoldMargin">
+  Description:
+  <span class="copy"><%= @survey.description %></span>
 </p>
 
-<p class="copy">
-  <span class="copyBold">Type:</span>
-  <%= @survey.survey_type.name.capitalize %>
+<p class="copyBoldMargin">
+  Type:
+  <span class="copy"><%= @survey.survey_type.name.capitalize %></span>
 </p>
 
 <div id="survey_versions_fields" >
-	<p class="copy">
-		<span class="copyBold">Version:</span>
-		<%= @survey.newest_version.major %>.
-		<%= @survey.newest_version.minor %>
+	<p class="copyBoldMargin">
+		Version:
+		<span class="copy">	
+			<%= @survey.newest_version.major %>.
+			<%= @survey.newest_version.minor %>
+		</span>
 	</p>
-	<p class="copy">
-		<span class="copyBold">Published:</span>
-		<%= @survey.newest_version.published ? "Yes" : "No" %>
+	<p class="copyBoldMargin">
+		Published:
+		<span class="copy"><%= @survey.newest_version.published ? "Yes" : "No" %></span>
 	</p>
 </div>
 

@@ -56,6 +56,9 @@
   clear: both; 
   width: 100%;
   min-width: 740px;
+  /* 5/6/2011 - Added properties below this comment so that the footer remains permanently at the bottom of the page. */
+  position: relative;
+  bottom: 0px;
 }
 
 .intranetLastUpdated {

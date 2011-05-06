@@ -6,19 +6,19 @@
 	    </div>
 	  <% end %>
 	
-	  <p>
-	    <%= f.label :name, "Name: " %><br />
+	  <p class="copy">
+	    <span class="copyBold"><%= f.label :name, "Name: " %></span><br />
 	    <%= f.text_field :name %>
 	  </p>
-	  <p>
+	  <p class="copyBoldMargin">
 	    <%= f.label :description, "Description: " %><br />
-	    <%= f.text_area :description, :rows => 3 %>
+	    <span class="copy"><%= f.text_area :description, :rows => 3 %></span>
 	  </p>
-	  <p>
+	  <p class="copyBoldMargin">
 	  	<%= f.label :type, "Survey Type: " %>
 			<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
 	  </p>
 		
-	  <%= f.submit %>
+	  <p class="sumbitButton"><%= f.submit %></p>
 	<% end %>
 </div>
