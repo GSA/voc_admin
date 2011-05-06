@@ -47,7 +47,7 @@ $(function(){
 	}
 	
 	/* Make the pagination links ajax calls */
-	$("nav span a").live('ajax:success', function(event, data, status, xhr){
+	$("div.pagination a").live('ajax:success', function(event, data, status, xhr){
 		$("#survey_response_list").html(data);
 	})
 
