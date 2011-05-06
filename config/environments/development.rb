@@ -22,16 +22,30 @@ CommentToolApp::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+end
+
+
  # Populate the @@subclasses variable for DisplayField to 
  # allow the select menu to be populated correctly  in development
  # environment.  A way around lazy loading in development.
- %w[display_field display_field_boolean display_field_choice_multiselect display_field_choice_single
-    display_field_currency_integer display_field_currency display_field_date display_field_email 
-    display_field_float display_field_integer display_field_percent display_field_person display_field_phone 
-    display_field_rtf display_field_text_multi display_field_text display_field_url_as_link 
-    display_field_url display_field_value].each do |c|
-   require_dependency File.join(Rails.root,"app", "models", "display_field_models", "#{c}.rb")
- end
+def bootstrap_display_field_callbacks
+  p "eager loading display field subclasses"
+  files = Dir.glob("app/models/display_field_models/*.rb")
+  files.map{|x| x.split('/').last.split('.').first}.each do |f|
+    f.classify.constantize.nil?
+  end
+end
+
+# Run once on startup after Rails environment is all warmed up and
+# ready to rock.
+CommentToolApp::Application.configure do
+  config.after_initialize do
+    bootstrap_display_field_callbacks
+  end
+end
+
+# Schedule it to be called after every reload!
+ActionDispatch::Callbacks.after do
+  bootstrap_display_field_callbacks
 end
 
