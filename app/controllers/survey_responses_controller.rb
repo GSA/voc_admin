@@ -1,3 +1,5 @@
+require 'csv'
+
 class SurveyResponsesController < ApplicationController
   def index
     @survey_version_id = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
@@ -6,6 +8,11 @@ class SurveyResponsesController < ApplicationController
     respond_to do |format|
       format.html #
       format.js {render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version_id}}
+      format.csv do
+        @survey_version = SurveyVersion.find(@survey_version_id)
+        response.headers["Content-Type"]        = "text/csv; header=present"
+        response.headers["Content-Disposition"] = "attachment; filename=responses.csv"
+      end
     end
   end
   
