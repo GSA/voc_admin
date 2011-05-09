@@ -10,6 +10,7 @@ CommentToolApp::Application.routes.draw do
         get :do_now, :on => :member
       end
       resources :display_fields
+      resources :display_field_values
       resources :text_questions
       resources :choice_questions
       resources :survey_elements do

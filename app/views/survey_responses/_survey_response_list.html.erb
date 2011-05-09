@@ -10,7 +10,7 @@
 		  <tr class="<%= cycle('white','blue')%>">
 		  	<td><%= sr.created_at.strftime("%m/%d/%Y") %></td>
 		  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
-				  <td>
+				  <td id="<%= 'displayFieldValue_' << dfv.id.to_s %>" ondblclick="editDisplayFieldValue(<%= version.survey.id %>,<%= version.id %>,<%= dfv.id %>)">
 				  	<%= dfv.value %>
 				  </td>
 				<% end -%>
@@ -25,4 +25,6 @@
 	<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> | 
 	<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %>
 </div>
+
+<div id="dfv_edit_modal" style="display: none;">&nbsp;</div>
 <% end %>

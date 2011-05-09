@@ -49,9 +49,38 @@ $(function(){
 	/* Make the pagination links ajax calls */
 	$("div.pagination a").live('ajax:success', function(event, data, status, xhr){
 		$("#survey_response_list").html(data);
-	})
+	});
+	
+	$(".edit_display_field_value").live('submit', function(){
+		$.modal.close();
+		refreshSurveyResponseTable();
+	});
 
 });
+
+function editDisplayFieldValue(survey_id, version_id, dfv_id){
+	$.ajax({
+		url: "surveys/"+survey_id+"/survey_versions/"+version_id+"/display_field_values/"+dfv_id+"/edit.js",
+		success: function(data){
+			$("#dfv_edit_modal").html(data);
+			$("#dfv_edit_modal").modal({
+				onClose: function(dialog){
+					/* when the modal closes, submit the form data to update the field */
+					$.ajax({
+						url: "surveys/"+survey_id+"/survey_versions/"+version_id+"/display_field_values/"+dfv_id,
+						type: "PUT",
+						data: "display_field_value[value]="+$("#display_field_value_value").val(),
+						success: function(){
+							getSurveyDisplayTable($("#survey_version_id").val());
+						}
+					});
+					/* onClose function for the modal must call $.modal.close() */
+					$.modal.close();
+				}
+			});
+		}
+	});
+}
 
 function setSurveyVersionSelect(survey_version_id){
 	$("#survey_version_id option[value='" + survey_version_id + "']").attr('selected', 'selected');
