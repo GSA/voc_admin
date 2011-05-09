@@ -39,14 +39,26 @@ $(function(){
 		$(".next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
 	});
 	
-	/*
-	 * If the checkbox option is selected then show the allow multiple
-	 * answers checkbox.
-	 */
+
 	$("#choice_question_answer_type").live('change', function(){
+		/*
+		 * If the checkbox option is selected then show the allow multiple
+		 * answers checkbox.
+		 */
 		if($(this).val() == "checkbox") {
 			$(".simplemodal-container").css("height", "auto");
 			$("#allow_multiple").show();
+		}
+		
+		/* If multi-select is chosen then disable flow control checkbox and hide next page options */
+		if($(this).val() == "multiselect"){
+			$("#flow_control_checkbox").attr('checked', false).attr('disabled', true);
+			$(".simplemodal-container").css("height", "auto");
+			$(".simplemodal-container").css("width", "auto");
+			$(".next_pages").hide();
+		} else {
+			
+			$("#flow_control_checkbox").removeAttr('disabled');
 		}
 		$(window).resize();
 	});
@@ -158,8 +170,12 @@ function add_fields(link, association, content) {
   var regexp = new RegExp("new_" + association, "g");  
   $(link).parent().prev().after(content.replace(regexp, new_id));  
 	if (association == "choice_answers") {
+		if($("#flow_control_checkbox").is(':checked')){
+			$(".next_pages").show();
+		}
+		
 		// This is for survey_builder only
-		$(".simplemodal-container").css("height", "auto");
+		$(".simplemodal-container").css("height", "auto").css("width", "auto");
 		$(window).resize();
 	}
 }
