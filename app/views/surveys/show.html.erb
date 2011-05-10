@@ -93,7 +93,7 @@
 				</ol>
 				<div class="surveyNav">
 					<% unless page.number == 1 %>
-						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "prev_page(#{page.number})", :class=>"surveyNav"  %></span> |
+						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "show_prev_page(#{page.number})", :class=>"surveyNav"  %></span> |
 					<% end %>
 					<% unless page.number == @survey_version.pages.count %>
 						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.number})", :class=>"surveyNav" %></span>
