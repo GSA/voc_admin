@@ -7,7 +7,6 @@ gem 'rails', '3.0.6'
 
 gem 'jquery-rails'
 gem 'thin'
-gem 'mysql2', '< 0.3'
 gem 'kaminari'
 
 
@@ -17,3 +16,12 @@ group :development, :test do
 	gem 'annotate-models'
 end
 gem "mocha", :group => :test
+
+group :mysql_db do
+	gem 'mysql2', '< 0.3'
+end
+
+group :oracle_db do
+	gem 'ruby-oci8'
+	gem 'activerecord-oracle_enhanced-adapter', '1.3.2'
+end
