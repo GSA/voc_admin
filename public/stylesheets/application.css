@@ -1,16 +1,5 @@
 /*Scaffolding Styles automatically generated.*/
 
-
-/* #container {
-	do we need this?
-  width: 75%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px;
-} */
-
 .error_messages {
   width: 400px;
   border: 2px solid #CF0000;
@@ -90,18 +79,21 @@ a img {
 	border-top: 3px solid #243b7c;
 	border-bottom: 3px solid #243b7c;
 	margin: 0px;
+	*margin: -19px 0px 0px;
 	padding: 0px;
 }
 .foreground {
-	width: 994px;
+	width: 990px;
 	margin: 0px auto;
-	padding: 30px 15px;
+	padding: 30px 10px;
+	*padding: 20px 5px;
 	background-color: #ffffff;
 	min-height: 600px;
 	vertical-align: top;
 }
 .navigation {
 	width: 165px;
+	*width: 150px;
 	margin: 2px 0px 0px;
 	padding: 0px;
 	display: inline-block;
@@ -109,16 +101,19 @@ a img {
 	top: 0px;
 	left: 0px;
 	vertical-align: top;
+	*float: left;
 }
 .contentArea {
-	width: 805px;
+	width: 788px;
 	margin:0px;
 	padding: 0px;
 	display: inline-block;
+	*display: inline;
 	position: relative;
 	top: 0px;
 	left: 15px;
 	vertical-align: top;
+	*float: left;
 }
 
 textarea {
@@ -146,7 +141,7 @@ textarea {
 	text-align: left;
 	font-size: 1.1em;
 	font-weight: bold;
-	padding: 0px 9px 1px 1px;
+	padding: 0px 10px 1px 0px;
 	border-bottom: 2px solid #243b7c;
 	color: #000000;
 }
@@ -162,25 +157,25 @@ textarea {
 
 #surveyTable .col1, #versionTable .col1, 
 #displayFieldsTable .col2 {
-	width: 185px;
-	padding: 5px 9px 5px 1px;
+	width: 178px;
+	padding: 5px 10px 5px 1px;
 }
 
 #categoryTable .col1, #surveyTable .col2 {
-	width: 310px;
-	padding: 5px 9px 5px 1px;
+	width: 290px;
+	padding: 5px 10px 5px 0px;
 }
 
 #surveyTable .col3 {
 	text-align: center;
 	width: 30px;
-	padding: 5px;
+	padding: 5px 0px;
 }
 
 #surveyTable .col4-7, #categoryTable .col2-4, 
 #rulesTable .col3-5, #displayFieldsTable .col3 {
 	text-align: center;
-	width: 65px;
+	width: 70px;
 	padding: 5px 0px;
 }
 
@@ -234,6 +229,7 @@ textarea {
 #survey_response_list  {
 	width: 805px;
 	margin: 10px 0px;
+	min-height: 300px;
 	max-height: 600px;
 	overflow: auto;
 }

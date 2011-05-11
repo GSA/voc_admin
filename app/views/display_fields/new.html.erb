@@ -3,8 +3,8 @@
 <%= form_for [@survey, @survey_version, @display_field] do |f| %>
 	<p class="copyBold">
    	<%= f.label :name, "Name: " %><br />
-    <span class="copy">	
-    	<%= f.text_field :name %>
+    <span class="copy"><%= f.text_field :name %></span>
+    <span class="copyBold">
 			<%= f.check_box :required %><%= f.label :required %>
 			<%= f.check_box :searchable %><%= f.label :searchable %>
 		</span>
