@@ -49,7 +49,11 @@ class MatrixQuestionsController < ApplicationController
   def destroy
     @matrix_question = @survey_version.matrix_questions.find(params[:id])
     @matrix_question.destroy
-    redirect_to [@survey, @survey_version], :notice => "Successfully destroyed matrix question."
+    
+    respond_to do |format|
+      format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully destroyed Matrix question."}
+      format.js   { render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version } }
+    end
   end
   
   private
