@@ -37,6 +37,22 @@
 			<% elsif element.assetable_type == "MatrixQuestion" %>
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.statement %></span>
+					<table>
+						<tr>
+							<th></th>
+							<% for column_header in element.assetable.choice_questions.first.choice_answers do %>
+							 <th><%= column_header.answer %></th>
+							<% end -%>
+						</tr>
+						<% for row_header in element.assetable.choice_questions do %>
+						  <tr>
+						  	<td><%= row_header.question_content.statement%></td>
+								<% row_header.choice_answers.each do |a| %>
+								  <td><%= radio_button_tag "empty", a.answer, false, :disabled => true %></td>
+								<% end %>
+						  </tr>
+						<% end -%>
+					</table>
 				</li>
 			<% end # close the if statements %>			
 		<% end # close the for loop %>

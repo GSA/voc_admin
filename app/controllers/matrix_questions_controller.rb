@@ -17,11 +17,11 @@ class MatrixQuestionsController < ApplicationController
     choice_questions = params[:matrix_question][:choice_questions_attributes]
     
     choice_answer_attributes = params[:choice_answer_attributes]
-    choice_questions.each {|key, value| value.merge!({:choice_answer_attributes => choice_answer_attributes})}
-    
-    @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question])
+    choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
+
+    @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question].merge({:survey_version_id => @survey_version.id}))
     @matrix_question.survey_element.survey_version_id = @survey_version.id
-    
+  
     respond_to do |format|
       if @matrix_question.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
