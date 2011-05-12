@@ -2,7 +2,7 @@
 <%= f.check_box :required, {:checked => false}, true, false %>
 <%= f.label :required %>
 
-<% if f.object.questionable_type == "ChoiceQuestion" %>
+<% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
 <div id="flow_control_settings" style="display:inline">
   <%= f.hidden_field :flow_control, :value => false %>
   <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>

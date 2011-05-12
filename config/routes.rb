@@ -1,5 +1,4 @@
 CommentToolApp::Application.routes.draw do
-
   resources :categories
   resources :survey_responses
   resources :raw_responses
@@ -13,6 +12,7 @@ CommentToolApp::Application.routes.draw do
       resources :display_field_values
       resources :text_questions
       resources :choice_questions
+      resources :matrix_questions
       resources :survey_elements do
         post :up, :on => :member
         post :down, :on => :member

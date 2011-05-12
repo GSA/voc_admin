@@ -48,4 +48,3 @@ end
 ActionDispatch::Callbacks.after do
   bootstrap_display_field_callbacks
 end
-

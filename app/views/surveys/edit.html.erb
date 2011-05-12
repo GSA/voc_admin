@@ -36,3 +36,20 @@
 <div id="question_list">
 	<%= render :partial => 'question_list', :locals => {:survey_version => @survey.newest_version, :survey => @survey} %>
 </div>
+
+
+<div id="new_choice_question_modal" class="displayNone">
+	<%= render :partial => "choice_questions/new_choice_question", :locals => {:survey => @survey} %>
+</div>
+
+<div id="new_text_question_modal" class="displayNone">
+	<%= render :partial => 'text_questions/new_text_question', :locals => {:survey => @survey} %>
+</div>
+
+<div id="new_asset_modal" class="displayNone">
+  <%= render :partial => 'assets/new_asset_fields', :locals => {:survey => @survey} %>
+</div>
+
+<div id="new_matrix_question_modal" class="displayNone">
+	<%= render :partial => 'matrix_questions/new_matrix_question', :locals => {:survey => @survey } %>
+</div>

@@ -1,0 +1,18 @@
+# == Schema Information
+# Schema version: 20110511142805
+#
+# Table name: matrix_questions
+#
+#  id         :integer(4)      not null, primary key
+#  statement  :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  statement: MyText
+
+two:
+  statement: MyText

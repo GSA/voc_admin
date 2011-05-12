@@ -83,6 +83,11 @@ $(function(){
 		return false;
 	});	
 	
+	$("#link_to_new_matrix_question").live('click', function(){
+		$("#new_matrix_question_modal").modal();
+		return false;
+	});
+	
 	$(".remove_question_link").live("ajax:success", function(event, data, status, xhr) {
 		$.modal.close();
 	    $("#question_list").html(data);
@@ -112,6 +117,12 @@ $(function(){
 		$(':input', '#new_choice_question').not(':button, :submit, :reset, :hidden').reset();
 	});
 	
+	$("#new_matrix_question").live("ajax:success", function(event, data, status, xhr){
+		$.modal.close();
+		$("#question_list").html(data);
+		$(':input', '#new_matrix_question').not(':button, :submit, :reset, :hidden').reset();
+	});
+	
 	$("#new_text_question").live("ajax:error", function(event, data, status, xhr){
 		$.modal.close();
 		$("#new_text_question div.validation_errors").html(data.responseText);
@@ -129,6 +140,16 @@ $(function(){
 			$.modal.close();
 		}, persist:true});
 	});
+	
+	$("#new_matrix_question").live("ajax:error", function(event, data, status, xhr){
+		$.modal.close();
+		$("#new_matrix_question div.validation_errors").html(data.responseText);
+		$("#new_matrix_question_modal").modal({onClose:function(){
+			$("#new_matrix_question div.validation_errors").html("");
+			$.modal.close();
+		}, persist:true});
+	});
+	
 	
 	$("#link_to_new_page").live("ajax:success", function(event, data, status, xhr){
 		$("#question_list").html(data);

@@ -4,8 +4,10 @@
 
 function add_fields(link, association, content){
 	var new_id = new Date().getTime();
-	var regexp = new RegExp("new_"+association, "g")
+	var regexp = new RegExp("new_"+association, "g");
 	$(link).parent().before(content.replace(regexp, new_id));
+	$("#edit_rule").hide(); // IE 8 hack to 
+	$("#edit_rule").show(); // IE 8 hack to fix adding fields overflowing the div
 }
 
 /* On DOM object load */

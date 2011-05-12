@@ -39,7 +39,7 @@
 
 
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
-	  <% index = 0%>
+	  <% index = 0 %>
 		<% for page in @survey_version.pages %>
 
 			<div class="<%= page.number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.number%>">
@@ -50,7 +50,9 @@
 				<ol class="showList">
 				<% page.survey_elements.order("element_order asc").each do |element| %>
 					<li class="outter">
-						<% unless element.assetable_type == "Asset" %>
+						<% if element.assetable_type == "MatrixQuestion" %>
+							Matrix Question
+						<% elsif element.assetable_type != "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 							
@@ -65,11 +67,9 @@
 									<% end -%>
 									
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
-								  <%#= select_tag "response[raw_responses_attributes][#{index}][answer]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :onchange => generate_next_page_on_change(element)%>
 									<%= select_tag "response[raw_responses_attributes][#{index}][answer]", options_for_select(element.assetable.choice_answers.collect {|a| [a.answer, a.id]}),:include_blank => true, :onchange => generate_next_page_on_change(element)%>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
 								  <%= select_tag "response[raw_responses_attributes][#{index}][answer][]", options_from_collection_for_select(element.assetable.choice_answers, "id", "answer"), :multiple => true, :style => "width: 100px" %>
-								
 								<% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX %>
 								  <% for answer in element.assetable.choice_answers %>
 									  <%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]", answer.id, false, :id => "answer_#{answer.id}" %>
@@ -83,7 +83,7 @@
 								<% elsif element.assetable.answer_type == "area" %>
 									<%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area"%>
 								<% end -%>
-							<% end -%>	
+							<% end -%>
 						<% else %>
               <%= element.assetable.snippet.html_safe%>
 						<% end %>			

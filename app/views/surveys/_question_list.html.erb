@@ -34,6 +34,10 @@
 					<%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
 					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
         </li>
+			<% elsif element.assetable_type == "MatrixQuestion" %>
+				<li class="outter">
+					<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.statement %></span>
+				</li>
 			<% end # close the if statements %>			
 		<% end # close the for loop %>
 		</ol>
@@ -46,20 +50,9 @@
 		|
 		<span class="surveyNav2"><%= link_to "Add a free answer question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_text_question" %></span> | 
 		<span class="surveyNav3"><%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_choice_question" %></span> | 
-		<span class="surveyNav4"><%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset"  %></span>
+		<span class="surveyNav4"><%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset"  %></span> | 
+		<span class="surveyNav5"><%= link_to "Add matrix question", new_survey_survey_version_matrix_question_path(survey_version.survey, survey_version), :class => "surveyNav", :id => "link_to_new_matrix_question" %>
 	<% end %>
-</div>
-
-<div id="new_choice_question_modal" class="displayNone">
-	<%= render :partial => "choice_questions/new_choice_question", :locals => {:survey => survey_version.survey} %>
-</div>
-
-<div id="new_text_question_modal" class="displayNone">
-	<%= render :partial => 'text_questions/new_text_question', :locals => {:survey => survey_version.survey} %>
-</div>
-
-<div id="new_asset_modal" class="displayNone">
-  <%= render :partial => 'assets/new_asset_fields', :locals => {:survey => survey_version.survey} %>
 </div>
 
 <div class="pageNav">
