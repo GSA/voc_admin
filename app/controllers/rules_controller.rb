@@ -56,11 +56,9 @@ class RulesController < ApplicationController
   
   def do_now
     @rule = Rule.find(params[:id])
-      
-    SurveyResponse.find_all_by_survey_version_id(params[:survey_version_id]).each do |sr|
-      @rule.apply_me(sr)
-    end
-    render :text => "done"
+    @job_id = @rule.delay.apply_me_all
+    
+    render :text => @job_id.id
   end
   
   private
