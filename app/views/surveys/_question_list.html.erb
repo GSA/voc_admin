@@ -78,3 +78,19 @@
 	<%= link_to "Show Survey", survey_path(survey_version.survey), :class=>"pageNav" %> | 
 	<%= link_to 'View All', surveys_path, :class=>"pageNav" %>
 </div>
+
+<div id="new_choice_question_modal" class="displayNone">
+  <%= render :partial => "choice_questions/new_choice_question", :locals => {:survey => survey_version.survey} %>
+</div>
+
+<div id="new_text_question_modal" class="displayNone">
+  <%= render :partial => 'text_questions/new_text_question', :locals => {:survey => survey_version.survey} %>
+</div>
+
+<div id="new_asset_modal" class="displayNone">
+  <%= render :partial => 'assets/new_asset_fields', :locals => {:survey => survey_version.survey} %>
+</div>
+
+<div id="new_matrix_question_modal" class="displayNone">
+  <%= render :partial => 'matrix_questions/new_matrix_question', :locals => {:survey => survey_version.survey } %>
+</div>

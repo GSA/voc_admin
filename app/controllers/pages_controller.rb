@@ -6,7 +6,7 @@ class PagesController < ApplicationController
     
     respond_to do |format|
       if @page.save
-        format.js {render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version}}
+        format.js {render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
       else
         format.js {render :partial => "shared/question_errors", :locals => {:object => @page}}
       end
@@ -18,7 +18,7 @@ class PagesController < ApplicationController
     @page.destroy
   
     respond_to do |format|
-      format.js   { render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version } }
+      format.js   { render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
     end
   end
   
