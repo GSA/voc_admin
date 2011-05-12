@@ -5,25 +5,23 @@
 <%= form_for [survey, survey.newest_version, matrix_question], :remote => true do |f| %>
   <div class="validation_errors"></div>
   <p>
-    <%= f.label :statement, "Question" %><br />
+    <%= f.label :statement, "Directions" %><br />
     <%= f.text_area :statement, :rows => 3 %>
   </p>
 
 	<div id="rows">
-		<% 4.times {matrix_question.choice_questions.build} %>
+		<% matrix_question.choice_questions.build if matrix_question.new_record? %>
 		<%= f.fields_for :choice_questions do |builder| %>
-			<% builder.object.build_question_content %>
-			<%= builder.fields_for :question_content do |content_builder| %>
-				<%= render :partial => 'shared/question_content_fields', :locals => {:f => content_builder, :matrix_question => true }%>			
-			<% end %>
+      <%= render :partial => "shared/choice_question_fields", :locals => {:f => builder}%>
 		<% end -%>
+		<span><%= link_to_add_fields "Add Question", f, :choice_questions %></span>
 	</div>
 	
 	<div id="columns">
 		<% 4.times do |i| %>
-			<%= label_tag "choice_answer_attributes[#{i}][answer]", "Answer" %>
-			<%= text_field_tag "choice_answer_attributes[#{i}][answer]" %>
+      <%= render :partial => "shared/matrix_answers_fields", :locals => {:i => i}%>
 		<% end -%>
+		<span><%= link_to_add_matrix_answer "Add Answer" %></span>
 	</div>
 
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => matrix_question, :survey => survey}%>

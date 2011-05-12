@@ -51,7 +51,27 @@
 				<% page.survey_elements.order("element_order asc").each do |element| %>
 					<li class="outter">
 						<% if element.assetable_type == "MatrixQuestion" %>
-							Matrix Question
+							<table>
+		            <tr>
+		              <th></th>
+		              <% for column_header in element.assetable.choice_questions.first.choice_answers do %>
+		               <th><%= column_header.answer %></th>
+		              <% end -%>
+		            </tr>
+		            <% for row_header in element.assetable.choice_questions do %>
+		              <tr>
+		                <td><%= row_header.question_content.statement%></td>
+		                <% row_header.choice_answers.each do |a| %>
+										  <td>
+										  <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
+                      <%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required, :class => "required_question" %>
+		                  <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false %>
+											</td>
+		                <% end %>
+		              </tr>
+									<% index = index + 1%>
+		            <% end -%>
+		          </table>
 						<% elsif element.assetable_type != "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>

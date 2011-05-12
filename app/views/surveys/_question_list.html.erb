@@ -37,6 +37,9 @@
 			<% elsif element.assetable_type == "MatrixQuestion" %>
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.statement %></span>
+          <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
+          <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
+          <%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
 					<table>
 						<tr>
 							<th></th>

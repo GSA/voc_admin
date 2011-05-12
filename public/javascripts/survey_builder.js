@@ -190,7 +190,7 @@ function add_fields(link, association, content) {
   var new_id = new Date().getTime();  
   var regexp = new RegExp("new_" + association, "g");  
   $(link).parent().prev().after(content.replace(regexp, new_id));  
-	if (association == "choice_answers") {
+	if (association == "choice_answers" || association == "choice_questions") {
 		if($("#flow_control_checkbox").is(':checked')){
 			$(".next_pages").show();
 		}
@@ -199,4 +199,17 @@ function add_fields(link, association, content) {
 		$(".simplemodal-container").css("height", "auto").css("width", "auto");
 		$(window).resize();
 	}
+}
+
+function add_matrix_answers(link, content){
+	var new_id = new Date().getTime();
+	var regexp = new RegExp("new_matrix_answer", "g");
+	$(link).parent().before(content.replace(regexp, new_id));
+	
+	$(".simplemodal-container").css("height", "auto").css("width", "auto");
+	$(window).resize();
+}
+
+function remove_matrix_answer(link){
+	$(link).parent().remove();
 }

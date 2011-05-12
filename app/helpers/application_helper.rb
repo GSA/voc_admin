@@ -9,4 +9,10 @@ module ApplicationHelper
     
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"surveyNav")
   end
+  
+  def link_to_add_matrix_answer(name)
+    fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer"})
+    
+    link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")")
+  end
 end
