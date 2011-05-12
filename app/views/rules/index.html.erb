@@ -1,3 +1,4 @@
+<% javascript 'rules' %>
 <p class="pageTitle">Rules for <%= @survey.name %>, version <%= @survey_version.version_number%></p>
 <div class="pageNav-upper">
 	<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> | 
@@ -17,7 +18,7 @@
 		<td class="col3-5"><%= link_to "Show", [@survey, @survey_version, rule] %></td>
 		<td class="col3-5"><%= link_to "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
 		<td class="col3-5"><%= link_to "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
-		<td class="col6"><%= link_to "Run Now", do_now_survey_survey_version_rule_path(@survey, @survey_version, rule) %></td>
+		<td class="col6"><%= link_to_function "Run Now", "run_rule(#{rule.id}, this)" %></td>
   </tr>
 <% end %>
 </table>

@@ -1,5 +1,5 @@
 class RulesController < ApplicationController
-  before_filter :get_survey_version
+  before_filter :get_survey_version, :except=>[:do_now, :check_do_now]
   
   def index
     @rules = @survey_version.rules
@@ -59,6 +59,10 @@ class RulesController < ApplicationController
     @job_id = @rule.delay.apply_me_all
     
     render :text => @job_id.id
+  end
+  
+  def check_do_now
+    render :text => (Delayed::Job.exists?(params[:job_id]) ? "not done" : "done")
   end
   
   private

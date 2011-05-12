@@ -46,3 +46,30 @@ $(function(){
 		}
 	})
 });
+
+function run_rule(rule_id, source){
+	$(source).hide();
+	$.ajax({url: "/rules/"+rule_id+"/do_now",
+			success: function(data){
+				//set waiting text
+				$(source).after("<div>Please Wait</div>");
+				
+				//setup timer to check for response
+				setTimeout(function(){check_run_rule(data, source)}, 5000);
+			}});
+}
+
+function check_run_rule(job_id, source){
+	$.ajax({url: "/rules/check_do_now?job_id="+job_id,
+		success: function(data){
+			//set waiting text
+			if(data == "done"){
+				$(source).next("div").remove();
+				$(source).show();
+			}
+			else
+			{
+				setTimeout(function(){check_run_rule(job_id, source)}, 5000);
+			}
+		}});
+}
