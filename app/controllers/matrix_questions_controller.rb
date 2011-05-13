@@ -25,7 +25,7 @@ class MatrixQuestionsController < ApplicationController
     respond_to do |format|
       if @matrix_question.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
-        format.js   {render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
+        format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
       else
         format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey} }
         format.js   {render :partial => "shared/question_errors", :locals => {:object => @matrix_question}, :status => 500}
@@ -52,7 +52,7 @@ class MatrixQuestionsController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully destroyed Matrix question."}
-      format.js   { render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version } }
+      format.js   { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version } }
     end
   end
   

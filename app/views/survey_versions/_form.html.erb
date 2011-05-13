@@ -1,0 +1,24 @@
+<div id="newSurvey">
+	<%= form_for(@survey) do |f| %>
+	  <% if @survey.errors.any? %>
+	    <div id="error_explanation">
+	      <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
+	    </div>
+	  <% end %>
+	
+	  <p class="copy">
+	    <span class="copyBold"><%= f.label :name, "Name: " %></span><br />
+	    <%= f.text_field :name %>
+	  </p>
+	  <p class="copyBoldMargin">
+	    <%= f.label :description, "Description: " %><br />
+	    <span class="copy"><%= f.text_area :description, :rows => 3 %></span>
+	  </p>
+	  <p class="copyBoldMargin">
+	  	<%= f.label :type, "Survey Type: " %>
+			<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
+	  </p>
+		
+	  <p class="sumbitButton"><%= f.submit %></p>
+	<% end %>
+</div>

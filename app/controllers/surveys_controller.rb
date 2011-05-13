@@ -2,7 +2,7 @@ class SurveysController < ApplicationController
   # GET /surveys
   # GET /surveys.xml
   def index
-    @surveys = Survey.all
+    @surveys = Survey.get_unarchived.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,10 +14,9 @@ class SurveysController < ApplicationController
   # GET /surveys/1.xml
   def show
     @survey = Survey.find(params[:id])
-    @survey_version = params[:version].blank? ? @survey.newest_version : get_survey_version(@survey, params[:version])
     
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {redirect_to(survey_survey_versions_path(@survey))}
       format.xml  { render :xml => @survey }
     end
   end
@@ -66,6 +65,16 @@ class SurveysController < ApplicationController
      format.xml { render :xml => @survey}
    end
  end
+ 
+  def update
+     @survey = Survey.find(params[:id])
+     @survey.update_attributes(params[:survey])
+       
+     respond_to do |format|
+       format.html { redirect_to(surveys_url) }
+       format.xml { render :xml => @survey}
+     end
+   end
 #  
 #  # POST /surveys/1
 #  def update
@@ -82,7 +91,7 @@ class SurveysController < ApplicationController
   # DELETE /surveys/1.xml
   def destroy
     @survey = Survey.find(params[:id])
-    @survey.destroy
+    @survey.update_attribute(:archived, true)
 
     respond_to do |format|
       format.html { redirect_to(surveys_url) }

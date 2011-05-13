@@ -1,0 +1,38 @@
+<p class="pageTitle">Edit Survey</p>
+
+<% javascript 'survey_builder.js' %>
+
+<p id="notice"><%= notice %></p>
+
+<p class="copy">
+  <span class="copyBold">Name:</span>
+  <%= @survey.name %>
+</p>
+
+<p class="copyBoldMargin">
+  Description:
+  <span class="copy"><%= @survey.description %></span>
+</p>
+
+<p class="copyBoldMargin">
+  Type:
+  <span class="copy"><%= @survey.survey_type.name.capitalize %></span>
+</p>
+
+<div id="survey_versions_fields" >
+	<p class="copyBoldMargin">
+		Version:
+		<span class="copy">	
+			<%= @survey_version.major %>.
+			<%= @survey_version.minor %>
+		</span>
+	</p>
+	<p class="copyBoldMargin">
+		Published:
+		<span class="copy"><%= @survey_version.published ? "Yes" : "No" %></span>
+	</p>
+</div>
+
+<div id="question_list">
+	<%= render :partial => 'question_list', :locals => {:survey_version => @survey_version, :survey => @survey} %>
+</div>

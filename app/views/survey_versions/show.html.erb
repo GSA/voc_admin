@@ -118,10 +118,7 @@
 					<% unless page.number == @survey_version.pages.count %>
 						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.number})", :class=>"surveyNav" %></span>
 					<% end %>
-					<% if page.number == @survey_version.pages.count %>
-						<span class="surveyNavSub"><%= submit_tag "Submit Survey", :disabled => "disabled" %></span> |
-						<span class="surveyNavFinished"><%= link_to "Finished Viewing", surveys_url, :class=>"surveyNav" %></span>
-					<% end %>
+					<span class="surveyNavSub"><%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %></span>
 				</div>
 				
 			</div> <!-- close page div -->
@@ -130,6 +127,5 @@
 <% end -%>
 
 <div class="pageNav">
-	<%= link_to "View All", surveys_url, :class => "pageNav" %> |
-	<%= link_to "Edit Survey", edit_survey_url, :class => "pageNav" %>
+	<%= link_to "Edit Survey", edit_survey_survey_version_path(@survey, @survey_version), :class => "pageNav" %>
 </div>

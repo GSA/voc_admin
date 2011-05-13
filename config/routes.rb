@@ -25,6 +25,8 @@ CommentToolApp::Application.routes.draw do
         post :move_page, :on => :member
       end
       resources :assets
+      get :create_new_major_version, :on => :collection
+      get :create_new_minor_version, :on => :member
     end
   end
   # You can have the root of your site routed with "root"
