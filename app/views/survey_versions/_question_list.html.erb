@@ -12,6 +12,7 @@
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %> 
 					<%= "*" if element.assetable.question_content.required %> (text_<%= element.assetable.answer_type %>)</span>
+          <%= link_to "edit", edit_survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :remote => true, :class => "edit_asset_link" %>
           <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
           <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
 					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
@@ -20,6 +21,7 @@
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.question_content.statement %>
 					<%= "*" if element.assetable.question_content.required %> </span>
+					<%= link_to "edit", edit_survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :remote => true, :class => "edit_asset_link" %>
           <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
           <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
 					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_choice_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
@@ -32,6 +34,7 @@
 			<% elsif element.assetable_type == "Asset" %>
         <li class="outter">
         	<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.snippet %></span>
+					<%= link_to "edit", edit_survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :remote => true, :class => "edit_asset_link" %>
 					<%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
 					<%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
 					<%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_asset_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
@@ -39,6 +42,7 @@
 			<% elsif element.assetable_type == "MatrixQuestion" %>
 				<li class="outter">
 					<span class="survey_element" id="element_<%= element.element_order %>"><%= element.assetable.statement %></span>
+					<%= link_to "edit", edit_survey_survey_version_matrix_question_path(survey_version.survey, survey_version, element.assetable), :remote => true, :class => "edit_asset_link" %>
           <%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move up" %>
           <%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true, :class => "element_order_up", :title => "Move down" %>
           <%= link_to image_tag("red_x.png", :alt=>"Remove Element"), survey_survey_version_matrix_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?", :remote => true, :class => "remove_question_link", :title => "Remove page element" %>
@@ -96,3 +100,5 @@
 <div id="new_matrix_question_modal" class="displayNone">
   <%= render :partial => 'matrix_questions/new_matrix_question', :locals => {:survey => survey_version.survey, :survey_version => survey_version } %>
 </div>
+
+<div id="edit_modal"></div>
