@@ -13,6 +13,17 @@ class PagesController < ApplicationController
     end
   end
   
+  def move_page
+    @page = @survey_version.pages.find(params[:id])
+    @target_page = params[:page_number]
+    
+    @page.move_page_to(@target_page)
+    
+    respond_to do |format|
+      format.js { render :partial => "surveys/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+    end
+  end
+  
   def destroy
     @page = @survey_version.pages.find(params[:id])
     @page.destroy

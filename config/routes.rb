@@ -21,7 +21,9 @@ CommentToolApp::Application.routes.draw do
         post :up, :on => :member
         post :down, :on => :member
       end
-      resources :pages
+      resources :pages do
+        post :move_page, :on => :member
+      end
       resources :assets
     end
   end
