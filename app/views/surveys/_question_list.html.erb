@@ -3,8 +3,8 @@
 <% for page in survey_version.pages.order("number asc") %>
 	<div class="page" id="page_<%=page.number%>">
 		<span class="copyBold">Page <%= page.number %></span>
-		<%= link_to "Up", move_page_survey_survey_version_page_path(survey_version.survey, survey_version, page, :page_number => (page.number - 1)), :method => :post, :remote => true, :class => "move_page_up" %>
-		<%= link_to "Down", move_page_survey_survey_version_page_path(survey_version.survey, survey_version, page, :page_number => (page.number + 1)), :method => :post, :remote => true, :class => "move_page_down" %>
+		<%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), move_page_survey_survey_version_page_path(survey_version.survey, survey_version, page, :page_number => (page.number - 1)), :method => :post, :remote => true, :class => "move_page_up" %>
+		<%= link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), move_page_survey_survey_version_page_path(survey_version.survey, survey_version, page, :page_number => (page.number + 1)), :method => :post, :remote => true, :class => "move_page_down" %>
 		<%= link_to image_tag("red_x.png", :alt=>"Remove Page"), survey_survey_version_page_path(survey_version.survey, survey_version, page), :remote => true, :method => :delete, :confirm => "All items on page #{page.number} will be removed as well.", :class => "remove_page_link", :title => "Remove page" %>
 		<ol class="outter">
 		<% for element in page.survey_elements.order("element_order asc") %>
