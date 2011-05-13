@@ -118,7 +118,10 @@
 					<% unless page.number == @survey_version.pages.count %>
 						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.number})", :class=>"surveyNav" %></span>
 					<% end %>
-					<span class="surveyNavSub"><%= submit_tag "Submit Survey" if page.number == @survey_version.pages.count %></span>
+					<% if page.number == @survey_version.pages.count %>
+						<span class="surveyNavSub"><%= submit_tag "Submit Survey", :disabled => "disabled" %></span> |
+						<span class="surveyNavFinished"><%= link_to "Finished Viewing", surveys_url, :class=>"surveyNav" %></span>
+					<% end %>
 				</div>
 				
 			</div> <!-- close page div -->

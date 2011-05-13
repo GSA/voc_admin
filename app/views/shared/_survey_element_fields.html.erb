@@ -1,5 +1,5 @@
 <% object.build_survey_element if object.new_record? %>
 <%= f.fields_for :survey_element do |builder| %>
-	<%= builder.label :page_id %>
+	<%= builder.label :page_id, "Page: " %>
 	<%= builder.collection_select :page_id, survey.newest_version.pages, :id, :number, :class => "question_page_select"%>
 <% end %>

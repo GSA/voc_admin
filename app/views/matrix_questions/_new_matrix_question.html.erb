@@ -1,30 +1,30 @@
-<h2>New Matrix Question</h2>
+<p class="modalTitle">New Matrix Question</p>
 
 <% matrix_question ||= survey.newest_version.matrix_questions.build %>
 
 <%= form_for [survey, survey.newest_version, matrix_question], :remote => true do |f| %>
   <div class="validation_errors"></div>
-  <p>
-    <%= f.label :statement, "Directions" %><br />
-    <%= f.text_area :statement, :rows => 3 %>
-  </p>
-
+  <%= f.label :statement, "Directions:" %><br />
+  <%= f.text_area :statement, :rows => 3 %>
+	<br /><br />
 	<div id="rows">
 		<% matrix_question.choice_questions.build if matrix_question.new_record? %>
 		<%= f.fields_for :choice_questions do |builder| %>
       <%= render :partial => "shared/choice_question_fields", :locals => {:f => builder}%>
 		<% end -%>
+		<br />
 		<span><%= link_to_add_fields "Add Question", f, :choice_questions %></span>
 	</div>
-	
+	<br />
 	<div id="columns">
 		<% 4.times do |i| %>
       <%= render :partial => "shared/matrix_answers_fields", :locals => {:i => i}%>
 		<% end -%>
 		<span><%= link_to_add_matrix_answer "Add Answer" %></span>
 	</div>
-
+	<br/><br/>
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => matrix_question, :survey => survey}%>
-
-  <p><%= f.submit %></p>
+	<br/><br/>
+  <%= f.submit "Add Matrix Question" %>
+  <%= link_to "Cancel", nil, :class => "simplemodal-close" %>
 <% end %>

@@ -4,11 +4,11 @@
 
 <%= form_for [survey, survey.newest_version, text_question], :remote => true do |f| %>
 	<div class="validation_errors"></div>
-	<%= f.label :answer_type %>
+	<%= f.label :answer_type, "Answer Type: " %>
 	<%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
 	<%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :are_radio_button, "Area" %>
 	<br/>
-	
+	<br/>
 	<% text_question.build_question_content if text_question.new_record? %>
 	<%= f.fields_for :question_content do |builder| %>
 		<%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>

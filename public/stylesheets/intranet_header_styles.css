@@ -36,6 +36,7 @@
   position:absolute;
   right:0px;
   top:28px;
+  *top: 10px;
   height:21px;
   background:url(/images/utilityBack.jpg);
   padding-right:10px;
@@ -52,21 +53,19 @@
   margin-top:0.3em
 }
 
-.footer { /* margin & padding edited 4/19/11 */
-  margin: 5px 0px 0px;
-  padding: 0px 0px 0px;
-  clear: both; 
+.footer { 
+/* whole style updated 5/13/2011 */
+  margin: 5px 0px;
+  padding: 0px;
   width: 100%;
-  min-width: 740px;
-  /* 5/6/2011 - Added properties below this comment so that the footer remains permanently at the bottom of the page. */
-  position: relative;
-  bottom: 0px;
 }
 
 .intranetLastUpdated {
   color: #808080;
   font-size: 0.6em;
   margin: 0px 0px 0px 20px;
+  /* styles added & changed because IE8 not showing footer correctly */
+  text-align: left;
 }
 
 .intranetFooter{ /* margin & padding edited 4/19/11 */
@@ -89,7 +88,7 @@ img{
   border: none 0px;
 }
 
-td {
+/* td {
 	font-size: 13px;
 	padding: 5px 10px 5px 0px;
-}
+} */

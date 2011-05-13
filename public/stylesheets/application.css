@@ -88,7 +88,7 @@ a img {
 	padding: 30px 10px;
 	*padding: 20px 5px;
 	background-color: #ffffff;
-	min-height: 600px;
+	min-height: 475px;
 	vertical-align: top;
 }
 .navigation {
@@ -119,6 +119,7 @@ a img {
 textarea {
 	font-family: Verdana, Helvetica, Arial, san-serif;
 	font-size: 11px;
+	margin: 0px 10px;
 }
 
 /* 
@@ -157,22 +158,32 @@ textarea {
 
 #surveyTable .col1, #versionTable .col1, 
 #displayFieldsTable .col2 {
-	width: 178px;
+	width: 175px;
 	padding: 5px 10px 5px 1px;
 }
 
 #categoryTable .col1, #surveyTable .col2 {
-	width: 290px;
+	width: 300px;
 	padding: 5px 10px 5px 0px;
 }
 
 #surveyTable .col3 {
 	text-align: center;
-	width: 30px;
+	width: 35px;
 	padding: 5px 0px;
 }
 
-#surveyTable .col4-7, #categoryTable .col2-4, 
+#surveyTable .col4col6-7 {
+	text-align: center;
+	width: 60px;
+	padding: 5px 0px;
+}
+#surveyTable .col5 {
+	text-align: center;
+	width: 75px;
+	padding: 5px 0px;
+}
+#categoryTable .col2-4, 
 #rulesTable .col3-5, #displayFieldsTable .col3 {
 	text-align: center;
 	width: 70px;
@@ -398,14 +409,6 @@ li.modalList {
 	padding: 0px 0px 3px;
 }
 
-#new_choice_question_modal { 
-	padding: 10px;
-	min-width: 380px;
-}
-
-#new_asset_modal, #new_text_question_modal {
-	padding: 10px;
-}
 
 /* Pages */
 .page {
@@ -413,7 +416,7 @@ li.modalList {
 	background-color: #eef1fc;
 	margin: 5px 0px 10px;
 	padding: 5px;
-	width: 793px;
+	width: 778px;
 }
 
 .current_page {
@@ -480,6 +483,7 @@ div.pageNav {
 	margin: 10px 0px;
 	padding: 5px 0px 0px;
 	border-top: 6px double #eef1fc;
+	width: 788px;
 }
 
 div.pageNav-upper {
@@ -527,21 +531,29 @@ span.surveyNav4 {
 	width: 85px;
 	display: inline-block;
 }
-
+span.surveyNav5 {
+	width: 130px;
+	display: inline-block;
+}
 span.surveyNavPrev {
 	width: 105px;
 	display: inline-block;
 }
 
 span.surveyNavNext {
-	width: 85px;
+	width: 80px;
+	display: inline-block;
+}
+
+span.surveyNavFinished {
+	width: 115px;
 	display: inline-block;
 }
 
 span.surveyNavSub {
 	text-align: left;
 	display: inline-block;
-	padding: 0px 0px 0px 10px;
+	padding: 0px 10px;
 }
 
 a.surveyNav, a.surveyNav:link, a.surveyNav:visited,
@@ -593,3 +605,9 @@ span.pageNum {
 }
 
 .gap {}
+
+/* Modal */
+#simplemodal-container {
+	max-height: 100%;
+	overflow: auto;
+}

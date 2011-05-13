@@ -79,12 +79,12 @@ $(function(){
 	});
 	
 	$("#link_to_new_choice_question").live('click', function(){
-		$("#new_choice_question_modal").modal();
+		$("#new_choice_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'300px'});
 		return false;
 	});	
 	
 	$("#link_to_new_matrix_question").live('click', function(){
-		$("#new_matrix_question_modal").modal();
+		$("#new_matrix_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'300px'});
 		return false;
 	});
 	
