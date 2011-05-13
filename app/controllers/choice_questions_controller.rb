@@ -15,6 +15,32 @@ class ChoiceQuestionsController < ApplicationController
       end
     end  
   end
+
+  def edit
+    @choice_question = @survey_version.choice_questions.find(params[:id])
+    
+    respond_to do |format|
+      format.html #
+      format.js {render :action => :edit}
+    end
+  end
+
+  def update
+    @choice_question = ChoiceQuestion.find(params[:id])
+    
+    respond_to do |format|
+      if @choice_question.update_attributes(params[:choice_question])
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
+      else
+        format.html {render :action => 'edit'}
+        format.js   {render :partial => "shared/question_errors", :locals => {:object => @choice_question}, :status => 500}
+      end
+    end
+  end
+  
+  
+  
   
   def destroy
     @choice_question = ChoiceQuestion.find(params[:id])

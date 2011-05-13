@@ -64,9 +64,10 @@ $(function(){
 	});
 	
 	/* Modal control functions */
-	$(".survey_element").live('dblclick', function(){
-		alert("double clicked on a question");
-	})
+	$("a.edit_asset_link").live('ajax:success', function(event, data, status, xhr){
+		$("#edit_modal").html(data).modal();
+	});
+	
 	
 	$("#link_to_new_asset").live('click', function(){
 		$("#new_asset_modal").modal();
@@ -111,6 +112,12 @@ $(function(){
 		$("#question_list").html(data);
 		$(':input', '#new_text_question').not(':button, :submit, :reset, :hidden').reset();
 	});
+	
+	$(".question_edit_form").live("ajax:success", function(event, data, status, xhr){
+		$.modal.close();
+		$("#question_list").html(data);
+	});
+	
 	$("#new_choice_question").live("ajax:success", function(event, data, status, xhr){
 		$.modal.close();
 		$("#question_list").html(data);
@@ -208,4 +215,10 @@ function add_matrix_answers(link, content){
 
 function remove_matrix_answer(link){
 	$(link).parent().remove();
+}
+
+function open_modal(modal_id){
+	$("#"+modal_id).modan({
+		autoResize: true
+	});
 }

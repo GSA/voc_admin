@@ -1,13 +1,13 @@
-<% asset ||= survey.newest_version.assets.build %>
+<% asset ||= survey_version.assets.build %>
 
-<%= form_for [survey, survey.newest_version, asset], :remote => true do |f| %>
+<%= form_for [survey, survey_version, asset], :remote => true do |f| %>
 	  
 	<p class="modalTitle"><%= f.label :snippet %></p>
 	<div class="validation_errors"></div>
 	<%= f.text_area :snippet %>
 	<br/>
 	<br/>
-  <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => asset, :survey => survey}%>
+  <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => asset, :survey => survey, :survey_version => survey_version}%>
   <br/>
   <br/>
   <%= f.submit "Add Survey Asset" %>

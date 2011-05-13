@@ -1,8 +1,8 @@
 <p class="modalTitle">New Choice Question</p>
 
-<% choice_question ||= survey.newest_version.choice_questions.build %>
+<% choice_question ||= survey_version.choice_questions.build %>
 
-<%= form_for [survey, survey.newest_version, choice_question], :remote => true do |f| %>
+<%= form_for [survey, survey_version, choice_question], :remote => true do |f| %>
   <div class="validation_errors"></div>
 	<% choice_question.build_question_content if choice_question.new_record? %>
 	<%= f.fields_for :question_content do |builder| %>
@@ -17,7 +17,7 @@
 
 	<% 4.times {choice_question.choice_answers.build} %>
 	<%= f.fields_for :choice_answers do |answer_builder| %>
-		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey} %>
+		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey, :survey_version => survey_version} %>
 	<% end %>
 	
 	<span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
@@ -27,7 +27,7 @@
   	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
 	</div>
 	<br/><br/>
-	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey}%>
+	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
 	<br/><br/>
 	<%= f.submit "Add Question" %>
 	<%= link_to "Cancel", nil, :class => "simplemodal-close" %>

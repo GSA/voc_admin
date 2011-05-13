@@ -1,8 +1,8 @@
 <p class="modalTitle">New Text Question</p>
 
-<% text_question ||= survey.newest_version.text_questions.build %>
+<% text_question ||= survey_version.text_questions.build %>
 
-<%= form_for [survey, survey.newest_version, text_question], :remote => true do |f| %>
+<%= form_for [survey, survey_version, text_question], :remote => true do |f| %>
 	<div class="validation_errors"></div>
 	<%= f.label :answer_type, "Answer Type: " %>
 	<%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
@@ -15,7 +15,7 @@
 	<% end -%>
 	<br/>
 	
-	<%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => text_question, :survey => survey} %>
+	<%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => text_question, :survey => survey, :survey_version => survey_version} %>
 	<br />
 	<br/>
 	<%= f.submit "Add Question" %>

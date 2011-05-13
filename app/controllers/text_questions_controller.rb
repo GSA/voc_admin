@@ -40,10 +40,16 @@ class TextQuestionsController < ApplicationController
 
   def update
     @text_question = TextQuestion.find(params[:id])
-    if @text_question.update_attributes(params[:text_question])
-      redirect_to @text_question, :notice  => "Successfully updated text question."
-    else
-      render :action => 'edit'
+
+    
+    respond_to do |format|
+      if @text_question.update_attributes(params[:text_question])
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
+      else
+        format.html {render :action => 'edit'}
+        format.js   {render :partial => "shared/question_errors", :locals => {:object => @text_question}, :status => 500}
+      end
     end
   end
 

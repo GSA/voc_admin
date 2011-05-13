@@ -27,7 +27,7 @@ class MatrixQuestionsController < ApplicationController
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
       else
-        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey} }
+        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey, :survey_version => @survey_version} }
         format.js   {render :partial => "shared/question_errors", :locals => {:object => @matrix_question}, :status => 500}
       end
     end
@@ -35,14 +35,23 @@ class MatrixQuestionsController < ApplicationController
 
   def edit
     @matrix_question = @survey_version.matrix_questions.find(params[:id])
+    
+    respond_to do |format|
+      format.html #
+      format.js {render :action => :edit}
+    end
   end
 
   def update
-    @matrix_question = @survey_version.matrix_questions.find(params[:id])
-    if @matrix_question.update_attributes(params[:matrix_question])
-      redirect_to [@survey, @survey_version], :notice  => "Successfully updated matrix question."
-    else
-      render :action => 'edit'
+    @matrix_question = MatrixQuestion.find(params[:id])
+    respond_to do |format|
+      if @matrix_question.update_attributes(params[:matrix_question])
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
+      else
+        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey, :survey_version => @survey_version} }
+        format.js   {render :partial => "shared/question_errors", :locals => {:object => @matrix_question}, :status => 500}
+      end
     end
   end
 

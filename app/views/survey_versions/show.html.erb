@@ -27,13 +27,13 @@
 		<p class="copyBoldMargin">
 			Version:
 			<span class="copy">
-				<%= @survey.newest_version.major %>.
-				<%= @survey.newest_version.minor %>
+				<%= @survey_version.major %>.
+				<%= @survey_version.minor %>
 			</span>
 		</p>
 		<p class="copyBoldMargin">
 			Published:
-			<span class="copy"><%= @survey.newest_version.published ? "Yes" : "No" %></span>
+			<span class="copy"><%= @survey_version.published ? "Yes" : "No" %></span>
 		</p>
 	</div>
 
