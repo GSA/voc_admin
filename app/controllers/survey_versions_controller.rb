@@ -34,7 +34,7 @@ class SurveyVersionsController < ApplicationController
   def destroy
     @survey_version.update_attribute(:archived, true)
     respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey)) }
+      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Survey Version was successfully deleted.') }
       format.xml  { head :ok }
     end
   end
@@ -42,7 +42,7 @@ class SurveyVersionsController < ApplicationController
   def create_new_major_version
     @survey.create_new_major_version
     respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey)) }
+      format.html { redirect_to(survey_survey_versions_path(@survey), :notice => 'Major Survey Version was successfully created.') }
       format.xml  { head :ok }
     end
   end
@@ -50,7 +50,7 @@ class SurveyVersionsController < ApplicationController
   def create_new_minor_version
     
     respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey)) }
+      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Minor Survey Version was successfully created.') }
       format.xml  { head :ok }
     end
   end

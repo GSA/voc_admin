@@ -2,22 +2,22 @@
 <div class="pageNav-upper">
 	<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "pageNav" %>
 </div>
-
+<p id="notice"><%= notice %></p>
 
 <table id="versionTable">
 	<tr>
-		<th class="col2">Version</th>
-		<th class="col3">Published</th>
-		<th class="col4">Created At</th>
+		<th>Version</th>
+		<th>Published</th>
+		<th colspan="4">Created At</th>
 	</tr>
 	<% for version in @survey_versions %>
 	<tr class="<%= cycle('white','blue') %>">
-		<td class="col2"><%= version.version_number %></td>
-		<td class="col3"><%= version.published ? "Yes" : "No" %></td>
-		<td class="col4"><%= version.created_at %></td>
-		<td class="col5"><%= link_to 'Show', survey_survey_version_path(@survey, version) %></td>
-		<td class="col6"><%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %></td>
-		<td class="col6"><%= link_to 'Destroy', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
+		<td class="col1-2"><%= version.version_number %></td>
+		<td class="col1-2"><%= version.published ? "Yes" : "No" %></td>
+		<td class="col3"><%= version.created_at %></td>
+		<td class="col4-6"><%= link_to 'Show', survey_survey_version_path(@survey, version) %></td>
+		<td class="col4-6"><%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %></td>
+		<td class="col4-6"><%= link_to 'Destroy', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
 	</tr>
 	<% end %>
 </table>

@@ -1,5 +1,5 @@
 <div class="modalErrorBox">
-	<p class="modalErrorTitle"><%= pluralize(object.errors.count, "error") %> prohibited this question from being saved:</h2>
+	<p class="modalErrorTitle"><%= pluralize(object.errors.count, "error") %> prohibited this question from being saved:</p>
 	
 	<ul class="modalList">
 	<% object.errors.full_messages.each do |msg| %>

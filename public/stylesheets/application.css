@@ -1,6 +1,6 @@
 /*Scaffolding Styles automatically generated.*/
 
-.error_messages {
+/* .error_messages {
   width: 400px;
   border: 2px solid #CF0000;
   padding: 0px;
@@ -28,19 +28,6 @@
   margin: 0;
 }
 
-#notice {
-  color: green;
-}
-
-#error_explanation {
-  width: 450px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-}
-
 #error_explanation h2 {
   text-align: left;
   font-weight: bold;
@@ -58,10 +45,10 @@
 }
 
 div.field, div.actions {
-	/* can get rid of. */
+	can get rid of.
   margin-bottom: 10px;
 }
-
+ */
 /** Style Guide (Last Updated: 5/2/2011 Created: 4/19/2011) **/
 body {
   background-color: #FFFFFF;
@@ -119,7 +106,7 @@ a img {
 textarea {
 	font-family: Verdana, Helvetica, Arial, san-serif;
 	font-size: 11px;
-	margin: 0px 10px;
+	margin: 0px 10px 0px 0px;
 }
 
 /* 
@@ -156,8 +143,7 @@ textarea {
 	vertical-align: top;
 }
 
-#surveyTable .col1, #versionTable .col1, 
-#displayFieldsTable .col2 {
+#surveyTable .col1, #displayFieldsTable .col2 {
 	width: 175px;
 	padding: 5px 10px 5px 1px;
 }
@@ -173,37 +159,22 @@ textarea {
 	padding: 5px 0px;
 }
 
-#surveyTable .col4col6-7 {
-	text-align: center;
-	width: 60px;
-	padding: 5px 0px;
-}
-#surveyTable .col5 {
-	text-align: center;
-	width: 75px;
-	padding: 5px 0px;
-}
-#categoryTable .col2-4, 
-#rulesTable .col3-5, #displayFieldsTable .col3 {
+#surveyTable .col4-5, #categoryTable .col2-4, 
+#rulesTable .col3-5, #displayFieldsTable .col3,
+#versionTable .col4-6, #rulesTable .col6 {
 	text-align: center;
 	width: 70px;
 	padding: 5px 0px;
 }
 
-#versionTable .col2, #rulesTable .col6 {
-	width: 70px;
+#versionTable .col1-2 {
 	text-align: center;
-	padding: 5px 0px;
+	width: 60px;
+	padding: 5px 30px 5px 0px;
 }
 
 #versionTable .col3 {
-	width: 130px;
-	text-align: center;
-	padding: 5px 0px;
-}
-
-#versionTable .col4 {
-	width: 200px;
+	width: 175px;
 	padding: 5px 0px;
 }
 
@@ -372,7 +343,7 @@ li.showList-ol {
 	list-style-position: inside;
 }
 
-/* Modals */
+/* Modals & Errors & Notice*/
 .modalTitle {
 	color: #243b7c;
 	font-size: 1.2em;
@@ -407,6 +378,12 @@ li.modalList {
 	font-size: 1em;
 	margin: 0px 0px 0px 25px;
 	padding: 0px 0px 3px;
+}
+
+#notice {
+  color: green;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 
 

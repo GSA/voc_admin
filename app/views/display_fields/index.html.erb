@@ -3,7 +3,7 @@
 	<%= link_to "Add New Dispaly Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"pageNav" %> | 
 	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
 </div>
-
+<p id="notice"><%= notice %></p>
 
 <table id="displayFieldsTable">
 	<tr>

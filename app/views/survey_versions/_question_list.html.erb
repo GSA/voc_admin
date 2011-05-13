@@ -77,8 +77,8 @@
 </div>
 
 <div class="pageNav">
-	<%= link_to "Show Survey", survey_survey_version_path(survey, survey_version), :class=>"pageNav" %> | 
-	<%= link_to 'View All Versions', survey_survey_versions_path(survey), :class=>"pageNav" %>
+	<%= link_to "Show Survey", survey_survey_version_path(survey_version.survey, survey_version), :class=>"pageNav" %> | 
+	<%= link_to 'View All Versions', survey_survey_versions_path(survey_version.survey), :class=>"pageNav" %>
 </div>
 
 <div id="new_choice_question_modal" class="displayNone">

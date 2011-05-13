@@ -15,7 +15,7 @@ class DisplayFieldsController < ApplicationController
     @display_field.display_order = @survey_version.display_fields.count + 1
 
     if @display_field.save
-      redirect_to survey_survey_version_display_fields_path
+      redirect_to survey_survey_version_display_fields_path, :notice => "Successfully created display field."
     else
       render :new
     end
@@ -24,7 +24,7 @@ class DisplayFieldsController < ApplicationController
   def destroy
     @display_field = @survey_version.display_fields.find(params[:id])
     @display_field.destroy
-    redirect_to survey_survey_version_display_fields_path(@survey, @survey_version)
+    redirect_to survey_survey_version_display_fields_path(@survey, @survey_version), :notice => "Successfully deleted display field."
   end
   
   private

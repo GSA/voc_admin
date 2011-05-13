@@ -71,7 +71,7 @@ class SurveysController < ApplicationController
      @survey.update_attributes(params[:survey])
        
      respond_to do |format|
-       format.html { redirect_to(surveys_url) }
+       format.html { redirect_to(surveys_url, :notice => 'Survey was successfully updated.') }
        format.xml { render :xml => @survey}
      end
    end
@@ -94,7 +94,7 @@ class SurveysController < ApplicationController
     @survey.update_attribute(:archived, true)
 
     respond_to do |format|
-      format.html { redirect_to(surveys_url) }
+      format.html { redirect_to(surveys_url, :notice => 'Survey was successfully destroyed.') }
       format.xml  { head :ok }
     end
   end

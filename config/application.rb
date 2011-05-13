@@ -40,5 +40,8 @@ module CommentToolApp
     config.filter_parameters += [:password]
       
     config.autoload_paths += Dir["#{config.root}/app/models/**/"]
+    
+    # This is suppose to cause the dig tag "field with errors" from breaking the styling.
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
   end
 end

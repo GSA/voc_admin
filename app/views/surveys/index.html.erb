@@ -2,6 +2,7 @@
 <div class="pageNav-upper">
 	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
 </div>
+<p id="notice"><%= notice %></p>
 
 <table id="surveyTable">
   <tr>
@@ -15,10 +16,8 @@
     <td class="col1"><%= link_to survey.name, survey_survey_versions_path(survey)  %></td>
     <td class="col2"><%= survey.description %></td>
     <td class="col3"><%= survey.survey_type.name.titleize %></td>
-    <!-- <td class="col4-7"><%= link_to 'Show', survey %></td> -->
-	<!-- <td class="col4-7"><%= link_to 'Versions', survey_survey_versions_path(survey) %></td> -->
-    <!-- <td class="col4-7"><%= link_to 'Edit', edit_survey_path(survey) %></td> -->
-    <td class="col4-7"><%= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class="col4-5"><%= link_to 'Edit', edit_survey_path(survey) %></td>
+    <td class="col4-5"><%= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

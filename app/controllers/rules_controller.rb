@@ -21,7 +21,7 @@ class RulesController < ApplicationController
     @rule.rule_order = @survey_version.rules.count + 1
     
     if @rule.save
-      redirect_to [@survey, @survey_version,@rule]
+      redirect_to [@survey, @survey_version,@rule], :notice  => "Successfully created rule."
     else
       do_rule_builds
       render :new
@@ -38,7 +38,7 @@ class RulesController < ApplicationController
     @rule = @survey_version.rules.find(params[:id])
     
     if @rule.update_attributes(params[:rule])
-      redirect_to survey_survey_version_rule_path(@survey, @survey_version, @rule)
+      redirect_to survey_survey_version_rule_path(@survey, @survey_version, @rule), :notice  => "Successfully updated rule."
     else
       build_source_array
       do_rule_builds
@@ -51,7 +51,7 @@ class RulesController < ApplicationController
     
     @rule.destroy
     
-    redirect_to survey_survey_version_rules_path(@survey, @survey_version)
+    redirect_to survey_survey_version_rules_path(@survey, @survey_version), :notice  => "Successfully deleted rule."
   end
   
   def do_now
