@@ -3,7 +3,7 @@
 	<%= f.text_field :answer %>
 	
   <span class="next_pages" style="display:none">
-  <%= f.label :next_page_id, "Go To Page: " %><%= f.collection_select :next_page_id, survey_version.pages, :id, :number, {},  :class => "next_page_select" %>
+  <%= f.label :next_page_id, "Go To Page: " %><%= f.collection_select :next_page_id, survey_version.pages, :id, :page_number, {},  :class => "next_page_select" %>
   </span>
 	
 	<%= f.hidden_field :_destroy %>

@@ -6,7 +6,7 @@ module SurveysHelper
     
     q_answers = element.assetable.choice_answers
     
-    change_function = q_answers.map {|answer| "if($(this).val() == \"#{answer.id}\"){$('#page_'+#{element.page.number}+'_next_page').val(\"#{answer.next_page_id.nil? ? (element.page.number + 1) : answer.page.number}\")}"}.join(';')
+    change_function = q_answers.map {|answer| "if($(this).val() == \"#{answer.id}\"){$('#page_'+#{element.page.page_number}+'_next_page').val(\"#{answer.next_page_id.nil? ? (element.page.page_number + 1) : answer.page.page_number}\")}"}.join(';')
     
 #    
 #    change_function = q_answers.inject do |memo, answer|
