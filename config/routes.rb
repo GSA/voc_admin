@@ -9,6 +9,7 @@ CommentToolApp::Application.routes.draw do
   end
   resources :surveys do
     resources :survey_versions do
+      get :publish, :on => :member, :as => "publish"
       resources :rules do
         get :do_now, :on => :member
       end
