@@ -1,6 +1,6 @@
 <p class="copyBoldMargin">Questions:</p>
 
-<% for page in survey_version.pages.order("number asc") %>
+<% for page in survey_version.pages.order("pages.number asc") %>
 	<div class="page" id="page_<%=page.number%>">
 		<span class="copyBold">Page <%= page.number %></span>
 		<%= link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), move_page_survey_survey_version_page_path(survey_version.survey, survey_version, page, :page_number => (page.number - 1)), :method => :post, :remote => true, :class => "move_page_up" %>
