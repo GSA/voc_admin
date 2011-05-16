@@ -15,6 +15,29 @@ class AssetsController < ApplicationController
       end
     end  
   end
+  
+  def edit
+    @asset = @survey_version.assets.find(params[:id])
+    
+    respond_to do |format|
+      format.html #
+      format.js {render :action => :edit}
+    end
+  end
+
+  def update
+    @asset = Asset.find(params[:id])
+    
+    respond_to do |format|
+      if @asset.update_attributes(params[:asset])
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
+      else
+        format.html {render :action => 'edit'}
+        format.js   {render :partial => "shared/question_errors", :locals => {:object => @choice_question}, :status => 500}
+      end
+    end
+  end
 
   def destroy
     @asset = Asset.find(params[:id])

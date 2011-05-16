@@ -1,0 +1,10 @@
+<%= form_for [@survey, @survey_version, @asset], :remote => true, :html => {:class => "question_edit_form"} do |f| %>
+    
+  <p class="modalTitle"><%= f.label :snippet %></p>
+  <div class="validation_errors"></div>
+  <%= f.text_area :snippet %>
+  <br/>
+	<br/>
+  <%= f.submit "Update Survey Asset" %>
+  <%= link_to "Cancel", nil, :class => "simplemodal-close"%>
+<% end -%>
