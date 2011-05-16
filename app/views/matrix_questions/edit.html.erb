@@ -1,4 +1,4 @@
-<%= form_for [@survey, @survey_version, matrix_question], :remote => true do |f| %>
+<%= form_for [@survey, @survey_version, @matrix_question], :remote => true do |f| %>
   <div class="validation_errors"></div>
   <%= f.label :statement, "Directions:" %><br />
   <%= f.text_area :statement, :rows => 3 %>
