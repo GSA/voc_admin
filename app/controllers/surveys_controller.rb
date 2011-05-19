@@ -47,7 +47,7 @@ class SurveysController < ApplicationController
     
     respond_to do |format|
       if @survey.save  # Will save both survey and survey_version and run validations on both
-        format.html { redirect_to(edit_survey_path(@survey), :notice => 'Survey was successfully created.') }
+        format.html { redirect_to(survey_path(@survey), :notice => 'Survey was successfully created.') }
         format.xml  { render :xml => @survey, :status => :created, :location => @survey }
       else
         format.html { render :action => "new" }

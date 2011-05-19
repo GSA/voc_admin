@@ -1,5 +1,5 @@
 class AssetsController < ApplicationController
-  before_filter :get_survey_version
+  before_filter :get_survey_version, :except => :destroy
   
   def create
     @asset = Asset.new(params[:asset])
