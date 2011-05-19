@@ -26,10 +26,7 @@ $(function(){
 	 * When a page is chosen from the page selection for the question, remove that option
 	 * from the flow control page select dropdown.
 	 */
-//	$("#choice_question_survey_element_attributes_page_id").live('change', function(){
-//		$(".answer_fields .next_page_select option[value='" + 
-//		$("#choice_question_survey_element_attributes_page_id option:selected").val() + "']").remove();
-//	});
+	// TODO: Implement this
 	
 	$(".next_page_select").each(function(index){
 		$(this).val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
@@ -66,6 +63,7 @@ $(function(){
 	/* Modal control functions */
 	$("a.edit_asset_link").live('ajax:success', function(event, data, status, xhr){
 		$("#edit_modal").html(data).modal();
+		return false
 	});
 	
 	
@@ -218,7 +216,7 @@ function remove_matrix_answer(link){
 }
 
 function open_modal(modal_id){
-	$("#"+modal_id).modan({
+	$("#"+modal_id).modal({
 		autoResize: true
 	});
 }
