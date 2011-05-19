@@ -40,7 +40,7 @@
 
 	<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <% index = 0 %>
-		<% for page in @survey_version.pages %>
+		<% for page in @survey_version.pages.includes(:survey_version) %>
 
 			<div class="<%= page.page_number == 1 ? 'current_page' : 'hidden_page' %>" id="page_<%=page.page_number%>">
 	      <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
@@ -48,17 +48,17 @@
 				
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
 				<ol class="showList">
-				<% page.survey_elements.order("element_order asc").each do |element| %>
+				<% page.elements_with_includes.each do |element| %>
 					<li class="outter">
 						<% if element.assetable_type == "MatrixQuestion" %>
 							<table>
 		            <tr>
 		              <th></th>
-		              <% for column_header in element.assetable.choice_questions.first.choice_answers do %>
-		               <th><%= column_header.answer %></th>
+		              <% for column_header in element.assetable.column_headers do %>
+		               <th><%= column_header %></th>
 		              <% end -%>
 		            </tr>
-		            <% for row_header in element.assetable.choice_questions do %>
+		            <% for row_header in element.assetable.rows do %>
 		              <tr>
 		                <td><%= row_header.question_content.statement%></td>
 		                <% row_header.choice_answers.each do |a| %>

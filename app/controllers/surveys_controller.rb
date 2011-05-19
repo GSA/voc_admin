@@ -2,7 +2,7 @@ class SurveysController < ApplicationController
   # GET /surveys
   # GET /surveys.xml
   def index
-    @surveys = Survey.get_unarchived.all
+    @surveys = Survey.get_unarchived.includes(:survey_type).all
 
     respond_to do |format|
       format.html # index.html.erb

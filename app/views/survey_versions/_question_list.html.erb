@@ -5,10 +5,10 @@
 		<span class="copyBold">Page <%= page.page_number %></span>
 			<%= page_management_links(survey_version.survey, survey_version, page) %>
 		<ol class="outter">
-		<% for element in page.survey_elements.order("element_order asc") %>
+		<% for element in page.elements_with_includes %>
 			<li class="outter">
 				<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.statement %> 
-				<%= "*" if element.assetable.required %> (<%= element.assetable.answer_type %>)</span>
+				<%= "*" if element.assetable.try(:required) %> (<%= element.assetable.answer_type %>)</span>
 				<%= element_management_links(survey_version.survey, survey_version, element)%>
 				<% if element.assetable_type == "ChoiceQuestion" %>
 						<ol class="inner">
@@ -20,11 +20,11 @@
 						<table>
 							<tr>
 								<th></th>
-								<% for column_header in element.assetable.choice_questions.first.choice_answers do %>
-								 <th><%= column_header.answer %></th>
+								<% for column_header in element.assetable.column_headers do  %>
+								 <th><%= column_header %></th>
 								<% end -%>
 							</tr>
-							<% for row_header in element.assetable.choice_questions do %>
+							<% for row_header in element.assetable.rows do %>
 							  <tr>
 							  	<td><%= row_header.question_content.statement%></td>
 									<% row_header.choice_answers.each do |a| %>
@@ -41,6 +41,6 @@
 	</div>
 <% end %>
 
-<%= render 'add_element_links', :survey_version => survey_version %>
-<%= render 'modals', :survey_version => survey_version %>
+<%= render 'shared/add_element_links', :survey_version => survey_version %>
+<%= render 'shared/modals', :survey_version => survey_version %>
 
