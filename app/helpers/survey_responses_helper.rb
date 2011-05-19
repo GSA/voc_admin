@@ -6,6 +6,8 @@ module SurveyResponsesHelper
       ChoiceAnswer.find(response.answer.to_i).answer
     when "TextQuestion"
       response.answer
+    else
+      ""
     end
   end
 end
