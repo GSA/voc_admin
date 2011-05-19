@@ -2,7 +2,6 @@ CommentToolApp::Application.routes.draw do
   resources :categories
   resources :survey_responses
   resources :raw_responses
-  resources :processed_responses
   resources :rules do
     get :do_now, :on => :member
     get :check_do_now, :on => :collection
