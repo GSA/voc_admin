@@ -10,14 +10,17 @@ gem 'thin'
 gem 'kaminari'
 gem 'delayed_job'
 
-group :development, :test do 
+group :development do 
 	gem 'ruby-debug19'
 	gem 'nifty-generators'
 	gem 'annotate-models'
 	gem 'metrical'
 	gem 'rails-erd'
+	gem 'bullet'
 end
+
 gem "mocha", :group => :test
+gem 'rspec-rails', :group => [:development, :test]
 
 group :mysql_db do
 	gem 'mysql2', '< 0.3'

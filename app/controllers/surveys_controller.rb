@@ -36,11 +36,11 @@ class SurveysController < ApplicationController
   # POST /surveys.xml
   def create
     @survey = Survey.new(params[:survey])
-    @version = @survey.survey_versions.build
-    
-    @version.major = 1
-    @version.minor = 0
-    @version.published = false
+    # @version = @survey.survey_versions.build
+    # 
+    # @version.major = 1
+    # @version.minor = 0
+    # @version.published = false
     
     # first_page = @version.pages.build
     # first_page.number = 1
