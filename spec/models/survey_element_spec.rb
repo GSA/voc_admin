@@ -63,4 +63,6 @@ describe SurveyElement do
     [element1.element_order, element2.element_order].should == [2,1]    
   end
   
+  it "should have another test"
+  
 end
