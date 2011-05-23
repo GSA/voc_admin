@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.6'
+gem 'rails', '3.0.7'
+gem 'rake', '0.8.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -9,6 +10,7 @@ gem 'jquery-rails'
 gem 'thin'
 gem 'kaminari'
 gem 'delayed_job'
+gem 'authlogic', :git => 'git://github.com/binarylogic/authlogic.git'
 
 group :development do 
 	gem 'ruby-debug19'

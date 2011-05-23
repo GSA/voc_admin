@@ -1,0 +1,15 @@
+one:
+  f_name: MyString
+  l_name: MyString
+  locked: false
+  email: MyString
+  crypted_password: MyString
+  password_salt: MyString
+
+two:
+  f_name: MyString
+  l_name: MyString
+  locked: false
+  email: MyString
+  crypted_password: MyString
+  password_salt: MyString

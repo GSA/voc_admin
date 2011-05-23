@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110406195219
+# Schema version: 20110520195018
 #
 # Table name: surveys
 #
@@ -9,6 +9,7 @@
 #  survey_type_id :integer(4)
 #  created_at     :datetime
 #  updated_at     :datetime
+#  archived       :boolean(1)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
