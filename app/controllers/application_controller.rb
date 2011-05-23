@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :require_user
   helper_method :current_user_session, :current_user
   
   private
@@ -7,6 +8,7 @@ class ApplicationController < ActionController::Base
       logger.debug "ApplicationController::current_user_session"
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
+      # return nil
     end
 
     def current_user
@@ -30,10 +32,10 @@ class ApplicationController < ActionController::Base
       if current_user
         store_location
         if @current_user_session.stale?
-          flash[:error] = "Your session has expired due to inactivity.  Please login again."
+          flash[:error] = "Your session has expired due to inactivity. Please login again."
         end
 
-        redirect_to appeals_url
+        redirect_to root_url
         return false
       end
     end

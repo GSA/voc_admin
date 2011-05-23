@@ -1,0 +1,29 @@
+<p class="pageTitle">Comment Tool Login</p>
+<% if @user_session.errors.any? %>
+	<div id="error_explanation" class="modalErrorBox">
+	  <p class="modalErrorTitle"><%= pluralize(@user_session.errors.count, "error") %> prohibited this login:</p>
+      <ul class="modalList">
+      <% @user_session.errors.full_messages.each do |msg| %>
+        <li class="modalList"><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <% if flash[:notice] -%>
+	<div id="notice">
+		<p><%= flash[:notice] %></p>
+	</div>
+<% end -%>
+
+<%= form_for @user_session, :url => {:action => "create"} do |f| %>
+	<p class="copyBold">
+		<%= f.label :email, "Email:"%><br />
+		<%= f.text_field :email %>
+	</p>
+	<p class="copyBoldMargin">
+		<%= f.label :password, "Password:" %><br />
+		<%= f.password_field :password %>
+	</p>
+	<p class="sumbitButton"><%= f.submit "Login" %></p>
+<% end %>

@@ -1,28 +1,34 @@
 <%= form_for @user do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br/>
-    <%= f.password_field :password%>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %><br/>
-    <%= f.password_field :password_confirmation%>
-  </p>
+	<% if @user.errors.any? %>
+		<div class="modalErrorBox">
+			<p class="modalErrorTitle"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</p>
+			<ul class="modalList">
+				<% @user.errors.full_messages.each do |msg| %>
+				  <li class="modalList"><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
 	
-  <p>
-    <%= f.label :f_name, "First Name"%><br />
+	<p class="copy">
+    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><br />
     <%= f.text_field :f_name %>
   </p>
-  <p>
-    <%= f.label :l_name, "Last Name" %><br />
+  <p class="copyBoldMargin">
+    <%= f.label :l_name, "Last Name: " %><br />
     <%= f.text_field :l_name %>
   </p>
-
-
-  <p><%= f.submit %></p>
+  <p class="copyBoldMargin">
+    <%= f.label :email, "Email: " %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p class="copyBoldMargin">
+    <%= f.label :password, "Password: " %><br/>
+    <%= f.password_field :password%>
+  </p>
+  <p class="copyBoldMargin">
+    <%= f.label :password_confirmation, "Password Confirmation: " %><br/>
+    <%= f.password_field :password_confirmation%>
+  </p>
+	<p class="sumbitButton"><%= f.submit %></p>
 <% end %>

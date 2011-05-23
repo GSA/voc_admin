@@ -1,24 +1,15 @@
-<% title "User" %>
-
-<p>
-  <strong>First Name:</strong>
-  <%= @user.f_name %>
+<p class="pageTitle">User Details</p>
+<p id="notice"><%= notice %></p>
+<p class="copyBold">
+  Name:
+  <span class="copy"><%= @user.f_name %> <%= @user.l_name %></span>
 </p>
-<p>
-  <strong>Last Name:</strong>
-  <%= @user.l_name %>
-</p>
-<p>
-  <strong>Locked:</strong>
-  <%= @user.locked %>
-</p>
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
+<p class="copyBoldMargin">
+  Email:
+  <span class="copy"><%= @user.email %></span>
 </p>
 
-<p>
-  <%= link_to "Edit", edit_user_path(@user) %> |
-  <%= link_to "Destroy", @user, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", users_path %>
-</p>
+<div class="pageNav">
+  <%= link_to "Edit", edit_user_path(@user), :class=>"pageNav" %> |
+  <%= link_to "View All", users_path, :class=>"pageNav" %>
+</div>

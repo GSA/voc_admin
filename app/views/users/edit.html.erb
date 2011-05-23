@@ -1,8 +1,7 @@
-<% title "Edit User" %>
+<p class="pageTitle">Edit User</p>
 
 <%= render 'form' %>
 
-<p>
-  <%= link_to "Show", @user %> |
-  <%= link_to "View All", users_path %>
-</p>
+<div class="pageNav">
+  <%= link_to "Cancel", user_path, :class => "pageNav" %>
+</div>

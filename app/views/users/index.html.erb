@@ -1,21 +1,25 @@
-<% title "Users" %>
+<p class="pageTitle">Users</p>
+<div class="pageNav-upper">
+	<%= link_to "New User", new_user_path, :class => "pageNav" %>
+</div>
+<p id="notice"><%= notice %></p>
 
-<table>
+<table id="usersTable">
   <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
+    <th>User Name</th>
+    <th colspan="4">Email</th>
   </tr>
   <% for user in @users %>
-    <tr>
-      <td><%= user.f_name %></td>
-      <td><%= user.l_name %></td>
-      <td><%= user.email %></td>
-      <td><%= link_to "Show", user %></td>
-      <td><%= link_to "Edit", edit_user_path(user) %></td>
-      <td><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
+    <tr class="<%= cycle('white','blue') %>">
+      <td class="col1-2"><%= user.f_name %> <%= user.l_name %></td>
+      <td class="col1-2"><%= user.email %></td>
+      <td class="col3-5"><%= link_to "Show", user %></td>
+      <td class="col3-5"><%= link_to "Edit", edit_user_path(user) %></td>
+      <td class="col3-5"><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New User", new_user_path %></p>
+<div class="pageNav">
+	<%= link_to "New User", new_user_path, :class => "pageNav" %>
+</div>
