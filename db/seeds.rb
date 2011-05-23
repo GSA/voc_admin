@@ -29,3 +29,11 @@ ExecutionTrigger.create! :id=>1, :name=>"add"
 ExecutionTrigger.create! :id=>2, :name=>"update"
 ExecutionTrigger.create! :id=>3, :name=>"delete"
 ExecutionTrigger.create! :id=>4, :name=>"nightly"
+
+puts "Creating user: sysadmin@ctacorp.com..."
+User.create!(:f_name => "System",
+						 :l_name => "Administrator",
+						 :email => "sysadmin@ctacorp.com", 
+						 :password => "password", 
+						 :password_confirmation => "password")
+
