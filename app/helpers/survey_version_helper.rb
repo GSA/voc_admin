@@ -14,7 +14,7 @@ module SurveyVersionHelper
 				down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true,
 				:class => "element_order_up", :title => "Move down" 
 		str +=link_to image_tag("red_x.png", :alt=>"Remove Element"), 
-				survey_survey_version_text_question_path(survey_version.survey, survey_version, element.assetable), :method => :delete, :confirm => "Are you sure?",
+				url_for([survey, survey_version, element.assetable]), :method => :delete, :confirm => "Are you sure?",
 				:remote => true, :class => "remove_question_link", :title => "Remove page element"   
   end
 end

@@ -18,7 +18,7 @@
 	<br />
 	<div id="columns">
 		<% 4.times do |i| %>
-      <%= render :partial => "shared/matrix_answers_fields", :locals => {:i => i}%>
+      <%= render :partial => "shared/matrix_answers_fields", :locals => {:i => i, :answer => nil}%>
 		<% end -%>
 		<span><%= link_to_add_matrix_answer "Add Answer" %></span>
 	</div>

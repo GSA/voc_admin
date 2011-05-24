@@ -60,7 +60,7 @@
 		            <% for row_header in element.assetable.rows do %>
 		              <tr>
 		                <td><%= row_header.question_content.statement%></td>
-		                <% row_header.choice_answers.each do |a| %>
+		                <% element.assetable.choice_questions.first.choice_answers.each do |a| %>
 										  <td>
 										  <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
                       <%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required, :class => "required_question" %>

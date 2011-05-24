@@ -1,7 +1,10 @@
-<%= form_for [@survey, @survey_version, @matrix_question], :remote => true do |f| %>
+<h2>Edit Matrix Question</h2>
+<%= form_for [@survey, @survey_version, @matrix_question], :remote => true, :html => {:class => 'question_edit_form'} do |f| %>
   <div class="validation_errors"></div>
+	
   <%= f.label :statement, "Directions:" %><br />
   <%= f.text_area :statement, :rows => 3 %>
+	
   <br /><br />
   <div id="rows">
     <%= f.fields_for :choice_questions do |builder| %>
@@ -11,12 +14,14 @@
     <span><%= link_to_add_fields "Add Question", f, :choice_questions %></span>
   </div>
   <br />
+
   <div id="columns">
-    <% 4.times do |i| %>
-      <%= render :partial => "shared/matrix_answers_fields", :locals => {:i => i}%>
-    <% end -%>
-    <span><%= link_to_add_matrix_answer "Add Answer" %></span>
-  </div>
+  	<% @matrix_question.choice_questions.includes(:choice_answers).first.choice_answers.each_with_index do |ca, index| %>
+		  <%= render 'shared/matrix_answers_fields', :i => index, :answer => ca.answer%>
+		<% end %>
+	</div>
+	<span><%= link_to_add_matrix_answer "Add Answer" %>
+	
   <br/><br/>
   <%= f.submit "Update Matrix Question" %>
   <%= link_to "Cancel", nil, :class => "simplemodal-close" %>

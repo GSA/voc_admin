@@ -3,8 +3,8 @@ CommentToolApp::Application.routes.draw do
   get 'logout' => 'user_sessions#destroy', :as => :logout
   resources :user_sessions
   
-  resources :users
-
+	resources :users
+	
   resources :surveys
 
   resources :categories

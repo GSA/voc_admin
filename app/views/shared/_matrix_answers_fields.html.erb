@@ -1,6 +1,8 @@
 <p class="matrix_answer_fields"> 
       <%= label_tag "choice_answer_attributes[#{i}][answer]", "Answer: " %>
-      <%= text_field_tag "choice_answer_attributes[#{i}][answer]" %>
+      <%= text_field_tag "choice_answer_attributes[#{i}][answer]", answer.presence %>
+			<%#= hidden_field_tag "choice_answer_attributes[#{i}][id]", id.presence %>
+			<%#= hidden_field_tag "choice_answer_attributes[#{i}][_destroy]" %>
 			<%= link_to_function image_tag("red_x.png", :alt=>"Remove"), "remove_matrix_answer(this)", :class=>"surveyNav" %>
 			<br/>
 </p>

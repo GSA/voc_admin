@@ -11,7 +11,7 @@ module ApplicationHelper
   end
   
   def link_to_add_matrix_answer(name)
-    fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer"})
+    fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer", :answer => nil})
     
     link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"surveyNav")
   end
