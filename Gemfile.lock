@@ -67,6 +67,7 @@ GEM
     flay (1.4.2)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
+    flexmock (0.9.0)
     flog (2.5.1)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -199,6 +200,7 @@ DEPENDENCIES
   authlogic!
   bullet
   delayed_job
+  flexmock
   jquery-rails
   kaminari
   metrical
