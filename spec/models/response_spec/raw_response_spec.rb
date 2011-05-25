@@ -5,7 +5,8 @@ describe RawResponse do
 		@valid_raw_response = RawResponse.new(:client_id => 1, :answer => "test",
 			:question_content => mock_model(QuestionContent), 
 			:status_id => 1, 
-			:survey_response => mock_model(SurveyResponse))
+			:survey_response => mock_model(SurveyResponse, :survey_version_id => 1)
+    )
 	end
 	
 	it "should be valid" do
@@ -17,13 +18,21 @@ describe RawResponse do
 		@valid_raw_response.should_not be_valid
 	end
 	
-	it "is not valid if the client id isnt unique in the scop of a question content" 
+	it "is not valid if the client id isnt unique in the scop of a question content" do
+   @valid_raw_response.dup.save!
+   @valid_raw_response.should_not be_valid
+  end
 	
-	it "is valid if the client id isnt unquie outside of the scope of a question content"
+	it "is valid if the client id isnt unquie outside of the scope of a question content" do
+   @valid_raw_response.dup.save!
+   @valid_raw_response.question_content = mock_model(QuestionContent)
+   @valid_raw_response.should be_valid
+  end
 	
-	it "is not valid without an answer"
-	
-	it "is valid with blank string answer"
+	it "is not valid without an answer" do
+   @valid_raw_response.answer = nil
+   @valid_raw_response.should_not be_valid
+  end
 	
 	it "is not valid without a question content" do
 		@valid_raw_response.question_content = nil
