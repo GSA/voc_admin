@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe TextQuestion do
   
@@ -14,5 +14,11 @@ describe TextQuestion do
     @text_question.should be_valid
   end
   
+  it "is not valid without a presence (answer_type)" do
+		@text_question.answer_type = nil
+		@text_question.should_not be_valid
+	end
+	
+	it "is not valid without a presence (question_content)" 
   
 end
