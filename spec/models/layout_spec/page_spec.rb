@@ -100,5 +100,12 @@ describe Page do
     version.pages.map(&:page_number).should == [1,2,3]
   end
   
+  it "should clone it self to new survey version" do
+    @page.save!
+    clone_page = @page.clone_me(mock_model(SurveyVersion))
+    clone_page.page_number.should == @page.page_number
+    clone_page.style_id.should == @page.style_id
+    clone_page.clone_of_id.should == @page.id
+  end
   
 end

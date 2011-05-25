@@ -34,12 +34,16 @@ describe Survey do
     survey.survey_versions.first.version_number.should == "1.0"
   end
   
-  it "should create version 2.0" do
+  it "should create a new minor version with out source version specified" do
     survey = Survey.create! @attr
-    survey.create_new_major_version
-    survey.survey_versions.order('major desc').first.version_number.should == "2.0"
+    survey.create_new_minor_version
+    survey.survey_versions.should have(2).records
   end
   
-  it "should create a new minor version 1.1"
+  it "should create a new minor version with source version specified" do
+    survey = Survey.create! @attr
+    survey.create_new_minor_version(survey.survey_versions.first.id)
+    survey.survey_versions.should have(2).records
+  end
   
 end

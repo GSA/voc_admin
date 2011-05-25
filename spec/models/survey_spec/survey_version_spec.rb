@@ -36,5 +36,12 @@ describe SurveyVersion do
   
   it "should reorder all survey elements" 
   
-  it "should clone itself to create a new minor version"
+  it "should clone itself to create a new minor version" do
+    @survey.survey_versions.last.clone_me
+    @survey.survey_versions.should have(2).records
+    @survey.survey_versions.first.major.should == @survey.survey_versions.last.major
+    @survey.survey_versions.last.minor.should == (@survey.survey_versions.first.minor + 1)
+    @survey.survey_versions.last.published == false
+    @survey.survey_versions.first.notes == @survey.survey_versions.last.notes
+  end
 end

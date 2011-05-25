@@ -94,4 +94,10 @@ describe SurveyElement do
     element_3.reload.element_order.should == 4
   end
   
+  it "should clone it self" do
+    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
+    asset_2 = Asset.create! :snippet => "Snippet2"
+    clone_sv = @version.clone_me
+    clone_sv.survey_elements.should have(@version.survey_elements.size).records
+  end
 end
