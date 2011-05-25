@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe MatrixQuestion do
   before(:each) do
+    choice_answers = [mock_model(ChoiceAnswer)]
+    @choice_questions = [mock_model(ChoiceQuestion, :choice_answers => choice_answers), mock_model(ChoiceQuestion, :choice_answers => choice_answers)]
+    @choice_questions.stub(:includes).and_return(@choice_questions)
     @valid_matrix_question = MatrixQuestion.new(:statement => "test")
+    @valid_matrix_question.stub(:choice_questions).and_return(@choice_questions)
   end
   
   it "should be valid with valid attributes" do

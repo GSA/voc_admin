@@ -50,9 +50,6 @@ class MatrixQuestionsController < ApplicationController
     
     @matrix_question = MatrixQuestion.find(params[:id])
     
-    @matrix_question.choice_questions.each {|x| x.choice_answers.each(&:destroy)}
-    @matrix_question.reload
-    
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}

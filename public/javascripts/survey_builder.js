@@ -67,6 +67,7 @@ $(function(){
 	});
 	
 	
+	
 	$("#link_to_new_asset").live('click', function(){
 		$("#new_asset_modal").modal();
 		return false;
@@ -114,6 +115,15 @@ $(function(){
 	$(".question_edit_form").live("ajax:success", function(event, data, status, xhr){
 		$.modal.close();
 		$("#question_list").html(data);
+	});
+	
+	$(".question_edit_form").live("ajax:error", function(event, data, status, xhr){
+		$.modal.close();
+		$(".question_edit_form div.validation_errors").html(data.responseText);
+		$("#edit_modal").modal({onClose:function(){
+			$("#new_choice_question div.validation_errors").html("");
+			$.modal.close();
+		}, persist:true});
 	});
 	
 	$("#new_choice_question").live("ajax:success", function(event, data, status, xhr){
