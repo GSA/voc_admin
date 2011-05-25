@@ -62,7 +62,7 @@ $(function(){
 	
 	/* Modal control functions */
 	$("a.edit_asset_link").live('ajax:success', function(event, data, status, xhr){
-		$("#edit_modal").html(data).modal();
+		$("#edit_modal").html(data).modal({autoResize:true,maxHeight:'90%',minWidth:'300px'});
 		return false
 	});
 	

@@ -1,6 +1,6 @@
 <%= form_for [@survey, @survey_version, @asset], :remote => true, :html => {:class => "question_edit_form"} do |f| %>
     
-  <p class="modalTitle"><%= f.label :snippet %></p>
+  <p class="modalTitle">Edit Snippet</p>
   <div class="validation_errors"></div>
   <%= f.text_area :snippet %>
   <br/>
