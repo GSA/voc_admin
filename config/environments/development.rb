@@ -24,15 +24,15 @@ CommentToolApp::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   # Set up bullet config
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.alert = true
-    Bullet.bullet_logger = true
-    Bullet.console = true
-  #  Bullet.growl = true
-    Bullet.rails_logger = true
-    Bullet.disable_browser_cache = true
-  end
+#  config.after_initialize do
+#    Bullet.enable = true
+#    Bullet.alert = true
+#    Bullet.bullet_logger = true
+#    Bullet.console = true
+#  #  Bullet.growl = true
+#    Bullet.rails_logger = true
+#    Bullet.disable_browser_cache = true
+#  end
 end
 
 

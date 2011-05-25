@@ -6,7 +6,11 @@ describe SurveyElement do
     @survey = Survey.create! :name => "Test Survey", :description => "RSpec Survey"
     @version = @survey.survey_versions.first
     @page = @version.pages.create! :page_number => @version.next_page_number
-    @asset = Asset.create! :snippet => "HTML Snippet"    
+    @asset = Asset.create! :snippet => "HTML Snippet"  
+  end
+  
+  it "should be valid" do
+    @version.survey_elements.new(:assetable => @asset, :page => @page).should be_valid
   end
   
   it "should have a page" do
@@ -63,6 +67,31 @@ describe SurveyElement do
     [element1.element_order, element2.element_order].should == [2,1]    
   end
   
-  it "should have another test"
+  it "should call set_element_order before validation" do
+    element = @version.survey_elements.new(:assetable => mock_model(Asset))
+    element.should_receive(:set_element_order).once
+    element.valid?
+  end
+  
+  it "should set element_order to the next number" do
+    element = SurveyElement.new(:page => @page, :survey_version => @version)
+    # element.send(:set_element_order)
+    # element.element_order.should == 1
+    element.save!
+    element.element_order.should == 1
+    element_2 = SurveyElement.new(:page => @page, :survey_version => @version)
+    element_2.save!
+    element_2.element_order.should == 2
+    
+    page_2 = @version.pages.create! :page_number => @version.next_page_number
+    element_3 = SurveyElement.new(:page => page_2, :survey_version => @version)
+    element_3.save!
+    element_3.element_order.should == 3
+    
+    element_4 = SurveyElement.new(:page => @page, :survey_version => @version)
+    element_4.save!
+    element_4.element_order.should == 3
+    element_3.reload.element_order.should == 4
+  end
   
 end

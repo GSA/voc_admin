@@ -34,7 +34,7 @@ class MatrixQuestionsController < ApplicationController
   end
 
   def edit
-    @matrix_question = @survey_version.matrix_questions.find(params[:id])
+    @matrix_question = @survey_version.matrix_questions.includes(:choice_questions => [:question_content, :choice_answers]).find(params[:id])
     
     respond_to do |format|
       format.html #
