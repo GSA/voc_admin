@@ -4,5 +4,5 @@
    <%= f.text_field :value%>
 	 
 	  <%= f.hidden_field :_destroy, :value => "" %>
-    <%= link_to_function image_tag("red_x.png", :alt=>"Remove Element"), "remove_fields(this)" %>
+    <%= link_to_function image_tag("red_x.png", :alt=>"Remove Element", :class=>"redX"), "remove_fields(this)" %>
    <br /><br />

@@ -3,6 +3,6 @@
       <%= text_field_tag "choice_answer_attributes[#{i}][answer]", answer.presence %>
 			<%#= hidden_field_tag "choice_answer_attributes[#{i}][id]", id.presence %>
 			<%#= hidden_field_tag "choice_answer_attributes[#{i}][_destroy]" %>
-			<%= link_to_function image_tag("red_x.png", :alt=>"Remove"), "remove_matrix_answer(this)", :class=>"surveyNav" %>
+			<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redX"), "remove_matrix_answer(this)", :class=>"surveyNav" %>
 			<br/>
 </p>

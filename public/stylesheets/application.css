@@ -544,3 +544,19 @@ span.pageNum {
 	max-height: 100%;
 	overflow: auto;
 }
+
+.redXpage{
+	vertical-align: top;
+	*margin: -13px 0px 0px;
+	_margin: 0px;
+}
+
+.redX {
+	padding: 0px 0px 0px 6px;
+}
+
+.redXmatrix {
+	padding: 0px 0px 0px 10px;
+	margin: 15px 0px 0px;
+	text-align: right;
+}

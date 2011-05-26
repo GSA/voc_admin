@@ -3,8 +3,8 @@
 <%= f.label :required %>
 
 <% if defined? matrix_question %>
-<%= f.hidden_field "_destroy" %>
-<%= link_to_function "Remove", "remove_fields(this)" %>
+	<%= f.hidden_field "_destroy" %>
+	<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redXmatrix"), "remove_fields(this)" %>
 <% end %>
 <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
 <div id="flow_control_settings" style="display:inline">
