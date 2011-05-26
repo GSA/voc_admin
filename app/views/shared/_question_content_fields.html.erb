@@ -2,6 +2,10 @@
 <%= f.check_box :required, {:checked => false}, true, false %>
 <%= f.label :required %>
 
+<% if defined? matrix_question %>
+<%= f.hidden_field "_destroy" %>
+<%= link_to_function "Remove", "remove_fields(this)" %>
+<% end %>
 <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
 <div id="flow_control_settings" style="display:inline">
   <%= f.hidden_field :flow_control, :value => false %>

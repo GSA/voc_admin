@@ -1,8 +1,6 @@
 <% f.object.build_question_content if f.object.new_record? %>
 
 <div>
-<%= f.hidden_field "_destroy" %>
-<%= link_to_function "Remove", "remove_fields(this)" %>
 <%= f.fields_for :question_content do |content_builder| %>
   <%= render :partial => 'shared/question_content_fields', :locals => {:f => content_builder, :matrix_question => true }%>    
 <% end %>
