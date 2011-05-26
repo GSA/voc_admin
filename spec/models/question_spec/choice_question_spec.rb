@@ -13,7 +13,17 @@ describe ChoiceQuestion do
   end
   
   it "should clone it self" do
-    survey_version = mock(SurveyVersion)
+    
+    page = mock_model(Page)
+    clone_page =  mock_model(Page, :clone_of_id=>page.id)
+    pages = mock("Page collection", :find_by_clone_of_id=>clone_page)
+    survey_version = mock_model(SurveyVersion)
+    survey_version.stub!(:pages).and_return(pages)
+    qc = mock_model(QuestionContent, :questionable => @choice_question, :statement => "RSpec ChoiceQuestion")
+    qc.stub!(:attributes).and_return({:statement=>"RSpec ChoiceQuestion"})
+    @choice_question.stub!(:survey_element).and_return(mock_model(SurveyElement, :attributes=>{}, :page_id=>page.id))
+    @choice_question.question_content = nil #remove the qc so we can stub it instead
+    @choice_question.stub(:question_content).and_return(qc)
     @choice_question.save!
     @choice_question.choice_answers.create!(:answer => "Test")
     QuestionContentObserver.instance.stub!(:after_create).and_return(true)
