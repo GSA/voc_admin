@@ -67,7 +67,6 @@ GEM
     flay (1.4.2)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
-    flexmock (0.9.0)
     flog (2.5.1)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -106,7 +105,6 @@ GEM
       activesupport
       metric_fu (~> 2.1.1)
     mime-types (1.16)
-    mocha (0.9.12)
     mysql2 (0.2.7)
     nifty-generators (0.4.6)
     polyglot (0.3.1)
@@ -200,11 +198,9 @@ DEPENDENCIES
   authlogic!
   bullet
   delayed_job
-  flexmock
   jquery-rails
   kaminari
   metrical
-  mocha
   mysql2 (< 0.3)
   nifty-generators
   rails (= 3.0.7)

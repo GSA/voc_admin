@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe TextQuestion do
-  include FlexMock::TestCase
   before(:each) do
     @text_question = TextQuestion.new(
       :answer_type => "area"
@@ -57,7 +56,7 @@ describe TextQuestion do
     @text_question.question_content = nil
     @text_question.stub(:question_content).and_return(qc)
     @text_question.save!
-    flexmock(QuestionContentObserver.instance, :after_create => true)
+    QuestionContentObserver.instance.stub!(:after_create).and_return(true)
     clone_question = @text_question.clone_me(survey_version)
     clone_question.answer_type.should == @text_question.answer_type
     clone_question.clone_of_id.should == @text_question.id

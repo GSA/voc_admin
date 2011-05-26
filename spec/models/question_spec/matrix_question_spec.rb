@@ -3,7 +3,8 @@ require 'spec_helper'
 describe MatrixQuestion do
   before(:each) do
     choice_answers = [mock_model(ChoiceAnswer)]
-    @choice_questions = [mock_model(ChoiceQuestion, :choice_answers => choice_answers), mock_model(ChoiceQuestion, :choice_answers => choice_answers)]
+    @choice_questions = [mock_model(ChoiceQuestion, :choice_answers => choice_answers, :question_content => mock_model(QuestionContent, :statement => "Test")),
+       mock_model(ChoiceQuestion, :choice_answers => choice_answers, :question_content => mock_model(QuestionContent, :statement => "Test2"))]
     @choice_questions.stub(:includes).and_return(@choice_questions)
     @valid_matrix_question = MatrixQuestion.new(:statement => "test")
     @valid_matrix_question.stub(:choice_questions).and_return(@choice_questions)
@@ -19,6 +20,7 @@ describe MatrixQuestion do
 	end
 	
   it "should clone itself" do
+    pending "Waiting on Ben's code"
     survey_version = mock_model(SurveyVersion)
     @valid_matrix_question.save!
     choice_question = mock_model(ChoiceQuestion)
@@ -29,6 +31,7 @@ describe MatrixQuestion do
   end
   
   it "should clone its related choice questions" do
+    pending "Waiting on Ben's code"
     survey_version = mock_model(SurveyVersion)
     choice_question = ChoiceQuestion.new(:answer_type => "check")
     qc = mock_model(QuestionContent, :questionable => choice_question, :statement => "RSpec ChoiceQuestion")

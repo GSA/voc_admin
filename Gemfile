@@ -21,8 +21,6 @@ group :development do
 	gem 'bullet'
 end
 
-gem "mocha", :group => :test
-gem "flexmock", :group => :test
 gem 'rspec-rails', :group => [:development, :test]
 
 group :mysql_db do
