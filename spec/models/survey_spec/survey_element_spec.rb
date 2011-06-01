@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SurveyElement do
+  fixtures(:all)
   
   before(:each) do
     @survey = Survey.create! :name => "Test Survey", :description => "RSpec Survey"
@@ -99,5 +100,18 @@ describe SurveyElement do
     asset_2 = Asset.create! :snippet => "Snippet2"
     clone_sv = @version.clone_me
     clone_sv.survey_elements.should have(@version.survey_elements.size).records
+  end
+  
+  it "should remove the display field when it is destroyed" do
+    ExecutionTrigger.create! :id => 1, :name => "add"
+    text_question = TextQuestion.create! :answer_type => "field", :question_content_attributes => {:statement => "test"}, :survey_element_attributes => {:page_id => @page.id, :survey_version => @version}
+    @version.survey_elements.should have(1).element
+    element = text_question.survey_element
+    @version.display_fields.should have(1).display_field
+    
+    text_question.destroy
+    
+    @version.survey_elements.should have(0).elements
+    @version.display_fields.should have(0).display_fields
   end
 end
