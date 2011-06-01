@@ -50,21 +50,21 @@
 				<% page.elements_with_includes.each do |element| %>
 					<li class="outter">
 						<% if element.assetable_type == "MatrixQuestion" %>
+							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
+	            <%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.required, :class => "required_question" %>
 							<table>
 		            <tr>
 		              <th></th>
-		              <% for column_header in element.assetable.column_headers do %>
-		               <th><%= column_header %></th>
+		              <% for column in element.assetable.column_headers do %>
+		               <th><%= column %></th>
 		              <% end -%>
 		            </tr>
-		            <% for row_header in element.assetable.rows do %>
+		            <% for row in element.assetable.row_headers do %>
 		              <tr>
-		                <td><%= row_header.question_content.statement%></td>
-		                <% element.assetable.choice_questions.first.choice_answers.each do |a| %>
+		                <td><%= row %></td>
+		                <% element.assetable.row_headers.each do |a| %>
 										  <td>
-										  <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
-                      <%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required, :class => "required_question" %>
-		                  <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false %>
+		                  <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer][]", a, false %>
 											</td>
 		                <% end %>
 		              </tr>

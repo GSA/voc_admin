@@ -16,7 +16,7 @@
 		<td class="col1-2"><%= version.published ? "Yes" : "No" %></td>
 		<td class="col3"><%= version.created_at %></td>
 		<td class="col4-7"><%= link_to 'Show', survey_survey_version_path(@survey, version) %></td>
-		<td class="col4-7"><%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %></td>
+		<td class="col4-7"><%= version.published ? 'Edit' : (link_to 'Edit', edit_survey_survey_version_path(@survey, version)) %></td>
 		<td class="col4-7"><%= link_to 'Destroy', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
 		<td class="col4-7"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, version), :confirm => 'Are you sure?' %></td>
 	</tr>

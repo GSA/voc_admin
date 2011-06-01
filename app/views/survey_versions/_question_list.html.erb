@@ -20,15 +20,15 @@
 						<table>
 							<tr>
 								<th></th>
-								<% for column_header in element.assetable.column_headers do  %>
-								 <th><%= column_header %></th>
+								<% for header in element.assetable.column_headers do  %>
+								 <th><%= header %></th>
 								<% end -%>
 							</tr>
-							<% for row_header in element.assetable.rows do %>
+							<% for row_header in element.assetable.row_headers do %>
 							  <tr>
-							  	<td><%= row_header.question_content.statement%></td>
-									<% row_header.choice_answers.each do |a| %>
-									  <td><%= radio_button_tag "empty", a.answer, false, :disabled => true %></td>
+							  	<td><%= row_header%></td>
+									<% element.assetable.row_headers.each do |a| %>
+									  <td><%= radio_button_tag "empty", a, false, :disabled => true %></td>
 									<% end %>
 							  </tr>
 							<% end -%>
