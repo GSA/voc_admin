@@ -25,6 +25,9 @@ class SurveyVersionsController < ApplicationController
       if @survey.archived || @survey_version.archived
         flash[:error] = "The survey you are trying to access has been removed."
         format.html {redirect_to(surveys_path)}
+      elsif @survey_version.published
+        flash[:error] = "You cannot edit a published version"
+        format.html { redirect_to(survey_survey_versions_path(@survey))}
       else
         format.html # show.html.erb
       end
