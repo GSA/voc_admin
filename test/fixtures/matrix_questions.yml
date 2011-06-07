@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110512162149
+# Schema version: 20110524182200
 #
 # Table name: matrix_questions
 #
@@ -8,6 +8,7 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  survey_version_id :integer(4)
+#  clone_of_id       :integer(4)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

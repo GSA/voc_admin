@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110422135557
+# Schema version: 20110524182200
 #
 # Table name: criteria
 #
@@ -11,6 +11,7 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #  source_type    :string(255)     not null
+#  clone_of_id    :integer(4)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

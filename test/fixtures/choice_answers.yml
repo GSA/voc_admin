@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110411142125
+# Schema version: 20110524182200
 #
 # Table name: choice_answers
 #
@@ -10,6 +10,7 @@
 #  next_page_id       :integer(4)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  clone_of_id        :integer(4)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

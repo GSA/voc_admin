@@ -1,4 +1,4 @@
-<%= f.label :statement, "Question: "%>
+<%= f.label :statement, (f.object.questionable_type == "MatrixQuestion" ? "Statement: " : "Question: ")%>
 <%= f.check_box :required, {:checked => false}, true, false %>
 <%= f.label :required %>
 

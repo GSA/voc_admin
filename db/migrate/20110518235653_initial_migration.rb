@@ -124,20 +124,11 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    # Old matrix question schema
-    # create_table "matrix_questions", :force => true do |t|
-    #   t.text     "statement"
-    #   t.datetime "created_at"
-    #   t.datetime "updated_at"
-    #   t.integer  "survey_version_id"
-    # end
-    
     create_table "matrix_questions", :force => true do |t|
-      t.text "rows"
-      t.text "columns"
-      t.string "answer_type"
+      t.text     "statement"
       t.datetime "created_at"
       t.datetime "updated_at"
+      t.integer  "survey_version_id"
     end
 
     create_table "new_responses", :force => true do |t|

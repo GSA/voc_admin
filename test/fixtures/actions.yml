@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110427155355
+# Schema version: 20110524182200
 #
 # Table name: actions
 #
@@ -10,6 +10,7 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  value_type       :string(255)
+#  clone_of_id      :integer(4)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

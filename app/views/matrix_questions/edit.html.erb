@@ -1,9 +1,10 @@
 <p class="modalTitle">Edit Matrix Question</p>
 <%= form_for [@survey, @survey_version, @matrix_question], :remote => true, :html => {:class => 'question_edit_form'} do |f| %>
   <div class="validation_errors"></div>
-	
-  <%= f.label :statement, "Directions:" %><br />
-  <%= f.text_area :statement, :rows => 3 %>
+  
+	<%= f.fields_for :question_content do |builder| %>
+	 <%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
+	<% end -%>
 	
   <br /><br />
   <div id="rows">

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110407172327
+# Schema version: 20110524182200
 #
 # Table name: text_questions
 #
@@ -7,6 +7,7 @@
 #  answer_type :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
+#  clone_of_id :integer(4)
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
