@@ -26,7 +26,7 @@ class SurveyVersionsController < ApplicationController
         flash[:error] = "The survey you are trying to access has been removed."
         format.html {redirect_to(surveys_path)}
       else
-        format.html # show.html.erb
+        format.html # edit.html.erb
       end
     end
   end

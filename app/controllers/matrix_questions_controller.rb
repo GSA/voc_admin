@@ -21,6 +21,13 @@ class MatrixQuestionsController < ApplicationController
 
     @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question].merge({:survey_version_id => @survey_version.id}))
     @matrix_question.survey_element.survey_version_id = @survey_version.id
+    
+    # This sets a virtual attribute on each choice question's question content in order to create the correct name for display fields in the
+    # after_create observer to get around the issue of the choice questions being saved before the matrix question's question content is saved
+    # in the transaction.  This was causing matrix_question.statement to return an error
+    @matrix_question.choice_questions.each do |cq|
+      cq.question_content.matrix_statement = @matrix_question.question_content.statement
+    end
   
     respond_to do |format|
       if @matrix_question.save

@@ -36,3 +36,9 @@
 <div id="question_list">
 	<%= render :partial => 'question_list', :locals => {:survey_version => @survey_version, :survey => @survey} %>
 </div>
+
+<div class="pageNav">
+  <%= link_to "Show Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNav" %> | 
+	<%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNav" %> | 
+  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNav" %>
+</div>
