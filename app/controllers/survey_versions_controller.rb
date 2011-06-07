@@ -20,15 +20,9 @@ class SurveyVersionsController < ApplicationController
     end
   end
   
-  def edit
-    respond_to do |format|
-      if @survey.archived || @survey_version.archived
-        flash[:error] = "The survey you are trying to access has been removed."
-        format.html {redirect_to(surveys_path)}
-      else
-        format.html # edit.html.erb
-      end
-    end
+  def edit  
+    redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
+    redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.published
   end
   
   def destroy

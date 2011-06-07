@@ -133,6 +133,8 @@
 <% end -%>
 
 <div class="pageNav">
-	<%= link_to "Edit Survey", edit_survey_survey_version_path(@survey, @survey_version), :class => "pageNav" %> |
+	<% unless @survey_version.published %>
+		<%= link_to "Edit Survey", edit_survey_survey_version_path(@survey, @survey_version), :class => "pageNav" %> |
+	<% end -%>
 	<%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNav" %>
 </div>

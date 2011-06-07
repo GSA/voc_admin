@@ -78,7 +78,7 @@ class RulesController < ApplicationController
   end
   
   def build_source_array
-    @source_array = @survey_version.questions.collect {|q| ["#{q.assetable.question_content.id},QuestionContent", q.assetable.question_content.statement + "(question)"]}
+    @source_array = @survey_version.sources
     @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})   
   end
 end

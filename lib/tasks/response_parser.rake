@@ -158,6 +158,7 @@ namespace :response_parser do
     loop do
       sr = SurveyResponse.get_next_response(who_am_i, "new")
       unless sr
+        log_event("No new messages sleeping", 1)
         sleep 5
         next
       end
