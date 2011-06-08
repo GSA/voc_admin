@@ -52,4 +52,17 @@ describe Rule do
 		@valid_rule.stub(:execution_trigger_ids).and_return([])
 		@valid_rule.should_not be_valid
 	end
+	
+	it "should clone it self" do
+    survey_version = mock_model(SurveyVersion)
+    DisplayField.stub!(:find_by_survey_version_id_and_clone_of_id).and_return(mock_model(DisplayField))
+	  @valid_rule.stub!(:criteria).and_return([mock_model(Criterion, :attributes=>{})])
+    @valid_rule.stub!(:actions).and_return([mock_model(Action, :attributes=>{:value=>"some value"}, :display_field_id=>1)])
+	  @valid_rule.stub!(:execution_triggers).and_return([mock_model(ExecutionTrigger)])
+	  @valid_rule.save!
+	  clone_rule = @valid_rule.clone_me(survey_version)
+	  clone_rule.clone_of_id.should == @valid_rule.id
+    clone_rule.criteria.size.should == @valid_rule.criteria.size
+	  clone_rule.actions.size.should == @valid_rule.actions.size
+	end
 end
