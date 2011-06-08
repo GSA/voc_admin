@@ -57,6 +57,13 @@ class SurveyVersionsController < ApplicationController
     end
   end
   
+  def clone_version
+    @minor_version = @survey_version.clone_me
+
+    redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
+
+  end
+  
   private
   
   def get_survey

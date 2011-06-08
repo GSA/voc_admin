@@ -17,6 +17,7 @@ CommentToolApp::Application.routes.draw do
   resources :surveys do
     resources :survey_versions do
       get :publish, :on => :member, :as => "publish"
+      get :clone_version, :on => :member, :as => "clone"
       resources :rules do
         get :do_now, :on => :member
       end
