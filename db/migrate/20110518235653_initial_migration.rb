@@ -125,7 +125,6 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     create_table "matrix_questions", :force => true do |t|
-      t.text     "statement"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.integer  "survey_version_id"
