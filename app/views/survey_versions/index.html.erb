@@ -8,7 +8,7 @@
 	<tr>
 		<th>Version</th>
 		<th>Published</th>
-		<th colspan="5">Created At</th>
+		<th colspan="6">Created At</th>
 	</tr>
 	<% for version in @survey_versions %>
 	<tr class="<%= cycle('white','blue') %>">
@@ -19,6 +19,7 @@
 		<td class="col4-7"><%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) unless version.published %></td>
 		<td class="col4-7"><%= link_to 'Destroy', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
 		<td class="col4-7"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, version), :confirm => 'Are you sure?' %></td>
+		<td class="col4-7"><%= link_to "Clone", clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version"  %></td>
 	</tr>
 	<% end %>
 </table>

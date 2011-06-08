@@ -7,7 +7,9 @@ describe MatrixQuestion do
       mock_model(ChoiceQuestion, :choice_answers => @choice_answers, :attributes=>{:answer_type=>"check"}, :question_content => mock_model(QuestionContent, :attributes=>{"statement"=>"Test"}, :statement => "Test")),
       mock_model(ChoiceQuestion, :choice_answers => @choice_answers, :attributes=>{:answer_type=>"check"}, :question_content => mock_model(QuestionContent, :attributes=>{"statement"=>"Test2"}, :statement => "Test2"))]
     @choice_questions.stub(:includes).and_return(@choice_questions)
-    @valid_matrix_question = MatrixQuestion.new(:statement => "test")
+    @valid_matrix_question = MatrixQuestion.new
+    qc = mock_model(QuestionContent, :statement => "MQ", :required => false, :[]= => true, :questionable_type => "MatrixQuestion")
+    @valid_matrix_question.question_content = qc
     @valid_matrix_question.stub(:choice_questions).and_return(@choice_questions)
   end
   
@@ -15,10 +17,10 @@ describe MatrixQuestion do
     @valid_matrix_question.should be_valid
   end
   
-  it "is not valid without a presence (statement)" do
-		@valid_matrix_question.statement = nil
-		@valid_matrix_question.should_not be_valid
-	end
+  it "should not be valid without a question content" do
+    @valid_matrix_question.question_content = nil
+    @valid_matrix_question.should_not be_valid
+  end
   
   it "should clone it self" do
     page = mock_model(Page)

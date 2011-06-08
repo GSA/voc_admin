@@ -44,4 +44,8 @@ describe SurveyVersion do
     @survey.survey_versions.last.published == false
     @survey.survey_versions.first.notes == @survey.survey_versions.last.notes
   end
+  
+  it "should return a source array to be used in rule creation"
+  
+  it "should return an array of question_content ids "
 end
