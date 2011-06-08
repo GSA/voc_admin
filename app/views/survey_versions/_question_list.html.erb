@@ -5,7 +5,7 @@
 		<span class="copyBold">Page <%= page.page_number %></span>
 			<%= page_management_links(survey_version.survey, survey_version, page) %>
 		<ol class="outter">
-		<% for element in page.elements_with_includes %>
+		<% for element in page.survey_elements.includes(:assetable) %>
 			<li class="outter">
 				<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.statement %> 
 				<%= "*" if element.assetable.try(:required) %> (<%= element.assetable.answer_type %>)</span>
