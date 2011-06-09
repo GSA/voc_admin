@@ -5,9 +5,9 @@
 		<span class="copyBold">Page <%= page.page_number %></span>
 			<%= page_management_links(survey_version.survey, survey_version, page) %>
 		<ol class="outter">
-		<% for element in page.survey_elements.includes(:assetable) %>
+		<% for element in page.survey_elements.order(:element_order).includes(:assetable) %>
 			<li class="outter">
-				<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.statement %> 
+				<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.statement %>
 				<%= "*" if element.assetable.try(:required) %> (<%= element.assetable.answer_type %>)</span>
 				<%= element_management_links(survey_version.survey, survey_version, element)%>
 				<% if element.assetable_type == "ChoiceQuestion" %>
