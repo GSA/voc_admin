@@ -50,10 +50,11 @@ class SurveyVersionsController < ApplicationController
   end
   
   def publish
-    @survey_version.publish_me
-    respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey)) }
-      format.xml  { head :ok }
+    if @survey_version.questions.empty?
+      redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
+    else
+      @survey_version.publish_me
+      redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
     end
   end
   
