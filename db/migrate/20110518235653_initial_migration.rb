@@ -32,7 +32,7 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "choice_answers", ["choice_question_id"], :name => "index_choice_answers_on_choice_question_id"
+    add_index "choice_answers", ["choice_question_id"], :name => "answers_choice_question_id"
 
     create_table "choice_questions", :force => true do |t|
       t.boolean  "multiselect"
@@ -60,7 +60,7 @@ class InitialMigration < ActiveRecord::Migration
 
     add_index "criteria", ["rule_id"], :name => "index_criteria_on_rule_id"
     add_index "criteria", ["source_id"], :name => "index_criteria_on_source_id"
-    add_index "criteria", ["conditional_id"], :name => "index_criteria_on_conditional_id"
+    add_index "criteria", ["conditional_id"], :name => "index_criteria_conditional_id"
 
     create_table "delayed_jobs", :force => true do |t|
       t.integer  "priority",   :default => 0
@@ -94,8 +94,8 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "display_field_values", "display_field_id", :name => "index_display_field_values_on_display_field_id"
-    add_index "display_field_values", "survey_response_id", :name => "index_dfv_on_survey_response_id"
+    add_index "display_field_values", "display_field_id", :name => "index_dfv_on_display_field_id"
+    add_index "display_field_values", "survey_response_id", :name => "index_dfv_survey_response_id"
 
     create_table "display_fields", :force => true do |t|
       t.string   "name",                                 :null => false
@@ -109,7 +109,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer  "survey_version_id"
     end
 
-    add_index "display_fields", "survey_version_id", :name => "index_display_fields_on_survey_version_id"
+    add_index "display_fields", "survey_version_id", :name => "index_dfs_survey_version_id"
 
     create_table "execution_trigger_rules", :force => true do |t|
       t.integer  "rule_id",              :null => false
@@ -136,7 +136,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer  "survey_response_id"
     end
 
-    add_index "new_responses", "survey_response_id", :name => "index_new_responses_on_survey_response_id"
+    add_index "new_responses", "survey_response_id", :name => "index_nrs_survey_response_id"
 
     create_table "pages", :force => true do |t|
       t.integer  "page_number"
@@ -146,7 +146,7 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "pages", "survey_version_id", :name => "index_pages_on_survey_version_id"
+    add_index "pages", "survey_version_id", :name => "index_pages_survey_version_id"
     
     create_table "question_contents", :force => true do |t|
       t.string   "statement"
@@ -159,7 +159,7 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "question_contents", ["questionable_id", "questionable_type"], :name => "index_question_contents_on_questionable"
+    add_index "question_contents", ["questionable_id", "questionable_type"], :name => "index_qcs_questionable"
 
     create_table "raw_responses", :force => true do |t|
       t.string   "client_id"
@@ -172,10 +172,10 @@ class InitialMigration < ActiveRecord::Migration
       t.integer  "survey_response_id",                 :null => false
     end
 
-    add_index "raw_responses", "client_id", :name => "index_raw_responses_on_client_id"
-    add_index "raw_responses", "question_content_id", :name => "index_raw_responses_on_question_content_id"
-    add_index "raw_responses", "status_id", :name => "index_raw_responses_on_status_id"
-    add_index "raw_responses", "survey_response_id", :name => "index_raw_responses_on_survey_response_id"
+    add_index "raw_responses", "client_id", :name => "index_rr_client_id"
+    add_index "raw_responses", "question_content_id", :name => "index_rr_question_content_id"
+    add_index "raw_responses", "status_id", :name => "index_rr_status_id"
+    add_index "raw_responses", "survey_response_id", :name => "index_rr_survey_response_id"
 
     create_table "response_categories", :force => true do |t|
       t.integer  "category_id",         :null => false
@@ -193,7 +193,7 @@ class InitialMigration < ActiveRecord::Migration
       t.integer  "rule_order",        :null => false
     end
 
-    add_index "rules", "survey_version_id", :name => "index_rules_on_survey_version_id"
+    add_index "rules", "survey_version_id", :name => "index_rules_survey_version_id"
 
     create_table "statuses", :force => true do |t|
       t.string   "name",       :null => false
@@ -211,8 +211,8 @@ class InitialMigration < ActiveRecord::Migration
       t.integer  "survey_version_id"
     end
 
-    add_index "survey_elements", ["assetable_id", "assetable_type"], :name => "index_survey_elements_on_assetable"
-    add_index "survey_elements", "page_id", :name => "index_survey_elements_on_page_id"
+    add_index "survey_elements", ["assetable_id", "assetable_type"], :name => "index_elements_assetable"
+    add_index "survey_elements", "page_id", :name => "survey_elements_page_id"
 
     create_table "survey_responses", :force => true do |t|
       t.string   "client_id"
@@ -224,8 +224,8 @@ class InitialMigration < ActiveRecord::Migration
       t.string   "worker_name"
     end
 
-    add_index "survey_responses", "status_id", :name => "index_survey_responses_on_status_id"
-    add_index "survey_responses", "survey_version_id", :name => "index_survey_responses_on_survey_version_id"
+    add_index "survey_responses", "status_id", :name => "index_srs_status_id"
+    add_index "survey_responses", "survey_version_id", :name => "index_srs_survey_version_id"
 
     create_table "survey_types", :force => true do |t|
       t.string   "name"
@@ -246,7 +246,7 @@ class InitialMigration < ActiveRecord::Migration
 
     end
 
-    add_index "survey_versions", ["survey_id"], :name => "index_survey_versions_on_survey_id"
+    add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"
 
     create_table "surveys", :force => true do |t|
       t.string   "name"
