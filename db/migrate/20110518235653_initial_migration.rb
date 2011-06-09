@@ -149,12 +149,10 @@ class InitialMigration < ActiveRecord::Migration
     add_index "pages", "survey_version_id", :name => "index_pages_on_survey_version_id"
     
     create_table "question_contents", :force => true do |t|
-      t.string   "name"
       t.string   "statement"
-      t.integer  "question_number"
       t.string   "questionable_type"
       t.integer  "questionable_id"
-      t.integer  "display_id"
+#      t.integer  "display_id"
       t.boolean  "flow_control"
       t.boolean  "required",          :default => true
       t.datetime "created_at"
@@ -162,7 +160,6 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     add_index "question_contents", ["questionable_id", "questionable_type"], :name => "index_question_contents_on_questionable"
-    add_index "question_contents", "display_id", :name => "index_question_contents_on_display_id"
 
     create_table "raw_responses", :force => true do |t|
       t.string   "client_id"
