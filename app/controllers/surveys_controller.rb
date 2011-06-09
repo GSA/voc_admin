@@ -61,10 +61,15 @@ class SurveysController < ApplicationController
   def update
      @survey = Survey.find(params[:id])
      @survey.update_attributes(params[:survey])
-       
+     
      respond_to do |format|
-       format.html { redirect_to(surveys_url, :notice => 'Survey was successfully updated.') }
-       format.xml { render :xml => @survey}
+       if @survey.update_attributes(params[:survey])
+         format.html { redirect_to(surveys_url, :notice => "Survey was successfully updated.") }
+         format.xml { render :xml => @survey }
+       else
+         format.html  {render :new }
+         format.xml   { render :xml => @survey.errors, :status => :unprocessable_entity}
+       end
      end
    end
 #  
