@@ -36,18 +36,10 @@ class SurveysController < ApplicationController
   # POST /surveys.xml
   def create
     @survey = Survey.new(params[:survey])
-    # @version = @survey.survey_versions.build
-    # 
-    # @version.major = 1
-    # @version.minor = 0
-    # @version.published = false
-    
-    # first_page = @version.pages.build
-    # first_page.number = 1
     
     respond_to do |format|
       if @survey.save  # Will save both survey and survey_version and run validations on both
-        format.html { redirect_to(survey_path(@survey), :notice => 'Survey was successfully created.') }
+        format.html { redirect_to([:edit, @survey, @survey.survey_versions.first], :notice => 'Survey was successfully created.') }
         format.xml  { render :xml => @survey, :status => :created, :location => @survey }
       else
         format.html { render :action => "new" }
