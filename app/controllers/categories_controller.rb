@@ -36,6 +36,6 @@ class CategoriesController < ApplicationController
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to categories_url, :notice => "Successfully destroyed category."
+    redirect_to categories_url, :notice => "Successfully deleted category."
   end
 end

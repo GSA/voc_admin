@@ -73,7 +73,7 @@ class MatrixQuestionsController < ApplicationController
     @matrix_question.destroy
     
     respond_to do |format|
-      format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully destroyed Matrix question."}
+      format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully deleted Matrix question."}
       format.js   { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version } }
     end
   end

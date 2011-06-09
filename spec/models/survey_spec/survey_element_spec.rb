@@ -35,7 +35,7 @@ describe SurveyElement do
     element2.should_not be_valid
   end
   
-  it "should reorder page elements when an element is destroyed" do
+  it "should reorder page elements when an element is deleted" do
     element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
     asset_2 = Asset.create! :snippet => "Snippet2"
     element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => asset_2.id, :page_id => @page.id)

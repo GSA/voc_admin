@@ -36,6 +36,6 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to users_url, :notice => "Successfully destroyed user."
+    redirect_to users_url, :notice => "Successfully deleted user."
   end
 end

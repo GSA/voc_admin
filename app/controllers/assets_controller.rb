@@ -44,7 +44,7 @@ class AssetsController < ApplicationController
     @asset.destroy
     
     respond_to do |format|
-      format.html { redirect_to text_questions_url, :notice => "Successfully destroyed text question."}
+      format.html { redirect_to text_questions_url, :notice => "Successfully deleted text question."}
       format.js   { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version } }
     end
   end

@@ -15,7 +15,7 @@
 		<td class="col1-2"><%= version.version_number %></td>
 		<td class="col1-2"><%= version.published ? "Yes" : "No" %></td>
 		<td class="col3"><%= version.created_at.strftime("%m/%d/%Y") %></td>
-		<td class="col4-7"><%= link_to 'Show', survey_survey_version_path(@survey, version) %></td>
+		<td class="col4-7"><%= link_to 'Preview', survey_survey_version_path(@survey, version) %></td>
 		<td class="col4-7">
 			<% if version.locked %>
 			 Edit
@@ -23,7 +23,7 @@
 			 <%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %>
 			<% end -%>
 		</td>
-		<td class="col4-7"><%= link_to 'Destroy', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
+		<td class="col4-7"><%= link_to 'Delete', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
 		<td class="col4-7">
 			<% if version.published %>
 			 <%= link_to "Unpublish", unpublish_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to remove this survey from the public site" %>

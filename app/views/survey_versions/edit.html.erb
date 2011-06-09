@@ -38,7 +38,7 @@
 </div>
 
 <div class="pageNav">
-  <%= link_to "Show Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNav" %> | 
+  <%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNav" %> | 
 	<%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNav" %> | 
   <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNav" %>
 </div>

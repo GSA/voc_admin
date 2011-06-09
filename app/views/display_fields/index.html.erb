@@ -15,7 +15,7 @@
 	 <tr class="<%= cycle('white','blue') %>">
 	 	<td class="col1"><%= df.name %></td>
 		<td class="col2"><%= df.type %></td>
-		<td class="col3"><%= link_to "Destroy", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
+		<td class="col3"><%= link_to "Delete", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
 	 </tr>
 	<% end %>
 </table>
