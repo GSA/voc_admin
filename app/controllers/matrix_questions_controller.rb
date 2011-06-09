@@ -26,7 +26,7 @@ class MatrixQuestionsController < ApplicationController
     # after_create observer to get around the issue of the choice questions being saved before the matrix question's question content is saved
     # in the transaction.  This was causing matrix_question.statement to return an error in the after_create observer
     @matrix_question.choice_questions.each do |cq|
-      cq.question_content.matrix_statement = @matrix_question.question_content.statement
+      cq.question_content.matrix_statement = @matrix_question.question_content.try(:statement)
     end
   
     respond_to do |format|
