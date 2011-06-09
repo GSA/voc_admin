@@ -2,7 +2,7 @@
 <div class="pageNav-upper">
 	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
 </div>
-<p id="notice"><%= notice %></p>
+<%= flash_messages(flash) %>
 
 <table id="surveyTable">
   <tr>

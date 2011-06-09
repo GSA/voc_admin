@@ -336,8 +336,14 @@ li.modalList {
 	padding: 0px 0px 3px;
 }
 
-#notice {
+#notice, #flash_notice {
   color: green;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+#error, #flash_error {
+  color: red;
   font-weight: bold;
   font-size: 1.1em;
 }

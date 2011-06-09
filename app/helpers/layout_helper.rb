@@ -19,4 +19,12 @@ module LayoutHelper
   def javascript(*args)
     content_for(:head) { javascript_include_tag(*args) }
   end
+  
+  def flash_messages(flash)
+    ret = ""
+    flash.each do |name, msg|
+      ret << content_tag(:p, msg, :id => "flash_#{name}") 
+    end
+    ret.html_safe
+  end
 end

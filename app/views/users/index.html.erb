@@ -2,7 +2,7 @@
 <div class="pageNav-upper">
 	<%= link_to "New User", new_user_path, :class => "pageNav" %>
 </div>
-<p id="notice"><%= notice %></p>
+<%= flash_messages(flash) %>
 
 <table id="usersTable">
   <tr>

@@ -10,10 +10,7 @@
     </div>
   <% end %>
   
-  <% if flash[:notice] -%>
-	<div id="notice">
-		<p><%= flash[:notice] %></p>
-	</div>
+  <%= flash_messages(flash) %>
 <% end -%>
 
 <%= form_for @user_session, :url => {:action => "create"} do |f| %>

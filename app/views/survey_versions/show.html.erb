@@ -6,7 +6,7 @@
 	<p>Could not find version <%= params[:version] %></p>
 	<%= link_to "View all", survey_path(@survey) %>
 <% else %>
-	<p id="notice"><%= notice %></p>
+  <%= flash_messages(flash) %>
 
 	<p class="copy">
 	   <span class="copyBold">Name:</span>
