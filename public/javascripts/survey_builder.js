@@ -62,7 +62,7 @@ $(function(){
 	
 	/* Modal control functions */
 	$("a.edit_asset_link").live('ajax:success', function(event, data, status, xhr){
-		$("#edit_modal").html(data).modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'330px'});
+		$("#edit_modal").html(data).modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
 		return false
 	});
 	
@@ -79,12 +79,12 @@ $(function(){
 	});
 	
 	$("#link_to_new_choice_question").live('click', function(){
-		$("#new_choice_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'330px'});
+		$("#new_choice_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
 		return false;
 	});	
 	
 	$("#link_to_new_matrix_question").live('click', function(){
-		$("#new_matrix_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'330px'});
+		$("#new_matrix_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
 		return false;
 	});
 	

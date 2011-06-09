@@ -8,7 +8,7 @@
 <% end %>
 <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
 <div id="flow_control_settings" style="display:inline">
-  <%= f.hidden_field :flow_control, :value => false %>
+  <%= f.hidden_field :flow_control, :value => f.object.flow_control %>
   <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
 	<%= f.label :flow_control_checkbox, "Flow Control"%>
 </div>

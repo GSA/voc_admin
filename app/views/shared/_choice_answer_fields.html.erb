@@ -2,8 +2,8 @@
 	<%= f.label :answer, "Answer: " %>
 	<%= f.text_field :answer %>
 	
-  <span class="next_pages" style="display:none">
-  <%= f.label :next_page_id, "Go To Page: " %><%= f.collection_select :next_page_id, survey_version.pages, :id, :page_number, {},  :class => "next_page_select" %>
+  <span class="next_pages" style="<%= 'display:none' unless f.object.choice_question.try(:question_content).try(:flow_control) %>" >
+  <%= f.label :next_page_id, "Go To Page: " %><%= f.collection_select :next_page_id, survey_version.pages.order(:page_number), :id, :page_number, {},  :class => "next_page_select" %>
   </span>
 	
 	<%= f.hidden_field :_destroy %>
