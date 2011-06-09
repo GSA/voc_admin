@@ -234,14 +234,16 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     create_table "survey_versions", :force => true do |t|
-      t.integer  "survey_id"
+      t.integer  "survey_id",   :null => false
       t.integer  "major"
       t.integer  "minor"
-      t.boolean  "published"
+      t.boolean  "published",   :default => false
+      t.boolean  "locked",      :default => false
+      t.boolean  "archived",    :default => false
       t.text     "notes"
       t.datetime "created_at"
       t.datetime "updated_at"
-      t.boolean  "archived",   :default => false
+
     end
 
     add_index "survey_versions", ["survey_id"], :name => "index_survey_versions_on_survey_id"

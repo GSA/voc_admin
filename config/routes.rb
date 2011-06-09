@@ -17,6 +17,7 @@ CommentToolApp::Application.routes.draw do
   resources :surveys do
     resources :survey_versions do
       get :publish, :on => :member, :as => "publish"
+      get :unpublish, :on => :member, :as => "unpublish"
       get :clone_version, :on => :member, :as => "clone"
       resources :rules do
         get :do_now, :on => :member
@@ -41,7 +42,7 @@ CommentToolApp::Application.routes.draw do
   
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "surveys#index"
+  root :to => "user_sessions#new"
 
   # See how all your routes lay out with "rake routes"
 

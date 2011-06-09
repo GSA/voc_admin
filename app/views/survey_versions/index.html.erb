@@ -16,9 +16,21 @@
 		<td class="col1-2"><%= version.published ? "Yes" : "No" %></td>
 		<td class="col3"><%= version.created_at.strftime("%m/%d/%Y") %></td>
 		<td class="col4-7"><%= link_to 'Show', survey_survey_version_path(@survey, version) %></td>
-		<td class="col4-7"><%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) unless version.published %></td>
+		<td class="col4-7">
+			<% if version.locked %>
+			 Edit
+			<% else %>
+			 <%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %>
+			<% end -%>
+		</td>
 		<td class="col4-7"><%= link_to 'Destroy', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
-		<td class="col4-7"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, version), :confirm => 'Are you sure?' %></td>
+		<td class="col4-7">
+			<% if version.published %>
+			 <%= link_to "Unpublish", unpublish_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to remove this survey from the public site" %>
+			<% else %>
+			 <%= link_to "Publish", publish_survey_survey_version_path(@survey, version), :confirm => "Are you sure?" %>
+			<% end %>
+		</td>
 		<td class="col4-7"><%= link_to "Clone", clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version"  %></td>
 	</tr>
 	<% end %>

@@ -20,9 +20,9 @@ class SurveyVersionsController < ApplicationController
     end
   end
   
-  def edit  
+  def edit 
     redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
-    redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.published
+    redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked
   end
   
   def destroy
@@ -56,6 +56,11 @@ class SurveyVersionsController < ApplicationController
       @survey_version.publish_me
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
     end
+  end
+  
+  def unpublish
+    @survey_version.unpublish_me
+    redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
   end
   
   def clone_version
