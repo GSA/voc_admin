@@ -10,7 +10,7 @@ gem 'jquery-rails'
 gem 'thin'
 gem 'kaminari'
 gem 'delayed_job'
-gem 'authlogic', :git => 'git://github.com/binarylogic/authlogic.git'
+gem 'authlogic'
 
 group :development do 
 	gem 'ruby-debug19'
