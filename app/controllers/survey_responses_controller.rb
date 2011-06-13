@@ -3,11 +3,11 @@ require 'csv'
 class SurveyResponsesController < ApplicationController
   def index
     @survey_version_id = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
-    @survey_responses = SurveyResponse.where("survey_version_id = ?", @survey_version_id).where(:status_id => 4).order("created_at desc").page params[:page]
+    @survey_responses = SurveyResponse.where("survey_version_id = ?", @survey_version_id).where(:status_id => 4).search(params[:search]).order("survey_responses.created_at desc").page params[:page]
     
     respond_to do |format|
       format.html #
-      format.js {render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version_id}}
+      format.js { render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version_id} }
       format.csv do
         @survey_version = SurveyVersion.find(@survey_version_id)
         response.headers["Content-Type"]        = "text/csv; header=present"

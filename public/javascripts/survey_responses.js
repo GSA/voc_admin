@@ -22,6 +22,9 @@ $(function(){
 	$("#survey_version_id").change(function(){
 		var survey_version_id = $(this).val();
 		
+		/* blank out the search field */
+		$("#search").val('')
+		
 		/* 
 		 * remove currently displayed responses if no version selected.  Otherwise 
 		 * make an ajax call to get the display table for the selected version
@@ -42,7 +45,7 @@ $(function(){
 		/* This has to be done for some reason in order to give time for the DOM to register the
 		 * previous insertion of select options.
 		 */
-		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 300);
+		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 500);
 
 	}
 	
@@ -54,6 +57,11 @@ $(function(){
 	$(".edit_display_field_value").live('submit', function(){
 		$.modal.close();
 		refreshSurveyResponseTable();
+	});
+	
+	$("#search_link").click(function(){
+		getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
+		return false;
 	});
 
 });
@@ -71,7 +79,7 @@ function editDisplayFieldValue(survey_id, version_id, dfv_id){
 						type: "PUT",
 						data: "display_field_value[value]="+$("#display_field_value_value").val(),
 						success: function(){
-							getSurveyDisplayTable($("#survey_version_id").val());
+							getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
 						}
 					});
 					/* onClose function for the modal must call $.modal.close() */
@@ -88,13 +96,16 @@ function setSurveyVersionSelect(survey_version_id){
 
 function refreshSurveyResponseTable(){
 	$("#survey_response_list").html("Refreshing table...");
-	getSurveyDisplayTable($("#survey_version_id").val());
+	getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
 }
 
-function getSurveyDisplayTable(survey_version_id){
+function getSurveyDisplayTable(survey_version_id, search_text){
+	if(search_text == undefined){
+		search_text = '';
+	}
 	$.ajax({
 		url: "survey_responses.js",
-		data: "survey_version_id=" + survey_version_id,
+		data: "survey_version_id=" + survey_version_id + "&search=" + search_text,
 		success: function(data){
 			$("#survey_response_list").html(data);
 		}
