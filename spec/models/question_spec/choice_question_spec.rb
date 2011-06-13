@@ -2,34 +2,73 @@ require "spec_helper"
 
 describe ChoiceQuestion do
   before(:each) do
-    @choice_question = ChoiceQuestion.new(:answer_type => "check")
-    @qc = mock_model(QuestionContent, :questionable => @choice_question, :statement => "RSpec ChoiceQuestion")
-    @qc.stub!(:attributes).and_return({:statement=>"RSpec ChoiceQuestion"})
-    @choice_question.stub(:question_content).and_return(@qc)
+    @survey = Survey.create! :name => "Test", :description => "Rspec"
+    @version = @survey.survey_versions.first
+    @page = @version.pages.create! :page_number => 1
+    
+    @choice_question = ChoiceQuestion.new(
+      :answer_type => "radio",
+      :question_content_attributes => {:statement => "RSpec choice Question"}
+    )
+    
+    @choice_question.build_survey_element(
+      :element_order => 1,
+      :survey_version => @version,
+      :page => @page
+    )
+    
+    @choice_question.choice_answers.build :answer => "answer 1"
   end
     
   it "should be valid" do
     @choice_question.should be_valid
   end
   
+  it "should not be valid without a question content" do
+    @choice_question.question_content = nil
+    @choice_question.should_not be_valid
+  end
+  
+  it "should not be valid without at least one answer" do
+    @choice_question.choice_answers = []
+    @choice_question.should_not be_valid
+  end
+  
+  it "should not be valid without an answer type" do
+    @choice_question.answer_type = nil
+    @choice_question.should_not be_valid
+  end
+  
+  it "should return the correct answer answers when given a properly formated response string" 
+  
+  it "should return a survey_version" do
+    @choice_question.survey_version.should_not be_nil
+    @choice_question.survey_version.should == @choice_question.survey_element.survey_version
+  end
+  
+  it "should check whether a given condition is met for a given response and test string"
+  
   it "should clone it self" do
+    @choice_question.choice_answers.should have(1).answer
     
-    page = mock_model(Page)
-    clone_page =  mock_model(Page, :clone_of_id=>page.id)
-    pages = mock("Page collection", :find_by_clone_of_id=>clone_page)
-    survey_version = mock_model(SurveyVersion)
-    survey_version.stub!(:pages).and_return(pages)
-    qc = mock_model(QuestionContent, :questionable => @choice_question, :statement => "RSpec ChoiceQuestion")
-    qc.stub!(:attributes).and_return({:statement=>"RSpec ChoiceQuestion"})
-    @choice_question.stub!(:survey_element).and_return(mock_model(SurveyElement, :attributes=>{}, :page_id=>page.id))
-    @choice_question.question_content = nil #remove the qc so we can stub it instead
-    @choice_question.stub(:question_content).and_return(qc)
+    @choice_question.should be_valid
+    
     @choice_question.save!
-    @choice_question.choice_answers.create!(:answer => "Test")
-    QuestionContentObserver.instance.stub!(:after_create).and_return(true)
-    clone_question = @choice_question.clone_me(survey_version)
-    clone_question.clone_of_id.should == @choice_question.id
-    clone_question.choice_answers.size.should == @choice_question.choice_answers.size
+    
+    target_version = @survey.create_new_major_version
+    target_version.pages.create! :page_number => 1, :clone_of_id => @page.id
+    
+    cloned_question = @choice_question.clone_me(target_version)
+    
+    cloned_question.should be_valid
+    cloned_question.survey_element.should_not be_nil
+    cloned_question.survey_element.should be_valid
+    cloned_question.survey_element.survey_version.should_not be_nil
+    cloned_question.survey_version.should == target_version
+    cloned_question.answer_type.should == @choice_question.answer_type
+    cloned_question.question_content.statement.should == @choice_question.question_content.statement
+    cloned_question.choice_answers.should have(1).answer
+    cloned_question.choice_answers.first.answer.should == @choice_question.choice_answers.first.answer
   end
   
   

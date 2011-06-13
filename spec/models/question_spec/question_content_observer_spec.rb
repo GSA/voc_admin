@@ -6,12 +6,20 @@ describe QuestionContentObserver do
       mock_field = mock_model(DisplayField)
       fields = [mock_field]
       mock_version = mock_model(SurveyVersion, :display_fields => fields)
-      mock_content = mock_model(QuestionContent, :statement_changed? => true, :statement_was => "Old Display Field Name", :survey_version => mock_version, :statement => "New Display Field Name")
+      mock_content = mock_model(QuestionContent,
+        :statement_changed? => true, 
+        :statement_was => "Old DispalyField Name", 
+        :survey_version => mock_version, 
+        :statement => "New DisplayField Name",
+        :questionable_type => "TextQuestion"
+      )
       fields.stub(:find_by_name).and_return(mock_field)
-      mock_field.should_receive(:update_attributes).with(:name => "New Display Field Name").once
       
-      observer = QuestionContentObserver.instance
-      observer.after_update(mock_content)
+      mock_field.should_receive(:update_attributes).with(:name => "New DisplayField Name").once
+      
+      qc_observer = QuestionContentObserver.instance
+      qc_observer.after_update(mock_content)
+
     end  
   end
   

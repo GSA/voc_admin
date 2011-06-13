@@ -33,18 +33,29 @@ describe DisplayField do
   end
   
   it "should clone it self" do
-    survey_version = mock_model(SurveyVersion, :survey_responses=>[])
-    @display_field_text.save!
-    clone_df = @display_field_text.clone_me(survey_version)
-    clone_df.name.should == @display_field_text.name
-    clone_df.display_order.should == @display_field_text.display_order
-    clone_df.clone_of_id.should == @display_field_text.id
-    clone_df.survey_version_id.should == survey_version.id
+    survey = Survey.create! :name => "test", :description => "rspec survey"
+    version = survey.survey_versions.first
+
+    DisplayFieldObserver.instance.should_receive(:after_create).and_return(true)
+    
+    display_field = DisplayFieldText.create!(
+      :name => "Display Field",
+      :display_order => 1,
+      :survey_version => version
+    )
+
+    target_version = survey.create_new_major_version
+    
+    cloned_df = display_field.clone_me(target_version)
+    cloned_df.should be_valid
+    target_version.display_fields.should have(1).display_field
+    cloned_df.name.should == display_field.name
+    cloned_df.display_order.should == display_field.display_order
+    cloned_df.survey_version.should_not be(version)
   end
   
-  it "should set the type when m_type is set" do
+  it "should set the type when model_type is set" do
     DisplayField.new(:model_type => "DisplayFieldText").type.should == "DisplayFieldText"
-    
   end
   
 

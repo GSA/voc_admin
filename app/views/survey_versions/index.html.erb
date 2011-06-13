@@ -18,7 +18,7 @@
 		<td class="col4-7"><%= link_to 'Preview', survey_survey_version_path(@survey, version) %></td>
 		<td class="col4-7">
 			<% if version.locked %>
-			 Edit
+			 Locked
 			<% else %>
 			 <%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %>
 			<% end -%>
