@@ -2,46 +2,49 @@ require 'spec_helper'
 
 describe MatrixQuestion do
   before(:each) do
-    @choice_answers = [mock_model(ChoiceAnswer, :attributes=>{})]
-    @choice_questions = [
-      mock_model(ChoiceQuestion, :choice_answers => @choice_answers, :attributes=>{:answer_type=>"check"}, :question_content => mock_model(QuestionContent, :attributes=>{"statement"=>"Test"}, :statement => "Test")),
-      mock_model(ChoiceQuestion, :choice_answers => @choice_answers, :attributes=>{:answer_type=>"check"}, :question_content => mock_model(QuestionContent, :attributes=>{"statement"=>"Test2"}, :statement => "Test2"))]
-    @choice_questions.stub(:includes).and_return(@choice_questions)
-    @valid_matrix_question = MatrixQuestion.new
-    qc = mock_model(QuestionContent, :statement => "MQ", :required => false, :[]= => true, :questionable_type => "MatrixQuestion")
-    @valid_matrix_question.question_content = qc
-    @valid_matrix_question.stub(:choice_questions).and_return(@choice_questions)
+    @survey = Survey.create! :name => "Rspec survey", :description => "RSpec test survey"
+    @version = @survey.survey_versions.first
+    @page = @version.pages.create! :page_number => 1
+    
+    @matrix_question = MatrixQuestion.new
+    
+    @matrix_question.build_survey_element :survey_version => @version, :element_order => 1, :page => @page
+    
+    @qc = @matrix_question.build_question_content :statement => "Matrix Question 1"
+    @choice_question = @matrix_question.choice_questions.build
+    
+    @choice_question.build_question_content :statement => "Row 1"
+    @choice_question.answer_type = 'radio'
+    
+    @choice_answer = @choice_question.choice_answers.build
+    @choice_answer.answer = "Answer 1"
+
   end
   
   it "should be valid with valid attributes" do
-    @valid_matrix_question.should be_valid
+    @matrix_question.should be_valid
   end
   
   it "should not be valid without a question content" do
-    @valid_matrix_question.question_content = nil
-    @valid_matrix_question.should_not be_valid
+    @matrix_question.question_content = nil
+    @matrix_question.should_not be_valid
   end
   
   it "should clone it self" do
-    page = mock_model(Page)
-    clone_page =  mock_model(Page, :clone_of_id=>page.id)
-    pages = mock("Page collection", :find_by_clone_of_id=>clone_page)
-    survey_version = mock_model(SurveyVersion)
-    survey_version.stub!(:pages).and_return(pages)
-    choice_question = mock_model(
-      ChoiceQuestion,
-      :answer_type => "check",
-      :question_content  => mock_model(QuestionContent, :statement => "RSpec MatrixQuestion - ChoiceQuestion") 
-    )
-    @valid_matrix_question.stub!(:survey_element).and_return(mock_model(SurveyElement, :attributes=>{}, :page_id=>page.id))  
-    @valid_matrix_question.choice_questions = @choice_questions
-    @valid_matrix_question.save!
-    clone_question = @valid_matrix_question.clone_me(survey_version)
+
+    @matrix_question.should be_valid
+    @matrix_question.save!
     
+    target_version = @survey.create_new_major_version
+    target_version.pages.create! :page_number => 1, :clone_of_id => @page.id
     
-    clone_question.statement.should == @valid_matrix_question.statement
-    clone_question.clone_of_id.should == @valid_matrix_question.id
-    clone_question.choice_questions.size.should == @valid_matrix_question.choice_questions.size
+    cloned_question = @matrix_question.clone_me(target_version)
+    cloned_question.should_not be_nil
+    cloned_question.survey_version.should == target_version
+    cloned_question.choice_questions.should have(1).question
+    cloned_question.choice_questions.first.statement.should == @choice_question.statement
+    cloned_question.choice_questions.first.choice_answers.should have(1).answer
+    cloned_question.choice_questions.first.choice_answers.first.answer.should == @choice_answer.answer
   end
 
 end

@@ -99,17 +99,22 @@ function refreshSurveyResponseTable(){
 	getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
 }
 
-function getSurveyDisplayTable(survey_version_id, search_text){
-	if(search_text == undefined){
-		search_text = '';
-	}
+function getSurveyDisplayTable(survey_version_id, search_text, order_column, direction){
+	if(search_text == undefined) { search_text = $("#search").val(); }
+	if(order_column == undefined) { order_column = ''; }
+	if(direction == undefined) { direction = '' }
+	
 	$.ajax({
 		url: "survey_responses.js",
-		data: "survey_version_id=" + survey_version_id + "&search=" + search_text,
+		data: "survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
 		success: function(data){
 			$("#survey_response_list").html(data);
 		}
 	})
+}
+
+function sortByDisplayField(column_id, direction){
+	getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val(), column_id, direction);
 }
 
 function getUrlParams(){
