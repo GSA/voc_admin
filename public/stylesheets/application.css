@@ -2,7 +2,7 @@
 body {
   background-color: #FFFFFF;
   font-family: Arial,Helvetica,sans-serif;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 a img {
@@ -189,7 +189,7 @@ textarea {
 }
 
 #survey_response_list th.questions {
-	text-align: center;
+	text-align: left;
 	font-size: 1.1em;
 	font-weight: bold;
 	padding: 5px 10px 5px 1px;
@@ -198,6 +198,31 @@ textarea {
 	min-width: 150px;
 	max-width: 200px;
 	vertical-align: bottom;
+}
+
+#survey_response_list th.arrows {
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 5px;
+	border-bottom: 2px solid #243b7c;
+	color: #000000;
+	min-width: 20px;
+	max-width: 20px;
+	vertical-align: bottom;
+}
+
+.up {
+	clear: both;
+	vertical-align: top;
+	float: left;
+	margin: 0px 5px 5px 0px;
+}
+
+.down {
+	clear: both;
+	vertical-align: bottom;
+	float: left;
 }
 
 #survey_response_list td {
