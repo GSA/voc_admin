@@ -1,6 +1,8 @@
 <%  unless version_id.nil? %>	
 	<% version = SurveyVersion.find(version_id) %>
 	<%= hidden_field_tag :search, params[:search] %>
+	<%= hidden_field_tag :order_column, @order_column_id %>
+	<%= hidden_field_tag :order_dir, @order_dir %>
 	<table>
 	  <tr>
 	  	<th class="date">
