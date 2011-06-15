@@ -2,6 +2,8 @@
  * @author jalvarado
  */
 
+var search_timer_id = null;
+var last_ajax_request_id = 0;
 
 $(function(){
 	/* Populate the version select box based on the survey selection */
@@ -60,8 +62,16 @@ $(function(){
 	});
 	
 	$("#search_link").click(function(){
-		getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
+		refreshSurveyResponseTable();
 		return false;
+	});
+	
+	$("#search").live('keyup', function(){
+		if(search_timer_id != null){
+			clearTimeout(search_timer_id);
+		}
+		
+		search_timer_id = setTimeout("refreshSurveyResponseTable()", 500);
 	});
 
 });
@@ -95,14 +105,25 @@ function setSurveyVersionSelect(survey_version_id){
 }
 
 function refreshSurveyResponseTable(){
-	$("#survey_response_list").html("Refreshing table...");
-	getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
+	var search = $("#search").val();
+	var order_column = $("#order_column").val();
+	var order_dir = $("#order_dir").val();
+	var survey_version_id = $("#survey_version_id").val();
+	
+	/* Do not make the ajax call if no survey_version_id has been selected */
+	if(survey_version_id != null && survey_version_id != undefined && survey_version_id != "0"){
+		$("#survey_response_list").html("Refreshing table...");
+		getSurveyDisplayTable(survey_version_id, search, order_column, order_dir);		
+	}
+
 }
 
 function getSurveyDisplayTable(survey_version_id, search_text, order_column, direction){
-	if(search_text == undefined) { search_text = $("#search").val(); }
+	if(search_text == undefined) { search_text = ''; }
 	if(order_column == undefined) { order_column = ''; }
 	if(direction == undefined) { direction = '' }
+	
+	last_ajax_request_id += 1;
 	
 	$.ajax({
 		url: "survey_responses.js",
