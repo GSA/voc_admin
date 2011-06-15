@@ -2,8 +2,22 @@ require 'csv'
 
 class SurveyResponsesController < ApplicationController
   def index
+
     @survey_version_id = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
-    @survey_responses = SurveyResponse.where("survey_version_id = ?", @survey_version_id).where(:status_id => 4).search(params[:search]).order("survey_responses.created_at desc").page params[:page]
+    if @survey_version_id
+      @order_column_id = @survey_version_id.display_fields.map(&:id).include?(params[:order_column].to_i) ? params[:order_column] : nil
+      
+    end
+    @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
+
+    @survey_responses = SurveyResponse.search(params[:search])
+    if @order_column_id
+      @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir) 
+    else
+      @survey_responses = @survey_responses.order("survey_responses.created_at #{@order_dir}")
+    end
+    @survey_responses = @survey_responses.page params[:page]
+    
     
     respond_to do |format|
       format.html #

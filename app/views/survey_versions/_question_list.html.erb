@@ -1,5 +1,6 @@
 <p class="copyBoldMargin">Questions:</p>
 
+
 <% for page in survey_version.pages.order("pages.page_number asc") %>
 	<div class="page" id="page_<%=page.page_number%>">
 		<span class="copyBold">Page <%= page.page_number %></span>
@@ -39,6 +40,7 @@
 		<% end # close the for loop %>
 		</ol>
 	</div>
+	
 <% end %>
 
 <%= render 'shared/add_element_links', :survey_version => survey_version %>

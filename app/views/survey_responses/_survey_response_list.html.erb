@@ -1,14 +1,23 @@
 <%  unless version_id.nil? %>	
 	<% version = SurveyVersion.find(version_id) %>
+	<%= hidden_field_tag :search, params[:search] %>
 	<table>
 	  <tr>
-	  	<th class="date">Date</th>
+	  	<th class="date">
+				Date 
+				<%= link_to_function "up", "sortByDisplayField('', 'ASC')" %>
+				<%= link_to_function "down", "sortByDisplayField('', 'DESC')"%>
+			</th>
 	  	<% version.display_fields.each do |df| %>
-			  <th class="questions"><%= df.name %></th>
+			  <th class="questions">
+					<%= df.name %>
+					<%= link_to_function "up", "sortByDisplayField(#{df.id}, 'ASC')" %>
+					<%= link_to_function "down", "sortByDisplayField(#{df.id}, 'DESC')"%>
+				</th>
 			<% end -%>
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('white','blue')%>">
-			  	<td><%= sr.created_at.strftime("%m/%d/%Y") %></td>
+			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
 			  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
 					  <td id="<%= 'displayFieldValue_' << dfv.id.to_s %>" ondblclick="editDisplayFieldValue(<%= version.survey.id %>,<%= version.id %>,<%= dfv.id %>)" style="text-align:center;">
 					  	<%= dfv.value.gsub("{%delim%}", ', ') %>
