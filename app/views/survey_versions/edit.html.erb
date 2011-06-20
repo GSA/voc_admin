@@ -33,8 +33,11 @@
 	</p>
 </div>
 
-<div id="question_list">
-	<%= render :partial => 'question_list', :locals => {:survey_version => @survey_version, :survey => @survey} %>
+<div id="overlay_container">
+  <div id="question_list">
+  	<%= render :partial => 'question_list', :locals => {:survey_version => @survey_version, :survey => @survey} %>
+  </div>
+  <div id="spinner_overlay"><img src='/images/ajax-loader.gif' id='ajax_spinner_question_list'/></div>
 </div>
 
 <div class="pageNav">

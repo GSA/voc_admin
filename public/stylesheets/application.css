@@ -562,15 +562,13 @@ span.pageNum {
 .pagination a, .pagination a:link, .pagination a:visited {
 	font-weight: normal;
 	color: #243b7c;
-	text-decoration: unerline;
+	text-decoration: underline;
 }
 
 .pagination a:hover, .pagination a:active {
 	text-decoration: underline;
 	font-weight: bold;
 }
-
-.gap {}
 
 /* Modal */
 #simplemodal-container {
@@ -593,3 +591,29 @@ span.pageNum {
 	margin: 15px 0px 0px;
 	text-align: right;
 }
+
+#ajax_spinner_question_list {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -35px;
+  margin-left: -35px;
+}
+
+#overlay_container {
+	position: relative;
+}
+
+#spinner_overlay {
+	margin-top: 1em;
+	display: none;
+	background-color: #eef1fc;
+	opacity: .6;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+  left: 0;
+  top: 0;
+}
+	 
+	 

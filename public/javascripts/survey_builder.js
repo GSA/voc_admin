@@ -66,55 +66,25 @@ $(function(){
 		return false
 	});
 	
-	
-	
-	$("#link_to_new_asset").live('click', function(){
-		$("#new_asset_modal").modal();
+	/* Open modal when control links are clicked */
+	$("#link_to_new_asset, #link_to_new_text_question, #link_to_new_choice_question, #link_to_new_matrix_question").live('click', function(){
+		var modal_name = $(this).attr('id').split('_').slice(2).join('_');
+		$("#" + modal_name + "_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
 		return false;
 	});
-	
-	$("#link_to_new_text_question").live('click', function(){
-		$("#new_text_question_modal").modal();
-		return false;
+		
+	/* Clear out the old validation errors data before opening the modal for a new question */
+	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset").live("ajax:beforeSend", function(){
+		$("#" + $(this).attr('id') + " div.validation_errors").html("");
 	});
 	
-	$("#link_to_new_choice_question").live('click', function(){
-		$("#new_choice_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
-		return false;
-	});	
-	
-	$("#link_to_new_matrix_question").live('click', function(){
-		$("#new_matrix_question_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
-		return false;
-	});
-	
-	$(".remove_question_link").live("ajax:success", function(event, data, status, xhr) {
-		$.modal.close();
-	    $("#question_list").html(data);
-	});
-	
-	$(".remove_page_link").live("ajax:success", function(event, data, status, xhr) {
-		$.modal.close();
-	    $("#question_list").html(data);
-	});
-	
-	$("#new_text_question").live("ajax:beforeSend", function(){
-		$("#new_text_question div.validation_errors").html("");
-	});
-	
-	$("#new_choice_question").live("ajax:beforeSend", function(){
-		$("#new_choice_question div.validation_errors").html("");
-	});
-	
-	$("#new_text_question").live("ajax:success", function(event, data, status, xhr){
+	/* Update the question list and clear out the submitted data from the modal when a question is successfully added to the survey */
+	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:success", function(event, data, status, xhr){
 		$.modal.close();
 		$("#question_list").html(data);
-		$(':input', '#new_text_question').not(':button, :submit, :reset, :hidden').reset();
-	});
-	
-	$(".question_edit_form").live("ajax:success", function(event, data, status, xhr){
-		$.modal.close();
-		$("#question_list").html(data);
+		if(!$(this).hasClass('question_edit_form')) {
+			$(':input', "#" + $(this).attr('id')).not(':button, :submit, :reset, :hidden').reset();			
+		}
 	});
 	
 	$(".question_edit_form").live("ajax:error", function(event, data, status, xhr){
@@ -126,71 +96,42 @@ $(function(){
 		}, persist:true});
 	});
 	
-	$("#new_choice_question").live("ajax:success", function(event, data, status, xhr){
-		$.modal.close();
-		$("#question_list").html(data);
-		$(':input', '#new_choice_question').not(':button, :submit, :reset, :hidden').reset();
-	});
+
 	
-	$("#new_matrix_question").live("ajax:success", function(event, data, status, xhr){
+	/* Update the modal with the validation errors if the ajax response comes back with an error code when creating a new question/asset */
+	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:error", function(event, data, status, xhr){
 		$.modal.close();
-		$("#question_list").html(data);
-		$(':input', '#new_matrix_question').not(':button, :submit, :reset, :hidden').reset();
-	});
-	
-	$("#new_text_question").live("ajax:error", function(event, data, status, xhr){
-		$.modal.close();
-		$("#new_text_question div.validation_errors").html(data.responseText);
-		$("#new_text_question_modal").modal({onClose:function(){
-			$("#new_text_question div.validation_errors").html("");
+		$("#" + $(this).attr('id') + " div.validation_errors").html(data.responseText);
+		
+		var modal_name = "#edit_modal"
+		
+		if(!$(this).hasClass('question_edit_form')){
+			modal_name = "#" + $(this).attr('id') + "_modal"
+		}
+		
+		$(modal_name).modal({onClose:function(){
+			$("#" + $(this).attr('id') + " div.validation_errors").html("");
 			$.modal.close();
-		}, persist:true});
+		}, persist:true});	
+
 	});
 	
-	$("#new_choice_question").live("ajax:error", function(event, data, status, xhr){
-		$.modal.close();
-		$("#new_choice_question div.validation_errors").html(data.responseText);
-		$("#new_choice_question_modal").modal({onClose:function(){
-			$("#new_choice_question div.validation_errors").html("");
-			$.modal.close();
-		}, persist:true});
-	});
-	
-	$("#new_matrix_question").live("ajax:error", function(event, data, status, xhr){
-		$.modal.close();
-		$("#new_matrix_question div.validation_errors").html(data.responseText);
-		$("#new_matrix_question_modal").modal({onClose:function(){
-			$("#new_matrix_question div.validation_errors").html("");
-			$.modal.close();
-		}, persist:true});
-	});
-	
-	
-	$("#link_to_new_page").live("ajax:success", function(event, data, status, xhr){
+	/* hide the spinner and update the question list when a successful response is received from an ajax request to reorder an element/page */
+	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, #link_to_new_page, .remove_page_link, .remove_question_link").live("ajax:success", function(event, data, status, xhr){
 		$("#question_list").html(data);
+		toggleSpinner();
 	});
 	
-	
-	$("#new_asset").live("ajax:success", function(event, data, status, xhr){
-		$.modal.close();
-		$("#question_list").html(data);
-		$(':input', '#new_asset').not(':button, :submit, :reset, :hidden').reset();
-	});
-	
-	$("#new_asset").live("ajax:error", function(event, data, status, xhr){
-		$.modal.close();
-		$("#new_asset div.validation_errors").html(data.responseText);
-		$("#new_asset_modal").modal({onClose:function(){
-			$("#new_asset div.validation_errors").html("");
-			$.modal.close();
-		}, persist:true});
-	});
-	
-	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down").live("ajax:success", function(event, data, status, xhr){
-		$("#question_list").html(data);
+	/* Show the spinner on ajax requests to reorder elements/pages */
+	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, #link_to_new_page, .remove_page_link, .remove_question_link").live("ajax:beforeSend", function(){
+		toggleSpinner();
 	});
 		
-})
+}) // End onLoad function
+
+function toggleSpinner(){
+	$("#spinner_overlay").toggle();
+}
 
 function remove_fields(link) {
 	$(link).prev("input[type=hidden]").val("1");
@@ -223,10 +164,4 @@ function add_matrix_answers(link, content){
 
 function remove_matrix_answer(link){
 	$(link).parent().remove();
-}
-
-function open_modal(modal_id){
-	$("#"+modal_id).modal({
-		autoResize: true
-	});
 }
