@@ -1,6 +1,3 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-
 $(function(){
 	
 	/* Functions for managing the select boxes for page and next_page 
@@ -87,30 +84,23 @@ $(function(){
 		}
 	});
 	
-	$(".question_edit_form").live("ajax:error", function(event, data, status, xhr){
-		$.modal.close();
-		$(".question_edit_form div.validation_errors").html(data.responseText);
-		$("#edit_modal").modal({onClose:function(){
-			$("#new_choice_question div.validation_errors").html("");
-			$.modal.close();
-		}, persist:true});
-	});
-	
-
-	
 	/* Update the modal with the validation errors if the ajax response comes back with an error code when creating a new question/asset */
 	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:error", function(event, data, status, xhr){
 		$.modal.close();
-		$("#" + $(this).attr('id') + " div.validation_errors").html(data.responseText);
 		
-		var modal_name = "#edit_modal"
+		var form_name = ".question_edit_form";
+		var modal_name = "#edit_modal";
 		
 		if(!$(this).hasClass('question_edit_form')){
-			modal_name = "#" + $(this).attr('id') + "_modal"
+			var id = $(this).attr('id');
+			modal_name = "#" + id + "_modal";
+			form_name = "#" + id;
 		}
 		
+		$(form_name + " div.validation_errors").html(data.responseText);
+		
 		$(modal_name).modal({onClose:function(){
-			$("#" + $(this).attr('id') + " div.validation_errors").html("");
+			$(form_name + " div.validation_errors").html("");
 			$.modal.close();
 		}, persist:true});	
 
