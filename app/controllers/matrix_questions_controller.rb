@@ -11,6 +11,11 @@ class MatrixQuestionsController < ApplicationController
 
   def new
     @matrix_question = @survey_version.matrix_questions.build
+    
+    respond_to do |format|
+      format.html #
+      format.js { render :new }
+    end
   end
 
   def create
@@ -34,8 +39,8 @@ class MatrixQuestionsController < ApplicationController
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
       else
-        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey, :survey_version => @survey_version} }
-        format.js   {render :partial => "shared/question_errors", :locals => {:object => @matrix_question}, :status => 500}
+        format.html {render :new }
+        format.js   {render :new, :status => 500}
       end
     end
   end

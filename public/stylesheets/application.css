@@ -334,14 +334,14 @@ li.showList-ol {
 	margin: 0px 0px 15px;
 }
 
-.modalErrorBox {
+.error_messages, .modalErrorBox {
 	border: 2px solid #980024;
 	background: #fbeff3;
 	padding: 5px 10px;
 	margin: 5px 0px 10px;
 }
 
-.modalErrorTitle {
+.error_messages p, .error_messages h2, .modalErrorTitle {
 	color: #980024;
 	font-size: 1.1em;
 	font-weight:bold;
@@ -349,14 +349,14 @@ li.showList-ol {
 	padding: 0px;
 }
 
-ul.modalList {
+.error_messages ul, ul.modalList {
 	color: #980024;
 	font-size: 1em;
 	margin: 0px;
 	padding: 0px;
 }
 
-li.modalList {
+.error_messages li, li.modalList {
 	color: #980024;
 	font-size: 1em;
 	margin: 0px 0px 0px 25px;

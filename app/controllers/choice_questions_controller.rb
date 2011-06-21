@@ -1,6 +1,15 @@
 class ChoiceQuestionsController < ApplicationController
   before_filter :get_survey_version
   
+  def new
+    @choice_question = @survey_version.choice_questions.build
+    
+    respond_to do |format|
+      format.html #
+      format.js  { render :new }
+    end
+  end
+  
   def create
     @choice_question = ChoiceQuestion.new(params[:choice_question])
     @choice_question.survey_element.survey_version_id = @survey_version.id
@@ -11,7 +20,7 @@ class ChoiceQuestionsController < ApplicationController
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
       else
         format.html {render :action => 'new'}
-        format.js   {render :partial => "shared/question_errors", :locals => {:object => @choice_question}, :status => 500}
+        format.js   {render :new, :status => 500}#:partial => "shared/question_errors", :locals => {:object => @choice_question}, :status => 500}
       end
     end  
   end

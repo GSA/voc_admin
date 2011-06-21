@@ -1,6 +1,15 @@
 class AssetsController < ApplicationController
   before_filter :get_survey_version, :except => :destroy
   
+  def new
+    @asset = @survey_version.assets.build
+    
+    respond_to do |format|
+      format.html #
+      format.js { render :new }
+    end
+  end
+  
   def create
     @asset = Asset.new(params[:asset])
     @asset.survey_element.survey_version_id = @survey_version.id
@@ -11,7 +20,7 @@ class AssetsController < ApplicationController
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
       else
         format.html {render :action => 'new'}
-        format.js   {render :partial => "shared/question_errors", :locals => {:object => @asset}, :status => 500}
+        format.js   {render :new, :status => 500}
       end
     end  
   end

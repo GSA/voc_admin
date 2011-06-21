@@ -2,18 +2,18 @@
 	<% unless survey_version.pages.count == 0 %>
 		<span class="surveyNav2">
 			<%= link_to "Add an open-ended question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version),
-			 :class=>"surveyNav", :id => "link_to_new_text_question" %>
+			 :class=>"surveyNav", :id => "link_to_new_text_question", :remote => true %>
 		</span> | 
 		<span class="surveyNav3">
 			<%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version),
-			 :class=>"surveyNav", :id => "link_to_new_choice_question" %>
+			 :class=>"surveyNav", :id => "link_to_new_choice_question", :remote => true %>
 		</span> | 
 		<span class="surveyNav5">
 			<%= link_to "Add matrix question", new_survey_survey_version_matrix_question_path(survey_version.survey, survey_version),
-			 :class => "surveyNav", :id => "link_to_new_matrix_question" %>
+			 :class => "surveyNav", :id => "link_to_new_matrix_question", :remote => true %>
 		</span> | 
 		<span class="surveyNav4">
-			<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset"  %>
+			<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset", :remote => true  %>
 		</span> | 
 		
 	<% end # Close unless statement%>

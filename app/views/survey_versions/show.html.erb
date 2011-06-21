@@ -108,7 +108,7 @@
 								<% end -%>
 							<% end -%>
 						<% else %>
-              <%= element.assetable.snippet.html_safe%>
+              <%= sanitize element.assetable.snippet.html_safe%>
 						<% end %>			
 					</li>
 					<% index = index + 1%>

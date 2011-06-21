@@ -10,7 +10,11 @@ class TextQuestionsController < ApplicationController
   end
 
   def new
-    @text_question = TextQuestion.new
+    @text_question = @survey_version.text_questions.build
+    respond_to do |format|
+      format.html #
+      format.js { render :new }
+    end
   end
 
   def create
@@ -24,7 +28,7 @@ class TextQuestionsController < ApplicationController
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
       else
         format.html {render :action => 'new'}
-        format.js   {render :partial => "shared/question_errors", :locals => {:object => @text_question}, :status => 500}
+        format.js   {render :new, :status => 500}
       end
     end
   end
@@ -48,7 +52,7 @@ class TextQuestionsController < ApplicationController
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
       else
         format.html {render :action => 'edit'}
-        format.js   {render :partial => "shared/question_errors", :locals => {:object => @text_question}, :status => 500}
+        format.js   {render :edit, :status => 500}
       end
     end
   end

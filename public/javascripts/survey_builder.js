@@ -63,17 +63,11 @@ $(function(){
 		return false
 	});
 	
-	/* Open modal when control links are clicked */
-	$("#link_to_new_asset, #link_to_new_text_question, #link_to_new_choice_question, #link_to_new_matrix_question").live('click', function(){
-		var modal_name = $(this).attr('id').split('_').slice(2).join('_');
-		$("#" + modal_name + "_modal").modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
-		return false;
+	/* Make an ajax call to pull the 'new' form from the server for a question */
+	$("#link_to_new_asset, #link_to_new_text_question, #link_to_new_choice_question, #link_to_new_matrix_question").live('ajax:success', function(event, data, status, xhr){
+		$("#edit_modal").html(data).modal({autoResize:true, maxHeight:'90%', minWidth:'330px', maxWidth:'500px'});
 	});
 		
-	/* Clear out the old validation errors data before opening the modal for a new question */
-	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset").live("ajax:beforeSend", function(){
-		$("#" + $(this).attr('id') + " div.validation_errors").html("");
-	});
 	
 	/* Update the question list and clear out the submitted data from the modal when a question is successfully added to the survey */
 	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:success", function(event, data, status, xhr){
@@ -86,24 +80,11 @@ $(function(){
 	
 	/* Update the modal with the validation errors if the ajax response comes back with an error code when creating a new question/asset */
 	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:error", function(event, data, status, xhr){
-		$.modal.close();
+		$("#edit_modal").html(data.responseText);
 		
-		var form_name = ".question_edit_form";
-		var modal_name = "#edit_modal";
-		
-		if(!$(this).hasClass('question_edit_form')){
-			var id = $(this).attr('id');
-			modal_name = "#" + id + "_modal";
-			form_name = "#" + id;
-		}
-		
-		$(form_name + " div.validation_errors").html(data.responseText);
-		
-		$(modal_name).modal({onClose:function(){
-			$(form_name + " div.validation_errors").html("");
-			$.modal.close();
-		}, persist:true});	
-
+		var modalContainer = $("#simplemodal-container");
+		modalContainer.css("height", $("#edit_modal").height()).css("width", Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
+		$.modal.setPosition();
 	});
 	
 	/* hide the spinner and update the question list when a successful response is received from an ajax request to reorder an element/page */
@@ -138,8 +119,8 @@ function add_fields(link, association, content) {
 		}
 		
 		// This is for survey_builder only
-		$(".simplemodal-container").css("height", "auto").css("width", "auto");
-		$(window).resize();
+		$(".simplemodal-container").css("height", $("#edit_modal").height()).css("width", Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
+		$.modal.setPosition();
 	}
 }
 
@@ -148,8 +129,8 @@ function add_matrix_answers(link, content){
 	var regexp = new RegExp("new_matrix_answer", "g");
 	$(link).parent().before(content.replace(regexp, new_id));
 	
-	$(".simplemodal-container").css("height", "auto").css("width", "auto");
-	$(window).resize();
+	$(".simplemodal-container").css("height", $("#edit_modal").height()).css("width", Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
+	$.modal.setPosition();
 }
 
 function remove_matrix_answer(link){
