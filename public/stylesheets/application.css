@@ -615,5 +615,9 @@ span.pageNum {
   left: 0;
   top: 0;
 }
+
+.next_pages {
+	white-space: nowrap;
+}
 	 
 	 

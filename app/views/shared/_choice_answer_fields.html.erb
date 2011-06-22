@@ -5,6 +5,9 @@
   <span class="next_pages" style="<%= 'display:none' unless f.object.choice_question.try(:question_content).try(:flow_control) %>" >
   <%= f.label :next_page_id, "Go To Page: " %><%= f.collection_select :next_page_id, survey_version.pages.order(:page_number), :id, :page_number, {},  :class => "next_page_select" %>
   </span>
+
+  <%= link_to_function image_tag('arrow_up.png'), "swapAnswers(this,'up')" %>
+  <%= link_to_function image_tag('arrow_down.png'), "swapAnswers(this, 'down')" %>
 	
 	<%= f.hidden_field :_destroy %>
 	<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redX"), "remove_fields(this)", :class=>"surveyNav" %>

@@ -4,19 +4,17 @@ $(function(){
 	 * for multiple choice questions.
 	 */
 	$("#flow_control_checkbox").live('change', function(){
-
+		var width = 0;
 		/* If checkbox is selected then hide the next page dropdown for answers. */
 		if(!$(this).is(':checked')){
-			$(".simplemodal-container").css("height", "auto");
-			$(".simplemodal-container").css("width", "auto");
 			$(".next_pages").hide();
+			width =  $("#edit_modal").width() - $(".next_pages").first().width();
 		} else {
-			$(".simplemodal-container").css("height", "auto");
-			$(".simplemodal-container").css("width", "auto");
 			/* Checkbox has been checked so show the page selections */
 			$(".next_pages").show();
+			width = $("#edit_modal").width() + $(".next_pages").first().width();
 		}
-		$(window).resize();
+		resizeModal($("#edit_modal").height(), width);
 	});
 	
 	/*
@@ -40,21 +38,17 @@ $(function(){
 		 * answers checkbox.
 		 */
 		if($(this).val() == "checkbox") {
-			$(".simplemodal-container").css("height", "auto");
 			$("#allow_multiple").show();
 		}
 		
 		/* If multi-select is chosen then disable flow control checkbox and hide next page options */
 		if($(this).val() == "multiselect"){
 			$("#flow_control_checkbox").attr('checked', false).attr('disabled', true);
-			$(".simplemodal-container").css("height", "auto");
-			$(".simplemodal-container").css("width", "auto");
 			$(".next_pages").hide();
 		} else {
-			
 			$("#flow_control_checkbox").removeAttr('disabled');
 		}
-		$(window).resize();
+		resizeModal($("#edit_modal").height(), $("#edit_modal").width());
 	});
 	
 	/* Modal control functions */
@@ -83,8 +77,7 @@ $(function(){
 		$("#edit_modal").html(data.responseText);
 		
 		var modalContainer = $("#simplemodal-container");
-		modalContainer.css("height", $("#edit_modal").height()).css("width", Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
-		$.modal.setPosition();
+		resizeModal($("#edit_modal").height(), $("#edit_modal").width());
 	});
 	
 	/* hide the spinner and update the question list when a successful response is received from an ajax request to reorder an element/page */
@@ -119,8 +112,7 @@ function add_fields(link, association, content) {
 		}
 		
 		// This is for survey_builder only
-		$(".simplemodal-container").css("height", $("#edit_modal").height()).css("width", Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
-		$.modal.setPosition();
+		resizeModal($("#edit_modal").height(), Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
 	}
 }
 
@@ -129,10 +121,33 @@ function add_matrix_answers(link, content){
 	var regexp = new RegExp("new_matrix_answer", "g");
 	$(link).parent().before(content.replace(regexp, new_id));
 	
-	$(".simplemodal-container").css("height", $("#edit_modal").height()).css("width", Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
-	$.modal.setPosition();
+	resizeModal($("#edit_modal").height(), Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
 }
 
 function remove_matrix_answer(link){
 	$(link).parent().remove();
+	resizeModal($("#edit_modal").height(), $("#edit_modal").width());
+}
+
+function resizeModal(height, width){
+	$(".simplemodal-container").css("height", height).css("width", width);
+	$.modal.setPosition();
+}
+
+function swapAnswers(link, direction){
+	var current_field = $(link).siblings('input:text').first();
+	var previous_field = null;
+	if(direction == "up"){
+		previous_field = $(link).parent().prevAll('p.answer_fields').first().children('input:text').first();
+	} else {
+		previous_field = $(link).parent().nextAll('p.answer_fields').first().children('input:text').first();
+	}
+	
+	
+	if(previous_field.length){
+		var current_field_value = current_field.val();
+		current_field.val(previous_field.val());
+		previous_field.val(current_field_value);
+
+	}
 }
