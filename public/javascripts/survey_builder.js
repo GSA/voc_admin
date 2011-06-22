@@ -8,11 +8,11 @@ $(function(){
 		/* If checkbox is selected then hide the next page dropdown for answers. */
 		if(!$(this).is(':checked')){
 			$(".next_pages").hide();
-			width =  $("#edit_modal").width() - $(".next_pages").first().width();
+			width =  $("#edit_modal").width() - $(".next_pages:first").width();
 		} else {
 			/* Checkbox has been checked so show the page selections */
 			$(".next_pages").show();
-			width = $("#edit_modal").width() + $(".next_pages").first().width();
+			width = $("#edit_modal").width() + $(".next_pages:first").width();
 		}
 		resizeModal($("#edit_modal").height(), width);
 	});
