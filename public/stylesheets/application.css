@@ -619,5 +619,9 @@ span.pageNum {
 .next_pages {
 	white-space: nowrap;
 }
-	 
-	 
+
+#images_index_table {
+	width: 100%;
+	
+}
+}

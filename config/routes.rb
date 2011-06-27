@@ -40,6 +40,12 @@ CommentToolApp::Application.routes.draw do
     end
   end
   
+  resources :images do
+    get :display, :on => :collection
+    delete :remove, :on => :collection
+    post :save_file, :on => :collection
+  end
+  
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => "user_sessions#new"

@@ -1,7 +1,7 @@
 class RawResponsesController < ApplicationController
   def index
-   
-    @responses = params[:client_id].blank? ? RawResponse.all : RawResponse.where(:client_id => params[:client_id]).all
+   client_id = params[:client_id]
+    @responses = client_id.blank? ? RawResponse.all : RawResponse.where(:client_id => client_id).all
     
     respond_to do |format|
       format.html #
@@ -9,12 +9,11 @@ class RawResponsesController < ApplicationController
     end
   end
   
+  
+  # TODO: Is this action used anymore?  Or all raw responses created through the survey response controller
   def create
-    
     @responses = {}
-    params[:response].each do |index, response|
-      @responses[index] = RawResponse.create response
-    end
+    params[:response].each { |index, response| @responses[index] = RawResponse.create response }
     redirect_to raw_responses_path
   end
 end

@@ -35,7 +35,7 @@ class AssetsController < ApplicationController
   end
 
   def update
-    @asset = Asset.find(params[:id])
+    @asset = @survey_version.assets.find(params[:id])
     
     respond_to do |format|
       if @asset.update_attributes(params[:asset])
@@ -49,7 +49,7 @@ class AssetsController < ApplicationController
   end
 
   def destroy
-    @asset = Asset.find(params[:id])
+    @asset = @survey_version.assets.find(params[:id])
     @asset.destroy
     
     respond_to do |format|
