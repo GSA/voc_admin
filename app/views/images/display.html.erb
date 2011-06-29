@@ -1,7 +1,10 @@
-<h2><%= @file %></h2>
+<p class="pageTitle"><%= @file %></p>
 
-<%= image_tag @file %>
+<div id="displayImage">
+	<%= image_tag @file %>
+</div>
 
-<p>
-<%= link_to "Back", images_path, :class => "surveyNav"%>
-</p>
+<div class="pageNav">
+	<%= link_to "Back", images_path, :class=>"pageNav" %>
+</div>
+

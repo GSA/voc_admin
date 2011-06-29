@@ -67,14 +67,16 @@ textarea {
 	Survey Response Table */
 
 #surveyTable, #versionTable, #categoryTable, 
-#rulesTable, #displayFieldsTable, #usersTable {
+#rulesTable, #displayFieldsTable, #usersTable,
+#images_index_table {
 	margin: 0px 0px 10px;
 	padding: 0px;
 	border-collapse: collapse;
 }
 
 #surveyTable th, #versionTable th, #categoryTable th, 
-#rulesTable th, #displayFieldsTable th, #usersTable th {
+#rulesTable th, #displayFieldsTable th, #usersTable th,
+#images_index_table th {
 	text-align: left;
 	font-size: 1.1em;
 	font-weight: bold;
@@ -84,7 +86,8 @@ textarea {
 }
 
 #surveyTable td, #versionTable td, #categoryTable td, 
-#rulesTable td, #displayFieldsTable td, #usersTable td {
+#rulesTable td, #displayFieldsTable td, #usersTable td,
+#images_index_table td {
 	text-align: left;
 	font-size: 1em;
 	font-weight: normal;
@@ -137,7 +140,8 @@ textarea {
 #categoryTable a, #categoryTable a:link, #categoryTable a:visited, 
 #rulesTable a, #rulesTable a:link, #rulesTable a:visited,
 #displayFieldsTable a, #displayFieldsTable a:link, #displayFieldsTable a:visited,
-#usersTable a, #usersTable a:link, #usersTable a:visited {
+#usersTable a, #usersTable a:link, #usersTable a:visited,
+#images_index_table a, #images_index_table a:link, #images_index_table a:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
@@ -147,7 +151,8 @@ textarea {
 #categoryTable a:hover, #categoryTable a:active, 
 #rulesTable a:hover, #rulesTable a:active,
 #displayFieldsTable a:hover, #displayFieldsTable a:active,
-#usersTable a:hover, #usersTable a:active {
+#usersTable a:hover, #usersTable a:active,
+#images_index_table a:hover, #images_index_table a:active {
 	color: #243b7c;
 	text-decoration: underline;
 	font-weight: bold;
@@ -158,10 +163,22 @@ textarea {
 	padding: 5px 10px 5px 1px;
 }
 
+#images_index_table .col1 {
+	width: 600px;
+	padding: 5px 10px 5px 1px;
+}
+
 #rulesTable .col2 {
 	text-align: center;
 	width: 35px;
 	padding: 5px 0px;
+}
+
+#images_index_table .col2 {
+	text-align: center;
+	width: 50px;
+	padding: 5px 0px;
+	vertical-align: middle;
 }
 
 #survey_response_list  {
@@ -620,8 +637,13 @@ span.pageNum {
 	white-space: nowrap;
 }
 
-#images_index_table {
-	width: 100%;
-	
+#displayImage {
+	width: 788px;
+	overflow: auto;
 }
+
+#newImage {
+	width: 788px;
+	overflow: auto;
+	padding: 10px 0px 35px;
 }

@@ -1,20 +1,23 @@
-<h2>Images</h2>
+<p class="pageTitle">Images</p>
 
 
-<div class="page_nav">
-  <%= link_to 'Add New Image', new_image_path, :class => "surveyNav" %>
+<div class="pageNav-upper">
+  <%= link_to 'Add New Image', new_image_path, :class => "pageNav" %>
 </div>
 
 
 <table id='images_index_table'>
   <tr>
     <th>Image Files</th>
-    <th class="actionCol">Actions</th>
+    <th>Actions</th>
   </tr>
   <% @files.each do |f| %>
     <tr class="<%= cycle('blue', 'white') %>">
-      <td class='descCol'><%= link_to f, display_images_path(:file=>f)%></td>
-      <td class='actionCol'><%= link_to image_tag('red_x.png'), remove_images_path(:file=>f), :confirm => "Are you sure?", :method => 'delete' -%></td>
+      <td class='col1'><%= link_to f, display_images_path(:file=>f) %></td>
+      <td class='col2'><%= link_to image_tag('red_x.png'), remove_images_path(:file=>f), :confirm => "Are you sure?", :method => 'delete' -%></td>
     </tr>
   <% end %>
 </table>
+<div class="pageNav">
+  <%= link_to 'Add New Image', new_image_path, :class => "pageNav" %>
+</div>
