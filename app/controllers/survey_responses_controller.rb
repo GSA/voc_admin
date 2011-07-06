@@ -9,7 +9,7 @@ class SurveyResponsesController < ApplicationController
       @order_column_id = @survey_version.display_fields.map(&:id).include?(params[:order_column].to_i) ? params[:order_column] : nil
       @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
 
-      @survey_responses = @survey_version.survey_responses.processed.search_and_sort(params[:search], @order_column_id, @order_dir).page params[:page]
+      @survey_responses = @survey_version.survey_responses.processed.search(params[:search]).order_by_display_field(@order_column_id, @order_dir).page params[:page]
     else
       @survey_responses = []
     end    
