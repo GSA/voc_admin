@@ -15,7 +15,7 @@ gem 'authlogic'
 group :development do 
 	gem 'ruby-debug19'
 	gem 'nifty-generators'
-	gem 'annotate-models'
+	gem 'annotate'
 	gem 'metrical'
 	gem 'rails-erd'
 	gem 'bullet'
