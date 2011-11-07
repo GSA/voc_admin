@@ -21,17 +21,17 @@ a img {
 .foreground {
 	width: 990px;
 	margin: 0px auto;
-	padding: 30px 10px;
-	*padding: 20px 5px;
+	padding: 10px 10px;
+	/* *padding: 20px 5px; */
 	background-color: #ffffff;
 	min-height: 475px;
 	vertical-align: top;
 }
 .navigation {
-	width: 165px;
-	*width: 150px;
-	margin: 2px 0px 0px;
-	padding: 0px;
+	width: 990px;
+	/* *width: 150px; */
+	margin: 0px 20px;
+	padding: 20px 0px 40px;
 	display: inline-block;
 	position: relative;
 	top: 0px;
@@ -40,7 +40,7 @@ a img {
 	*float: left;
 }
 .contentArea {
-	width: 788px;
+	width: 990px;
 	margin:0px;
 	padding: 0px;
 	display: inline-block;
@@ -58,13 +58,14 @@ textarea {
 	margin: 0px 10px 0px 0px;
 }
 
-/* 
+/****
 	Survey Index Page
 	Survey Version Index Page 
 	Category Index Page
 	Manage Rules Page
 	Display Fields Page
-	Survey Response Table */
+	Survey Response Table 
+****/
 
 #surveyTable, #versionTable, #categoryTable, 
 #rulesTable, #displayFieldsTable, #usersTable,
@@ -277,6 +278,7 @@ textarea {
 	padding: 0px 0px 3px;
 	color: #243b7c;
 	border-bottom: 6px double #eef1fc;
+	width: 960px;
 }
 
 .copy {
@@ -431,7 +433,6 @@ li.showList-ol {
 /* Navigation */
 .navTitle {
 	border-bottom: 1px solid #243b7c;
-	/* background-color: #cad3f6; */
 	margin: 0px 0px /* 7px */;
 	padding: 0px 0px 3px;
 	color: #243b7c;
@@ -445,6 +446,7 @@ p.nav {
 	margin: 0px 0px /* 7px */;
 	padding: 5px 5px;
 	color: #243b7c;
+	display: inline;
 }
 
 a.nav:link, a.nav:visited {
@@ -466,7 +468,7 @@ div.pageNav {
 	margin: 10px 0px;
 	padding: 5px 0px 0px;
 	border-top: 6px double #eef1fc;
-	width: 788px;
+	width: 960px;
 }
 
 div.pageNav-upper {
