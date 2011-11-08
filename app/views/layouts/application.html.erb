@@ -20,9 +20,11 @@
 			<!-- begin main content for intranet page -->
 				<div class="background">	
 					<div class="foreground">
-						<div class="navigation">
-							<%= render :partial => 'layouts/app_nav' %>
-						</div>
+						<% if !current_user.blank? %>
+							<div class="navigation">
+								<%= render :partial => 'layouts/app_nav' %>
+							</div>
+						<% end %>
 						<div class="contentArea">
 							<%= yield %>
 						</div>

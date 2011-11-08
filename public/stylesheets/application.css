@@ -28,16 +28,14 @@ a img {
 	vertical-align: top;
 }
 .navigation {
-	width: 990px;
+	width: 1010px;
 	/* *width: 150px; */
-	margin: 0px 20px;
-	padding: 20px 0px 40px;
-	display: inline-block;
-	position: relative;
-	top: 0px;
-	left: 0px;
+	margin: 0px -10px 30px;
+	padding: 10px 0px 20px;
+	display: block;
 	vertical-align: top;
-	*float: left;
+	border-bottom: 3px double #243b7c;
+	text-align: center;
 }
 .contentArea {
 	width: 990px;
@@ -358,6 +356,7 @@ li.showList-ol {
 	background: #fbeff3;
 	padding: 5px 10px;
 	margin: 5px 0px 10px;
+	width: 938px;
 }
 
 .error_messages p, .error_messages h2, .modalErrorTitle {
@@ -399,7 +398,7 @@ li.showList-ol {
 .page {
 	border: 1px solid #243b7c;
 	background-color: #eef1fc;
-	margin: 5px 0px 10px;
+	margin: 5px auto 10px;
 	padding: 5px;
 	width: 778px;
 }
@@ -430,37 +429,38 @@ li.showList-ol {
 	margin: 25px 0px 0px;
 }
 
-/* Navigation */
-.navTitle {
-	border-bottom: 1px solid #243b7c;
-	margin: 0px 0px /* 7px */;
-	padding: 0px 0px 3px;
-	color: #243b7c;
-	text-align: center;
-	font-size: 1.3em;
-	font-weight: bold;
-}
+/***    Top Navigation    ****/
 
 p.nav {
-	border-bottom: 1px solid #243b7c;
-	margin: 0px 0px /* 7px */;
-	padding: 5px 5px;
-	color: #243b7c;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 0px 3px;
 	display: inline;
 }
-
 a.nav:link, a.nav:visited {
 	color: #243b7c;
 	text-decoration: none;
-	font-weight: normal;
+	background: #EEF1FC;
+	padding: 7px 20px;
+	color: #243b7c;
+	border: 1px solid #243b7c;
 }
-
 a.nav:hover, a.nav:active {
 	color: #243b7c;
 	text-decoration: underline;
-	font-weight: bold;
+	border: 1px solid #243b7c;
+	background: #C9D4E8;
+	padding: 7px 20px;
+}
+.navActive {
+	color: #EEF1FC;
+	text-decoration: none;
+	border: 1px solid #EEF1FC;
+	background: #243b7c;
+	padding: 7px 20px;
 }
 
+/****    Page Navigation    ****/
 div.pageNav {
 	color: #ffad05;
 	font-weight: bold;
