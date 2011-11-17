@@ -95,8 +95,8 @@ textarea {
 }
 
 #surveyTable .col1, #displayFieldsTable .col2 {
-	width: 175px;
-	padding: 5px 10px 5px 1px;
+	width: 200px;
+	padding: 5px 10px;
 }
 
 #usersTable .col1-2 {
@@ -105,13 +105,13 @@ textarea {
 }
 
 #categoryTable .col1, #surveyTable .col2 {
-	width: 300px;
-	padding: 5px 10px 5px 0px;
+	width: 470px;
+	padding: 5px 20px 5px 0px;
 }
 
 #surveyTable .col3 {
 	text-align: center;
-	width: 35px;
+	width: 40px;
 	padding: 5px 0px;
 }
 
@@ -130,8 +130,8 @@ textarea {
 }
 
 #versionTable .col3 {
-	width: 175px;
-	padding: 5px 0px;
+	width: 100px;
+	padding: 5px 5px;
 }
 
 #surveyTable a, #surveyTable a:link, #surveyTable a:visited,
@@ -181,7 +181,7 @@ textarea {
 }
 
 #survey_response_list  {
-	width: 805px;
+	width: 960px;
 	margin: 10px 0px;
 	min-height: 300px;
 	max-height: 600px;
@@ -398,9 +398,9 @@ li.showList-ol {
 .page {
 	border: 1px solid #243b7c;
 	background-color: #eef1fc;
-	margin: 5px auto 10px;
+	margin: 5px 0px 10px;
 	padding: 5px;
-	width: 778px;
+	width: 950px;
 }
 
 .current_page {
@@ -648,4 +648,8 @@ span.pageNum {
 	width: 788px;
 	overflow: auto;
 	padding: 10px 0px 35px;
+}
+
+#sr_search {
+	margin: 20px 0px;
 }
