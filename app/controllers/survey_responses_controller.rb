@@ -10,6 +10,7 @@ class SurveyResponsesController < ApplicationController
       @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
 
       @survey_responses = @survey_version.survey_responses.processed.search(params[:search]).order_by_display_field(@order_column_id, @order_dir).page params[:page]
+      #@survey_responses = @survey_version.survey_responses.processed.order_by_display_field(@order_column_id, @order_dir).page params[:page]
     else
       @survey_responses = []
     end    
