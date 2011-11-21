@@ -1,6 +1,6 @@
 class UserSessionsController < ApplicationController
 	skip_before_filter :require_no_user, :only => :destroy
-  skip_before_filter :require_user, :only => [:new, :create]
+  skip_before_filter :require_user, :only => [:new, :create, :reset_password, :do_pw_reset]
   before_filter :redirect_if_logged_in, :only => :new
 	
 	def new
@@ -20,6 +20,21 @@ class UserSessionsController < ApplicationController
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
     redirect_to login_url
+  end
+  
+  def do_pw_reset
+    user = User.find_by_email(params["email_address"])
+    if user
+      password =  PasswordGenerator::generate_password(2,2,2,2)
+      user.password = password
+      user.password_confirmation = password
+      
+      if user.save_without_session_maintenance
+        UserSessionsMailer.reset_password(user, password).deliver
+      end
+    end
+    flash.notice = "An email has been sent to #{params["email_address"]}, if the account existed."
+    redirect_to login_path
   end
   
   private

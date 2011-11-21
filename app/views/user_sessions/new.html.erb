@@ -11,7 +11,7 @@
   <% end %>
   
   <%= flash_messages(flash) %>
-
+<div>
 <%= form_for @user_session, :url => {:action => "create"} do |f| %>
 	<p class="copyBold">
 		<%= f.label :email, "Email:"%><br />
@@ -22,4 +22,7 @@
 		<%= f.password_field :password %>
 	</p>
 	<p class="sumbitButton"><%= f.submit "Login" %></p>
+	<p><a href="/reset_password" title="Request that new password be sent to you.">Reset Password</a></p>
 <% end %>
+</div>
+
