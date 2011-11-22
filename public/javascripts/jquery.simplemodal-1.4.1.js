@@ -360,7 +360,7 @@
 			var s = this;
 
 			// bind the close event to any element with the closeClass class
-			$('.' + s.o.closeClass).bind('click.simplemodal', function (e) {
+			$('.' + s.o.closeClass).live('click.simplemodal', function (e) {
 				e.preventDefault();
 				s.close();
 			});
