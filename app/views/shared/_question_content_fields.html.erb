@@ -1,5 +1,5 @@
 <%= f.label :statement, (f.object.questionable_type == "MatrixQuestion" ? "Statement: " : "Question: ")%>
-<%= f.check_box :required, {:checked => false}, true, false %>
+<%= f.check_box :required, {:checked => f.object.required}, true, false %>
 <%= f.label :required %>
 
 <% if defined? matrix_question %>

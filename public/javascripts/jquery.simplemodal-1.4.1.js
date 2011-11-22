@@ -367,14 +367,14 @@
 
 			// bind the overlay click to the close function, if enabled
 			if (s.o.modal && s.o.close && s.o.overlayClose) {
-				s.d.overlay.bind('click.simplemodal', function (e) {
+				s.d.overlay.live('click.simplemodal', function (e) {
 					e.preventDefault();
 					s.close();
 				});
 			}
 
 			// bind keydown events
-			$(document).bind('keydown.simplemodal', function (e) {
+			$(document).live('keydown.simplemodal', function (e) {
 				if (s.o.modal && e.keyCode === 9) { // TAB
 					s.watchTab(e);
 				}
@@ -385,7 +385,7 @@
 			});
 
 			// update window size
-			$(window).bind('resize.simplemodal', function () {
+			$(window).live('resize.simplemodal', function () {
 				// redetermine the window width/height
 				w = s.getDimensions();
 
