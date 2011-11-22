@@ -33,6 +33,14 @@ class PagesController < ApplicationController
     end
   end
   
+  def copy_page
+    page = @survey_version.pages.find(params[:id])
+    page.create_copy
+    respond_to do |format|
+      format.js   { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+    end
+  end
+  
   private
   def get_survey
     @survey = Survey.find(params[:survey_id])

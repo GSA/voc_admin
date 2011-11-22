@@ -36,6 +36,7 @@ CommentToolApp::Application.routes.draw do
       end
       resources :pages do
         post :move_page, :on => :member
+        post :copy_page, :on => :member
       end
       resources :assets
       get :create_new_major_version, :on => :collection
