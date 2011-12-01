@@ -58,15 +58,7 @@ describe SurveyElement do
     element2.move_element_up
     element2.element_order.should == 1   
   end
-  
-  it "should swap element orders" do
-    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    asset_2 = Asset.create! :snippet => "Snippet2"
-    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => asset_2.id, :page_id => @page.id)
-    element2.swap_elements(element1)
-    [element1.element_order, element2.element_order].should == [2,1]    
-  end
-  
+
   it "should call set_element_order before validation" do
     element = @version.survey_elements.new(:assetable => mock_model(Asset))
     element.should_receive(:set_element_order).once

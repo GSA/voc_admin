@@ -8,14 +8,20 @@ module SurveyVersionHelper
   end
   
   def element_management_links(survey, survey_version, element)
+    confirm_move_msg = "This action will remove the flow control from this question. Continue?"
     str = link_to "Edit", url_for([:edit, survey, survey_version, element.assetable]), :remote => true, :class => "edit_asset_link"
+      
+    confirm_move = element.assetable_type == "ChoiceQuestion" && element.assetable.question_content.flow_control && element.element_order == 1
     str += link_to image_tag("arrow_up.png", :alt=>"Up Arrow"), up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element),
-				:method => :post, :remote => true, :class => "element_order_up", :title => "Move up" 
+				:method => :post, :remote => true, :class => "element_order_up", :title => "Move up", :confirm => (confirm_move ? confirm_move_msg : nil)
+				
+		confirm_move = element.assetable_type == "ChoiceQuestion" && element.assetable.question_content.flow_control && element.element_order.to_i == element.page.survey_elements.maximum(:element_order).to_i
     str += link_to image_tag("arrow_down.png", :alt=>"Down Arrow"), 
 				down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element), :method => :post, :remote => true,
-				:class => "element_order_up", :title => "Move down" 
+				:class => "element_order_up", :title => "Move down", :confirm => (confirm_move ? confirm_move_msg : nil)
+				  
 		str +=link_to image_tag("red_x.png", :alt=>"Remove Element", :class=>"redX"), 
 				url_for([survey, survey_version, element.assetable]), :method => :delete, :confirm => "Are you sure?",
-				:remote => true, :class => "remove_question_link", :title => "Remove page element"   
+				:remote => true, :class => "remove_question_link", :title => "Remove page element"
   end
 end
