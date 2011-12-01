@@ -3,15 +3,6 @@ $(function(){
 	/* Functions for managing the select boxes for page and next_page 
 	 * for multiple choice questions.
 	 */
-	$(".warn_on_move").live('click', function(event){
-		if (confirm("This action will remove the flow control from this question. Continue?")) {
-			return true;
-		}
-		event.preventDefault();
-		event.stopImmediatePropagation();
-		return false;
-	});
-	
 	$("#flow_control_checkbox").live('change', function(){
 		var width = 0;
 		/* If checkbox is selected then hide the next page dropdown for answers. */
