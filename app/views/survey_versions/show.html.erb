@@ -46,31 +46,38 @@
 	      <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
 				<%= hidden_field_tag :prev_page, page.prev_page.try(:page_number), :id => "page_#{page.page_number}_prev_page" %>
 				<%= hidden_field_tag "survey_version_id", @survey_version.id %>
-				<ol class="showList">
+				<ul class="showList">
+				<% question_number = 0 %>
 				<% page.elements_with_includes.each do |element| %>
+					
 					<li class="outter">
+						<% if element.assetable_type != 'Asset'  %>
+							<% question_number =+ question_number + 1  %>
+							<%= "#{question_number}." %>
+						<% end %>
 						<% if element.assetable_type == "MatrixQuestion" %>
+							<%= element.assetable.statement %>
 							<table>
-		            <tr>
-		              <th></th>
-		              <% for column_header in element.assetable.column_headers do %>
-		               <th><%= column_header %></th>
-		              <% end -%>
-		            </tr>
-		            <% for row_header in element.assetable.rows do %>
-		              <tr>
-		                <td><%= row_header.question_content.statement%></td>
-		                <% element.assetable.choice_questions.first.choice_answers.each do |a| %>
-										  <td>
-										  <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
-                      <%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required, :class => "required_question" %>
-		                  <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false %>
-											</td>
-		                <% end %>
-		              </tr>
-									<% index = index + 1%>
-		            <% end -%>
-		          </table>
+					            <tr>
+					              <th></th>
+					              <% for column_header in element.assetable.column_headers do %>
+					               <th><%= column_header %></th>
+					              <% end -%>
+					            </tr>
+					            <% for row_header in element.assetable.rows do %>
+					              <tr>
+					                <td><%= row_header.question_content.statement%></td>
+					                <% element.assetable.choice_questions.first.choice_answers.each do |a| %>
+										<td>
+											<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
+			                      			<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required, :class => "required_question" %>
+					                  		<%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false %>
+										</td>
+					                <% end %>
+					              </tr>
+								  <% index = index + 1%>
+					            <% end -%>
+					          </table>
 						<% elsif element.assetable_type != "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
@@ -81,7 +88,7 @@
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO %>
 									<% for answer in element.assetable.choice_answers %>
 										<%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-                      :onclick => (element.assetable.question_content.flow_control ? 
+                      						:onclick => (element.assetable.question_content.flow_control ? 
 											"set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : "Empty")%>
 										<%= answer.answer%><br/>
 									<% end -%>
@@ -108,12 +115,12 @@
 								<% end -%>
 							<% end -%>
 						<% else %>
-              <%= sanitize element.assetable.snippet.html_safe%>
+              				<%= sanitize element.assetable.snippet.html_safe%>
 						<% end %>			
 					</li>
 					<% index = index + 1%>
 				<% end %>
-				</ol>
+				</ul>
 				<div class="surveyNav">
 					<% unless page.page_number == 1 %>
 						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "show_prev_page(#{page.page_number})", :class=>"surveyNav"  %></span> |

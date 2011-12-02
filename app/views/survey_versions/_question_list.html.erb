@@ -7,9 +7,15 @@
 	<div class="page" id="page_<%=page.page_number%>">
 		<span class="copyBold">Page <%= page.page_number %></span>
 			<%= page_management_links(survey_version.survey, survey_version, page) %>
-		<ol class="outter">
+		<ul class="outter">
+		<% question_number = 0 %>
 		<% for element in page.survey_elements.order(:element_order) %>
+			
 			<li class="outter">
+				<% if element.assetable_type != 'Asset'  %>
+					<% question_number =+ question_number + 1  %>
+					<%= "#{question_number}." %>
+				<% end %>
 				<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.statement %>
 				<%= "*" if element.assetable.try(:required) %> (<%= element.assetable.answer_type %>)</span>
 				<%= element_management_links(survey_version.survey, survey_version, element)%>
@@ -40,7 +46,7 @@
 				
 			</li>		
 		<% end # close the for loop %>
-		</ol>
+		</ul>
 	</div>
 	
 <% end %>
