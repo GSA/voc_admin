@@ -1,5 +1,10 @@
 <p class="pageTitle"><%= @file %></p>
 
+<div>
+<p>Place the following into a snippet to display image in survey:</p>
+<p><%= "#{image_tag(@file)}" %></p>
+</div>
+
 <div id="displayImage">
 	<%= image_tag @file %>
 </div>
