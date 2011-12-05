@@ -48,6 +48,7 @@ GEM
       main
       ruby_parser (~> 2.0.4)
       sexp_processor (~> 3.0.3)
+    coderay (0.9.8)
     colored (1.2)
     columnize (0.3.2)
     daemons (1.1.3)
@@ -84,6 +85,8 @@ GEM
     main (4.4.0)
       arrayfields (>= 4.7.4)
       fattr (>= 2.1.0)
+    method_source (0.6.6)
+      ruby_parser (~> 2.0.5)
     metric_fu (2.1.1)
       Saikuro (>= 1.1.0)
       activesupport (>= 2.0.0)
@@ -103,6 +106,13 @@ GEM
     mysql2 (0.2.7)
     nifty-generators (0.4.6)
     polyglot (0.3.1)
+    pry (0.9.6.2)
+      coderay (~> 0.9.8)
+      method_source (~> 0.6.5)
+      ruby_parser (~> 2.0.5)
+      slop (~> 2.1.0)
+    pry_debug (0.0.1)
+      pry (~> 0.9.0)
     rack (1.2.3)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -173,6 +183,7 @@ GEM
     ruby_parser (2.0.6)
       sexp_processor (~> 3.0)
     sexp_processor (3.0.5)
+    slop (2.1.0)
     syntax (1.0.0)
     thin (1.2.11)
       daemons (>= 1.0.9)
@@ -198,9 +209,10 @@ DEPENDENCIES
   metrical
   mysql2 (< 0.3)
   nifty-generators
+  pry
+  pry_debug
   rails (= 3.0.7)
   rails-erd
-  rake (= 0.8.7)
   rspec-rails
   ruby-debug19
   ruby-oci8

@@ -8,10 +8,12 @@
 			<%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version),
 			 :class=>"surveyNav", :id => "link_to_new_choice_question", :remote => true %>
 		</span> | 
+		<% unless survey_version.survey.survey_type_id == SurveyType::PAGE%>
 		<span class="surveyNav5">
 			<%= link_to "Add matrix question", new_survey_survey_version_matrix_question_path(survey_version.survey, survey_version),
 			 :class => "surveyNav", :id => "link_to_new_matrix_question", :remote => true %>
 		</span> | 
+		<% end %>
 		<span class="surveyNav4">
 			<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav", :id => "link_to_new_asset", :remote => true  %>
 		</span> | 

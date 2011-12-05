@@ -1,17 +1,3 @@
-# == Schema Information
-# Schema version: 20110524182200
-#
-# Table name: pages
-#
-#  id                :integer(4)      not null, primary key
-#  page_number       :integer(4)
-#  survey_version_id :integer(4)
-#  style_id          :integer(4)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  clone_of_id       :integer(4)
-#
-
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
@@ -23,3 +9,18 @@ two:
   number: 1
   suvey_version_id: 1
   style_id: 1
+
+# == Schema Information
+#
+# Table name: pages
+#
+#  id                :integer(4)      not null, primary key
+#  page_number       :integer(4)
+#  survey_version_id :integer(4)
+#  style_id          :integer(4)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  clone_of_id       :integer(4)
+#  next_page_id      :integer(4)
+#
+
