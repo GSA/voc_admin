@@ -1,6 +1,6 @@
 <p class="copyBoldMargin">Questions:</p>
 
-<%# render 'shared/add_element_links', :survey_version => survey_version %>
+
 
 <% survey_version.pages.includes(:survey_elements => :assetable).order("pages.page_number asc").each do |page| %>
 	<%= render 'shared/add_element_links', :survey_version => survey_version %>
@@ -8,7 +8,9 @@
 		<span class="copyBold">Page <%= page.page_number %></span>
 		<%= page_management_links(survey_version.survey, survey_version, page) %>
 		<div>
-			Next Page: <%= page.next_page.try(:page_number) %>
+			<%= label_tag :next_page, "Next Page: " %>
+			<%= select_tag :next_page, options_from_collection_for_select(Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number), :id, :page_number, :selected => page.next_page_id),
+			    :id => nil, :class => "NextPageSelect", "data-url" => survey_survey_version_page_path(page.survey_version.survey, page.survey_version, page), :disabled => (Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).empty? ? "disabled" : nil) %>
 		</div>
 		<ul class="outter">
 		<% question_number = 0 %>

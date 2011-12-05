@@ -13,6 +13,18 @@ class PagesController < ApplicationController
     end
   end
   
+  def update
+    @page = @survey_version.pages.find(params[:id])
+    
+    respond_to do |format|
+      if @page.update_attributes(params[:page])
+        format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+      else
+        format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}, :status => 500 }
+      end
+    end
+  end
+  
   def move_page
     @page = @survey_version.pages.find(params[:id])
     @target_page = params[:page_number]

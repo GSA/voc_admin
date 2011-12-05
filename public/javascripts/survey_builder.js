@@ -1,4 +1,22 @@
 $(function(){
+	/* NextPage should submit an ajax update for the page to set the next_page_id */
+	$(".NextPageSelect").live("change", function() {
+	  toggleSpinner();
+    $.ajax({
+      type: "PUT",
+      url: $(this).data("url"),
+      data: "&page[next_page_id]=" + $(this).val(),
+      success: function() {
+        toggleSpinner();
+        alert("Page Updated.");
+      },
+      error: function() {
+        toggleSpinner();
+        alert("Failed to update Page");
+      }
+    });
+	});
+	
 	
 	/* Functions for managing the select boxes for page and next_page 
 	 * for multiple choice questions.
@@ -54,7 +72,7 @@ $(function(){
 	/* Modal control functions */
 	$("a.edit_asset_link").live('ajax:success', function(event, data, status, xhr){
 		$("#edit_modal").html(data).modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
-		return false
+		return false;
 	});
 	
 	/* Make an ajax call to pull the 'new' form from the server for a question */
@@ -96,9 +114,9 @@ $(function(){
 		toggleSpinner();
 	});
 		
-}) // End onLoad function
+}); // End onLoad function
 
-function toggleSpinner(){
+function toggleSpinner() {
 	$("#spinner_overlay").toggle();
 }
 
