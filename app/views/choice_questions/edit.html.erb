@@ -1,24 +1,20 @@
 <p class="modalTitle">Edit Choice Question</p>
 <%= form_for [@survey, @survey_version, @choice_question], :remote => true, :html => {:class => "question_edit_form"} do |f| %>
-  <div class="validation_errors"></div>
+  <div class="validation_errors"><%= f.error_messages %></div>
   <%= f.fields_for :question_content do |builder| %>
     <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
   <% end -%>
   <br/>
   <br/>
   <%= f.label :answer_type, "Answer Type: " %>
-  <%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT], ["Check Boxes", ChoiceAnswer::CHECKBOX]]), :id => "answer_type_dropdown" %>
+  <%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT], ["Check Boxes", ChoiceAnswer::CHECKBOX]], :selected=>@choice_question.answer_type), :id => "answer_type_dropdown" %>
 
   <%= f.fields_for :choice_answers do |answer_builder| %>
     <%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => @survey, :survey_version => @survey_version} %>
   <% end %>
   
   <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
-  
-  <br/>
-  <div id="allow_multiple" class="displayNone">
-    <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
-  </div>
+
   <br/><br/>
 
   <%= f.submit "Edit Question" %>

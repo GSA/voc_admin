@@ -7,6 +7,7 @@ class ChoiceAnswerTest < ActiveSupport::TestCase
   end
 end
 
+
 # == Schema Information
 #
 # Table name: choice_answers
@@ -19,5 +20,6 @@ end
 #  created_at         :datetime
 #  updated_at         :datetime
 #  clone_of_id        :integer(4)
+#  is_default         :boolean(1)      default(FALSE)
 #
 

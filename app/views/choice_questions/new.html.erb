@@ -1,7 +1,7 @@
 <p class="modalTitle">New Choice Question</p>
 
 <%= form_for [@survey, @survey_version, @choice_question], :remote => true do |f| %>
-  <%= f.error_messages %>
+  <div class="validation_errors"><%= f.error_messages %></div>
   <% @choice_question.build_question_content unless @choice_question.question_content %>
   <%= f.fields_for :question_content do |builder| %>
     <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
@@ -9,7 +9,7 @@
   <br/>
   <br/>
   <%= f.label :answer_type, "Answer Type: " %>
-  <%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT]]), :id => "answer_type_dropdown" %>
+  <%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT], ["Check Boxes", ChoiceAnswer::CHECKBOX]]), :id => "answer_type_dropdown" %>
   
   
 
@@ -19,11 +19,6 @@
   <% end %>
   
   <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
-  
-  <br/>
-  <div id="allow_multiple" class="displayNone">
-    <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
-  </div>
   <br/><br/>
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => @choice_question, :survey => @survey, :survey_version => @survey_version}%>
   <br/><br/>

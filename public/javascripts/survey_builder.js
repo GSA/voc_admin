@@ -17,7 +17,6 @@ $(function(){
     });
 	});
 	
-	
 	/* Functions for managing the select boxes for page and next_page 
 	 * for multiple choice questions.
 	 */
@@ -47,26 +46,6 @@ $(function(){
 	
 	$("#choice_question_survey_element_attributes_page_id").bind('change', function(){
 		$(".next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
-	});
-	
-
-	$("#choice_question_answer_type").live('change', function(){
-		/*
-		 * If the checkbox option is selected then show the allow multiple
-		 * answers checkbox.
-		 */
-		if($(this).val() == "checkbox") {
-			$("#allow_multiple").show();
-		}
-		
-		/* If multi-select is chosen then disable flow control checkbox and hide next page options */
-		if($(this).val() == "multiselect"){
-			$("#flow_control_checkbox").attr('checked', false).attr('disabled', true);
-			$(".next_pages").hide();
-		} else {
-			$("#flow_control_checkbox").removeAttr('disabled');
-		}
-		resizeModal($("#edit_modal").height(), $("#edit_modal").width());
 	});
 	
 	/* Modal control functions */

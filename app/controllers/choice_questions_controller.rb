@@ -43,7 +43,7 @@ class ChoiceQuestionsController < ApplicationController
         format.js   {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
       else
         format.html {render :action => 'edit'}
-        format.js   {render :partial => "shared/question_errors", :locals => {:object => @choice_question}, :status => 500}
+        format.js   {render :edit, :status => 500}
       end
     end
   end
