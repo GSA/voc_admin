@@ -17,6 +17,32 @@ $(function(){
     });
 	});
 	
+	/* Selecting the checkbox to enable flow control at the page level should remove the disabled flag from the select box
+	 * Unchecking the box should disable the select menu and clear the next_page_id from the page model
+	 */
+	$(".page_level_flow_control").live("change", function () {
+		if( $(this).attr('checked') == true ) {
+			/* The checkbox is checked and the select box shoudl be enabled */
+			$(this).prev(".NextPageSelect").attr('disabled', null);
+		} else {
+			$(this).prev(".NextPageSelect").attr('disabled', 'disabled');
+			toggleSpinner();
+	    $.ajax({
+	      type: "PUT",
+	      url: $(this).prev(".NextPageSelect").data("url"),
+	      data: "&page[next_page_id]=",
+	      success: function() {
+	        toggleSpinner();
+	        alert("Page Updated.");
+	      },
+	      error: function() {
+	        toggleSpinner();
+	        alert("Failed to update Page");
+	      }	
+			});
+		} /* End else statement */
+	});
+	
 	/* Functions for managing the select boxes for page and next_page 
 	 * for multiple choice questions.
 	 */
@@ -134,6 +160,23 @@ function remove_matrix_answer(link){
 function resizeModal(height, width){
 	$(".simplemodal-container").css("height", height).css("width", width);
 	$.modal.setPosition();
+}
+
+function swapMatrixQuestion(link, direction) {
+	var current_field = $(link).siblings('textarea').first();
+	var previous_field = null;
+	
+	if(direction == "up"){
+		previous_field = $(link).parent().prevAll('div.ChoiceQuestionContent').first().children('textarea').first();
+	} else {
+		previous_field = $(link).parent().nextAll('div.ChoiceQuestionContent').first().children('textarea').first();
+	}
+	if(previous_field.length){
+		var current_field_value = current_field.val();
+		current_field.val(previous_field.val());
+		previous_field.val(current_field_value);
+
+	}
 }
 
 function swapAnswers(link, direction){

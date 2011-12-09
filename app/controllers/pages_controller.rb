@@ -32,7 +32,7 @@ class PagesController < ApplicationController
     @page.move_page_to(@target_page)
     
     respond_to do |format|
-      format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+        format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
     end
   end
   

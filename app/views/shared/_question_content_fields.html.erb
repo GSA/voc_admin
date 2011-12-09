@@ -4,6 +4,8 @@
 
 <% if defined? matrix_question %>
 	<%= f.hidden_field "_destroy" %>
+	<%= link_to_function image_tag('arrow_up.png'), "swapMatrixQuestion(this,'up')" %>
+	<%= link_to_function image_tag('arrow_down.png'), "swapMatrixQuestion(this, 'down')" %>
 	<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redXmatrix"), "remove_fields(this)" %>
 <% end %>
 <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>

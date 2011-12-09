@@ -1,6 +1,6 @@
 <% f.object.build_question_content if f.object.new_record? %>
 
-<div>
+<div class="ChoiceQuestionContent">
 <%= f.fields_for :question_content do |content_builder| %>
   <%= render :partial => 'shared/question_content_fields', :locals => {:f => content_builder, :matrix_question => true }%>    
 <% end %>
