@@ -278,7 +278,16 @@ textarea {
 	border-bottom: 6px double #eef1fc;
 	width: 960px;
 }
-
+.pageTitleLogin {
+	font-size: 1.9em;
+	font-weight: bold;
+	margin: 20px auto 0px;
+	padding: 0px 0px 3px;
+	color: #243b7c;
+	/* border-bottom: 6px double #eef1fc; */
+	width: 100%;
+	text-align: center;
+}
 .copy {
 	font-weight: normal;
 	color: #000;
@@ -393,6 +402,14 @@ li.showList-ol {
   font-size: 1.1em;
 }
 
+/* Login Page */
+.loginBox {
+	margin: 0px auto;
+	padding: 10px 20px;
+	background-color: #eef1fc;
+	border:2px solid #243B7C;
+	width: 230px;
+}
 
 /* Pages */
 .page {
@@ -402,21 +419,30 @@ li.showList-ol {
 	padding: 5px;
 	width: 950px;
 }
-
-.current_page {
-	
-}
-
 .hidden_page {
 	display: none;
 }
 
-/* General */
+/* Helper links */
 .remove_page_link {
 	float: right;
 	display: inline-block;
 }
+.move_page_down, .copy_page {
+	margin: 0px 0px 0px 10px;
+}
+.copy_page {
+	height: 10px;
+}
+.link_text {
+	font-weight: normal;
+	color: #243b7c;
+	margin: 0px;
+	display: inline-block;
+	font-size: 10px;
+}
 
+/* General */
 .displayNone {
 	display:none; 
 }

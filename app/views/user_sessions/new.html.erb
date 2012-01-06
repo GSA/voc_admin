@@ -1,4 +1,4 @@
-<p class="pageTitle">Comment Tool Login</p>
+<p class="pageTitleLogin">HHS VOC Tool Login</p>
 <% if @user_session.errors.any? %>
 	<div id="error_explanation" class="modalErrorBox">
 	  <p class="modalErrorTitle"><%= pluralize(@user_session.errors.count, "error") %> prohibited this login:</p>
@@ -11,7 +11,7 @@
   <% end %>
   
   <%= flash_messages(flash) %>
-<div>
+<div class="loginBox">
 <%= form_for @user_session, :url => {:action => "create"} do |f| %>
 	<p class="copyBold">
 		<%= f.label :email, "Email:"%><br />

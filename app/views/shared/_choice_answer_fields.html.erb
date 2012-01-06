@@ -7,11 +7,11 @@
 	</span>
 	<%= f.label :is_default, "Default?" %>
 	<%= f.check_box :is_default %>
-	<%= link_to_function image_tag('arrow_up.png'), "swapAnswers(this,'up')" %>
-	<%= link_to_function image_tag('arrow_down.png'), "swapAnswers(this, 'down')" %>
+	<%= link_to_function image_tag('arrow_up.png') + "<span class='link_text'>Move Up</span>".html_safe, "swapAnswers(this,'up')" %>
+	<%= link_to_function image_tag('arrow_down.png') + "<span class='link_text'>Move Down</span>".html_safe, "swapAnswers(this, 'down')" %>
 	
 	<%= f.hidden_field :_destroy %>
-	<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redX"), "remove_fields(this)", :class=>"surveyNav" %>
+	<%= link_to_function image_tag("red_x.png", :alt=>"Delete", :class=>"redX") + "<span class='link_text'>Delete</span>".html_safe, "remove_fields(this)", :class=>"surveyNav" %>
 	
 
 </p>
