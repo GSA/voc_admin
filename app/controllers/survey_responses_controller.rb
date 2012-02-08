@@ -6,7 +6,7 @@ class SurveyResponsesController < ApplicationController
     @survey_version = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
     
     if @survey_version
-      @order_column_id = @survey_version.display_fields.map(&:id).include?(params[:order_column].to_i) ? params[:order_column] : nil
+      @order_column_id = @survey_version.display_fields.order(:display_order).map(&:id).include?(params[:order_column].to_i) ? params[:order_column] : nil
       @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
 
       @survey_responses = @survey_version.survey_responses.processed.search(params[:search]).order_by_display_field(@order_column_id, @order_dir).page params[:page]
