@@ -8,7 +8,7 @@ gem 'rails', '3.0.10'
 gem 'jquery-rails'
 gem 'thin'
 gem 'kaminari'
-gem 'delayed_job'
+gem 'delayed_job', '2.1.4'
 gem 'authlogic'
 
 group :development do 
