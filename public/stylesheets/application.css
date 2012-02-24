@@ -496,7 +496,6 @@ div.pageNav {
 	border-top: 6px double #eef1fc;
 	width: 960px;
 }
-
 div.pageNav-upper {
 	color: #ffad05;
 	font-weight: bold;
@@ -504,16 +503,62 @@ div.pageNav-upper {
 	margin: -30px 0px 20px;
 	padding: 3px 0px 0px;
 }
-
 a.pageNav, a.pageNav:link, a.pageNav:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
-
 a.pageNav:hover, a.pageNav:active {
 	color: #ffad05;
 	text-decoration: underline;
 }
+
+div.pageNavEdit {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: 10px 0px;
+	padding: 0px 10px;
+	border: 2px solid #eef1fc;
+	width: 937px;
+	position: relative;
+	display: block;
+}
+div.pageNavEdit-upper {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: -32px 0px 20px;
+	border: 2px solid #eef1fc;
+	padding: 0px 10px;
+	width: 937px;
+	position: relative;
+}
+.pageNavEdit p, .pageNavEdit-upper p {
+	border: 1px solid #243b7c;
+	width: 130px;
+	display: inline-block;
+	text-align: center;
+	padding: 5px 0px;
+	background-color: #EEF1FC;
+}
+.pageNavEdit p:hover, .pageNavEdit-upper p:hover {
+	color: #243b7c;
+	text-decoration: underline;
+	background-color: #C9D4E8;
+}
+a.pageNavEdit, a.pageNavEdit:link, a.pageNavEdit:visited {
+	text-decoration: none;
+	color: #243b7c;	
+}
+a.pageNavEdit:hover, a.pageNavEdit:active {
+	text-decoration: underline;
+	color: #243b7c;	
+}
+.pageNavEdit p.right, .pageNavEdit-upper p.right {
+	position: relative;
+	left: 525px;
+}
+
 
 div.surveyNav {
 	color: #000000;

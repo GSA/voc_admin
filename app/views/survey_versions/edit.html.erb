@@ -4,10 +4,10 @@
 
 <%= flash_messages(flash) %>
 
-<div class="pageNav">
-  <%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNav" %> | 
-  <%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNav" %> | 
-  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNav" %>
+<div class="pageNavEdit-upper">
+  <p><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p>
+  <p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p>
+  <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
 
 <div id="overlay_container">
@@ -17,10 +17,10 @@
   <div id="spinner_overlay"><img src='/images/ajax-loader.gif' id='ajax_spinner_question_list'/></div>
 </div>
 
-<div class="pageNav">
-  <%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNav" %> | 
-	<%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNav" %> | 
-  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNav" %>
+<div class="pageNavEdit">
+  <p><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p> 
+	<p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p> 
+  <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
 
 <div id="edit_modal" class="displayNone"></div>
