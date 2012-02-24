@@ -16,6 +16,9 @@
   <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
 
   <br/><br/>
+  <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @choice_question, :survey => @survey, :survey_version => @survey_version} %>
+
+  <br/><br/>
 
   <%= f.submit "Edit Question" %>
   <%= link_to "Cancel", nil, :class => "simplemodal-close" %>

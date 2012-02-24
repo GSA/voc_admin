@@ -13,7 +13,7 @@
   <% end -%>
   <br/>
   
-  <%#= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @text_question, :survey => @survey} %>
+  <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @text_question, :survey => @survey, :survey_version => @survey_version} %>
 
   <br/>
   <%= f.submit "Update Question" %>

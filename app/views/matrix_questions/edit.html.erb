@@ -22,6 +22,8 @@
 		<% end %>
 	</div>
 	<span><%= link_to_add_matrix_answer "Add Answer" %>
+
+  <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @matrix_question, :survey => @survey, :survey_version => @survey_version} %>
 	
   <br/><br/>
   <%= f.submit "Update Matrix Question" %>
