@@ -23,6 +23,8 @@
 <% end %>
 </table>
 
+<%= paginate @surveys %>
+
 <div class="pageNav">
 	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
 </div>
