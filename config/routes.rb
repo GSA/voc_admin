@@ -25,7 +25,10 @@ CommentToolApp::Application.routes.draw do
       resources :rules do
         get :do_now, :on => :member
       end
-      resources :display_fields
+      resources :display_fields do
+        put :increment_display_order, :on => :member
+        put :decrement_display_order, :on => :member
+      end
       resources :display_field_values
       resources :text_questions
       resources :choice_questions

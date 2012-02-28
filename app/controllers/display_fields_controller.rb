@@ -2,7 +2,7 @@ class DisplayFieldsController < ApplicationController
   before_filter :get_survey_version
   
   def index
-    @display_fields = @survey_version.display_fields
+    @display_fields = @survey_version.display_fields.order(:display_order)
   end
 
   def new
@@ -20,11 +20,39 @@ class DisplayFieldsController < ApplicationController
       render :new
     end
   end
+
+  def edit
+    @display_field = DisplayField.find(params[:id])
+  end
+
+  def update
+    @display_field = DisplayField.find(params[:id])
+
+    if @display_field.update_attributes(params[:display_field])
+      redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field"
+    else
+      render :edit
+    end
+  end
   
   def destroy
     @display_field = @survey_version.display_fields.find(params[:id])
     @display_field.destroy
     redirect_to survey_survey_version_display_fields_path(@survey, @survey_version), :notice => "Successfully deleted display field."
+  end
+  
+  def increment_display_order
+    @display_field = @survey_version.display_fields.find(params[:id])
+    @display_field.increment_display_order
+    
+    redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
+  end
+  
+  def decrement_display_order
+    @display_field = @survey_version.display_fields.find(params[:id])
+    @display_field.decrement_display_order
+    
+    redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
   end
   
   private

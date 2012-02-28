@@ -12,7 +12,7 @@
 				<%= link_to_function image_tag("arrow_up.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
 				<%= link_to_function image_tag("arrow_down.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%>
 			</th>
-	  	<% version.display_fields.each do |df| %>
+	  	<% version.display_fields.order(:display_order).each do |df| %>
 			  <th class="questions">
 					<%= df.name %>
 				</th>

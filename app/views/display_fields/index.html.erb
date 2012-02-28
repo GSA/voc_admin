@@ -8,14 +8,19 @@
 <table id="displayFieldsTable">
 	<tr>
 		<th class="col1">Name</th>
-		<th colspan="2">Type</th>
+		<th>Type</th>
+		<th colspan="5">Display Order</th>
 	</tr>
 	
 	<% @display_fields.each do |df| %>
 	 <tr class="<%= cycle('white','blue') %>">
 	 	<td class="col1"><%= df.name %></td>
 		<td class="col2"><%= df.type %></td>
-		<td class="col3"><%= link_to "Delete", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
+		<td class="col3"><%= df.display_order %></td>
+		<td class="col3"><%= link_to "Move Up", 	decrement_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
+		<td class="col3"><%= link_to "Move Down", increment_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
+		<td><%= link_to "Delete", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
+		<td><%= link_to "Edit", edit_survey_survey_version_display_field_path(@survey, @survey_version, df) %></td>
 	 </tr>
 	<% end %>
 </table>
