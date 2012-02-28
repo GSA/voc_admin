@@ -25,7 +25,6 @@ GEM
       activesupport (= 3.0.10)
       arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
-    activerecord-oracle_enhanced-adapter (1.3.2)
     activeresource (3.0.10)
       activemodel (= 3.0.10)
       activesupport (= 3.0.10)
@@ -177,7 +176,6 @@ GEM
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
     ruby-graphviz (0.9.21)
-    ruby-oci8 (2.0.4)
     ruby-progressbar (0.0.10)
     ruby2ruby (1.2.5)
       ruby_parser (~> 2.0)
@@ -204,11 +202,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-oracle_enhanced-adapter (= 1.3.2)
   annotate
   authlogic
   bullet
-  delayed_job
+  delayed_job (= 2.1.4)
   jquery-rails
   kaminari
   metrical
@@ -220,5 +217,4 @@ DEPENDENCIES
   rails-erd
   rspec-rails
   ruby-debug19
-  ruby-oci8
   thin

@@ -1,0 +1,37 @@
+<p class="pageTitle">Edit Display Field</p>
+
+<%= form_for [@survey, @survey_version, @display_field.becomes(DisplayField)] do |f| %>
+  <% if @display_field.errors.any? %>
+    <div class="modalErrorBox">
+      <p class="modalErrorTitle"><%= pluralize(@display_field.errors.count, "error") %> prohibited this display field from being saved:</p>
+      <ul class="modalList">
+        <% @display_field.errors.full_messages.each do |msg| %>
+          <li class="modalList"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <p class="copyBold">
+    <%= f.label :name, "Name: " %><br />
+    <span class="copy"><%= f.text_field :name, :disabled => true %>
+      <%= f.check_box :required %><%= f.label :required %>
+      <%= f.check_box :searchable %><%= f.label :searchable %>
+    </span>
+  </p>
+  <p class="copyBoldMargin">
+    <%= f.label :type, "Type: " %>
+    <%= f.select :type, DisplayField.select_options %>
+  </p>
+
+  <p class="copyBoldMargin">
+    <%= f.label :default_value, "Default Value: " %><br />
+    <%= f.text_field :default_value %>
+  </p>
+    
+  <p class="sumbitButton"><%= f.submit %></p>
+<% end %>
+
+<p>
+<%= link_to "Cancel", survey_survey_version_display_fields_path(@survey, @survey_version) %>
+</p>

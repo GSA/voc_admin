@@ -27,8 +27,3 @@ gem 'rspec-rails', :group => [:development, :test]
 group :mysql_db do
 	gem 'mysql2', '< 0.3'
 end
-
-group :oracle_db do
-	gem 'ruby-oci8'
-	gem 'activerecord-oracle_enhanced-adapter', '1.3.2'
-end

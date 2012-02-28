@@ -31,6 +31,32 @@ describe DisplayField do
     @display_field_text.survey_version = mock_model(SurveyVersion, :survey_resposnes => [])
     @display_field_text.should be_valid
   end
+
+  it "should not be valid without a unique display_order in the scope of a survey_version" do
+    @df2 = DisplayFieldText.create!(:name=>"Test2", :display_order=> 1, :survey_version => @display_field_text.survey_version)
+    @display_field_text.should_not be_valid
+  end
+
+
+  # 12456 should become 12345
+  it "should reorder display fields" do
+    df1 = DisplayFieldText.create!(:name=>"df1", :display_order=>1, :survey_version => mock_model(SurveyVersion, :survey_responses => []))
+    df2 = DisplayFieldText.create!(:name=>"df2", :display_order=>2, :survey_version => df1.survey_version)
+    
+    df2.update_attributes! :display_order => 1
+    
+    df2.display_order.should == 1
+    df1.display_order.should == 2
+  end
+
+
+  # in order to move display_order 3 to become display_order 5 when there are 12345
+  # it should remove 3 => 12_45
+  # move 4,5 to 3,4 => 1234_
+  # insert the old '3' into 5 => 12345
+  it "should make space to rearrange the display_order" do
+    pending
+  end
   
   it "should clone it self" do
     survey = Survey.create! :name => "test", :description => "rspec survey"
