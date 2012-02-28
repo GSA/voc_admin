@@ -6,6 +6,11 @@ function add_fields(link, association, content){
 	$("#edit_rule").show(); // IE 8 hack to fix adding fields overflowing the div
 }
 
+function remove_fields(link) {
+	$(link).prev("input[type=hidden]").val("1");
+	$(link).parent().hide();
+}
+
 /* On DOM object load */
 $(function(){
 	$(".ActionTargetSelect").live('change', function(){

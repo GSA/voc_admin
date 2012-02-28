@@ -1,3 +1,4 @@
+<div class="action">
   <%= f.label :display_field_id, "Update" %>
   <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
 	<br />
@@ -12,4 +13,5 @@
 	
 	<%= f.hidden_field :_destroy, :value => "" %>
 	<%= link_to_function image_tag("red_x.png", :alt=>"Remove Element", :class=>"redX"), "remove_fields(this)" %>
-	<br /><br />
+</div>
+<br/>
