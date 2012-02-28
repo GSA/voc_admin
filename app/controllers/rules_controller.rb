@@ -2,7 +2,7 @@ class RulesController < ApplicationController
   before_filter :get_survey_version, :except=>[:do_now, :check_do_now]
   
   def index
-    @rules = @survey_version.rules
+    @rules = @survey_version.rules.order(:rule_order)
   end
 
   def show
@@ -63,6 +63,20 @@ class RulesController < ApplicationController
   
   def check_do_now
     render :text => (Delayed::Job.exists?(params[:job_id]) ? "not done" : "done")
+  end
+  
+  def increment_rule_order
+    @rule = @survey_version.rules.find(params[:id])
+    @rule.increment_rule_order
+    
+    redirect_to survey_survey_version_rules_path, :notice => "Successfully updated rule order"
+  end
+  
+  def decrement_rule_order
+    @rules = @survey_version.rules.find(params[:id])
+    @rules.decrement_rule_order
+    
+    redirect_to survey_survey_version_rules_path, :notice => "Successfully updated rule order"
   end
   
   private
