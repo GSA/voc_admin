@@ -10,18 +10,18 @@
 	<tr>
 		
 		<th class="col1">Name</th>
-		<th colspan="5">Order</th>
+		<th colspan="7" class="col2-8">Priority</th>
 	</tr>
 <% @rules.each do |rule| %>
   <tr class="<%= cycle('white','blue') %>">
   	<td class="col1"><%= rule.name %></td>
   	<td class="col2"><%= rule.rule_order%></td>
-		<td><%= link_to "Move Up", 	 [:decrement_rule_order, @survey, @survey_version, rule], :method => :put %></td>
-		<td><%= link_to "Move Down", [:increment_rule_order, @survey, @survey_version, rule], :method => :put %></td>
-		<td class="col3-5"><%= link_to "Show", [@survey, @survey_version, rule] %></td>
-		<td class="col3-5"><%= link_to "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
-		<td class="col3-5"><%= link_to "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
-		<td class="col6"><%= link_to_function "Run Now", "run_rule(#{rule.id}, this)" %></td>
+		<td class="col3"><%= link_to image_tag('arrow_up.png') + "Move Up", 	 [:decrement_rule_order, @survey, @survey_version, rule], :method => :put %></td>
+		<td class="col4"><%= link_to image_tag('arrow_down.png') + "Move Down", [:increment_rule_order, @survey, @survey_version, rule], :method => :put %></td>
+		<td class="col5"><%= link_to "Show", [@survey, @survey_version, rule] %></td>
+		<td class="col6"><%= link_to image_tag('edit.png') + "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
+		<td class="col7"><%= link_to image_tag("red_x.png", :alt=>"Delete", :class=>"redX") + "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
+		<td class="col8"><%= link_to_function "Run Now", "run_rule(#{rule.id}, this)" %></td>
   </tr>
 <% end %>
 </table>

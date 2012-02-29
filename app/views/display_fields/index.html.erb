@@ -8,8 +8,8 @@
 <table id="displayFieldsTable">
 	<tr>
 		<th class="col1">Name</th>
-		<th>Type</th>
-		<th colspan="5">Display Order</th>
+		<th class="col2">Type</th>
+		<th class="col3-5" colspan="5">Display Order</th>
 	</tr>
 	
 	<% @display_fields.each do |df| %>
@@ -17,10 +17,10 @@
 	 	<td class="col1"><%= df.name %></td>
 		<td class="col2"><%= df.type %></td>
 		<td class="col3"><%= df.display_order %></td>
-		<td class="col3"><%= link_to "Move Up", 	decrement_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
-		<td class="col3"><%= link_to "Move Down", increment_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
-		<td><%= link_to "Delete", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
-		<td><%= link_to "Edit", edit_survey_survey_version_display_field_path(@survey, @survey_version, df) %></td>
+		<td class="col4"><%= link_to image_tag('arrow_up.png') + "Move Up", 	decrement_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
+		<td class="col5"><%= link_to image_tag('arrow_down.png') + "Move Down", increment_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
+		<td class="col6"><%= link_to image_tag("red_x.png", :alt=>"Delete", :class=>"redX") + "Delete", survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete %></td>
+		<td class="col7"><%= link_to image_tag('edit.png') + "Edit", edit_survey_survey_version_display_field_path(@survey, @survey_version, df) %></td>
 	 </tr>
 	<% end %>
 </table>

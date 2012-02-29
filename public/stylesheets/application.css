@@ -38,7 +38,7 @@ a img {
 	text-align: center;
 }
 .contentArea {
-	width: 990px;
+	width: 960px;
 	margin:0px;
 	padding: 0px;
 	display: inline-block;
@@ -94,7 +94,7 @@ textarea {
 	vertical-align: top;
 }
 
-#surveyTable .col1, #displayFieldsTable .col2 {
+#surveyTable .col1 {
 	width: 200px;
 	padding: 5px 10px;
 }
@@ -116,8 +116,7 @@ textarea {
 }
 
 #surveyTable .col4-5, #categoryTable .col2-4, 
-#rulesTable .col3-5, #displayFieldsTable .col3,
-#versionTable .col4-7, #rulesTable .col6, #usersTable .col3-5 {
+#versionTable .col4-7, #usersTable .col3-5 {
 	text-align: center;
 	width: 70px;
 	padding: 5px 0px;
@@ -156,30 +155,16 @@ textarea {
 	text-decoration: underline;
 	font-weight: bold;
 }
-
-#rulesTable .col1, #displayFieldsTable .col1 {
-	width: 400px;
-	padding: 5px 10px 5px 1px;
-}
-
 #images_index_table .col1 {
 	width: 600px;
 	padding: 5px 10px 5px 1px;
 }
-
-#rulesTable .col2 {
-	text-align: center;
-	width: 35px;
-	padding: 5px 0px;
-}
-
 #images_index_table .col2 {
 	text-align: center;
 	width: 50px;
 	padding: 5px 0px;
 	vertical-align: middle;
 }
-
 #survey_response_list  {
 	width: 960px;
 	margin: 10px 0px;
@@ -187,11 +172,9 @@ textarea {
 	max-height: 600px;
 	overflow: auto;
 }
-
 #survey_response_list table {
 		border-collapse: collapse;
 }
-
 #survey_response_list th.date {
 	text-align: left;
 	font-size: 1.1em;
@@ -203,7 +186,6 @@ textarea {
 	max-width: 90px;
 	vertical-align: bottom;
 }
-
 #survey_response_list th.questions {
 	text-align: left;
 	font-size: 1.1em;
@@ -250,6 +232,76 @@ textarea {
 	border-right: 1px solid #243b7c;
 	padding: 5px;
 	vertical-align: top;
+}
+
+/*manage display fields & manage rules*/
+#displayFieldsTable .col1 {
+	width: 379px;
+	padding: 5px 10px 5px 1px;
+}
+#displayFieldsTable .col2 {
+	width: 140px;
+	padding: 5px 10px;
+}
+#displayFieldsTable .col3 {
+	text-align: center;
+	width: 90px;
+	padding: 5px 0px;
+}
+#displayFieldsTable .col4 {
+	width: 70px;
+	padding: 5px;
+	text-align: center;
+}
+#displayFieldsTable .col5 {
+	width: 90px;
+	padding: 5px;
+	text-align: center;
+}
+#displayFieldsTable .col6, #displayFieldsTable .col7 {
+	width: 60px;
+	padding: 5px;
+	text-align: center;
+}
+#displayFieldsTable .col3-5 {
+	text-align: left;
+}
+#rulesTable .col1 {
+	width: 439px;
+	padding: 5px 10px 5px 1px;
+}
+#rulesTable .col2 {
+	text-align: center;
+	width: 50px;
+	padding: 5px 0px;
+}
+#rulesTable .col3 {
+	width: 70px;
+	padding: 5px;
+	text-align: center;
+}
+#rulesTable .col4 {
+	width: 90px;
+	padding: 5px;
+	text-align: center;
+}
+#rulesTable .col5 {
+	width: 50px;
+	padding: 5px;
+	text-align: center;
+}
+#rulesTable .col6, #rulesTable .col7 {
+	width: 60px;
+	padding: 5px;
+	text-align: center;
+}
+#rulesTable .col8 {
+	width: 70px;
+	padding: 5px;
+	text-align: center;
+}
+#rulesTable .col2-8 {
+	text-align: left;
 }
 
 /* Cycle */
@@ -365,7 +417,7 @@ li.showList-ol {
 	background: #fbeff3;
 	padding: 5px 10px;
 	margin: 5px 0px 10px;
-	/* width: 938px; */ 
+	width: 938px; 
 }
 
 .error_messages p, .error_messages h2, .modalErrorTitle {
