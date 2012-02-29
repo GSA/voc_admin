@@ -23,6 +23,8 @@ CommentToolApp::Application.routes.draw do
       get :unpublish, :on => :member, :as => "unpublish"
       get :clone_version, :on => :member, :as => "clone"
       resources :rules do
+        put :increment_rule_order, :on => :member
+        put :decrement_rule_order, :on => :member
         get :do_now, :on => :member
       end
       resources :display_fields do
