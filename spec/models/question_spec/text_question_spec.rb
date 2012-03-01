@@ -57,6 +57,7 @@ describe TextQuestion do
     survey_version.stub!(:pages).and_return(pages)
     qc = mock_model(QuestionContent, :questionable => @text_question, :statement => "RSpec TextQuestion")
     qc.stub!(:attributes).and_return({:statement=>"RSpec TextQuestion"})
+    SurveyElement.any_instance.stub(:valid?).and_return(true)
     @text_question.stub!(:survey_element).and_return(mock_model(SurveyElement, :attributes=>{}, :page_id=>page.id))
     @text_question.question_content = nil #remove the qc so we can stub it instead
     @text_question.stub(:question_content).and_return(qc)

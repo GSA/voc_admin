@@ -40,24 +40,27 @@ describe DisplayField do
 
   # 12456 should become 12345
   it "should reorder display fields" do
-    df1 = DisplayFieldText.create!(:name=>"df1", :display_order=>1, :survey_version => mock_model(SurveyVersion, :survey_responses => []))
-    df2 = DisplayFieldText.create!(:name=>"df2", :display_order=>2, :survey_version => df1.survey_version)
+    survey = Survey.create! :name => "test", :description => "test survey"
+    df1 = DisplayFieldText.create!(:name=>"df1", :display_order=>1, :survey_version => survey.survey_versions.first)
+    df2 = DisplayFieldText.create!(:name=>"df2", :display_order=>2, :survey_version => survey.survey_versions.first)
     
-    df2.update_attributes! :display_order => 1
+    df2.decrement_display_order
     
-    df2.display_order.should == 1
-    df1.display_order.should == 2
+    df2.reload.display_order.should == 1
+    df1.reload.display_order.should == 2
   end
 
-
-  # in order to move display_order 3 to become display_order 5 when there are 12345
-  # it should remove 3 => 12_45
-  # move 4,5 to 3,4 => 1234_
-  # insert the old '3' into 5 => 12345
-  it "should make space to rearrange the display_order" do
-    pending
+  it "should increment the display order" do
+    survey = Survey.create! :name => "test", :description => "test survey"
+    df1 = DisplayFieldText.create! :name => "df1", :display_order => 1, :survey_version => survey.survey_versions.first
+    df2 = DisplayFieldText.create! :name => "df2", :display_order => 2, :survey_version => survey.survey_versions.first
+    
+    df1.increment_display_order
+    
+    df1.reload.display_order.should == 2
+    df2.reload.display_order.should == 1
   end
-  
+
   it "should clone it self" do
     survey = Survey.create! :name => "test", :description => "rspec survey"
     version = survey.survey_versions.first
