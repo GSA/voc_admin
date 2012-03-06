@@ -35,7 +35,8 @@ class AssetsController < ApplicationController
   end
 
   def update
-    @asset = @survey_version.assets.find(params[:id])
+    #@asset = @survey_version.assets.find(params[:id])
+    @asset = Asset.find(params[:id])
     
     respond_to do |format|
       if @asset.update_attributes(params[:asset])
