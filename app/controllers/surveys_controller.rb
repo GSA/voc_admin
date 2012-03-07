@@ -2,7 +2,7 @@ class SurveysController < ApplicationController
   # GET /surveys
   # GET /surveys.xml
   def index
-    @surveys = Survey.get_unarchived.includes(:survey_type).order(:name).page(params[:page]).per(10)
+    @surveys = Survey.get_unarchived.includes(:survey_type).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -101,5 +101,13 @@ class SurveysController < ApplicationController
   def get_survey_version(survey, version)
     major, minor = version.split('.')
     @survey_version = survey.survey_versions.where(:major => major, :minor => minor).first
+  end
+
+  def sort_column
+    %w(name).include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w(asc desc).include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

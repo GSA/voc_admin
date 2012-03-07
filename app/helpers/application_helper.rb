@@ -15,4 +15,10 @@ module ApplicationHelper
     
     link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"surveyNav")
   end
+
+  def sortable column, title = nil
+    title ||= column.titleize
+    direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
+    link_to title, {:sort => column, :direction => direction}, :style => "display: inline-block; height: 100%; width: 100%;"
+  end
 end
