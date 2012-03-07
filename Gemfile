@@ -11,6 +11,8 @@ gem 'kaminari'
 gem 'delayed_job', '2.1.4'
 gem 'authlogic'
 
+gem 'unicorn-rails'
+
 group :development do 
 	gem 'ruby-debug19'
 	gem 'nifty-generators'
@@ -23,6 +25,10 @@ group :development do
 end
 
 gem 'rspec-rails', :group => [:development, :test]
+
+group :test do
+  gem 'simplecov', :require => false
+end
 
 group :mysql_db do
 	gem 'mysql2', '< 0.3'
