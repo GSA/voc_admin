@@ -31,7 +31,7 @@ describe MatrixQuestion do
   end
   
   it "should clone it self" do
-
+    trigger = ExecutionTrigger.create :id => 1, :name => "Test Trigger"
     @matrix_question.should be_valid
     @matrix_question.save!
     
@@ -39,8 +39,10 @@ describe MatrixQuestion do
     target_version.pages.create! :page_number => 1, :clone_of_id => @page.id
     
     cloned_question = @matrix_question.clone_me(target_version)
+    target_version.questions.should have(1).question
     cloned_question.should_not be_nil
     cloned_question.survey_version.should == target_version
+    cloned_question.question_content.statement.should == @matrix_question.question_content.statement
     cloned_question.choice_questions.should have(1).question
     cloned_question.choice_questions.first.statement.should == @choice_question.statement
     cloned_question.choice_questions.first.choice_answers.should have(1).answer

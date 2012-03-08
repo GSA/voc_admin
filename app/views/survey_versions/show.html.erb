@@ -57,7 +57,7 @@
 						end %>
 						<% if element.assetable_type == "MatrixQuestion" %>
 							<% if element.assetable_type != 'Asset'  %>
-								<span class="vocquestionnumber"><%= "#{question_number}." %></span>
+								<span class="vocquestionnumber"><%= "#{question_number}. #{element.assetable.question_content.statement}" %></span>
 							<% end %>
 			              <table>
 			                <tr>
