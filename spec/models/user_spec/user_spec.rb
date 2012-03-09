@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @valid_user = User.new(:email => "example@example.com", :password => "password", :password_confirmation => "password", :f_name => "Example", :l_name => "User")
+    @valid_user = User.new(:email => "Example@example.com", :password => "password", :password_confirmation => "password", :f_name => "Example", :l_name => "User")
   end
   
   it "should be valid with valid attributes" do
@@ -28,5 +28,10 @@ describe User do
   it "is not valid without a last name" do
     @valid_user.l_name = nil
     @valid_user.should_not be_valid
+  end
+
+  it "should write the email to the database in lowercase" do
+    email = "CAPITAL_EMAIL@TEST.COM"
+    User.new(:email => email).email.should == email.downcase
   end
 end

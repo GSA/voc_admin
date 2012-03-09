@@ -45,5 +45,11 @@ describe Survey do
     survey.create_new_minor_version(survey.survey_versions.first.id)
     survey.survey_versions.should have(2).records
   end
+
+  it "should return the survey_version with the highest major and minor numbers" do
+    s = Survey.create! @attr
+    new_sv = s.create_new_major_version
+    s.newest_version.should == new_sv
+  end
   
 end
