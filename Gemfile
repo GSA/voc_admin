@@ -28,6 +28,7 @@ gem 'rspec-rails', :group => [:development, :test]
 
 group :test do
   gem 'simplecov', :require => false
+  gem 'guard-rspec'
 end
 
 group :mysql_db do
