@@ -15,7 +15,7 @@
 	    <span class="copy"><%= f.text_area :description, :rows => 3 %></span>
 	  </p>
 	  <p class="copyBoldMargin">
-	  	<%= f.label :type, "Survey Type: " %>
+	  	<%= f.label :survey_type_id, "Survey Type: " %>
 			<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
 	  </p>
 		
