@@ -34,6 +34,13 @@ describe SurveyElement do
     element2.element_order = 1
     element2.should_not be_valid
   end
+
+  it "should order by element_order by default" do
+    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
+    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => Asset.create!(:snippet => "Snippet2").id, :page_id => @page.id)
+
+    @version.survey_elements.should == @version.survey_elements.order(:element_order)
+  end
   
   it "should reorder page elements when an element is deleted" do
     element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)

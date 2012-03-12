@@ -61,6 +61,24 @@ describe DisplayField do
     df2.reload.display_order.should == 1
   end
 
+  it "should decrement the display order" do
+    survey = Survey.create! :name => "test", :description => "test survey"
+    df1 = DisplayFieldText.create! :name => "df1", :display_order => 1, :survey_version => survey.survey_versions.first
+    df2 = DisplayFieldText.create! :name => "df2", :display_order => 2, :survey_version => survey.survey_versions.first
+    
+    df2.decrement_display_order
+    
+    df1.reload.display_order.should == 2
+    df2.reload.display_order.should == 1
+  end
+
+  it "should trigger the observer after_destroy when a display field is destroyed" do
+    survey = Survey.create! :name => "test", :description => "test survey"
+    df1 = DisplayFieldText.create! :name => "df1", :display_order => 1, :survey_version => survey.survey_versions.first
+    DisplayFieldObserver.instance.should_receive :after_destroy
+    df1.destroy    
+  end
+
   it "should clone it self" do
     survey = Survey.create! :name => "test", :description => "rspec survey"
     version = survey.survey_versions.first
