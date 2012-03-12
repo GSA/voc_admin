@@ -8,36 +8,6 @@
 <% else %>
   <%= flash_messages(flash) %>
 
-<!-- 	<p class="copy">
-	   <span class="copyBold">Name:</span>
-	  <%= @survey.name %>
-	</p>
-
-	<p class="copyBoldMargin">
-		Description:
-	  <span class="copy"><%= @survey.description %></span>
-	</p>
-	
-	<p class="copyBoldMargin">
-	  Type:
-	  <span class="copy"><%= @survey.survey_type.name.capitalize %></span>
-	</p>
-	
-	<div id="survey_versions_fields" >
-		<p class="copyBoldMargin">
-			Version:
-			<span class="copy">
-				<%= @survey_version.major %>.
-				<%= @survey_version.minor %>
-			</span>
-		</p>
-		<p class="copyBoldMargin">
-			Published:
-			<span class="copy"><%= @survey_version.published ? "Yes" : "No" %></span>
-		</p>
-	</div> -->
-
-
 <%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
 	  <%= hidden_field_tag :stylesheet, params[:stylesheet] %>
 	  <% index = 0 %>
@@ -152,7 +122,7 @@
 					<% unless page.page_number == @survey_version.pages.count %>
 						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.page_number})", :class=>"surveyNav" %></span>
 					<% end %>
-					<span class="surveyNavSub"><%= submit_tag("Submit Survey", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
+					<span class="surveyNavSub"><%= submit_tag("Submit Survey", :disabled => "disabled", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
 				</div>
 				
 			</div> <!-- close page div -->
