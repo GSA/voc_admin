@@ -6,9 +6,9 @@
 
 <table id="surveyTable">
   <tr>
-    <th class="col1"><%= sortable "name" %></th>
-    <th class="col2">Description</th>
-    <th colspan="5">Type</th>
+    <th class="col1" scope="col"><%= sortable "name" %></th>
+    <th class="col2" scope="col">Description</th>
+    <th colspan="5"  scope="col">Type</th>
   </tr>
 
 <% @surveys.each do |survey| %>

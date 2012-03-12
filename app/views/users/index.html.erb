@@ -6,8 +6,8 @@
 
 <table id="usersTable">
   <tr>
-    <th>User Name</th>
-    <th colspan="4">Email</th>
+    <th scope="col">User Name</th>
+    <th scope="col" colspan="4">Email</th>
   </tr>
   <% for user in @users %>
     <tr class="<%= cycle('white','blue') %>">
