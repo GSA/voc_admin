@@ -11,6 +11,7 @@
 </p>
 
 <p id="sr_search">
+  <div style="display: none"><%= label_tag :search, "Search" %></div>
 	<%= text_field_tag :search, params[:search] %>
 	<%= link_to "Search", nil, :id => "search_link", :class=>"surveyNav"%>
 </p>
