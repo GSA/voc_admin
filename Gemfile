@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '3.0.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -14,14 +14,9 @@ gem 'authlogic'
 gem 'unicorn-rails'
 
 group :development do 
-	gem 'ruby-debug19'
-	gem 'nifty-generators'
 	gem 'annotate'
 	gem 'metrical'
-	gem 'rails-erd'
-	gem 'bullet'
 	gem 'pry'
-	gem 'pry_debug'
 end
 
 gem 'rspec-rails', :group => [:development, :test]
