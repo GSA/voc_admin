@@ -169,7 +169,7 @@ textarea {
 	width: 960px;
 	margin: 10px 0px;
 	min-height: 300px;
-	max-height: 600px;
+	/*max-height: 600px;*/
 	overflow: auto;
 }
 #survey_response_list table {
