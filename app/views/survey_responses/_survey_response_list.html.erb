@@ -12,6 +12,13 @@
 				<%= link_to_function image_tag("arrow_up.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
 				<%= link_to_function image_tag("arrow_down.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%>
 			</th>
+			<th class="date">
+				Page URL
+			</th>
+			<th class="arrows">
+				<!-- <%= link_to_function image_tag("arrow_up.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
+				<%= link_to_function image_tag("arrow_down.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%> -->
+			</th>
 	  	<% version.display_fields.order(:display_order).each do |df| %>
 			  <th class="questions">
 					<%= df.name %>
@@ -24,6 +31,7 @@
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('white','blue')%>">
 			  	<td colspan="2"><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
+				  <td colspan="2"><%= sr.page_url %></td>
 			  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
 					  <td  colspan="2" id="<%= 'displayFieldValue_' << dfv.id.to_s %>" ondblclick="editDisplayFieldValue(<%= version.survey.id %>,<%= version.id %>,<%= dfv.id %>)">
 					  	<%= dfv.value ? dfv.value.gsub("{%delim%}", ', ') : "" %>
