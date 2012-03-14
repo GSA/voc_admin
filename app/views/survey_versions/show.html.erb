@@ -65,7 +65,7 @@
 									<div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %>">
 										<% for answer in element.assetable.choice_answers %>
 											<span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-	                      :onclick => (element.assetable.question_content.flow_control ? "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)})" : nil),
+	                      :onclick => generate_onclick(element, page, answer),
 												:class => "question_#{element.assetable.question_content.id}_answer", 
 												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
 												:id => "response[raw_responses_attributes][#{index}][answer]_#{answer.id}"

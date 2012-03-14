@@ -36,7 +36,6 @@ class ChoiceQuestionsController < ApplicationController
 
   def update
     @choice_question = ChoiceQuestion.find(params[:id])
-    
     respond_to do |format|
       if @choice_question.update_attributes(params[:choice_question])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
