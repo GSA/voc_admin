@@ -54,6 +54,7 @@ class SurveyVersionsController < ApplicationController
       redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
     else
       @survey_version.publish_me
+      Rails.cache.clear if Rails.cache
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
     end
   end
