@@ -10,6 +10,7 @@ gem 'thin'
 gem 'kaminari'
 gem 'delayed_job', '2.1.4'
 gem 'authlogic'
+gem 'memcache-client'
 
 gem 'unicorn-rails'
 
