@@ -1,13 +1,21 @@
 namespace :memcache do
   desc "Start Memcache server"
   task :start do
-    
+    raise "Memcached already running" if File.exists?(pid_path)
+
+    print "starting memcache..."
     `memcached -d  -l 127.0.0.1 -p 11211 -P #{pid_path}  >> #{log_path} 2>&1`
+    sleep(2.seconds)
+    puts (File.exists?(pid_path) ? "done" : "Memcached failed to start")
+
   end
   
   task :stop do
+    raise "Memcached does not seem to be running." unless File.exists?(pid_path)
+    puts "stopping memcache..."
     `kill -9 \`cat #{pid_path}\``
     `rm #{pid_path}`
+
   end
   
   private

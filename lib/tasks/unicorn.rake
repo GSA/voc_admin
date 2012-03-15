@@ -10,7 +10,7 @@ namespace :unicorn do
     raise "Config file (#{args[:config_file]}) doesn't seem to exist" if args[:config_file].present? && !File.exists?(args[:config_file])
 
     puts "Starting unicorn server using config file: #{args[:config_file]}"
-    exec "cd #{Rails.root} && bundle exec unicorn --daemonize #{args[:config_file].present? ? "--config-file #{args[:config_file]}" : "" }"
+    sh "cd #{Rails.root} && bundle exec unicorn --daemonize #{args[:config_file].present? ? "--config-file #{args[:config_file]}" : "" }"
   end
 
   desc "Stop the unicorn server"
