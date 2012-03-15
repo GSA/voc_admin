@@ -4,6 +4,8 @@
 </div>
 <%= flash_messages(flash) %>
 
+<p>To link to published survey version use: <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%></p>
+
 <table id="versionTable">
 	<tr>
 		<th>Version</th>
