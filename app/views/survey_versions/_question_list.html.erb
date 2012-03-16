@@ -8,11 +8,11 @@
 		<span class="copyBold">Page <%= page.page_number %></span>
 		<%= page_management_links(survey_version.survey, survey_version, page) %>
 		<div>
-			<%= label_tag :next_page, "Next Page: " %>
+			<%= label_tag "next_page_#{page.page_number}", "Next Page: " %>
 			<%= select_tag :next_page, options_from_collection_for_select(Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).order(:page_number), :id, :page_number, :selected => page.next_page_id),
-			    :id => nil, :class => "NextPageSelect", "data-url" => survey_survey_version_page_path(page.survey_version.survey, page.survey_version, page), :disabled => (Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).empty? || page.next_page_id.nil? ? "disabled" : nil) %>
-      <%= check_box_tag :page_level_flow_control, true, page.next_page_id.present?, :id => nil, :class => "page_level_flow_control" %>
-      <%= label_tag :page_level_flow_control, "Enable Page Flow Control" %>
+			    :id => "next_page_#{page.page_number}", :class => "NextPageSelect", "data-url" => survey_survey_version_page_path(page.survey_version.survey, page.survey_version, page), :disabled => (Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).empty? || page.next_page_id.nil? ? "disabled" : nil) %>
+      <%= check_box_tag :page_level_flow_control, true, page.next_page_id.present?, :id => "page_level_flow_control_#{page.page_number}", :class => "page_level_flow_control" %>
+      <%= label_tag "page_level_flow_control_#{page.page_number}", "Enable Page Flow Control" %>
 		</div>
 		<ul class="outter">
 		<% question_number = 0 %>
