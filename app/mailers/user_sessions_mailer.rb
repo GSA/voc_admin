@@ -1,5 +1,5 @@
 class UserSessionsMailer < ActionMailer::Base
-  default :from => "from@example.com"
+  default :from => "notifier@comment-adm.hhs.gov"
   
   def reset_password(user, password)
     @password = password
