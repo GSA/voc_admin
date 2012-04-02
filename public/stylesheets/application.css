@@ -155,6 +155,15 @@ textarea {
 	text-decoration: underline;
 	font-weight: bold;
 }
+#surveyTable th a, #surveyTable th a:link, #surveyTable th a:visited {
+	color: #000;
+	text-decoration: none;
+}
+#surveyTable th a:hover, #surveyTable th a:active {
+	color: #000;
+	text-decoration: underline;
+	font-weight: bold;
+}
 #images_index_table .col1 {
 	width: 600px;
 	padding: 5px 10px 5px 1px;
@@ -209,6 +218,10 @@ textarea {
 	min-width: 20px;
 	max-width: 20px;
 	vertical-align: bottom;
+}
+.sortArrows {
+	text-align: right;
+	display: inline-block;
 }
 
 .up {

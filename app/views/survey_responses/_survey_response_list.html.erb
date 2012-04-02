@@ -7,25 +7,28 @@
 	  <tr>
 	  	<th class="date">
 				Date 
-			</th>
-			<th class="arrows">
-				<%= link_to_function image_tag("arrow_up.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
-				<%= link_to_function image_tag("arrow_down.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%>
+				<div class="sortArrows">
+    			<%= image_tag "arrows.png", :alt=>"Sort Arrow" %>
+				</div>
+				<%= link_to_function image_tag("arrow_asc.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
+				<%= link_to_function image_tag("arrow_desc.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%>
 			</th>
 			<th class="date">
 				Page URL
-			</th>
-			<th class="arrows">
-				<!-- <%= link_to_function image_tag("arrow_up.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
-				<%= link_to_function image_tag("arrow_down.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%> -->
+				<div class="sortArrows">
+	    		<%= image_tag "arrows.png", :alt=>"Sort Arrow" %>
+				</div>
+				<!-- <%= link_to_function image_tag("arrow_asc.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
+				<%= link_to_function image_tag("arrow_desc.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%> -->
 			</th>
 	  	<% version.display_fields.order(:display_order).each do |df| %>
 			  <th class="questions">
 					<%= df.name %>
-				</th>
-				<th class="arrows">
-					<%= link_to_function image_tag("arrow_up.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField(#{df.id}, 'DESC')" %>
-					<%= link_to_function image_tag("arrow_down.png", :alt=>"Sort asc", :class=>"down"), "sortByDisplayField(#{df.id}, 'ASC')"%>
+					<div class="sortArrows">
+		    		<%= image_tag "arrows.png", :alt=>"Sort Arrow" %>
+					</div>
+					<%= link_to_function image_tag("arrow_asc.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField(#{df.id}, 'DESC')" %>
+					<%= link_to_function image_tag("arrow_desc.png", :alt=>"Sort asc", :class=>"down"), "sortByDisplayField(#{df.id}, 'ASC')"%>
 				</th>
 			<% end -%>
 			<% objects.each do |sr| %>
