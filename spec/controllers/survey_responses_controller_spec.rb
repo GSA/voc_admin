@@ -19,7 +19,8 @@ describe SurveyResponsesController do
     end
 
     it "should assign @survey_version if params[:survey_version_id] is present" do
-      SurveyVersion.stub(:find).and_return(mock_model(SurveyVersion).as_null_object)
+      sv = mock_model(SurveyVersion, :display_fields => DisplayField.scoped, :survey_responses => SurveyResponse.scoped)
+      SurveyVersion.stub(:find).and_return(sv)
       get :index, :survey_version_id => 1
       assigns(:survey_version).should_not be_nil
     end
@@ -36,7 +37,8 @@ describe SurveyResponsesController do
     it "should return a csv download" do
        #@controller.should_receive(:send_file).with(@file, {:filename => "responses.csv", :type => 'text/csv', :disposition => 'attachment'})
        @request.env["HTTP_ACCEPT"] = "text/csv"
-       SurveyVersion.stub(:find).and_return(mock_model(SurveyVersion).as_null_object)
+      sv = mock_model(SurveyVersion, :display_fields => DisplayField.scoped, :survey_responses => SurveyResponse.scoped)
+      SurveyVersion.stub(:find).and_return(sv)
        get :index, :survey_version_id => 1
        response.headers['Content-Type'].index("text/csv").should_not be_nil
     end

@@ -75,7 +75,7 @@ describe QuestionContentObserver do
     end
   end
   
-  context "when a new question content created" do
+  context "when a new question content is created" do
     it "should create a new display field for the question content" do
       sv = mock_model(SurveyVersion).as_null_object
       qc = mock_model(QuestionContent, :survey_version => sv, :questionable_type => "TextQuestion", :skip_observer => false, :statement => "Test")
@@ -92,7 +92,7 @@ describe QuestionContentObserver do
 
       sv.stub_chain(:rules, :create).and_return(rule)
 
-      DisplayFieldText.should_receive(:create).and_return(df)
+      DisplayFieldText.should_receive(:create!).and_return(df)
 
       QuestionContentObserver.instance.after_create(qc)
     end
