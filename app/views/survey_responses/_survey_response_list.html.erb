@@ -3,12 +3,12 @@
 	<%= hidden_field_tag :search, params[:search] %>
 	<%= hidden_field_tag :order_column, @order_column_id %>
 	<%= hidden_field_tag :order_dir, @order_dir %>
-	<table>
+	<table summary="this table is used to display the results of a survey">
 	  <tr>
-	  	<th class="date"><%= sortable_display_field 'created_at', 'Date' %></th>
-			<th class="date"><%= sortable_display_field 'page_url', 'Page URL' %></th>
+	  	<th><%= sortable_display_field 'created_at', 'Date' %></th>
+			<th><%= sortable_display_field 'page_url', 'Page URL' %></th>
 	  	<% version.display_fields.order(:display_order).each do |df| %>
-			  <th class="questions"><%= sortable_display_field df.name %></th>
+			  <th><%= sortable_display_field df.name %></th>
 			<% end -%>
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('white','blue')%>">

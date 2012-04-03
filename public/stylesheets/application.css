@@ -82,6 +82,7 @@ textarea {
 	padding: 0px 10px 1px 0px;
 	border-bottom: 2px solid #243b7c;
 	color: #000000;
+	position: relative;
 }
 
 #surveyTable td, #versionTable td, #categoryTable td, 
@@ -155,11 +156,13 @@ textarea {
 	text-decoration: underline;
 	font-weight: bold;
 }
-#surveyTable th a, #surveyTable th a:link, #surveyTable th a:visited {
+#surveyTable th a, #surveyTable th a:link, #surveyTable th a:visited,
+#survey_response_list th a, #survey_response_list th a:link, #survey_response_list th a:visited  {
 	color: #000;
 	text-decoration: none;
 }
-#surveyTable th a:hover, #surveyTable th a:active {
+#surveyTable th a:hover, #surveyTable th a:active,
+#survey_response_list th a:hover, #survey_response_list th a:active {
 	color: #000;
 	text-decoration: underline;
 	font-weight: bold;
@@ -184,46 +187,41 @@ textarea {
 #survey_response_list table {
 		border-collapse: collapse;
 }
-#survey_response_list th.date {
+#survey_response_list th {
 	text-align: left;
 	font-size: 1.1em;
 	font-weight: bold;
-	padding: 5px;
-	border-bottom: 2px solid #243b7c;
-	color: #000000;
-	min-width: 90px;
-	max-width: 90px;
-	vertical-align: bottom;
-}
-#survey_response_list th.questions {
-	text-align: left;
-	font-size: 1.1em;
-	font-weight: bold;
-	padding: 5px;
-	border-bottom: 2px solid #243b7c;
-	color: #000000;
-	min-width: 150px;
-	max-width: 200px;
-	vertical-align: bottom;
-}
-
-#survey_response_list th.arrows {
-	text-align: left;
-	font-size: 1.1em;
-	font-weight: bold;
-	padding: 5px;
+	padding: 5px 15px 5px 5px;
 	border-bottom: 2px solid #243b7c;
 	border-right: 1px solid #243b7c;
 	color: #000000;
-	min-width: 20px;
-	max-width: 20px;
+	min-width: 150px;
+	max-width: 150px;
 	vertical-align: bottom;
+	position: relative;
+	word-wrap:break-word;
 }
-.sortArrows {
-	text-align: right;
+#survey_response_list td {
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 5px 15px 5px 5px;
+	border-bottom: 1px solid #243b7c;
+	border-right: 1px solid #243b7c;
+	color: #000000;
+	min-width: 150px;
+	max-width: 150px;
+	vertical-align: top;
+	word-wrap:break-word;
+}
+#survey_response_list .sort_arrows {
+	display: inline-block;
+	position: absolute;
+	right: 0px;
+}
+#surveyTable .sort_arrows {
 	display: inline-block;
 }
-
 .up {
 	clear: both;
 	vertical-align: top;
