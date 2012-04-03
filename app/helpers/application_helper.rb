@@ -17,8 +17,19 @@ module ApplicationHelper
   end
 
   def sortable column, title = nil
-    title ||= column.titleize
     direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
-    link_to title, {:sort => column, :direction => direction}
+    
+    title ||= column.titleize
+    
+    arrows = content_tag :span, :class => "sort_arrows" do
+      ret = ""
+      ret += image_tag "arrow_up.png"   if direction == "desc"
+      ret += image_tag "arrow_down.png" if direction == "asc"
+      ret.html_safe
+    end
+    
+    title += arrows
+    
+    link_to title.html_safe, {:sort => column, :direction => direction}
   end
 end

@@ -5,38 +5,17 @@
 	<%= hidden_field_tag :order_dir, @order_dir %>
 	<table>
 	  <tr>
-	  	<th class="date">
-				Date 
-				<div class="sortArrows">
-    			<%= image_tag "arrows.png", :alt=>"Sort Arrow" %>
-				</div>
-				<%= link_to_function image_tag("arrow_asc.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
-				<%= link_to_function image_tag("arrow_desc.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%>
-			</th>
-			<th class="date">
-				Page URL
-				<div class="sortArrows">
-	    		<%= image_tag "arrows.png", :alt=>"Sort Arrow" %>
-				</div>
-				<!-- <%= link_to_function image_tag("arrow_asc.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField('', 'DESC')" %>
-				<%= link_to_function image_tag("arrow_desc.png", :alt=>"Sort ASC", :class=>"down"), "sortByDisplayField('', 'ASC')"%> -->
-			</th>
+	  	<th class="date"><%= sortable_display_field 'created_at', 'Date' %></th>
+			<th class="date"><%= sortable_display_field 'page_url', 'Page URL' %></th>
 	  	<% version.display_fields.order(:display_order).each do |df| %>
-			  <th class="questions">
-					<%= df.name %>
-					<div class="sortArrows">
-		    		<%= image_tag "arrows.png", :alt=>"Sort Arrow" %>
-					</div>
-					<%= link_to_function image_tag("arrow_asc.png", :alt=>"Sort DESC", :class=>"up"), "sortByDisplayField(#{df.id}, 'DESC')" %>
-					<%= link_to_function image_tag("arrow_desc.png", :alt=>"Sort asc", :class=>"down"), "sortByDisplayField(#{df.id}, 'ASC')"%>
-				</th>
+			  <th class="questions"><%= sortable_display_field df.name %></th>
 			<% end -%>
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('white','blue')%>">
-			  	<td colspan="2"><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
-				  <td colspan="2"><%= sr.page_url %></td>
+			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
+				  <td><%= sr.page_url %></td>
 			  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
-					  <td  colspan="2" id="<%= 'displayFieldValue_' << dfv.id.to_s %>" ondblclick="editDisplayFieldValue(<%= version.survey.id %>,<%= version.id %>,<%= dfv.id %>)">
+					  <td id="<%= 'displayFieldValue_' << dfv.id.to_s %>" ondblclick="editDisplayFieldValue(<%= version.survey.id %>,<%= version.id %>,<%= dfv.id %>)">
 					  	<%= dfv.value ? dfv.value.gsub("{%delim%}", ', ') : "" %>
 					  </td>
 					<% end -%>
