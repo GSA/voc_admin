@@ -49,4 +49,14 @@ class SurveyResponsesController < ApplicationController
     # redirect_to survey_responses_path
   end
 
+  def destroy
+    @survey_response = SurveyResponse.find(params[:id])
+
+    @survey_response.archive
+
+    respond_to do |format|
+      format.html #
+      format.js { render :partial => "survey_response_list", :locals => {:objects => @survey_response.survey_version.survey_responses.page(params[:page]), :version_id => @survey_response.survey_version_id} }
+    end
+  end
 end

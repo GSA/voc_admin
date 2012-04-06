@@ -2,6 +2,9 @@ var search_timer_id = null;
 var last_ajax_request_id = 0;
 
 $(function(){
+	/* replace the survey_response_list when a delete call is made */
+	$(".archive_link").live('ajax:success', refreshSurveyResponseTable);
+
 	/* Populate the version select box based on the survey selection */
 	$("#survey_id").change(function(){
 		var survey_id = $(this).val()
