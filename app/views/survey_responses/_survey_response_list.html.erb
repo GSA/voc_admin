@@ -5,7 +5,7 @@
 	<%= hidden_field_tag :order_dir, @order_dir %>
 	<table summary="this table is used to display the results of a survey">
 	  <tr>
-	  	<th></th>
+	  	<th class="col1"></th>
 	  	<th><%= sortable_display_field 'created_at', 'Date' %></th>
 			<th><%= sortable_display_field 'page_url', 'Page URL' %></th>
 	  	<% version.display_fields.order(:display_order).each do |df| %>
@@ -13,7 +13,7 @@
 			<% end -%>
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('white','blue')%>">
-			  	<td><%= link_to image_tag("red_x.png"), survey_response_path(sr, :page => params[:page]), :method => :delete, :remote => true, :class => "archive_link" %></td>
+			  	<td class="col1"><%= link_to image_tag("red_x.png"), survey_response_path(sr, :page => params[:page]), :method => :delete, :remote => true, :class => "archive_link" %></td>
 			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
 				  <td><%= sr.page_url %></td>
 			  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
