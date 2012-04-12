@@ -29,6 +29,6 @@ module SurveyResponsesHelper
     
     title += arrows
     
-    link_to_function title.html_safe, "sortByDisplayField('#{column}', '#{direction}')"
+    link_to_function title.html_safe, "sortByDisplayField('#{CGI.escape(column)}', '#{direction}')"
   end
 end
