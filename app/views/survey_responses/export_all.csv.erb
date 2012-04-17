@@ -1,0 +1,5 @@
+"Date"<% @survey_version.display_fields.each do |df| -%>,"<%= df.name %>"<% end -%>
+<% @survey_responses.find_in_batches do |survey_responses| %>
+  <%=render :partial=> survey_responses %>
+<% end %>
+

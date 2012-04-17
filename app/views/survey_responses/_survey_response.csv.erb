@@ -1,1 +1,1 @@
-"<%= survey_response.created_at.strftime("%m/%d/%Y") %>"<% survey_response.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| -%>,"<%= dfv.value.gsub("{%delim%}", ', ').html_safe %>"<% end -%>
+"<%= survey_response.created_at.strftime("%m/%d/%Y") %>", <%= survey_response.page_url %>,<% survey_response.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| -%>,"<%= dfv.value.gsub("{%delim%}", ', ').html_safe %>"<% end -%>

@@ -59,4 +59,24 @@ class SurveyResponsesController < ApplicationController
       format.js { render :partial => "survey_response_list", :locals => {:objects => @survey_response.survey_version.survey_responses.page(params[:page]), :version_id => @survey_response.survey_version_id} }
     end
   end
+
+  def export_all
+    @survey_version = SurveyVersion.find(params[:survey_version_id])
+
+    ## It’s not possible to set the order. That is automatically set to ascending on the primary key (“id ASC”) to make the batch ordering work. 
+    ## This also mean that this method only works with integer-based primary keys. 
+    ## You can’t set the limit either, that’s used to control the batch sizes.
+    # @order_column_id = @survey_version.display_fields.find_by_name(params[:order_column]).try(:id)
+    # @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
+    
+    @survey_responses = @survey_version.survey_responses.processed.search(params[:search])
+
+    respond_to do |format|
+      format.csv do
+        @survey_version
+        response.headers["Content-Type"]        = "text/csv; header=present"
+        response.headers["Content-Disposition"] = "attachment; filename=responses.csv"
+      end
+    end
+  end
 end
