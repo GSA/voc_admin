@@ -11,7 +11,9 @@ CommentToolApp::Application.routes.draw do
   resources :surveys
 
   resources :categories
-  resources :survey_responses
+  resources :survey_responses do
+    get :export_all, :on => :collection, :as => 'export_all'
+  end
   resources :raw_responses
   resources :rules do
     get :do_now, :on => :member
