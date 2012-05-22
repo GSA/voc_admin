@@ -101,6 +101,7 @@ GEM
       treetop (~> 1.4.8)
     main (4.7.1)
     map (4.3.0)
+    memcache-client (1.8.5)
     method_source (0.7.1)
     metric_fu (2.1.1)
       Saikuro (>= 1.1.0)
@@ -215,6 +216,7 @@ DEPENDENCIES
   guard-rspec
   jquery-rails
   kaminari
+  memcache-client
   metrical
   mysql2 (< 0.3)
   pry
