@@ -3,25 +3,21 @@ class PagesController < ApplicationController
   
   def create
     @page = @survey_version.pages.build params[:page]
+
+    @page.save
     
     respond_to do |format|
-      if @page.save
-        format.js {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}}
-      else
-        format.js {render :partial => "shared/question_errors", :locals => {:object => @page}}
-      end
+      format.js  { render "shared/update_question_list" }
     end
   end
   
   def update
     @page = @survey_version.pages.find(params[:id])
     
+    @page.update_attributes(params[:page])
+    
     respond_to do |format|
-      if @page.update_attributes(params[:page])
-        format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
-      else
-        format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey}, :status => 500 }
-      end
+      format.js  { render "shared/update_question_list" }
     end
   end
   
@@ -32,7 +28,7 @@ class PagesController < ApplicationController
     @page.move_page_to(@target_page)
     
     respond_to do |format|
-        format.js { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+        format.js  { render "shared/update_question_list" }
     end
   end
   
@@ -41,7 +37,7 @@ class PagesController < ApplicationController
     @page.destroy
   
     respond_to do |format|
-      format.js   { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+      format.js  { render "shared/update_question_list" }
     end
   end
   
@@ -49,7 +45,7 @@ class PagesController < ApplicationController
     page = @survey_version.pages.find(params[:id])
     page.create_copy
     respond_to do |format|
-      format.js   { render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version, :survey => @survey} }
+      format.js  { render "shared/update_question_list" }
     end
   end
   

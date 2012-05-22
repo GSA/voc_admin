@@ -1,0 +1,19 @@
+<%= form_for [survey, survey_version, text_question], :remote => true do |f| %>
+
+	<%= f.label :answer_type, "Answer Type: " %>
+	<%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
+	<%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :are_radio_button, "Area" %>
+	<br/>
+	<br/>
+	<% text_question.build_question_content if text_question.new_record? %>
+	<%= f.fields_for :question_content do |builder| %>
+		<%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
+	<% end -%>
+	<br/>
+	
+	<%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => text_question, :survey => survey, :survey_version => survey_version} %>
+	<br />
+	<br/>
+	<%= f.submit "Submit Question" %>
+	<%= link_to "Cancel", nil, :class => "simplemodal-close"%>
+<% end -%>

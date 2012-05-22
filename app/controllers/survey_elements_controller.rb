@@ -6,7 +6,7 @@ class SurveyElementsController < ApplicationController
     @element.move_element_up
     
     respond_to do |format|
-      format.js {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
+      format.js { render "shared/update_question_list" }
     end
   end
 
@@ -15,7 +15,7 @@ class SurveyElementsController < ApplicationController
     @element.move_element_down
       
     respond_to do |format|
-      format.js {render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
+      format.js { render "shared/update_question_list" }
     end
   end
 

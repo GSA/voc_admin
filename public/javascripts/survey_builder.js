@@ -5,15 +5,7 @@ $(function(){
     $.ajax({
       type: "PUT",
       url: $(this).data("url"),
-      data: "&page[next_page_id]=" + $(this).val(),
-      success: function() {
-        toggleSpinner();
-        alert("Page Updated.");
-      },
-      error: function() {
-        toggleSpinner();
-        alert("Failed to update Page");
-      }
+      data: "&page[next_page_id]=" + $(this).val()
     });
 	});
 	
@@ -30,15 +22,7 @@ $(function(){
 	    $.ajax({
 	      type: "PUT",
 	      url: $(this).prev(".NextPageSelect").data("url"),
-	      data: "&page[next_page_id]=",
-	      success: function() {
-	        toggleSpinner();
-	        alert("Page Updated.");
-	      },
-	      error: function() {
-	        toggleSpinner();
-	        alert("Failed to update Page");
-	      }	
+	      data: "&page[next_page_id]="
 			});
 		} /* End else statement */
 	});
@@ -74,45 +58,17 @@ $(function(){
 		$(".next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
 	});
 	
-	/* Modal control functions */
-	$("a.edit_asset_link").live('ajax:success', function(event, data, status, xhr){
-		$("#edit_modal").html(data).modal({autoResize:true,maxHeight:'90%',minWidth:'330px',maxWidth:'500px'});
-		return false;
-	});
+	// /* hide the spinner and update the question list when a successful response is received from an ajax request to reorder an element/page */
+	// $(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .copy_page").live("ajax:success", function(event, data, status, xhr){
+	// 	$("#question_list").html(data);
+	// 	toggleSpinner();
+	// });
+
 	
-	/* Make an ajax call to pull the 'new' form from the server for a question */
-	$(".link_to_new_asset, .link_to_new_text_question, .link_to_new_choice_question, .link_to_new_matrix_question").live('ajax:success', function(event, data, status, xhr){
-		$("#edit_modal").html(data).modal({autoResize:true, maxHeight:'90%', minWidth:'330px', maxWidth:'500px'});
-	});
-		
-	
-	/* Update the question list and clear out the submitted data from the modal when a question is successfully added to the survey */
-	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:success", function(event, data, status, xhr){
-		$.modal.close();
-		$("#question_list").html(data);
-		if(!$(this).hasClass('question_edit_form')) {
-			$(':input', "#" + $(this).attr('id')).not(':button, :submit, :reset, :hidden').reset();			
-		}
-	});
-	
-	/* Update the modal with the validation errors if the ajax response comes back with an error code when creating a new question/asset */
-	$("#new_text_question, #new_choice_question, #new_matrix_question, #new_asset, .question_edit_form").live("ajax:error", function(event, data, status, xhr){
-		$("#edit_modal").html(data.responseText);
-		
-		var modalContainer = $("#simplemodal-container");
-		resizeModal($("#edit_modal").height(), $("#edit_modal").width());
-	});
-	
-	/* hide the spinner and update the question list when a successful response is received from an ajax request to reorder an element/page */
-	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:success", function(event, data, status, xhr){
-		$("#question_list").html(data);
-		toggleSpinner();
-	});
-	
-	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:error", function(event, data, status, xhr){
-		$("#question_list").html(data);
-		toggleSpinner();
-	});
+	// $(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .copy_page").live("ajax:error", function(event, data, status, xhr){
+	// 	$("#question_list").html(data);
+	// 	toggleSpinner();
+	// });
 	
 	/* Show the spinner on ajax requests to reorder elements/pages */
 	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:beforeSend", function(){

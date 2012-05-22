@@ -1,0 +1,2 @@
+$("#question_list").html("<%= escape_javascript( render( :partial => 'survey_versions/question_list', :locals => {:survey_version => @survey_version}) ) %>");
+$("#spinner_overlay").hide(); // Spinner should have been shown using the beforeSend ajax callback.  This will hide the Spinner

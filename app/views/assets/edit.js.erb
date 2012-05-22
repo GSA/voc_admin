@@ -1,0 +1,2 @@
+$("#edit_modal").html("<%= escape_javascript(render(:partial => 'edit_asset_fields', :locals => {:survey_version => @survey_version, :survey => @survey_version.survey, :asset => @asset})) %>").
+	modal({autoResize:true, maxHeight:'90%', minWidth:'330px', maxWidth:'500px'});

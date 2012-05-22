@@ -17,7 +17,7 @@ gem 'unicorn-rails'
 group :development do 
 	gem 'annotate'
 	gem 'metrical'
-	gem 'pry'
+	gem 'pry-rails'
 end
 
 gem 'rspec-rails', :group => [:development, :test]
