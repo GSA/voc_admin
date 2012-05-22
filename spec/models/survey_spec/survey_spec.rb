@@ -51,5 +51,11 @@ describe Survey do
     new_sv = s.create_new_major_version
     s.newest_version.should == new_sv
   end
-  
+
+  it "should create a new major version" do
+    s = Survey.create! @attr
+    new_major_version = s.create_new_major_version
+    s.survey_versions.should have(2).versions
+    new_major_version.major.should == 2
+  end
 end
