@@ -54,7 +54,7 @@ GEM
       ruby_parser (~> 2.3)
       sexp_processor (= 3.0.7)
       sexp_processor (~> 3.0.3)
-    coderay (1.0.5)
+    coderay (1.0.6)
     colored (1.2)
     daemons (1.1.8)
     delayed_job (2.1.4)
@@ -123,10 +123,12 @@ GEM
     mysql2 (0.2.18)
     polyglot (0.3.3)
     progressbar (0.10.0)
-    pry (0.9.8.4)
+    pry (0.9.9.6)
       coderay (~> 1.0.5)
       method_source (~> 0.7.1)
       slop (>= 2.4.4, < 3)
+    pry-rails (0.1.6)
+      pry
     rack (1.2.5)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -219,7 +221,7 @@ DEPENDENCIES
   memcache-client
   metrical
   mysql2 (< 0.3)
-  pry
+  pry-rails
   rails (= 3.0.12)
   rspec-rails
   simplecov
