@@ -463,12 +463,24 @@ li.showList-ol {
   color: green;
   font-weight: bold;
   font-size: 1.1em;
+  margin: -25px 0px 10px;
 }
 
 #error, #flash_error {
   color: red;
   font-weight: bold;
   font-size: 1.1em;
+}
+
+/* Flash Locations */
+.flash_location_login {
+	/* this isused on pages where the flash notice needs to be centered */
+	margin: 25px auto 10px;
+	text-align: center;
+}
+.flash_location_upper {
+	/* this is used on pages where there is a pageNav-upper tag */
+	margin: 0px 0px 35px 0px;
 }
 
 /* Login Page */

@@ -58,18 +58,6 @@ $(function(){
 		$(".next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
 	});
 	
-	// /* hide the spinner and update the question list when a successful response is received from an ajax request to reorder an element/page */
-	// $(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .copy_page").live("ajax:success", function(event, data, status, xhr){
-	// 	$("#question_list").html(data);
-	// 	toggleSpinner();
-	// });
-
-	
-	// $(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .copy_page").live("ajax:error", function(event, data, status, xhr){
-	// 	$("#question_list").html(data);
-	// 	toggleSpinner();
-	// });
-	
 	/* Show the spinner on ajax requests to reorder elements/pages */
 	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:beforeSend", function(){
 		toggleSpinner();

@@ -1,5 +1,5 @@
 <p class="pageTitle">Editing <%= @survey.name %> version <%= "#{@survey_version.major}.#{@survey_version.minor}" %></p>
-
+<%= flash_messages(flash) %>
 <% javascript 'survey_builder.js' %>
 
 <div class="pageNavEdit-upper">
@@ -7,7 +7,6 @@
   <p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p>
   <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
-<%= flash_messages(flash) %>
 
 <div id="overlay_container">
   <div id="question_list">

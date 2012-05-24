@@ -21,10 +21,14 @@ module LayoutHelper
   end
   
   def flash_messages(flash)
-    ret = ""
-    flash.each do |name, msg|
-      ret << content_tag(:p, msg, :id => "flash_#{name}") 
-    end
-    ret.html_safe
+    unless flash.empty?
+	    content_tag :div, :class => (controller_name == "user_sessions" ? "flash_location_login" : "flash_location_upper") do
+	      content = ""
+	      flash.each do |name, msg|
+	        content << content_tag(:p, msg, :id => "flash_#{name}" ) 
+	      end      
+	      content.html_safe
+	    end
+	  end
   end
 end
