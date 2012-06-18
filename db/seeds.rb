@@ -66,6 +66,6 @@ User.find_or_create_by_email("sysadmin@ctacorp.com") do |user|
 	user.l_name = "Administrator"
 	user.password = "password"
 	user.password_confirmation = "password"
-	user.role_id = Role::ADMIN.id
+	user.role_id = Role.find_by_name("Admin").id
 end
 puts "done"
