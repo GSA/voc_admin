@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     end
     
     
-    if @user.update_attributes(filtered_params(params[:user])))
+    if @user.update_attributes(filtered_params(params[:user]))
       redirect_to (@current_user.admin? ? users_path : surveys_path), :notice  => "Successfully updated user."
     else
       render :action => 'edit'
