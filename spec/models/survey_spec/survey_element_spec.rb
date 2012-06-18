@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SurveyElement do
   
   before(:each) do
-    @survey = Survey.create! :name => "Test Survey", :description => "RSpec Survey"
+    @survey = create :survey
     @version = @survey.survey_versions.first
     @page = @version.pages.create! :page_number => @version.next_page_number
     @asset = Asset.create! :snippet => "HTML Snippet"  

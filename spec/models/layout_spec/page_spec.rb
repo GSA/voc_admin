@@ -36,7 +36,7 @@ describe Page do
   
   it "should return the next page object" do
     version = SurveyVersion.create!(
-      :survey => Survey.new(:name => "Test", :description => "Test"),
+      :survey => build(:survey),
       :major => 1,
       :minor => 0
     )
@@ -51,7 +51,7 @@ describe Page do
   
   it "should return the previous page object" do
     version = SurveyVersion.create!(
-      :survey => Survey.new(:name => "Test", :description => "Test"),
+      :survey => build(:survey),
       :major => 1,
       :minor => 0
     )
@@ -66,7 +66,7 @@ describe Page do
   
   it "should change the page number to the provided position and update all other pages" do
     version = SurveyVersion.create!(
-      :survey => Survey.new(:name => "Test", :description => "Test"),
+      :survey => build(:survey),
       :major => 1,
       :minor => 0
     )
@@ -91,7 +91,7 @@ describe Page do
   end
   
   it "should renumber all pages after destroy" do
-    survey = Survey.create! :name => "Test", :description => "Test page renumbering"
+    survey = create :survey
     version = survey.survey_versions.first
     4.times {version.pages.create! :page_number => version.next_page_number}
     version.pages.first.destroy

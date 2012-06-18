@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe ChoiceQuestion do
   before(:each) do
-    @survey = Survey.create! :name => "Test", :description => "Rspec"
+    @survey = create :survey
     @version = @survey.survey_versions.first
     @page = @version.pages.create! :page_number => 1
     

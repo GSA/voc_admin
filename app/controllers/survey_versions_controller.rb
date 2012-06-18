@@ -74,7 +74,7 @@ class SurveyVersionsController < ApplicationController
   private
   
   def get_survey
-    @survey = Survey.find(params[:survey_id])
+    @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:id]) if params[:id]
   end
   

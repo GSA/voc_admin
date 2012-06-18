@@ -63,11 +63,12 @@ textarea {
 	Manage Rules Page
 	Display Fields Page
 	Survey Response Table 
+	Mnage Sites
 ****/
 
 #surveyTable, #versionTable, #categoryTable, 
 #rulesTable, #displayFieldsTable, #usersTable,
-#images_index_table {
+#images_index_table, #sitesTable {
 	margin: 0px 0px 10px;
 	padding: 0px;
 	border-collapse: collapse;
@@ -75,7 +76,7 @@ textarea {
 
 #surveyTable th, #versionTable th, #categoryTable th, 
 #rulesTable th, #displayFieldsTable th, #usersTable th,
-#images_index_table th {
+#images_index_table th, #sitesTable th {
 	text-align: left;
 	font-size: 1.1em;
 	font-weight: bold;
@@ -87,7 +88,7 @@ textarea {
 
 #surveyTable td, #versionTable td, #categoryTable td, 
 #rulesTable td, #displayFieldsTable td, #usersTable td,
-#images_index_table td {
+#images_index_table td, #sitesTable td {
 	text-align: left;
 	font-size: 1em;
 	font-weight: normal;
@@ -140,7 +141,8 @@ textarea {
 #rulesTable a, #rulesTable a:link, #rulesTable a:visited,
 #displayFieldsTable a, #displayFieldsTable a:link, #displayFieldsTable a:visited,
 #usersTable a, #usersTable a:link, #usersTable a:visited,
-#images_index_table a, #images_index_table a:link, #images_index_table a:visited {
+#images_index_table a, #images_index_table a:link, #images_index_table a:visited,
+#sitesTable a, #sitesTable a:link, #sitesTable a:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
@@ -151,7 +153,8 @@ textarea {
 #rulesTable a:hover, #rulesTable a:active,
 #displayFieldsTable a:hover, #displayFieldsTable a:active,
 #usersTable a:hover, #usersTable a:active,
-#images_index_table a:hover, #images_index_table a:active {
+#images_index_table a:hover, #images_index_table a:active,
+#sitesTable a:hover, #sitesTable a:active {
 	color: #243b7c;
 	text-decoration: underline;
 	font-weight: bold;
@@ -234,13 +237,11 @@ textarea {
 	float: left;
 	margin: 0px 5px 5px 0px;
 }
-
 .down {
 	clear: both;
 	vertical-align: bottom;
 	float: left;
 }
-
 #survey_response_list td {
 	text-align: left;
 	font-size: 1em;
@@ -250,6 +251,24 @@ textarea {
 	padding: 5px;
 	vertical-align: top;
 }
+#sitesTable .col1 {
+	width: 190px;
+	padding: 5px 10px 5px 0px;
+}
+#sitesTable .col2 {
+	width: 230px;
+	padding: 5px 10px 5px 0px;
+}
+#sitesTable .col3 {
+	width: 335px;
+	padding: 5px 5px 5px 0px;
+}
+#sitesTable .col4-6 {
+	text-align: center;
+	width: 60px;
+	padding: 5px 0px;
+}
+
 
 /*manage display fields & manage rules*/
 #displayFieldsTable .col1 {
@@ -537,7 +556,6 @@ li.showList-ol {
 }
 
 /***    Top Navigation    ****/
-
 p.nav {
 	font-size: 11px;
 	font-weight: bold;
@@ -640,7 +658,7 @@ a.pageNavEdit:hover, a.pageNavEdit:active {
 	left: 525px;
 }
 
-
+/* Survey Nav */
 div.surveyNav {
 	color: #000000;
 	text-decoration: none;
@@ -704,6 +722,15 @@ a.surveyNav:hover, a.surveyNav:active,
 a.simplemodal-close:hover, .simplemodal-close:active {
 	text-decoration: underline;
 	font-weight: bold;
+}
+
+/* New User */
+#form_widths input[type="text"], #form_widths input[type="password"], #newSurvey input[type="text"] {
+	min-width: 230px;
+}
+#form_widths #user_sites, #form_widths #site_description, #newSurvey #survey_description {
+	height: 160px;
+	width: 230px;
 }
 
 /* Pagination */

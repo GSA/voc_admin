@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SurveyVersion do
   before(:each) do 
-    @survey = Survey.create! :name => "Test Survey", :description => "RSpec test survey"
+    @survey = create :survey
   end
   
   it "should require a survey" do

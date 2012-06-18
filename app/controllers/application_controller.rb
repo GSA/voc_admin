@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   
   private
+    def require_admin
+      logger.debug "ApplicationController::require_user"
+      unless current_user.admin?
+        flash[:error] = "You do not have permissions to view this page"
+        redirect_to surveys_path
+      end
+    end
+    
     def current_user_session
       logger.debug "ApplicationController::current_user_session"
       return @current_user_session if defined?(@current_user_session)

@@ -1,0 +1,20 @@
+<p class="pageTitle">Site Details</p>
+<%= flash_messages(flash) %>
+
+<p class="copyBold">
+	Name:
+  <span class="copy"><%= @site.name %></span>
+</p>
+<p class="copyBoldMargin">
+  URL:
+  <span class="copy"><%= @site.url %></span>
+</p>
+<p class="copyBoldMargin">
+	Description:
+  <span class="copy"><%= @site.description %></span>
+</p>
+
+<div class="pageNav">
+  <%= link_to "Edit", edit_site_path(@site), :class=>"pageNav" %> |
+  <%= link_to "View All", sites_path, :class=>"pageNav" %>
+</div>

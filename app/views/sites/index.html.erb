@@ -1,0 +1,26 @@
+<p class="pageTitle">Sites</p>
+<div class="pageNav-upper">
+	<%= link_to "New Site", new_site_path, :class => "pageNav" %>
+</div>
+
+<table id="sitesTable" summary="this table lists sites">
+	<tr>
+		<th scope="col" class="col1">Name</th>
+		<th scope="col" class="col2">URL</th>
+		<th scope="col" class="col3" colspan="4">Description</th>
+	</tr>
+	<% @sites.each do |site| %>
+		<tr class="<%= cycle('white','blue') %>">
+			<td class="col1"><%= site.name %></td>
+			<td class="col2"><%= site.url %></td>
+			<td class="col3"><%= site.description %></td>
+			<td class="col4-6"><%= link_to "Show", site %></td>
+      <td class="col4-6"><%= link_to "Edit", edit_site_path(site) %></td>
+      <td class="col4-6"><%= link_to "Delete", site, :confirm => 'Are you sure?', :method => :delete %></td>
+		</tr>
+	<% end %>
+</table>
+
+<div class="pageNav">
+	<%= link_to "New Site", new_site_path, :class=>"pageNav" %>
+</div>

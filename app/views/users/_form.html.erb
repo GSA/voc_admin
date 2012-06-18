@@ -10,28 +10,41 @@
 		</div>
 	<% end %>
 	
-	<p class="copy">
-    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><br />
-    <%= f.text_field :f_name %>
-  </p>
-  <p class="copyBoldMargin">
-    <%= f.label :l_name, "Last Name: " %><br />
-    <%= f.text_field :l_name %>
-  </p>
-  <p class="copyBoldMargin">
-    <%= f.label :email, "Email: " %><br />
-    <%= f.text_field :email %>
-  </p>
+	<div id="form_widths">
+		<p class="copy">
+	    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><br />
+	    <%= f.text_field :f_name %>
+	  </p>
+	  <p class="copyBoldMargin">
+	    <%= f.label :l_name, "Last Name: " %><br />
+	    <%= f.text_field :l_name %>
+	  </p>
+	  <p class="copyBoldMargin">
+	    <%= f.label :email, "Email: " %><br />
+	    <%= f.text_field :email %>
+	  </p>
+		
+		<% if @user.new_record? || @user == @current_user %>
+		  <p class="copyBoldMargin">
+		    <%= f.label :password, "Password: " %><br/>
+		    <%= f.password_field :password%>
+		  </p>
+		  <p class="copyBoldMargin">
+		    <%= f.label :password_confirmation, "Password Confirmation: " %><br/>
+		    <%= f.password_field :password_confirmation%>
+		  </p>
+		<% end -%>
 	
-	<% if @user.new_record? || @user == @current_user %>
-	  <p class="copyBoldMargin">
-	    <%= f.label :password, "Password: " %><br/>
-	    <%= f.password_field :password%>
-	  </p>
-	  <p class="copyBoldMargin">
-	    <%= f.label :password_confirmation, "Password Confirmation: " %><br/>
-	    <%= f.password_field :password_confirmation%>
-	  </p>
-	<% end -%>
+	  <% if @current_user.admin? %>
+			<p class="copyBoldMargin">
+				<%= f.label :role_id, "Admin?" %>
+				<%= f.check_box :role_id, {},  Role::ADMIN.id, nil %>
+	
+			<p class="copyBoldMargin">
+		  	<%= f.label :site_ids, "Sites:" %><br />
+		    <%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
+		  </p>
+	  <% end %>
+	</div>  
 	<p class="sumbitButton"><%= f.submit %></p>
 <% end %>

@@ -6,34 +6,66 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-SurveyType.create! :id => 1, :name => "site"
-SurveyType.create! :id => 2, :name => "page"
+print "creating default survey types..."
+SurveyType.find_or_create_by_name("site") do |st|
+  st.id = 1
+end
 
-Conditional.create! :id=>1, :name=>"="
-Conditional.create! :id=>2, :name=>"!="
-Conditional.create! :id=>3, :name=>"contains"
-Conditional.create! :id=>4, :name=>"does not contain"
-Conditional.create! :id=>5, :name=>"<"
-Conditional.create! :id=>6, :name=>"<="
-Conditional.create! :id=>7, :name=>">="
-Conditional.create! :id=>8, :name=>">"
-Conditional.create! :id=>9, :name=>"empty"
-Conditional.create! :id=>10, :name=>"not empty"
+SurveyType.find_or_create_by_name("page") do |st|
+  st.id = 2
+end
 
-Status.create! :id=>1, :name=>"new"
-Status.create! :id=>2, :name=>"processing"
-Status.create! :id=>3, :name=>"error"
-Status.create! :id=>4, :name=>"done"
+puts "done"
 
-ExecutionTrigger.create! :id=>1, :name=>"add"
-ExecutionTrigger.create! :id=>2, :name=>"update"
-ExecutionTrigger.create! :id=>3, :name=>"delete"
-ExecutionTrigger.create! :id=>4, :name=>"nightly"
+print "creating default conditionals..."
+conditionals = [
+  "=",
+  "!=",
+  "contains",
+  "does not contain",
+  "<",
+  "<=",
+  ">=",
+  ">",
+  "empty",
+  "not empty"
+]
 
-puts "Creating user: sysadmin@ctacorp.com..."
-User.create!(:f_name => "System",
-						 :l_name => "Administrator",
-						 :email => "sysadmin@ctacorp.com", 
-						 :password => "password", 
-						 :password_confirmation => "password")
+conditionals.each_with_index do |c, index|
+  Conditional.find_or_create_by_name(c) do |cond|
+    cond.id = index + 1
+  end
+end
+puts "done"
 
+
+print "creating default survey statuses..."
+%w(new processing error done).each_with_index do |status, index|
+  Status.find_or_create_by_name(status) do |st|
+    st.id = index + 1
+  end
+end
+puts "done"
+
+
+print "creating default execution triggers..."
+%w(add update delete nightly).each_with_index do |trigger, index|
+  ExecutionTrigger.find_or_create_by_name(trigger) do |et|
+    et.id = index + 1
+  end
+end
+puts "done"
+
+print "creating default roles..."
+role = Role.find_or_create_by_name("Admin")
+puts "done"
+
+print "Creating user: sysadmin@ctacorp.com..."
+User.find_or_create_by_email("sysadmin@ctacorp.com") do |user| 
+  user.f_name = "System"
+	user.l_name = "Administrator"
+	user.password = "password"
+	user.password_confirmation = "password"
+	user.role_id = Role::ADMIN.id
+end
+puts "done"

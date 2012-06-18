@@ -31,7 +31,7 @@ describe SurveyResponse do
   end
   
   it "should return all survey responses with a display field value like the provided search text" do
-    survey = Survey.create! :name => "survey 1", :description => "rspec"
+    survey = create :survey
     version = survey.survey_versions.first
     page = version.pages.create! :page_number => 1
     question = TextQuestion.new

@@ -2,7 +2,18 @@
 <div class="pageNav-upper">
 	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
 </div>
+<% flash.each do |msg, name| %>
+	<%= flash[name] %>
+<% end %>
 <%= flash_messages(flash) %>
+
+<div id="surveySearch">
+	<%= form_tag surveys_path,:method => :get, :id => "searchSurveyForm" do %>
+		<%= label_tag :q, "Search Surveys" %>
+		<%= text_field_tag :q, params[:q] %>
+		<%= link_to "View all surveys", surveys_path %>
+	<% end %>
+</div>
 
 <table id="surveyTable">
   <tr>

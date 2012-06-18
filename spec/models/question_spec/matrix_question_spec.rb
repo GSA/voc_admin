@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MatrixQuestion do
   before(:each) do
-    @survey = Survey.create! :name => "Rspec survey", :description => "RSpec test survey"
+    @survey = create :survey
     @version = @survey.survey_versions.first
     @page = @version.pages.create! :page_number => 1
     

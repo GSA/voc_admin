@@ -7,6 +7,7 @@ CommentToolApp::Application.routes.draw do
   end
   
 	resources :users
+	resources :sites
 	
   resources :surveys
 
