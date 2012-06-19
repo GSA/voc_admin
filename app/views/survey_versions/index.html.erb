@@ -10,7 +10,7 @@
 	<tr>
 		<th>Version</th>
 		<th>Published</th>
-		<th colspan="6">Created At</th>
+		<th colspan="7">Created At</th>
 	</tr>
 	<% for version in @survey_versions %>
 	<tr class="<%= cycle('white','blue') %>">
@@ -34,7 +34,10 @@
 			<% end %>
 		</td>
 		<td class="col4-7"><%= link_to "Clone", clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version"  %></td>
+		<td class="col4-7"><%= link_to "Thank You Page", [:edit_thank_you_page, @survey, version] %></td>
 	</tr>
+
+	
 	<% end %>
 </table>
 

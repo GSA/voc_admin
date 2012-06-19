@@ -24,6 +24,17 @@ class SurveyVersionsController < ApplicationController
     redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
     redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked
   end
+
+  def edit_thank_you_page
+  end
+
+  def update
+    if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
+      redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
+    else
+      render :edit
+    end
+  end
   
   def destroy
     @survey_version.update_attribute(:archived, true)
