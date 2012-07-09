@@ -4,6 +4,12 @@
 	<%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
 	<%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :are_radio_button, "Area" %>
 	<br/>
+  
+  <%= f.label :answer_size, "Answer Size: " %>
+  <%= f.select :answer_size, options_for_select( [ ["50 Characters", 50], ["75 Characters", 75], ["100 Characters", 100] ]) %>
+  <%= f.label :row_size, "Row Size: ", :class => "HiddenLabel" %>
+  <%= f.select :row_size, options_for_select( [ ["", nil],["3 Lines", 3], ["4 Lines", 4], ["5 Lines", 5] ]), {}, :id => "RowCountSelect" %>
+  
 	<br/>
 	<% text_question.build_question_content if text_question.new_record? %>
 	<%= f.fields_for :question_content do |builder| %>

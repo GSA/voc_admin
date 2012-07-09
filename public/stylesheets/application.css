@@ -832,3 +832,8 @@ span.pageNum {
 #sr_search {
 	margin: 20px 0px;
 }
+
+.HiddenLabel {
+  left: -500px;
+  position: absolute;
+}

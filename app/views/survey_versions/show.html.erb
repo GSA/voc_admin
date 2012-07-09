@@ -103,9 +103,9 @@
 							<% elsif element.assetable_type == "TextQuestion" %>
 								<%= label_tag "response[raw_responses_attributes][#{index}][answer]", "Answer for question #{question_number}", :style => "display: none" %>
 								<% if element.assetable.answer_type == "field" %>
-									<span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer" %></span>
+                <span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size %></span>
 								<% elsif element.assetable.answer_type == "area" %>
-									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer"%></span>
+									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => element.assetable.row_size, :columns => element.assetable.column_size %></span>
 								<% end -%>
 							<% end -%>
 						<% else %>
