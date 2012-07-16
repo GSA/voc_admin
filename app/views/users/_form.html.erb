@@ -1,4 +1,4 @@
-<%= form_for @user do |f| %>
+<%= form_for @user, :remote => true do |f| %>
 	<% if @user.errors.any? %>
 		<div class="modalErrorBox">
 			<p class="modalErrorTitle"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</p>
@@ -10,41 +10,53 @@
 		</div>
 	<% end %>
 	
-	<div id="form_widths">
-		<p class="copy">
-	    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><br />
-	    <%= f.text_field :f_name %>
-	  </p>
-	  <p class="copyBoldMargin">
-	    <%= f.label :l_name, "Last Name: " %><br />
-	    <%= f.text_field :l_name %>
-	  </p>
-	  <p class="copyBoldMargin">
-	    <%= f.label :email, "Email: " %><br />
-	    <%= f.text_field :email %>
-	  </p>
+	<div id="create_form_widths">
+		<div class="copy">
+	    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><%= f.text_field :f_name, :size=>"30" %> &nbsp;&nbsp;
+	    <span class="copyBold"><%= f.label :l_name, "Last Name: " %></span><%= f.text_field :l_name, :size=>"30" %>
+	  </div>
+	  
+	  <div id="leftside">
+	  	<p class="copyBold"><%= f.label :email, "Email: " %></p>
+	  </div>
+	  <div id="rightside">
+	  	<%= f.text_field :email %>
+	  </div>
+	  
 		
 		<% if @user.new_record? || @user == @current_user %>
-		  <p class="copyBoldMargin">
-		    <%= f.label :password, "Password: " %><br/>
-		    <%= f.password_field :password%>
-		  </p>
-		  <p class="copyBoldMargin">
-		    <%= f.label :password_confirmation, "Password Confirmation: " %><br/>
-		    <%= f.password_field :password_confirmation%>
-		  </p>
+			<div id="leftside">
+			  <p class="copyBold"><%= f.label :password, "Password: " %></p>
+		  </div>
+		  <div id="rightside">
+		  	<%= f.password_field :password%>
+		  </div>
+		  <div id="leftside">
+			  <p class="copyBold"><%= f.label :password_confirmation, "Password Confirmation: " %></p>
+		  </div>
+		  <div id="rightside">
+		  	<%= f.password_field :password_confirmation%>
+		  </div>
 		<% end -%>
 	
 	  <% if @current_user.admin? %>
-			<p class="copyBoldMargin">
-				<%= f.label :role_id, "Admin?" %>
-				<%= f.check_box :role_id, {},  Role::ADMIN.id, nil %>
-	
-			<p class="copyBoldMargin">
-		  	<%= f.label :site_ids, "Sites:" %><br />
-		    <%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
-		  </p>
+			<div id="leftside">
+				<p class="copyBold"><%= f.label :role_id, "Role: " %></p>
+			</div>
+			<div id="rightside">
+				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role" %><%= label_tag "admin_role", "Admin" %>
+				<%= radio_button :user, :role_id, nil, :id => "user_role" %><%= label_tag "user_role", "User" %>
+			</div>
+			<div id="leftside">
+				<p class="copyBold"><%= f.label :site_ids, "Sites:" %></p>
+			</div>
+			<div id="rightside">
+	    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
+	  	</div>
 	  <% end %>
-	</div>  
-	<p class="sumbitButton"><%= f.submit %></p>
+	 
+		<div class="sumbitButton">
+			<%= f.submit %>
+		</div>
+	</div> 
 <% end %>

@@ -2,7 +2,7 @@ class SitesController < ApplicationController
   before_filter :require_admin
   
   def index
-    @sites = Site.all
+    @sites = Site.order("name asc").page(params[:page]).per(10)
   end
   
   def show

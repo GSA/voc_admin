@@ -2,7 +2,7 @@ class SurveyVersionsController < ApplicationController
   before_filter :get_survey
   
   def index
-    @survey_versions = @survey.survey_versions.get_unarchived.order("major desc, minor desc").all
+    @survey_versions = @survey.survey_versions.get_unarchived.order(order_clause(params[:sort], params[:direction])).page(params[:page]).per(10)
     respond_to do |format|
       format.html #
       format.js {render :json => [{:value => 0, :display => "Choose a version"}].concat(@survey_versions.collect {|s| {:value => s.id, :display => s.version_number}}) }
@@ -87,6 +87,27 @@ class SurveyVersionsController < ApplicationController
   def get_survey
     @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:id]) if params[:id]
+  end
+  
+  def order_clause(column = nil, direction = nil)
+    dir = sort_direction(direction)
+    col = sort_column(column)
+    
+    if col == "major, minor"
+      col.split(",").map {|c| "#{c} #{dir}" }.join(",")
+    else
+      "#{col} #{dir}"
+    end
+  end
+  
+  def sort_column(column = "major, minor")
+    columns = ["major, minor", "published", "created_at", "updated_at"]
+    columns.include?(column) ? column : "major, minor"
+  end
+  
+  def sort_direction(direction = "asc")
+    directions = %w(asc desc)
+    directions.include?(direction) ? direction : "asc"
   end
   
 end

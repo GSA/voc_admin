@@ -2,7 +2,12 @@ class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
   
   def index
-    @users = User.all
+    @users = User.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
@@ -15,10 +20,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    if @user.save
-      redirect_to @user, :notice => "Successfully created user."
-    else
-      render :action => 'new'
+
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @user, :notice => "Successfully created user." }
+        format.js
+      else
+        format.html { render :action => 'new' }
+        format.js
+      end
     end
   end
 

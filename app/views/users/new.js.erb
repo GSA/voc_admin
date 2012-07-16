@@ -1,0 +1,11 @@
+	$("#modalDiv").html("<%= escape_javascript( render( partial: 'form' ) )%>");
+$("#modalDiv").prepend( "<h2>Add A New User</h2>");
+$(".sumbitButton").prepend( "<input type='button' class='simplemodal-close' value='Close'/>");
+$("#modalDiv").modal({
+	escClose: true,
+	modal: true,
+	onClose: function() {
+		$.modal.close();
+		$("#modalDiv").html("");
+	}
+});

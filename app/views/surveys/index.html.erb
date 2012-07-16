@@ -27,9 +27,10 @@
     <td class="col1"><%= survey.name %></td>
     <td class="col2"><%= survey.description %></td>
     <td class="col3"><%= survey.survey_type.name.titleize %></td>
-    <td class="col4-5"><%= link_to 'Edit', edit_survey_path(survey) %></td>
-    <td class="col4-5"><%= link_to 'Versions', survey_survey_versions_path(survey)%></td>
-    <td class="col4-5"><%= link_to 'Delete', survey, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class="col4"><%= link_to 'Edit', edit_survey_path(survey) %></td>
+    <td class="col5"><%= link_to 'View Versions', survey_survey_versions_path(survey)%></td>
+		<td class="col6"><%= link_to 'View Responses', survey_responses_path(:survey_version_id => survey.published_version.try(:id), :survey_id => survey.id) %></td>
+    <td class="col7"><%= link_to 'Delete', survey, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -21,6 +21,8 @@
 	<% end %>
 </table>
 
+<%= paginate @sites %>
+
 <div class="pageNav">
 	<%= link_to "New Site", new_site_path, :class=>"pageNav" %>
 </div>

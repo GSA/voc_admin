@@ -23,8 +23,8 @@ module ApplicationHelper
     
     arrows = content_tag :span, :class => "sort_arrows" do
       ret = ""
-      ret += image_tag "arrow_up.png"   if direction == "desc"
-      ret += image_tag "arrow_down.png" if direction == "asc"
+      ret += image_tag "arrow_up.png"   if direction == "desc" && column == params[:sort]
+      ret += image_tag "arrow_down.png" if direction == "asc"  && column == params[:sort]
       ret.html_safe
     end
     

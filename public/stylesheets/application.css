@@ -95,45 +95,109 @@ textarea {
 	border-bottom: 1px solid #243b7c;
 	vertical-align: top;
 }
-
-#surveyTable .col1 {
-	width: 200px;
-	padding: 5px 10px;
-}
-
 #usersTable .col1-2 {
 	width: 215px;
 	padding: 5px 10px 5px 1px;
 }
-
-#categoryTable .col1, #surveyTable .col2 {
+#categoryTable .col1 {
 	width: 470px;
 	padding: 5px 20px 5px 0px;
 }
-
-#surveyTable .col3 {
-	text-align: center;
-	width: 40px;
-	padding: 5px 0px;
-}
-
-#surveyTable .col4-5, #categoryTable .col2-4, 
+#categoryTable .col2-4, 
 #versionTable .col4-7, #usersTable .col3-5 {
 	text-align: center;
 	width: 70px;
 	padding: 5px 0px;
 }
 
-#versionTable .col1-2 {
+/** Survey Table **/
+#surveyTable .col1 {
+	width: 225px;
+	padding: 5px 10px;
+}
+#surveyTable .col2 {
+	width: 325px;
+	padding: 5px 20px 5px 0px;
+}
+#surveyTable .col3 {
+	text-align: left;
+	width: 50px;
+	padding: 5px;
+}
+#surveyTable .col4 {
 	text-align: center;
-	width: 60px;
-	padding: 5px 30px 5px 0px;
+	width: 50px;
+	padding: 5px;
+}
+#surveyTable .col5 {
+	text-align: center;
+	width: 70px;
+	padding: 5px;
+}
+#surveyTable .col6 {
+	text-align: center;
+	width: 80px;
+	padding: 5px;
+}
+#surveyTable .col7 {
+	text-align: center;
+	width: 70px;
+	padding: 5px;
 }
 
-#versionTable .col3 {
-	width: 100px;
-	padding: 5px 5px;
+/** Version Table **/
+#versionTable th.col1 {
+	text-align: left;
+	width: 50px;
+	padding: 5px 10px 5px 0px;
 }
+#versionTable td.col1 {
+	text-align: center;
+	width: 50px;
+	padding: 5px 10px 5px 0px;
+}
+#versionTable .col2 {
+	text-align: center;
+	width: 80px;
+	padding: 5px 10px 5px 5px;
+}
+#versionTable .col3 {
+	text-align: center;
+	width: 120px;
+	padding: 5px;
+}
+#versionTable .col4 {
+	text-align: center;
+	width: 120px;
+	padding: 5px;
+}
+#versionTable .col5, #versionTable .col6 {
+	text-align: center;
+	width: 70px;
+	padding: 5px;
+}
+#versionTable .col7 {
+	text-align: center;
+	width: 60px;
+	padding: 5px;
+}
+#versionTable .col8 {
+	text-align: center;
+	width: 70px;
+	padding: 5px;
+}
+#versionTable .col9 {
+	text-align: center;
+	width: 50px;
+	padding: 5px;
+}
+#versionTable .col10 {
+	text-align: center;
+	width: 110px;
+	padding: 5px 10px 5px 5px;
+}
+
+
 
 #surveyTable a, #surveyTable a:link, #surveyTable a:visited,
 #versionTable a, #versionTable a:link, #versionTable a:visited, 
@@ -142,11 +206,11 @@ textarea {
 #displayFieldsTable a, #displayFieldsTable a:link, #displayFieldsTable a:visited,
 #usersTable a, #usersTable a:link, #usersTable a:visited,
 #images_index_table a, #images_index_table a:link, #images_index_table a:visited,
-#sitesTable a, #sitesTable a:link, #sitesTable a:visited {
+#sitesTable a, #sitesTable a:link, #sitesTable a:visited,
+#surveySearch a, #surveySearch a:link, #surveySearch a:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
-
 #surveyTable a:hover, #surveyTable a:active,
 #versionTable a:hover, #versionTable a:active,
 #categoryTable a:hover, #categoryTable a:active, 
@@ -154,7 +218,8 @@ textarea {
 #displayFieldsTable a:hover, #displayFieldsTable a:active,
 #usersTable a:hover, #usersTable a:active,
 #images_index_table a:hover, #images_index_table a:active,
-#sitesTable a:hover, #sitesTable a:active {
+#sitesTable a:hover, #sitesTable a:active,
+#surveySearch a:hover, #surveySearch a:active {
 	color: #243b7c;
 	text-decoration: underline;
 	font-weight: bold;
@@ -599,7 +664,7 @@ div.pageNav-upper {
 	color: #ffad05;
 	font-weight: bold;
 	font-size: 11px;
-	margin: -30px 0px 20px;
+	margin: -30px 0px 25px;
 	padding: 3px 0px 0px;
 }
 a.pageNav, a.pageNav:link, a.pageNav:visited {
@@ -732,6 +797,28 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	height: 160px;
 	width: 230px;
 }
+#create_form_widths #leftside {
+	width: 150px;
+	display: inline-block;
+	vertical-align: top;
+	margin: 15px 0px;
+}
+#create_form_widths #rightside {
+	width: 350px;
+	display: inline-block;
+	vertical-align: top;
+	margin: 15px 0px;
+}
+#create_form_widths #rightside input[type="text"],
+#create_form_widths #rightside input[type="password"],
+#create_form_widths #rightside select {
+	width: 100%;
+}
+#create_form_widths .sumbitButton {
+	display: block;
+	text-align: right;
+	margin: 0px 0px 10px;
+}
 
 /* Pagination */
 .pagination {
@@ -832,8 +919,13 @@ span.pageNum {
 #sr_search {
 	margin: 20px 0px;
 }
+#surveySearch {
+	margin: 0px 0px 30px;
+}
 
-.HiddenLabel {
-  left: -500px;
-  position: absolute;
+.simplemodal-wrap {
+	overflow: visible !important;	
+}
+.input_field input[type="text"]{
+	width: 100px;
 }
