@@ -1,0 +1,8 @@
+<p>Your requested export is now ready for pickup.</p>
+
+<p><%= link_to "Click here to download the CSV file.", exports_download_url(:id => @export_file.access_token) %></p>
+
+<p>NOTE: The CSV file will be available for 25 hours. After that, you will need to run the export request again</p>
+
+<p>If you are having trouble clicking on the link above, you can copy and paste the following URL on your browser:</p>
+<p><%= exports_download_url(:id => @export_file.access_token) %></p>

@@ -54,6 +54,7 @@ GEM
       ruby_parser (~> 2.3)
       sexp_processor (= 3.0.7)
       sexp_processor (~> 3.0.3)
+    cocaine (0.2.1)
     coderay (1.0.6)
     colored (1.2)
     daemons (1.1.8)
@@ -126,6 +127,12 @@ GEM
     mime-types (1.19)
     multi_json (1.1.0)
     mysql2 (0.2.18)
+    paperclip (3.1.4)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (>= 0.0.2)
+      mime-types
     polyglot (0.3.3)
     progressbar (0.10.0)
     pry (0.9.9.6)
@@ -224,6 +231,7 @@ DEPENDENCIES
   memcache-client
   metrical
   mysql2 (< 0.3)
+  paperclip
   pry-rails
   rails (= 3.0.13)
   rspec-rails

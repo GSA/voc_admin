@@ -31,9 +31,8 @@
 	<div class="pageNav">
 		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> | 
 		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %> | 
-		<%= link_to "Export as CSV", survey_responses_path(:format => :csv, :survey_version_id=>version, :page => params[:page], :order_column => params[:order_column], :order_dir => params[:order_dir], :search => params[:search]), :class=>"pageNav" %> |
-		<%= link_to "Export All Responses", export_all_survey_responses_path(:format => :csv, :survey_version_id => version, :order_column => params[:order_column],
-			:order_dir => params[:order_dir], :search => params[:search]), :class => "pageNav" %>
+		<%= link_to "Export as CSV", export_all_survey_responses_path(:format => :csv, :survey_version_id => version, :order_column => params[:order_column],
+			:order_dir => params[:order_dir], :search => params[:search]), :class => "pageNav", :id => "ExportCSV", :remote => true %>
 	</div>
 	
 	<div id="dfv_edit_modal" style="display: none;">&nbsp;</div>

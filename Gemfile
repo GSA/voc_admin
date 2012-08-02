@@ -10,6 +10,8 @@ gem 'kaminari'
 gem 'delayed_job', '2.1.4'
 gem 'authlogic'
 gem 'memcache-client'
+gem 'paperclip'
+
 
 gem 'unicorn-rails'
 
@@ -28,6 +30,4 @@ group :test do
   gem 'growl'
 end
 
-group :mysql_db do
-	gem 'mysql2', '< 0.3'
-end
+gem 'mysql2', '< 0.3'

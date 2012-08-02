@@ -1,4 +1,6 @@
 CommentToolApp::Application.routes.draw do
+  match '/exports/:id/download' => "exports#download", :as => 'exports_download'
+
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
   get 'reset_password' => 'user_sessions#reset_password', :as => :reset_password
