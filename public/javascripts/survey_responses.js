@@ -2,6 +2,11 @@ var search_timer_id = null;
 var last_ajax_request_id = 0;
 
 $(function(){
+	$(".editDisplayFieldValue").bind('ajax:success', function(event, data, status, xhr){
+			$("#dfv_edit_modal").html(data);
+			$("#dfv_edit_modal").modal();		
+	});
+
 	/* Bind an onclick for the csv export to pop up hte simple modal */
 	$("a#ExportCSV").live('click', function() {
 		$.modal("<div class='modal'><h1>Export Request Submitted</h1><p>Your export request has been submitted.  An email will be sent to you to notifiy you when the export is ready for pick-up.</p><p>NOTE: The export will reflect any advanced filters applied to the current view and will include all rows of data that apply to those filters</p><a href='#' class='simplemodal-close'>Close</a></div>", {close: true, escClose: true, overlayClose: true, minHeight: '200px'})
@@ -51,8 +56,7 @@ $(function(){
 		/* This has to be done for some reason in order to give time for the DOM to register the
 		 * previous insertion of select options.
 		 */
-		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 500);
-
+		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 1000);
 	}
 	
 	/* Make the pagination links ajax calls */
@@ -88,27 +92,15 @@ function editDisplayFieldValue(survey_id, version_id, dfv_id){
 		url: "surveys/"+survey_id+"/survey_versions/"+version_id+"/display_field_values/"+dfv_id+"/edit.js",
 		success: function(data){
 			$("#dfv_edit_modal").html(data);
-			$("#dfv_edit_modal").modal({
-				onClose: function(dialog){
-					/* when the modal closes, submit the form data to update the field */
-					$.ajax({
-						url: "surveys/"+survey_id+"/survey_versions/"+version_id+"/display_field_values/"+dfv_id,
-						type: "PUT",
-						data: "display_field_value[value]="+$("#display_field_value_value").val(),
-						success: function(){
-							getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val());
-						}
-					});
-					/* onClose function for the modal must call $.modal.close() */
-					$.modal.close();
-				}
-			});
+			$("#dfv_edit_modal").modal();
 		}
 	});
 }
 
 function setSurveyVersionSelect(survey_version_id){
 	$("#survey_version_id option[value='" + survey_version_id + "']").attr('selected', 'selected');
+	console.log("setSurveyVersionSelect");
+	console.log( $("#survey_version_id"));
 }
 
 function refreshSurveyResponseTable(){

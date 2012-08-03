@@ -197,8 +197,6 @@ textarea {
 	padding: 5px 10px 5px 5px;
 }
 
-
-
 #surveyTable a, #surveyTable a:link, #surveyTable a:visited,
 #versionTable a, #versionTable a:link, #versionTable a:visited, 
 #categoryTable a, #categoryTable a:link, #categoryTable a:visited, 
@@ -207,7 +205,8 @@ textarea {
 #usersTable a, #usersTable a:link, #usersTable a:visited,
 #images_index_table a, #images_index_table a:link, #images_index_table a:visited,
 #sitesTable a, #sitesTable a:link, #sitesTable a:visited,
-#surveySearch a, #surveySearch a:link, #surveySearch a:visited {
+#surveySearch a, #surveySearch a:link, #surveySearch a:visited,
+.display_field a, .display_field a:link, .display_field a:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
@@ -219,7 +218,8 @@ textarea {
 #usersTable a:hover, #usersTable a:active,
 #images_index_table a:hover, #images_index_table a:active,
 #sitesTable a:hover, #sitesTable a:active,
-#surveySearch a:hover, #surveySearch a:active {
+#surveySearch a:hover, #surveySearch a:active,
+.display_field a:hover, .display_field a:active {
 	color: #243b7c;
 	text-decoration: underline;
 	font-weight: bold;
@@ -245,6 +245,12 @@ textarea {
 	padding: 5px 0px;
 	vertical-align: middle;
 }
+
+/** Survey Response List **/
+#survey_response_list td img {
+	float: right;
+	padding: 3px;
+}
 #survey_response_list  {
 	width: 960px;
 	margin: 10px 0px;
@@ -254,6 +260,7 @@ textarea {
 }
 #survey_response_list table {
 		border-collapse: collapse;
+		vertical-align: top;
 }
 #survey_response_list th {
 	text-align: left;
@@ -268,6 +275,7 @@ textarea {
 	vertical-align: bottom;
 	position: relative;
 	word-wrap:break-word;
+	vertical-align: top;
 }
 #survey_response_list td {
 	text-align: left;
@@ -277,14 +285,13 @@ textarea {
 	border-bottom: 1px solid #243b7c;
 	border-right: 1px solid #243b7c;
 	color: #000000;
-	min-width: 150px;
-	max-width: 150px;
+	width: 150px;
 	vertical-align: top;
 	word-wrap:break-word;
 }
 #survey_response_list .col1 {
-	min-width: 15px;
-	max-width: 15px;
+	min-width: 45px;
+	max-width: 45px;
 	text-align: center;
 	padding: 5px;
 }
@@ -928,4 +935,27 @@ span.pageNum {
 }
 .input_field input[type="text"]{
 	width: 100px;
+}
+
+/** Display Fields **/
+.display_field  {
+	vertical-align: top;
+}
+.display_field .display_left {
+	width: 150px;
+	padding: 5px 10px 5px 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+.display_field .display_right {
+	padding: 5px 0px 5px 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+.display_field input[type=text] {
+	width: 200px;
+}
+.display_field textarea {
+	width: 200px;
+	height: 100px;
 }

@@ -1,8 +1,16 @@
 <%= form_for [survey, version, display_field_value], :remote => true do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :value %><br />
-    <%= f.text_area :value %>
+  	<%= f.label :value %><br />
+  	<% if display_field_value.display_field.type == "DisplayFieldText" %>
+   		<%= f.text_field :value %>
+  	<% elsif display_field_value.display_field.type == "DisplayFieldChoiceSingle" %>
+  		<%= f.select :value, display_field_value.display_field.choices.split %>
+  	<% elsif display_field_value.display_field.type == "DisplayFieldChoiceMultiselect" %>
+  		<% display_field_value.display_field.choices.split.each_with_index do |val, index| %>
+  			<%= check_box_tag "display_field_value[value_array][]", val, (display_field_value.value and display_field_value.value.include?(val)), {:id => "display_field_value[value_array][]"} %><%= val %>
+  		<% end %>
+  	<% end %>
   </p>
   <p><%= f.submit %></p>
 <% end %>

@@ -19,6 +19,7 @@ group :development do
 	gem 'annotate'
 	gem 'metrical'
 	gem 'pry-rails'
+	gem 'debugger'
 end
 
 gem 'rspec-rails', :group => [:development, :test]

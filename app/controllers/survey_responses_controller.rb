@@ -35,6 +35,33 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
+  def edit
+    @survey_response = SurveyResponse.find(params[:id])
+  end
+
+  def update
+    @survey_response = SurveyResponse.find(params[:id])
+    if @survey_response.update_attributes(params[:survey_response])
+      redirect_to survey_responses_path(:survey_id => @survey_response.survey_version.survey_id, :survey_version_id => @survey_response.survey_version_id), :notice => "Successfully updated the record."
+    else
+      render :action => 'edit'
+    end
+  end
+
+  ## You shouldn't be able to create survey responses from the admin app
+  def create
+    # @client_id = SecureRandom.hex(64)
+    # @survey_version_id = params[:survey_version_id]
+    
+    # @survey_response = SurveyResponse.new ({:client_id => @client_id, :survey_version_id => @survey_version_id}.merge(params[:response]))
+    
+    # @survey_response.raw_responses.each {|raw_response| raw_response.client_id = @client_id}
+    
+    # @survey_response.save!
+    
+    # redirect_to survey_responses_path
+  end
+
   def destroy
     @survey_response = SurveyResponse.find(params[:id])
 

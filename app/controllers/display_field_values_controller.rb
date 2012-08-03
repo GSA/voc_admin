@@ -6,18 +6,23 @@ class DisplayFieldValuesController < ApplicationController
     
     respond_to do |format|
       format.html #
-      format.js    { render :partial => "display_field_value_fields", :locals => {:survey => @survey, :version => @survey_version, :display_field_value => @display_field_value}}
+      format.js    { render :edit}
     end
     
   end
 
   def update
     @display_field_value = DisplayFieldValue.find(params[:id])
-    if @display_field_value.update_attributes(params[:display_field_value])
-      #@display_field_value.survey_response.process_me(2) # TODO: Reprocess response when a field is updated
-      redirect_to root_url, :notice  => "Successfully updated display field."
-    else
-      render :action => 'edit'
+    
+    respond_to do |format|
+      if @display_field_value.update_attributes(params[:display_field_value])
+        #@display_field_value.survey_response.process_me(2) # TODO: Reprocess response when a field is updated
+        format.html {redirect_to root_url, :notice  => "Successfully updated display field."}
+        format.js 
+      else
+        format.html {render :action => 'edit'}
+        format.js   { render :edit }
+      end
     end
   end
   
