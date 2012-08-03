@@ -5,9 +5,19 @@
     </div>
   <% end %>
   <p class="copy">
-  	<span class="copyBold"><%= f.label :name, "Name: " %></span><br />
+  	<span class="copyBold"><%= f.label :name, "Name: " %></span>
 		<%= f.text_field :name%>
   </p>  
+
+  <div>
+    <div style="display: inline-block;">Type: </div>
+    <div style="display: inline-block;">
+      <%= f.radio_button :action_type, "db", :id => "db_action_rule" %><%= label_tag "db_action_rule", "Database Action: allows you to update or set a field value" %>
+      <br/>
+      <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><%= label_tag "email_action_rule", "Email Notification: allows you to send out an automated email when somethign happens" %>
+    </div>
+  </div>
+
   <p class="copyBoldMargin">This rule will execute when a survey is: </p>
   <p class="copy">
   	<input name="rule[execution_trigger_ids][]" type='hidden' />
@@ -17,24 +27,69 @@
   		<% end %>
   	<% end %>
   </p>
-  <p class="copyBoldMargin">Criteria:</p>
+
+  <%= field_set_tag "Criteria" do %>
 	  <div id="criteria">
 				<%= f.fields_for :criteria do |builder| %>
 		    	<%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
 				<% end -%>
 				<div class="surveyNavMargin"><%= link_to_add_fields "Add Criteria", f, :criteria %></div>
 		</div>
-
+  <% end %>
 	
 	
-	<p class="copyBold">Actions:</p>
+	<%= field_set_tag "Actions" do %>
 	<div id="actions">
-		<%= f.fields_for :actions do |builder| %>
-		 <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
-		<% end %>
-	 	<div class="surveyNavMargin"><%= link_to_add_fields "Add Action", f, :actions %></div>
+    <div id="email_action" class="<%= @rule.action_type == 'db' || @rule.action_type.nil? ? 'hidden_page' : '' %>">
+      <% @rule.build_email_action if @rule.email_action.nil? %>
+      <%= f.fields_for :email_action do |builder| %>
+        <p>
+          <%= builder.label :emails, "Send email to: " %>
+          <%= builder.text_field :emails %>
+          <span>Seperate email addresses with a comma</span>
+        </p>
+
+        <p>
+          <%= builder.label :subject, "Subject Line: "%>
+          <%= builder.text_field :subject %>
+        </p>
+
+        <p>
+          <%= builder.label :body, "Message Content" %>
+          <%= builder.text_area :body %>
+          <%= builder.hidden_field :_destroy, :value => false, :id => "destroy_email_action" %>
+        </p>
+      <% end %>
+    </div>
+
+    <div id="db_actions" class="<%= @rule.action_type == 'email' ? 'hidden_page' : '' %>">
+      <%= f.fields_for :actions do |builder| %>
+       <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
+      <% end %>
+      <div class="surveyNavMargin"><%= link_to_add_fields "Add Action", f, :actions %></div>
+    </div>
+
 	</div>
+  <% end %>
 	
 	
 	<%= f.submit %>
 <% end -%>
+
+<script>
+  $(function() {
+    $("#email_action_rule").click(function(){
+      $("#email_action").show();
+      $("#db_actions").hide();
+      $("#destroy_email_action").val(false);
+      $(".db_action_delete").val(true);
+    });
+
+    $("#db_action_rule").click(function(){
+      $("#email_action").hide();
+      $("#db_actions").show();
+      $("#destroy_email_action").val(true);
+      $(".db_action_delete").val(false);
+    });
+  });
+</script>

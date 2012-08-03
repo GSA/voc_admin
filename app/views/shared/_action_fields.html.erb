@@ -1,4 +1,4 @@
-<div class="action">
+<div class="db_action">
   <%= f.label :display_field_id, "Update" %>
   <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
 	<br />
@@ -11,7 +11,7 @@
 	<%= text_field_tag :value_text, nil ,{:class => "ActionManualValue"} %>
 	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
 	
-	<%= f.hidden_field :_destroy, :value => "" %>
+	<%= f.hidden_field :_destroy, :value => "", :class => "db_action_delete" %>
 	<%= link_to_function image_tag("red_x.png", :alt=>"Remove Element", :class=>"redX"), "remove_fields(this)" %>
 </div>
 <br/>

@@ -31,6 +31,13 @@
 	  	to <%= action.value %>
 		</li>
 	<% end %>
+
+	<% if @rule.email_action.present? %>
+		<li class="showList-ol">
+			Send Email To:  <%= @rule.email_action.emails %><br/>
+			With Subject: <%= @rule.email_action.subject %>
+		</li>
+	<% end %>
 </ol>
 
 <div class="pageNav">

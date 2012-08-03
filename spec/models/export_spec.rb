@@ -5,14 +5,13 @@ describe Export do
 end
 
 
+
 # == Schema Information
 #
 # Table name: exports
 #
 #  id                    :integer(4)      not null, primary key
 #  access_token          :string(255)
-#  file_name             :string(255)
-#  content_type          :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime
 #  document_file_name    :string(255)
