@@ -2,7 +2,7 @@ var search_timer_id = null;
 var last_ajax_request_id = 0;
 
 $(function(){
-	$(".editDisplayFieldValue").bind('ajax:success', function(event, data, status, xhr){
+	$(".editDisplayFieldValue").live('ajax:success', function(event, data, status, xhr){
 			$("#dfv_edit_modal").html(data);
 			$("#dfv_edit_modal").modal();		
 	});
