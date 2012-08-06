@@ -26,7 +26,8 @@
 	<br />
 	<div id='choices_fields' style="<%= (f.object.type=="DisplayFieldChoiceSingle" or f.object.type=="DisplayFieldChoiceMultiselect") ? 'display:show;' : "display:none  ;" %>">
 		<div class="display_left">
-		  <span class="copyBoldMargin" ><%= f.label :choices, "Choices: " %></span>
+		  <span class="copyBoldMargin" ><%= f.label :choices, "Choices: " %></span><br />
+		  <span class="copy">(Separate entries should each appear on individual lines.)</span>
 		</div>
 		<div class="display_right">
 		  <%= f.text_area :choices %>

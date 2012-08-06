@@ -1,44 +1,50 @@
 <p class="pageTitle">Edit Record</p>
 
 <%= field_set_tag :Response do %>
-	<p>Date/Time: <%= @survey_response.created_at.strftime("%m/%d/%Y - %T") %></p>
+	<div class="left_side">Date/Time:</div>
+	<div class="right_side"><%= @survey_response.created_at.strftime("%m/%d/%Y - %T") %></div>
+	<br />
 
-	<p>Page URL: <%= @survey_response.page_url %></p>
+	<div class="left_side">Page URL:</div>
+	<div class="right_side"><%= @survey_response.page_url %></div>
+	<br />
 
 	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", false).each do |dfv| %>
-		<p>
-			<%= dfv.display_field.name %>:
-			<%= dfv.value %>
-		</p>
+		<div class="left_side"><%= dfv.display_field.name %>:</div>
+	<div class="right_side"><%= dfv.value %></div><br />
 	<% end %>
 <% end %>
 
 <%= form_for @survey_response do |f| %>
-
+	<div class="below_fieldset">
 	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", true).each_with_index do |display_field_value, i| %>
 		<%= f.fields_for :display_field_values, display_field_value do |dfv| %>
 			<% df = dfv.object.display_field %>
-			<p>
-			<%= df.name %>:
-			<% if df.editable? %>
-				<% if df.type == "DisplayFieldText" %>
-					<%= dfv.text_field :value %>
-				<% elsif df.type == "DisplayFieldChoiceSingle" %>
-					<%= dfv.select :value, df.choices.split %>
-				<% elsif df.type == "DisplayFieldChoiceMultiselect" %>
+			<div class="left_side"><%= df.name %>:</div>
+			<div class="right_side">
+				<% if df.editable? %>
+					<% if df.type == "DisplayFieldText" %>
+						<%= dfv.text_field :value %>
+					<% elsif df.type == "DisplayFieldChoiceSingle" %>
+						<%= dfv.select :value, df.choices.split %>
+					<% elsif df.type == "DisplayFieldChoiceMultiselect" %>
 			  		<% df.choices.split.each_with_index do |val, index| %>
-			  			<%= check_box_tag "survey_response[display_field_values_attributes][#{i}][value_array][]", val, (dfv.object.value and dfv.object.value.include?(val)), {:id => "survey_response[display_field_values_attributes][#{i}][value_array][]"} %><%= val %>
+			  			<span><%= check_box_tag "survey_response[display_field_values_attributes][#{i}][value_array][]", val, (dfv.object.value and dfv.object.value.include?(val)), {:id => "survey_response[display_field_values_attributes][#{i}][value_array][]"} %><%= val %></span>
 			  		<% end %>
 			  		<%= dfv.hidden_field :id, :value => dfv.object.id %>
-					<!-- <input type="hidden" value="<%= df.id %>" name="survey_response[display_field_values_attributes][<%= dfv.object.id %>][display_field_id]" id="survey_response_display_field_values_attributes_<%= dfv.object.id %>_display_field_id"> -->
-
+						<!-- <input type="hidden" value="<%= df.id %>" name="survey_response[display_field_values_attributes][<%= dfv.object.id %>][display_field_id]" id="survey_response_display_field_values_attributes_<%= dfv.object.id %>_display_field_id"> -->
+					<% end %>
+				<% else %>
+					<%= dfv.object.value %>
 				<% end %>
-			<% else %>
-				<%= dfv.object.value %>
-			<% end %>
-			</p>
+			</div><br />
 		<% end %>
 	<% end %>
-
-	<%= f.submit "Save Changes" %>	| <%= link_to "Cancel", survey_responses_path(:survey_id => @survey_response.survey_version.survey_id, :survey_version_id => @survey_response.survey_version_id) %>
+	
+	<p class="sumbitButton">
+		<%= f.submit "Save Changes" %>
+	</p> 
+	<div class="pageNav">
+		<%= link_to "Cancel", survey_responses_path(:survey_id => @survey_response.survey_version.survey_id, :survey_version_id => @survey_response.survey_version_id), :class=>"pageNav" %>
+	</div>
 <% end %>

@@ -299,6 +299,7 @@ textarea {
 	display: inline-block;
 	position: absolute;
 	right: 0px;
+	top: 2px;
 }
 #surveyTable .sort_arrows {
 	display: inline-block;
@@ -344,11 +345,11 @@ textarea {
 
 /*manage display fields & manage rules*/
 #displayFieldsTable .col1 {
-	width: 379px;
+	width: 300px;
 	padding: 5px 10px 5px 1px;
 }
 #displayFieldsTable .col2 {
-	width: 140px;
+	width: 200px;
 	padding: 5px 10px;
 }
 #displayFieldsTable .col3 {
@@ -356,11 +357,7 @@ textarea {
 	width: 90px;
 	padding: 5px 0px;
 }
-#displayFieldsTable .col4 {
-	width: 70px;
-	padding: 5px;
-	text-align: center;
-}
+#displayFieldsTable .col4,
 #displayFieldsTable .col5 {
 	width: 90px;
 	padding: 5px;
@@ -371,7 +368,7 @@ textarea {
 	padding: 5px;
 	text-align: center;
 }
-#displayFieldsTable .col3-5 {
+#displayFieldsTable .col3-7 {
 	text-align: left;
 }
 #rulesTable .col1 {
@@ -554,7 +551,7 @@ li.showList-ol {
   color: green;
   font-weight: bold;
   font-size: 1.1em;
-  margin: -25px 0px 10px;
+  margin: -20px 0px 10px;
 }
 
 #error, #flash_error {
@@ -958,4 +955,54 @@ span.pageNum {
 .display_field textarea {
 	width: 200px;
 	height: 100px;
+}
+
+/** Fieldsets **/
+.above_fieldset {
+	margin: 0px 10px 10px;
+}
+.below_fieldset {
+	margin: 10px 10px 0px;
+}
+fieldset {
+	margin: 5px 0px;
+}
+fieldset .left_side,
+.below_fieldset .left_side {
+	width: 200px;
+	padding: 5px 10px 5px 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+.above_fieldset .left_side {
+	width: 150px;
+	padding: 5px 10px 5px 0px;
+	display: inline-block;
+	vertical-align: top;
+}
+.above_fieldset .right_side input[type=text],
+#email_action .right_side input[type=text],
+#email_action .right_side textarea {
+	width: 300px;
+}
+fieldset .right_side,
+.below_fieldset .right_side,
+.above_fieldset .right_side {
+	padding: 5px 0px 5px 10px;
+	display: inline-block;
+	vertical-align: top;
+}
+.below_fieldset .right_side input[type=text],
+.below_fieldset .right_side select {
+	width: 150px;
+	vertical-align: top;
+}
+.below_fieldset .right_side span,
+.above_fieldset .right_side span {
+	width: 130px;
+	padding: 0px 10px 0px 0px;
+	display: inline-block;
+	word-wrap:break-word;
+	word-break:break-all;
+	vertical-align: top;
 }
