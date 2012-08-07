@@ -991,6 +991,7 @@ fieldset .right_side,
 	padding: 5px 0px 5px 10px;
 	display: inline-block;
 	vertical-align: top;
+	width: 712px;
 }
 .below_fieldset .right_side input[type=text],
 .below_fieldset .right_side select {
@@ -1000,7 +1001,7 @@ fieldset .right_side,
 .below_fieldset .right_side span,
 .above_fieldset .right_side span {
 	width: 130px;
-	padding: 0px 10px 0px 0px;
+	padding: 0px 10px 5px 0px;
 	display: inline-block;
 	word-wrap:break-word;
 	word-break:break-all;
