@@ -3,6 +3,8 @@
 	<%= hidden_field_tag :search, params[:search] %>
 	<%= hidden_field_tag :order_column, @order_column_id %>
 	<%= hidden_field_tag :order_dir, @order_dir %>
+
+	<div id="survey_response_table_div">
 	<table summary="this table is used to display the results of a survey">
 	  <tr>
 	  	<th class="col1"></th>
@@ -29,6 +31,7 @@
 			<% end -%>
 	  </tr>
 	</table>
+</div>
 	
 	<%= paginate objects, :remote => true %>
 	

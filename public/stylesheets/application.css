@@ -1007,3 +1007,7 @@ fieldset .right_side,
 	word-break:break-all;
 	vertical-align: top;
 }
+
+#survey_response_table_div {
+	overflow: scroll;
+}
