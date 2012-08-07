@@ -17,5 +17,5 @@ namespace :application do
   end
 
   desc "restart the application and all background jobs and processes"
-  task :restart_all => [:start_all, :stop_all]
+  task :restart_all => [:stop_all, :start_all]
 end
