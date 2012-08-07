@@ -7,11 +7,6 @@ $(function(){
 			$("#dfv_edit_modal").modal();		
 	});
 
-	/* Bind an onclick for the csv export to pop up hte simple modal */
-	$("a#ExportCSV").live('click', function() {
-		$.modal("<div class='modal'><h1>Export Request Submitted</h1><p>Your export request has been submitted.  An email will be sent to you to notifiy you when the export is ready for pick-up.</p><p>NOTE: The export will reflect any advanced filters applied to the current view and will include all rows of data that apply to those filters</p><a href='#' class='simplemodal-close'>Close</a></div>", {close: true, escClose: true, overlayClose: true, minHeight: '200px'})
-	});
-
 	/* replace the survey_response_list when a delete call is made */
 	$(".archive_link").live('ajax:success', refreshSurveyResponseTable);
 

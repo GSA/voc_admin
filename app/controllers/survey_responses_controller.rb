@@ -79,6 +79,10 @@ class SurveyResponsesController < ApplicationController
     # Generate the csv file in the background in case there are a large number of responses
     @survey_version.delay.generate_responses_csv(params[:search], current_user.id)
 
-    redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)
+    respond_to do |format|
+      format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
+      format.js
+    end
+    
   end
 end
