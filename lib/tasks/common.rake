@@ -15,4 +15,7 @@ namespace :application do
     sh "#{Rails.root}/script/delayed_job stop"
     sh "rake response_parser:stop"
   end
+
+  desc "restart the application and all background jobs and processes"
+  task :restart_all => [:start_all, :stop_all]
 end
