@@ -14,7 +14,7 @@
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('white','blue')%>">
 			  	<td class="col1">
-			  		<%= link_to image_tag("red_x.png"), survey_response_path(sr, :page => params[:page]), :method => :delete, :remote => true, :class => "archive_link" %>
+			  		<%= link_to image_tag("red_x.png"), survey_response_path(sr, :page => params[:page]), :method => :delete, :remote => true, :class => "archive_link", :confirm => "Are you sure you want to remove this record>?" %>
 			  		<%= link_to image_tag("edit.png"), edit_survey_response_path(sr.id, :page => params[:page]) %>
 			  	</td>
 			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
@@ -22,7 +22,7 @@
 			  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
 					  <td class="<%= dfv.display_field.editable? ? 'editable' : '' %>" id="<%= 'displayFieldValue_' << dfv.id.to_s %>" <%= dfv.display_field.editable? ? "ondblclick=editDisplayFieldValue(#{version.survey.id},#{version.id},#{dfv.id})" : "" %>>
 							<%= link_to image_tag("/images/edit.png"), [:edit, version.survey, version, dfv], :remote => true, :class => "editDisplayFieldValue" if dfv.display_field.editable %>
-					  	<%= sanitize(dfv.value ? dfv.value.gsub("{%delim%}",  "\n").gsub(",", "<br/>") : "" )%>
+					  	<%= sanitize(dfv.value ? dfv.value.gsub("\n", "{%delim%}").gsub("{%delim%}",  "<br/>") : "" )%>
 					  </td>
 					<% end -%>
 			  </tr>
