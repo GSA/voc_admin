@@ -43,7 +43,7 @@ task :add_test_data => [:environment] do
   # Create 10 answers to the survey
   100.times do
     response_params = {
-      :page_url => "http://localhost:3000",
+      :page_url => "http://voc-staging-test.com/#{answer_array.sample.chomp}",
       :survey_version_id => version.id,
       :raw_responses_attributes => {
         "0" => {
