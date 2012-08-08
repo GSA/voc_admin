@@ -5,6 +5,9 @@ class CreateRoles < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    # Create the default role for admins
+    role = Role.find_or_create_by_name("Admin")
   end
 
   def self.down
