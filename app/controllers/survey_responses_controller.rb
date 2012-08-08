@@ -18,7 +18,7 @@ class SurveyResponsesController < ApplicationController
         @survey_responses = @survey_responses.order("#{column} #{@order_dir}")
       end
       
-      @survey_responses = @survey_responses.page(params[:page]).per(10)
+      @survey_responses = @survey_responses.includes(:display_field_values).page(params[:page]).per(10)
 
     else
       @survey_responses = []
