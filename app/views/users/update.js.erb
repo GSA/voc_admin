@@ -1,0 +1,9 @@
+<% if @user.errors.any? %>
+  $("#modalDiv form").prepend( "<%= escape_javascript( render(partial: 'shared/question_errors', locals: { object: @user}) ) %>");
+  $("#simplemodal-container").height($("#modalDiv").height());
+  $("#simplemodal-container").width($("#modalDiv").width());
+<% else %>
+  $("#usersTable").replaceWith( "<%= escape_javascript( render(partial: 'users_table', locals: { users: User.page(params[:page]).per(10) }) ) %>");
+  $.modal.close();
+  alert("Successfully Updated User");
+<% end %>

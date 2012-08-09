@@ -49,11 +49,16 @@ class UsersController < ApplicationController
     end
     
     
-    if @user.update_attributes(filtered_params(params[:user]))
-      redirect_to (@current_user.admin? ? users_path : surveys_path), :notice  => "Successfully updated user."
-    else
-      render :action => 'edit'
+    respond_to do |format|
+      if @user.update_attributes(filtered_params(params[:user]))
+        format.html {redirect_to (@current_user.admin? ? users_path : surveys_path), :notice  => "Successfully updated user."}
+        format.js
+      else
+        format.html {render :action => 'edit'}
+        format.js
+      end
     end
+
   end
 
   def destroy

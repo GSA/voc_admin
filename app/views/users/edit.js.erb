@@ -1,0 +1,15 @@
+$("#modalDiv").html("<%= escape_javascript( render( partial: 'form' ) )%>");
+$("#modalDiv").prepend( "<h2>Edit User</h2>");
+$(".sumbitButton").prepend( "<input type='button' class='simplemodal-close' value='Close'/>");
+$("#modalDiv").modal({
+  escClose: true,
+  modal: true,
+  autoResize: true,
+  onClose: function() {
+    $.modal.close();
+    $("#modalDiv").html("");
+  }
+});
+
+$(".simplemodal-container").css("height", $("#modalDiv").height()).css("width", $("#modalDiv").width());
+$.modal.setPosition();
