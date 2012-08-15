@@ -159,7 +159,7 @@ function getUrlParams(){
 function getSurveyVersionList(survey_id){
 	var jqxhr = $.getJSON("/surveys/" + survey_id + "/survey_versions/", {ajax:'true'}, function(j){
 		var options = '';
-		for(var i = 0; i < j.length; i ++){
+		for(var i = 0; i < j.length ; i++){
 			options += '<option value="' + j[i].value + '">' + j[i].display + '</optioin>';
 		}
 		$("#survey_version_id").html(options);

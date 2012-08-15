@@ -5,7 +5,7 @@ class SurveyVersionsController < ApplicationController
     @survey_versions = @survey.survey_versions.get_unarchived.order(order_clause(params[:sort], params[:direction])).page(params[:page]).per(10)
     respond_to do |format|
       format.html #
-      format.js {render :json => [{:value => 0, :display => "Choose a version"}].concat(@survey_versions.collect {|s| {:value => s.id, :display => s.version_number}}) }
+      format.js {render :json => [{:value => 0, :display => "Choose a version"}].concat(@survey.survey_versions.get_unarchived.order("major desc, minor desc").collect {|s| {:value => s.id, :display => s.version_number}}) }
     end
   end
   
