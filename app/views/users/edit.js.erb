@@ -1,6 +1,6 @@
 $("#modalDiv").html("<%= escape_javascript( render( partial: 'form' ) )%>");
 $("#modalDiv").prepend( "<h2>Edit User</h2>");
-$(".sumbitButton").prepend( "<input type='button' class='simplemodal-close' value='Close'/>");
+$(".sumbitButton").prepend( "<input type='button' class='simplemodal-close' value='Cancel'/>");
 $("#modalDiv").modal({
   escClose: true,
   modal: true,
