@@ -801,21 +801,21 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	height: 160px;
 	width: 230px;
 }
-#create_form_widths #leftside {
+#create_form_widths .leftside {
 	width: 150px;
 	display: inline-block;
 	vertical-align: top;
 	margin: 15px 0px;
 }
-#create_form_widths #rightside {
+#create_form_widths .rightside {
 	width: 350px;
 	display: inline-block;
 	vertical-align: top;
 	margin: 15px 0px;
 }
-#create_form_widths #rightside input[type="text"],
-#create_form_widths #rightside input[type="password"],
-#create_form_widths #rightside select {
+#create_form_widths .rightside input[type="text"],
+#create_form_widths .rightside input[type="password"],
+#create_form_widths .rightside select {
 	width: 100%;
 }
 #create_form_widths .sumbitButton {

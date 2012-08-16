@@ -16,43 +16,45 @@
 	    <span class="copyBold"><%= f.label :l_name, "Last Name: " %></span><%= f.text_field :l_name, :size=>"30" %>
 	  </div>
 	  
-	  <div id="leftside">
+	  <div class="leftside">
 	  	<p class="copyBold"><%= f.label :email, "Email: " %></p>
 	  </div>
-	  <div id="rightside">
+	  <div class="rightside">
 	  	<%= f.text_field :email %>
 	  </div>
 	  
 		
 		<% if @user.new_record? || @user == @current_user %>
-			<div id="leftside">
+			<div class="leftside">
 			  <p class="copyBold"><%= f.label :password, "Password: " %></p>
 		  </div>
-		  <div id="rightside">
+		  <div class="rightside">
 		  	<%= f.password_field :password%>
 		  </div>
-		  <div id="leftside">
+		  <div class="leftside">
 			  <p class="copyBold"><%= f.label :password_confirmation, "Password Confirmation: " %></p>
 		  </div>
-		  <div id="rightside">
+		  <div class="rightside">
 		  	<%= f.password_field :password_confirmation%>
 		  </div>
 		<% end -%>
 	
 	  <% if @current_user.admin? %>
-			<div id="leftside">
+			<div class="leftside">
 				<p class="copyBold"><%= f.label :role_id, "Role: " %></p>
 			</div>
-			<div id="rightside">
-				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role" %><%= label_tag "admin_role", "Admin" %>
-				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil? %><%= label_tag "user_role", "User" %>
+			<div class="rightside">
+				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
+				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
 			</div>
-			<div id="leftside">
-				<p class="copyBold"><%= f.label :site_ids, "Sites:" %></p>
+			<div id="sites_div" class="<%= @user.role.nil? ? '' : 'displayNone'%>">
+				<div class="leftside">
+					<p class="copyBold"><%= f.label :site_ids, "Sites:" %></p>
+				</div>
+				<div class="rightside">
+		    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
+		  	</div>
 			</div>
-			<div id="rightside">
-	    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
-	  	</div>
 	  <% end %>
 	 
 		<div class="sumbitButton">
