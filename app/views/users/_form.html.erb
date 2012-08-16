@@ -45,7 +45,7 @@
 			</div>
 			<div id="rightside">
 				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role" %><%= label_tag "admin_role", "Admin" %>
-				<%= radio_button :user, :role_id, nil, :id => "user_role" %><%= label_tag "user_role", "User" %>
+				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil? %><%= label_tag "user_role", "User" %>
 			</div>
 			<div id="leftside">
 				<p class="copyBold"><%= f.label :site_ids, "Sites:" %></p>
