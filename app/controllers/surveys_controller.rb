@@ -2,7 +2,7 @@ class SurveysController < ApplicationController
   # GET /surveys
   def index
     # @current_user is set in the require_user before filter
-    @surveys = @current_user.surveys.search(params[:q]).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @surveys = @current_user.surveys.search(params[:q]).order("surveys.#{sort_column} #{sort_direction}").page(params[:page]).per(10)
 
   end
 
@@ -62,7 +62,7 @@ class SurveysController < ApplicationController
   end
 
   def sort_column
-    %w(name).include?(params[:sort]) ? params[:sort] : "name"
+    %w(name).include?(params[:sort]) ? params[:sort] : "surveys.name"
   end
 
   def sort_direction
