@@ -62,7 +62,7 @@ class SurveysController < ApplicationController
   end
 
   def sort_column
-    %w(name).include?(params[:sort]) ? params[:sort] : "surveys.name"
+    %w(name).include?(params[:sort]) ? params[:sort] : "name"
   end
 
   def sort_direction
