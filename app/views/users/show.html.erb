@@ -8,6 +8,20 @@
   Email:
   <span class="copy"><%= @user.email %></span>
 </p>
+<p class="copyBoldMargin">
+  Role:
+  <span class="copy"><%= @user.role.nil? ? 'User' : @user.role.name %></span>
+</p>
+<% if @user.role.nil? %>
+<p class="copyBoldMargin">
+  <div style="display: inline-block; vertical-align: top; font-weight: bold; color: black;">Sites:</div>
+  <div style="display: inline-block;">
+    <% @user.sites.each do |site| %>
+    <span class="copy"><%= site.name %></span><br/>
+    <% end %>
+  </div>
+</p>
+<% end %>
 
 <div class="pageNav">
   <%= link_to "Edit", edit_user_path(@user), :class=>"pageNav" %> |
