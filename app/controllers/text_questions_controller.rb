@@ -59,6 +59,9 @@ class TextQuestionsController < ApplicationController
 
   def destroy
     @text_question = TextQuestion.find(params[:id])
+    
+    destroy_default_rule_and_display_field(@text_question.question_content)
+    
     @text_question.destroy
     
     respond_to do |format|
@@ -71,6 +74,14 @@ class TextQuestionsController < ApplicationController
   def get_survey_version
     @survey = Survey.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
+  end
+
+  def destroy_default_rule_and_display_field(qc)
+    rule = @survey_version.rules.find_by_name(qc.statement)
+    rule.destroy if rule.present?
+    
+    df = @survey_version.display_fields.find_by_name(qc.statement)
+    df.destroy if df.present?
   end
 
 end

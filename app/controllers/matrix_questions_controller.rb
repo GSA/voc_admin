@@ -75,6 +75,8 @@ class MatrixQuestionsController < ApplicationController
 
   def destroy
     @matrix_question = @survey_version.matrix_questions.find(params[:id])
+    
+    destroy_default_rule_and_display_field(@matrix_question)
     @matrix_question.destroy
     
     respond_to do |format|
@@ -87,5 +89,17 @@ class MatrixQuestionsController < ApplicationController
   def get_survey_and_survey_version
     @survey = Survey.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
+  end
+
+  def destroy_default_rule_and_display_field(question)
+    question.choice_questions.each do |choice_question|
+      name ="#{question.question_content.statement}: #{choice_question.question_content.statement}"
+      
+      rule = @survey_version.rules.find_by_name(name)
+      rule.destroy if rule.present?
+      
+      df = @survey_version.display_fields.find_by_name(name)
+      df.destroy if df.present?
+    end
   end
 end
