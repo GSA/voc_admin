@@ -3,7 +3,13 @@ class IncreaseDisplayFieldValueValue < ActiveRecord::Migration
     change_column :display_field_values, :value, :text
     
     # Rerun all Rules as if it was a new comment
-    SurveyResponse.all.each {|sr| sr.process_me(1) }
+    SurveyResponse.all.each do |sr|
+       begin
+         sr.process_me(1)
+       rescue
+         #
+       end
+    end 
   end
 
   def self.down
