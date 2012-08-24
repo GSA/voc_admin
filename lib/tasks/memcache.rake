@@ -4,7 +4,7 @@ namespace :memcache do
     raise "Memcached already running" if File.exists?(pid_path)
 
     print "starting memcache..."
-    `memcached -d  -l 127.0.0.1 -p 11211 -P #{pid_path}  >> #{log_path} 2>&1`
+    `memcached -d -vv -l 127.0.0.1 -p 11211 -P #{pid_path}  >> #{log_path} 2>&1`
     sleep(2.seconds)
     puts (File.exists?(pid_path) ? "done" : "Memcached failed to start")
 
