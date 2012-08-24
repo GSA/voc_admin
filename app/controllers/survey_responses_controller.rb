@@ -14,7 +14,7 @@ class SurveyResponsesController < ApplicationController
       if @order_column_id
         @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir)
       else
-        column = %w('created_at', 'page_url').include?(params[:order_column]) ? params[:order_column] : 'created_at'
+        column = %w('survey_responses.created_at', 'page_url').include?(params[:order_column]) ? params[:order_column] : 'survey_responses.created_at'
         @survey_responses = @survey_responses.order("#{column} #{@order_dir}")
       end
       
