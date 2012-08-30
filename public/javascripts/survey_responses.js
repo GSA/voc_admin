@@ -66,21 +66,32 @@ $(function(){
 		$.modal.close();
 		refreshSurveyResponseTable();
 	});
-	
-	$("#search_link").click(function(){
-		refreshSurveyResponseTable();
-		return false;
-	});
-	
-	$("#search").live('keyup', function(){
-		if(search_timer_id != null){
-			clearTimeout(search_timer_id);
-		}
-		
-		search_timer_id = setTimeout("refreshSurveyResponseTable()", 500);
-	});
+
+  /* Replace the survey results with the ajax spinner */
+  $("#advanced_search_form").live('ajax:beforeSend', function() {
+	old_html = $("#survey_response_list").html();
+	searchTimeout = setTimeout(replaceOldHtml, 1000);
+    $("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
+  });
+  
+  $("#advanced_search_form").live('ajax:success', function(event, data, status, xhr){
+	clearTimeout(searchTimeout);
+    $("#survey_response_list").html(data);
+  });
 
 });
+
+function replaceOldHtml(){
+	$("#survey_response_list").html(old_html)
+}
+
+function add_search_criteria(link, content){
+  var new_criteria_index = new Date().getTime();
+  var regexp = new RegExp('new_criteria_index', 'g');
+  
+  $("#searchCriterias").append(content.replace(regexp, new_criteria_index));
+}
+
 
 function editDisplayFieldValue(survey_id, version_id, dfv_id){
 	$.ajax({

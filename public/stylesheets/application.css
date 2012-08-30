@@ -1011,3 +1011,21 @@ fieldset .right_side,
 #survey_response_table_div {
 	overflow: scroll;
 }
+
+/****/
+#advanced_search {
+	background-color: #EEF1FC;
+	border: 1px solid black; 
+	margin: 20px 0px 25px; 
+	padding: 10px;
+}
+#searchCriterias input[type=text] {
+	width: 200px;
+}
+.SearchCriteria {
+	margin: 10px 0px;
+}
+.andor {
+	display: inline-block;
+	margin: 0px 10px 0px 0px;
+}
