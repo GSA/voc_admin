@@ -4,6 +4,37 @@
 	<%= hidden_field_tag :order_column, @order_column_id %>
 	<%= hidden_field_tag :order_dir, @order_dir %>
 
+	<div id="advanced_search">
+		<p class="copyBold">Advanced Search</p><br />
+
+		<%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "advanced_search_form" do %>
+			<%= hidden_field_tag "survey_version_id", version.id %>
+			<%= hidden_field_tag "survey_id", version.survey_id %>
+			
+			<div id="searchCriterias">
+				
+				<% if params[:search].blank? || @search.criteria.empty? %>
+					<%= select_tag "search[criteria][0][include_exclude]", options_for_select([ ['Include', 1], ['Exclude', 0]], :selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:include_exclude].to_i)) %>
+					<%= select_tag "search[criteria][0][display_field_id]", options_from_collection_for_select(version.display_fields, :id, :name, :selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:display_field_id])) %>
+					<%= select_tag "search[criteria][0][condition]", options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
+							:selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:condition]) ) %>
+					<%= text_field_tag "search[criteria][0][value]", ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:value]) %>			
+				<% else %>
+					<% @search.criteria.keys.each_with_index do |criteria_index, index| %>
+						<%= render :partial => 'criteria_fields', :locals => { :criteria_index => criteria_index, :version => version, :index => index } %>
+					<% end # params[:search].each %>
+
+				<% end # if else %>
+			</div>
+			<br />
+			<div><%= link_to_function "Add Criteria", "add_search_criteria(this, '#{escape_javascript(render(:partial => 'criteria_fields', :locals => {:version => version, :criteria_index => 'new_criteria_index', :index => 'new_index'}))}')", :class=>"surveyNav" %></div>
+
+			<div style="text-align: right;"><%= submit_tag "Search" %></div>
+		<% end %>
+
+	</div>
+
+
 	<div id="survey_response_table_div">
 	<table summary="this table is used to display the results of a survey">
 	  <tr>

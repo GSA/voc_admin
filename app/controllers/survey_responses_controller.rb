@@ -4,13 +4,16 @@ class SurveyResponsesController < ApplicationController
   def index
 
     @survey_version = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
-    
+
+
     if @survey_version.present?
+      @survey_responses = @survey_version.survey_responses.processed
+
+      # Get the order column and direction
       @order_column_id = @survey_version.display_fields.find_by_name(params[:order_column]).try(:id)
       @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
-      
-      @survey_responses = @survey_version.survey_responses.processed.search(params[:search])
-      
+            
+      # if we have an order column, then order by that column
       if @order_column_id
         @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir)
       else
@@ -18,11 +21,21 @@ class SurveyResponsesController < ApplicationController
         @survey_responses = @survey_responses.order("#{column} #{@order_dir}")
       end
       
+      # If search parameters are sent in then use them to build the proper where clause
+      if params[:search]
+        @search = SurveyResponseSearch.new(@survey_version.id, params[:search])
+
+        @survey_responses = @search.search(@survey_responses)
+      end
+
+      # Paginate the results
       @survey_responses = @survey_responses.includes(:display_field_values).page(params[:page]).per(10)
 
     else
       @survey_responses = []
     end    
+
+    binding.pry if params[:debug] == true
 
     respond_to do |format|
       format.html #
