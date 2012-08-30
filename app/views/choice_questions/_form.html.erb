@@ -8,7 +8,10 @@
 	<%= f.label :answer_type, "Answer Type: " %>
 	<%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT], ["Check Boxes", ChoiceAnswer::CHECKBOX]], :selected => f.object.answer_type), :id => "answer_type_dropdown" %>
 	
-	
+	<p id="auto_next_page_fields" style="<%= (choice_question.answer_type == ChoiceAnswer::RADIO and choice_question.flow_control) ? '' : 'display: none;'%>">
+		<%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
+		<%= f.check_box :auto_next_page, {}, true, false %>
+	</p>
 
 	<% 4.times {choice_question.choice_answers.build} if choice_question.choice_answers.empty? %>
 	<%= f.fields_for :choice_answers do |answer_builder| %>
@@ -21,9 +24,10 @@
 	<div id="allow_multiple" class="displayNone">
   	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
 	</div>
-
-	<div><%= f.label :display_results, "Display results on the thank-you page" %><%= f.check_box :display_results %></div>
-
+	
+	<% if survey.survey_type_id == SurveyType::POLL %>
+		<div><%= f.label :display_results, "Display results on the thank-you page" %><%= f.check_box :display_results %></div>
+	<% end %>
 	<br/><br/>
 	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
 	<br/><br/>

@@ -35,10 +35,15 @@ $(function(){
 		/* If checkbox is selected then hide the next page dropdown for answers. */
 		if(!$(this).is(':checked')){
 			$(".next_pages").hide();
+			$("#auto_next_page_fields").hide();
 			width =  $("#edit_modal").width() - $(".next_pages:first").width();
 		} else {
 			/* Checkbox has been checked so show the page selections */
 			$(".next_pages").show();
+			if($("#choice_question_answer_type").val() == "radio"){
+				$("#auto_next_page_fields").show()	
+			}
+			
 			width = $("#edit_modal").width() + $(".next_pages:first").width();
 		}
 		resizeModal($("#edit_modal").height(), width);
@@ -61,6 +66,15 @@ $(function(){
 	/* Show the spinner on ajax requests to reorder elements/pages */
 	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:beforeSend", function(){
 		toggleSpinner();
+	});
+	
+	/* When the Choice Question Type is Radio then the auto_next_page option should show up*/	
+	$("#choice_question_answer_type").live('change', function(){
+		if($("#choice_question_answer_type").val() == "radio" && $("#flow_control_checkbox").is(":checked")) {
+			$("#auto_next_page_fields").show();
+		} else {
+			$("#auto_next_page_fields").hide();
+		}		
 	});
 		
 }); // End onLoad function
