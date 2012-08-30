@@ -21,6 +21,9 @@
 	<div id="allow_multiple" class="displayNone">
   	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
 	</div>
+
+	<div><%= f.label :display_results, "Display results on the thank-you page" %><%= f.check_box :display_results %></div>
+
 	<br/><br/>
 	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
 	<br/><br/>

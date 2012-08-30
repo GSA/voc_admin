@@ -15,6 +15,10 @@ SurveyType.find_or_create_by_name("page") do |st|
   st.id = 2
 end
 
+SurveyType.find_or_create_by_name("poll") do |st|
+  st.id = 3
+end
+
 puts "done"
 
 print "creating default conditionals..."
