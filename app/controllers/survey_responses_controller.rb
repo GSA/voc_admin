@@ -22,7 +22,7 @@ class SurveyResponsesController < ApplicationController
       end
       
       # If search parameters are sent in then use them to build the proper where clause
-      if params[:search]
+      if params[:search].present?
         @search = SurveyResponseSearch.new(@survey_version.id, params[:search])
 
         @survey_responses = @search.search(@survey_responses)

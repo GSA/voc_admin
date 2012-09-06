@@ -105,34 +105,37 @@ function editDisplayFieldValue(survey_id, version_id, dfv_id){
 
 function setSurveyVersionSelect(survey_version_id){
 	$("#survey_version_id option[value='" + survey_version_id + "']").attr('selected', 'selected');
-	console.log("setSurveyVersionSelect");
-	console.log( $("#survey_version_id"));
+
 }
 
 function refreshSurveyResponseTable(){
-	var search = $("#search").val();
 	var order_column = $("#order_column").val();
 	var order_dir = $("#order_dir").val();
 	var survey_version_id = $("#survey_version_id").val();
+
 	
 	/* Do not make the ajax call if no survey_version_id has been selected */
 	if(survey_version_id != null && survey_version_id != undefined && survey_version_id != "0"){
+		console.log("Refreshing table...");
 		$("#survey_response_list").html("Refreshing table...");
-		getSurveyDisplayTable(survey_version_id, search, order_column, order_dir);		
+		getSurveyDisplayTable(survey_version_id, order_column, order_dir);		
 	}
 
 }
 
-function getSurveyDisplayTable(survey_version_id, search_text, order_column, direction){
-	if(search_text == undefined) { search_text = ''; }
+function getSurveyDisplayTable(survey_version_id, order_column, direction){
 	if(order_column == undefined) { order_column = ''; }
 	if(direction == undefined) { direction = '' }
+	
+	var search_form_url_string = $("#advanced_search_form").serialize();
+	
+	var data_string = search_form_url_string + "&order_column=" + order_column + "&order_dir=" + direction + "&survey_version_id=" + survey_version_id;
 	
 	last_ajax_request_id += 1;
 	
 	$.ajax({
 		url: "survey_responses.js",
-		data: "survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
+		data: data_string, //"survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
 		beforeSend: function(){
 			$("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
 		},
@@ -143,7 +146,7 @@ function getSurveyDisplayTable(survey_version_id, search_text, order_column, dir
 }
 
 function sortByDisplayField(column_id, direction){
-	getSurveyDisplayTable($("#survey_version_id").val(), $("#search").val(), column_id, direction);
+	getSurveyDisplayTable($("#survey_version_id").val(), column_id, direction);
 }
 
 function getUrlParams(){
@@ -178,6 +181,5 @@ function getSurveyVersionList(survey_id){
 }
 
 function remove_search_criteria(link) {
-	console.log(link);
 	$(link).parent().remove();
 }
