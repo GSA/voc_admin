@@ -176,3 +176,8 @@ function getSurveyVersionList(survey_id){
 		$("#survey_version_id").html(options);
 	});
 }
+
+function remove_search_criteria(link) {
+	console.log(link);
+	$(link).parent().remove();
+}
