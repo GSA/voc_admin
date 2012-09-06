@@ -5,7 +5,10 @@
 	<%= hidden_field_tag :order_dir, @order_dir %>
 
 	<div id="advanced_search">
-		<p class="copyBold">Advanced Search</p><br />
+		<div style="clear:both;margin-bottom: 15px">
+		  <span class="copyBold">Advanced Search</span>
+		  <span style="float:right"><%= link_to "Clear Settings", survey_responses_path(:survey_id => version.survey_id, :survey_version_id => version.id) %></span>
+		</div>
 
 		<%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "advanced_search_form" do %>
 			<%= hidden_field_tag "survey_version_id", version.id %>
