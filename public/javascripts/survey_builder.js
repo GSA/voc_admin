@@ -84,7 +84,8 @@ function toggleSpinner() {
 }
 
 function remove_fields(link) {
-	$(link).prev("input[type=hidden]").val("1");
+    console.log(link);
+    $(link).siblings('input[type=hidden][name*="_destroy"]').val(1);
 	$(link).parent().hide();
 }
 
