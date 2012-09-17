@@ -61,6 +61,16 @@ class MatrixQuestionsController < ApplicationController
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
     
     @matrix_question = MatrixQuestion.find(params[:id])
+
+    choice_questions.each {|key, value| value['question_content_attributes'].merge!(:matrix_statement => @matrix_question.question_content.try(:statement))}
+
+    to_be_removed = choice_questions.select {|k, value| value[:question_content_attributes][:_destroy] == "1" }
+    Rails.logger.debug "*" * 50
+    Rails.logger.debug to_be_removed
+    Rails.logger.debug "*" * 50
+    unless to_be_removed.empty?
+      to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
+    end
     
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
@@ -86,6 +96,21 @@ class MatrixQuestionsController < ApplicationController
   end
   
   private
+  def remove_sub_question_display_field_and_rules(choice_question_params)
+    matrix_statement = @matrix_question.question_content.statement_changed? ? @matrix_question.question_content.statement_was : @matrix_question.question_content.statement
+
+    name = "#{matrix_statement}: #{choice_question_params[:question_content_attributes][:statement]}"
+
+    rule = @survey_version.rules.find_by_name(name)
+    rule.destroy if rule.present?
+    Rails.logger.debug "Removing rule: #{name}"
+
+    df = @survey_version.display_fields.find_by_name(name)
+    df.destroy if df.present?
+    Rails.logger.debug "Removing DispalyField: #{name}"
+
+  end
+
   def get_survey_and_survey_version
     @survey = Survey.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
