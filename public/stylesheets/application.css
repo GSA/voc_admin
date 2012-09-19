@@ -664,6 +664,16 @@ div.pageNav {
 	border-top: 6px double #eef1fc;
 	width: 960px;
 }
+
+div.pageNavTop {
+	color: #ffad05;
+	font-weight: bold;
+	font-size: 11px;
+	margin: 0px;
+	padding: 0px;
+	width: 960px;
+}
+
 div.pageNav-upper {
 	color: #ffad05;
 	font-weight: bold;
