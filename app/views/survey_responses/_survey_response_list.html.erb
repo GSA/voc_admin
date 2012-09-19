@@ -4,7 +4,23 @@
 	<%= hidden_field_tag :order_column, @order_column_id %>
 	<%= hidden_field_tag :order_dir, @order_dir %>
 
-	<div id="advanced_search">
+	<div class="pageNavTop">
+	  <%= link_to "Export as CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
+			:order_dir => params[:order_dir], :search => params[:search]), :class => "pageNav", :remote => true %> | 
+		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> | 
+		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %>
+		
+		<div style="display: inline-block">
+      <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
+        <%= hidden_field_tag :survey_version_id, version.id %>
+        <%= text_field_tag :simple_search, params[:simple_search] %>
+        <%= submit_tag "Search" %>
+      <% end -%>
+		</div>
+		<%= link_to_function "Advanced Search", "$('#advanced_search').toggle();return false;" %>
+	</div>
+
+	<div id="advanced_search" style="<%= params[:search].blank? ? 'display: none;' : ''%>">
 		<div style="clear:both;margin-bottom: 15px">
 		  <span class="copyBold">Advanced Search</span>
 		  <span style="float:right"><%= link_to "Clear Settings", survey_responses_path(:survey_id => version.survey_id, :survey_version_id => version.id) %></span>
@@ -72,10 +88,10 @@
 	<%= paginate objects, :remote => true %>
 	
 	<div class="pageNav">
-		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> | 
-		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %> | 
 		<%= link_to "Export as CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
-			:order_dir => params[:order_dir], :search => params[:search]), :class => "pageNav", :id => "ExportCSV", :remote => true %>
+			:order_dir => params[:order_dir], :search => params[:search], :simple_search => params[:simple_search]), :class => "pageNav", :remote => true %> | 
+		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> | 
+		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %>
 	</div>
 	
 	<div id="dfv_edit_modal" style="display: none;">&nbsp;</div>

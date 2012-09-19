@@ -26,6 +26,8 @@ class SurveyResponsesController < ApplicationController
         @search = SurveyResponseSearch.new(@survey_version.id, params[:search])
 
         @survey_responses = @search.search(@survey_responses)
+      elsif params[:simple_search].present?
+        @survey_responses = @survey_responses.search(params[:simple_search])
       end
 
       # Paginate the results
@@ -89,8 +91,13 @@ class SurveyResponsesController < ApplicationController
   def export_all
     @survey_version = SurveyVersion.find(params[:survey_version_id])
     
+    Rails.logger.debug "*" * 50
+    Rails.logger.debug params[:simple_search]
+    Rails.logger.debug "*" * 50
+
     # Generate the csv file in the background in case there are a large number of responses
-    @survey_version.delay.generate_responses_csv(params[:search], current_user.id)
+    @survey_version.delay.generate_responses_csv(params, current_user.id)
+    
 
     respond_to do |format|
       format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
