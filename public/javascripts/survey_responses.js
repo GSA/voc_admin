@@ -69,15 +69,19 @@ $(function(){
 
   /* Replace the survey results with the ajax spinner */
   $("#advanced_search_form").live('ajax:beforeSend', function() {
-	old_html = $("#survey_response_list").html();
-	searchTimeout = setTimeout(replaceOldHtml, 1000);
+		old_html = $("#survey_response_list").html();
+		searchTimeout = setTimeout(replaceOldHtml, 1000);
     $("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
   });
   
   $("#advanced_search_form").live('ajax:success', function(event, data, status, xhr){
-	clearTimeout(searchTimeout);
+		clearTimeout(searchTimeout);
     $("#survey_response_list").html(data);
   });
+
+	$("#simple_search_form").live("ajax:success", function(event, data, status, xhr){
+		$("#survey_response_list").html(data);
+	});
 
 });
 
