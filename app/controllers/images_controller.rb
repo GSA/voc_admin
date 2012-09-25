@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  Images_Folder = Rails.env.production? ? "/appdata/uploads/" : "#{Rails.root}/public/images/hhs_image_lib/"
+  Images_Folder = "#{Rails.root}/public/images/hhs_image_lib/"
   
   #show list of files
   def index

@@ -2,11 +2,11 @@
 
 <div>
 <p>Place the following into a snippet to display image in survey:</p>
-<p><%= "<img src='/images/hhs_image_lib/#{@file}' />" %><%#= "#{image_tag(@file)}" %></p>
+<p><%= "<img src='/images/hhs_image_lib/#{@file}'' />" %><%#= "#{image_tag(@file)}" %></p>
 </div>
 
 <div id="displayImage">
-	<%= image_tag '/appdata/uploads/#{@file}' %>
+	<%= image_tag "/images/hhs_image_lib/#{@file}" %>
 </div>
 
 <div class="pageNav">
