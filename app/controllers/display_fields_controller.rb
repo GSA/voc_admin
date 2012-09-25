@@ -12,7 +12,7 @@ class DisplayFieldsController < ApplicationController
   def create
     @display_field = @survey_version.display_fields.build params[:display_field]
     @display_field.type = params[:display_field][:model_type]
-    @display_field.display_order = @survey_version.display_fields.count + 1
+    @display_field.display_order = @survey_version.display_fields.maximum(:display_order).to_i + 1
 
     if @display_field.save
       redirect_to survey_survey_version_display_fields_path, :notice => "Successfully created display field."
@@ -41,12 +41,15 @@ class DisplayFieldsController < ApplicationController
   
   def destroy
     @display_field = @survey_version.display_fields.find(params[:id])
+    
     if @display_field.editable?
       @display_field.destroy
+      ## TODO: Re-order the display_field_order
       flash[:notice] = "Successfully deleted display field."
     else
       flash[:error] = "This display field can not be deleted." 
     end
+
     redirect_to survey_survey_version_display_fields_path(@survey, @survey_version)
   end
   
