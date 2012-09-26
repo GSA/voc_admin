@@ -20,7 +20,7 @@
 	  	<input name="rule[execution_trigger_ids][]" type='hidden' />
 	  	<% ExecutionTrigger.all.each do |et| %>
 	  		<% unless et.id == 3 %>
-	  			<span><%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]") %><%= et.name.capitalize %></span>
+	  			<span><%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]", :id => nil) %><%= et.name.capitalize %></span>
 	  		<% end %>
 	  	<% end %>
 	  </div>
@@ -71,7 +71,7 @@
 	<p class="submitButton"><%= f.submit %></p>
 <% end -%>
 
-<script>
+<script type="javascript">
   $(function() {
     $("#email_action_rule").click(function(){
       $("#email_action").show();

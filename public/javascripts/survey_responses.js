@@ -178,7 +178,7 @@ function getSurveyVersionList(survey_id){
 	var jqxhr = $.getJSON("/surveys/" + survey_id + "/survey_versions/", {ajax:'true'}, function(j){
 		var options = '';
 		for(var i = 0; i < j.length ; i++){
-			options += '<option value="' + j[i].value + '">' + j[i].display + '</optioin>';
+			options += '<option value="' + j[i].value + '">' + j[i].display + '</option>';
 		}
 		$("#survey_version_id").html(options);
 	});

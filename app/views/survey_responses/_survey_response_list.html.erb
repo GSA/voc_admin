@@ -12,7 +12,7 @@
 		
 		<div style="display: inline-block">
       <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
-        <%= hidden_field_tag :survey_version_id, version.id %>
+        <%= hidden_field_tag :survey_version_id, version.id, :id => nil %>
         <%= text_field_tag :simple_search, params[:simple_search] %>
         <%= submit_tag "Search" %>
       <% end -%>
@@ -27,8 +27,8 @@
 		</div>
 
 		<%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "advanced_search_form" do %>
-			<%= hidden_field_tag "survey_version_id", version.id %>
-			<%= hidden_field_tag "survey_id", version.survey_id %>
+			<%= hidden_field_tag "survey_version_id", version.id, :id => nil %>
+			<%= hidden_field_tag "survey_id", version.survey_id, :id => nil %>
 			
 			<div id="searchCriterias">
 				<% if params[:search].blank? || @search.criteria.empty? %>
