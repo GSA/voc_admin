@@ -70,7 +70,7 @@ $(function(){
 	
 	/* When the Choice Question Type is Radio then the auto_next_page option should show up*/	
 	$("#choice_question_answer_type").live('change', function(){
-		if($("#choice_question_answer_type").val() == "radio" && $("#flow_control_checkbox").is(":checked")) {
+		if($("#choice_question_answer_type").val() == "radio") {
 			$("#auto_next_page_fields").show();
 		} else {
 			$("#auto_next_page_fields").hide();
