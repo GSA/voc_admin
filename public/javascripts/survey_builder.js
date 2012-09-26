@@ -67,7 +67,7 @@ $(function(){
 	$(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:beforeSend", function(){
 		toggleSpinner();
 	});
-	
+
 	/* When the Choice Question Type is Radio then the auto_next_page option should show up*/	
 	$("#choice_question_answer_type").live('change', function(){
 		if($("#choice_question_answer_type").val() == "radio") {
