@@ -12,7 +12,7 @@ $(function(){
 
 	/* Populate the version select box based on the survey selection */
 	$("#survey_id").change(function(){
-		var survey_id = $(this).val()
+		var survey_id = $(this).val();
 		/* reset the version select */
 		$("#survey_version_id").html("");
 		/* remove the display table if one already is shown */
@@ -29,7 +29,7 @@ $(function(){
 		var survey_version_id = $(this).val();
 		
 		/* blank out the search field */
-		$("#search").val('')
+		$("#search").val('');
 		
 		/* 
 		 * remove currently displayed responses if no version selected.  Otherwise 
@@ -86,7 +86,7 @@ $(function(){
 });
 
 function replaceOldHtml(){
-	$("#survey_response_list").html(old_html)
+	$("#survey_response_list").html(old_html);
 }
 
 function add_search_criteria(link, content){
@@ -129,7 +129,7 @@ function refreshSurveyResponseTable(){
 
 function getSurveyDisplayTable(survey_version_id, order_column, direction){
 	if(order_column == undefined) { order_column = ''; }
-	if(direction == undefined) { direction = '' }
+	if(direction == undefined) { direction = ''; }
 	
 	var search_form_url_string = $("#advanced_search_form").serialize();
 	
@@ -140,6 +140,7 @@ function getSurveyDisplayTable(survey_version_id, order_column, direction){
 	$.ajax({
 		url: "survey_responses.js",
 		data: data_string, //"survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
+		dataType: "html",
 		beforeSend: function(){
 			$("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
 		},
@@ -170,7 +171,7 @@ function getUrlParams(){
 	     queryStringList[tmp[0]] = unescape(tmp[1]);
 	 }
 	 
-	 return queryStringList
+	 return queryStringList;
 }
 
 /* Make an ajax call to get the list of versions for a survey and populate the select box */
