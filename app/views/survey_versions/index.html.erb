@@ -19,7 +19,7 @@
 		<td class="col1"><%= version.version_number %></td>
 		<td class="col2"><%= version.published ? "Yes" : "No" %></td>
 		<td class="col3"><%= version.created_at.strftime("%m/%d/%Y") %></td>
-		<td class="col4"><%= version.updated_at.strftime("%m/%d/%Y") %></td>
+		<td class="col4"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
 		<td class="col5"><%= link_to 'Preview', survey_survey_version_path(@survey, version) %></td>
 		<td class="col6">
 			<% if version.locked %>
