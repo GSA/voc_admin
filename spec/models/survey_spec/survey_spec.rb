@@ -68,11 +68,19 @@ describe Survey do
   end
 
   it "should create a new major version" do
-    s = Survey.create! @attr
-    new_major_version = s.create_new_major_version
-    s.survey_versions.should have(2).versions
+    survey.save!
+    new_major_version = survey.create_new_major_version
+    survey.survey_versions.should have(2).versions
     new_major_version.major.should == 2
   end
+  
+  it 'should create an initial page for new major versions' do
+      survey.save!
+      survey_version = survey.create_new_major_version
+      survey_version.pages.should_not be_empty
+      survey_version.pages.first.page_number.should == 1
+  end
+  
   it "should not be valid without a site" do
    survey.site = nil
    survey.should_not be_valid
