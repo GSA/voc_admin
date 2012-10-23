@@ -26,6 +26,7 @@ gem 'rspec-rails', :group => [:development, :test]
 
 group :test do
   gem 'simplecov', :require => false
+  gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'growl'
