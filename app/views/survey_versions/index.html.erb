@@ -5,6 +5,16 @@
 <%= flash_messages(flash) %>
 
 <p>To link to published survey version use: <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%></p>
+<p>For the Javascript widget, include voc.widget.js, add a div with any ID and class="survey_target", then use:
+	<pre>
+  &lt;script type="text/javascript"&gt;
+    new voc.Survey({targetID: "[[ID of the div which will hold the survey]]", surveyID: <%= @survey.id %>}).loadSurvey();
+  &lt;/script&gt;
+  &lt;noscript&gt;
+    <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%>
+  &lt;/noscript&gt;
+	</pre>
+</p>
 
 <table id="versionTable">
 	<tr>
