@@ -12,8 +12,8 @@ task :add_test_data => [:environment] do
 
   version = survey.survey_versions.first
 
-  # Add a new page to the survey
-  page1 = version.pages.create! page_number: version.next_page_number
+  # Get the auto-created first page of the survey
+  page1 = version.pages.first
 
   # Add a text question to the survey
   text_question = TextQuestion.create! survey_element_attributes: {page_id: page1.id, survey_version_id: version.id}, question_content_attributes: {statement: "Text Question 1", flow_control: false, required: false}, answer_type: "area"
