@@ -15,7 +15,7 @@
   <%= f.fields_for :choice_answers do |answer_builder| %>
     <%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => @survey, :survey_version => @survey_version} %>
   <% end %>
-  
+
   <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
 
   <br/><br/>

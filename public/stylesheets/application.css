@@ -63,12 +63,13 @@ textarea {
 	Manage Rules Page
 	Display Fields Page
 	Survey Response Table 
-	Mnage Sites
+	Manage Sites
+	Custone View Table
 ****/
 
 #surveyTable, #versionTable, #categoryTable, 
 #rulesTable, #displayFieldsTable, #usersTable,
-#images_index_table, #sitesTable {
+#images_index_table, #sitesTable, #customViewsTable {
 	margin: 0px 0px 10px;
 	padding: 0px;
 	border-collapse: collapse;
@@ -76,7 +77,7 @@ textarea {
 
 #surveyTable th, #versionTable th, #categoryTable th, 
 #rulesTable th, #displayFieldsTable th, #usersTable th,
-#images_index_table th, #sitesTable th {
+#images_index_table th, #sitesTable th, #customViewsTable th {
 	text-align: left;
 	font-size: 1.1em;
 	font-weight: bold;
@@ -88,7 +89,7 @@ textarea {
 
 #surveyTable td, #versionTable td, #categoryTable td, 
 #rulesTable td, #displayFieldsTable td, #usersTable td,
-#images_index_table td, #sitesTable td {
+#images_index_table td, #sitesTable td, #customViewsTable td {
 	text-align: left;
 	font-size: 1em;
 	font-weight: normal;
@@ -103,8 +104,7 @@ textarea {
 	width: 470px;
 	padding: 5px 20px 5px 0px;
 }
-#categoryTable .col2-4, 
-#versionTable .col4-7, #usersTable .col3-5 {
+#categoryTable .col2-4, #usersTable .col3-5 {
 	text-align: center;
 	width: 70px;
 	padding: 5px 0px;
@@ -197,6 +197,31 @@ textarea {
 	padding: 5px 10px 5px 5px;
 }
 
+
+/** Custom View Table **/
+#customViewsTable .col1 {
+	width: 200px;
+	padding: 5px 10px 5px 5px;
+}
+#customViewsTable .col2 {
+	width: 100px;
+	padding: 5px 10px 5px 5px;
+}
+#customViewsTable .col3 {
+	width: 70px;
+	text-align: center;
+	padding: 5px;
+}
+#customViewsTable .col4 {
+	width: 80px;
+	text-align: center;
+	padding: 5px;
+}
+
+.custom_view .delete_link {
+	padding: 0 20px 0 0;
+}
+
 #surveyTable a, #surveyTable a:link, #surveyTable a:visited,
 #versionTable a, #versionTable a:link, #versionTable a:visited, 
 #categoryTable a, #categoryTable a:link, #categoryTable a:visited, 
@@ -206,7 +231,9 @@ textarea {
 #images_index_table a, #images_index_table a:link, #images_index_table a:visited,
 #sitesTable a, #sitesTable a:link, #sitesTable a:visited,
 #surveySearch a, #surveySearch a:link, #surveySearch a:visited,
-.display_field a, .display_field a:link, .display_field a:visited {
+.display_field a, .display_field a:link, .display_field a:visited,
+#customViewsTable a, #customViewsTable a:link, #customViewsTable a:visited,
+.custom_view a, .custom_view a:link, .custom_view a:visited {
 	color: #243b7c;
 	text-decoration: none;
 }
@@ -219,7 +246,9 @@ textarea {
 #images_index_table a:hover, #images_index_table a:active,
 #sitesTable a:hover, #sitesTable a:active,
 #surveySearch a:hover, #surveySearch a:active,
-.display_field a:hover, .display_field a:active {
+.display_field a:hover, .display_field a:active,
+#customViewsTable a:hover, #customViewsTable a:active,
+.custom_view a:hover, .custom_view a:active {
 	color: #243b7c;
 	text-decoration: underline;
 	font-weight: bold;
@@ -596,6 +625,12 @@ li.showList-ol {
 .remove_page_link {
 	float: right;
 	display: inline-block;
+	*display: inline;
+	*vertical-align: top;
+}
+.remove_page_link .link_text {
+	*position: relative;
+	*top: -15px;
 }
 .move_page_down, .copy_page {
 	margin: 0px 0px 0px 10px;
@@ -609,13 +644,18 @@ li.showList-ol {
 	margin: 0px;
 	display: inline-block;
 	font-size: 10px;
+	*vertical-align: top;
+	*display: inline;
 }
 
 /* General */
 .displayNone {
 	display:none; 
 }
-
+.italic {
+	font-style: italic;
+	font-weight: normal;
+}
 .surveyNavMargin {
 	margin: 5px 0px 35px;
 }
@@ -669,11 +709,18 @@ div.pageNavTop {
 	color: #ffad05;
 	font-weight: bold;
 	font-size: 11px;
-	margin: 0px;
+	margin: 0px 0px 20px;
 	padding: 0px;
 	width: 960px;
 }
-
+div.pageNavTop select {
+	max-width: 107px;
+}
+.pageNavTop .inline {
+	display: inline-block;
+	*display: inline;
+	*float: right;
+}
 div.pageNav-upper {
 	color: #ffad05;
 	font-weight: bold;
@@ -689,7 +736,10 @@ a.pageNav:hover, a.pageNav:active {
 	color: #ffad05;
 	text-decoration: underline;
 }
-
+.pageNavlookalike {
+	color: #243b7c;
+	text-decoration: none;
+}
 div.pageNavEdit {
 	color: #ffad05;
 	font-weight: bold;
@@ -732,9 +782,18 @@ a.pageNavEdit:hover, a.pageNavEdit:active {
 	text-decoration: underline;
 	color: #243b7c;	
 }
+.pageNavEdit p.left, .pageNavEdit-upper p.left {
+	*display: inline;
+	*margin: 10px 20px;
+	*vertical-align: top;
+}
 .pageNavEdit p.right, .pageNavEdit-upper p.right {
 	position: relative;
 	left: 525px;
+	*left: 425px;
+	*display: inline;
+	*margin: 10px 20px;
+	*vertical-align: top;
 }
 
 /* Survey Nav */
@@ -833,6 +892,9 @@ a.simplemodal-close:hover, .simplemodal-close:active {
 	text-align: right;
 	margin: 0px 0px 10px;
 }
+#create_form_widths #user_f_name, #create_form_widths #user_l_name {
+	*width: 175px;
+}
 
 /* Pagination */
 .pagination {
@@ -879,6 +941,7 @@ span.pageNum {
 	vertical-align: top;
 	*margin: -13px 0px 0px;
 	_margin: 0px;
+	*display: inline;
 }
 
 .redX {
@@ -1003,6 +1066,35 @@ fieldset .right_side,
 	vertical-align: top;
 	width: 712px;
 }
+fieldset .left_side_c {
+	width: 400px;
+	padding: 5px 10px 5px 0px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+fieldset .center_side {
+	padding: 20px 15px;
+	display: inline-block;
+	vertical-align: middle;
+	width: 70px;
+	text-align: center;
+}
+fieldset .right_side_c {
+	padding: 5px 0px 5px 10px;
+	display: inline-block;
+	vertical-align: top;
+	width: 400px;
+	text-align: right;
+}
+fieldset .center_side .middle_links {
+	display: block;
+	padding: 5px 0px;
+}
+fieldset .left_side_c select, fieldset .right_side_c select {
+	width: 380px;
+	min-height: 100px;
+}
 .below_fieldset .right_side input[type=text],
 .below_fieldset .right_side select {
 	width: 150px;
@@ -1019,23 +1111,45 @@ fieldset .right_side,
 }
 
 #survey_response_table_div {
-	overflow: scroll;
+	overflow: auto;
 }
 
-/****/
+/** Advance Search Box **/
 #advanced_search {
 	background-color: #EEF1FC;
 	border: 1px solid black; 
-	margin: 20px 0px 25px; 
+	margin: 0px 0px 20px; 
 	padding: 10px;
 }
+#advanced_search .boxtitle {
+	clear:both;
+	margin: 0px 0px 15px;
+}
+.float_right {
+	float: right;
+}
+
+/** Search Criteria **/
 #searchCriterias input[type=text] {
 	width: 200px;
 }
 .SearchCriteria {
 	margin: 10px 0px;
 }
+
+/****/
 .andor {
 	display: inline-block;
 	margin: 0px 10px 0px 0px;
+}
+.center {
+	text-align: center;
+}
+.center .link_left {
+	width: 130px; 
+	display: inline-block;
+}
+.center .link_right {
+	width: 102px; 
+	display: inline-block;
 }

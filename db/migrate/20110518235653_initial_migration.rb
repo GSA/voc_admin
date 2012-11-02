@@ -10,6 +10,7 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     add_index "actions", ["rule_id"], :name => "index_actions_on_rule_id"
+    add_index :actions, :display_field_id
 
     create_table "assets", :force => true do |t|
       t.text     "snippet"
@@ -33,6 +34,7 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     add_index "choice_answers", ["choice_question_id"], :name => "answers_choice_question_id"
+    add_index :choice_answers, :next_page_id
 
     create_table "choice_questions", :force => true do |t|
       t.boolean  "multiselect"
@@ -41,6 +43,8 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
       t.integer  "matrix_question_id"
     end
+
+    add_index :choice_questions, :matrix_question_id
 
     create_table "conditionals", :force => true do |t|
       t.string   "name",       :null => false
@@ -61,6 +65,7 @@ class InitialMigration < ActiveRecord::Migration
     add_index "criteria", ["rule_id"], :name => "index_criteria_on_rule_id"
     add_index "criteria", ["source_id"], :name => "index_criteria_on_source_id"
     add_index "criteria", ["conditional_id"], :name => "index_criteria_conditional_id"
+    add_index :criteria, [:source_id, :source_type]
 
     create_table "delayed_jobs", :force => true do |t|
       t.integer  "priority",   :default => 0
@@ -85,6 +90,7 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     add_index "display_field_categories", "display_field_id", :name => "index_dfc_on_display_field_id"
+    add_index :display_field_categories, :category_id
 
     create_table "display_field_values", :force => true do |t|
       t.integer  "display_field_id",   :null => false
@@ -118,6 +124,9 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
+    add_index :execution_trigger_rules, :execution_trigger_id
+    add_index :execution_trigger_rules, :rule_id
+
     create_table "execution_triggers", :force => true do |t|
       t.string   "name",       :null => false
       t.datetime "created_at"
@@ -129,6 +138,8 @@ class InitialMigration < ActiveRecord::Migration
       t.datetime "updated_at"
       t.integer  "survey_version_id"
     end
+
+    add_index :matrix_questions, :survey_version_id
 
     create_table "new_responses", :force => true do |t|
       t.datetime "created_at"
@@ -147,7 +158,7 @@ class InitialMigration < ActiveRecord::Migration
     end
 
     add_index "pages", "survey_version_id", :name => "index_pages_survey_version_id"
-    
+
     create_table "question_contents", :force => true do |t|
       t.string   "statement"
       t.string   "questionable_type"
@@ -185,6 +196,9 @@ class InitialMigration < ActiveRecord::Migration
       t.integer  "survey_version_id",   :null => false
     end
 
+    add_index :response_categories, :category_id
+    add_index :response_categories, :survey_version_id
+
     create_table "rules", :force => true do |t|
       t.string   "name",              :null => false
       t.datetime "created_at"
@@ -213,6 +227,7 @@ class InitialMigration < ActiveRecord::Migration
 
     add_index "survey_elements", ["assetable_id", "assetable_type"], :name => "index_elements_assetable"
     add_index "survey_elements", "page_id", :name => "survey_elements_page_id"
+    add_index :survey_elements, :survey_version_id
 
     create_table "survey_responses", :force => true do |t|
       t.string   "client_id"
@@ -257,6 +272,8 @@ class InitialMigration < ActiveRecord::Migration
       t.boolean  "archived",       :default => false
     end
 
+    add_index "surveys", :survey_type_id
+
     create_table "text_questions", :force => true do |t|
       t.string   "answer_type"
       t.datetime "created_at"
@@ -265,6 +282,6 @@ class InitialMigration < ActiveRecord::Migration
   end
 
   def self.down
-    raise ActiveRecord::IrreversibleMigration 
+    raise ActiveRecord::IrreversibleMigration
   end
 end

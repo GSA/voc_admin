@@ -19,14 +19,14 @@ module LayoutHelper
   def javascript(*args)
     content_for(:head) { javascript_include_tag(*args) }
   end
-  
+
   def flash_messages(flash)
     unless flash.empty?
 	    content_tag :div, :class => (controller_name == "user_sessions" ? "flash_location_login" : "flash_location_upper") do
 	      content = ""
 	      flash.each do |name, msg|
-	        content << content_tag(:p, msg, :id => "flash_#{name}" ) 
-	      end      
+	        content << content_tag(:p, msg, :id => "flash_#{name}" )
+	      end
 	      content.html_safe
 	    end
 	  end

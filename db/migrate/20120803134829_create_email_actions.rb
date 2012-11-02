@@ -9,6 +9,9 @@ class CreateEmailActions < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :email_actions, :rule_id
+    add_index :email_actions, :clone_of_id
   end
 
   def self.down

@@ -28,7 +28,7 @@ CommentToolApp::Application.configure do
 end
 
 
- # Populate the @@subclasses variable for DisplayField to 
+ # Populate the @@subclasses variable for DisplayField to
  # allow the select menu to be populated correctly  in development
  # environment.  A way around lazy loading in development.
 def bootstrap_display_field_callbacks

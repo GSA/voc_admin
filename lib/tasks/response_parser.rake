@@ -5,10 +5,10 @@ require 'yaml'
 namespace :response_parser do
   desc "Start response parsers"
   task :start do
-    
+
     #get configuration file
     parseryaml = YAML::load(File.open('config/response_parser.yml'))
-    
+
     #Setup params
     who_am_i_base = (parseryaml["configuration"]["instance_name"] if parseryaml["configuration"]) || "response_parser"
     railsenv = (parseryaml["configuration"]["environment"] if parseryaml["configuration"]) || ((ENV['RAILS_ENV'] != nil && ENV['RAILS_ENV'] != '') ? ENV['RAILS_ENV'] : 'development')
@@ -19,22 +19,22 @@ namespace :response_parser do
     @log_level = (parseryaml["configuration"]["log_level"] if parseryaml["configuration"]) || 1
     log_path = (parseryaml["configuration"]["log_file_path"] if parseryaml["configuration"]) || ''
     pid_path = (parseryaml["configuration"]["pid_path"] if parseryaml["configuration"]) || 'tmp/pids'
-    
-    
+
+
     #cycle through modes
     ["new", "nightly"].each do |mode|
-      
+
       #start workers
       parseryaml["configuration"][mode].times do |instance_num|
-        
+
         who_am_i = who_am_i_base + "_" + mode + "_" + instance_num.to_s
-        
+
         #start workers
         pid = fork do
           Signal.trap("HUP") { log_event "Exiting...",2; exit }
           log_file = "#{who_am_i}.log"
           $stdout = File.new(File.join(log_path,log_file), 'a')
-          
+
           if @log_level > 0
             puts "--------------------------------------------------------------------------------"
             puts "Starting Responce parser: #{who_am_i}"
@@ -51,12 +51,12 @@ namespace :response_parser do
             end
             puts ""
           end
-          
+
           #Load rails
           log_event("Starting Rails",3)
           require File.dirname(__FILE__) + "/../../config/application"
           Rails.application.require_environment!
-          
+
           #pick a process
           if mode == "new"
             process_new(who_am_i)
@@ -65,20 +65,20 @@ namespace :response_parser do
           else
             raise "Invalid Mode (#{mode}) specified, try 'new' or 'nightly'"
           end
-          
+
         end
         #record pid
         puts "Started worker with name #{who_am_i} and pid #{pid}"
         pidfile = File.new(File.join(pid_path,"response_parser.pids"), 'a')
         pidfile.puts(pid)
         pidfile.close
-        
+
         #detach the worker
         Process.detach(pid)
       end
     end
   end
-  
+
   desc "Stop Response Parsers"
   task :stop do
     parseryaml = YAML::load(File.open('config/response_parser.yml'))
@@ -100,8 +100,8 @@ namespace :response_parser do
     pidfile.close
     File.delete(File.join(pid_path,"response_parser.pids"))
   end
-  
-  
+
+
   private
   def log_event(message, level)
     level_text = ''
@@ -120,26 +120,26 @@ namespace :response_parser do
     puts "#{Time.now.to_s} - #{level_text}: " + message if @log_level <= level && @log_level != 0
     $stdout.flush
   end
-  
+
   #define nightly process
   def process_nightly(who_am_i, nightly_run_hour)
     log_event("Starting Main Loop",2)
     #set date of last run to yesterday to force check of system
     date_last_run = Date.today - 1.day
-    
+
     loop do
       #check time
       if Time.now.hour > nightly_run_hour.to_i && Date.today > date_last_run
         log_event("Starting Nightly run",2)
         #set new run times
         date_last_run = Date.today
-        
+
         #start processing
         loop do
           sr = SurveyResponse.get_next_response(who_am_i, "nightly", date_last_run)
           if sr.nil?
             break
-          end 
+          end
           log_event("Processing survey response #{sr.id}",2)
           begin
             sr.process_me(4)
@@ -151,7 +151,7 @@ namespace :response_parser do
       end
     end
   end
-    
+
   #define new process
   def process_new(who_am_i)
     log_event("Starting Main Loop",2)

@@ -7,7 +7,7 @@
 	<br/>
 	<%= f.label :answer_type, "Answer Type: " %>
 	<%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT], ["Check Boxes", ChoiceAnswer::CHECKBOX]], :selected => f.object.answer_type), :id => "answer_type_dropdown" %>
-	
+
 	<p id="auto_next_page_fields" style="<%= (choice_question.answer_type == ChoiceAnswer::RADIO || f.object.new_record?) ? '' : 'display: none;'%>">
 		<%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
 		<%= f.check_box :auto_next_page, {}, true, false %>
@@ -17,14 +17,19 @@
 	<%= f.fields_for :choice_answers do |answer_builder| %>
 		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey, :survey_version => survey_version} %>
 	<% end %>
-	
+
 	<span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
-	
-	<br/>
+
+	<div id="answer_placement_fields" style="<%= ([ChoiceAnswer::RADIO, ChoiceAnswer::CHECKBOX].include?(choice_question.answer_type) || f.object.new_record?) ? '' : 'display: none;'%>">
+		<br/>
+		<%= f.label :answer_placement, "Answer Placement: " %>
+		<%= f.select :answer_placement, options_for_select([["horizontal (side-by-side)", ChoiceQuestion::HORIZONTAL_PLACEMENT], ["vertical (stacked)", ChoiceQuestion::VERTICAL_PLACEMENT]], :selected => f.object.answer_placement), :id => "answer_placement_dropdown" %>
+	</div>
+
 	<div id="allow_multiple" class="displayNone">
   	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
 	</div>
-	
+
 	<% if survey.survey_type_id == SurveyType::POLL %>
 		<div><%= f.label :display_results, "Display results on the thank-you page" %><%= f.check_box :display_results %></div>
 	<% end %>

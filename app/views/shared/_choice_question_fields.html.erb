@@ -2,6 +2,6 @@
 
 <div class="ChoiceQuestionContent">
 <%= f.fields_for :question_content do |content_builder| %>
-  <%= render :partial => 'shared/question_content_fields', :locals => {:f => content_builder, :matrix_question => true }%>    
+  <%= render :partial => 'shared/question_content_fields', :locals => {:f => content_builder, :matrix_question => true }%>
 <% end %>
 </div>

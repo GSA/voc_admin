@@ -6,6 +6,9 @@ class CreateSiteUsers < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :site_users, :site_id
+    add_index :site_users, :user_id
   end
 
   def self.down

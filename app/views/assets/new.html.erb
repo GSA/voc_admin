@@ -1,5 +1,5 @@
 <%= form_for [@survey, @survey_version, @asset], :remote => true do |f| %>
-  
+
   <p class="modalTitle">New Snippet</p>
   <%= f.error_messages %>
   <%= f.text_area :snippet %>

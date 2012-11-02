@@ -1,0 +1,109 @@
+<% if @custom_view.errors.any? %>
+<div class="modalErrorBox">
+	<p class="modalErrorTitle">
+		<%= pluralize(@custom_view.errors.count, "error") %>prohibited this view from being saved:</p>
+	<ul class="modalList">
+		<% @custom_view.errors.full_messages.each do |msg| %>
+		<li class="modalList">
+			<%= msg %></li>
+		<% end %></ul>
+</div>
+<% end %>
+
+<% javascript 'custom_views.js' %>
+
+<%= form_for [@survey, @survey_version, @custom_view] do |f| %>
+<div class="custom_view">
+
+	<%= field_set_tag "Options" do %>
+		<div class="left_side">
+			<%= f.label :name, "Name: " %>
+		</div>
+		<div class="right_side">
+			<%= f.text_field :name %>
+		</div>
+
+		<div class="left_side">
+			<%= f.label :default, "Default View: " %>
+		</div>
+		<div class="right_side">
+			<%= f.radio_button :default, true %>
+			<%= f.label "default_true", "Yes" %>
+			<%= f.radio_button :default, false %>
+			<%= f.label "default_false", "No" %>
+		</div>
+	<% end %>
+
+	<%= field_set_tag "Display Fields (Columns)" do %>
+		<div class="left_side_c">
+			<%= select_tag "available_display_fields", options_from_collection_for_select(@survey_version.display_fields - f.object.display_fields, :id, :name), :multiple => true %>
+			<br />
+			<div class="center">
+				<span class="link_left"><%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(@survey, @survey_version) %></span> |
+				<span class="link_right"><%= link_to "Add Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version) %></span>
+			</div>
+		</div>
+
+		<div class="center_side">
+			<span class="middle_links"><%= link_to "ADD >>", nil, :id => "add_display_fields" %></span>
+			<span class="middle_links"><%= link_to "<< REMOVE", nil, :id => "remove_display_fields" %></span>
+		</div>
+
+		<div class="right_side_c">
+			<%= select_tag "selected_display_fields", options_from_collection_for_select(f.object.ordered_display_fields, :id, :name), :multiple => true %>
+			<%= hidden_field_tag "custom_view[ordered_display_fields][selected]" %>
+			<br />
+			<div class="center">
+				<%= link_to image_tag('arrow_up.png') + "Move Up", "#", :id => "move_display_field_up" %> |
+				<%= link_to image_tag('arrow_down.png') + "Move Down", "#", :id => "move_display_field_down" %>
+			</div>
+		</div>
+	<% end %>
+
+	<%= field_set_tag "Default Sort" do %>
+		<%= hidden_field_tag "custom_view[ordered_display_fields][sorts]", sort_orders(f.object.sorted_display_field_custom_views) %>
+		<div class="left_side">
+			<%= label_tag "sort_by_1", "First Sort By:" %>
+		</div>
+		<div class="right_side">
+			<%= select_tag "sort_by_1", "<option value='-1'>SELECT COLUMN</option>".html_safe %>
+			<%= radio_button_tag "sort_by_1_dir", "asc" %>
+			<%= label_tag "sort_by_1_dir_asc", "Ascending" %>
+			<%= radio_button_tag "sort_by_1_dir", "desc" %>
+			<%= label_tag "sort_by_1_dir_desc", "Descending" %>
+		</div>
+		<br/>
+		<div class="left_side">
+			<%= label_tag "sort_by_2", "Then By:" %>
+		</div>
+		<div class="right_side">
+			<%= select_tag "sort_by_2", "<option value='-1'>SELECT COLUMN</option>".html_safe %>
+			<%= radio_button_tag "sort_by_2_dir", "asc" %>
+			<%= label_tag "sort_by_2_dir_asc", "Ascending" %>
+			<%= radio_button_tag "sort_by_2_dir", "desc" %>
+			<%= label_tag "sort_by_2_dir_desc", "Descending" %>
+		</div>
+		<br/>
+		<div class="left_side">
+			<%= label_tag "sort_by_3", "Then By:" %>
+		</div>
+		<div class="right_side">
+			<%= select_tag "sort_by_3", "<option value='-1'>SELECT COLUMN</option>".html_safe %>
+			<%= radio_button_tag "sort_by_3_dir", "asc" %>
+			<%= label_tag "sort_by_3_dir_asc", "Ascending" %>
+			<%= radio_button_tag "sort_by_3_dir", "desc" %>
+			<%= label_tag "sort_by_3_dir_desc", "Descending" %>
+		</div>
+		<br />
+		<p class="italic">NOTE: Users will always be able to sort by clicking on the column headers.</p>
+	<% end %>
+
+	<p class="sumbitButton">
+		<%= f.submit "Save Changes" %>
+
+		<% if controller.action_name == 'edit' %>
+			<%= link_to 'Delete Custom View', [@survey, @survey_version, @custom_view], :confirm => 'Are you sure?', :method => :delete, :class => "delete_link" %>
+		<% end %>
+	</p>
+</div>
+<% end %>

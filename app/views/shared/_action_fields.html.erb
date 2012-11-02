@@ -4,13 +4,13 @@
 	<br />
 	<%= f.label :value, " with "%>
 	<%= f.hidden_field :value_type, :value => f.object.value_type || "Text" %>
-	
+
 	<%= select_tag :value_target , options_for_select(survey_version.options_for_action_select), :include_blank => true, :class => "ActionTargetSelect" %>
 	&nbsp;or&nbsp;
-	
+
 	<%= text_field_tag :value_text, nil ,{:class => "ActionManualValue"} %>
 	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
-	
+
 	<%= f.hidden_field :_destroy, :value => "", :class => "db_action_delete" %>
 	<%= link_to_function image_tag("red_x.png", :alt=>"Remove Element", :class=>"redX"), "remove_fields(this)" %>
 </div>

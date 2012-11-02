@@ -1,5 +1,5 @@
 desc "drop, create, migrate and seed the DB"
-task :recreate_dev =>['db:drop', 'db:create', 'db:migrate', 'db:seed', 'db:test:prepare' ]
+task :recreate_dev =>['db:drop', 'db:create', 'db:migrate', 'db:seed', 'add_test_data', 'db:test:prepare' ]
 
 namespace :application do
   desc "start the application and all required background jobs and processes"
@@ -8,7 +8,7 @@ namespace :application do
     sh "#{Rails.root}/script/delayed_job start -n 5"
     sh "rake response_parser:start"
   end
-  
+
   desc "stop the application and all background jobs and processes"
   task :stop_all => [:environment, "memcache:stop", "unicorn:stop"] do
     puts "stopping delayed jobs workers"

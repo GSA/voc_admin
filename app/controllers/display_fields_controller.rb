@@ -1,6 +1,6 @@
 class DisplayFieldsController < ApplicationController
   before_filter :get_survey_version
-  
+
   def index
     @display_fields = @survey_version.display_fields.order(:display_order)
   end
@@ -24,7 +24,7 @@ class DisplayFieldsController < ApplicationController
   def edit
     @display_field = DisplayField.find(params[:id])
     if !@display_field.editable?
-      flash[:error] = "This display field can not be editted." 
+      flash[:error] = "This display field can not be editted."
       redirect_to survey_survey_version_display_fields_path
     end
   end
@@ -38,35 +38,35 @@ class DisplayFieldsController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @display_field = @survey_version.display_fields.find(params[:id])
-    
+
     if @display_field.editable?
       @display_field.destroy
       ## TODO: Re-order the display_field_order
       flash[:notice] = "Successfully deleted display field."
     else
-      flash[:error] = "This display field can not be deleted." 
+      flash[:error] = "This display field can not be deleted."
     end
 
     redirect_to survey_survey_version_display_fields_path(@survey, @survey_version)
   end
-  
+
   def increment_display_order
     @display_field = @survey_version.display_fields.find(params[:id])
     @display_field.increment_display_order
-    
+
     redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
   end
-  
+
   def decrement_display_order
     @display_field = @survey_version.display_fields.find(params[:id])
     @display_field.decrement_display_order
-    
+
     redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
   end
-  
+
   private
   def get_survey_version
     @survey = Survey.find(params[:survey_id])

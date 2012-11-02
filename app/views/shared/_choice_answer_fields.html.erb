@@ -1,7 +1,7 @@
 <p class="answer_fields">
 	<%= f.label :answer, "Answer: " %>
 	<%= f.text_field :answer %>
-	
+
 	<span class="next_pages" style="<%= 'display:none' unless f.object.choice_question.try(:question_content).try(:flow_control) %>" >
 	<%= f.label :next_page_id, "Go To Page: " %><%= f.collection_select :next_page_id, survey_version.pages.order(:page_number), :id, :page_number, {},  :class => "next_page_select" %>
 	</span>
@@ -9,9 +9,9 @@
 	<%= f.check_box :is_default %>
 	<%= link_to_function image_tag('arrow_up.png') + "<span class='link_text'>Move Up</span>".html_safe, "swapAnswers(this,'up')" %>
 	<%= link_to_function image_tag('arrow_down.png') + "<span class='link_text'>Move Down</span>".html_safe, "swapAnswers(this, 'down')" %>
-	
+
 	<%= f.hidden_field :_destroy %>
 	<%= link_to_function image_tag("red_x.png", :alt=>"Delete", :class=>"redX") + "<span class='link_text'>Delete</span>".html_safe, "remove_fields(this)", :class=>"surveyNav" %>
-	
+
 
 </p>

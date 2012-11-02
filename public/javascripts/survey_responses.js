@@ -8,7 +8,7 @@ $(function(){
 	});
 
 	/* replace the survey_response_list when a delete call is made */
-	$(".archive_link").live('ajax:success', refreshSurveyResponseTable);
+	//$(".archive_link").live('ajax:success', refreshSurveyResponseTable);
 
 	/* Populate the version select box based on the survey selection */
 	$("#survey_id").change(function(){
@@ -58,9 +58,6 @@ $(function(){
 	$("div.pagination a").live('ajax:beforeSend', function(){
 		$("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
 	});
-	$("div.pagination a").live('ajax:success', function(event, data, status, xhr){
-		$("#survey_response_list").html(data);
-	});
 	
 	$(".edit_display_field_value").live('submit', function(){
 		$.modal.close();
@@ -83,6 +80,7 @@ $(function(){
 		$("#survey_response_list").html(data);
 	});
 
+	$('select[name="custom_view"]').live("change", change_responses_view);
 });
 
 function replaceOldHtml(){
@@ -116,42 +114,41 @@ function refreshSurveyResponseTable(){
 	var order_column = $("#order_column").val();
 	var order_dir = $("#order_dir").val();
 	var survey_version_id = $("#survey_version_id").val();
+	var custom_view_id = $("#custom_view_id").val();
+	var page_num = $("#page").val();
 
 	
 	/* Do not make the ajax call if no survey_version_id has been selected */
 	if(survey_version_id != null && survey_version_id != undefined && survey_version_id != "0"){
-		console.log("Refreshing table...");
 		$("#survey_response_list").html("Refreshing table...");
-		getSurveyDisplayTable(survey_version_id, order_column, order_dir);		
+		getSurveyDisplayTable(survey_version_id, order_column, order_dir, custom_view_id, page_num);		
 	}
 
 }
 
-function getSurveyDisplayTable(survey_version_id, order_column, direction){
+function getSurveyDisplayTable(survey_version_id, order_column, direction, custom_view_id, page_num){
 	if(order_column == undefined) { order_column = ''; }
 	if(direction == undefined) { direction = ''; }
+	if(custom_view_id == undefined) { custom_view_id = '';}
+	if(page_num == undefined) { page_num = 1;}
 	
 	var search_form_url_string = $("#advanced_search_form").serialize();
 	
-	var data_string = search_form_url_string + "&order_column=" + order_column + "&order_dir=" + direction + "&survey_version_id=" + survey_version_id;
-	
+	var data_string = search_form_url_string + "&order_column=" + order_column + "&order_dir=" + direction + "&survey_version_id=" + survey_version_id + "&custom_view_id=" + custom_view_id + "&page=" + page_num;
 	last_ajax_request_id += 1;
 	
 	$.ajax({
 		url: "survey_responses.js",
 		data: data_string, //"survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
-		dataType: "html",
+		dataType: "script",
 		beforeSend: function(){
 			$("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
-		},
-		success: function(data){
-			$("#survey_response_list").html(data);
 		}
 	})
 }
 
 function sortByDisplayField(column_id, direction){
-	getSurveyDisplayTable($("#survey_version_id").val(), column_id, direction);
+	getSurveyDisplayTable($("#survey_version_id").val(), column_id, direction, $("#custom_view_id").val(), $("#page").val());
 }
 
 function getUrlParams(){
@@ -187,4 +184,16 @@ function getSurveyVersionList(survey_id){
 
 function remove_search_criteria(link) {
 	$(link).parent().remove();
+}
+
+function change_responses_view(ev) {
+	ev.preventDefault();
+
+	// set the custom view to post back
+	$("#custom_view_id").val(this.value);
+
+	// since we're changing views, go back to page 1 of responses
+	$("#page").val(1);
+
+	refreshSurveyResponseTable();
 }

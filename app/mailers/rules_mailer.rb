@@ -5,7 +5,7 @@ class RulesMailer < ActionMailer::Base
     @survey_response = SurveyResponse.find(survey_response_id)
     @msg = body
     puts "Body: #{@msg}"
-    
+
     puts mail(:to => email_string, :subject => subject)
   end
 end

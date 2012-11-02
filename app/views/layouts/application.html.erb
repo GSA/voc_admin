@@ -4,21 +4,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<title>HHS VOC Tool Application</title>
-  	
+
   	<%= stylesheet_link_tag :all %>
   	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1' %>
   	<%= yield :head %>
   	<%= csrf_meta_tag %>
-  	
+
   	<!-- Community Imports -->
 	<%= yield :additional_scripts %>
-	
+
 	</head>
 	<body>
 		<%= render :partial => 'layouts/hhs_header' %>
 
 			<!-- begin main content for intranet page -->
-				<div class="background">	
+				<div class="background">
 					<div class="foreground">
 						<% if !current_user.blank? %>
 							<div class="navigation">
@@ -30,7 +30,7 @@
 						</div>
 					</div>
 				</div>
-			
+
 			<!-- end main content for intranet page -->
 		<%= render :partial => 'layouts/hhs_footer' %>
 

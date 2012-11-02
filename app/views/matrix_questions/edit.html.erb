@@ -1,11 +1,11 @@
 <p class="modalTitle">Edit Matrix Question</p>
 <%= form_for [@survey, @survey_version, @matrix_question], :remote => true, :html => {:class => 'question_edit_form'} do |f| %>
   <div class="validation_errors"></div>
-  
+
 	<%= f.fields_for :question_content do |builder| %>
 	 <%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
 	<% end -%>
-	
+
   <br /><br />
   <div id="rows">
     <%= f.fields_for :choice_questions do |builder| %>
@@ -24,7 +24,7 @@
 	<span><%= link_to_add_matrix_answer "Add Answer" %>
 
   <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @matrix_question, :survey => @survey, :survey_version => @survey_version} %>
-	
+
   <br/><br/>
   <%= f.submit "Update Matrix Question" %>
   <%= link_to "Cancel", nil, :class => "simplemodal-close" %>

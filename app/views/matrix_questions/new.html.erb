@@ -7,7 +7,7 @@
   <%= f.fields_for :question_content do |builder| %>
    <%= render :partial => "shared/question_content_fields", :locals => {:f => builder, :matrix_statement => true} %>
   <% end -%>
-  
+
   <div id="rows">
     <% @matrix_question.choice_questions.build if @matrix_question.choice_questions.empty? %>
     <%= f.fields_for :choice_questions do |builder| %>
@@ -17,7 +17,7 @@
     <span><%= link_to_add_fields "Add Question", f, :choice_questions %></span>
   </div>
   <br />
-  
+
   <div id="columns">
     <% 4.times do |i| %>
       <%= render :partial => "shared/matrix_answers_fields", :locals => {:i => i, :answer => nil}%>
@@ -25,10 +25,10 @@
     <span><%= link_to_add_matrix_answer "Add Answer" %></span>
   </div>
   <br/><br/>
-  
+
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => @matrix_question, :survey => @survey, :survey_version => @survey_version}%>
   <br/><br/>
-  
+
   <%= f.submit "Add Matrix Question" %>
   <%= link_to "Cancel", nil, :class => "simplemodal-close" %>
 <% end %>

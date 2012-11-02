@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :require_user
   helper_method :current_user_session, :current_user
-  
+
   private
     def require_admin
       logger.debug "ApplicationController::require_user"
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
         redirect_to surveys_path
       end
     end
-    
+
     def current_user_session
       logger.debug "ApplicationController::current_user_session"
       return @current_user_session if defined?(@current_user_session)
@@ -28,32 +28,10 @@ class ApplicationController < ActionController::Base
     def require_user
       logger.debug "ApplicationController::require_user"
       unless current_user
-        store_location
         flash[:error] = "You must be logged in to access this page."
         redirect_to login_url
         return false
       end
     end
 
-    def require_no_user
-      logger.debug "ApplicationController::require_no_user"
-      if current_user
-        store_location
-        if @current_user_session.stale?
-          flash[:error] = "Your session has expired due to inactivity. Please login again."
-        end
-
-        redirect_to root_url
-        return false
-      end
-    end
-
-    def store_location
-      session[:return_to] = request.fullpath
-    end
-
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default) 
-      session[:return_to] = nil
-    end
 end

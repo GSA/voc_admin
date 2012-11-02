@@ -1,5 +1,5 @@
 # Paperclip::Attachment.default_options.merge!(
-#     :path => ":rails_root/exports/:basename.:extension", 
+#     :path => ":rails_root/exports/:basename.:extension",
 #     :url => "/exports/:access_token/download"
 # )
 

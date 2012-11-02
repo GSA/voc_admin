@@ -68,13 +68,22 @@ $(function(){
 		toggleSpinner();
 	});
 
-	/* When the Choice Question Type is Radio then the auto_next_page option should show up*/	
-	$("#choice_question_answer_type").live('change', function(){
-		if($("#choice_question_answer_type").val() == "radio") {
+	/* When the Choice Question Type is Radio then the auto_next_page option should show up */
+	/* When Radio or Checkbox, the Answer Placement option should show */	
+	$("#choice_question_answer_type").live('change', function() {
+		val = $(this).val();
+
+		if (val == "radio") {
 			$("#auto_next_page_fields").show();
+			$("#answer_placement_fields").show();
 		} else {
 			$("#auto_next_page_fields").hide();
-		}		
+			if (val == "checkbox") {
+				$("#answer_placement_fields").show();
+			} else {
+				$("#answer_placement_fields").hide();
+			}
+		}
 	});
 		
 }); // End onLoad function

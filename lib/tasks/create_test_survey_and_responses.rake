@@ -23,15 +23,15 @@ task :add_test_data => [:environment] do
   puts text_question.errors unless text_question.valid?
 
   # Add a Multiple Choice Question
-  choice_question = ChoiceQuestion.create! survey_element_attributes: {page_id: page1.id, survey_version_id: version.id}, question_content_attributes: {statement: "Choice Question 1 (Checkboxes)", flow_control: false}, 
-    choice_answers_attributes: { '0' => {answer: "a", answer_order: 1, is_default: false}, '1' => {answer: "b", answer_order: 2, is_default: true}, '2' => { answer: "c", answer_order: 3, is_default: false}, '3' => {answer: "d", answer_order: 4, is_default: false} }, 
+  choice_question = ChoiceQuestion.create! survey_element_attributes: {page_id: page1.id, survey_version_id: version.id}, question_content_attributes: {statement: "Choice Question 1 (Checkboxes)", flow_control: false},
+    choice_answers_attributes: { '0' => {answer: "a", answer_order: 1, is_default: false}, '1' => {answer: "b", answer_order: 2, is_default: true}, '2' => { answer: "c", answer_order: 3, is_default: false}, '3' => {answer: "d", answer_order: 4, is_default: false} },
     answer_type: ChoiceAnswer::CHECKBOX, auto_next_page: false
 
   # Add a Matrix Question
   matrix_question = MatrixQuestion.create! survey_element_attributes: { page_id: page1.id, survey_version_id: version.id}, survey_version_id: version.id, question_content_attributes: { statement: "Matrix Question 1", flow_control: false, required: false},
-    choice_questions_attributes: { 
-      "0" => { question_content_attributes: { required: false, _destroy: false, statement: "Sub-Question 1", matrix_statement: "Matrix Question 1"}, answer_type: ChoiceAnswer::RADIO, choice_answers_attributes: { "0" => {answer: "answer 1"}, "1" => { answer: "answer 2"}, "2" => {answer: "answer 3"}, "3" => {"answer" => "answer 4"}} }, 
-      "1" => { question_content_attributes: {required: false, _destroy: false, statement: "Sub-Question 2", matrix_statement: "Matrix Question 1"}, answer_type: ChoiceAnswer::RADIO, choice_answers_attributes: { "0" => {answer: "answer 1"}, "1" => { answer: "answer 2"}, "2" => {answer: "answer 3"}, "3" => {"answer" => "answer 4"}} } 
+    choice_questions_attributes: {
+      "0" => { question_content_attributes: { required: false, _destroy: false, statement: "Sub-Question 1", matrix_statement: "Matrix Question 1"}, answer_type: ChoiceAnswer::RADIO, choice_answers_attributes: { "0" => {answer: "answer 1"}, "1" => { answer: "answer 2"}, "2" => {answer: "answer 3"}, "3" => {"answer" => "answer 4"}} },
+      "1" => { question_content_attributes: {required: false, _destroy: false, statement: "Sub-Question 2", matrix_statement: "Matrix Question 1"}, answer_type: ChoiceAnswer::RADIO, choice_answers_attributes: { "0" => {answer: "answer 1"}, "1" => { answer: "answer 2"}, "2" => {answer: "answer 3"}, "3" => {"answer" => "answer 4"}} }
     }
 
   # publish the survey version

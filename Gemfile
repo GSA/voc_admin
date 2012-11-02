@@ -30,6 +30,10 @@ group :test do
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'growl'
+  gem 'pry-rails'
+  gem 'shoulda-matchers'
+  gem 'rb-fsevent', '~> 0.9.1'
+  gem 'rails_best_practices'
 end
 
 gem 'mysql2', '< 0.3'

@@ -16,8 +16,8 @@
 <ol class="showList">
 	<% for criterion in @rule.criteria %>
 	  <li class="showList-ol">
-	    <%= criterion.source.get_display_field_header %> 
-	    <%= criterion.conditional.name %> 
+	    <%= criterion.source.get_display_field_header %>
+	    <%= criterion.conditional.name %>
 	    <%= criterion.value %>
 		</li>
 	<% end %>
@@ -27,7 +27,7 @@
 <ol class="showList">
 	<% for action in @rule.actions %>
 	  <li class="showList-ol">
-	  	Set <%= action.display_field.name %> 
+	  	Set <%= action.display_field.name %>
 	  	to <%= action.value %>
 		</li>
 	<% end %>
@@ -41,6 +41,6 @@
 </ol>
 
 <div class="pageNav">
-	<%= link_to "Edit Rule", edit_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> | 
+	<%= link_to "Edit Rule", edit_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> |
 	<%= link_to "All Rules", survey_survey_version_rules_path(@survey, @survey_version), :class=>"pageNav"%>
 </div>

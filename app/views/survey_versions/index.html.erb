@@ -22,7 +22,7 @@
 		<th class="col2" scope="col"><%= sortable("published") %></th>
 		<th class="col3" scope="col"><%= sortable "created_at", "Created" %></th>
 		<th class="col4" scope="col"><%= sortable "updated_at", "Last Updated" %></th>
-		<th colspan="6"></th>
+		<th colspan="6">&nbsp;</th>
 	</tr>
 	<% for version in @survey_versions %>
 	<tr class="<%= cycle('white','blue') %>">
@@ -50,13 +50,13 @@
 		<td class="col10"><%= link_to "Thank You Page", [:edit_thank_you_page, @survey, version] %></td>
 	</tr>
 
-	
+
 	<% end %>
 </table>
 
 <%= paginate @survey_versions %>
 
 <div class="pageNav">
-	<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "pageNav" %> | 
+	<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "pageNav" %> |
 	<%= link_to "Back", surveys_path, :class => "pageNav" %>
 </div>

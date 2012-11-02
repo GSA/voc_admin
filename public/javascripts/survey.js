@@ -1,3 +1,11 @@
+$(function() {
+	// iframe: if a page url isn't passed in on the query string, grab parent referrer.
+	var page_url = $("#response_page_url");
+	if (page_url.val() == "" && parent) {
+		page_url.val(parent.document.location.origin + parent.document.location.pathname);
+	}
+});
+
 function show_next_page(page){
 	var required_unanswered = false;
 	

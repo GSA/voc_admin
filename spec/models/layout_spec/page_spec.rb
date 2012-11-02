@@ -5,7 +5,7 @@ describe Page do
   before(:each) do
     @page = Page.new(
       :page_number => 1,
-      :survey_version => mock_model(SurveyVersion, :version_number => "1.0")
+      :survey_version => mock_model(SurveyVersion, :version_number => "1.0", :touch => nil)
     )
   end
   
@@ -53,7 +53,8 @@ describe Page do
     version = SurveyVersion.create!(
       :survey => build(:survey),
       :major => 1,
-      :minor => 0
+      :minor => 0,
+      :touch => nil
     )
     
     2.times do
@@ -102,7 +103,7 @@ describe Page do
   
   it "should clone it self to new survey version" do
     @page.save!
-    clone_page = @page.clone_me(mock_model(SurveyVersion))
+    clone_page = @page.clone_me(mock_model(SurveyVersion, :touch => nil))
     clone_page.page_number.should == @page.page_number
     clone_page.style_id.should == @page.style_id
     clone_page.clone_of_id.should == @page.id

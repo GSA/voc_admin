@@ -9,7 +9,7 @@ namespace :memcache do
     puts (File.exists?(pid_path) ? "done" : "Memcached failed to start")
 
   end
-  
+
   task :stop do
     raise "Memcached does not seem to be running." unless File.exists?(pid_path)
     puts "stopping memcache..."
@@ -17,12 +17,12 @@ namespace :memcache do
     `rm #{pid_path}`
 
   end
-  
+
   private
   def pid_path
     File.join(Rake.original_dir,'tmp','pids','memcache.pid')
   end
-  
+
   def log_path
     File.join(Rake.original_dir,'log','memcache.log')
   end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
-  
+
   def index
     @users = User.page(params[:page]).per(10)
 
@@ -35,20 +35,20 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    
+
     redirect_to edit_user_path(@current_user) if @user != @current_user && !@current_user.admin?
   end
 
   def update
     @user = User.find(params[:id])
-    
+
     # Only an admin may update another user.
     unless @current_user.admin? || @current_user == @user
       redirect_to surveys_path
       return
     end
-    
-    
+
+
     respond_to do |format|
       if @user.update_attributes(filtered_params(params[:user]))
         format.html {redirect_to (@current_user.admin? ? users_path : surveys_path), :notice  => "Successfully updated user."}

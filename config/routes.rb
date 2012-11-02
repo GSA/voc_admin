@@ -38,6 +38,7 @@ CommentToolApp::Application.routes.draw do
         put :decrement_display_order, :on => :member
       end
       resources :display_field_values
+      resources :custom_views
       resources :text_questions
       resources :choice_questions
       resources :matrix_questions

@@ -1,6 +1,6 @@
 <p class="pageTitle">Display Fields</p>
 <div class="pageNav-upper">
-	<%= link_to "Add New Dispaly Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"pageNav" %> | 
+	<%= link_to "Add New Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"pageNav" %> |
 	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
 </div>
 <%= flash_messages(flash) %>
@@ -11,7 +11,7 @@
 		<th class="col2">Type</th>
 		<th class="col3-7" colspan="5">Display Order</th>
 	</tr>
-	
+
 	<% @display_fields.each do |df| %>
 	 <tr class="<%= cycle('white','blue') %>">
 	 	<td class="col1"><%= df.name %></td>
@@ -35,6 +35,6 @@
 </table>
 
 <div class="pageNav">
-	<%= link_to "Add New Dispaly Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"pageNav" %> | 
+	<%= link_to "Add New Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"pageNav" %> |
 	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
 </div>

@@ -5,15 +5,15 @@
 			<%= radio_button_tag "search[criteria][#{criteria_index}][clause_join]", 'OR',  (criteria_index != 'new_criteria_index' and params[:search].present? && params[:search][:criteria]["#{criteria_index}"][:clause_join] == 'OR'), :id => "criteria_#{criteria_index}_OR" %><%= label_tag "criteria_#{criteria_index}_OR", "OR" %>
 		</div>
 	<% end %>
-	
+
 	<%= select_tag "search[criteria][#{criteria_index}][include_exclude]", options_for_select([ ['Include', 1], ['Exclude', 0]], :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:include_exclude].to_i)) %>
-	<%= select_tag "search[criteria][#{criteria_index}][display_field_id]", 
+	<%= select_tag "search[criteria][#{criteria_index}][display_field_id]",
 	  options_from_collection_for_select([Struct.new(:id, :name).new('survey_responses.page_url', 'Page URL'), Struct.new(:id, :name).new('survey_responses.created_at', 'Date')].concat(version.display_fields),
-	   :id, :name, :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:display_field_id])) 
+	   :id, :name, :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:display_field_id]))
 	%>
 	<%= select_tag "search[criteria][#{criteria_index}][condition]", options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
 			:selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:condition]) ) %>
 	<%= text_field_tag "search[criteria][#{criteria_index}][value]", ((params[:search].blank? or criteria_index == 'new_criteria_index') ? '' : params[:search][:criteria]["#{criteria_index}"][:value]) %>
-	
+
 	<%= link_to_function "Remove Criteria", "remove_search_criteria(this); return false;" %>
 </div>

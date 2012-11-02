@@ -43,7 +43,7 @@ CommentToolApp::Application.configure do
     :address                        => "smtp.mxes.net",
     :port                           => 25,
     :domain                         => 'ctacorp.com',
-    :user_name                      => 'emailalertbccs_paperworkreduction.gov', 
+    :user_name                      => 'emailalertbccs_paperworkreduction.gov',
     :password                       => 'icras555alerts',
     :authentication                 => :login
   }

@@ -1,245 +1,189 @@
 require 'spec_helper'
 
 describe QuestionContentObserver do
-  let(:question_content) do
-    mock_model(QuestionContent,
-      statement: "Rspec Test Content",
-      questionable_type: "TextQuestion",
-      skip_observer: false,
-      survey_version: mock_model(SurveyVersion).as_null_object
-    )
-  end
-
-  before do
-    DisplayFieldObserver.instance.stub(:after_create)
-    question_content.stub_chain(:questionable, :matrix_question).and_return false
-    question_content.stub_chain(:questionable, :errors, :add)   
-  end
-
-  context "create_default_display_field" do
-    it "should create a new display field with the provided name" do
-      name = question_content.statement
-      question_content.survey_version.stub_chain(:display_fields, :count).and_return 0
-
-      display_field = QuestionContentObserver.instance.send(:create_default_display_field, question_content, name)
-      display_field.name.should == "Rspec Test Content"
-    end
-
-    it "should set the display_order to the next sequence" do
-      name = question_content.statement
-      question_content.survey_version.stub_chain(:display_fields, :count).and_return 0
-
-      display_field = QuestionContentObserver.instance.send(:create_default_display_field, question_content, name)
-      display_field.display_order.should == 1      
-    end
-  end
 
   context "after_create" do
-    it "should call create_default_display_field" do
-      QuestionContentObserver.instance.should_receive(:create_default_display_field).with(question_content, question_content.statement)
-      QuestionContentObserver.instance.after_create(question_content)
+    context "matrix_question? returns true" do
+      it "does not call create_default_display_field" do
+        QuestionContentObserver.should_not_receive(:create_default_display_field)
+
+        QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: true)
+      end
+
+      it "does not call create_default_rule" do
+        QuestionContentObserver.should_not_receive(:create_default_rule)
+
+        QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: true)
+      end
+    end # matrix_question? == true
+
+    context "skip_observer returns true" do
+      it "does not call create_default_display_field" do
+        QuestionContentObserver.should_not_receive(:create_default_display_field)
+
+        QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: true, skip_observer: true)
+      end
+
+      it "does not call create_default_rule" do
+        QuestionContentObserver.should_not_receive(:create_default_rule)
+
+        QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: true, skip_observer: true)
+      end      
+    end # skip_observer == true
+
+    context "question_content.questionable_type == ChoiceQuestion && question_content.questionable.matrix_question" do
+      it 'sets the name to ("#{question_content.matrix_statement}: " + name) when true' do
+        qc = mock_model(QuestionContent, matrix_question?: false, skip_observer: false, statement: "Rspec Test Statement", questionable_type: "ChoiceQuestion", matrix_statement: "Matrix Statement")
+        qc.stub_chain(:questionable, :matrix_question).and_return(true)
+        statement = "#{qc.matrix_statement}: " + qc.statement
+
+        QuestionContentObserver.instance.should_receive(:create_default_display_field).with(qc, statement).and_return mock_model(DisplayField, present?: true)
+
+        QuestionContentObserver.instance.stub(:create_default_rule).and_return mock_model(Rule, present?: true)
+
+        QuestionContentObserver.instance.after_create(qc)
+      end
+
+      it "sets the name to question_content.statement when false" do
+        qc = mock_model(QuestionContent, matrix_question?: false, skip_observer: false, statement: "Rspec Test Statement")
+
+        QuestionContentObserver.instance.should_receive(:create_default_display_field).with(qc, qc.statement).and_return mock_model(DisplayField, present?: true)
+
+        QuestionContentObserver.instance.stub(:create_default_rule).and_return mock_model(Rule, present?: true)
+
+        QuestionContentObserver.instance.after_create(qc)       
+      end
+    end # question_content.questionable_type == ChoiceQuestion && question_content.questionable.matrix_question
+
+    context "create_default_display_field" do
+      it "should call DisplayField.create!" do
+        qc = mock_model QuestionContent
+        qc.stub_chain(:survey_version, :display_fields, :count).and_return 0
+        qc.stub_chain(:survey_version, :id).and_return 1
+
+        DisplayField.should_receive(:create!).with({
+          :name => "Rspec Test Statement",
+          :required => false,
+          :searchable => false,
+          :default_value => "",
+          :display_order => 1, 
+          :survey_version_id => 1,
+          :editable => false
+        })
+
+        QuestionContentObserver.instance.send :create_default_display_field, qc, "Rspec Test Statement"
+      end
+    end # create_default_display_field
+
+    context "create_default_rule" do
+      it "should call rule.create!" do
+        rules_proxy = mock "rule association proxy", count: 0
+        sv_proxy = mock "survey_version association proxy", rules: rules_proxy
+        qc = mock_model(QuestionContent, survey_version: sv_proxy)
+        df = mock_model(DisplayField, :id => 1016)
+
+        rules_proxy.should_receive(:create!).with({
+          :name=>"Rspec Test Statement", 
+          :rule_order=>1, 
+          :execution_trigger_ids=>[1], 
+          :action_type=>"db", 
+          :criteria_attributes=>[{:source_id=> qc.id, :source_type=>"QuestionContent", :conditional_id=>10, :value=>""}], 
+          :actions_attributes=>[{:display_field_id=>df.id, :value_type=>"Response", :value=> qc.id.to_s}]
+        })
+
+        QuestionContentObserver.instance.send :create_default_rule, qc, df, "Rspec Test Statement"        
+      end
+
+    end # create_default_rule
+
+    it "should raise ActiveRecord::Rollback if create_default_display_field returns nil" do
+      QuestionContentObserver.instance.stub!(:create_default_display_field).and_return nil
+
+      expect {
+        QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: false, skip_observer: false)
+      }.to raise_error(ActiveRecord::Rollback)
     end
 
-    it "creates a default rule" do
-      display_field = mock_model DisplayField
-      QuestionContentObserver.instance.stub(:create_default_display_field).and_return(display_field)
-      question_content.survey_version.stub_chain(:rules, :count).and_return 0
+    it "should raise ActiveRecord::Rollback if create_default_rule returns nil" do
+      QuestionContentObserver.instance.stub!(:create_default_display_field).and_return mock_model(DisplayField, present?: true)
 
-      question_content
+      QuestionContentObserver.instance.stub!(:create_default_rule).and_return nil
 
-      QuestionContentObserver.instance.send(:create_default_rule, question_content, display_field, "Rspec Test Content")
+      expect { QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: false, skip_observer: false) }.to raise_error(ActiveRecord::Rollback)
     end
 
-    it "raises ActiveRecord::Rollback if there is an error creating the default display field"
 
-    it "raises ActiveRecord::Rollback if there is an error creating the default rule"
-
-    it "adds an error to the questionable model if an exception was raised"
-
-    context "questionable_type is MatrixQuestion" do
-      it "does not create a default display field"
-
-      it "does not create a default rule"
-    end # Matrix Question
-
-    context "questionable_type is ChoiceQuestion" do
-      context "and is part of a matrix question" do
-        it "prepends the matrix statement to the name of the display field"
-
-        it "prepends the matrix statement to the name of the rule"
-
-      end # Part of matrix question
-    end # ChoiceQuestion 
   end # after_create
-end
 
+  # let(:question_content) do
+  #   mock_model(QuestionContent,
+  #     statement: "Rspec Test Content",
+  #     questionable_type: "TextQuestion",
+  #     skip_observer: false,
+  #     survey_version: mock_model(SurveyVersion).as_null_object,
+  #     matrix_question?: false
+  #   )
+  # end
 
-
-
-  # before(:each) do
+  # before do
   #   DisplayFieldObserver.instance.stub(:after_create)
-  #   @sv = mock_model(SurveyVersion)
+  #   question_content.stub_chain(:questionable, :matrix_question).and_return false
+  #   question_content.stub_chain(:questionable, :errors, :add)   
   # end
 
-  # context "when a question content is updated" do
-  #   it "should update the display field name when a question is updated" do
-  #     mock_field = mock_model(DisplayField)
-  #     @sv.stub_chain(:display_fields, :find_by_name).and_return(mock_field)
-  #     mock_content = mock_model(QuestionContent,
-  #       :statement_changed? => true, 
-  #       :statement_was => "Old DispalyField Name", 
-  #       :survey_version => @sv, 
-  #       :statement => "New DisplayField Name",
-  #       :questionable_type => "TextQuestion"
-  #     )
-      
-  #     mock_field.should_receive(:update_attributes).with(:name => "New DisplayField Name").once
-      
-  #     QuestionContentObserver.instance.after_update(mock_content)
+  # context "create_default_display_field" do
+  #   it "should create a new display field with the provided name" do
+  #     name = question_content.statement
+  #     question_content.survey_version.stub_chain(:display_fields, :count).and_return 0
+
+  #     display_field = QuestionContentObserver.instance.send(:create_default_display_field, question_content, name)
+  #     display_field.name.should == "Rspec Test Content"
   #   end
 
-  #   it "should not update the display field if the statement was not changed" do
-  #     mock_field = mock_model(DisplayField)
-  #     @sv.stub_chain(:display_fields, :find_by_name).and_return(mock_field)
-  #     mock_field.should_not_receive :update_attributes
-  #     QuestionContentObserver.instance.after_update(mock_model(QuestionContent, :statement_changed? => false))
-  #   end
+  #   it "should set the display_order to the next sequence" do
+  #     name = question_content.statement
+  #     question_content.survey_version.stub_chain(:display_fields, :count).and_return 0
 
-  #   it "should update the child question display fields for a matrix question" do
-  #     mock_content = mock_model(QuestionContent,
-  #       :statement_changed? => true, 
-  #       :statement_was => "Old DispalyField Name", 
-  #       :survey_version => @sv, 
-  #       :statement => "New DisplayField Name",
-  #       :questionable_type => "MatrixQuestion"
-  #     )
-  #     mock_question = mock_model(ChoiceQuestion)
-  #     mock_question.stub_chain(:question_content, :statement).and_return("Test Question")
-      
-  #     mock_content.stub_chain(:questionable, :choice_questions, :includes).and_return([mock_question])
-
-  #     mock_field = mock_model(DisplayField)
-  #     @sv.stub_chain(:display_fields, :find_by_name).and_return(mock_field)
-
-  #     mock_field.should_receive(:update_attributes).with(:name => "New DisplayField Name: Test Question")
-
-  #     QuestionContentObserver.instance.after_update(mock_content)
-  #   end
-
-  #   it "should update the display field name correctly when updating a child question of a matrix question" do
-  #      mock_content = mock_model(QuestionContent,
-  #       :statement_changed? => true, 
-  #       :statement_was => "Old DispalyField Name", 
-  #       :survey_version => @sv, 
-  #       :statement => "New DisplayField Name",
-  #       :questionable_type => "ChoiceQuestion"
-  #     )
-  #     mock_content.stub_chain(:questionable, :matrix_question, :present?).and_return(true)
-      
-  #     mock_content.stub_chain(:questionable, :matrix_question, :question_content, :statement).and_return("Matrix Question Content")
-  #     mock_question = mock_model(ChoiceQuestion)
-      
-  #     mock_content.stub_chain(:questionable, :choice_questions, :includes).and_return([mock_question])
-
-  #     mock_field = mock_model(DisplayField)
-  #     @sv.stub_chain(:display_fields, :find_by_name).and_return(mock_field)
-
-  #     mock_field.should_receive(:update_attributes).with(:name => "Matrix Question Content: New DisplayField Name")
-
-  #     QuestionContentObserver.instance.after_update(mock_content)     
+  #     display_field = QuestionContentObserver.instance.send(:create_default_display_field, question_content, name)
+  #     display_field.display_order.should == 1      
   #   end
   # end
-  
-  # context "when a new question content is created" do
-  #   it "should create a new display field for the question content" do
-  #     sv = mock_model(SurveyVersion).as_null_object
-  #     qc = mock_model(QuestionContent, :survey_version => sv, :questionable_type => "TextQuestion", :skip_observer => false, :statement => "Test")
-  #     qc.stub_chain(:questionable, :matrix_question).and_return false
-  #     qc.stub_chain(:questionable, :errors).and_return ActiveModel::Errors.new(QuestionContent)
-  #     sv.stub_chain(:rules, :create!)
-  #     sv.stub_chain(:rules, :count).and_return 0
-  #     sv.stub_chain(:display_fields, :count).and_return 0
 
-  #     rule = mock_model(Rule)
-  #     rule.stub_chain(:errors, :any?).and_return(false)
-
-  #     df = mock_model(DisplayFieldText)
-  #     df.stub_chain(:errors, :any?).and_return(false)
-
-  #     sv.stub_chain(:rules, :create!).and_return(rule)
-
-  #     DisplayFieldText.should_receive(:create!).and_return(df)
-
-  #     QuestionContentObserver.instance.after_create(qc)
+  # context "after_create" do
+  #   it "should call create_default_display_field" do
+  #     QuestionContentObserver.instance.should_receive(:create_default_display_field).with(question_content, question_content.statement)
+  #     QuestionContentObserver.instance.after_create(question_content)
   #   end
 
-  #   it "should create a new rule for the dispaly field" do
-  #     sv = mock_model(SurveyVersion).as_null_object
-  #     qc = mock_model(QuestionContent, :survey_version => sv, :questionable_type => "TextQuestion", :skip_observer => false, :statement => "Test")
-  #     qc.stub_chain(:questionable, :matrix_question).and_return false
-  #     sv.stub_chain(:rules, :create!)
-  #     sv.stub_chain(:rules, :count).and_return 0
-  #     sv.stub_chain(:display_fields, :count).and_return 0
+  #   it "creates a default rule" do
+  #     display_field = mock_model DisplayField
+  #     QuestionContentObserver.instance.stub(:create_default_display_field).and_return(display_field)
+  #     question_content.survey_version.stub_chain(:rules, :count).and_return 0
 
-  #     rule = mock_model(Rule)
-  #     rule.stub_chain(:errors, :any?).and_return(false)
+  #     question_content
 
-  #     df = mock_model(DisplayFieldText)
-  #     df.stub_chain(:errors, :any?).and_return(false)
-  #     DisplayFieldText.stub(:create!).and_return(df)
-
-  #     sv.rules.should_receive(:create!).and_return(rule)
-
-  #     QuestionContentObserver.instance.after_create(qc)
+  #     QuestionContentObserver.instance.send(:create_default_rule, question_content, display_field, "Rspec Test Content")
   #   end
 
-  #   it "should not create a new display field for a matrix question" do
-  #     qc = mock_model(QuestionContent, :survey_version => mock_model(SurveyVersion), :questionable_type => "MatrixQuestion")
+  #   it "raises ActiveRecord::Rollback if there is an error creating the default display field"
 
-  #     DisplayField.should_not_receive(:create!)
-  #     QuestionContentObserver.instance.after_create(qc)
-  #   end
+  #   it "raises ActiveRecord::Rollback if there is an error creating the default rule"
 
-  #   it "should not create a new rule for a matrix question" do
-  #     qc = mock_model(QuestionContent, :survey_version => mock_model(SurveyVersion), :questionable_type => "MatrixQuestion")
+  #   it "adds an error to the questionable model if an exception was raised"
 
-  #     Rule.should_not_receive(:create!)
-  #     QuestionContentObserver.instance.after_create(qc)
-  #   end
+  #   context "questionable_type is MatrixQuestion" do
+  #     it "does not create a default display field"
 
-  #   it "should not create a new display field if :skip_observer is true" do
-  #     qc = mock_model(QuestionContent, :survey_version => mock_model(SurveyVersion), :questionable_type => "TextQuestion", :skip_observer => true)
+  #     it "does not create a default rule"
+  #   end # Matrix Question
 
-  #     DisplayField.should_not_receive(:create!)
-  #     QuestionContentObserver.instance.after_create(qc)
-  #   end
+  #   context "questionable_type is ChoiceQuestion" do
+  #     context "and is part of a matrix question" do
+  #       it "prepends the matrix statement to the name of the display field"
 
-  #   it "should not create a new rule if the :skip_observer is true" do
-  #     qc = mock_model(QuestionContent, :survey_version => mock_model(SurveyVersion), :questionable_type => "TextQuestion", :skip_observer => true)
+  #       it "prepends the matrix statement to the name of the rule"
 
-  #     Rule.should_not_receive(:create!)
-  #     QuestionContentObserver.instance.after_create(qc)
-  #   end
-
-  #   it "should raise ActiveRecord::Rollback if display field has errors" do
-  #     qc = mock_model(QuestionContent, :survey_version => mock_model(SurveyVersion).as_null_object, :questionable_type => "TextQuestion", :skip_observer => false, :statement => "Test Question")
-  #     qc.stub_chain(:questionable, :matrix_question).and_return(false)
-  #     qc.stub_chain(:questionable, :errors, :add)
-  #     df = mock_model(DisplayFieldText)
-  #     df.stub_chain(:errors, :any?).and_return(true)
-  #     DisplayFieldText.stub(:create!).and_return(df)
-
-  #     lambda { QuestionContentObserver.instance.after_create(qc) }.should raise_error(ActiveRecord::Rollback)
-  #   end
-
-  #   it "should raise ActiveRecord::Rollback if the rule has errors" do
-  #     question_content = mock_model QuestionContent, statement: "RSpec Test Question Content", questionable_type: "TextQuestion", skip_observer: false, survey_version: mock_model(SurveyVersion).as_null_object
-  #     question_content.stub_chain(:questionable, :matrix_question).and_return false
-  #     question_content.stub_chain(:questionable, :errors, :add)
-
-  #     QuestionContentObserver.any_instance.stub(:created_default_display_field).and_return mock_model(DisplayField).as_null_object
-  #     QuestionContentObserver.any_instance.stub(:create_default_rule).and_raise ActiveRecord::RecordInvalid
-
-  #     lambda { QuestionContentObserver.instance.after_create(question_content) }.should raise_error(ActiveRecord::Rollback)
-  #   end
-  # end
+  #     end # Part of matrix question
+  #   end # ChoiceQuestion 
+  # end # after_create
+end

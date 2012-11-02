@@ -9,21 +9,21 @@
 			</ul>
 		</div>
 	<% end %>
-	
+
 	<div id="create_form_widths">
 		<div class="copy">
 	    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><%= f.text_field :f_name, :size=>"30" %> &nbsp;&nbsp;
 	    <span class="copyBold"><%= f.label :l_name, "Last Name: " %></span><%= f.text_field :l_name, :size=>"30" %>
 	  </div>
-	  
+
 	  <div class="leftside">
 	  	<p class="copyBold"><%= f.label :email, "Email: " %></p>
 	  </div>
 	  <div class="rightside">
 	  	<%= f.text_field :email %>
 	  </div>
-	  
-		
+
+
 		<% if @user.new_record? || @user == @current_user %>
 			<div class="leftside">
 			  <p class="copyBold"><%= f.label :password, "Password: " %></p>
@@ -38,7 +38,7 @@
 		  	<%= f.password_field :password_confirmation%>
 		  </div>
 		<% end -%>
-	
+
 	  <% if @current_user.admin? %>
 			<div class="leftside">
 				<p class="copyBold"><%= f.label :role_id, "Role: " %></p>
@@ -56,9 +56,9 @@
 		  	</div>
 			</div>
 	  <% end %>
-	 
+
 		<div class="sumbitButton">
 			<%= f.submit %>
 		</div>
-	</div> 
+	</div>
 <% end %>

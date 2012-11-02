@@ -65,7 +65,7 @@ role = Role.find_or_create_by_name("Admin")
 puts "done"
 
 print "Creating user: sysadmin@ctacorp.com..."
-User.find_or_create_by_email("sysadmin@ctacorp.com") do |user| 
+User.find_or_create_by_email("sysadmin@ctacorp.com") do |user|
   user.f_name = "System"
 	user.l_name = "Administrator"
 	user.password = "password"

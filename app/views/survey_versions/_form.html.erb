@@ -5,7 +5,7 @@
 	      <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
 	    </div>
 	  <% end %>
-	
+
 	  <p class="copy">
 	    <span class="copyBold"><%= f.label :name, "Name: " %></span><br />
 	    <%= f.text_field :name %>
@@ -18,7 +18,7 @@
 	  	<%= f.label :type, "Survey Type: " %>
 			<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
 	  </p>
-		
+
 	  <p class="sumbitButton"><%= f.submit %></p>
 	<% end %>
 </div>

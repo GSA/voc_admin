@@ -15,7 +15,7 @@
 	<% end %>
 <% end %>
 
-<%= form_for @survey_response do |f| %>
+<%= form_for @survey_response, :url => survey_response_path(@survey_response, params.slice(*SurveyResponsesController::POST_PARAMS)), :html => { :method => :put } do |f| %>
 	<div class="below_fieldset">
 	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", true).each_with_index do |display_field_value, i| %>
 		<%= f.fields_for :display_field_values, display_field_value do |dfv| %>
@@ -40,11 +40,11 @@
 			</div><br />
 		<% end %>
 	<% end %>
-	
+
 	<p class="sumbitButton">
 		<%= f.submit "Save Changes" %>
-	</p> 
+	</p>
 	<div class="pageNav">
-		<%= link_to "Cancel", survey_responses_path(:survey_id => @survey_response.survey_version.survey_id, :survey_version_id => @survey_response.survey_version_id), :class=>"pageNav" %>
+		<%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"pageNav" %>
 	</div>
 <% end %>

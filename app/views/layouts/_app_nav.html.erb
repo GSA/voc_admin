@@ -8,7 +8,7 @@
 	<% else %>
 		<p class="nav"><%= link_to "Manage Account", edit_user_url(@current_user), (params[:controller] == "users" ? { :class => "navActive"} : {:class => "nav"}) %></p>
 	<% end %>
-	
+
 	<% if @current_user.admin? %>
 		<p class="nav"><%= link_to "Manage Sites", sites_url, params[:controller] == "sites" ? { :class => "navActive"} : {:class => "nav"} %></p>
 	<% end %>

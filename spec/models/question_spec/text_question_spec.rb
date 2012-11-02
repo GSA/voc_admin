@@ -5,7 +5,7 @@ describe TextQuestion do
     @text_question = TextQuestion.new(
       :answer_type => "area"
     )
-    @text_question.question_content = mock_model(QuestionContent, :[]= => nil, :questionable => @text_question, :question_type => "TextQuestion", :id => 1)
+    @text_question.question_content = mock_model(QuestionContent, :[]= => nil, :questionable => @text_question, :questionable_type => "TextQuestion", :id => 1)
   end
   
   it "should be valid" do
@@ -50,22 +50,35 @@ describe TextQuestion do
   end
 
   it "should clone it self" do
-    page = mock_model(Page)
-    clone_page =  mock_model(Page, :clone_of_id=>page.id)
-    pages = mock("Page collection", :find_by_clone_of_id=>clone_page)
-    survey_version = mock_model(SurveyVersion)
-    survey_version.stub!(:pages).and_return(pages)
-    qc = mock_model(QuestionContent, :questionable => @text_question, :statement => "RSpec TextQuestion")
-    qc.stub!(:attributes).and_return({:statement=>"RSpec TextQuestion"})
-    SurveyElement.any_instance.stub(:valid?).and_return(true)
-    @text_question.stub!(:survey_element).and_return(mock_model(SurveyElement, :attributes=>{}, :page_id=>page.id))
-    @text_question.question_content = nil #remove the qc so we can stub it instead
-    @text_question.stub(:question_content).and_return(qc)
-    @text_question.save!
     QuestionContentObserver.instance.stub!(:after_create).and_return(true)
-    clone_question = @text_question.clone_me(survey_version)
-    clone_question.answer_type.should == @text_question.answer_type
-    clone_question.clone_of_id.should == @text_question.id
+    target_sv = mock_model(SurveyVersion)
+    @text_question.build_question_content({ :required => false, :flow_control => false, :statement => "Rspec Question Content Statement"})
+    @text_question.save!
+
+    @text_question.stub_chain(:survey_element, :attributes).and_return({
+      "page_id" => 1,
+      "element_order" => 1,
+      "survey_version_id" => 1,
+      "assetable_type" => "TextQuestion",
+      "assetable_id" => @text_question.id
+    })
+
+    @text_question.stub_chain(:survey_element, :page_id).and_return(1)
+
+    target_sv.stub_chain(:pages, :find_by_clone_of_id, :id).and_return 2
+
+    TextQuestion.any_instance.stub(:save!)
+
+    cloned_question = @text_question.clone_me(target_sv)
+
+    cloned_question.attributes.except("created_at", "updated_at", "id", "clone_of_id").should == @text_question.attributes.except("created_at", "updated_at", "id", "clone_of_id")
+    cloned_question.question_content.attributes.except("questionable_id", "created_at", "updated_at", "id").should == @text_question.question_content.attributes.except("questionable_id", "created_at", "updated_at", "id")
+    cloned_question.survey_element.attributes.except("page_id", "created_at", "updated_at", "id", "survey_version_id").should == @text_question.survey_element.attributes.except("page_id", "created_at", "updated_at", "id", "survey_version_id")
+
   end
+
+  it "should set the clone_of_id"
+
+  
   
 end

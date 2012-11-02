@@ -1,6 +1,6 @@
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_and_survey_version
-  
+
   def index
     @matrix_questions = @survey_version.matrix_questions
   end
@@ -11,7 +11,7 @@ class MatrixQuestionsController < ApplicationController
 
   def new
     @matrix_question = @survey_version.matrix_questions.build
-    
+
     respond_to do |format|
       format.html #
       format.js
@@ -20,20 +20,20 @@ class MatrixQuestionsController < ApplicationController
 
   def create
     choice_questions = params[:matrix_question][:choice_questions_attributes]
-    
+
     choice_answer_attributes = params[:choice_answer_attributes]
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
 
     @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question].merge({:survey_version_id => @survey_version.id}))
     @matrix_question.survey_element.survey_version_id = @survey_version.id
-    
+
     # This sets a virtual attribute on each choice question's question content in order to create the correct name for display fields in the
     # after_create observer to get around the issue of the choice questions being saved before the matrix question's question content is saved
     # in the transaction.  This was causing matrix_question.statement to return an error in the after_create observer
     @matrix_question.choice_questions.each do |cq|
       cq.question_content.matrix_statement = @matrix_question.question_content.try(:statement)
     end
-  
+
     respond_to do |format|
       if @matrix_question.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
@@ -47,7 +47,7 @@ class MatrixQuestionsController < ApplicationController
 
   def edit
     @matrix_question = @survey_version.matrix_questions.includes(:choice_questions => [:question_content, :choice_answers]).find(params[:id])
-    
+
     respond_to do |format|
       format.html #
       format.js
@@ -56,10 +56,10 @@ class MatrixQuestionsController < ApplicationController
 
   def update
     choice_questions = params[:matrix_question][:choice_questions_attributes]
-    
+
     choice_answer_attributes = params[:choice_answer_attributes]
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
-    
+
     @matrix_question = MatrixQuestion.find(params[:id])
 
     choice_questions.each {|key, value| value['question_content_attributes'].merge!(:matrix_statement => @matrix_question.question_content.try(:statement))}
@@ -71,7 +71,7 @@ class MatrixQuestionsController < ApplicationController
     unless to_be_removed.empty?
       to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
     end
-    
+
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
@@ -85,16 +85,16 @@ class MatrixQuestionsController < ApplicationController
 
   def destroy
     @matrix_question = @survey_version.matrix_questions.find(params[:id])
-    
+
     destroy_default_rule_and_display_field(@matrix_question)
     @matrix_question.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully deleted Matrix question."}
       format.js
     end
   end
-  
+
   private
   def remove_sub_question_display_field_and_rules(choice_question_params)
     matrix_statement = @matrix_question.question_content.statement_changed? ? @matrix_question.question_content.statement_was : @matrix_question.question_content.statement
@@ -119,10 +119,10 @@ class MatrixQuestionsController < ApplicationController
   def destroy_default_rule_and_display_field(question)
     question.choice_questions.each do |choice_question|
       name ="#{question.question_content.statement}: #{choice_question.question_content.statement}"
-      
+
       rule = @survey_version.rules.find_by_name(name)
       rule.destroy if rule.present?
-      
+
       df = @survey_version.display_fields.find_by_name(name)
       df.destroy if df.present?
     end

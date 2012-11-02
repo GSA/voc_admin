@@ -21,27 +21,27 @@ class SurveysController < ApplicationController
   # POST /surveys
   def create
     @survey = @current_user.surveys.new(params[:survey])
-    
+
     if @survey.save  # Will save both survey and survey_version and run validations on both
       redirect_to([:edit, @survey, @survey.survey_versions.first], :notice => 'Survey was successfully created.')
     else
-      render :action => "new" 
+      render :action => "new"
     end
   end
-  
+
   # GET /surveys/edit
   def edit
    @survey = @current_user.surveys.find(params[:id])
   end
- 
+
   def update
      @survey = @current_user.surveys.find(params[:id])
      @survey.update_attributes(params[:survey])
-     
+
      if @survey.update_attributes(params[:survey])
-       redirect_to(surveys_url, :notice => "Survey was successfully updated.") 
+       redirect_to(surveys_url, :notice => "Survey was successfully updated.")
      else
-       render :new 
+       render :new
      end
    end
 
@@ -51,16 +51,11 @@ class SurveysController < ApplicationController
     @survey.update_attribute(:archived, true)
 
 
-    redirect_to(surveys_url, :notice => 'Survey was successfully deleted.') 
-  end
-  
-  
-  private
-  def get_survey_version(survey, version)
-    major, minor = version.split('.')
-    @survey_version = survey.survey_versions.where(:major => major, :minor => minor).first
+    redirect_to(surveys_url, :notice => 'Survey was successfully deleted.')
   end
 
+
+  private
   def sort_column
     %w(name).include?(params[:sort]) ? params[:sort] : "name"
   end

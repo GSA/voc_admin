@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :l_name,               :null => false
       t.boolean :locked
       ##### DB columns needed for authlogic authentication #####
-      
+
       # t.string :login,                :null => false
       t.string :email,                :null => false # use the email as the login
       t.string :crypted_password,     :null => false
@@ -13,7 +13,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :persistence_token,    :null => false
 #      t.string :single_access_token,  :null => false
 #      t.string :perishable_token,     :null => false # Used for email password resets
-      
+
       # These fields are optional based on which features are wanted from authlogic
       # See Authlogic::Session::MagicColumns for documentation on features
 #      t.integer :login_count,         :null => false, :default => 0

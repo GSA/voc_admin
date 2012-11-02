@@ -34,8 +34,8 @@
 				<div class="surveyNavMargin"><%= link_to_add_fields "Add Criteria", f, :criteria %></div>
 		</div>
   <% end %>
-	
-	
+
+
 	<%= field_set_tag "Actions" do %>
 	<div id="actions">
     <div id="email_action" class="<%= @rule.action_type == 'db' || @rule.action_type.nil? ? 'hidden_page' : '' %>">
@@ -66,8 +66,8 @@
 
 	</div>
   <% end %>
-	
-	
+
+
 	<p class="submitButton"><%= f.submit %></p>
 <% end -%>
 

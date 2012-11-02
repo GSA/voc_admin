@@ -23,7 +23,7 @@ module CommentToolApp
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
     config.active_record.observers = :question_content_observer, :display_field_observer
-    
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -41,9 +41,9 @@ module CommentToolApp
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-      
+
     config.autoload_paths += Dir["#{config.root}/app/models/**/"]
-    
+
     # This is suppose to cause the dig tag "field with errors" from breaking the styling.
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
   end

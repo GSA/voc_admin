@@ -3,7 +3,7 @@
 <% javascript 'survey_builder.js' %>
 
 <div class="pageNavEdit-upper">
-  <p><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p>
+  <p class="left"><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p>
   <p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p>
   <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
@@ -16,8 +16,8 @@
 </div>
 
 <div class="pageNavEdit">
-  <p><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p> 
-	<p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p> 
+  <p class="left"><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p>
+	<p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p>
   <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
 

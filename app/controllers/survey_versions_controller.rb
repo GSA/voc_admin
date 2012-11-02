@@ -1,6 +1,6 @@
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey
-  
+
   def index
     @survey_versions = @survey.survey_versions.get_unarchived.order(order_clause(params[:sort], params[:direction])).page(params[:page]).per(10)
     respond_to do |format|
@@ -8,7 +8,7 @@ class SurveyVersionsController < ApplicationController
       format.js {render :json => [{:value => 0, :display => "Choose a version"}].concat(@survey.survey_versions.get_unarchived.order("major desc, minor desc").collect {|s| {:value => s.id, :display => s.version_number}}) }
     end
   end
-  
+
   def show
     respond_to do |format|
       if @survey.archived || @survey_version.archived
@@ -19,8 +19,8 @@ class SurveyVersionsController < ApplicationController
       end
     end
   end
-  
-  def edit 
+
+  def edit
     redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
     redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked
   end
@@ -35,7 +35,7 @@ class SurveyVersionsController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @survey_version.update_attribute(:archived, true)
     respond_to do |format|
@@ -43,7 +43,7 @@ class SurveyVersionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def create_new_major_version
     @survey.create_new_major_version
     respond_to do |format|
@@ -51,15 +51,15 @@ class SurveyVersionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def create_new_minor_version
-    
+
     respond_to do |format|
       format.html { redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Minor Survey Version was successfully created.') }
       format.xml  { head :ok }
     end
   end
-  
+
   def publish
     if @survey_version.questions.empty?
       redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
@@ -69,45 +69,45 @@ class SurveyVersionsController < ApplicationController
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
     end
   end
-  
+
   def unpublish
     @survey_version.unpublish_me
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
   end
-  
+
   def clone_version
     @minor_version = @survey_version.clone_me
 
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
 
   end
-  
+
   private
-  
+
   def get_survey
     @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:id]) if params[:id]
   end
-  
+
   def order_clause(column = nil, direction = nil)
     dir = sort_direction(direction)
     col = sort_column(column)
-    
+
     if col == "major, minor"
       col.split(",").map {|c| "#{c} #{dir}" }.join(",")
     else
       "#{col} #{dir}"
     end
   end
-  
+
   def sort_column(column = "major, minor")
     columns = ["major, minor", "published", "created_at", "updated_at"]
     columns.include?(column) ? column : "major, minor"
   end
-  
+
   def sort_direction(direction = "asc")
     directions = %w(asc desc)
     directions.include?(direction) ? direction : "asc"
   end
-  
+
 end

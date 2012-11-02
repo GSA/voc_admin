@@ -6,13 +6,13 @@
   <%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
   <%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :are_radio_button, "Area" %>
   <br/>
-  
+
   <% text_question.build_question_content unless @text_question.question_content %>
   <%= f.fields_for :question_content do |builder| %>
     <%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
   <% end -%>
   <br/>
-  
+
   <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @text_question, :survey => @survey, :survey_version => @survey_version} %>
 
   <br/>

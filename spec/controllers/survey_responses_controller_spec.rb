@@ -19,10 +19,12 @@ describe SurveyResponsesController do
     end
 
     it "should assign @survey_version if params[:survey_version_id] is present" do
-      sv = mock_model(SurveyVersion, :display_fields => DisplayField.scoped, :survey_responses => SurveyResponse.scoped)
+      sv = mock_model(SurveyVersion, :present? => false)
+
       SurveyVersion.stub(:find).and_return(sv)
+
       get :index, :survey_version_id => 1
-      assigns(:survey_version).should_not be_nil
+      assigns(:survey_version).should == sv
     end
 
     it "should raise an error if params[:survey_version_id] is not a valid id" do
@@ -38,6 +40,7 @@ describe SurveyResponsesController do
        #@controller.should_receive(:send_file).with(@file, {:filename => "responses.csv", :type => 'text/csv', :disposition => 'attachment'})
        @request.env["HTTP_ACCEPT"] = "text/csv"
       sv = mock_model(SurveyVersion, :display_fields => DisplayField.scoped, :survey_responses => SurveyResponse.scoped)
+      SurveyResponsesController.any_instance.stub(:set_custom_view)
       SurveyVersion.stub(:find).and_return(sv)
        get :index, :survey_version_id => 1
        response.headers['Content-Type'].index("text/csv").should_not be_nil

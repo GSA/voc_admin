@@ -10,7 +10,7 @@ module PasswordGenerator
     ret = ret.split("").sort_by{rand}.join()
     ret
   end
-  
+
   private
   #returns specified number of lower case characters
   def self.get_lowercase(total)
@@ -18,20 +18,20 @@ module PasswordGenerator
     ret = get_from_array(total, source)
     ret
   end
-  
+
   #returns specified number of upper case characters
   def self.get_capitals(total)
     ret = get_lowercase(total)
     ret.upcase
   end
-  
+
   #returns specified number of number as string
   def self.get_numbers(total)
     source = ("0".."9").to_a
     ret = get_from_array(total, source)
     ret
   end
-  
+
   #returns specified number of special characters
   #Possible values: !@#$%^&*
   def self.get_special(total)
@@ -39,11 +39,11 @@ module PasswordGenerator
     ret = get_from_array(total, source)
     ret
   end
-  
+
   def self.get_from_array(total, source)
     ret = ""
     1.upto(total) { |i| ret << source[rand(source.size-1)] }
     ret
   end
-  
+
 end
