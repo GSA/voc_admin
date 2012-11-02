@@ -69,4 +69,9 @@ task :add_test_data => [:environment] do
     SurveyResponse.process_response response_params, version.id
   end
 
+  version.reload.survey_responses.each do |sr|
+    new_time = Time.at( (Time.now.to_f - (Time.now-5.days).to_f)*rand + (Time.now-5.days).to_f )
+    sr.update_attribute :created_at, new_time
+  end
+
 end
