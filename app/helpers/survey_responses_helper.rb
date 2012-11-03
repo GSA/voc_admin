@@ -48,6 +48,6 @@ module SurveyResponsesHelper
 
   def options_for_conditions(default = nil)
     options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
-      :selected => default
+      :selected => default)
   end
 end
