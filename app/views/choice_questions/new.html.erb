@@ -12,7 +12,7 @@
 		<%= f.check_box :auto_next_page, {}, true, false %>
 	</p>
   <%= f.label :answer_type, "Answer Type: " %>
-  <%= f.select :answer_type, options_for_select([["Radio", ChoiceAnswer::RADIO], ["Dropdown", ChoiceAnswer::DROPDOWN], ["Multi-select", ChoiceAnswer::MULTISELECT], ["Check Boxes", ChoiceAnswer::CHECKBOX]]), :id => "answer_type_dropdown" %>
+  <%= f.select :answer_type, options_for_answer_type(nil), :id => "answer_type_dropdown" %>
 
 
 
