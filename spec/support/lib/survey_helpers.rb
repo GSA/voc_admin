@@ -7,7 +7,7 @@ module SurveyHelpers
     # survey / version / page setups
     @s = create :survey
     @v = @s.survey_versions.first
-    @p = @v.pages.create! :page_number => 1
+    @p = @v.pages.first || @v.pages.create!(:page_number => 1)
 
     # create questions
     @q1 = build_text_question "alpha", @v, @p, 1

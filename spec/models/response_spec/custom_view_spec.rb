@@ -2,7 +2,7 @@ require 'spec_helper'
 include SurveyHelpers
 
 describe CustomView do
-  before(:each) do 
+  before(:each) do
     @sv = create :survey_version, :major => 1, :minor => 1
   end
 
