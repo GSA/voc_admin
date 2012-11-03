@@ -39,4 +39,15 @@ module SurveyResponsesHelper
 
     edit_link
   end
+
+  def options_for_include_exclude(default = nil)
+    options_for_select([ ['Include', 1], ['Exclude', 0]],
+     :selected => default
+    )
+  end
+
+  def options_for_conditions(default = nil)
+    options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
+      :selected => default
+  end
 end
