@@ -23,7 +23,7 @@
 	<div id="answer_placement_fields" style="<%= ([ChoiceAnswer::RADIO, ChoiceAnswer::CHECKBOX].include?(choice_question.answer_type) || f.object.new_record?) ? '' : 'display: none;'%>">
 		<br/>
 		<%= f.label :answer_placement, "Answer Placement: " %>
-		<%= f.select :answer_placement, options_for_select([["horizontal (side-by-side)", ChoiceQuestion::HORIZONTAL_PLACEMENT], ["vertical (stacked)", ChoiceQuestion::VERTICAL_PLACEMENT]], :selected => f.object.answer_placement), :id => "answer_placement_dropdown" %>
+		<%= f.select :answer_placement, options_for_answer_placement(f.object.answer_placement), :id => "answer_placement_dropdown" %>
 	</div>
 
 	<div id="allow_multiple" class="displayNone">
