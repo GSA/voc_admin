@@ -4,7 +4,7 @@ var last_ajax_request_id = 0;
 $(function(){
 	$(".editDisplayFieldValue").live('ajax:success', function(event, data, status, xhr){
 			$("#dfv_edit_modal").html(data);
-			$("#dfv_edit_modal").modal();		
+			$("#dfv_edit_modal").modal();
 	});
 
 	/* replace the survey_response_list when a delete call is made */
@@ -22,17 +22,17 @@ $(function(){
 			getSurveyVersionList($("#survey_id").val());
 		}
 	});
-	
-	
+
+
 	/* make an ajax call to display the survey responses based on version_selection */
 	$("#survey_version_id").change(function(){
 		var survey_version_id = $(this).val();
-		
+
 		/* blank out the search field */
 		$("#search").val('');
-		
-		/* 
-		 * remove currently displayed responses if no version selected.  Otherwise 
+
+		/*
+		 * remove currently displayed responses if no version selected.  Otherwise
 		 * make an ajax call to get the display table for the selected version
 		 */
 		if(survey_version_id == "0"){
@@ -53,12 +53,12 @@ $(function(){
 		 */
 		setTimeout("setSurveyVersionSelect(" + params["survey_version_id"] + ")", 1000);
 	}
-	
+
 	/* Make the pagination links ajax calls */
 	$("div.pagination a").live('ajax:beforeSend', function(){
 		$("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
 	});
-	
+
 	$(".edit_display_field_value").live('submit', function(){
 		$.modal.close();
 		refreshSurveyResponseTable();
@@ -70,10 +70,9 @@ $(function(){
 		searchTimeout = setTimeout(replaceOldHtml, 1000);
     $("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
   });
-  
+
   $("#advanced_search_form").live('ajax:success', function(event, data, status, xhr){
 		clearTimeout(searchTimeout);
-    $("#survey_response_list").html(data);
   });
 
 	$("#simple_search_form").live("ajax:success", function(event, data, status, xhr){
@@ -90,7 +89,7 @@ function replaceOldHtml(){
 function add_search_criteria(link, content){
   var new_criteria_index = new Date().getTime();
   var regexp = new RegExp('new_criteria_index', 'g');
-  
+
   $("#searchCriterias").append(content.replace(regexp, new_criteria_index));
 }
 
@@ -117,11 +116,11 @@ function refreshSurveyResponseTable(){
 	var custom_view_id = $("#custom_view_id").val();
 	var page_num = $("#page").val();
 
-	
+
 	/* Do not make the ajax call if no survey_version_id has been selected */
 	if(survey_version_id != null && survey_version_id != undefined && survey_version_id != "0"){
 		$("#survey_response_list").html("Refreshing table...");
-		getSurveyDisplayTable(survey_version_id, order_column, order_dir, custom_view_id, page_num);		
+		getSurveyDisplayTable(survey_version_id, order_column, order_dir, custom_view_id, page_num);
 	}
 
 }
@@ -131,12 +130,12 @@ function getSurveyDisplayTable(survey_version_id, order_column, direction, custo
 	if(direction == undefined) { direction = ''; }
 	if(custom_view_id == undefined) { custom_view_id = '';}
 	if(page_num == undefined) { page_num = 1;}
-	
+
 	var search_form_url_string = $("#advanced_search_form").serialize();
-	
+
 	var data_string = search_form_url_string + "&order_column=" + order_column + "&order_dir=" + direction + "&survey_version_id=" + survey_version_id + "&custom_view_id=" + custom_view_id + "&page=" + page_num;
 	last_ajax_request_id += 1;
-	
+
 	$.ajax({
 		url: "survey_responses.js",
 		data: data_string, //"survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
@@ -161,13 +160,13 @@ function getUrlParams(){
 	 // associative array
 	 var params = params.split("&");
 	 var queryStringList = {};
-	 
+
 	 for(var i=0;i<params.length;i++)
 	 {
 	     var tmp = params[i].split("=");
 	     queryStringList[tmp[0]] = unescape(tmp[1]);
 	 }
-	 
+
 	 return queryStringList;
 }
 
