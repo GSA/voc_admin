@@ -7,17 +7,16 @@ CommentToolApp::Application.routes.draw do
   resources :user_sessions do
     post :do_pw_reset, :on => :collection
   end
-  
+
 	resources :users
 	resources :sites
-	
+
   resources :surveys
 
-  resources :categories
   resources :survey_responses do
     get :export_all, :on => :collection, :as => 'export_all'
   end
-  resources :raw_responses
+
   resources :rules do
     get :do_now, :on => :member
     get :check_do_now, :on => :collection
@@ -55,13 +54,13 @@ CommentToolApp::Application.routes.draw do
       get :create_new_minor_version, :on => :member
     end
   end
-  
+
   resources :images do
     get :display, :on => :collection
     delete :remove, :on => :collection
     post :save_file, :on => :collection
   end
-  
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => "user_sessions#new"
