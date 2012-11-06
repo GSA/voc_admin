@@ -3,6 +3,8 @@ class ChoiceQuestionsController < ApplicationController
 
   def new
     @choice_question = @survey_version.choice_questions.build
+    
+    build_default_choice_context(@choice_question)
 
     respond_to do |format|
       format.html #
@@ -13,6 +15,8 @@ class ChoiceQuestionsController < ApplicationController
   def create
     @choice_question = ChoiceQuestion.new(params[:choice_question])
     @choice_question.survey_element.survey_version_id = @survey_version.id
+
+    build_default_choice_context(@choice_question)
 
     respond_to do |format|
       if @choice_question.save
@@ -47,9 +51,6 @@ class ChoiceQuestionsController < ApplicationController
     end
   end
 
-
-
-
   def destroy
     @choice_question = ChoiceQuestion.find(params[:id])
 
@@ -75,6 +76,12 @@ class ChoiceQuestionsController < ApplicationController
 
     df = @survey_version.display_fields.find_by_name(qc.statement)
     df.destroy if df.present?
+  end
+
+  def build_default_choice_context(choice_question)
+    choice_question.build_question_content unless choice_question.question_content
+
+    4.times {choice_question.choice_answers.build} if choice_question.choice_answers.empty?
   end
 
 end

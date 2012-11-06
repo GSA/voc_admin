@@ -1,5 +1,4 @@
 <%= form_for [survey, survey_version, choice_question], :remote => true do |f| %>
-	<% choice_question.build_question_content if choice_question.new_record? %>
 	<%= f.fields_for :question_content do |builder| %>
 		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
 	<% end -%>
@@ -8,19 +7,18 @@
 	<%= f.label :answer_type, "Answer Type: " %>
 	<%= f.select :answer_type, options_for_answer_type(f.object.answer_type), :id => "answer_type_dropdown" %>
 
-	<p id="auto_next_page_fields" style="<%= (choice_question.answer_type == ChoiceAnswer::RADIO || f.object.new_record?) ? '' : 'display: none;'%>">
+	<p id="auto_next_page_fields" <%= auto_next_page_visibility(f, choice_question) %>>
 		<%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
 		<%= f.check_box :auto_next_page, {}, true, false %>
 	</p>
 
-	<% 4.times {choice_question.choice_answers.build} if choice_question.choice_answers.empty? %>
 	<%= f.fields_for :choice_answers do |answer_builder| %>
 		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey, :survey_version => survey_version} %>
 	<% end %>
 
 	<span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
 
-	<div id="answer_placement_fields" style="<%= ([ChoiceAnswer::RADIO, ChoiceAnswer::CHECKBOX].include?(choice_question.answer_type) || f.object.new_record?) ? '' : 'display: none;'%>">
+	<div id="answer_placement_fields" <%= answer_placement_visibility(f, choice_question) %>>
 		<br/>
 		<%= f.label :answer_placement, "Answer Placement: " %>
 		<%= f.select :answer_placement, options_for_answer_placement(f.object.answer_placement), :id => "answer_placement_dropdown" %>
