@@ -17,7 +17,81 @@ describe SurveyVersion do
 
   it { should validate_presence_of(:survey) }
 
-  it "should set the version to published" do
+  # these are not in Shoulda 1.4.0, but coming soon:
+  # it { should delegate_method(:name).to(:survey) }
+  # it { should delegate_method(:description).to(:survey) }
+
+  context "scope tests" do
+    before(:each) do
+      @sv = build :survey_version
+    end
+
+    context "published scope" do
+      it "should include published SurveyVersions" do
+        @sv.published = true
+        @sv.save!
+
+        SurveyVersion.published.should include(@sv)
+      end
+
+      it "should not include unpublished SurveyVersions" do
+        @sv.published = false
+        @sv.save!
+
+        SurveyVersion.published.should_not include(@sv)
+      end
+    end
+
+    context "unpublished scope" do
+      it "should include unpublished SurveyVersions" do
+        @sv.published = false
+        @sv.save!
+
+        SurveyVersion.unpublished.should include(@sv)
+      end
+
+      it "should not include published SurveyVersions" do
+        @sv.published = true
+        @sv.save!
+
+        SurveyVersion.unpublished.should_not include(@sv)
+      end
+    end
+
+    context "archived scope" do
+      it "should include archived SurveyVersions" do
+        @sv.archived = true
+        @sv.save!
+
+        SurveyVersion.get_archived.should include(@sv)
+      end
+
+      it "should not include unarchived SurveyVersions" do
+        @sv.archived = false
+        @sv.save!
+
+        SurveyVersion.get_archived.should_not include(@sv)
+      end
+    end
+
+    context "unarchived scope" do
+      it "should include unarchived SurveyVersions" do
+        @sv.archived = false
+        @sv.save!
+
+        SurveyVersion.get_unarchived.should include(@sv)
+      end
+
+      it "should not include archived SurveyVersions" do
+        @sv.archived = true
+        @sv.save!
+
+        SurveyVersion.get_unarchived.should_not include(@sv)
+      end
+    end
+  end
+
+  it "calling publish_me should set the version to published" do
     @survey.survey_versions.first.publish_me
     @survey.survey_versions.first.published.should == true
   end
