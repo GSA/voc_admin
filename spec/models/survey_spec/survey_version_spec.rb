@@ -17,13 +17,9 @@ describe SurveyVersion do
 
   it { should validate_presence_of(:survey) }
 
-  # these are not in Shoulda 1.4.0, but coming soon:
-  # it { should delegate_method(:name).to(:survey) }
-  # it { should delegate_method(:description).to(:survey) }
-
   context "scope tests" do
     before(:each) do
-      @sv = build :survey_version
+      @sv = @survey.survey_versions.first
     end
 
     context "published scope" do
@@ -91,9 +87,18 @@ describe SurveyVersion do
     end
   end
 
+  # these are not in Shoulda 1.4.0, but coming soon:
+  # it { should delegate_method(:name).to(:survey) }
+  # it { should delegate_method(:description).to(:survey) }
+
   it "calling publish_me should set the version to published" do
     @survey.survey_versions.first.publish_me
-    @survey.survey_versions.first.published.should == true
+    @survey.survey_versions.first.published.should be_true
+  end
+
+  it "calling unpublish_me should set the version to unpublished" do
+    @survey.survey_versions.first.unpublish_me
+    @survey.survey_versions.first.published.should be_false
   end
 
   it "should return the next page number" do
@@ -102,6 +107,14 @@ describe SurveyVersion do
 
   it "should return the next element number" do
     @survey.survey_versions.first.next_element_number.should == 1
+  end
+
+  it "should format the version number" do
+    sv = @survey.survey_versions.first
+    sv.major = 6
+    sv.minor = 5
+
+    sv.version_number.should == "6.5"
   end
 
   it "should reorder all survey elements"
