@@ -15,6 +15,10 @@ FactoryGirl.define do
     description           "Rspec test site created using Factory Girl"
   end
 
+  factory :role do
+    sequence(:name)       {|n| "Rspec Test Role #{n}"}
+  end
+
   # == Schema Information
   # Schema version: 20110408150334
   #

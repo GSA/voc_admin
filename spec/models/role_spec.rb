@@ -1,7 +1,23 @@
 require 'spec_helper'
 
 describe Role do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:role) {build :role}
+
+  it "should be valid" do
+  	role.should be_valid
+  end
+
+  it "should not be valid without a name" do
+  	role.name = nil
+  	role.should_not be_valid
+  	role.errors[:name].should include("can't be blank")
+  end
+
+  it "should not be valid without a unique name" do
+  	role.dup.save!
+  	role.should_not be_valid
+  	role.errors[:name].should include("has already been taken")
+  end
 end
 
 # == Schema Information
