@@ -10,13 +10,13 @@ FactoryGirl.define do
   #  created_at  :datetime
   #  updated_at  :datetime
   factory :site do
-    sequence(:name)       {|n| "Rspec Test Site #{n}"}
-    sequence(:url)        {|n| "http://www.example#{n}.com"}
-    description           "Rspec test site created using Factory Girl"
+    sequence(:name)           {|n| "Rspec Test Site #{n}"}                                                
+    sequence(:url)            {|n| "http://www.example#{n}.com"}                              
+    description               "Rspec test site created using Factory Girl"
   end
 
   factory :role do
-    sequence(:name)       {|n| "Rspec Test Role #{n}"}
+    sequence(:name)           {|n| "Rspec Test Role #{n}"}                                                
   end
 
   # == Schema Information
@@ -29,7 +29,7 @@ FactoryGirl.define do
   #  created_at :datetime
   #  updated_at :datetime
   factory :survey_type do
-    sequence(:name)       {|n| "Survey Type #{n}"}
+    sequence(:name)           {|n| "Survey Type #{n}"}                                                            
   end
 
   # == Schema Information
@@ -45,8 +45,8 @@ FactoryGirl.define do
   #  archived       :boolean(1)      default(FALSE)
   #  site_id        :integer(4)
   factory :survey do
-    sequence(:name)       {|n| "Rspec Test Survey #{n}"}
-    description           "Rspec test survey created by Factory Girl"
+    sequence(:name)           {|n| "Rspec Test Survey #{n}"}                                          
+    description               "Rspec test survey created by Factory Girl"   
     survey_type
     site
   end
@@ -84,8 +84,8 @@ FactoryGirl.define do
   #  created_at        :datetime
   #  updated_at        :datetime
   factory :custom_view do
-    sequence(:name)       {|n| "Rspec Test Survey Version #{n}"}
-    default               false
+    sequence(:name)           {|n| "Rspec Test Survey Version #{n}"}                  
+    default                   false                                                                                                                     
     survey_version
   end
 
@@ -98,6 +98,11 @@ FactoryGirl.define do
   #  created_at :datetime
   #  updated_at :datetime
   factory :execution_trigger do
-    sequence(:name)       {|n| "trigger #{n}"}
+    sequence(:name)           {|n| "trigger #{n}"}                                                                        
+  end
+
+  factory :export do
+    sequence(:access_token)   {|n| n}
+    document                  File.open(File.join(Rails.root, 'spec', 'fixtures', 'Null.png'), 'r')
   end
 end
