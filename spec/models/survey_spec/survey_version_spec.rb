@@ -5,21 +5,17 @@ describe SurveyVersion do
     @survey = create :survey
   end
 
-  it "should require a survey" do
-    SurveyVersion.new(:major => 1, :minor => 0, :published => false, :notes => "").should_not be_valid
-  end
+  it { should validate_presence_of(:major) }
+  it { should validate_numericality_of(:major) }
+  it { should validate_uniqueness_of(:major).scoped_to([:survey_id, :minor]) }
 
-  it "should require a major version number" do
-    SurveyVersion.new(:minor => 0, :published => false, :notes => "", :survey => @survey).should_not be_valid
-  end
+  it { should validate_presence_of(:minor) }
+  it { should validate_numericality_of(:minor) }
+  it { should validate_uniqueness_of(:minor).scoped_to([:survey_id, :major]) }
 
-  it "should require a minor version number" do
-    SurveyVersion.new(:major => 1, :published => false, :notes => "", :survey => @survey).should_not be_valid
-  end
+  it { should ensure_length_of(:notes).is_at_most(65535) }
 
-  it "should have a unique version number" do
-    @survey.survey_versions.new(:major => @survey.survey_versions.first.major, :minor => 0, :published => false, :notes => "").should_not be_valid
-  end
+  it { should validate_presence_of(:survey) }
 
   it "should set the version to published" do
     @survey.survey_versions.first.publish_me
