@@ -1,23 +1,12 @@
 require 'spec_helper'
 
 describe Role do
-  let(:role) {build :role}
 
-  it "should be valid" do
-  	role.should be_valid
+  context "validations" do
+    it { should validate_presence_of(:name).with_message(/can't be blank/) }
+    it { should validate_uniqueness_of(:name).with_message(/has already been taken/)}
   end
 
-  it "should not be valid without a name" do
-  	role.name = nil
-  	role.should_not be_valid
-  	role.errors[:name].should include("can't be blank")
-  end
-
-  it "should not be valid without a unique name" do
-  	role.dup.save!
-  	role.should_not be_valid
-  	role.errors[:name].should include("has already been taken")
-  end
 end
 
 # == Schema Information
