@@ -17,6 +17,9 @@ describe SurveyVersion do
 
   it { should validate_presence_of(:survey) }
 
+  it { should delegate_method(:name).to(:survey).with_arguments(:prefix => true) }
+  it { should delegate_method(:description).to(:survey).with_arguments(:prefix => true) }
+
   it "should set the version to published" do
     @survey.survey_versions.first.publish_me
     @survey.survey_versions.first.published.should == true
