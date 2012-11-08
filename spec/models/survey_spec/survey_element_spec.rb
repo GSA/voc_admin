@@ -21,55 +21,46 @@ describe SurveyElement do
     element = SurveyElement.new(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id).should_not be_valid
   end
   
-  it "should have an element order set" do
-    element = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    element.element_order = nil
-    element.should_not be_valid
-  end
-  
-  it "should have a unique element order" do
-    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    asset_2 = Asset.create! :snippet => "Snippet2"
-    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => asset_2.id, :page_id => @page.id)
-    element2.element_order = 1
-    element2.should_not be_valid
-  end
+  context "element ordering" do
+    before(:each) do
+      @element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
+      @element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => Asset.create!(:snippet => "Snippet2").id, :page_id => @page.id)
+    end
 
-  it "should order by element_order by default" do
-    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => Asset.create!(:snippet => "Snippet2").id, :page_id => @page.id)
+    it "should have an element order set" do
+      @element1.element_order = nil
+      @element1.should_not be_valid
+    end
 
-    @version.survey_elements.should == @version.survey_elements.order(:element_order)
-  end
-  
-  it "should reorder page elements when an element is deleted" do
-    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    asset_2 = Asset.create! :snippet => "Snippet2"
-    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => asset_2.id, :page_id => @page.id)
-    element1.destroy
-    element2.reload.element_order.should == 1
-  end
-  
-  it "should increment element order" do
-    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    asset_2 = Asset.create! :snippet => "Snippet2"
-    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => asset_2.id, :page_id => @page.id)
-    element1.move_element_down
-    element1.element_order.should == 2
-  end
-  
-  it "should decrement element order" do
-    element1 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => @asset.id, :page_id => @page.id)
-    asset_2 = Asset.create! :snippet => "Snippet2"
-    element2 = @version.survey_elements.create!(:assetable_type => "Asset", :assetable_id => asset_2.id, :page_id => @page.id)
-    element2.move_element_up
-    element2.element_order.should == 1   
-  end
+    it "should have a unique element order" do
+      @element2.element_order = 1
+      @element2.should_not be_valid
+    end
 
-  it "should call set_element_order before validation" do
-    element = @version.survey_elements.new(:assetable => mock_model(Asset))
-    element.should_receive(:set_element_order).once
-    element.valid?
+    it "should order by element_order by default" do
+      @version.survey_elements.should == @version.survey_elements.order(:element_order)
+    end
+
+    it "should reorder page elements when an element is deleted" do
+      @element1.destroy
+      @element2.reload.element_order.should == 1
+    end
+
+    it "should increment element order" do
+      @element1.move_element_down
+      @element1.element_order.should == 2
+    end
+  
+    it "should decrement element order" do
+      @element2.move_element_up
+      @element2.element_order.should == 1   
+    end
+
+    it "should call set_element_order before validation" do
+      element = @version.survey_elements.new(:assetable => mock_model(Asset))
+      element.should_receive(:set_element_order).once
+      element.valid?
+    end
   end
   
   it "should set element_order to the next number" do

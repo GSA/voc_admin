@@ -28,4 +28,8 @@ describe SurveyType do
 		@valid_survey_type.dup.save
 		@valid_survey_type.should_not be_valid
 	end
+
+	it "should capitalize name" do
+		@valid_survey_type.name_upcase.should == @valid_survey_type.name.capitalize
+	end
 end
