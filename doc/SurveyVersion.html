@@ -119,7 +119,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong> </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (SurveyVersion) <strong>clone_me</strong> </a>
     
 
     
@@ -133,7 +133,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Clone all elements of the SurveyVersion into a new minor version.</p>
+</div></span>
   
 </li>
 
@@ -155,7 +157,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Create a CSV export of the survey responses and notify the requesting user
+by email when the export has completed and is available for download.</p>
+</div></span>
   
 </li>
 
@@ -163,7 +168,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#next_element_number-instance_method" title="#next_element_number (instance method)">- (Object) <strong>next_element_number</strong> </a>
+      <a href="#next_element_number-instance_method" title="#next_element_number (instance method)">- (Integer) <strong>next_element_number</strong> </a>
     
 
     
@@ -177,7 +182,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets the next available SurveyElement order.</p>
+</div></span>
   
 </li>
 
@@ -185,7 +192,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#next_page_number-instance_method" title="#next_page_number (instance method)">- (Object) <strong>next_page_number</strong> </a>
+      <a href="#next_page_number-instance_method" title="#next_page_number (instance method)">- (Integer) <strong>next_page_number</strong> </a>
     
 
     
@@ -199,7 +206,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets the next available page number.</p>
+</div></span>
   
 </li>
 
@@ -229,7 +238,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#publish_me-instance_method" title="#publish_me (instance method)">- (Object) <strong>publish_me</strong> </a>
+      <a href="#publish_me-instance_method" title="#publish_me (instance method)">- (Boolean) <strong>publish_me</strong> </a>
     
 
     
@@ -243,7 +252,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Unpublish any previously published survey versions for the Survey and
+publish this SurveyVersion instead.</p>
+</div></span>
   
 </li>
 
@@ -251,7 +263,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#question_elements-instance_method" title="#question_elements (instance method)">- (Object) <strong>question_elements</strong> </a>
+      <a href="#question_elements-instance_method" title="#question_elements (instance method)">- (Array&lt;SurveyElement&gt;) <strong>question_elements</strong> </a>
     
 
     
@@ -265,7 +277,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Get all the SurveyElements that are Question elements.</p>
+</div></span>
   
 </li>
 
@@ -295,7 +309,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sources-instance_method" title="#sources (instance method)">- (Object) <strong>sources</strong> </a>
+      <a href="#sources-instance_method" title="#sources (instance method)">- (Array&lt;Integer&gt;) <strong>sources</strong> </a>
     
 
     
@@ -309,7 +323,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Get all the available question content ids for the survey version for use
+as Rule sources.</p>
+</div></span>
   
 </li>
 
@@ -317,7 +334,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#unpublish_me-instance_method" title="#unpublish_me (instance method)">- (Object) <strong>unpublish_me</strong> </a>
+      <a href="#unpublish_me-instance_method" title="#unpublish_me (instance method)">- (Boolean) <strong>unpublish_me</strong> </a>
     
 
     
@@ -331,7 +348,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Unpublish the SurveyVersion.</p>
+</div></span>
   
 </li>
 
@@ -339,7 +358,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#version_number-instance_method" title="#version_number (instance method)">- (Object) <strong>version_number</strong> </a>
+      <a href="#version_number-instance_method" title="#version_number (instance method)">- (String) <strong>version_number</strong> </a>
     
 
     
@@ -353,7 +372,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets the version string in the format (major.minor).</p>
+</div></span>
   
 </li>
 
@@ -371,47 +392,80 @@
       <div class="method_details first">
   <h3 class="signature first" id="clone_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>clone_me</strong> 
+    - (<tt><span class='object_link'><a href="" title="SurveyVersion (class)">SurveyVersion</a></span></tt>) <strong>clone_me</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Clone all elements of the SurveyVersion into a new minor version.</p>
+
+<p>All Pages, SurveyElements, DisplayFields, and Rules will be cloned into the
+new SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a new minor version of the SurveyVersion which is an exact copy of the
+cloned SurveyVersion</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170</pre>
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span>
   <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -453,19 +507,64 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a CSV export of the survey responses and notify the requesting user
+by email when the export has completed and is available for download.</p>
+
+<p>All search parameters, filters, and custom view options are respected in
+the export</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>filter_params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>parameters for filtering the survey responses (Advanced Search, Simple
+Search, Custom Views)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>user_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>ID for the user requesting the export</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-38
-39
-40
-41
-42
-43
-44
 45
 46
 47
@@ -506,19 +605,26 @@
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_responses_csv'>generate_responses_csv</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_params'>filter_params</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_survey_responses'>survey_responses</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_processed'>processed</span>
 
   <span class='comment'># use the simple search
 </span>  <span class='id identifier rubyid_survey_responses'>survey_responses</span> <span class='op'>=</span> <span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:simple_search</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:simple_search</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-
-  <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>simple_seach = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:simple_search</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
 
   <span class='comment'># use the advanced search filters
 </span>  <span class='kw'>unless</span> <span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:search</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -527,7 +633,8 @@
     <span class='id identifier rubyid_survey_responses'>survey_responses</span> <span class='op'>=</span> <span class='id identifier rubyid_search'>search</span><span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='comment'># Apply the custom view to the survey responses
+</span>  <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:custom_view_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
     <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_custom_views'>custom_views</span><span class='period'>.</span><span class='id identifier rubyid_find_by_default'>find_by_default</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
@@ -536,7 +643,10 @@
 </span>    <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_custom_views'>custom_views</span><span class='period'>.</span><span class='id identifier rubyid_find_by_id'>find_by_id</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:custom_view_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_file_name'>file_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%Y%m%d%H%M</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>10</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_version_number'>version_number</span><span class='rbrace'>}</span><span class='tstring_content'>.csv</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># Write the survey responses to a temporary CSV file which will be used to create the
+</span>  <span class='comment'># Export instance.  The document will be copied to the correct location by paperclip
+</span>  <span class='comment'># when the Export instance is created.
+</span>  <span class='id identifier rubyid_file_name'>file_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%Y%m%d%H%M</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>10</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_version_number'>version_number</span><span class='rbrace'>}</span><span class='tstring_content'>.csv</span><span class='tstring_end'>&quot;</span></span>
   <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_name'>file_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_csv'>csv</span><span class='op'>|</span>
     <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Date</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Page URL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>||</span> <span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
@@ -553,11 +663,13 @@
 
   <span class='id identifier rubyid_export_file'>export_file</span> <span class='op'>=</span> <span class='const'>Export</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span> <span class='symbol'>:document</span> <span class='op'>=&gt;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_name'>file_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_export_file'>export_file</span><span class='period'>.</span><span class='id identifier rubyid_persisted?'>persisted?</span>
+  <span class='comment'># Notify the user that the export has been successful and is available for download
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_export_file'>export_file</span><span class='period'>.</span><span class='id identifier rubyid_persisted?'>persisted?</span>
     <span class='const'>ExportMailer</span><span class='period'>.</span><span class='id identifier rubyid_delay'>delay</span><span class='period'>.</span><span class='id identifier rubyid_export_download'>export_download</span><span class='lparen'>(</span><span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_email'>email</span><span class='comma'>,</span> <span class='id identifier rubyid_export_file'>export_file</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_name'>file_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='comment'># Remove the temporary file used to create this export
+</span>  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_root'>root</span><span class='rbrace'>}</span><span class='tstring_content'>/tmp/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_name'>file_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -567,24 +679,53 @@
       <div class="method_details ">
   <h3 class="signature " id="next_element_number-instance_method">
   
-    - (<tt>Object</tt>) <strong>next_element_number</strong> 
+    - (<tt>Integer</tt>) <strong>next_element_number</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets the next available SurveyElement order</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>next available SurveyElement order</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-123
-124
-125</pre>
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_element_number'>next_element_number</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -597,24 +738,53 @@
       <div class="method_details ">
   <h3 class="signature " id="next_page_number-instance_method">
   
-    - (<tt>Object</tt>) <strong>next_page_number</strong> 
+    - (<tt>Integer</tt>) <strong>next_page_number</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets the next available page number</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>next available page number</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-119
-120
-121</pre>
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_page_number'>next_page_number</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -639,20 +809,20 @@
       <pre class="lines">
 
 
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117</pre>
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_for_action_select'>options_for_action_select</span>
   <span class='id identifier rubyid_source_array'>source_array</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -673,29 +843,59 @@
       <div class="method_details ">
   <h3 class="signature " id="publish_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>publish_me</strong> 
+    - (<tt>Boolean</tt>) <strong>publish_me</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Unpublish any previously published survey versions for the Survey and
+publish this SurveyVersion instead.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>true if the publish succeeds, false otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-131
-132
-133
-134
-135
-136
-137
-138</pre>
+160
+161
+162
+163
+164
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_publish_me'>publish_me</span>
   <span class='comment'># Unpublish all other versions of the survey
@@ -713,24 +913,53 @@
       <div class="method_details ">
   <h3 class="signature " id="question_elements-instance_method">
   
-    - (<tt>Object</tt>) <strong>question_elements</strong> 
+    - (<tt>Array&lt;<span class='object_link'><a href="SurveyElement.html" title="SurveyElement (class)">SurveyElement</a></span>&gt;</tt>) <strong>question_elements</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get all the SurveyElements that are Question elements</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="SurveyElement.html" title="SurveyElement (class)">SurveyElement</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>array containing all the question survey elements</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-87
-88
-89</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_question_elements'>question_elements</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>assetable_type in (?)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>TextQuestion</span><span class='words_sep'> </span><span class='tstring_content'>ChoiceQuestion</span><span class='words_sep'> </span><span class='tstring_content'>MatrixQuestion</span><span class='words_sep'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>element_order asc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -755,12 +984,12 @@
       <pre class="lines">
 
 
-91
-92
-93</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_questions'>questions</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_elements'>question_elements</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:assetable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:assetable</span><span class='rparen'>)</span>
@@ -773,32 +1002,62 @@
       <div class="method_details ">
   <h3 class="signature " id="sources-instance_method">
   
-    - (<tt>Object</tt>) <strong>sources</strong> 
+    - (<tt>Array&lt;Integer&gt;</tt>) <strong>sources</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get all the available question content ids for the survey version for use
+as Rule sources</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Integer&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>array of available question contents for use as Rule sources</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105</pre>
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sources'>sources</span>
   <span class='id identifier rubyid_source_array'>source_array</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -819,25 +1078,54 @@
       <div class="method_details ">
   <h3 class="signature " id="unpublish_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>unpublish_me</strong> 
+    - (<tt>Boolean</tt>) <strong>unpublish_me</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Unpublish the SurveyVersion</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if the SurveyVersion is successfully unpublished, False otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-140
-141
-142
-143</pre>
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unpublish_me'>unpublish_me</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_published'>published</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -851,24 +1139,53 @@
       <div class="method_details ">
   <h3 class="signature " id="version_number-instance_method">
   
-    - (<tt>Object</tt>) <strong>version_number</strong> 
+    - (<tt>String</tt>) <strong>version_number</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets the version string in the format (major.minor)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>version string</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-127
-128
-129</pre>
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version_number'>version_number</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_major'>major</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_minor'>minor</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -883,7 +1200,7 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Nov 12 07:59:55 2012 by
+  Generated on Mon Nov 12 09:02:34 2012 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>
