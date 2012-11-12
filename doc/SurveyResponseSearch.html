@@ -1,0 +1,627 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: SurveyResponseSearch
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (S)</a> &raquo;
+    
+    
+    <span class="title">SurveyResponseSearch</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: SurveyResponseSearch
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">SurveyResponseSearch</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/response_models/survey_response_search.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="SQLConditions-constant" class="">SQLConditions =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>equals</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>=</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>contains</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>LIKE</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>begins_with</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>LIKE</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ends_with</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>LIKE</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>less_than</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>greater_than</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>'</span></span>
+<span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="NegationSQL-constant" class="">NegationSQL =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>equals</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>!=</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>contains</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT LIKE</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>begins_with</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT LIKE</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ends_with</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>NOT LIKE</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>less_than</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&gt;=</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>greater_than</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>&lt;=</span><span class='tstring_end'>'</span></span>
+<span class='rbrace'>}</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#conditions-instance_method" title="#conditions (instance method)">- (Object) <strong>conditions</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute conditions.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#criteria-instance_method" title="#criteria (instance method)">- (Object) <strong>criteria</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute criteria.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parameters-instance_method" title="#parameters (instance method)">- (Object) <strong>parameters</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Array of parameters to the condition string.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#condition_string-instance_method" title="#condition_string (instance method)">- (Object) <strong>condition_string</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>condition_string: return the full condition and parameters string to be
+passed to the where clause.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (SurveyResponseSearch) <strong>initialize</strong>(attribs = nil) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of SurveyResponseSearch.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#search-instance_method" title="#search (instance method)">- (Object) <strong>search</strong>(passed_scope) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Apply the built where clause to the passed Relation.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="SurveyResponseSearch (class)">SurveyResponseSearch</a></span></tt>) <strong>initialize</strong>(attribs = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>A new instance of SurveyResponseSearch</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_attribs'>attribs</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@criteria</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_attribs'>attribs</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_attribs'>attribs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>criteria</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>value</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@parameters</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@clause_joins</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='comment'># clean_criteria
+</span>
+  <span class='id identifier rubyid_build_condition_string'>build_condition_string</span>
+
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="conditions=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="conditions-instance_method">
+  
+    - (<tt>Object</tt>) <strong>conditions</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute conditions</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2
+3
+4</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 2</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_conditions'>conditions</span>
+  <span class='ivar'>@conditions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="criteria=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="criteria-instance_method">
+  
+    - (<tt>Object</tt>) <strong>criteria</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute criteria</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2
+3
+4</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 2</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_criteria'>criteria</span>
+  <span class='ivar'>@criteria</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="parameters=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="parameters-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parameters</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Array of parameters to the condition string</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_parameters'>parameters</span>
+  <span class='ivar'>@parameters</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="condition_string-instance_method">
+  
+    - (<tt>Object</tt>) <strong>condition_string</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>condition_string: return the full condition and parameters string to be
+passed to the where clause.</p>
+
+<p>"(display_field_values.display_field_id = ? AND display_field_values.value
+#condition) AND/OR (display_field_values.display_field_id = ? AND
+display_field_values.value #condition) AND/OR
+(display_field_values.display_field_id = ? AND display_field_values.value
+#condition)"</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_condition_string'>condition_string</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='ivar'>@conditions</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_con'>con</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_con'>con</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='ivar'>@clause_joins</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_con'>con</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="search-instance_method">
+  
+    - (<tt>Object</tt>) <strong>search</strong>(passed_scope) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Apply the built where clause to the passed Relation</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_passed_scope'>passed_scope</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_passed_scope'>passed_scope</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_condition_string'>condition_string</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon Nov 12 07:59:56 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

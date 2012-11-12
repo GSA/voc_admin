@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: SurveyResponsesHelper
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (S)</a> &raquo;
+    
+    
+    <span class="title">SurveyResponsesHelper</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: SurveyResponsesHelper
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/helpers/survey_responses_helper.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#display_question_answer-instance_method" title="#display_question_answer (instance method)">- (Object) <strong>display_question_answer</strong>(response) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_edit_current_view_link-instance_method" title="#get_edit_current_view_link (instance method)">- (Object) <strong>get_edit_current_view_link</strong>(version, current_view) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#options_for_conditions-instance_method" title="#options_for_conditions (instance method)">- (Object) <strong>options_for_conditions</strong>(default = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#options_for_include_exclude-instance_method" title="#options_for_include_exclude (instance method)">- (Object) <strong>options_for_include_exclude</strong>(default = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sortable_display_field-instance_method" title="#sortable_display_field (instance method)">- (Object) <strong>sortable_display_field</strong>(column, title = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="display_question_answer-instance_method">
+  
+    - (<tt>Object</tt>) <strong>display_question_answer</strong>(response) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 2</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_display_question_answer'>display_question_answer</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;i&gt;No Answer&lt;/i&gt;</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_questionable_type'>questionable_type</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ChoiceQuestion</span><span class='tstring_end'>&quot;</span></span>
+    <span class='const'>ChoiceAnswer</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TextQuestion</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_edit_current_view_link-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_edit_current_view_link</strong>(version, current_view) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_edit_current_view_link'>get_edit_current_view_link</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_current_view'>current_view</span>
+  <span class='id identifier rubyid_edit_link'>edit_link</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Edit Current View</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_edit_link'>edit_link</span> <span class='op'>=</span> <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_edit_link'>edit_link</span><span class='comma'>,</span> <span class='id identifier rubyid_edit_survey_survey_version_custom_view_path'>edit_survey_survey_version_custom_view_path</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_current_view'>current_view</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pageNav</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_current_view'>current_view</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_edit_link'>edit_link</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="options_for_conditions-instance_method">
+  
+    - (<tt>Object</tt>) <strong>options_for_conditions</strong>(default = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_options_for_conditions'>options_for_conditions</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options_for_select'>options_for_select</span><span class='lparen'>(</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Exactly Matches</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>equals</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Containing</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>contains</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Begins With</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>begins_with</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Ends With</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>ends_with</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Less Than</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>less_than</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Greater Than</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>greater_than</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='symbol'>:selected</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="options_for_include_exclude-instance_method">
+  
+    - (<tt>Object</tt>) <strong>options_for_include_exclude</strong>(default = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_options_for_include_exclude'>options_for_include_exclude</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_options_for_select'>options_for_select</span><span class='lparen'>(</span><span class='lbracket'>[</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Include</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Exclude</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='comma'>,</span>
+   <span class='symbol'>:selected</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default'>default</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sortable_display_field-instance_method">
+  
+    - (<tt>Object</tt>) <strong>sortable_display_field</strong>(column, title = nil) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sortable_display_field'>sortable_display_field</span> <span class='id identifier rubyid_column'>column</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='id identifier rubyid_direction'>direction</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_column'>column</span> <span class='op'>==</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:order_column</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:order_dir</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>asc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>desc</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>asc</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_title'>title</span> <span class='op'>||=</span> <span class='id identifier rubyid_column'>column</span><span class='period'>.</span><span class='id identifier rubyid_titleize'>titleize</span>
+
+  <span class='id identifier rubyid_arrows'>arrows</span> <span class='op'>=</span> <span class='id identifier rubyid_content_tag'>content_tag</span> <span class='symbol'>:span</span><span class='comma'>,</span> <span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sort_arrows</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_ret'>ret</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_column'>column</span> <span class='op'>==</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:order_column</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_ret'>ret</span> <span class='op'>+=</span> <span class='id identifier rubyid_image_tag'>image_tag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow_up.png</span><span class='tstring_end'>&quot;</span></span>   <span class='kw'>if</span> <span class='id identifier rubyid_direction'>direction</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>desc</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_ret'>ret</span> <span class='op'>+=</span> <span class='id identifier rubyid_image_tag'>image_tag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow_down.png</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_direction'>direction</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>asc</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_ret'>ret</span> <span class='op'>+=</span> <span class='id identifier rubyid_image_tag'>image_tag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrows.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sort</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_ret'>ret</span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_title'>title</span> <span class='op'>+=</span> <span class='id identifier rubyid_arrows'>arrows</span>
+
+  <span class='id identifier rubyid_link_to_function'>link_to_function</span> <span class='id identifier rubyid_title'>title</span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sortByDisplayField('</span><span class='embexpr_beg'>#{</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_column'>column</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>', '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_direction'>direction</span><span class='rbrace'>}</span><span class='tstring_content'>')</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon Nov 12 07:59:54 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

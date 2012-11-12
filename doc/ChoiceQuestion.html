@@ -1,0 +1,643 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: ChoiceQuestion
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (C)</a> &raquo;
+    
+    
+    <span class="title">ChoiceQuestion</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: ChoiceQuestion
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">ActiveRecord::Base</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next">ChoiceQuestion</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/question_models/choice_question.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="HORIZONTAL_PLACEMENT-constant" class="">HORIZONTAL_PLACEMENT =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>false</span></pre></dd>
+      
+        <dt id="VERTICAL_PLACEMENT-constant" class="">VERTICAL_PLACEMENT =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>true</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check_condition-instance_method" title="#check_condition (instance method)">- (Object) <strong>check_condition</strong>(survey_response, conditional_id, test_value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get_true_value-instance_method" title="#get_true_value (instance method)">- (Object) <strong>get_true_value</strong>(answer_string) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#only_one_default_answer-instance_method" title="#only_one_default_answer (instance method)">- (Object) <strong>only_one_default_answer</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#survey_version-instance_method" title="#survey_version (instance method)">- (Object) <strong>survey_version</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="check_condition-instance_method">
+  
+    - (<tt>Object</tt>) <strong>check_condition</strong>(survey_response, conditional_id, test_value) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
+  <span class='comment'>#check the survey_response for a response to this quesiton
+</span>  <span class='id identifier rubyid_raw_response'>raw_response</span> <span class='op'>=</span> <span class='id identifier rubyid_survey_response'>survey_response</span><span class='period'>.</span><span class='id identifier rubyid_raw_responses'>raw_responses</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_rr'>rr</span><span class='op'>|</span> <span class='id identifier rubyid_rr'>rr</span><span class='period'>.</span><span class='id identifier rubyid_question_content_id'>question_content_id</span> <span class='op'>==</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
+  <span class='kw'>return</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_raw_response'>raw_response</span>
+  <span class='id identifier rubyid_answer'>answer</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_response'>raw_response</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span>
+
+  <span class='kw'>case</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span>
+  <span class='kw'>when</span> <span class='int'>1</span> <span class='comment'>#&quot;=&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span> <span class='op'>==</span> <span class='id identifier rubyid_test_value'>test_value</span>
+  <span class='kw'>when</span> <span class='int'>2</span> <span class='comment'>#&quot;!=&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span> <span class='op'>!=</span> <span class='id identifier rubyid_test_value'>test_value</span>
+  <span class='kw'>when</span> <span class='int'>3</span> <span class='comment'>#&quot;contains&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_test_value'>test_value</span>
+  <span class='kw'>when</span> <span class='int'>4</span> <span class='comment'>#&quot;does not contain&quot;
+</span>    <span class='op'>!</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_test_value'>test_value</span>
+  <span class='kw'>when</span> <span class='int'>5</span> <span class='comment'>#&quot;&lt;&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>when</span> <span class='int'>6</span> <span class='comment'>#&quot;&lt;=&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;=</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>when</span> <span class='int'>7</span> <span class='comment'>#&quot;&gt;=&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>when</span> <span class='int'>8</span> <span class='comment'>#&quot;&gt;&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+  <span class='kw'>when</span> <span class='int'>9</span> <span class='comment'>#&quot;empty&quot;
+</span>    <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='kw'>when</span> <span class='int'>10</span> <span class='comment'>#&quot;not empty&quot;
+</span>    <span class='op'>!</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='kw'>else</span>
+    <span class='kw'>false</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clone_me-instance_method">
+  
+    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span>
+  <span class='comment'>#build question content
+</span>  <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
+  <span class='id identifier rubyid_qc_attribs'>qc_attribs</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'>#build Survey Element
+</span>  <span class='id identifier rubyid_se_attribs'>se_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
+    <span class='symbol'>:survey_version_id</span><span class='op'>=&gt;</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+    <span class='symbol'>:page_id</span><span class='op'>=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_clone_of_id'>find_by_clone_of_id</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_page_id'>page_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_se_attribs'>se_attribs</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'>#build Choice Answers
+</span>  <span class='id identifier rubyid_ca_attribs'>ca_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_answers'>choice_answers</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_choice_answer'>choice_answer</span><span class='op'>|</span>
+    <span class='id identifier rubyid_answer_hash'>answer_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_choice_answer'>choice_answer</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
+      <span class='symbol'>:clone_of_id</span><span class='op'>=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_choice_answer'>choice_answer</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_answer_hash'>answer_hash</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='comment'>#update the next page pointer
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_answer_hash'>answer_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>next_page_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_answer_hash'>answer_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>next_page_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Page</span><span class='period'>.</span><span class='id identifier rubyid_find_by_survey_version_id_and_clone_of_id'>find_by_survey_version_id_and_clone_of_id</span><span class='lparen'>(</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_answer'>choice_answer</span><span class='period'>.</span><span class='id identifier rubyid_next_page_id'>next_page_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_answer_hash'>answer_hash</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'>#save it all
+</span>  <span class='const'>ChoiceQuestion</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
+                           <span class='symbol'>:question_content_attributes</span><span class='op'>=&gt;</span><span class='id identifier rubyid_qc_attribs'>qc_attribs</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:skip_observer</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='comma'>,</span>
+                           <span class='symbol'>:survey_element_attributes</span><span class='op'>=&gt;</span><span class='id identifier rubyid_se_attribs'>se_attribs</span><span class='comma'>,</span>
+                           <span class='symbol'>:choice_answers_attributes</span><span class='op'>=&gt;</span><span class='id identifier rubyid_ca_attribs'>ca_attribs</span><span class='comma'>,</span>
+                           <span class='symbol'>:clone_of_id</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="copy_to_page-instance_method">
+  
+    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 104</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span>
+  <span class='comment'>#build question content
+</span>  <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
+  <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='id identifier rubyid_qc_attribs'>qc_attribs</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:statement</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_statement'>statement</span><span class='rbrace'>}</span><span class='tstring_content'> (copy)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_qc_attribs'>qc_attribs</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'>#build Survey Element
+</span>  <span class='id identifier rubyid_se_attribs'>se_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:page_id</span><span class='op'>=&gt;</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_se_attribs'>se_attribs</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'>#build Choice Answers
+</span>  <span class='id identifier rubyid_ca_attribs'>ca_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_answers'>choice_answers</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_choice_answer'>choice_answer</span><span class='op'>|</span>
+    <span class='id identifier rubyid_answer_hash'>answer_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_choice_answer'>choice_answer</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:clone_of_id</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_answer_hash'>answer_hash</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='comment'>#update the next page pointer (clear the pointers since new question is on new page and linking would be invalid)
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_answer_hash'>answer_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>next_page_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_answer_hash'>answer_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>next_page_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_answer_hash'>answer_hash</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'>#save it all
+</span>  <span class='const'>ChoiceQuestion</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
+                           <span class='symbol'>:question_content_attributes</span><span class='op'>=&gt;</span><span class='id identifier rubyid_qc_attribs'>qc_attribs</span><span class='comma'>,</span>
+                           <span class='symbol'>:survey_element_attributes</span><span class='op'>=&gt;</span><span class='id identifier rubyid_se_attribs'>se_attribs</span><span class='comma'>,</span>
+                           <span class='symbol'>:choice_answers_attributes</span><span class='op'>=&gt;</span><span class='id identifier rubyid_ca_attribs'>ca_attribs</span><span class='comma'>,</span>
+                           <span class='symbol'>:clone_of_id</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_true_value-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get_true_value</strong>(answer_string) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_true_value'>get_true_value</span><span class='lparen'>(</span><span class='id identifier rubyid_answer_string'>answer_string</span><span class='rparen'>)</span>
+  <span class='const'>ChoiceAnswer</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_answer_string'>answer_string</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ca'>ca</span><span class='op'>|</span> <span class='id identifier rubyid_ca'>ca</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>{%delim%}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="only_one_default_answer-instance_method">
+  
+    - (<tt>Object</tt>) <strong>only_one_default_answer</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_only_one_default_answer'>only_one_default_answer</span>
+  <span class='id identifier rubyid_defaults'>defaults</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_answers'>choice_answers</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_ca'>ca</span><span class='op'>|</span> <span class='id identifier rubyid_ca'>ca</span><span class='period'>.</span><span class='id identifier rubyid_is_default'>is_default</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_is_default'>is_default</span><span class='op'>|</span> <span class='id identifier rubyid_is_default'>is_default</span> <span class='op'>==</span> <span class='kw'>false</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_add_to_base'>add_to_base</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_answer_type'>answer_type</span><span class='period'>.</span><span class='id identifier rubyid_titlecase'>titlecase</span><span class='rbrace'>}</span><span class='tstring_content'> style questions can have only one default answer</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span><span class='lparen'>(</span><span class='id identifier rubyid_defaults'>defaults</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="survey_version-instance_method">
+  
+    - (<tt>Object</tt>) <strong>survey_version</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_survey_version'>survey_version</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_matrix_question'>matrix_question</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span> <span class='op'>:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span>
+  <span class='comment'># self.survey_element.survey_version if self.survey_element
+</span>  <span class='comment'># self.matrix_question.survey_version if self.matrix_question
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Mon Nov 12 07:59:56 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
