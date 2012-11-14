@@ -49,7 +49,7 @@ function check_for_unanswered_required(page) {
 				/* if the element is a radio button that is required then check to make sure one is checked */
 				if( $(".question_" + question_number + "_answer").attr('type') == "radio" && $(".question_" + question_number + "_answer:checked").length == 0 ) {
 					required =  true;
-				} else if( $("select.question_" + question_number + "_answer").length > 0 && $(".question_" + question_number + "_answer:selected").length == 0 ) {
+				} else if( $("select.question_" + question_number + "_answer").length > 0 && $("select.question_" + question_number + "_answer").val() == "" ) {
 					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "checkbox" && $(".question_" + question_number + "_answer").length > 0 && $(".question_" + question_number + "_answer:checked").length == 0 ) {
 					required =  true;
