@@ -20,6 +20,7 @@ group :development do
 	gem 'metrical'
 	gem 'pry-rails'
 	gem 'debugger'
+  gem 'yard'
 end
 
 gem 'rspec-rails', :group => [:development, :test]
