@@ -34,6 +34,7 @@ class SurveysController < ApplicationController
    @survey = @current_user.surveys.find(params[:id])
   end
 
+  # PUT /surveys/1
   def update
      @survey = @current_user.surveys.find(params[:id])
      @survey.update_attributes(params[:survey])
