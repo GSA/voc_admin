@@ -62,7 +62,7 @@
     <iframe id="search_frame"></iframe>
 
     <div id="content"><div id='filecontents'>
-<h2>Welcome to Rails</h2>
+<h2 id="label-Welcome+to+Rails">Welcome to Rails</h2>
 
 <p>Rails is a web-application framework that includes everything needed to
 create database-backed web applications according to the Model-View-Control
@@ -90,13 +90,13 @@ that is much more separate. Each of these packages can be used
 independently outside of Rails. You can read more about Action Pack in <a
 href="files/vendor/rails/actionpack/README.html">files/vendor/rails/actionpack/README.html</a>.</p>
 
-<h2>Getting Started</h2>
+<h2 id="label-Getting+Started">Getting Started</h2>
 <ol><li>
 <p>At the command prompt, create a new Rails application:</p>
 
 <pre class="code ruby"><code>&lt;tt&gt;rails new myapp&lt;/tt&gt; (where &lt;tt&gt;myapp&lt;/tt&gt; is the application name)</code></pre>
 </li><li>
-<p>Change directory to <tt>myapp</tt> and start the web server:</p>
+<p>Change directory to <code>myapp</code> and start the web server:</p>
 
 <pre class="code ruby"><code>&lt;tt&gt;cd myapp; rails server&lt;/tt&gt; (run with --help for options)</code></pre>
 </li><li>
@@ -116,7 +116,7 @@ href="http://guides.rubyonrails.org/getting_started.html">guides.rubyonrails.org
 href="http://www.railstutorial.org">www.railstutorial.org</a>/</p>
 </li></ul>
 
-<h2>Debugging Rails</h2>
+<h2 id="label-Debugging+Rails">Debugging Rails</h2>
 
 <p>Sometimes your application goes wrong. Fortunately there are a lot of tools
 that will help you debug it and get it back on the rails.</p>
@@ -129,13 +129,14 @@ will also be shown in the browser on requests from 127.0.0.1.</p>
 <p>You can also log your own messages directly into the log file from your
 code using the Ruby logger class from inside your controllers. Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>WeblogController</span> <span class='op'>&lt;</span> <span class='const'>ActionController</span><span class='op'>::</span><span class='const'>Base</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
-    <span class='ivar'>@weblog</span> <span class='op'>=</span> <span class='const'>Weblog</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='ivar'>@weblog</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
-    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rbrace'>}</span><span class='tstring_content'> Destroyed Weblog ID #</span><span class='embexpr_beg'>#{</span><span class='ivar'>@weblog</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></code></pre>
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">WeblogController</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">destroy</span>
+    <span class="ruby-ivar">@weblog</span> = <span class="ruby-constant">Weblog</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[:<span class="ruby-identifier">id</span>])
+    <span class="ruby-ivar">@weblog</span>.<span class="ruby-identifier">destroy</span>
+    <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;#{Time.now} Destroyed Weblog ID ##{@weblog.id}!&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>The result will be a message in your log file along the lines of:</p>
 
@@ -160,43 +161,46 @@ beginners guide)</p>
 <p>These two books will bring you up to speed on the Ruby language and also on
 programming in general.</p>
 
-<h2>Debugger</h2>
+<h2 id="label-Debugger">Debugger</h2>
 
 <p>Debugger support is available through the debugger command when you start
 your Mongrel or WEBrick server with --debugger. This means that you can
 break out of execution at any point in the code, investigate and change the
 model, and then, resume execution! You need to install ruby-debug to run
-the server in debugging mode. With gems, use <tt>sudo gem install
-ruby-debug</tt>. Example:</p>
+the server in debugging mode. With gems, use <code>sudo gem install
+ruby-debug</code>. Example:</p>
 
-<pre class="code ruby"><code><span class='kw'>class</span> <span class='const'>WeblogController</span> <span class='op'>&lt;</span> <span class='const'>ActionController</span><span class='op'>::</span><span class='const'>Base</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
-    <span class='ivar'>@posts</span> <span class='op'>=</span> <span class='const'>Post</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='symbol'>:all</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_debugger'>debugger</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></code></pre>
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">WeblogController</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">index</span>
+    <span class="ruby-ivar">@posts</span> = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(:<span class="ruby-identifier">all</span>)
+    <span class="ruby-identifier">debugger</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>So the controller will accept the action, run the first line, then present
 you with a IRB prompt in the server window. Here you can do things like:</p>
 
-<pre class="code ruby"><code>&gt;&gt; @posts.inspect
-=&gt; &quot;[#&lt;Post:0x14a6be8
-        @attributes={&quot;title&quot;=&gt;nil, &quot;body&quot;=&gt;nil, &quot;id&quot;=&gt;&quot;1&quot;}&gt;,
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-ivar">@posts</span>.<span class="ruby-identifier">inspect</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;[#&lt;Post:0x14a6be8
+        @attributes={&quot;</span><span class="ruby-identifier">title</span><span class="ruby-string">&quot;=&gt;nil, &quot;</span><span class="ruby-identifier">body</span><span class="ruby-string">&quot;=&gt;nil, &quot;</span><span class="ruby-identifier">id</span><span class="ruby-string">&quot;=&gt;&quot;</span><span class="ruby-value">1</span><span class="ruby-node">&quot;}&gt;,
      #&lt;Post:0x14a6620
-        @attributes={&quot;title&quot;=&gt;&quot;Rails&quot;, &quot;body&quot;=&gt;&quot;Only ten..&quot;, &quot;id&quot;=&gt;&quot;2&quot;}&gt;]&quot;
-&gt;&gt; @posts.first.title = &quot;hello from a debugger&quot;
-=&gt; &quot;hello from a debugger&quot;</code></pre>
+        @attributes={&quot;</span><span class="ruby-identifier">title</span><span class="ruby-string">&quot;=&gt;&quot;</span><span class="ruby-constant">Rails</span><span class="ruby-string">&quot;, &quot;</span><span class="ruby-identifier">body</span><span class="ruby-string">&quot;=&gt;&quot;</span><span class="ruby-constant">Only</span> <span class="ruby-identifier">ten</span><span class="ruby-operator">..</span><span class="ruby-string">&quot;, &quot;</span><span class="ruby-identifier">id</span><span class="ruby-string">&quot;=&gt;&quot;</span><span class="ruby-value">2</span><span class="ruby-string">&quot;}&gt;]&quot;</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-ivar">@posts</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">title</span> = <span class="ruby-string">&quot;hello from a debugger&quot;</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;hello from a debugger&quot;</span>
+</pre>
 
 <p>...and even better, you can examine how your runtime objects actually work:</p>
 
-<pre class="code ruby"><code>&gt;&gt; f = @posts.first
-=&gt; #&lt;Post:0x13630c4 @attributes={&quot;title&quot;=&gt;nil, &quot;body&quot;=&gt;nil, &quot;id&quot;=&gt;&quot;1&quot;}&gt;
-&gt;&gt; f.
-Display all 152 possibilities? (y or n)</code></pre>
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">f</span> = <span class="ruby-ivar">@posts</span>.<span class="ruby-identifier">first</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-comment">#&lt;Post:0x13630c4 @attributes={&quot;title&quot;=&gt;nil, &quot;body&quot;=&gt;nil, &quot;id&quot;=&gt;&quot;1&quot;}&gt;</span>
+<span class="ruby-operator">&gt;&gt;</span> <span class="ruby-identifier">f</span>.
+<span class="ruby-constant">Display</span> <span class="ruby-identifier">all</span> <span class="ruby-value">152</span> <span class="ruby-identifier">possibilities?</span> (<span class="ruby-identifier">y</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">n</span>)
+</pre>
 
 <p>Finally, when you're ready to resume execution, you can enter "cont".</p>
 
-<h2>Console</h2>
+<h2 id="label-Console">Console</h2>
 
 <p>The console is a Ruby shell, which allows you to interact with your
 application's domain model. Here you'll have all parts of the application
@@ -204,34 +208,34 @@ configured, just like it is when the application is running. You can
 inspect domain models, change values, and save to the database. Starting
 the script without arguments will launch it in the development environment.</p>
 
-<p>To start the console, run <tt>rails console</tt> from the application
+<p>To start the console, run <code>rails console</code> from the application
 directory.</p>
 
 <p>Options:</p>
 <ul><li>
-<p>Passing the <tt>-s, --sandbox</tt> argument will rollback any modifications
-made to the database.</p>
+<p>Passing the <code>-s, --sandbox</code> argument will rollback any
+modifications made to the database.</p>
 </li><li>
 <p>Passing an environment name as an argument will load the corresponding
-environment. Example: <tt>rails console production</tt>.</p>
+environment. Example: <code>rails console production</code>.</p>
 </li></ul>
 
 <p>To reload your controllers and models after launching the console run
-<tt>reload!</tt></p>
+<code>reload!</code></p>
 
 <p>More information about irb can be found at: <a
 href="http:/www.rubycentral.com/pickaxe/irb.html">http://www.rubycentral.com/pickaxe/irb.html</a></p>
 
-<h2>dbconsole</h2>
+<h2 id="label-dbconsole">dbconsole</h2>
 
-<p>You can go to the command line of your database directly through <tt>rails
-dbconsole</tt>. You would be connected to the database with the credentials
-defined in database.yml. Starting the script without arguments will connect
-you to the development database. Passing an argument will connect you to a
-different database, like <tt>rails dbconsole production</tt>. Currently
-works for MySQL, PostgreSQL and SQLite 3.</p>
+<p>You can go to the command line of your database directly through
+<code>rails dbconsole</code>. You would be connected to the database with
+the credentials defined in database.yml. Starting the script without
+arguments will connect you to the development database. Passing an argument
+will connect you to a different database, like <code>rails dbconsole
+production</code>. Currently works for MySQL, PostgreSQL and SQLite 3.</p>
 
-<h2>Description of Contents</h2>
+<h2 id="label-Description+of+Contents">Description of Contents</h2>
 
 <p>The default directory structure of a generated Ruby on Rails application:</p>
 
@@ -351,7 +355,7 @@ vendor/rails/. This directory is in the load path.</code></pre>
 </div></div>
 
     <div id="footer">
-  Generated on Mon Nov 12 09:02:32 2012 by
+  Generated by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.3 (ruby-1.9.3).
 </div>

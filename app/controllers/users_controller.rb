@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
 
   def index
-    @users = User.page(params[:page]).per(10)
+    @users = User.listing.page(params[:page]).per(10)
 
     respond_to do |format|
       format.html
