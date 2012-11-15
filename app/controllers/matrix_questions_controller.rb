@@ -21,7 +21,7 @@ class MatrixQuestionsController < ApplicationController
   def create
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
-    choice_answer_attributes = params[:choice_answer_attributes]
+    choice_answer_attributes = params[:choice_answer_attributes] || {}
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
 
     @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question].merge({:survey_version_id => @survey_version.id}))
@@ -36,7 +36,7 @@ class MatrixQuestionsController < ApplicationController
 
     respond_to do |format|
       if @matrix_question.save
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
         format.js
       else
         format.html {render :new }
@@ -57,7 +57,7 @@ class MatrixQuestionsController < ApplicationController
   def update
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
-    choice_answer_attributes = params[:choice_answer_attributes]
+    choice_answer_attributes = params[:choice_answer_attributes] || {}
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
 
     @matrix_question = MatrixQuestion.find(params[:id])
@@ -65,19 +65,14 @@ class MatrixQuestionsController < ApplicationController
     choice_questions.each {|key, value| value['question_content_attributes'].merge!(:matrix_statement => @matrix_question.question_content.try(:statement))}
 
     to_be_removed = choice_questions.select {|k, value| value[:question_content_attributes][:_destroy] == "1" }
-    Rails.logger.debug "*" * 50
-    Rails.logger.debug to_be_removed
-    Rails.logger.debug "*" * 50
-    unless to_be_removed.empty?
-      to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
-    end
+    to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
 
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
         format.js   { render :create }
       else
-        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey, :survey_version => @survey_version} }
+        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey_version.survey, :survey_version => @survey_version} }
         format.js   { render :create }
       end
     end

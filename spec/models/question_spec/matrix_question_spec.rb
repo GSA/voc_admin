@@ -42,6 +42,7 @@ describe MatrixQuestion do
     cloned_question = @matrix_question.clone_me(target_version)
     target_version.questions.should have(1).question
     cloned_question.should_not be_nil
+    binding.pry
     cloned_question.survey_version.should == target_version
     cloned_question.question_content.statement.should == @matrix_question.question_content.statement
     cloned_question.choice_questions.should have(1).question
