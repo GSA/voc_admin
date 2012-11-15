@@ -1,4 +1,5 @@
 <% if @text_question.errors.any? %>
+	$(".modalErrorBox").remove();
 	$("#edit_modal form").prepend("<%= escape_javascript( render( :partial => 'shared/question_errors', :locals => { :object => @text_question } ) ) %>");
 	$("#simplemodal-container").height($("#edit_modal").height());
 	$("#simplemodal-container").width($("#edit_modal").width());
