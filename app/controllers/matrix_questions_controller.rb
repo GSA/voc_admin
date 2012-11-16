@@ -84,7 +84,7 @@ class MatrixQuestionsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully deleted Matrix question."}
-      format.js
+      format.js { render :partial => "shared/element_destroy" }
     end
   end
 

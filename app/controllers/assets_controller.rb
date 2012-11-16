@@ -53,7 +53,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to text_questions_url, :notice => "Successfully deleted text question."}
-      format.js
+      format.js { render :partial => "shared/element_destroy" }
     end
   end
 
