@@ -327,8 +327,7 @@
 42
 43
 44
-45
-46</pre>
+45</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 21</span>
@@ -336,7 +335,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:choice_questions_attributes</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_choice_answer_attributes'>choice_answer_attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:choice_answer_attributes</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_choice_answer_attributes'>choice_answer_attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:choice_answer_attributes</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='symbol'>:choice_answers_attributes</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_choice_answer_attributes'>choice_answer_attributes</span><span class='comma'>,</span> <span class='symbol'>:answer_type</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>radio</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='symbol'>:survey_version_id</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -351,12 +350,11 @@
 
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='ivar'>@matrix_question</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_survey_path'>survey_path</span><span class='lparen'>(</span><span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:notice</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Successfully added text question.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span>
+      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_survey_path'>survey_path</span><span class='lparen'>(</span><span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:notice</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Successfully added Matrix question.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render'>render</span> <span class='symbol'>:new</span> <span class='rbrace'>}</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:partial</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shared/element_create</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:object</span> <span class='op'>=&gt;</span> <span class='ivar'>@matrix_question</span><span class='comma'>,</span> <span class='symbol'>:as</span> <span class='op'>=&gt;</span> <span class='symbol'>:element</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -379,20 +377,20 @@
       <pre class="lines">
 
 
+79
+80
+81
+82
+83
+84
+85
 86
 87
 88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -402,7 +400,7 @@
 
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
     <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='lbracket'>[</span><span class='ivar'>@survey</span><span class='comma'>,</span> <span class='ivar'>@survey_version</span><span class='rbracket'>]</span> <span class='comma'>,</span> <span class='symbol'>:notice</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Successfully deleted Matrix question.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span>
+    <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:partial</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shared/element_destroy</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -425,17 +423,17 @@
       <pre class="lines">
 
 
+47
 48
 49
 50
 51
 52
 53
-54
-55</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:choice_questions</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:question_content</span><span class='comma'>,</span> <span class='symbol'>:choice_answers</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -565,6 +563,7 @@
       <pre class="lines">
 
 
+56
 57
 58
 59
@@ -585,22 +584,15 @@
 74
 75
 76
-77
-78
-79
-80
-81
-82
-83
-84</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:choice_questions_attributes</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_choice_answer_attributes'>choice_answer_attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:choice_answer_attributes</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_choice_answer_attributes'>choice_answer_attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:choice_answer_attributes</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='symbol'>:choice_answers_attributes</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_choice_answer_attributes'>choice_answer_attributes</span><span class='comma'>,</span> <span class='symbol'>:answer_type</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>radio</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='const'>MatrixQuestion</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -608,21 +600,15 @@
   <span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>question_content_attributes</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='symbol'>:matrix_statement</span> <span class='op'>=&gt;</span> <span class='ivar'>@matrix_question</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:statement</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_to_be_removed'>to_be_removed</span> <span class='op'>=</span> <span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='symbol'>:question_content_attributes</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:_destroy</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='int'>50</span>
-  <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='id identifier rubyid_to_be_removed'>to_be_removed</span>
-  <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='int'>50</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_to_be_removed'>to_be_removed</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='id identifier rubyid_to_be_removed'>to_be_removed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question_params'>choice_question_params</span><span class='op'>|</span> <span class='id identifier rubyid_remove_sub_question_display_field_and_rules'>remove_sub_question_display_field_and_rules</span><span class='lparen'>(</span><span class='id identifier rubyid_choice_question_params'>choice_question_params</span><span class='rparen'>)</span><span class='rbrace'>}</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_to_be_removed'>to_be_removed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question_params'>choice_question_params</span><span class='op'>|</span> <span class='id identifier rubyid_remove_sub_question_display_field_and_rules'>remove_sub_question_display_field_and_rules</span><span class='lparen'>(</span><span class='id identifier rubyid_choice_question_params'>choice_question_params</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='ivar'>@matrix_question</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_survey_path'>survey_path</span><span class='lparen'>(</span><span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:notice</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Successfully added text question.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span>   <span class='lbrace'>{</span> <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:create</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_survey_path'>survey_path</span><span class='lparen'>(</span><span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:notice</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Successfully added Matrix question.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render'>render</span> <span class='symbol'>:partial</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>new_matrix_question</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:locals</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:survey</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey</span><span class='comma'>,</span> <span class='symbol'>:survey_version</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey_version</span><span class='rbrace'>}</span> <span class='rbrace'>}</span>
-      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span>   <span class='lbrace'>{</span> <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:create</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_render'>render</span> <span class='symbol'>:partial</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>new_matrix_question</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:locals</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='symbol'>:survey</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='symbol'>:survey_version</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey_version</span><span class='rbrace'>}</span> <span class='rbrace'>}</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_render'>render</span> <span class='symbol'>:partial</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shared/element_create</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:object</span> <span class='op'>=&gt;</span> <span class='ivar'>@matrix_question</span><span class='comma'>,</span> <span class='symbol'>:as</span> <span class='op'>=&gt;</span> <span class='symbol'>:element</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>

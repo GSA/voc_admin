@@ -436,7 +436,7 @@
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 4</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
-  <span class='ivar'>@users</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_per'>per</span><span class='lparen'>(</span><span class='int'>10</span><span class='rparen'>)</span>
+  <span class='ivar'>@users</span> <span class='op'>=</span> <span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_listing'>listing</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_per'>per</span><span class='lparen'>(</span><span class='int'>10</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
     <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span>

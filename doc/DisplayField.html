@@ -92,11 +92,15 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="ConditionHelper.html" title="ConditionHelper (module)">ConditionHelper</a></span></dd>
+      
+    
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">app/models/display_field_models/display_field.rb</dd>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/models/display_field_models/display_field.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -168,7 +172,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Used by Criteria in Rules to process survey_responses against Conditionals.</p>
+</div></span>
   
 </li>
 
@@ -442,6 +448,17 @@
 
 
   
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="ConditionHelper.html" title="ConditionHelper (module)">ConditionHelper</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ConditionHelper.html#test_condition-instance_method" title="ConditionHelper#test_condition (method)">#test_condition</a></span></p>
+
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -462,15 +479,15 @@
       <pre class="lines">
 
 
-76
 77
 78
 79
 80
-81</pre>
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_select_options'>select_options</span>
   <span class='comment'># TODO: reenable this when display field validations have been implemented
@@ -498,17 +515,75 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used by Criteria in Rules to process survey_responses against Conditionals</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>survey_response</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyResponse.html" title="SurveyResponse (class)">SurveyResponse</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a SurveyResponse to test</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>conditional_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the operator used to test</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>test_value</span>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the value to test</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-83
-84
-85
-86
-87
 88
 89
 90
@@ -517,28 +592,10 @@
 93
 94
 95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114</pre>
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
 
@@ -547,30 +604,7 @@
   <span class='kw'>return</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_display_field_value'>display_field_value</span>
   <span class='id identifier rubyid_answer'>answer</span> <span class='op'>=</span> <span class='id identifier rubyid_display_field_value'>display_field_value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
 
-  <span class='kw'>case</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span>
-    <span class='kw'>when</span> <span class='int'>1</span> <span class='comment'>#&quot;=&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span> <span class='op'>==</span> <span class='id identifier rubyid_test_value'>test_value</span>
-    <span class='kw'>when</span> <span class='int'>2</span> <span class='comment'>#&quot;!=&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span> <span class='op'>!=</span> <span class='id identifier rubyid_test_value'>test_value</span>
-    <span class='kw'>when</span> <span class='int'>3</span> <span class='comment'>#&quot;contains&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test_value'>test_value</span><span class='rbrace'>}</span><span class='regexp_end'>/i</span></span> <span class='op'>||</span> <span class='kw'>false</span>
-    <span class='kw'>when</span> <span class='int'>4</span> <span class='comment'>#&quot;does not contain&quot;
-</span>      <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test_value'>test_value</span><span class='rbrace'>}</span><span class='regexp_end'>/i</span></span> <span class='op'>||</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='int'>5</span> <span class='comment'>#&quot;&lt;&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-    <span class='kw'>when</span> <span class='int'>6</span> <span class='comment'>#&quot;&lt;=&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;=</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-    <span class='kw'>when</span> <span class='int'>7</span> <span class='comment'>#&quot;&gt;=&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-    <span class='kw'>when</span> <span class='int'>8</span> <span class='comment'>#&quot;&gt;&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-    <span class='kw'>when</span> <span class='int'>9</span> <span class='comment'>#&quot;empty&quot;
-</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-    <span class='kw'>when</span> <span class='int'>10</span> <span class='comment'>#&quot;not empty&quot;
-</span>      <span class='op'>!</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-    <span class='kw'>else</span>
-      <span class='kw'>false</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_test_condition'>test_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -592,14 +626,14 @@
       <pre class="lines">
 
 
-120
-121
-122
-123
-124</pre>
+102
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_name'>find_by_name</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -626,13 +660,13 @@
       <pre class="lines">
 
 
-47
 48
 49
-50</pre>
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decrement_display_order'>decrement_display_order</span>
   <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>-</span> <span class='int'>1</span>
@@ -658,13 +692,13 @@
       <pre class="lines">
 
 
-25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_values'>default_values</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_editable'>editable</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_editable'>editable</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -690,12 +724,12 @@
       <pre class="lines">
 
 
-126
-127
-128</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_my_clone_for'>find_my_clone_for</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_clone_of_id'>find_by_clone_of_id</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -720,12 +754,12 @@
       <pre class="lines">
 
 
-116
-117
-118</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_display_field_header'>get_display_field_header</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -750,13 +784,13 @@
       <pre class="lines">
 
 
-42
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_increment_display_order'>increment_display_order</span>
   <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -782,12 +816,12 @@
       <pre class="lines">
 
 
-72
 73
-74</pre>
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_type'>model_type</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
@@ -812,12 +846,12 @@
       <pre class="lines">
 
 
-68
 69
-70</pre>
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_type='>model_type=</span><span class='lparen'>(</span><span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_write_attribute'>write_attribute</span><span class='lparen'>(</span><span class='symbol'>:type</span><span class='comma'>,</span> <span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
@@ -842,7 +876,6 @@
       <pre class="lines">
 
 
-52
 53
 54
 55
@@ -856,10 +889,11 @@
 63
 64
 65
-66</pre>
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_display_field'>move_display_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span>
   <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -896,16 +930,16 @@
       <pre class="lines">
 
 
-130
-131
-132
-133
-134
-135
-136</pre>
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_populate_default_values!'>populate_default_values!</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_find_in_batches'>find_in_batches</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='op'>|</span>
@@ -934,14 +968,14 @@
       <pre class="lines">
 
 
-36
 37
 38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip_choices'>strip_choices</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DisplayFieldText</span><span class='tstring_end'>&quot;</span></span>
@@ -968,14 +1002,14 @@
       <pre class="lines">
 
 
-30
 31
 32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip_default_value'>strip_default_value</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DisplayFieldChoiceMultiselect</span><span class='tstring_end'>&quot;</span></span>
