@@ -1,6 +1,6 @@
-<% if @matrix_question.errors.any? %>
+<% if element.errors.any? %>
 	$(".modalErrorBox").remove();
-	$("#edit_modal form").prepend("<%= escape_javascript( render( :partial => 'shared/question_errors', :locals => { :object => @matrix_question } ) ) %>");
+	$("#edit_modal form").prepend("<%= escape_javascript( render( :partial => 'shared/question_errors', :locals => { :object => element } ) ) %>");
 	$("#simplemodal-container").height($("#edit_modal").height());
 	$("#simplemodal-container").width($("#edit_modal").width());
 	$.modal.setPosition();

@@ -21,11 +21,10 @@ class ChoiceQuestionsController < ApplicationController
     respond_to do |format|
       if @choice_question.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
-        format.js
       else
         format.html {render :action => 'new'}
-        format.js
       end
+      format.js { render :partial => "shared/element_create", :object => @choice_question, :as => :element }
     end
   end
 
@@ -43,11 +42,10 @@ class ChoiceQuestionsController < ApplicationController
     respond_to do |format|
       if @choice_question.update_attributes(params[:choice_question])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
-        format.js   { render :create }
       else
         format.html {render :action => 'edit'}
-        format.js   { render :create }
       end
+      format.js { render :partial => "shared/element_create", :object => @choice_question, :as => :element }
     end
   end
 

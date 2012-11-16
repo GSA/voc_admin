@@ -25,11 +25,10 @@ class TextQuestionsController < ApplicationController
     respond_to do |format|
       if @text_question.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
-        format.js   #{render :partial => "survey_versions/question_list", :locals => {:survey_version => @survey_version}}
       else
         format.html {render :action => 'new'}
-        format.js
       end
+      format.js { render :partial => "shared/element_create", :object => @text_question, :as => :element }
     end
   end
 
@@ -49,11 +48,10 @@ class TextQuestionsController < ApplicationController
     respond_to do |format|
       if @text_question.update_attributes(params[:text_question])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
-        format.js
       else
         format.html {render :action => 'edit'}
-        format.js
       end
+      format.js { render :partial => "shared/element_create", :object => @text_question, :as => :element }
     end
   end
 

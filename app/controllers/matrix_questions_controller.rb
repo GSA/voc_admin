@@ -37,11 +37,10 @@ class MatrixQuestionsController < ApplicationController
     respond_to do |format|
       if @matrix_question.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
-        format.js
       else
         format.html {render :new }
-        format.js
       end
+      format.js { render :partial => "shared/element_create", :object => @matrix_question, :as => :element }
     end
   end
 
@@ -70,11 +69,10 @@ class MatrixQuestionsController < ApplicationController
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
-        format.js   { render :create }
       else
         format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey_version.survey, :survey_version => @survey_version} }
-        format.js   { render :create }
       end
+      format.js { render :partial => "shared/element_create", :object => @matrix_question, :as => :element }
     end
   end
 
