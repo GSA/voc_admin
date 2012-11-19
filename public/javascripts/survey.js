@@ -45,7 +45,7 @@ function check_for_unanswered_required(page) {
 	required = false;
 		$("#page_"+page+" input[type=hidden].required_question").each(function(index){
 			if($(this).val() == 'true'){
-				question_number = $(this).attr('id').split('_')[0];
+				question_number = $(this).attr('id').split('_')[1]; // q_{number}_required
 				/* if the element is a radio button that is required then check to make sure one is checked */
 				if( $(".question_" + question_number + "_answer").attr('type') == "radio" && $(".question_" + question_number + "_answer:checked").length == 0 ) {
 					required =  true;
