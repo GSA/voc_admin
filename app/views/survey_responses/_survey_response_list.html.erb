@@ -91,7 +91,7 @@
 			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
 				  <td><%= sr.page_url %></td>
 				  <% if @custom_view.present? %>
-						<% sr.display_field_values.where(:display_field_id => @custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').each do |dfv| %>
+						<% sr.display_field_values.joins(:display_field => :display_field_custom_views).where(:display_field_id => @custom_view.ordered_display_fields.map(&:id)).where("display_field_custom_views.custom_view_id = ?", @custom_view.id).order('display_field_custom_views.display_order ASC').each do |dfv| %>
 							<td class="<%= dfv.display_field.editable? ? 'editable' : '' %>" id="<%= 'displayFieldValue_' << dfv.id.to_s %>" <%= dfv.display_field.editable? ? "ondblclick=editDisplayFieldValue(#{version.survey.id},#{version.id},#{dfv.id})" : "" %>>
 								<%= link_to image_tag("/images/edit.png", :alt=>"edit"), [:edit, version.survey, version, dfv], :remote => true, :class => "editDisplayFieldValue" if dfv.display_field.editable %>
 						  	<%= sanitize(dfv.value ? dfv.value.gsub("\n", "{%delim%}").gsub("{%delim%}",  "<br/>") : "" )%>
