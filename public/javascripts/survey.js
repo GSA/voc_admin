@@ -8,17 +8,17 @@ $(function() {
 
 function show_next_page(page){
 	var required_unanswered = false;
-	
+
 	required_unanswered = check_for_unanswered_required(page);
-	
+
 	if (!required_unanswered){
 		$("#page_" + page).hide();
 		var next_page = $("#page_" + page + "_next_page").val();
-    
+
     /* Set the prev page on next page */
    set_prev_page(page, next_page);
-    
-		$("#page_"+ next_page).show();	
+
+		$("#page_"+ next_page).show();
 		window.location.hash="PAGE_" + next_page;
 	} else {
 		alert('Please answer all required questions before moving on to the next page.');
@@ -57,7 +57,7 @@ function check_for_unanswered_required(page) {
 					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
 					required =  true;
-				} 
+				}
 			}
 		});
 		return required;
