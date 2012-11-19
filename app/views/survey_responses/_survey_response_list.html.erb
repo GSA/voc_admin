@@ -1,4 +1,4 @@
-<%  unless version_id.nil? %>
+<%  unless version_id.nil? %>	
 	<% version = SurveyVersion.find(version_id) %>
 	<%= hidden_field_tag :search, params[:search] %>
 	<%= hidden_field_tag :order_column, @order_column_id %>
@@ -7,43 +7,35 @@
 	<%= hidden_field_tag :custom_view_id, params[:custom_view_id] %>
 
 	<div class="pageNavTop">
-	  <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
-			:order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id]), :class => "pageNav", :remote => true %> |
-		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> |
-		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %> |
-		<%= label_tag "custom_view_id", "Select View: ", :class=>"pageNavlookalike" %>
-		<%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"pageNav", :id=>nil %> |
-		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"pageNav" %> |
-		<%= get_edit_current_view_link(version, @custom_view) %> |
-
 		<div class="inline">
       <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
         <%= hidden_field_tag :survey_version_id, version.id, :id => nil %>
         <%= text_field_tag :simple_search, params[:simple_search] %>
         <%= submit_tag "Search" %>
       <% end -%>
-		</div> |
-		<%= link_to_function "Advanced Search", "$('#advanced_search').toggle();return false;", :class=>"pageNav" %>
+		</div>
+		<%= link_to_function "Advanced Search", "$('#advanced_search').toggle();return false;", :class=>"manage" %>
 	</div>
-
+	
 	<div id="advanced_search" style="<%= (params[:search].blank? or params[:search][:criteria].all? {|k,v| v[:value].blank?}) ? 'display: none;' : '' %>">
 		<div class="boxtitle">
-		  <span class="copyBold">Advanced Search</span>
-		  <span class="float_right"><%= link_to "Clear Settings", survey_responses_path(:survey_id => version.survey_id, :survey_version_id => version.id), :class=>"surveyNav" %></span>
+		  Advanced Search
+		  <span class="float_right"><%= link_to "Clear Settings", survey_responses_path(:survey_id => version.survey_id, :survey_version_id => version.id), :class=>"manage" %></span>
 		</div>
 
 		<%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "advanced_search_form" do %>
 			<%= hidden_field_tag "survey_version_id", version.id, :id => nil %>
 			<%= hidden_field_tag "survey_id", version.survey_id, :id => nil %>
-
+			
 			<div id="searchCriterias">
 				<% if params[:search].blank? || @search.criteria.empty? %>
   				<div class="searchCriteria">
-				    <%= select_tag "search[criteria][0][include_exclude]", options_for_include_exclude((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:include_exclude].to_i) %>
+				    <%= select_tag "search[criteria][0][include_exclude]", options_for_select([ ['Include', 1], ['Exclude', 0]], :selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:include_exclude].to_i)) %>
   					<%= select_tag "search[criteria][0][display_field_id]", options_from_collection_for_select([Struct.new(:id, :name).new('survey_responses.page_url', 'Page URL'), Struct.new(:id, :name).new('survey_responses.created_at', 'Date')].concat((@custom_view || version).display_fields),
   					 :id, :name, :selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:display_field_id])) %>
-  					<%= select_tag "search[criteria][0][condition]", options_for_conditions((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:condition]) %>
-  					<%= text_field_tag "search[criteria][0][value]", ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:value]) %>
+  					<%= select_tag "search[criteria][0][condition]", options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
+  							:selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:condition]) ) %>
+  					<%= text_field_tag "search[criteria][0][value]", ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:value]) %>	
   				</div>
 				<% else %>
 					<% @search.criteria.keys.each_with_index do |criteria_index, index| %>
@@ -53,67 +45,83 @@
 				<% end # if else %>
 			</div>
 			<br />
-			<div><%= link_to_function "Add Criteria", "add_search_criteria(this, '#{escape_javascript(render(:partial => 'criteria_fields', :locals => {:version => version, :criteria_index => 'new_criteria_index', :index => 'new_index'}))}')", :class=>"surveyNav" %></div>
-
-			<div style="text-align: right;"><%= submit_tag "Search" %></div>
+			<div>
+				<%= link_to_function "Add Criteria", "add_search_criteria(this, '#{escape_javascript(render(:partial => 'criteria_fields', :locals => {:version => version, :criteria_index => 'new_criteria_index', :index => 'new_index'}))}')", :class=>"manage" %>
+			</div>
+			<br />
+			<div>
+				<%= submit_tag "Search" %>
+			</div>
 		<% end %>
-
 	</div>
+	
+	<div class="page-nav">
+	  <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
+			:order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %> 
+		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
+		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %> 
+		<%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink" %> 
+		<%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %> 
+		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %> 
+		<span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
+	</div>
+
+	
 
 
 	<div id="survey_response_table_div">
-	<table summary="this table is used to display the results of a survey">
-	  <tr>
-	  	<th class="col1"></th>
-	  	<th><%= sortable_display_field 'survey_responses.created_at', 'Date' %></th>
-			<th><%= sortable_display_field 'page_url', 'Page URL' %></th>
-
-			<%# TODO: REfactor this code!!! %>
-		  	<% (@custom_view || version).display_fields.order(:display_order).each do |df| %>
-				  <th><%= sortable_display_field df.name %></th>
-				<% end -%>
-
-	  </tr>
+		<table summary="this table is used to display the results of a survey">
+		  <tr>
+		  	<th scope="col" class="col1">Delete/ Edit</th>
+		  	<th scope="col"><%= sortable_display_field 'survey_responses.created_at', 'Date' %></th>
+				<th scope="col"><%= sortable_display_field 'page_url', 'Page URL' %></th>
+	
+				<%# TODO: REfactor this code!!! %>
+			  <% (@custom_view || version).display_fields.order(:display_order).each do |df| %>
+				  <th scope="col"><%= sortable_display_field df.name %></th>
+				<% end -%>			
+		  </tr>
+		  
 			<% objects.each do |sr| %>
-			  <tr class="<%= cycle('white','blue')%>">
+			  <tr class="<%= cycle('gray','white')%>">
 			  	<td class="col1">
-			  		<%= link_to image_tag("red_x.png"), survey_response_path(sr, params.slice(*SurveyResponsesController::POST_PARAMS)), :method => :delete, :remote => true, :class => "archive_link", :confirm => "Please confirm" %>
-			  		<%= link_to image_tag("edit.png"), edit_survey_response_path(sr.id, {:survey_id => version.survey_id}.merge(params.slice(*SurveyResponsesController::POST_PARAMS))) %>
+			  		<%= link_to "&nbsp;".html_safe, survey_response_path(sr, params.slice(*SurveyResponsesController::POST_PARAMS)), :method => :delete, :remote => true, :class => "deleteLink", :confirm => "Please confirm" %>
+			  		<%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_response_path(sr.id, {:survey_id => version.survey_id}.merge(params.slice(*SurveyResponsesController::POST_PARAMS))) %>
 			  	</td>
 			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
 				  <td><%= sr.page_url %></td>
 				  <% if @custom_view.present? %>
 						<% sr.display_field_values.where(:display_field_id => @custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').each do |dfv| %>
 							<td class="<%= dfv.display_field.editable? ? 'editable' : '' %>" id="<%= 'displayFieldValue_' << dfv.id.to_s %>" <%= dfv.display_field.editable? ? "ondblclick=editDisplayFieldValue(#{version.survey.id},#{version.id},#{dfv.id})" : "" %>>
-								<%= link_to image_tag("/images/edit.png"), [:edit, version.survey, version, dfv], :remote => true, :class => "editDisplayFieldValue" if dfv.display_field.editable %>
+								<%= link_to image_tag("/images/edit.png", :alt=>"edit"), [:edit, version.survey, version, dfv], :remote => true, :class => "editDisplayFieldValue" if dfv.display_field.editable %>
 						  	<%= sanitize(dfv.value ? dfv.value.gsub("\n", "{%delim%}").gsub("{%delim%}",  "<br/>") : "" )%>
 						  </td>
 						<% end -%>
 				  <% else %>
 				  	<% sr.display_field_values.joins(:display_field).order("display_fields.display_order asc").each do |dfv| %>
 						  <td class="<%= dfv.display_field.editable? ? 'editable' : '' %>" id="<%= 'displayFieldValue_' << dfv.id.to_s %>" <%= dfv.display_field.editable? ? "ondblclick=editDisplayFieldValue(#{version.survey.id},#{version.id},#{dfv.id})" : "" %>>
-								<%= link_to image_tag("/images/edit.png"), [:edit, version.survey, version, dfv], :remote => true, :class => "editDisplayFieldValue" if dfv.display_field.editable %>
+								<%= link_to image_tag("/images/edit.png", :alt=>"edit"), [:edit, version.survey, version, dfv], :remote => true, :class => "editDisplayFieldValue" if dfv.display_field.editable %>
 						  	<%= sanitize(dfv.value ? dfv.value.gsub("\n", "{%delim%}").gsub("{%delim%}",  "<br/>") : "" )%>
 						  </td>
 						<% end -%>
 				  <% end %>
 			  </tr>
 			<% end -%>
-	</table>
-</div>
+		</table>
+	</div>
 	<%= paginate objects, :remote => true, :params => @paginate_params || {} %>
-
-	<div class="pageNav">
+	
+	<div class="page-nav">
 		<%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
-			:order_dir => params[:order_dir], :search => params[:search], :simple_search => params[:simple_search], :custom_view_id => params[:custom_view_id]), :class => "pageNav", :remote => true %> |
-		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"pageNav" %> |
-		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"pageNav" %> |
-		<%= label_tag "custom_view_id", "Select View: ", :class=>"pageNavlookalike" %>
-		<%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"pageNav", :id=>nil %> |
-		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"pageNav" %> |
-		<%= get_edit_current_view_link(version, @custom_view) %>
+			:order_dir => params[:order_dir], :search => params[:search], :simple_search => params[:simple_search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %>
+		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
+		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %>
+		<%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink" %> 
+		<%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %>
+		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %>
+		<span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
 
 	</div>
-
+	
 	<div id="dfv_edit_modal" style="display: none;">&nbsp;</div>
 <% end %>

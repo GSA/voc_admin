@@ -10,7 +10,7 @@ module ApplicationHelper
       render(:partial => "shared/" + association.to_s.singularize + "_fields", :locals => {:f => builder, :survey_version => @survey_version, :survey => @survey})
     end
 
-    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"surveyNav")
+    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"newlink")
   end
 
   # (see link_to_add_fields)
@@ -19,7 +19,7 @@ module ApplicationHelper
   def link_to_add_matrix_answer(name)
     fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer", :answer => nil})
 
-    link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"surveyNav")
+    link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"newlink")
   end
 
   # Adds sort arrows to table columns
@@ -30,8 +30,12 @@ module ApplicationHelper
 
     arrows = content_tag :span, :class => "sort_arrows" do
       ret = ""
-      ret += image_tag "arrow_up.png"   if direction == "desc" && column == params[:sort]
-      ret += image_tag "arrow_down.png" if direction == "asc"  && column == params[:sort]
+      if column == params[:sort]
+        ret += image_tag "arrow_up_larger.png", :alt => "Sort"   if direction == "desc" && column == params[:sort]
+        ret += image_tag "arrow_down_larger.png", :alt => "Sort" if direction == "asc"  && column == params[:sort]
+      else
+        ret += image_tag "arrows.png", :alt => "Sort"
+      end
       ret.html_safe
     end
 

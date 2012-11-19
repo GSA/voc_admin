@@ -23,6 +23,8 @@
 
   <br/><br/>
 
-  <%= f.submit "Edit Question" %>
-  <%= link_to "Cancel", nil, :class => "simplemodal-close" %>
+  <div class="pageLink">
+  	<%= link_to "Cancel", nil, :class => "cancelLink" %>
+  	<%= f.submit "Update Question", :type => :image, :src=>"/images/update-question.png" %>
+  </div>
 <% end -%>

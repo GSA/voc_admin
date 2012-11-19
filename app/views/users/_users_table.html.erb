@@ -1,15 +1,15 @@
 <table id="usersTable" summary="this table lists users">
   <tr>
-    <th scope="col">User Name</th>
-    <th scope="col" colspan="4">Email</th>
+  	<th class="col1" scope="col">Edit</th>
+    <th class="col2" scope="col">User Name</th>
+    <th class="col3" scope="col">Email</th>
   </tr>
   <% for user in users %>
-    <tr class="<%= cycle('white','blue') %>">
-      <td class="col1-2"><%= user.f_name %> <%= user.l_name %></td>
-      <td class="col1-2"><%= user.email %></td>
-      <td class="col3-5"><%= link_to "Show", user %></td>
-      <td class="col3-5"><%= link_to "Edit", edit_user_path(user), :remote => true %></td>
-      <td class="col3-5"><%= link_to "Delete", user, :confirm => 'Are you sure?', :method => :delete %></td>
+    <tr class="<%= cycle('gray','white') %>">
+      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_user_path(user), :remote => true %></td>
+      <td class="col2"><%= link_to user.f_name + user.l_name, user %></td>
+      <td class="col3"><%= user.email %></td>
+      <td class="col4"><%= link_to "&nbsp;".html_safe, user, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink", :alt=>"delete" %></td>
     </tr>
   <% end %>
 </table>

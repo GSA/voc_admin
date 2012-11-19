@@ -1,4 +1,4 @@
-<p class="pageTitle">Edit Display Field</p>
+<h1>Edit Display Field</h1>
 
 <% javascript 'display_field.js' %>
 
@@ -6,6 +6,6 @@
   <%= render :partial => 'form', :locals => {:f => f, :disabled => true} %>
 <% end %>
 
-<div class="pageNav">
-<%= link_to "Cancel", survey_survey_version_display_fields_path(@survey, @survey_version), :class=>"pageNav" %>
-</p>
+<div class="align_cancel">
+	<%= link_to "Cancel", survey_survey_version_display_fields_path(@survey, @survey_version), :class=>"cancelLink" %>
+</div>

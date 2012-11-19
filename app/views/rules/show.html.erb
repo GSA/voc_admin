@@ -1,46 +1,68 @@
-<p class="pageTitle">Rule: <%= @rule.name %></p>
+<h1>View Rule</h1>
 <%= flash_messages(flash) %>
 
-<p class="copy"><span class="copyBold">Name: </span><%= @rule.name%></p>
+<div id="showpage">
+	<div class="left_side">
+		Rule Name:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @rule.name %></p>
+	</div>
+	<br />
+	<div class="left_side">Order: </div>
+	<div class="right_side">
+		<p class="version"><%= @rule.rule_order%></p>
+	</div>
+</div>
 
-<p class="copyBoldMargin">Order: <span class="copy"><%= @rule.rule_order%></span></p>
+<div id="survey_info">
+	<div class="top_side">
+		Triggers:
+	</div>
+	<div class="bottom_side">
+		<ul>
+			<% @rule.execution_triggers.each do |et| %>
+				<li><%= et.name.capitalize %></li>
+			<% end %>
+		</ul>
+	</div>
+	<div class="top_side">
+		Criteria:
+	</div>
+	<div class="bottom_side">
+		<ol>
+			<% for criterion in @rule.criteria %>
+	  		<li>
+			    <%= criterion.source.get_display_field_header %>
+			    <%= criterion.conditional.name %>
+			    <%= criterion.value %>
+				</li>
+			<% end %>
+		</ol>
+	</div>
+	<div class="top_side">
+		Actions:
+	</div>
+	<div class="bottom_side">
+		<ol>
+			<% for action in @rule.actions %>
+			  <li>
+			  	Set <%= action.display_field.name %>
+			  	to <%= action.value %>
+				</li>
+			<% end %>
 
-<p class="copyBoldMargin">Triggers:</p>
-<ul class="showList">
-	<% @rule.execution_triggers.each do |et| %>
-		<li class="showList-ul"><%= et.name.capitalize %></li>
-	<% end %>
-</ul>
+			<% if @rule.email_action.present? %>
+				<li>
+					Send Email To:  <%= @rule.email_action.emails %><br/>
+					With Subject: <%= @rule.email_action.subject %>
+				</li>
+			<% end %>
+		</ol>
+	</div>
+</div>
 
-<p class="copyBoldMargin">Criteria:</p>
-<ol class="showList">
-	<% for criterion in @rule.criteria %>
-	  <li class="showList-ol">
-	    <%= criterion.source.get_display_field_header %>
-	    <%= criterion.conditional.name %>
-	    <%= criterion.value %>
-		</li>
-	<% end %>
-</ol>
-
-<p class="copyBoldMargin">Actions:</p>
-<ol class="showList">
-	<% for action in @rule.actions %>
-	  <li class="showList-ol">
-	  	Set <%= action.display_field.name %>
-	  	to <%= action.value %>
-		</li>
-	<% end %>
-
-	<% if @rule.email_action.present? %>
-		<li class="showList-ol">
-			Send Email To:  <%= @rule.email_action.emails %><br/>
-			With Subject: <%= @rule.email_action.subject %>
-		</li>
-	<% end %>
-</ol>
-
-<div class="pageNav">
-	<%= link_to "Edit Rule", edit_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> |
-	<%= link_to "All Rules", survey_survey_version_rules_path(@survey, @survey_version), :class=>"pageNav"%>
+<div class="page-nav">
+	<%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_survey_version_rule_path(@survey, @survey_version), :class=>"manage" %>
+	<%= link_to "View All Rules", survey_survey_version_rules_path(@survey, @survey_version), :class=>"manage" %>
 </div>

@@ -2,7 +2,7 @@ require 'spec_helper'
 include SurveyHelpers
 
 describe CustomView do
-  before(:each) do
+  before(:each) do 
     @sv = create :survey_version, :major => 1, :minor => 1
   end
 
@@ -36,15 +36,8 @@ describe CustomView do
   end
 
   context "before_validation :update_default_fields filter" do
-    it "should ensure update_default_fields is a before_validation filter" do
+    it "should ensure :update_default_fields is called" do
       CustomView._validation_callbacks.select{|cb| cb.kind.eql?(:before)}.collect(&:filter).should include(:update_default_fields)
-    end
-
-    it "should receive :update_default_fields" do
-      CustomView.any_instance.stub(:update_default_fields)
-      CustomView.any_instance.should_receive(:update_default_fields)
-
-      create :custom_view, :survey_version => @sv, :default => true
     end
 
     it "should reset all DB defaults to false for survey_version" do

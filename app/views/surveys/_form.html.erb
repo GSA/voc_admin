@@ -1,29 +1,47 @@
-<div id="newSurvey">
+<div id="surveys">
 	<%= form_for(@survey) do |f| %>
 	  <% if @survey.errors.any? %>
 	    <div id="error_explanation">
 	      <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
 	    </div>
-	  <% end %>
-
-		<p class="copy">
-			<span class="copyBold"><%= f.label :site_id, "Site: " %></span></br />
+		<% end %>
+	
+		<div class="left_side">
+			<%= f.label :site_id, "Site: " %>
+		</div>
+		<div class="right_side">
 			<%= f.collection_select :site_id, (current_user.admin? ? Site.all : current_user.sites), :id, :name, include_blank: true %>
-		</p>
-
-	  <p class="copy">
-	    <span class="copyBold"><%= f.label :name, "Name: " %></span><br />
-	    <%= f.text_field :name %>
-	  </p>
-	  <p class="copyBoldMargin">
-	    <%= f.label :description, "Description: " %><br />
-	    <span class="copy"><%= f.text_area :description, :rows => 3 %></span>
-	  </p>
-	  <p class="copyBoldMargin">
-	  	<%= f.label :survey_type_id, "Survey Type: " %>
+		</div>
+		<br />
+		<div class="left_side">
+			<%= f.label :name, "Name: " %>
+		</div>
+		<div class="right_side">
+			<%= f.text_field :name %>
+		</div>
+		<br />
+		<div class="left_side">
+			<%= f.label :description, "Description: " %>
+		</div>
+		<div class="right_side">
+			<%= f.text_area :description, :rows => 3 %>
+		</div>
+		<br />
+		<div class="left_side">
+			<%= f.label :survey_type_id, "Survey Type: " %>
+		</div>
+		<div class="right_side">
 			<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
-	  </p>
+		</div>
+	  
+	  <div class="pageLink">
+			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
+	  	<% if f.object.new_record? %>
+	  		<%= f.submit "Create Survey", :type => :image, :src=>"/images/Create-Survey.png" %>
+	  	<% else %>
+	  		<%= f.submit "Edit Survey", :type => :image, :src=>"/images/update-survey.png" %>
+	  	<% end %>
+		</div>
 
-	  <p class="sumbitButton"><%= f.submit %></p>
 	<% end %>
 </div>

@@ -5,6 +5,8 @@
   <%= f.text_area :snippet %>
   <br/>
 	<br/>
-  <%= f.submit "Update Snippet" %>
-  <%= link_to "Cancel", nil, :class => "simplemodal-close"%>
+  <div class="pageLink">
+  	<%= link_to "Cancel", nil, :class => "cancelLink" %>
+  	<%= f.submit "Update Snippet", :type => :image, :src=>"/images/update-snippet.png" %>
+  </div>
 <% end -%>

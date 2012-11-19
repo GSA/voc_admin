@@ -1,0 +1,15 @@
+<div id="skipNav">
+	<a href="#skip">Skip Navigation to go to Content</a> 
+	<a href="#rightNav">Skip to Right Side Navigation</a>
+</div>
+
+<div id="header">
+	<%= image_tag "voc_large_logo.png", :class=>"large_logo", :alt=>"logo" %>
+	<% if !current_user.blank? %>
+		<div class="user_details">
+			<p class="user"><%= current_user.email %></p>
+			<%= image_tag "half_separator.png", :class=>"separator", :alt=>"" %>
+			<%= link_to "Logout", logout_url, :class => "logout" %>
+		</div>
+	<% end %>
+</div>

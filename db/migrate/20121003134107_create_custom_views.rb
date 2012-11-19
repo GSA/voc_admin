@@ -8,8 +8,6 @@ class CreateCustomViews < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    add_index :custom_views, :survey_version_id
   end
 
   def self.down

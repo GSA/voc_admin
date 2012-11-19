@@ -1,31 +1,53 @@
 <% javascript 'rules' %>
-<p class="pageTitle">Rules for <%= @survey.name %>, version <%= @survey_version.version_number%></p>
-<div class="pageNav-upper">
-	<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> |
-	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
-</div>
+<h1>View Rules</h1>
+
 <%= flash_messages(flash) %>
+
+<div id="showpage">
+	<div class="left_side">
+		Survey:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @survey.name.titleize %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Version:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @survey_version.version_number%></p>
+	</div>
+</div>
+
+<div class="pageNav">
+	<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version), :class=>"newlink" %>
+	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"manage" %>
+</div>
+
 
 <table id="rulesTable">
 	<tr>
-
-		<th class="col1">Name</th>
-		<th colspan="7" class="col2-8">Priority</th>
+		<th class="col1" scope="col">Edit</th>
+		<th class="col2-3" scope="col" colspan="2">Rule <span class="not_bold">(click to see details)</span></th>
+		<th class="col4" scope="col">Move Up</th>
+		<th class="col5" scope="col">Move Down</th>
+		<th class="col6" scope="col">Run</th>
+		<th class="col7" scope="col"></th>
 	</tr>
-<% @rules.each do |rule| %>
-  <tr class="<%= cycle('white','blue') %>">
-  	<td class="col1"><%= rule.name %></td>
-  	<td class="col2"><%= rule.rule_order%></td>
-		<td class="col3"><%= link_to image_tag('arrow_up.png') + "Move Up", 	 [:decrement_rule_order, @survey, @survey_version, rule], :method => :put %></td>
-		<td class="col4"><%= link_to image_tag('arrow_down.png') + "Move Down", [:increment_rule_order, @survey, @survey_version, rule], :method => :put %></td>
-		<td class="col5"><%= link_to "Show", [@survey, @survey_version, rule] %></td>
-		<td class="col6"><%= link_to image_tag('edit.png') + "Edit", edit_survey_survey_version_rule_path(@survey, @survey_version, rule)%></td>
-		<td class="col7"><%= link_to image_tag("red_x.png", :alt=>"Delete", :class=>"redX") + "Delete", [@survey, @survey_version, rule], :method => :delete %></td>
-		<td class="col8"><%= link_to_function "Run Now", "run_rule(#{rule.id}, this)" %></td>
-  </tr>
-<% end %>
+	<% @rules.each do |rule| %>
+		<tr class="<%= cycle('gray','white') %>">
+	  	<td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_survey_version_rule_path(@survey, @survey_version, rule) %></td>
+	  	<td class="col2"><%= rule.rule_order%>.</td>
+	  	<td class="col3"><%= link_to rule.name, [@survey, @survey_version, rule] %></td>
+	  	<td class="col4"><%= link_to image_tag('arrow_up_larger.png', :alt=>"move up"), [:decrement_rule_order, @survey, @survey_version, rule], :method => :put %></td>
+			<td class="col5"><%= link_to image_tag('arrow_down_larger.png', :alt=>"move down"), [:increment_rule_order, @survey, @survey_version, rule], :method => :put %></td>
+	  	<td class="col6"><%= link_to_function "&nbsp;".html_safe, "run_rule(#{rule.id}, this)", :class=>"runLink" %></td>
+			<td class="col7"><%= link_to "&nbsp;".html_safe, [@survey, @survey_version, rule], :method => :delete, :class=>"deleteLink" %></td>
+	  </tr>
+	<% end %>
 </table>
+
 <div class="pageNav">
-	<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version), :class=>"pageNav"%> |
-	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
+	<%= link_to "Add New Rule", new_survey_survey_version_rule_path(@survey, @survey_version), :class=>"newlink" %>
+	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"manage" %>
 </div>

@@ -7,6 +7,8 @@
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => asset, :survey => survey, :survey_version => survey_version}%>
   <br/>
   <br/>
-  <%= f.submit "Create Snippet" %>
-  <%= link_to "Cancel", nil, :class => "simplemodal-close"%>
+  <div class="pageLink">
+		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close"%>
+  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png" %>
+  </div>
 <% end -%>

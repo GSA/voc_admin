@@ -1,9 +1,9 @@
 <div class="modalErrorBox">
-	<p class="modalErrorTitle"><%= pluralize(object.errors.count, "error") %> prohibited this question from being saved:</p>
+	<p class="title"><%= pluralize(object.errors.count, "error") %> prohibited this question from being saved:</p>
 
-	<ul class="modalList">
-	<% object.errors.full_messages.each do |msg| %>
-	  <li class="modalList"><%= msg %></li>
-	<% end %>
+	<ul class="list">
+		<% object.errors.full_messages.each do |msg| %>
+		  <li class="list"><%= msg %></li>
+		<% end %>
 	</ul>
 </div>

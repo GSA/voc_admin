@@ -1,4 +1,4 @@
-<p class="pageTitle">Edit Record</p>
+<h1>Edit Record</h1>
 
 <%= field_set_tag :Response do %>
 	<div class="left_side">Date/Time:</div>
@@ -11,17 +11,17 @@
 
 	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", false).each do |dfv| %>
 		<div class="left_side"><%= dfv.display_field.name %>:</div>
-	<div class="right_side"><%= dfv.value %></div><br />
+		<div class="right_side"><%= dfv.value %></div>
 	<% end %>
 <% end %>
 
 <%= form_for @survey_response, :url => survey_response_path(@survey_response, params.slice(*SurveyResponsesController::POST_PARAMS)), :html => { :method => :put } do |f| %>
-	<div class="below_fieldset">
+	<div id="survey_info">
 	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", true).each_with_index do |display_field_value, i| %>
 		<%= f.fields_for :display_field_values, display_field_value do |dfv| %>
 			<% df = dfv.object.display_field %>
-			<div class="left_side"><%= df.name %>:</div>
-			<div class="right_side">
+			<div class="top_side"><%= df.name.titleize %>:</div>
+			<div class="bottom_side">
 				<% if df.editable? %>
 					<% if df.type == "DisplayFieldText" %>
 						<%= dfv.text_field :value %>
@@ -37,14 +37,14 @@
 				<% else %>
 					<%= dfv.object.value %>
 				<% end %>
-			</div><br />
+			</div>
 		<% end %>
 	<% end %>
-
-	<p class="sumbitButton">
-		<%= f.submit "Save Changes" %>
+	</div>
+	<p class="submitButton">
+		<%= f.submit "Submit", :type => :image, :src=>"/images/update-record.png" %>
 	</p>
-	<div class="pageNav">
-		<%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"pageNav" %>
+	<div class="align_cancel">
+		<%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"cancelLink" %>
 	</div>
 <% end %>

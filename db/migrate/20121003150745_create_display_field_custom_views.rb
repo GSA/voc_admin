@@ -7,9 +7,6 @@ class CreateDisplayFieldCustomViews < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    add_index :display_field_custom_views, :display_field_id
-    add_index :display_field_custom_views, :custom_view_id
   end
 
   def self.down

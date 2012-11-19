@@ -1,7 +1,7 @@
-<p class="pageTitle">Edit Custom View</p>
+<h1>Edit Custom View</h1>
 
 <%= render :partial => 'form' %>
 
-<div class="pageNav">
-	<%= link_to "Cancel", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"pageNav"%>
+<div class="align_cancel">
+	<%= link_to "Cancel", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"cancelLink" %>
 </div>

@@ -47,6 +47,7 @@ CommentToolApp::Application.routes.draw do
       resources :display_field_values, only: [:edit, :update]
       resources :custom_views,
         only: [:new, :create, :edit, :update, :destroy, :index]
+      resources :custom_views
       resources :text_questions
       resources :choice_questions,
         only: [:new, :create, :edit, :update, :destroy]

@@ -1,7 +1,4 @@
-<p class="pageTitle">All Survey's</p>
-<div class="pageNav-upper">
-	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
-</div>
+<h1>All Surveys</h1>
 <% flash.each do |msg, name| %>
 	<%= flash[name] %>
 <% end %>
@@ -11,32 +8,40 @@
 	<%= form_tag surveys_path,:method => :get, :id => "searchSurveyForm" do %>
 		<%= label_tag :q, "Search Surveys" %>
 		<%= text_field_tag :q, params[:q] %>
-		<%= link_to "View all surveys", surveys_path %>
+		<%= link_to "View all surveys", surveys_path, :class=>"manage" %>
 	<% end %>
+</div>
+
+<div class="page-nav">
+	<%= link_to 'New Survey', new_survey_path, :class => "newlink" %>
 </div>
 
 <table id="surveyTable">
   <tr>
-    <th class="col1" scope="col"><%= sortable "name" %></th>
-    <th class="col2" scope="col">Description</th>
-    <th colspan="5"  scope="col">Type</th>
+  	<th class="col1" scope="col">Edit</th>
+  	<th class="col2" scope="col">Ver.</th>
+    <th class="col3" scope="col"><%= sortable "Survey" %> <span class="notation">(click to view responses)</span></th>
+    <th class="col4" scope="col">Description</th>
+    <th class="col5" scope="col">Type</th>
+    <th class="col6" scope="col">Site</th>
+    <th class="col7" scope="col"></th>
   </tr>
 
 <% @surveys.each do |survey| %>
-  <tr class="<%= cycle('white','blue') %>">
-    <td class="col1"><%= survey.name %></td>
-    <td class="col2"><%= survey.description %></td>
-    <td class="col3"><%= survey.survey_type.name.titleize %></td>
-    <td class="col4"><%= link_to 'Edit', edit_survey_path(survey) %></td>
-    <td class="col5"><%= link_to 'View Versions', survey_survey_versions_path(survey)%></td>
-		<td class="col6"><%= link_to 'View Responses', survey_responses_path(:survey_version_id => survey.published_version.try(:id) || survey.survey_versions.last.id, :survey_id => survey.id) %></td>
-    <td class="col7"><%= link_to 'Delete', survey, :confirm => 'Are you sure?', :method => :delete %></td>
+  <tr class="<%= cycle('gray','white') %>">
+    <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_path(survey) %></td>
+    <td class="col2"><%= link_to image_tag('version.png', :alt=>"view versions"), survey_survey_versions_path(survey)%></td>
+    <td class="col3"><%= link_to survey.name, survey_responses_path(:survey_version_id => survey.published_version.try(:id) || survey.survey_versions.last.id, :survey_id => survey.id) %></td>
+    <td class="col4"><%= survey.description %></td>
+    <td class="col5"><%= survey.survey_type.name.titleize %></td>
+		<td class="col6"><%= survey.site.name %></td>
+    <td class="col7"><%= link_to "&nbsp;".html_safe, survey, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
   </tr>
 <% end %>
 </table>
 
 <%= paginate @surveys %>
 
-<div class="pageNav">
-	<%= link_to 'New Survey', new_survey_path, :class => "pageNav" %>
+<div class="page-nav">
+	<%= link_to 'New Survey', new_survey_path, :class => "newlink" %>
 </div>

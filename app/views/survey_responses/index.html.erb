@@ -1,15 +1,16 @@
 <% javascript 'survey_responses' %>
 
-<p class="pageTitle">Survey Responses</p>
+<h1>Survey Responses</h1>
 
-<p class="copyBold"><%= label_tag "survey_id", "Survey: " %>
-<%= select_tag "survey_id", options_from_collection_for_select(Survey.get_alpha_list, :id, :name, params[:survey_id].to_i), :include_blank => true %>
 
-<%= label_tag "survey_version_id", "Version: "%>
-<%= select_tag "survey_version_id", nil, :include_blank => true %>
+	<%= label_tag "survey_id", "Survey: " %>
+	<%= select_tag "survey_id", options_from_collection_for_select(Survey.get_alpha_list, :id, :name, params[:survey_id].to_i), :include_blank => true %>
 
-<%= link_to_function "Refresh", "refreshSurveyResponseTable()", :class=>"surveyNav"%>
-</p>
+	<%= label_tag "survey_version_id", "Version: "%>
+	<%= select_tag "survey_version_id", nil, :include_blank => true %>
+
+	<%= link_to_function "Refresh", "refreshSurveyResponseTable()", :class=>"manage" %>
+
 
 <div id="survey_response_list">
 	<%= render :partial => "survey_response_list", :locals => {:objects => @survey_responses, :version_id => @survey_version, :search => @search} %>

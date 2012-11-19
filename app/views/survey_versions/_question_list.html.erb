@@ -3,69 +3,109 @@
 <% end -%>
 
 <% survey_version.pages.includes(:survey_elements => :assetable).order("pages.page_number asc").each do |page| %>
-	<%= render 'shared/add_element_links', :survey_version => survey_version %>
+
 	<div class="page" id="page_<%=page.page_number%>">
-		<span class="copyBold">Page <%= page.page_number %></span>
-		<%= page_management_links(survey_version.survey, survey_version, page) %>
-		<div>
-			<%= label_tag "next_page_#{page.page_number}", "Next Page: " %>
-			<%= select_tag :next_page,
-				options_from_collection_for_select(Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).order(:page_number),
-				:id,
-				:page_number,
-				:selected => page.next_page_id),
-			  :id => "next_page_#{page.page_number}",
-				:class => "NextPageSelect",
-				"data-url" => survey_survey_version_page_path(page.survey_version.survey, page.survey_version, page),
-				:disabled => (Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).empty? || page.next_page_id.nil? ? "disabled" : nil) %>
-      <%= check_box_tag :page_level_flow_control, true, page.next_page_id.present?, :id => "page_level_flow_control_#{page.page_number}", :class => "page_level_flow_control" %>
-      <%= label_tag "page_level_flow_control_#{page.page_number}", "Enable Page Flow Control" %>
-		</div>
+		<div class="page_arrows"><%= page_order_links(survey_version.survey, survey_version, page) %></div>
+		<span class="page_number">Pg. <%= page.page_number %></span>
+		<span class="page_next">
+		<% unless is_last_page(page) %>
+			<%= label_tag "next_page_#{page.page_number}", "Control flow to: " %>
+			<%= select_for_next_page(page) %>
+		<% end %>
+		</span>
+		<span class="page_mngmnt"><%= page_management_links(survey_version.survey, survey_version, page) %></span>
+
 		<ul class="outter">
-		<% question_number = 0 %>
-		<% for element in page.survey_elements.order(:element_order) %>
+			<% question_number = 0 %>
+			<% for element in page.survey_elements.order(:element_order) %>
 
-			<li class="outter">
-				<% if element.assetable_type != 'Asset'  %>
-					<% question_number =+ question_number + 1  %>
-					<%= "#{question_number}." %>
-				<% end %>
-				<span class="survey_element" id="element_<%= element.element_order%>"><%= element.assetable.statement %>
-				<%= "*" if element.assetable.try(:required) %> (<%= element.assetable.answer_type %>)</span>
-				<%= element_management_links(survey_version.survey, survey_version, element)%>
-				<% if element.assetable_type == "ChoiceQuestion" %>
-						<ol class="inner">
-							<% for answer in element.assetable.choice_answers %>
-							<li class="inner"><%= answer.answer %></li>
-							<% end -%>
-						</ol>
-				<% elsif element.assetable_type == "MatrixQuestion" %>
-						<table>
-							<tr>
-								<th></th>
-								<% for column_header in element.assetable.column_headers do  %>
-								 <th><%= column_header %></th>
-								<% end -%>
-							</tr>
-							<% for row_header in element.assetable.rows do %>
-							  <tr>
-							  	<td><%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? %></td>
-									<% row_header.choice_answers.each do |a| %>
-									  <td><%= radio_button_tag "empty", a.answer, false, :disabled => true %></td>
-									<% end %>
-							  </tr>
-							<% end -%>
-						</table>
-				<% end # close the if statements %>
+				<li class="outter">
+					<div class="page_asset">
+						<div class="asset_mngmnt">
+							<%= element_order_links(survey_version.survey, survey_version, element)%>
+							<%= element_edit_link(survey_version.survey, survey_version, element)%>
+						</div>
 
-			</li>
-		<% end # close the for loop %>
-		</ul>
+						<div class="asset_content">
+							<% if element.assetable_type != 'Asset'  %>
+								<% question_number =+ question_number + 1  %>
+								<%= "#{question_number}." %>
+							<% end %>
+
+							<span class="survey_element" id="element_<%= element.element_order%>">
+								<%= element.assetable.statement %>
+								<%= "*" if element.assetable.try(:required) %>
+							</span>
+						</div>
+
+						<div class="asset_delete">
+							<span><%= element.assetable.answer_type.titleize %></span>
+							<% if element.assetable_type == "ChoiceQuestion" &&
+								element.assetable.question_content.flow_control? %>
+								<span class="minus-space">,<span><span class="notation">Contains Flow Control</span>
+							<% end %>
+
+							<%= element_delete_link(survey_version.survey, survey_version, element)%>
+						</div>
+
+						<div class="asset_body">
+							<% if element.assetable_type == "ChoiceQuestion" %>
+								<ol class="inner">
+									<% for answer in element.assetable.choice_answers %>
+									<li class="inner">
+										<%= answer.answer %>
+
+										<% if answer.choice_question.flow_control? %>
+											<span class="extra">Flows to Pg. <%= answer.page.page_number %></span>
+										<% end %>
+
+										<% if answer.is_default? %>
+											<span class='extra'>Default</span>
+										<% end -%>
+									</li>
+									<% end -%>
+								</ol>
+							<% elsif element.assetable_type == "MatrixQuestion" %>
+								<div>
+									<div class="italic">Questions (rows):</div>
+									<ol class="inner">
+										<% element.assetable.rows.each do |row_header| %>
+										<li class="inner">
+											<%= row_header.question_content.statement %>
+											<% if row_header.question_content.required? %>
+								  			<span class='extra'>Required</span>
+								  		<% end -%>
+										</li>
+										<% end -%>
+									</ol>
+								</div>
+								<br />
+								<div>
+									<div class="italic">Radio Options (columns):</div>
+									<ol class="inner">
+										<% element.assetable.column_headers.each do |column_header| %>
+										<li class="inner">
+											<%= column_header%>
+										</li>
+										<% end %>
+									</ol>
+								</div>
+							<% end # close the if statements %>
+						</div>
+					</div>
+
+				</li>
+			<% end # close the for loop %>
+			</ul>
+
+		<%= render 'shared/add_element_links', :survey_version => survey_version %>
 	</div>
 
 <% end %>
 
-<%= render 'shared/add_element_links', :survey_version => survey_version %>
+<% if survey_version.pages.count == 0 %>
+	<%= render 'shared/add_element_links', :survey_version => survey_version %>
+<% end %>
 
 
 

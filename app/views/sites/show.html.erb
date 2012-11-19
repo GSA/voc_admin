@@ -1,20 +1,30 @@
-<p class="pageTitle">Site Details</p>
+<h1>Site Details</h1>
 <%= flash_messages(flash) %>
 
-<p class="copyBold">
-	Name:
-  <span class="copy"><%= @site.name %></span>
-</p>
-<p class="copyBoldMargin">
-  URL:
-  <span class="copy"><%= @site.url %></span>
-</p>
-<p class="copyBoldMargin">
-	Description:
-  <span class="copy"><%= @site.description %></span>
-</p>
-
-<div class="pageNav">
-  <%= link_to "Edit", edit_site_path(@site), :class=>"pageNav" %> |
-  <%= link_to "View All", sites_path, :class=>"pageNav" %>
+<div id="surveys">
+	<div class="left_side">
+		Name:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @site.name %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		URL:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @site.url %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Description:
+	</div>
+	<div class="right_side">
+		<p><%= @site.description %></p>
+	</div>
 </div>
+<div class="page-nav">
+  <%= link_to image_tag("edit.png", :alt=>"edit"), edit_site_path(@site) %>
+  <%= link_to "View All Sites", sites_path, :class=>"manage" %>
+</div>
+
