@@ -339,7 +339,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@custom_view</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_custom_views'>custom_views</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-
+  
   <span class='ivar'>@custom_view</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
   <span class='id identifier rubyid_flash'>flash</span><span class='lbracket'>[</span><span class='symbol'>:notice</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Successfully deleted custom view.</span><span class='tstring_end'>&quot;</span></span>
 

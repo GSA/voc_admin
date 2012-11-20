@@ -437,14 +437,6 @@ cloned SurveyVersion</p>
       <pre class="lines">
 
 
-183
-184
-185
-186
-187
-188
-189
-190
 191
 192
 193
@@ -462,10 +454,18 @@ cloned SurveyVersion</p>
 205
 206
 207
-208</pre>
+208
+209
+210
+211
+212
+213
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span>
   <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -615,7 +615,15 @@ Search, Custom Views)</p>
 92
 93
 94
-95</pre>
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 45</span>
@@ -631,6 +639,14 @@ Search, Custom Views)</p>
     <span class='id identifier rubyid_search'>search</span> <span class='op'>=</span> <span class='const'>SurveyResponseSearch</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:search</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_survey_responses'>survey_responses</span> <span class='op'>=</span> <span class='id identifier rubyid_search'>search</span><span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:custom_view_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_custom_views'>custom_views</span><span class='period'>.</span><span class='id identifier rubyid_find_by_default'>find_by_default</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Use find_by_id in order to return nil if a custom view with the specified id
+</span>    <span class='comment'># cannot be found instead of raising an error.
+</span>    <span class='id identifier rubyid_custom_view'>custom_view</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_custom_views'>custom_views</span><span class='period'>.</span><span class='id identifier rubyid_find_by_id'>find_by_id</span><span class='lparen'>(</span><span class='id identifier rubyid_filter_params'>filter_params</span><span class='lbracket'>[</span><span class='symbol'>:custom_view_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Apply the custom view to the survey responses
@@ -720,12 +736,12 @@ Search, Custom Views)</p>
       <pre class="lines">
 
 
-145
-146
-147</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_element_number'>next_element_number</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -779,12 +795,12 @@ Search, Custom Views)</p>
       <pre class="lines">
 
 
-138
-139
-140</pre>
+146
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_page_number'>next_page_number</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -809,20 +825,20 @@ Search, Custom Views)</p>
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129
-130
 131
 132
-133</pre>
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_for_action_select'>options_for_action_select</span>
   <span class='id identifier rubyid_source_array'>source_array</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -885,17 +901,17 @@ publish this SurveyVersion instead.</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165
-166
-167</pre>
+168
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_publish_me'>publish_me</span>
   <span class='comment'># Unpublish all other versions of the survey
@@ -954,12 +970,12 @@ publish this SurveyVersion instead.</p>
       <pre class="lines">
 
 
-100
-101
-102</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_question_elements'>question_elements</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>assetable_type in (?)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>TextQuestion</span><span class='words_sep'> </span><span class='tstring_content'>ChoiceQuestion</span><span class='words_sep'> </span><span class='tstring_content'>MatrixQuestion</span><span class='words_sep'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>element_order asc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -984,12 +1000,12 @@ publish this SurveyVersion instead.</p>
       <pre class="lines">
 
 
-104
-105
-106</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_questions'>questions</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_elements'>question_elements</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:assetable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:assetable</span><span class='rparen'>)</span>
@@ -1044,20 +1060,20 @@ as Rule sources</p>
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116
-117
-118
 119
 120
-121</pre>
+121
+122
+123
+124
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sources'>sources</span>
   <span class='id identifier rubyid_source_array'>source_array</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1119,13 +1135,13 @@ as Rule sources</p>
       <pre class="lines">
 
 
-172
-173
-174
-175</pre>
+180
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unpublish_me'>unpublish_me</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_published'>published</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -1180,12 +1196,12 @@ as Rule sources</p>
       <pre class="lines">
 
 
-152
-153
-154</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_version.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version_number'>version_number</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_major'>major</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_minor'>minor</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>

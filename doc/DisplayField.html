@@ -92,20 +92,42 @@
     
   
     
-      <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="ConditionHelper.html" title="ConditionHelper (module)">ConditionHelper</a></span></dd>
-      
-    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">app/models/display_field_models/display_field.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/display_field_models/display_field.rb</dd>
   
 </dl>
 <div class="clear"></div>
 
-<div id="subclasses">
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A DisplayField (at the base level) represents a column of question response
+or admin-defined data.</p>
+
+<p>The intersection of a SurveyResponse and a DisplayField is a
+DisplayFieldValue, which represents how a single respondent answered a
+specific ChoiceQuestion or TextQuestion (as MatrixQuestions are comprised
+of multiple ChoiceQuestions.)</p>
+
+<p>DisplayFields also represent admin-defined data.  These are columns which
+are not populated by a survey respondent, instead filled in through Actions
+triggered by Rules.</p>
+
+<p>DisplayFields based on questions have readonly DisplayFieldValues;
+admin-defined DisplayFields' values are editable.</p>
+
+<p>DisplayFields are also tracked by CustomViews to determine column ordering.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
   <p class="children"><span class='object_link'><a href="DisplayFieldBoolean.html" title="DisplayFieldBoolean (class)">DisplayFieldBoolean</a></span>, <span class='object_link'><a href="DisplayFieldChoiceMultiselect.html" title="DisplayFieldChoiceMultiselect (class)">DisplayFieldChoiceMultiselect</a></span>, <span class='object_link'><a href="DisplayFieldChoiceSingle.html" title="DisplayFieldChoiceSingle (class)">DisplayFieldChoiceSingle</a></span>, <span class='object_link'><a href="DisplayFieldCurrency.html" title="DisplayFieldCurrency (class)">DisplayFieldCurrency</a></span>, <span class='object_link'><a href="DisplayFieldCurrencyInteger.html" title="DisplayFieldCurrencyInteger (class)">DisplayFieldCurrencyInteger</a></span>, <span class='object_link'><a href="DisplayFieldDate.html" title="DisplayFieldDate (class)">DisplayFieldDate</a></span>, <span class='object_link'><a href="DisplayFieldEmail.html" title="DisplayFieldEmail (class)">DisplayFieldEmail</a></span>, <span class='object_link'><a href="DisplayFieldFloat.html" title="DisplayFieldFloat (class)">DisplayFieldFloat</a></span>, <span class='object_link'><a href="DisplayFieldInteger.html" title="DisplayFieldInteger (class)">DisplayFieldInteger</a></span>, <span class='object_link'><a href="DisplayFieldPercent.html" title="DisplayFieldPercent (class)">DisplayFieldPercent</a></span>, <span class='object_link'><a href="DisplayFieldPerson.html" title="DisplayFieldPerson (class)">DisplayFieldPerson</a></span>, <span class='object_link'><a href="DisplayFieldPhone.html" title="DisplayFieldPhone (class)">DisplayFieldPhone</a></span>, <span class='object_link'><a href="DisplayFieldRtf.html" title="DisplayFieldRtf (class)">DisplayFieldRtf</a></span>, <span class='object_link'><a href="DisplayFieldText.html" title="DisplayFieldText (class)">DisplayFieldText</a></span>, <span class='object_link'><a href="DisplayFieldTextMulti.html" title="DisplayFieldTextMulti (class)">DisplayFieldTextMulti</a></span>, <span class='object_link'><a href="DisplayFieldUrl.html" title="DisplayFieldUrl (class)">DisplayFieldUrl</a></span>, <span class='object_link'><a href="DisplayFieldUrlAsLink.html" title="DisplayFieldUrlAsLink (class)">DisplayFieldUrlAsLink</a></span></p>
 </div>
@@ -141,7 +163,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Populates the Type dropdown on the DisplayField form view.</p>
+</div></span>
   
 </li>
 
@@ -196,7 +220,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Duplicates the DisplayField upon cloning a SurveyVersion.</p>
+</div></span>
   
 </li>
 
@@ -218,7 +244,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Used to reorder a DisplayField left within the SurveyResponse standard
+view.</p>
+</div></span>
   
 </li>
 
@@ -262,7 +291,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Retrieve the clone for this DisplayField within a cloned SurveyVersion.</p>
+</div></span>
   
 </li>
 
@@ -284,7 +315,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Used to retrieve the name property on the Rule show view.</p>
+</div></span>
   
 </li>
 
@@ -306,7 +339,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Used to reorder a DisplayField right within the SurveyResponse standard
+view.</p>
+</div></span>
   
 </li>
 
@@ -372,7 +408,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Invoked when increment_display_order or decrement_display_order are used;
+reorders other DisplayFields appropriately.</p>
+</div></span>
   
 </li>
 
@@ -394,7 +433,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Creates default DisplayFieldValue mappings on the current SurveyVersion's
+SurveyResponses.</p>
+</div></span>
   
 </li>
 
@@ -448,17 +490,6 @@
 
 
   
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="ConditionHelper.html" title="ConditionHelper (module)">ConditionHelper</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ConditionHelper.html#test_condition-instance_method" title="ConditionHelper#test_condition (method)">#test_condition</a></span></p>
-
-  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -473,21 +504,32 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Populates the Type dropdown on the DisplayField form view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82</pre>
+96
+97
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_select_options'>select_options</span>
   <span class='comment'># TODO: reenable this when display field validations have been implemented
@@ -584,18 +626,18 @@
       <pre class="lines">
 
 
-88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
 
@@ -604,7 +646,7 @@
   <span class='kw'>return</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_display_field_value'>display_field_value</span>
   <span class='id identifier rubyid_answer'>answer</span> <span class='op'>=</span> <span class='id identifier rubyid_display_field_value'>display_field_value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span>
 
-  <span class='id identifier rubyid_test_condition'>test_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
+  <span class='const'>ConditionTester</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -620,20 +662,51 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Duplicates the DisplayField upon cloning a SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion destination for the new cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-102
-103
-104
-105
-106</pre>
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_name'>find_by_name</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -654,19 +727,31 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to reorder a DisplayField left within the SurveyResponse standard
+view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-48
-49
-50
-51</pre>
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decrement_display_order'>decrement_display_order</span>
   <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>-</span> <span class='int'>1</span>
@@ -692,13 +777,13 @@
       <pre class="lines">
 
 
-26
-27
-28
-29</pre>
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_values'>default_values</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_editable'>editable</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_editable'>editable</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -718,18 +803,49 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Retrieve the clone for this DisplayField within a cloned SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion to search for the cloned copy.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-108
-109
-110</pre>
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_my_clone_for'>find_my_clone_for</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_clone_of_id'>find_by_clone_of_id</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -748,18 +864,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to retrieve the name property on the Rule show view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-98
-99
-100</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_display_field_header'>get_display_field_header</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -778,19 +905,31 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used to reorder a DisplayField right within the SurveyResponse standard
+view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-43
-44
-45
-46</pre>
+58
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_increment_display_order'>increment_display_order</span>
   <span class='id identifier rubyid_target_display_order'>target_display_order</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_display_order'>display_order</span> <span class='op'>+</span> <span class='int'>1</span>
@@ -816,12 +955,12 @@
       <pre class="lines">
 
 
-73
-74
-75</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_type'>model_type</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
@@ -846,12 +985,12 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_type='>model_type=</span><span class='lparen'>(</span><span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_write_attribute'>write_attribute</span><span class='lparen'>(</span><span class='symbol'>:type</span><span class='comma'>,</span> <span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
@@ -870,30 +1009,62 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Invoked when increment_display_order or decrement_display_order are used;
+reorders other DisplayFields appropriately.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_display_order</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>defines the threshold index used to reorder DisplayFields</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67</pre>
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_display_field'>move_display_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span>
   <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -924,22 +1095,34 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates default DisplayFieldValue mappings on the current SurveyVersion's
+SurveyResponses.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-112
-113
-114
-115
-116
-117
-118</pre>
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_populate_default_values!'>populate_default_values!</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_find_in_batches'>find_in_batches</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='op'>|</span>
@@ -968,14 +1151,14 @@
       <pre class="lines">
 
 
-37
-38
-39
-40
-41</pre>
+51
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip_choices'>strip_choices</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DisplayFieldText</span><span class='tstring_end'>&quot;</span></span>
@@ -1002,14 +1185,14 @@
       <pre class="lines">
 
 
-31
-32
-33
-34
-35</pre>
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strip_default_value'>strip_default_value</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DisplayFieldChoiceMultiselect</span><span class='tstring_end'>&quot;</span></span>

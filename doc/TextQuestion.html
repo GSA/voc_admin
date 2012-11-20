@@ -92,15 +92,11 @@
     
   
     
-      <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="ConditionHelper.html" title="ConditionHelper (module)">ConditionHelper</a></span></dd>
-      
-    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">app/models/question_models/text_question.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/models/question_models/text_question.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -230,17 +226,6 @@
 
 
   
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="ConditionHelper.html" title="ConditionHelper (module)">ConditionHelper</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="ConditionHelper.html#test_condition-instance_method" title="ConditionHelper#test_condition (method)">#test_condition</a></span></p>
-
-  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -324,17 +309,17 @@
       <pre class="lines">
 
 
-27
 28
 29
 30
 31
 32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
   <span class='comment'>#check the survey_response for a response to this question
@@ -342,7 +327,7 @@
   <span class='kw'>return</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_raw_response'>raw_response</span>
   <span class='id identifier rubyid_answer'>answer</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_response'>raw_response</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span> 
   
-  <span class='id identifier rubyid_test_condition'>test_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
+  <span class='const'>ConditionTester</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -375,7 +360,6 @@
       <pre class="lines">
 
 
-37
 38
 39
 40
@@ -390,10 +374,11 @@
 49
 50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:skip_observer</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -442,7 +427,6 @@
       <pre class="lines">
 
 
-55
 56
 57
 58
@@ -453,10 +437,11 @@
 63
 64
 65
-66</pre>
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
@@ -490,12 +475,12 @@
       <pre class="lines">
 
 
-19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_true_value'>get_true_value</span><span class='lparen'>(</span><span class='id identifier rubyid_string_value'>string_value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string_value'>string_value</span>
