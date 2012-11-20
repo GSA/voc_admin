@@ -104,17 +104,8 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h2 id="label-Schema+Information">Schema Information</h2>
-
-<p>Schema version: 20110524182200</p>
-
-<p>Table name: matrix_questions</p>
-
-<pre class="code ruby"><code>id                :integer(4)      not null, primary key
-created_at        :datetime
-updated_at        :datetime
-survey_version_id :integer(4)
-clone_of_id       :integer(4)</code></pre>
+<p>A MatrixQuestion is a set of ChoiceQuestions which share a single set of
+ChoiceAnswers.</p>
 
 
   </div>
@@ -154,9 +145,7 @@ clone_of_id       :integer(4)</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>def required.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -164,7 +153,7 @@ clone_of_id       :integer(4)</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (MatrixQuestion) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -188,7 +177,7 @@ clone_of_id       :integer(4)</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#column_headers-instance_method" title="#column_headers (instance method)">- (Object) <strong>column_headers</strong> </a>
+      <a href="#column_headers-instance_method" title="#column_headers (instance method)">- (Array&lt;String&gt;) <strong>column_headers</strong> </a>
     
 
     
@@ -202,7 +191,9 @@ clone_of_id       :integer(4)</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Used in displaying the ChoiceAnswer values on the SurveyVersion show view.</p>
+</div></span>
   
 </li>
 
@@ -210,7 +201,7 @@ clone_of_id       :integer(4)</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (MatrixQuestion) <strong>copy_to_page</strong>(page) </a>
     
 
     
@@ -234,7 +225,7 @@ clone_of_id       :integer(4)</code></pre>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#rows-instance_method" title="#rows (instance method)">- (Object) <strong>rows</strong> </a>
+      <a href="#rows-instance_method" title="#rows (instance method)">- (ActiveRecord::Relation) <strong>rows</strong> </a>
     
 
     
@@ -248,7 +239,10 @@ clone_of_id       :integer(4)</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Used for displaying ChoiceQuestion properties on the SurveyVersion show
+view.</p>
+</div></span>
   
 </li>
 
@@ -272,34 +266,18 @@ clone_of_id       :integer(4)</code></pre>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>def required</p>
-
-<pre class="ruby"><span class="ruby-keyword">self</span>.<span class="ruby-identifier">choice_questions</span>.<span class="ruby-identifier">includes</span>(:<span class="ruby-identifier">question_content</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-keyword">true</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">memo</span>, <span class="ruby-identifier">q</span><span class="ruby-operator">|</span> <span class="ruby-identifier">memo</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">required</span> }
-</pre>
-
-<p>end</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-45
-46
-47</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer_type'>answer_type</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>matrix</span><span class='tstring_end'>&quot;</span></span>
@@ -312,7 +290,7 @@ clone_of_id       :integer(4)</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="clone_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt><span class='object_link'><a href="" title="MatrixQuestion (class)">MatrixQuestion</a></span></tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
@@ -327,7 +305,45 @@ clone_of_id       :integer(4)</code></pre>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion destination for the new cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="MatrixQuestion (class)">MatrixQuestion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned MatrixQuestion</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -335,6 +351,14 @@ clone_of_id       :integer(4)</code></pre>
       <pre class="lines">
 
 
+42
+43
+44
+45
+46
+47
+48
+49
 50
 51
 52
@@ -375,18 +399,10 @@ clone_of_id       :integer(4)</code></pre>
 87
 88
 89
-90
-91
-92
-93
-94
-95
-96
-97
-98</pre>
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='comment'>#start matrix hash
@@ -445,25 +461,54 @@ clone_of_id       :integer(4)</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="column_headers-instance_method">
   
-    - (<tt>Object</tt>) <strong>column_headers</strong> 
+    - (<tt>Array&lt;String&gt;</tt>) <strong>column_headers</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used in displaying the ChoiceAnswer values on the SurveyVersion show view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an array of the first ChoiceQuestion's ChoiceAnswer values</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-32
-33
-34
-35</pre>
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_column_headers'>column_headers</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -477,7 +522,7 @@ clone_of_id       :integer(4)</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="copy_to_page-instance_method">
   
-    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
+    - (<tt><span class='object_link'><a href="" title="MatrixQuestion (class)">MatrixQuestion</a></span></tt>) <strong>copy_to_page</strong>(page) 
   
 
   
@@ -492,7 +537,45 @@ clone_of_id       :integer(4)</code></pre>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>page</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the page to be cloned</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="MatrixQuestion (class)">MatrixQuestion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -500,6 +583,12 @@ clone_of_id       :integer(4)</code></pre>
       <pre class="lines">
 
 
+95
+96
+97
+98
+99
+100
 101
 102
 103
@@ -535,16 +624,10 @@ clone_of_id       :integer(4)</code></pre>
 133
 134
 135
-136
-137
-138
-139
-140
-141
-142</pre>
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='comment'>#start matrix hash
@@ -596,24 +679,54 @@ clone_of_id       :integer(4)</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="rows-instance_method">
   
-    - (<tt>Object</tt>) <strong>rows</strong> 
+    - (<tt>ActiveRecord::Relation</tt>) <strong>rows</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used for displaying ChoiceQuestion properties on the SurveyVersion show
+view. the MatrixQuestion's ChoiceQuestions with proper joins included</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::Relation</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an ActiveRecord::Relation of</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rows'>rows</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:question_content</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:choice_answers</span><span class='rparen'>)</span>

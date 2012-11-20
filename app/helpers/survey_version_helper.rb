@@ -15,7 +15,7 @@ module SurveyVersionHelper
   # tests to determine if the given page is last in the survey version; used for
   # visibility of the page level flow control dropdown
   #
-  # @param [Page] the Page instance to test
+  # @param [Page] page the Page instance to test
   def is_last_page(page)
     Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).empty? and page.next_page_id.nil?
   end
