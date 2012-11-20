@@ -152,7 +152,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Asset) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -166,7 +166,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Duplicates the Asset upon cloning a SurveyVersion.</p>
+</div></span>
   
 </li>
 
@@ -174,7 +176,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Asset) <strong>copy_to_page</strong>(page) </a>
     
 
     
@@ -188,7 +190,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Duplicates the Asset upon cloning the Page.</p>
+</div></span>
   
 </li>
 
@@ -210,7 +214,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>There is no associated Answer, so it's never required.</p>
+</div></span>
   
 </li>
 
@@ -262,12 +268,12 @@
       <pre class="lines">
 
 
-18
 19
-20</pre>
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer_type'>answer_type</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTML snippet</span><span class='tstring_end'>&quot;</span></span>
@@ -280,28 +286,77 @@
       <div class="method_details ">
   <h3 class="signature " id="clone_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt><span class='object_link'><a href="" title="Asset (class)">Asset</a></span></tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Duplicates the Asset upon cloning a SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion destination for the new cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Asset (class)">Asset</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned Asset</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-22
-23
-24
-25
 26
 27
-28</pre>
+28
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_se_attribs'>se_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
@@ -318,26 +373,75 @@
       <div class="method_details ">
   <h3 class="signature " id="copy_to_page-instance_method">
   
-    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
+    - (<tt><span class='object_link'><a href="" title="Asset (class)">Asset</a></span></tt>) <strong>copy_to_page</strong>(page) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Duplicates the Asset upon cloning the Page.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>page</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the Page destination for the new cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Asset (class)">Asset</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the newly-copied Asset</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-30
-31
-32
-33
-34</pre>
+37
+38
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_se_attribs'>se_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:page_id</span><span class='op'>=&gt;</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -358,18 +462,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>There is no associated Answer, so it's never required</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_required'>required</span>
   <span class='kw'>false</span>
@@ -394,12 +509,12 @@
       <pre class="lines">
 
 
-14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_statement'>statement</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_snippet'>snippet</span>
