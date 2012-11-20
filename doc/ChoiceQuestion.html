@@ -173,7 +173,7 @@ only)</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (ChoiceQuestion) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -197,7 +197,7 @@ only)</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Page) <strong>copy_to_page</strong>(page) </a>
     
 
     
@@ -384,7 +384,7 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <div class="method_details ">
   <h3 class="signature " id="clone_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt><span class='object_link'><a href="" title="ChoiceQuestion (class)">ChoiceQuestion</a></span></tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
@@ -399,7 +399,45 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion destination</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="ChoiceQuestion (class)">ChoiceQuestion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned ChoiceQuestion</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -407,8 +445,6 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-61
-62
 63
 64
 65
@@ -438,10 +474,12 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
 89
 90
 91
-92</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span>
@@ -483,7 +521,7 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <div class="method_details ">
   <h3 class="signature " id="copy_to_page-instance_method">
   
-    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
+    - (<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>) <strong>copy_to_page</strong>(page) 
   
 
   
@@ -498,7 +536,45 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>page</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the page to be cloned</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -506,10 +582,6 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-95
-96
-97
-98
 99
 100
 101
@@ -535,10 +607,14 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
 121
 122
 123
-124</pre>
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span>
@@ -598,7 +674,7 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
   
     <li>
       
-        <span class='name'>a</span>
+        <span class='name'>answer_string</span>
       
       
         <span class='type'>(<tt>String</tt>)</span>
@@ -607,7 +683,7 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       
         &mdash;
         <div class='inline'>
-<p>comma-delimited string of ChoiceAnswer ids</p>
+<p>a comma-delimited string of ChoiceAnswer ids</p>
 </div>
       
     </li>

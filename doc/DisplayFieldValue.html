@@ -132,7 +132,7 @@ can represent a respondent's answer to a question or admin-defined data.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#search-class_method" title="search (class method)">+ (Object) <strong>search</strong>(criteria = {}) </a>
+      <a href="#search-class_method" title="search (class method)">+ (Array&lt;DisplayFieldValue&gt;) <strong>search</strong>(criteria = {}) </a>
     
 
     
@@ -165,7 +165,7 @@ can represent a respondent's answer to a question or admin-defined data.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#value_array%3D-instance_method" title="#value_array= (instance method)">- (Object) <strong>value_array=</strong>(arg) </a>
+      <a href="#value_array%3D-instance_method" title="#value_array= (instance method)">- (String) <strong>value_array=</strong>(arg) </a>
     
 
     
@@ -199,7 +199,7 @@ can represent a respondent's answer to a question or admin-defined data.</p>
       <div class="method_details first">
   <h3 class="signature first" id="search-class_method">
   
-    + (<tt>Object</tt>) <strong>search</strong>(criteria = {}) 
+    + (<tt>Array&lt;<span class='object_link'><a href="" title="DisplayFieldValue (class)">DisplayFieldValue</a></span>&gt;</tt>) <strong>search</strong>(criteria = {}) 
   
 
   
@@ -238,6 +238,24 @@ can represent a respondent's answer to a question or admin-defined data.</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="" title="DisplayFieldValue (class)">DisplayFieldValue</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>any matching DisplayFieldValues</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -245,16 +263,16 @@ can represent a respondent's answer to a question or admin-defined data.</p>
       <pre class="lines">
 
 
-17
 18
 19
 20
 21
 22
-23</pre>
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_criteria'>criteria</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_search_scope'>search_scope</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -277,7 +295,7 @@ can represent a respondent's answer to a question or admin-defined data.</p>
       <div class="method_details first">
   <h3 class="signature first" id="value_array=-instance_method">
   
-    - (<tt>Object</tt>) <strong>value_array=</strong>(arg) 
+    - (<tt>String</tt>) <strong>value_array=</strong>(arg) 
   
 
   
@@ -302,7 +320,7 @@ entered by a respondent.</p>
         <span class='name'>arg</span>
       
       
-        <span class='type'>(<tt>Array</tt>)</span>
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
       
       
       
@@ -315,6 +333,24 @@ entered by a respondent.</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the serialized field value</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -322,12 +358,12 @@ entered by a respondent.</p>
       <pre class="lines">
 
 
-28
-29
-30</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value_array='>value_array=</span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span>
 	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>{%delim%}</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
