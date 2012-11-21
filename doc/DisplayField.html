@@ -521,15 +521,15 @@ SurveyResponses.</p>
       <pre class="lines">
 
 
-96
 97
 98
 99
 100
-101</pre>
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_select_options'>select_options</span>
   <span class='comment'># TODO: reenable this when display field validations have been implemented
@@ -626,18 +626,18 @@ SurveyResponses.</p>
       <pre class="lines">
 
 
-107
-108
 109
 110
 111
 112
 113
 114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
 
@@ -717,14 +717,14 @@ SurveyResponses.</p>
       <pre class="lines">
 
 
-125
-126
-127
 128
-129</pre>
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_name'>find_by_name</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -876,12 +876,12 @@ view.</p>
       <pre class="lines">
 
 
-134
-135
-136</pre>
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_my_clone_for'>find_my_clone_for</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_target_sv'>target_sv</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find_by_clone_of_id'>find_by_clone_of_id</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -917,12 +917,12 @@ view.</p>
       <pre class="lines">
 
 
-118
-119
-120</pre>
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_display_field_header'>get_display_field_header</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -991,12 +991,12 @@ view.</p>
       <pre class="lines">
 
 
-91
 92
-93</pre>
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_type'>model_type</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
@@ -1021,12 +1021,12 @@ view.</p>
       <pre class="lines">
 
 
-87
 88
-89</pre>
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_model_type='>model_type=</span><span class='lparen'>(</span><span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_write_attribute'>write_attribute</span><span class='lparen'>(</span><span class='symbol'>:type</span><span class='comma'>,</span> <span class='id identifier rubyid_m_type'>m_type</span><span class='rparen'>)</span>
@@ -1083,7 +1083,6 @@ reorders other DisplayFields appropriately.</p>
       <pre class="lines">
 
 
-71
 72
 73
 74
@@ -1097,10 +1096,11 @@ reorders other DisplayFields appropriately.</p>
 82
 83
 84
-85</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_display_field'>move_display_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target_display_order'>target_display_order</span><span class='rparen'>)</span>
   <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -1149,16 +1149,16 @@ SurveyResponses.</p>
       <pre class="lines">
 
 
-139
-140
-141
-142
 143
 144
-145</pre>
+145
+146
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_populate_default_values!'>populate_default_values!</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='period'>.</span><span class='id identifier rubyid_find_in_batches'>find_in_batches</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_survey_responses'>survey_responses</span><span class='op'>|</span>

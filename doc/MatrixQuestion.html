@@ -272,12 +272,12 @@ view.</p>
       <pre class="lines">
 
 
-35
-36
-37</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer_type'>answer_type</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>matrix</span><span class='tstring_end'>&quot;</span></span>
@@ -351,9 +351,6 @@ view.</p>
       <pre class="lines">
 
 
-42
-43
-44
 45
 46
 47
@@ -399,10 +396,13 @@ view.</p>
 87
 88
 89
-90</pre>
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='comment'>#start matrix hash
@@ -502,13 +502,13 @@ view.</p>
       <pre class="lines">
 
 
-23
 24
 25
-26</pre>
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_column_headers'>column_headers</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -551,7 +551,7 @@ view.</p>
       
         &mdash;
         <div class='inline'>
-<p>the page to be cloned</p>
+<p>the page to be cloned onto</p>
 </div>
       
     </li>
@@ -583,10 +583,6 @@ view.</p>
       <pre class="lines">
 
 
-95
-96
-97
-98
 99
 100
 101
@@ -624,10 +620,14 @@ view.</p>
 133
 134
 135
-136</pre>
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='comment'>#start matrix hash
@@ -689,7 +689,9 @@ view.</p>
   <div class="discussion">
     
 <p>Used for displaying ChoiceQuestion properties on the SurveyVersion show
-view. the MatrixQuestion's ChoiceQuestions with proper joins included</p>
+view.</p>
+
+<p>the MatrixQuestion's ChoiceQuestions with proper joins included</p>
 
 
   </div>
@@ -721,12 +723,12 @@ view. the MatrixQuestion's ChoiceQuestions with proper joins included</p>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/matrix_question.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rows'>rows</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_choice_questions'>choice_questions</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:question_content</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:choice_answers</span><span class='rparen'>)</span>

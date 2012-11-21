@@ -236,7 +236,7 @@ only)</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A custom-delimited string of ChoiceAnswer.answer field values.</p>
+<p>Looks up from the DB and composes a safetied string of ChoiceAnswer values.</p>
 </div></span>
   
 </li>
@@ -356,17 +356,17 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
 56
 57
-58</pre>
+58
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
   <span class='comment'>#check the survey_response for a response to this question
@@ -445,12 +445,6 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-63
-64
-65
-66
-67
-68
 69
 70
 71
@@ -476,10 +470,16 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
 91
 92
 93
-94</pre>
+94
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span>
@@ -550,7 +550,7 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       
         &mdash;
         <div class='inline'>
-<p>the page to be cloned</p>
+<p>the page to be cloned onto</p>
 </div>
       
     </li>
@@ -582,13 +582,6 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-99
-100
-101
-102
-103
-104
-105
 106
 107
 108
@@ -611,10 +604,17 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
 125
 126
 127
-128</pre>
+128
+129
+130
+131
+132
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span>
@@ -663,7 +663,8 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>A custom-delimited string of ChoiceAnswer.answer field values</p>
+<p>Looks up from the DB and composes a safetied string of ChoiceAnswer values.
+Used for checkbox ChoiceQuestions.</p>
 
 
   </div>
@@ -715,12 +716,12 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-43
-44
-45</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_true_value'>get_true_value</span><span class='lparen'>(</span><span class='id identifier rubyid_answer_string'>answer_string</span><span class='rparen'>)</span>
   <span class='const'>ChoiceAnswer</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_answer_string'>answer_string</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ca'>ca</span><span class='op'>|</span> <span class='id identifier rubyid_ca'>ca</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>{%delim%}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -776,12 +777,12 @@ MatrixQuestion will be the source for the SurveyVersion reference.</p>
       <pre class="lines">
 
 
-37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/choice_question.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_survey_version'>survey_version</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_matrix_question'>matrix_question</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span> <span class='op'>:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span>

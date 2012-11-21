@@ -104,7 +104,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>The TextQuestion class can represent either a text field or a text area</p>
+<p>The TextQuestion class can represent either a text field or a text area.</p>
 
 
   </div>
@@ -154,7 +154,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (TextQuestion) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -178,7 +178,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (TextQuestion) <strong>copy_to_page</strong>(page) </a>
     
 
     
@@ -309,17 +309,17 @@
       <pre class="lines">
 
 
-28
 29
 30
 31
 32
 33
 34
-35</pre>
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
   <span class='comment'>#check the survey_response for a response to this question
@@ -337,7 +337,7 @@
       <div class="method_details ">
   <h3 class="signature " id="clone_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
@@ -352,7 +352,45 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyVersion destination</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned TextQuestion</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -360,10 +398,6 @@
       <pre class="lines">
 
 
-38
-39
-40
-41
 42
 43
 44
@@ -375,10 +409,14 @@
 50
 51
 52
-53</pre>
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:skip_observer</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -404,7 +442,7 @@
       <div class="method_details ">
   <h3 class="signature " id="copy_to_page-instance_method">
   
-    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
+    - (<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>) <strong>copy_to_page</strong>(page) 
   
 
   
@@ -419,7 +457,45 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>page</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the page to be cloned onto</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -427,21 +503,21 @@
       <pre class="lines">
 
 
-56
-57
-58
-59
-60
-61
-62
 63
 64
 65
 66
-67</pre>
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
