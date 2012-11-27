@@ -1,14 +1,6 @@
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_and_survey_version
 
-  def index
-    @matrix_questions = @survey_version.matrix_questions
-  end
-
-  def show
-    @matrix_question = @survey_version.matrix_questions.find(params[:id])
-  end
-
   def new
     @matrix_question = @survey_version.matrix_questions.build
 

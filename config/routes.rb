@@ -51,7 +51,8 @@ CommentToolApp::Application.routes.draw do
       resources :text_questions
       resources :choice_questions,
         only: [:new, :create, :edit, :update, :destroy]
-      resources :matrix_questions
+      resources :matrix_questions,
+        only: [:new, :create, :edit, :update, :destroy]
 
       # We don't need any default routes for survey_elements
       resources :survey_elements, only: [] do
