@@ -125,11 +125,8 @@
 								<% if element.assetable.answer_type == "field" %>
                 <span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size %></span>
 								<% elsif element.assetable.answer_type == "area" %>
-<<<<<<< .working
-									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => element.assetable.row_size, :cols => element.assetable.column_size || 20 %></span>
-=======
 									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => (element.assetable.row_size || ""), :cols => (element.assetable.column_size  || "") %></span>
->>>>>>> .merge-right.r1153
+
 								<% end -%>
 							<% end -%>
 						<% else %>
