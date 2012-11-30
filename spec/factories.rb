@@ -24,7 +24,7 @@ FactoryGirl.define do
     trait :admin do
       role                  { Role::ADMIN }
     end
-    
+
     trait :user do
       role nil
     end
