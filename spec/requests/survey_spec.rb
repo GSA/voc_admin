@@ -58,6 +58,56 @@ describe Survey do
 
   end # GET /surveys
   
+  # GET /surveys/:id/edit
+  context "edit survey" do
+    it 'should have the required fields for editing' do
+      survey = create :survey
+      sign_in(:admin)
+      current_path.should == surveys_path
+      
+      find("#surveyTable td.col1 a").click
+      current_path.should == edit_survey_path(survey)
+      
+      page.should have_css("input#survey_name")
+      page.should have_css("textarea#survey_description")
+      page.should have_css("select#survey_site_id")
+      page.should have_css("select#survey_survey_type_id")
+    end
+  end
+  
+  # PUT /surveys/:id
+  context "updating survey" do
+    before(:each) { 
+      @survey = create(:survey)
+      sign_in(:admin) 
+    }
+    
+    it 'should update the survey information' do
+      visit surveys_path
+      survey_type = SurveyType.create! name: "Site"
+      old_survey_type = @survey.survey_type.name
+      
+      find('#surveyTable td.col1 a').click # Col 1 should have the edit link.  
+      current_path.should == edit_survey_path(@survey)
+      
+      fill_in "survey_name", with: "Updated Survey Name"
+      fill_in "survey_description", with: "Updated Survey Description Field"
+      page.select survey_type.name, from: 'survey_survey_type_id'
+      
+      click_button "survey_submit"
+      
+      current_path.should == surveys_path
+      page.should have_content("Updated Survey Name")
+      page.should have_content("Updated Survey Description Field")
+      page.should have_content("Site")
+      page.should_not have_content(@survey.name)
+      page.should_not have_content(@survey.description)
+      page.should_not have_content(old_survey_type)
+    end
+    
+  end
+  
+  # POST /surveys
   it 'should create a new survey' do
     create :site
     SurveyType.create! :name => "Poll"
@@ -73,6 +123,7 @@ describe Survey do
     current_path.should == edit_survey_survey_version_path(survey_id: Survey.first, id: Survey.first.survey_versions.first)
   end
   
+  # DELETE /surveys/:id
   it 'should destroy the survey' do
     survey = create :survey
     sign_in(:admin)
@@ -81,10 +132,7 @@ describe Survey do
     
     current_path.should == surveys_path
     
-    find('a.deleteLink').click
-    
-    
-    
+    expect {find('a.deleteLink').click}.to change {Survey.count}.by(-1)
   end
 end
 
@@ -95,4 +143,6 @@ def sign_in(role)
   fill_in "user_session_email", with: @user.email
   fill_in "user_session_password", with: "password"
   click_button "Login"
+  
+  @user
 end
