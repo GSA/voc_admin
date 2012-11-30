@@ -10,19 +10,12 @@ describe Survey do
     end
 
     context 'when logged in' do
-      it 'should not redirect to login page' do
-        sign_in(:user)
-        visit surveys_path
-        current_path.should == surveys_path
-      end
-
       context "as admin" do
-        before(:each) { sign_in(:admin) }
-
-        it 'should list available surveys' do
+        it 'should list all available surveys' do
+          sign_in(:admin)
           survey = create :survey
-
           visit surveys_path
+          current_path.should == surveys_path
           page.should have_content(survey.name)
         end
       end # as admin
@@ -30,28 +23,73 @@ describe Survey do
       context "as user" do
         before(:each) { sign_in(:user) }
 
+        it 'should not redirect to login page' do
+          visit surveys_path
+          current_path.should == surveys_path
+        end
+
         it 'should list only surveys for the sites the user is allowed to see' do
           allowed_survey = create :survey
           restricted_survey = create :survey
-
+              
           @user.site_ids = [allowed_survey.site_id]
-
+              
           visit surveys_path
-
+              
           page.should have_content allowed_survey.name
           page.should_not have_content restricted_survey.name
         end
+        
+        it 'should take you to the survey_responses page when you click on the survey name' do
+          survey = create :survey
+          
+          @user.site_ids = [survey.site_id]
+          
+          visit surveys_path
+          
+          page.should have_link(survey.name)
+          click_link survey.name
+          current_path.should == survey_responses_path
+        end
+        
       end # as user
 
     end # when logged in
 
   end # GET /surveys
+  
+  it 'should create a new survey' do
+    create :site
+    SurveyType.create! :name => "Poll"
+    sign_in(:admin)
+    
+    visit new_survey_path
+    current_path.should == new_survey_path
+    page.select(Site.first.name, :from => "survey_site_id")
+    fill_in "survey_name", with: "Test Survey"
+    fill_in "survey_description", with: "This is a test survey"
+    page.select(SurveyType.first.name, from: "survey_survey_type_id")
+    click_button "Create Survey"
+    current_path.should == edit_survey_survey_version_path(survey_id: Survey.first, id: Survey.first.survey_versions.first)
+  end
+  
+  it 'should destroy the survey' do
+    survey = create :survey
+    sign_in(:admin)
+    
+    visit surveys_path
+    
+    current_path.should == surveys_path
+    
+    find('a.deleteLink').click
+    
+    
+    
+  end
 end
 
-def sign_in(role = :admin)
-  @user = create :user
-
-  @user.update_attribute(:role_id, Role::ADMIN.id) if role == :admin
+def sign_in(role)
+  @user = create(:user, role)
 
   visit login_path
   fill_in "user_session_email", with: @user.email

@@ -2,68 +2,75 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UsersController do
   include Authlogic::TestCase
-  
-  before do
-    activate_authlogic
-    UserSession.create User.create(:email => "jalvarado@ctacorp.com", :password => "password", :password_confirmation => "password", :f_name => "juan", :l_name => "alvarado", :role_id => Role::ADMIN)
-  end
-  
-  render_views
-  
-  def valid_attributes
-    {:email => "jalvarado@ctacorp.com", :password => "password", :password_confirmation => "password", :f_name => "juan", :l_name => "alvarado", :role_id => Role::ADMIN}
-  end
 
-  # TODO: Clean these up and organize into tests for admin / regular user roles.
+  setup :activate_authlogic
 
-  it "index action should render index template" do
-    get :index
-    response.should render_template(:index)
+
+  context "no user logged in" do
+    it "should redirect to the login page" do
+      get :index
+      response.should redirect_to(login_path)
+    end
   end
 
-  it "show action should render show template" do
-    get :show, :id => User.first
-    response.should render_template(:show)
-  end
+  context "user is logged in" do
+    before(:each) do
+      @user = create(:user, :admin)
+      controller.stub(:current_user).and_return @user
+    end
 
-  it "new action should render new template" do
-    get :new
-    response.should render_template(:new)
-  end
+    it "should render the index template" do
+      get :index
+      response.status.should == 200
+      response.should render_template(:index)
+    end
 
-  it "create action should render new template when model is invalid" do
-    User.any_instance.stub(:valid?).and_return(false)
-    post :create
-    response.should render_template(:new)
-  end
+    it "show action should render show template" do
+      get :show, :id => @user.id
+      response.should render_template(:show)
+    end
 
-  it "create action should redirect when model is valid" do
-    User.any_instance.stub(:valid?).and_return(true)
-    post :create, :user => valid_attributes
-    response.should redirect_to(user_url(assigns[:user]))
-  end
+    it "new action should render new template" do
+      get :new
+      response.should render_template(:new)
+    end
 
-  it "edit action should render edit template" do
-    get :edit, :id => User.first
-    response.should render_template(:edit)
-  end
+    it "create action should render new template when model is invalid" do
+      User.any_instance.stub(:valid?).and_return false
 
-  it "update action should render edit template when model is invalid" do
-    User.any_instance.stub(:valid?).and_return(false)
-    put :update, :id => User.first
-    response.should render_template(:edit)
-  end
+      post :create
+      response.should render_template(:new)
+    end
 
-  # it "update action should redirect when model is valid" do
-  #   User.any_instance.stub(:valid?).and_return(true)
-  #   put :update, :id => User.first
-  #   response.should redirect_to(user_url(assigns[:user]))
-  # end
+    it "create action shoudl redirect when model is valid" do
+      post :create, :user => {
+        email: "user@example.com",
+        password: "password",
+        password_confirmation: "password",
+        f_name: "user",
+        l_name: "test"
+      }
 
-  it "destroy action should destroy model and redirect to index action" do
-    user = User.first
-    delete :destroy, :id => user
-    response.should redirect_to(users_url)
-    User.exists?(user.id).should be_false
-  end
+      user = assigns(:user)
+      user.should_not be_nil
+      response.should redirect_to(user)
+    end
+
+    it "edit action should render edit template" do
+      get :edit, :id => @user
+      response.should render_template(:edit)
+    end
+
+    it "update action shoudl render edit template when model is invalid" do
+      User.any_instance.stub(:update_attributes).and_return false
+      put :update, :id => @user, :user => {:email => ""}
+      response.should render_template(:edit)
+    end
+
+    it "update action should redirect to user when model is valid" do
+      put :update, :user => { :f_name => "Test 2" }, :id => @user.id
+      response.should redirect_to(users_path)
+    end
+  end # user is logged in
+
 end

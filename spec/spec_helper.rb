@@ -19,7 +19,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
-  
+
   # == Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -36,4 +36,18 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  # config.use_transactional_fixtures = false
+  # 
+  # config.before(:suite) do
+  #   DatabaseCleaner.strategy = :truncation
+  # end
+  # 
+  # config.before(:each) do
+  #   DatabaseCleaner.start
+  # end
+  # 
+  # config.after(:each) do
+  #   DatabaseCleaner.clean
+  # end
 end

@@ -20,12 +20,16 @@ FactoryGirl.define do
     email                   { "#{f_name}.#{l_name}@example.com" }
     password                "password"
     password_confirmation   "password"
-    
+
     trait :admin do
-      role_id               { Role::ADMIN.id }
+      role                  { Role::ADMIN }
+    end
+    
+    trait :user do
+      role nil
     end
   end
-  
+
   # == Schema Information
   #
   # Table name: sites
