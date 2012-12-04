@@ -26,9 +26,25 @@ describe SurveyResponse do
     NewResponse.all.should have(1).response
   end
 
-  it "should call queue_response when a response is created" do
+  it "should call queue_for_processing when a response is created" do
     @sr.should_receive(:queue_for_processing).once.and_return(true)
     @sr.save!
+  end
+
+  it "should call create_dfvs when a response is created" do
+    @sr.should_receive(:create_dfvs).once
+    @sr.save!
+  end
+
+  it "should build DisplayFieldValues when a survey response is created" do
+    publish_survey_version
+
+    build_three_simple_responses
+
+    # create a survey response where not every question is answered
+    @sr4 = build_survey_response @v, '104', { @q1 => "b" }, true
+
+    @v.survey_responses.map { |sr| sr.display_field_values.count }.inject(0, :+).should eql(12)
   end
 
   it "should return all survey responses with a display field value like the provided search text" do
@@ -63,24 +79,6 @@ describe SurveyResponse do
   context "order_by_display_field" do
     before(:each) do
       publish_survey_version
-    end
-
-    def build_eight_distinct_responses
-      # create survey responses
-      @sr1 = build_survey_response @v, '777', { @q1 => "y", @q2 => "a", @q3 => "2" }, true
-      @sr2 = build_survey_response @v, '778', { @q1 => "y", @q2 => "b", @q3 => "2" }, true
-      @sr3 = build_survey_response @v, '779', { @q1 => "z", @q2 => "a", @q3 => "2" }, true
-      @sr4 = build_survey_response @v, '780', { @q1 => "z", @q2 => "b", @q3 => "2" }, true
-      @sr5 = build_survey_response @v, '781', { @q1 => "y", @q2 => "a", @q3 => "1" }, true
-      @sr6 = build_survey_response @v, '782', { @q1 => "y", @q2 => "b", @q3 => "1" }, true
-      @sr7 = build_survey_response @v, '783', { @q1 => "z", @q2 => "a", @q3 => "1" }, true
-      @sr8 = build_survey_response @v, '784', { @q1 => "z", @q2 => "b", @q3 => "1" }, true
-    end
-
-    def build_three_simple_responses
-      @sr1 = build_survey_response @v, '101', { @q1 => "c", @q2 => "a", @q3 => "2" }, true
-      @sr2 = build_survey_response @v, '102', { @q1 => "a", @q2 => "b", @q3 => "2" }, true
-      @sr3 = build_survey_response @v, '103', { @q1 => "b", @q2 => "a", @q3 => "2" }, true
     end
 
     it 'should return table order without params' do

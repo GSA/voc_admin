@@ -42,4 +42,22 @@ module SurveyHelpers
 
     sr
   end
+
+  def build_eight_distinct_responses
+    # create survey responses
+    @sr1 = build_survey_response @v, '777', { @q1 => "y", @q2 => "a", @q3 => "2" }, true
+    @sr2 = build_survey_response @v, '778', { @q1 => "y", @q2 => "b", @q3 => "2" }, true
+    @sr3 = build_survey_response @v, '779', { @q1 => "z", @q2 => "a", @q3 => "2" }, true
+    @sr4 = build_survey_response @v, '780', { @q1 => "z", @q2 => "b", @q3 => "2" }, true
+    @sr5 = build_survey_response @v, '781', { @q1 => "y", @q2 => "a", @q3 => "1" }, true
+    @sr6 = build_survey_response @v, '782', { @q1 => "y", @q2 => "b", @q3 => "1" }, true
+    @sr7 = build_survey_response @v, '783', { @q1 => "z", @q2 => "a", @q3 => "1" }, true
+    @sr8 = build_survey_response @v, '784', { @q1 => "z", @q2 => "b", @q3 => "1" }, true
+  end
+
+  def build_three_simple_responses
+    @sr1 = build_survey_response @v, '101', { @q1 => "c", @q2 => "a", @q3 => "2" }, true
+    @sr2 = build_survey_response @v, '102', { @q1 => "a", @q2 => "b", @q3 => "2" }, true
+    @sr3 = build_survey_response @v, '103', { @q1 => "b", @q2 => "a", @q3 => "2" }, true
+  end
 end

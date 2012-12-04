@@ -18,12 +18,12 @@ describe RawResponse do
 		@valid_raw_response.should_not be_valid
 	end
 	
-	it "is not valid if the client id isnt unique in the scop of a question content" do
+	it "is not valid if the client id isn't unique in the scop of a question content" do
    @valid_raw_response.dup.save!
    @valid_raw_response.should_not be_valid
   end
 	
-	it "is valid if the client id isnt unquie outside of the scope of a question content" do
+	it "is valid if the client id isn't unique outside of the scope of a question content" do
    @valid_raw_response.dup.save!
    @valid_raw_response.question_content = mock_model(QuestionContent)
    @valid_raw_response.should be_valid
