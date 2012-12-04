@@ -155,7 +155,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Create a survey response from the raw_response.</p>
+</div></span>
   
 </li>
 
@@ -186,7 +188,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Mark the SurveyResponse as archived.</p>
+</div></span>
   
 </li>
 
@@ -209,7 +213,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>processes all rules regardless of trigger.</p>
+<p>Process all rules for the survey version and apply them to the
+SurveyResponse.</p>
 </div></span>
   
 </li>
@@ -262,8 +267,6 @@
       <pre class="lines">
 
 
-100
-101
 102
 103
 104
@@ -278,10 +281,12 @@
 113
 114
 115
-116</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_next_response'>get_next_response</span><span class='lparen'>(</span><span class='id identifier rubyid_worker_name'>worker_name</span><span class='comma'>,</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span>
   <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -314,14 +319,24 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a survey response from the raw_response.  This is used by DelayedJob
+to process the survey responses asynchronouly</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-56
-57
 58
 59
 60
@@ -334,10 +349,12 @@
 67
 68
 69
-70</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_process_response'>process_response</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version_id'>survey_version_id</span>
   <span class='id identifier rubyid_client_id'>client_id</span> <span class='op'>=</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>64</span><span class='rparen'>)</span>
@@ -374,19 +391,30 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Mark the SurveyResponse as archived</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-122
-123
-124
-125</pre>
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_archive'>archive</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_archived'>archived</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -409,7 +437,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>processes all rules regardless of trigger</p>
+<p>Process all rules for the survey version and apply them to the
+SurveyResponse</p>
 
 
   </div>
@@ -423,8 +452,6 @@
       <pre class="lines">
 
 
-73
-74
 75
 76
 77
@@ -448,10 +475,12 @@
 95
 96
 97
-98</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process_me'>process_me</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_trigger_id'>trigger_id</span><span class='rparen'>)</span>
   <span class='comment'>#if no triggers specified, do them all
@@ -499,12 +528,12 @@
       <pre class="lines">
 
 
-118
-119
-120</pre>
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_queue_for_processing'>queue_for_processing</span>
   <span class='const'>NewResponse</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='symbol'>:survey_response_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
