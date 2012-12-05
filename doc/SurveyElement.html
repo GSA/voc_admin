@@ -104,20 +104,8 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h2 id="label-Schema+Information">Schema Information</h2>
-
-<p>Schema version: 20110413183938</p>
-
-<p>Table name: survey_elements</p>
-
-<pre class="code ruby"><code>id                :integer(4)      not null, primary key
-page_id           :integer(4)
-element_order     :integer(4)
-assetable_id      :integer(4)
-assetable_type    :string(255)
-created_at        :datetime
-updated_at        :datetime
-survey_version_id :integer(4)</code></pre>
+<p>A single survey element (currently: TextQuestion, ChoiceQuestion,
+MatrixQuestion, Asset)</p>
 
 
   </div>
@@ -432,12 +420,12 @@ being updated.</p>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+7
+8
+9</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_callbacks'>skip_callbacks</span>
   <span class='ivar'>@skip_callbacks</span>
@@ -481,14 +469,14 @@ page or destroyed</p>
       <pre class="lines">
 
 
-56
-57
-58
-59
-60</pre>
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_compact_element_order'>compact_element_order</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_se'>se</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
@@ -521,13 +509,13 @@ page or destroyed</p>
       <pre class="lines">
 
 
-138
-139
-140
-141</pre>
+124
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cloned_assetable'>cloned_assetable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
@@ -553,13 +541,13 @@ page or destroyed</p>
       <pre class="lines">
 
 
-143
-144
-145
-146</pre>
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_copy_of_assetable'>copy_of_assetable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
@@ -597,6 +585,20 @@ protect flow control)</p>
       <pre class="lines">
 
 
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
 68
 69
 70
@@ -626,24 +628,10 @@ protect flow control)</p>
 94
 95
 96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111</pre>
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element'>move_element</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='comma'>,</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -720,20 +708,20 @@ protect flow control)</p>
       <pre class="lines">
 
 
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124</pre>
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element_down'>move_element_down</span>
   <span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span><span class='id identifier rubyid_target_element'>target_element</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>  <span class='op'>?</span>
@@ -777,19 +765,19 @@ protect flow control)</p>
       <pre class="lines">
 
 
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136</pre>
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element_up'>move_element_up</span>
   <span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span><span class='id identifier rubyid_target_element'>target_element</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>?</span>
@@ -832,12 +820,12 @@ protect flow control)</p>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 19</span>
 
 <span class='id identifier rubyid_before_validation'>before_validation</span> <span class='symbol'>:move_to_end_of_page</span><span class='comma'>,</span> <span class='symbol'>:on</span> <span class='op'>=&gt;</span> <span class='symbol'>:update</span><span class='comma'>,</span> <span class='symbol'>:if</span> <span class='op'>=&gt;</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
   <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_page_id_changed?'>page_id_changed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_skip_callbacks'>skip_callbacks</span>
@@ -873,10 +861,10 @@ protect flow control)</p>
       <pre class="lines">
 
 
-46</pre>
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 32</span>
 
 <span class='id identifier rubyid_default_scope'>default_scope</span> <span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span></pre>
     </td>
@@ -911,12 +899,12 @@ being updated</p>
       <pre class="lines">
 
 
-51
-52
-53</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_survey_version_updated_at'>update_survey_version_updated_at</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:updated_at</span><span class='comma'>,</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
