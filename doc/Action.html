@@ -104,20 +104,8 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<h2 id="label-Schema+Information">Schema Information</h2>
-
-<p>Schema version: 20110524182200</p>
-
-<p>Table name: actions</p>
-
-<pre class="code ruby"><code>id               :integer(4)      not null, primary key
-rule_id          :integer(4)      not null
-display_field_id :integer(4)      not null
-value            :string(255)
-created_at       :datetime
-updated_at       :datetime
-value_type       :string(255)
-clone_of_id      :integer(4)</code></pre>
+<p>An Action is the component of the Rules system which performs the actual
+DisplayFieldValue update.</p>
 
 
   </div>
@@ -174,7 +162,9 @@ clone_of_id      :integer(4)</code></pre>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Invokes the Action for a given SurveyResponse.</p>
+</div></span>
   
 </li>
 
@@ -198,25 +188,58 @@ clone_of_id      :integer(4)</code></pre>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Invokes the Action for a given SurveyResponse.  Updates the appropriate
+DisplayFieldValue with either the RawResponse's value (in case of a
+question response) or specific text (for custom DisplayFields.)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>survey_response</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyResponse.html" title="SurveyResponse (class)">SurveyResponse</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the SurveyResponse to alter</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32</pre>
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/rule_models/action.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/models/rule_models/action.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_perform'>perform</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='rparen'>)</span>
   <span class='comment'>#get target DFV
