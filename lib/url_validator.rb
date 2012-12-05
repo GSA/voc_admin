@@ -10,7 +10,7 @@
 # validates :attribute, :allow_empty => true
 
 # Pass in a domain to validate a url belongs to a domain (including any sub-domains and pages beneath the domain and sub-domains)
-# validates :attribute, :url => {:domain => 'facebook.com'}
+# validates :attribute, :url => !{:domain => 'facebook.com'}
 
 class UrlValidator < ActiveModel::EachValidator
   def initialize(options)

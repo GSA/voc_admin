@@ -99,13 +99,35 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Facilitate searching SurveyResponses using simple boolean conditions.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
   <h2>Constant Summary</h2>
   
     <dl class="constants">
       
         <dt id="SQLConditions-constant" class="">SQLConditions =
-          
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Used when "include_exclude" is true/include</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
   <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>equals</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>=</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
@@ -117,7 +139,18 @@
 <span class='rbrace'>}</span></pre></dd>
       
         <dt id="NegationSQL-constant" class="">NegationSQL =
-          
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Used when "include_exclude" is false/exclude</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='lbrace'>{</span>
   <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>equals</span><span class='tstring_end'>'</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>!=</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
@@ -194,7 +227,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parameters-instance_method" title="#parameters (instance method)">- (Object) <strong>parameters</strong> </a>
+      <a href="#parameters-instance_method" title="#parameters (instance method)">- (Array) <strong>parameters</strong> </a>
     
 
     
@@ -234,7 +267,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#condition_string-instance_method" title="#condition_string (instance method)">- (Object) <strong>condition_string</strong> </a>
+      <a href="#condition_string-instance_method" title="#condition_string (instance method)">- (String) <strong>condition_string</strong> </a>
     
 
     
@@ -249,8 +282,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>condition_string: return the full condition and parameters string to be
-passed to the where clause.</p>
+<p>Creates the full condition and parameters string to be passed to the WHERE
+clause in :search.</p>
 </div></span>
   
 </li>
@@ -276,7 +309,8 @@ passed to the where clause.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of SurveyResponseSearch.</p>
+<p>Removes empty values on the passed in criteria before building the SQL
+condition string.</p>
 </div></span>
   
 </li>
@@ -285,7 +319,7 @@ passed to the where clause.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#search-instance_method" title="#search (instance method)">- (Object) <strong>search</strong>(passed_scope) </a>
+      <a href="#search-instance_method" title="#search (instance method)">- (ActiveRecord::Relation) <strong>search</strong>(passed_scope) </a>
     
 
     
@@ -300,7 +334,7 @@ passed to the where clause.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Apply the built where clause to the passed Relation.</p>
+<p>Apply the built WHERE clause to the passed Relation.</p>
 </div></span>
   
 </li>
@@ -324,13 +358,44 @@ passed to the where clause.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>A new instance of SurveyResponseSearch</p>
+<p>Removes empty values on the passed in criteria before building the SQL
+condition string.</p>
+
+<h4 id="label-Example">Example</h4>
+
+<p>{"criteria"=&gt;{"0"=&gt;{"include_exclude"=&gt;"1",
+"display_field_id"=&gt;"39", "condition"=&gt;"equals", "value"=&gt;"b"},
+"1354716800350"=&gt;{"clause_join"=&gt;"OR", "include_exclude"=&gt;"0",
+"display_field_id"=&gt;"42", "condition"=&gt;"contains",
+"value"=&gt;"testval"}}}</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>attribs</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the search parameters</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -338,20 +403,17 @@ passed to the where clause.</p>
       <pre class="lines">
 
 
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32</pre>
+32
+33
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_attribs'>attribs</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@criteria</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_attribs'>attribs</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_attribs'>attribs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>criteria</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>value</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='rbrace'>}</span>
@@ -359,10 +421,7 @@ passed to the where clause.</p>
   <span class='ivar'>@parameters</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@clause_joins</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
-  <span class='comment'># clean_criteria
-</span>
   <span class='id identifier rubyid_build_condition_string'>build_condition_string</span>
-
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -402,12 +461,12 @@ passed to the where clause.</p>
       <pre class="lines">
 
 
-2
 3
-4</pre>
+4
+5</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 2</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 3</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_conditions'>conditions</span>
   <span class='ivar'>@conditions</span>
@@ -445,12 +504,12 @@ passed to the where clause.</p>
       <pre class="lines">
 
 
-2
 3
-4</pre>
+4
+5</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 2</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 3</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_criteria'>criteria</span>
   <span class='ivar'>@criteria</span>
@@ -465,7 +524,7 @@ passed to the where clause.</p>
       <div class="method_details ">
   <h3 class="signature " id="parameters-instance_method">
   
-    - (<tt>Object</tt>) <strong>parameters</strong> 
+    - (<tt>Array</tt>) <strong>parameters</strong> 
   
 
   
@@ -474,13 +533,35 @@ passed to the where clause.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Array of parameters to the condition string</p>
+<p>Array of parameters to the condition string.</p>
+
+<h4 id="label-Example">Example</h4>
+<dl class="rdoc-list label-list"><dt>"39", "b", "42", "%t%"
+<dd></dd></dl>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>DisplayField ids and search values</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -488,12 +569,12 @@ passed to the where clause.</p>
       <pre class="lines">
 
 
-57
-58
-59</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parameters'>parameters</span>
   <span class='ivar'>@parameters</span>
@@ -513,7 +594,7 @@ passed to the where clause.</p>
       <div class="method_details first">
   <h3 class="signature first" id="condition_string-instance_method">
   
-    - (<tt>Object</tt>) <strong>condition_string</strong> 
+    - (<tt>String</tt>) <strong>condition_string</strong> 
   
 
   
@@ -522,20 +603,40 @@ passed to the where clause.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>condition_string: return the full condition and parameters string to be
-passed to the where clause.</p>
+<p>Creates the full condition and parameters string to be passed to the WHERE
+clause in :search</p>
+
+<h4 id="label-Example">Example</h4>
 
 <p>"(display_field_values.display_field_id = ? AND display_field_values.value
-#condition) AND/OR (display_field_values.display_field_id = ? AND
-display_field_values.value #condition) AND/OR
+#{condition}) AND/OR (display_field_values.display_field_id = ? AND
+display_field_values.value #{condition}) AND/OR
 (display_field_values.display_field_id = ? AND display_field_values.value
-#condition)"</p>
+#{condition})"</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the full SQL WHERE clause for filtering the SurveyResponse Relation</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -543,29 +644,29 @@ display_field_values.value #condition) AND/OR
       <pre class="lines">
 
 
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54</pre>
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_condition_string'>condition_string</span>
-  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_conditionals'>conditionals</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='ivar'>@conditions</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_con'>con</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_con'>con</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='int'>0</span>
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='ivar'>@clause_joins</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_con'>con</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_conditionals'>conditionals</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_con'>con</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_conditionals'>conditionals</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='ivar'>@clause_joins</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_con'>con</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='int'>0</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_result'>result</span>
+  <span class='id identifier rubyid_conditionals'>conditionals</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -575,7 +676,7 @@ display_field_values.value #condition) AND/OR
       <div class="method_details ">
   <h3 class="signature " id="search-instance_method">
   
-    - (<tt>Object</tt>) <strong>search</strong>(passed_scope) 
+    - (<tt>ActiveRecord::Relation</tt>) <strong>search</strong>(passed_scope) 
   
 
   
@@ -584,13 +685,51 @@ display_field_values.value #condition) AND/OR
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Apply the built where clause to the passed Relation</p>
+<p>Apply the built WHERE clause to the passed Relation.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>passed_scope</span>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::Relation</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the Relation representing the SurveyResponse query to filter</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::Relation</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the modified Relation</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -598,12 +737,12 @@ display_field_values.value #condition) AND/OR
       <pre class="lines">
 
 
-35
-36
-37</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/survey_response_search.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_passed_scope'>passed_scope</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_passed_scope'>passed_scope</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_condition_string'>condition_string</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
