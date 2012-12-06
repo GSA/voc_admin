@@ -34,12 +34,8 @@ CommentToolApp::Application.configure do
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
-  # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
-  # config.action_mailer.raise_delivery_errors = false
-  # config.action_mailer.default_url_options = {:host => 'comment-adm.hhs.gov'}
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = YAML.load_file("#{Rails.root}/config/smtp_settings.yml")[Rails.env][:smtp_settings]
+  # Email Configuration is handled by the mailer_config.rb initializer and
+  # mailer_settings.yml
 
   # Enable threaded mode
   # config.threadsafe!
