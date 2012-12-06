@@ -1,0 +1,12 @@
+# Example mailer_settings.yml layout
+#
+# development:
+#   raise_delivery_errors: false
+#   default_url_options: {:host => 'example.com'}
+#   delivery_method: :smtp
+#   smtp_settings: { :address: smtp.example.com,
+#                    :port: 27,
+#                    :domain: example.com,
+#                    :user_name: smtp_user_name,
+#                    :password: super_secure_password,
+#                    :authentication: :login }
