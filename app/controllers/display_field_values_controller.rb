@@ -16,7 +16,10 @@ class DisplayFieldValuesController < ApplicationController
 
     respond_to do |format|
       if @display_field_value.update_attributes(params[:display_field_value])
-        #@display_field_value.survey_response.process_me(2) # TODO: Reprocess response when a field is updated
+        
+        # Reprocess response when a field is updated
+        @display_field_value.survey_response.delay.process_me(2)
+        
         format.html {redirect_to root_url, :notice  => "Successfully updated display field."}
         format.js
       else
