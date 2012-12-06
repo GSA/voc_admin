@@ -105,7 +105,7 @@
   <div class="discussion">
     
 <p>A single survey element (currently: TextQuestion, ChoiceQuestion,
-MatrixQuestion, Asset)</p>
+MatrixQuestion, Asset) which exists on a Page within a SurveyVersion.</p>
 
 
   </div>
@@ -178,8 +178,8 @@ MatrixQuestion, Asset)</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>used to clean up gaps in element order when question is moved to another
-page or destroyed.</p>
+<p>Cleans up gaps in element order when the SurveyElement is moved to another
+Page or destroyed.</p>
 </div></span>
   
 </li>
@@ -197,7 +197,7 @@ page or destroyed.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (SurveyElement) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -211,7 +211,10 @@ page or destroyed.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Clone the SurveyElement, delegating the real work to the specific
+SurveyElement type.</p>
+</div></span>
   
 </li>
 
@@ -219,7 +222,7 @@ page or destroyed.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (SurveyElement) <strong>copy_to_page</strong>(page) </a>
     
 
     
@@ -233,7 +236,10 @@ page or destroyed.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Copy the SurveyElement to a specified Page, delegating the real work to the
+specific SurveyElement type.</p>
+</div></span>
   
 </li>
 
@@ -256,8 +262,8 @@ page or destroyed.</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>move any element from any page to another page at any position (TODO:
-protect flow control).</p>
+<p>Moves the element from any source Page to any destination Page, optionally
+specifying an element order position.</p>
 </div></span>
   
 </li>
@@ -281,7 +287,8 @@ protect flow control).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>moves to next element order or next page if necessary and possible.</p>
+<p>Moves the SurveyElement to the next element order (same page) or the next
+page if it's already the last SurveyElement on the page.</p>
 </div></span>
   
 </li>
@@ -305,7 +312,8 @@ protect flow control).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>moves to prior element order or prior page if necessary and possible.</p>
+<p>Moves the SurveyElement to the previous element order (same page) or the
+previous page if it's already the first SurveyElement on the page.</p>
 </div></span>
   
 </li>
@@ -314,7 +322,7 @@ protect flow control).</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#move_to_end_of_page-instance_method" title="#move_to_end_of_page (instance method)">- (Object) <strong>move_to_end_of_page</strong> </a>
+      <a href="#move_to_end_of_page-instance_method" title="#move_to_end_of_page (instance method)">- (false, Integer) <strong>move_to_end_of_page</strong> </a>
     
 
     
@@ -329,31 +337,7 @@ protect flow control).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Why is this here?.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#order-instance_method" title="#order (instance method)">- (Object) <strong>order</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Scopes.</p>
+<p>Moves a SurveyElement to the end of its Page.</p>
 </div></span>
   
 </li>
@@ -377,8 +361,8 @@ protect flow control).</p>
 
   
     <span class="summary_desc"><div class='inline'>
-<p>when any changes are made to a survey element mark the survey version as
-being updated.</p>
+<p>Sets the SurveyVersion update timestamp whenever changes are made to a
+contained SurveyElement.</p>
 </div></span>
   
 </li>
@@ -420,12 +404,12 @@ being updated.</p>
       <pre class="lines">
 
 
-7
 8
-9</pre>
+9
+10</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_callbacks'>skip_callbacks</span>
   <span class='ivar'>@skip_callbacks</span>
@@ -454,14 +438,34 @@ being updated.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>used to clean up gaps in element order when question is moved to another
-page or destroyed</p>
+<p>Cleans up gaps in element order when the SurveyElement is moved to another
+Page or destroyed.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>page</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the Page that the SurveyElement is removed from</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -469,18 +473,18 @@ page or destroyed</p>
       <pre class="lines">
 
 
-42
-43
-44
-45
-46</pre>
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_compact_element_order'>compact_element_order</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_se'>se</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
-    <span class='id identifier rubyid_se'>se</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>+</span><span class='int'>1</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_se'>se</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -497,25 +501,75 @@ page or destroyed</p>
       <div class="method_details first">
   <h3 class="signature first" id="clone_me-instance_method">
   
-    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt><span class='object_link'><a href="" title="SurveyElement (class)">SurveyElement</a></span></tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Clone the SurveyElement, delegating the real work to the specific
+SurveyElement type. Used when cloning a SurveyVersion.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>target_sv</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the target SurveyVersion</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="SurveyElement (class)">SurveyElement</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-124
-125
-126
-127</pre>
+147
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cloned_assetable'>cloned_assetable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
@@ -529,25 +583,75 @@ page or destroyed</p>
       <div class="method_details ">
   <h3 class="signature " id="copy_to_page-instance_method">
   
-    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
+    - (<tt><span class='object_link'><a href="" title="SurveyElement (class)">SurveyElement</a></span></tt>) <strong>copy_to_page</strong>(page) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Copy the SurveyElement to a specified Page, delegating the real work to the
+specific SurveyElement type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>page</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the target Page</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="SurveyElement (class)">SurveyElement</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the cloned copy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-129
-130
-131
-132</pre>
+157
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_copy_of_assetable'>copy_of_assetable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
@@ -570,14 +674,53 @@ page or destroyed</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>move any element from any page to another page at any position (TODO:
-protect flow control)</p>
+<p>Moves the element from any source Page to any destination Page, optionally
+specifying an element order position.  Note: source and destination Pages
+may be the same.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>page_num</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the destination Page id</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new_element_order</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an optional new element order</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -585,17 +728,6 @@ protect flow control)</p>
       <pre class="lines">
 
 
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
 65
 66
 67
@@ -628,52 +760,75 @@ protect flow control)</p>
 94
 95
 96
-97</pre>
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 65</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_move_element'>move_element</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='comma'>,</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_move_element'>move_element</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='comma'>,</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
-    <span class='comment'>#slightly different logic if on same page
+
+    <span class='comment'># slightly different logic if on same page
 </span>    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>==</span> <span class='id identifier rubyid_page_num'>page_num</span>
-      <span class='comment'>#make sure we are actually moving something
+
+      <span class='comment'># make sure we are actually moving something
 </span>      <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span> <span class='op'>==</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span>
+
       <span class='id identifier rubyid_start_index'>start_index</span><span class='comma'>,</span> <span class='id identifier rubyid_end_index'>end_index</span> <span class='op'>=</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span> <span class='op'>&lt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='comma'>,</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span><span class='comma'>,</span><span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='rbracket'>]</span>
 
-      <span class='comment'>#shift range from target to source (overright source with it's neighbor in direction of target)
+      <span class='comment'># shift range from target to source (overright source with it's neighbor in direction of target)
 </span>      <span class='kw'>if</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span> <span class='op'>&lt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span>
         <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>element_order &gt;= ? and element_order &lt; ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_start_index'>start_index</span><span class='comma'>,</span> <span class='id identifier rubyid_end_index'>end_index</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>element_order = element_order + 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
       <span class='kw'>else</span>
         <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>element_order &gt; ? and element_order &lt;= ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_start_index'>start_index</span><span class='comma'>,</span> <span class='id identifier rubyid_end_index'>end_index</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>element_order = element_order - 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
-      <span class='comment'>#update source to target
+      <span class='comment'># update source to target
 </span>      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='comma'>,</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_orginating_page'>orginating_page</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span> <span class='comment'>#will need this for clean up
+      <span class='id identifier rubyid_originating_page'>originating_page</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span> <span class='comment'># will need this for clean up
 </span>
-      <span class='comment'>#remove flow control from ChoiceQuestion answer sets
+      <span class='comment'># remove flow control from ChoiceQuestion answer sets
 </span>      <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable_type'>assetable_type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ChoiceQuestion</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_choice_answers'>choice_answers</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>next_page_id = ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rbracket'>]</span><span class='rparen'>)</span>
         <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:flow_control</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
-      <span class='comment'>#shift the element to new page (insert or append)
+      <span class='comment'># shift the element to new page (insert or append)
 </span>      <span class='kw'>if</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span>
-
-        <span class='comment'>#move everything up one place after where we want to insert the element
+        <span class='comment'># insert: move everything up one place after where we want to insert the element
 </span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>element_order &gt;= ?</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>element_order = element_order + 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-        <span class='comment'>#insert the element
-</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='symbol'>:page_id</span><span class='op'>=&gt;</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='symbol'>:element_order</span><span class='op'>=&gt;</span><span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='comma'>,</span> <span class='symbol'>:skip_callbacks</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+
+        <span class='comment'># insert the element, skipping move_to_end_of_page validation
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='symbol'>:page_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+                               <span class='symbol'>:element_order</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span><span class='comma'>,</span>
+                               <span class='symbol'>:skip_callbacks</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
-        <span class='comment'>#append
-</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='symbol'>:page_id</span><span class='op'>=&gt;</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='symbol'>:element_order</span><span class='op'>=&gt;</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='symbol'>:skip_callbacks</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+        <span class='comment'># append: append the element, skipping move_to_end_of_page validation
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_attributes'>update_attributes</span><span class='lparen'>(</span><span class='symbol'>:page_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+                               <span class='symbol'>:element_order</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_find_by_page_number'>find_by_page_number</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='comma'>,</span>
+                               <span class='symbol'>:skip_callbacks</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
-
-      <span class='comment'>#clean up the original page (would have gap left by moving element
-</span>      <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_compact_element_order'>compact_element_order</span><span class='lparen'>(</span><span class='id identifier rubyid_orginating_page'>orginating_page</span><span class='rparen'>)</span>
+      <span class='comment'># clean up the original page (would have gap left by moving element
+</span>      <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_compact_element_order'>compact_element_order</span><span class='lparen'>(</span><span class='id identifier rubyid_originating_page'>originating_page</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -694,7 +849,8 @@ protect flow control)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>moves to next element order or next page if necessary and possible</p>
+<p>Moves the SurveyElement to the next element order (same page) or the next
+page if it's already the last SurveyElement on the page.</p>
 
 
   </div>
@@ -708,31 +864,29 @@ protect flow control)</p>
       <pre class="lines">
 
 
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110</pre>
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element_down'>move_element_down</span>
   <span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span><span class='id identifier rubyid_target_element'>target_element</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>  <span class='op'>?</span>
     <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>+</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>:</span>
     <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbracket'>]</span>
 
-  <span class='comment'>#is target page valid?
+  <span class='comment'># is target page valid?
 </span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_target_page_num'>target_page_num</span> <span class='op'>&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:page_number</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_move_element'>move_element</span><span class='lparen'>(</span><span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span> <span class='id identifier rubyid_target_element'>target_element</span><span class='rparen'>)</span>
-
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -751,7 +905,8 @@ protect flow control)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>moves to prior element order or prior page if necessary and possible</p>
+<p>Moves the SurveyElement to the previous element order (same page) or the
+previous page if it's already the first SurveyElement on the page.</p>
 
 
   </div>
@@ -765,26 +920,26 @@ protect flow control)</p>
       <pre class="lines">
 
 
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122</pre>
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element_up'>move_element_up</span>
   <span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span><span class='id identifier rubyid_target_element'>target_element</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>?</span>
     <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>-</span> <span class='int'>1</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rbracket'>]</span> <span class='op'>:</span>
     <span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>-</span> <span class='int'>1</span><span class='rbracket'>]</span>
 
-  <span class='comment'>#is target page valid
+  <span class='comment'># is target page valid?
 </span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_target_page_num'>target_page_num</span> <span class='op'>&lt;</span> <span class='int'>1</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_move_element'>move_element</span><span class='lparen'>(</span><span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span> <span class='id identifier rubyid_target_element'>target_element</span><span class='rparen'>)</span>
@@ -797,7 +952,7 @@ protect flow control)</p>
       <div class="method_details ">
   <h3 class="signature " id="move_to_end_of_page-instance_method">
   
-    - (<tt>Object</tt>) <strong>move_to_end_of_page</strong> 
+    - (<tt>false</tt>, <tt>Integer</tt>) <strong>move_to_end_of_page</strong> 
   
 
   
@@ -806,13 +961,31 @@ protect flow control)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Why is this here?</p>
+<p>Moves a SurveyElement to the end of its Page.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>false</tt>, <tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>false if no Page association exists, otherwise the determined element order</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -820,53 +993,18 @@ protect flow control)</p>
       <pre class="lines">
 
 
-19
-20
-21</pre>
+55
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 55</span>
 
-<span class='id identifier rubyid_before_validation'>before_validation</span> <span class='symbol'>:move_to_end_of_page</span><span class='comma'>,</span> <span class='symbol'>:on</span> <span class='op'>=&gt;</span> <span class='symbol'>:update</span><span class='comma'>,</span> <span class='symbol'>:if</span> <span class='op'>=&gt;</span> <span class='const'>Proc</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_object'>object</span><span class='op'>|</span>
-  <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_page_id_changed?'>page_id_changed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_skip_callbacks'>skip_callbacks</span>
-<span class='rbrace'>}</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="order-instance_method">
-  
-    - (<tt>Object</tt>) <strong>order</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Scopes</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-32</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 32</span>
-
-<span class='id identifier rubyid_default_scope'>default_scope</span> <span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_move_to_end_of_page'>move_to_end_of_page</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_id'>page_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>=</span> <span class='const'>Page</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_id'>page_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>+</span> <span class='int'>1</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -884,8 +1022,8 @@ protect flow control)</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>when any changes are made to a survey element mark the survey version as
-being updated</p>
+<p>Sets the SurveyVersion update timestamp whenever changes are made to a
+contained SurveyElement.</p>
 
 
   </div>
@@ -899,12 +1037,12 @@ being updated</p>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_survey_version_updated_at'>update_survey_version_updated_at</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:updated_at</span><span class='comma'>,</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
