@@ -1,6 +1,9 @@
 require 'csv'
 
+# Allows for the download of CSV exports of SurveyResponse data.
 class ExportsController < ApplicationController
+
+  # Endpoint to start the download process.
   def download
     @export_file = Export.find_by_access_token params[:id]
 

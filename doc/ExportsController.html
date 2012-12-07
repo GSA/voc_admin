@@ -103,7 +103,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Allows for the download of CSV exports of SurveyResponse data.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -135,7 +146,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Endpoint to start the download process.</p>
+</div></span>
   
 </li>
 
@@ -165,20 +178,31 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Endpoint to start the download process.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-4
-5
-6
 7
-8</pre>
+8
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/exports_controller.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/exports_controller.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span>
   <span class='ivar'>@export_file</span> <span class='op'>=</span> <span class='const'>Export</span><span class='period'>.</span><span class='id identifier rubyid_find_by_access_token'>find_by_access_token</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>

@@ -1,6 +1,8 @@
+# Manages the lifecycle of Asset HTML snippet entities.
 class AssetsController < ApplicationController
   before_filter :get_survey_version
 
+  # New.
   def new
     @asset = @survey_version.assets.build
 
@@ -10,6 +12,7 @@ class AssetsController < ApplicationController
     end
   end
 
+  # Create.
   def create
     @asset = Asset.new(params[:asset])
     @asset.survey_element.survey_version_id = @survey_version.id
@@ -24,6 +27,7 @@ class AssetsController < ApplicationController
     end
   end
 
+  # Edit.
   def edit
     @asset = @survey_version.assets.find(params[:id])
 
@@ -33,8 +37,8 @@ class AssetsController < ApplicationController
     end
   end
 
+  # Update.
   def update
-    #@asset = @survey_version.assets.find(params[:id])
     @asset = Asset.find(params[:id])
 
     respond_to do |format|
@@ -47,6 +51,7 @@ class AssetsController < ApplicationController
     end
   end
 
+  # Destroy.
   def destroy
     @asset = @survey_version.assets.find(params[:id])
     @asset.destroy
@@ -58,9 +63,10 @@ class AssetsController < ApplicationController
   end
 
   private
+
+  # Load Survey and SurveyVersion information from the DB.
   def get_survey_version
     @survey = Survey.find(params[:survey_id])
     @survey_version = SurveyVersion.find(params[:survey_version_id])
   end
-
 end

@@ -1,14 +1,18 @@
+# Manages the lifecycle of SurveyResponse CustomViews.
 class CustomViewsController < ApplicationController
   before_filter :get_survey_version
   
+  # Index.
   def index
     @custom_views = @survey_version.custom_views.all
   end
 
+  # New.
   def new
     @custom_view = @survey_version.custom_views.build
   end
 
+  # Create.
   def create
     @custom_view = @survey_version.custom_views.build params[:custom_view]
 
@@ -20,10 +24,12 @@ class CustomViewsController < ApplicationController
     end
   end
 
+  # Edit.
   def edit
     @custom_view = CustomView.find(params[:id])
   end
 
+  # Update.
   def update
     @custom_view = CustomView.find(params[:id])
 
@@ -35,6 +41,7 @@ class CustomViewsController < ApplicationController
     end
   end
   
+  # Destroy.
   def destroy
     @custom_view = @survey_version.custom_views.find(params[:id])
     
@@ -45,6 +52,7 @@ class CustomViewsController < ApplicationController
   end
   
   private
+  # Load Survey and SurveyVersion information from the DB.
   def get_survey_version
     @survey = Survey.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])

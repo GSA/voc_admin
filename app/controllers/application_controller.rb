@@ -1,9 +1,12 @@
+# Base Controller class; integrates Authlogic and provides gate keeper
+# before_filter functions.
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :require_user
   helper_method :current_user_session, :current_user
 
   private
+    # Used to restrict access to User and Site functionality.
     def require_admin
       logger.debug "ApplicationController::require_user"
       unless current_user.admin?
@@ -12,6 +15,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # Retrieves the UserSession.
     def current_user_session
       logger.debug "ApplicationController::current_user_session"
       return @current_user_session if defined?(@current_user_session)
@@ -19,12 +23,14 @@ class ApplicationController < ActionController::Base
       # return nil
     end
 
+    # Retrieves the User from the UserSession.
     def current_user
       logger.debug "ApplicationController::current_user"
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.user
     end
 
+    # Used to restrict application functionality to logged-in Users.
     def require_user
       logger.debug "ApplicationController::require_user"
       unless current_user

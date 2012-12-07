@@ -1,14 +1,18 @@
+# Manages the lifecycle of DisplayFields.
 class DisplayFieldsController < ApplicationController
   before_filter :get_survey_version
 
+  # Index.
   def index
     @display_fields = @survey_version.display_fields.order(:display_order)
   end
 
+  # New.
   def new
     @display_field = @survey_version.display_fields.build
   end
 
+  # Create.
   def create
     @display_field = @survey_version.display_fields.build params[:display_field]
     @display_field.type = params[:display_field][:model_type]
@@ -21,6 +25,7 @@ class DisplayFieldsController < ApplicationController
     end
   end
 
+  # Edit.
   def edit
     @display_field = DisplayField.find(params[:id])
     if !@display_field.editable?
@@ -29,6 +34,7 @@ class DisplayFieldsController < ApplicationController
     end
   end
 
+  # Update.
   def update
     @display_field = DisplayField.find(params[:id])
 
@@ -39,6 +45,7 @@ class DisplayFieldsController < ApplicationController
     end
   end
 
+  # Destroy.
   def destroy
     @display_field = @survey_version.display_fields.find(params[:id])
 
@@ -53,6 +60,7 @@ class DisplayFieldsController < ApplicationController
     redirect_to survey_survey_version_display_fields_path(@survey, @survey_version)
   end
 
+  # Moves the DisplayField down in the list.
   def increment_display_order
     @display_field = @survey_version.display_fields.find(params[:id])
     @display_field.increment_display_order
@@ -60,6 +68,7 @@ class DisplayFieldsController < ApplicationController
     redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
   end
 
+  # Moves the DisplayField up in the list.
   def decrement_display_order
     @display_field = @survey_version.display_fields.find(params[:id])
     @display_field.decrement_display_order
@@ -68,6 +77,8 @@ class DisplayFieldsController < ApplicationController
   end
 
   private
+  
+  # Load Survey and SurveyVersion information from the DB.
   def get_survey_version
     @survey = Survey.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])

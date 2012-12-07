@@ -103,7 +103,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Manages the lifecycle of DisplayFields.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -135,7 +146,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Create.</p>
+</div></span>
   
 </li>
 
@@ -157,7 +170,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Moves the DisplayField up in the list.</p>
+</div></span>
   
 </li>
 
@@ -179,7 +194,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Destroy.</p>
+</div></span>
   
 </li>
 
@@ -201,7 +218,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Edit.</p>
+</div></span>
   
 </li>
 
@@ -223,7 +242,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Moves the DisplayField down in the list.</p>
+</div></span>
   
 </li>
 
@@ -245,7 +266,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Index.</p>
+</div></span>
   
 </li>
 
@@ -267,7 +290,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>New.</p>
+</div></span>
   
 </li>
 
@@ -289,7 +314,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Update.</p>
+</div></span>
   
 </li>
 
@@ -319,26 +346,37 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-12
-13
-14
-15
 16
 17
 18
 19
 20
 21
-22</pre>
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:display_field</span><span class='rbracket'>]</span>
@@ -365,21 +403,32 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Moves the DisplayField up in the list.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-63
-64
-65
-66
-67
-68</pre>
+72
+73
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decrement_display_order'>decrement_display_order</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -401,28 +450,39 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Destroy.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
 49
 50
 51
 52
 53
-54</pre>
+54
+55
+56
+57
+58
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -451,22 +511,33 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Edit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-24
-25
-26
-27
-28
 29
-30</pre>
+30
+31
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -489,21 +560,32 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Moves the DisplayField down in the list.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-56
-57
-58
-59
-60
-61</pre>
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_increment_display_order'>increment_display_order</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -525,18 +607,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Index.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-4
-5
-6</pre>
+6
+7
+8</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 6</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
   <span class='ivar'>@display_fields</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:display_order</span><span class='rparen'>)</span>
@@ -555,18 +648,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>New.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-8
-9
-10</pre>
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
@@ -585,24 +689,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Update.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-32
-33
-34
-35
-36
-37
 38
 39
-40</pre>
+40
+41
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='const'>DisplayField</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
