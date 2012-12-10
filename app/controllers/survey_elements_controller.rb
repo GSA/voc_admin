@@ -18,11 +18,4 @@ class SurveyElementsController < ApplicationController
       format.js { render "shared/update_question_list" }
     end
   end
-
-  private
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
-
 end

@@ -80,10 +80,6 @@ class RulesController < ApplicationController
   end
 
   private
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
 
   def do_rule_builds
     @rule.execution_trigger_rules.build if  @rule.execution_trigger_rules.size == 0

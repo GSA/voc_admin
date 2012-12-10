@@ -69,10 +69,6 @@ class TextQuestionsController < ApplicationController
   end
 
   private
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
 
   def destroy_default_rule_and_display_field(qc)
     rule = @survey_version.rules.find_by_name(qc.statement)

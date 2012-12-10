@@ -1,5 +1,5 @@
 class MatrixQuestionsController < ApplicationController
-  before_filter :get_survey_and_survey_version
+  before_filter :get_survey_version
 
   def new
     @matrix_question = @survey_version.matrix_questions.build
@@ -93,12 +93,6 @@ class MatrixQuestionsController < ApplicationController
     df = matrix_question.survey_version.display_fields.find_by_name(name)
     df.destroy if df.present?
     Rails.logger.debug "Removing DispalyField: #{name}"
-
-  end
-
-  def get_survey_and_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
   end
 
   def destroy_default_rule_and_display_field(question)

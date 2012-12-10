@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :get_survey, :get_survey_version
+  before_filter :get_survey_version
 
   def create
     @page = @survey_version.pages.build params[:page]
@@ -48,13 +48,4 @@ class PagesController < ApplicationController
       format.js  { render "shared/update_question_list" }
     end
   end
-
-  private
-  def get_survey
-    @survey = Survey.find(params[:survey_id])
-  end
-  def get_survey_version
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
-
 end

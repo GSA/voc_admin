@@ -61,12 +61,4 @@ class AssetsController < ApplicationController
       format.js { render :partial => "shared/element_destroy" }
     end
   end
-
-  private
-
-  # Load Survey and SurveyVersion information from the DB.
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = SurveyVersion.find(params[:survey_version_id])
-  end
 end

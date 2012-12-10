@@ -50,11 +50,4 @@ class CustomViewsController < ApplicationController
 
     redirect_to survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :notice => "Successfully removed custom view."
   end
-  
-  private
-  # Load Survey and SurveyVersion information from the DB.
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
 end

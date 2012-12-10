@@ -70,12 +70,6 @@ class ChoiceQuestionsController < ApplicationController
 
   private
   
-  # Load Survey and SurveyVersion information from the DB.
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = SurveyVersion.find(params[:survey_version_id])
-  end
-
   # Clean up when destroying a ChoiceQuestion.
   def destroy_default_rule_and_display_field(qc)
     rule = @survey_version.rules.find_by_name(qc.statement)
@@ -85,7 +79,7 @@ class ChoiceQuestionsController < ApplicationController
     df.destroy if df.present?
   end
 
-  # Build the QuestionContent to allow the new/edit form to worl properly.
+  # Build the QuestionContent to allow the new/edit form to work properly.
   def build_default_choice_context(choice_question)
     choice_question.build_question_content unless choice_question.question_content
 

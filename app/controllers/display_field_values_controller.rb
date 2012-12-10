@@ -1,7 +1,7 @@
 # Manages the lifecycle of DisplayFieldValues (modal edit
 # from the SurveyResponse grid.)
 class DisplayFieldValuesController < ApplicationController
-  before_filter :get_survey_and_survey_version
+  before_filter :get_survey_version
 
   # Edit.
   def edit
@@ -30,12 +30,5 @@ class DisplayFieldValuesController < ApplicationController
         format.js   { render :edit }
       end
     end
-  end
-
-  private
-  # Load Survey and SurveyVersion information from the DB.
-  def get_survey_and_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
   end
 end

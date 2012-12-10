@@ -75,12 +75,4 @@ class DisplayFieldsController < ApplicationController
 
     redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
   end
-
-  private
-  
-  # Load Survey and SurveyVersion information from the DB.
-  def get_survey_version
-    @survey = Survey.find(params[:survey_id])
-    @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
 end
