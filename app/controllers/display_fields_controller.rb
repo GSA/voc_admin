@@ -2,17 +2,17 @@
 class DisplayFieldsController < ApplicationController
   before_filter :get_survey_version
 
-  # Index.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format)
   def index
     @display_fields = @survey_version.display_fields.order(:display_order)
   end
 
-  # New.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/display_fields/new(.:format)
   def new
     @display_field = @survey_version.display_fields.build
   end
 
-  # Create.
+  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format)
   def create
     @display_field = @survey_version.display_fields.build params[:display_field]
     @display_field.type = params[:display_field][:model_type]
@@ -25,7 +25,7 @@ class DisplayFieldsController < ApplicationController
     end
   end
 
-  # Edit.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/edit(.:format)
   def edit
     @display_field = DisplayField.find(params[:id])
     if !@display_field.editable?
@@ -34,7 +34,7 @@ class DisplayFieldsController < ApplicationController
     end
   end
 
-  # Update.
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id(.:format)
   def update
     @display_field = DisplayField.find(params[:id])
 
@@ -45,7 +45,7 @@ class DisplayFieldsController < ApplicationController
     end
   end
 
-  # Destroy.
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id(.:format)
   def destroy
     @display_field = @survey_version.display_fields.find(params[:id])
 
@@ -60,6 +60,7 @@ class DisplayFieldsController < ApplicationController
     redirect_to survey_survey_version_display_fields_path(@survey, @survey_version)
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/increment_display_order(.:format)
   # Moves the DisplayField down in the list.
   def increment_display_order
     @display_field = @survey_version.display_fields.find(params[:id])
@@ -68,6 +69,7 @@ class DisplayFieldsController < ApplicationController
     redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/decrement_display_order(.:format)
   # Moves the DisplayField up in the list.
   def decrement_display_order
     @display_field = @survey_version.display_fields.find(params[:id])

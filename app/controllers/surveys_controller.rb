@@ -1,22 +1,22 @@
 class SurveysController < ApplicationController
-  # GET /surveys
+  # GET    /surveys(.:format)
   def index
     @surveys = current_user.surveys.search(params[:q]).order("surveys.#{sort_column} #{sort_direction}").page(params[:page]).per(10)
   end
 
-  # GET /surveys/1
+  # GET    /surveys/:id(.:format)
   def show
     @survey = current_user.surveys.find(params[:id])
 
   end
 
-  # GET /surveys/new
+  # GET    /surveys/new(.:format)
   def new
     @survey = current_user.surveys.new
 
   end
 
-  # POST /surveys
+  # POST   /surveys(.:format)
   def create
     @survey = current_user.surveys.new(params[:survey])
 
@@ -27,12 +27,12 @@ class SurveysController < ApplicationController
     end
   end
 
-  # GET /surveys/edit
+  # GET    /surveys/:id/edit(.:format)
   def edit
    @survey = current_user.surveys.find(params[:id])
   end
 
-  # PUT /surveys/1
+  # PUT    /surveys/:id(.:format)
   def update
      @survey = current_user.surveys.find(params[:id])
      @survey.update_attributes(params[:survey])
@@ -44,17 +44,16 @@ class SurveysController < ApplicationController
      end
    end
 
-  # DELETE /surveys/1
+  # DELETE /surveys/:id(.:format)
   def destroy
     @survey = current_user.surveys.find(params[:id])
     @survey.update_attribute(:archived, true)
 
-
     redirect_to(surveys_url, :notice => 'Survey was successfully deleted.')
   end
 
-
   private
+
   def sort_column
     %w(name).include?(params[:sort]) ? params[:sort] : "name"
   end

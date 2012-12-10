@@ -3,7 +3,7 @@
 class DisplayFieldValuesController < ApplicationController
   before_filter :get_survey_version
 
-  # Edit.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/display_field_values/:id/edit(.:format)
   def edit
     @display_field_value = DisplayFieldValue.find(params[:id])
 
@@ -13,7 +13,7 @@ class DisplayFieldValuesController < ApplicationController
     end
   end
 
-  # Update.
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/display_field_values/:id(.:format)
   def update
     @display_field_value = DisplayFieldValue.find(params[:id])
 

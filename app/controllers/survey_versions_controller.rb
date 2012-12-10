@@ -1,6 +1,7 @@
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules(.:format)
   def index
     @survey_versions = @survey.survey_versions.get_unarchived.order(order_clause(params[:sort], params[:direction])).page(params[:page]).per(10)
     respond_to do |format|
@@ -9,6 +10,7 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id(.:format)
   def show
     respond_to do |format|
       if @survey.archived || @survey_version.archived
@@ -20,14 +22,17 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/edit(.:format)
   def edit
     redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
     redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/edit_thank_you_page(.:format)
   def edit_thank_you_page
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id(.:format)
   def update
     if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
@@ -36,6 +41,7 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id(.:format)
   def destroy
     @survey_version.update_attribute(:archived, true)
     respond_to do |format|
@@ -44,6 +50,7 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/create_new_major_version(.:format)
   def create_new_major_version
     @survey.create_new_major_version
     respond_to do |format|
@@ -52,14 +59,15 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/create_new_minor_version(.:format)
   def create_new_minor_version
-
     respond_to do |format|
       format.html { redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Minor Survey Version was successfully created.') }
       format.xml  { head :ok }
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/publish(.:format)
   def publish
     if @survey_version.questions.empty?
       redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
@@ -70,16 +78,17 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/unpublish(.:format)
   def unpublish
     @survey_version.unpublish_me
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/clone_version(.:format)
   def clone_version
     @minor_version = @survey_version.clone_me
 
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
-
   end
 
   private

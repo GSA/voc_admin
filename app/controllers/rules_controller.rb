@@ -1,20 +1,24 @@
 class RulesController < ApplicationController
   before_filter :get_survey_version, :except=>[:do_now, :check_do_now]
 
+  # GET    /rules(.:format)
   def index
     @rules = @survey_version.rules.order(:rule_order)
   end
 
+  # GET    /rules/:id(.:format)
   def show
     @rule = @survey_version.rules.find(params[:id])
   end
 
+  # GET    /rules/new(.:format)
   def new
     @rule = @survey_version.rules.build
     build_source_array
     do_rule_builds
   end
 
+  # POST   /rules(.:format)
   def create
     build_source_array
     @rule = @survey_version.rules.build params[:rule]
@@ -28,12 +32,14 @@ class RulesController < ApplicationController
     end
   end
 
+  # GET    /rules/:id/edit(.:format)
   def edit
     @rule = @survey_version.rules.find(params[:id])
     build_source_array
     do_rule_builds
   end
 
+  # PUT    /rules/:id(.:format)
   def update
     @rule = @survey_version.rules.find(params[:id])
 
@@ -46,6 +52,7 @@ class RulesController < ApplicationController
     end
   end
 
+  # DELETE /rules/:id(.:format)
   def destroy
     @rule = @survey_version.rules.find(params[:id])
 
@@ -54,6 +61,7 @@ class RulesController < ApplicationController
     redirect_to survey_survey_version_rules_path(@survey, @survey_version), :notice  => "Successfully deleted rule."
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/do_now(.:format)
   def do_now
     @rule = Rule.find(params[:id])
     @job_id = @rule.delay.apply_me_all
@@ -61,10 +69,12 @@ class RulesController < ApplicationController
     render :text => @job_id.id
   end
 
+  # GET    /rules/check_do_now(.:format)
   def check_do_now
     render :text => (Delayed::Job.exists?(params[:job_id]) ? "not done" : "done")
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/increment_rule_order(.:format)
   def increment_rule_order
     @rule = @survey_version.rules.find(params[:id])
     @rule.increment_rule_order
@@ -72,6 +82,7 @@ class RulesController < ApplicationController
     redirect_to survey_survey_version_rules_path, :notice => "Successfully updated rule order"
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/decrement_rule_order(.:format)
   def decrement_rule_order
     @rules = @survey_version.rules.find(params[:id])
     @rules.decrement_rule_order

@@ -1,6 +1,7 @@
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_version
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/new(.:format)
   def new
     @matrix_question = @survey_version.matrix_questions.build
 
@@ -10,6 +11,7 @@ class MatrixQuestionsController < ApplicationController
     end
   end
 
+  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions(.:format)
   def create
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
@@ -36,6 +38,7 @@ class MatrixQuestionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id/edit(.:format)
   def edit
     @matrix_question = @survey_version.matrix_questions.includes(:choice_questions => [:question_content, :choice_answers]).find(params[:id])
 
@@ -45,6 +48,7 @@ class MatrixQuestionsController < ApplicationController
     end
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)
   def update
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
@@ -68,6 +72,7 @@ class MatrixQuestionsController < ApplicationController
     end
   end
 
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)
   def destroy
     @matrix_question = @survey_version.matrix_questions.find(params[:id])
 
@@ -81,6 +86,7 @@ class MatrixQuestionsController < ApplicationController
   end
 
   private
+  
   def remove_sub_question_display_field_and_rules(matrix_question, choice_question_params)
     matrix_statement = matrix_question.question_content.statement_changed? ? matrix_question.question_content.statement_was : matrix_question.question_content.statement
 

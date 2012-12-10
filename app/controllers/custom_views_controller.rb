@@ -2,17 +2,17 @@
 class CustomViewsController < ApplicationController
   before_filter :get_survey_version
   
-  # Index.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/custom_views(.:format)
   def index
     @custom_views = @survey_version.custom_views.all
   end
 
-  # New.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/custom_views/new(.:format)
   def new
     @custom_view = @survey_version.custom_views.build
   end
 
-  # Create.
+  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/custom_views(.:format)
   def create
     @custom_view = @survey_version.custom_views.build params[:custom_view]
 
@@ -24,12 +24,12 @@ class CustomViewsController < ApplicationController
     end
   end
 
-  # Edit.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/custom_views/:id/edit(.:format)
   def edit
     @custom_view = CustomView.find(params[:id])
   end
 
-  # Update.
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/custom_views/:id(.:format)
   def update
     @custom_view = CustomView.find(params[:id])
 
@@ -41,7 +41,7 @@ class CustomViewsController < ApplicationController
     end
   end
   
-  # Destroy.
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/custom_views/:id(.:format)
   def destroy
     @custom_view = @survey_version.custom_views.find(params[:id])
     

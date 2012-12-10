@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   before_filter :get_survey_version
 
+  # /surveys/:survey_id/survey_versions/:survey_version_id/pages(.:format)
   def create
     @page = @survey_version.pages.build params[:page]
 
@@ -11,6 +12,7 @@ class PagesController < ApplicationController
     end
   end
 
+  # /surveys/:survey_id/survey_versions/:survey_version_id/pages/:id(.:format)
   def update
     @page = @survey_version.pages.find(params[:id])
 
@@ -21,6 +23,7 @@ class PagesController < ApplicationController
     end
   end
 
+  # /surveys/:survey_id/survey_versions/:survey_version_id/pages/:id/move_page(.:format)
   def move_page
     @page = @survey_version.pages.find(params[:id])
     @target_page = params[:page_number]
@@ -32,6 +35,7 @@ class PagesController < ApplicationController
     end
   end
 
+  # /surveys/:survey_id/survey_versions/:survey_version_id/pages/:id(.:format)
   def destroy
     @page = @survey_version.pages.find(params[:id])
     @page.destroy
@@ -41,6 +45,7 @@ class PagesController < ApplicationController
     end
   end
 
+  # /surveys/:survey_id/survey_versions/:survey_version_id/pages/:id/copy_page(.:format)
   def copy_page
     page = @survey_version.pages.find(params[:id])
     page.create_copy

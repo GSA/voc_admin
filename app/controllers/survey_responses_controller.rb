@@ -3,6 +3,7 @@ require 'csv'
 class SurveyResponsesController < ApplicationController
   POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id]
 
+  # GET    /survey_responses(.:format)
   def index
     build_survey_version_and_responses
 
@@ -17,10 +18,12 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
+  # GET    /survey_responses/:id/edit(.:format)
   def edit
     @survey_response = SurveyResponse.find(params[:id])
   end
 
+  # PUT    /survey_responses/:id(.:format)
   def update
     @survey_response = SurveyResponse.find(params[:id])
     if @survey_response.update_attributes(params[:survey_response])
@@ -30,20 +33,7 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
-  ## You shouldn't be able to create survey responses from the admin app
-  def create
-    @client_id = SecureRandom.hex(64)
-    @survey_version_id = params[:survey_version_id]
-
-    @survey_response = SurveyResponse.new ({:client_id => @client_id, :survey_version_id => @survey_version_id}.merge(params[:response]))
-
-    @survey_response.raw_responses.each {|raw_response| raw_response.client_id = @client_id}
-
-    @survey_response.save!
-
-    redirect_to survey_responses_path
-  end
-
+  # DELETE /survey_responses/:id(.:format)
   def destroy
     @survey_response = SurveyResponse.find(params[:id])
     @survey_response.archive
@@ -58,6 +48,7 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
+  # GET    /survey_responses/export_all(.:format)
   def export_all
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 

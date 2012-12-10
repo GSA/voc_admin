@@ -2,7 +2,7 @@
 class AssetsController < ApplicationController
   before_filter :get_survey_version
 
-  # New.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/assets/new(.:format)
   def new
     @asset = @survey_version.assets.build
 
@@ -12,7 +12,7 @@ class AssetsController < ApplicationController
     end
   end
 
-  # Create.
+  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/assets(.:format)
   def create
     @asset = Asset.new(params[:asset])
     @asset.survey_element.survey_version_id = @survey_version.id
@@ -27,7 +27,7 @@ class AssetsController < ApplicationController
     end
   end
 
-  # Edit.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/assets/:id/edit(.:format)
   def edit
     @asset = @survey_version.assets.find(params[:id])
 
@@ -37,7 +37,7 @@ class AssetsController < ApplicationController
     end
   end
 
-  # Update.
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/assets/:id(.:format)
   def update
     @asset = Asset.find(params[:id])
 
@@ -51,7 +51,7 @@ class AssetsController < ApplicationController
     end
   end
 
-  # Destroy.
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/assets/:id(.:format)
   def destroy
     @asset = @survey_version.assets.find(params[:id])
     @asset.destroy

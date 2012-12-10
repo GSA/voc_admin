@@ -2,7 +2,7 @@
 class ChoiceQuestionsController < ApplicationController
   before_filter :get_survey_version
 
-  # New.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/choice_questions/new(.:format)
   def new
     @choice_question = @survey_version.choice_questions.build
     
@@ -14,7 +14,7 @@ class ChoiceQuestionsController < ApplicationController
     end
   end
 
-  # Create.
+  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/choice_questions(.:format)
   def create
     @choice_question = ChoiceQuestion.new(params[:choice_question])
     @choice_question.survey_element.survey_version_id = @survey_version.id
@@ -31,7 +31,7 @@ class ChoiceQuestionsController < ApplicationController
     end
   end
 
-  # Edit.
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/choice_questions/:id/edit(.:format)
   def edit
     @choice_question = @survey_version.choice_questions.find(params[:id])
 
@@ -41,7 +41,7 @@ class ChoiceQuestionsController < ApplicationController
     end
   end
 
-  # Update.
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/choice_questions/:id(.:format)
   def update
     @choice_question = ChoiceQuestion.find(params[:id])
     respond_to do |format|
@@ -54,7 +54,8 @@ class ChoiceQuestionsController < ApplicationController
     end
   end
 
-  # Destroy. Also removes default Rule and Display Fields.
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/choice_questions/:id(.:format)
+  # Also removes default Rule and Display Fields.
   def destroy
     @choice_question = ChoiceQuestion.find(params[:id])
 

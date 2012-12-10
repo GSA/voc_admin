@@ -2,10 +2,12 @@ class UserSessionsController < ApplicationController
   skip_before_filter :require_user, :only => [:new, :create, :reset_password, :do_pw_reset]
   before_filter :redirect_if_logged_in, :only => :new
 
-	def new
+	# GET    /user_sessions/new(.:format)
+  def new
     @user_session = UserSession.new
   end
 
+  # POST   /user_sessions(.:format)
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
@@ -15,12 +17,14 @@ class UserSessionsController < ApplicationController
     end
   end
 
+  # DELETE /user_sessions/:id(.:format)
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
     redirect_to login_url
   end
 
+  # POST   /user_sessions/do_pw_reset(.:format)
   def do_pw_reset
     user = User.find_by_email(params["email_address"])
     if user

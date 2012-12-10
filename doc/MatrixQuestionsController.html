@@ -135,7 +135,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions(.:format).</p>
+</div></span>
   
 </li>
 
@@ -157,7 +160,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>DELETE
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format).</p>
+</div></span>
   
 </li>
 
@@ -179,7 +185,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id/edit(.:format).</p>
+</div></span>
   
 </li>
 
@@ -201,7 +210,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/new(.:format).</p>
+</div></span>
   
 </li>
 
@@ -223,7 +235,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format).</p>
+</div></span>
   
 </li>
 
@@ -253,14 +268,24 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-13
-14
 15
 16
 17
@@ -283,10 +308,12 @@
 34
 35
 36
-37</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:choice_questions_attributes</span><span class='rbracket'>]</span>
@@ -327,26 +354,38 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>DELETE
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-71
-72
-73
-74
-75
 76
 77
 78
 79
 80
-81</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -373,23 +412,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id/edit(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-39
-40
-41
 42
 43
 44
 45
-46</pre>
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:choice_questions</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:question_content</span><span class='comma'>,</span> <span class='symbol'>:choice_answers</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -413,23 +464,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/new(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-4
 5
 6
 7
 8
 9
 10
-11</pre>
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
@@ -453,16 +516,24 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-48
-49
-50
-51
 52
 53
 54
@@ -480,10 +551,14 @@
 66
 67
 68
-69</pre>
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:choice_questions_attributes</span><span class='rbracket'>]</span>

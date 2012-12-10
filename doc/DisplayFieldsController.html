@@ -147,7 +147,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Create.</p>
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format).</p>
 </div></span>
   
 </li>
@@ -171,7 +172,9 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Moves the DisplayField up in the list.</p>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/decrement_display_order(.:format)
+Moves the DisplayField up in the list.</p>
 </div></span>
   
 </li>
@@ -195,7 +198,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Destroy.</p>
+<p>DELETE
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id(.:format).</p>
 </div></span>
   
 </li>
@@ -219,7 +223,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Edit.</p>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/edit(.:format).</p>
 </div></span>
   
 </li>
@@ -243,7 +248,9 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Moves the DisplayField down in the list.</p>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/increment_display_order(.:format)
+Moves the DisplayField down in the list.</p>
 </div></span>
   
 </li>
@@ -267,7 +274,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Index.</p>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format).</p>
 </div></span>
   
 </li>
@@ -291,7 +299,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>New.</p>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/new(.:format).</p>
 </div></span>
   
 </li>
@@ -315,7 +324,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Update.</p>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id(.:format).</p>
 </div></span>
   
 </li>
@@ -349,7 +359,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Create.</p>
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format)</p>
 
 
   </div>
@@ -406,7 +417,9 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Moves the DisplayField up in the list.</p>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/decrement_display_order(.:format)
+Moves the DisplayField up in the list.</p>
 
 
   </div>
@@ -420,15 +433,15 @@
       <pre class="lines">
 
 
-72
-73
 74
 75
 76
-77</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decrement_display_order'>decrement_display_order</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -453,7 +466,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Destroy.</p>
+<p>DELETE
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id(.:format)</p>
 
 
   </div>
@@ -514,7 +528,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Edit.</p>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/edit(.:format)</p>
 
 
   </div>
@@ -563,7 +578,9 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Moves the DisplayField down in the list.</p>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id/increment_display_order(.:format)
+Moves the DisplayField down in the list.</p>
 
 
   </div>
@@ -577,15 +594,15 @@
       <pre class="lines">
 
 
-64
 65
 66
 67
 68
-69</pre>
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/display_fields_controller.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_increment_display_order'>increment_display_order</span>
   <span class='ivar'>@display_field</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_display_fields'>display_fields</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -610,7 +627,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Index.</p>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format)</p>
 
 
   </div>
@@ -651,7 +669,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>New.</p>
+<p>GET   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/new(.:format)</p>
 
 
   </div>
@@ -692,7 +711,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Update.</p>
+<p>PUT   
+/surveys/:survey_id/survey_versions/:survey_version_id/display_fields/:id(.:format)</p>
 
 
   </div>

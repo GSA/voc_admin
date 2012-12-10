@@ -135,7 +135,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/survey_elements/:id/down(.:format).</p>
+</div></span>
   
 </li>
 
@@ -157,7 +160,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/survey_elements/:id/up(.:format).</p>
+</div></span>
   
 </li>
 
@@ -187,23 +193,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/survey_elements/:id/down(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-13
-14
 15
 16
 17
 18
 19
-20</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_elements_controller.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_elements_controller.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span>
   <span class='ivar'>@element</span> <span class='op'>=</span> <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -227,23 +245,35 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>POST  
+/surveys/:survey_id/survey_versions/:survey_version_id/survey_elements/:id/up(.:format)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-4
 5
 6
 7
 8
 9
 10
-11</pre>
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_elements_controller.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_elements_controller.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_up'>up</span>
   <span class='ivar'>@element</span> <span class='op'>=</span> <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>

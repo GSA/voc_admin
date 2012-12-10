@@ -1,14 +1,17 @@
 class TextQuestionsController < ApplicationController
   before_filter :get_survey_version
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/text_questions(.:format)
   def index
     @text_questions = TextQuestion.all
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/:id(.:format)
   def show
     @text_question = TextQuestion.find(params[:id])
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/new(.:format)
   def new
     @text_question = @survey_version.text_questions.build
     respond_to do |format|
@@ -17,10 +20,10 @@ class TextQuestionsController < ApplicationController
     end
   end
 
+  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/text_questions(.:format)
   def create
     @text_question = TextQuestion.new(params[:text_question])
     @text_question.survey_element.survey_version_id = @survey_version.id
-
 
     respond_to do |format|
       if @text_question.save
@@ -32,6 +35,7 @@ class TextQuestionsController < ApplicationController
     end
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/:id/edit(.:format)
   def edit
     @text_question = @survey_version.text_questions.find(params[:id])
 
@@ -41,9 +45,9 @@ class TextQuestionsController < ApplicationController
     end
   end
 
+  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/:id(.:format)
   def update
     @text_question = TextQuestion.find(params[:id])
-
 
     respond_to do |format|
       if @text_question.update_attributes(params[:text_question])
@@ -55,6 +59,7 @@ class TextQuestionsController < ApplicationController
     end
   end
 
+  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/:id(.:format)
   def destroy
     @text_question = TextQuestion.find(params[:id])
 
@@ -77,5 +82,4 @@ class TextQuestionsController < ApplicationController
     df = @survey_version.display_fields.find_by_name(qc.statement)
     df.destroy if df.present?
   end
-
 end

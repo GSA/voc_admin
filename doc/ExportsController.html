@@ -147,7 +147,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Endpoint to start the download process.</p>
+<p>/exports/:id/download(.:format) Endpoint to start the download process.</p>
 </div></span>
   
 </li>
@@ -181,7 +181,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Endpoint to start the download process.</p>
+<p>/exports/:id/download(.:format) Endpoint to start the download process.</p>
 
 
   </div>
@@ -195,14 +195,14 @@
       <pre class="lines">
 
 
-7
 8
 9
 10
-11</pre>
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/exports_controller.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/exports_controller.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span>
   <span class='ivar'>@export_file</span> <span class='op'>=</span> <span class='const'>Export</span><span class='period'>.</span><span class='id identifier rubyid_find_by_access_token'>find_by_access_token</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>

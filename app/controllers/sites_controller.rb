@@ -1,18 +1,22 @@
 class SitesController < ApplicationController
   before_filter :require_admin
 
+  # GET    /sites(.:format)
   def index
     @sites = Site.order("name asc").page(params[:page]).per(10)
   end
 
+  # GET    /sites/:id(.:format)
   def show
     @site = Site.find params[:id]
   end
 
+  # GET    /sites/new(.:format)
   def new
     @site = Site.new
   end
 
+  # POST   /sites(.:format)
   def create
     @site = Site.new params[:site]
 
@@ -23,10 +27,12 @@ class SitesController < ApplicationController
     end
   end
 
+  # GET    /sites/:id/edit(.:format)
   def edit
     @site = Site.find params[:id]
   end
 
+  # PUT    /sites/:id(.:format)
   def update
     @site = Site.find(params[:id])
 
@@ -37,6 +43,7 @@ class SitesController < ApplicationController
     end
   end
 
+  # DELETE /sites/:id(.:format)
   def destroy
     @site = Site.find params[:id]
 
