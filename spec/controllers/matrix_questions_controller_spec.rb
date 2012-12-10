@@ -3,17 +3,20 @@ require 'spec_helper'
 describe MatrixQuestionsController do
   include Authlogic::TestCase
   
+  let(:site) { create :site }
+  let(:survey) { create :survey, { :site => site }}
+  let(:survey_version) { survey.survey_versions.first }
+
   before do
     activate_authlogic
-    UserSession.create User.create(:email => "jalvarado@ctacorp.com", :password => "password", :password_confirmation => "password", :f_name => "juan", :l_name => "alvarado")
+    user = User.create(:email => "jalvarado@ctacorp.com", :password => "password", :password_confirmation => "password", :f_name => "juan", :l_name => "alvarado")
+    user.sites << site
+    UserSession.create user
     ExecutionTrigger.find_or_create_by_name("Test") do |et|
       et.id = 1
     end
   end
   
-  let(:survey) { create :survey }
-  let(:survey_version) { survey.survey_versions.first }
-
   let(:valid_attributes) do
     {
       "matrix_question"=> {
