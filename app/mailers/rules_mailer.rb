@@ -1,6 +1,14 @@
+# Mailer corresponding to the EmailAction class; sends an email
+# when criteria are met for an EmailAction to be triggered.
 class RulesMailer < ActionMailer::Base
   default :from => "notifier@comment-adm.hhs.gov"
 
+  # Send an email notification due to a Rule with an EmailAction firing.
+  # 
+  # @param [String] email_string the email address of the recipient
+  # @param [String] subject the subject of the email
+  # @param [String] body the body of the email
+  # @param [Integer] survey_response_id the id of the matching SurveyResponse record
   def email_action_notification(email_string, subject, body, survey_response_id)
     @survey_response = SurveyResponse.find(survey_response_id)
     @msg = body

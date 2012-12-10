@@ -104,7 +104,8 @@ class SurveyVersionsController < ApplicationController
   # Generates a clause string ready to be passed to #order(). Parameters are
   # optional but will not generate sane content if omitted.
   #
-  # @param [String] column the 
+  # @param [String] column the column name to sort by
+  # @param [String] direction the direction string to apply
   def order_clause(column = nil, direction = nil)
     dir = sort_direction(direction)
     col = sort_column(column)
@@ -119,7 +120,7 @@ class SurveyVersionsController < ApplicationController
   # Allows sorting on a specific set of SurveyVersion columns. Defaults to
   # major and minor survey version if not specified or unexpected value.
   #
-  # @param [String] direction direction to sort by
+  # @param [String] column the column name to sort by
   # @return [String] "asc" or "desc"
   def sort_column(column = "major, minor")
     columns = ["major, minor", "published", "created_at", "updated_at"]

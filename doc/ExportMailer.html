@@ -101,7 +101,20 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Sends a notification email upon completion of SurveyResponse export
+processing. The email provides the recipient with a link to download the
+export file.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -134,8 +147,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>export_download - Send an email containing a download link for the provided
-export file.</p>
+<p>Send an email containing a download link for the provided export file.</p>
 </div></span>
   
 </li>
@@ -163,17 +175,49 @@ export file.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>export_download - Send an email containing a download link for the provided
-export file</p>
-
-<pre class="code ruby"><code>emails:         array of email recipients for the notification
-export_id:   export file to be downloadable through the email link</code></pre>
+<p>Send an email containing a download link for the provided export file.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>emails</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;string&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>an array of email recipients for the notification</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>export_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the identifier for the export file to be downloadable</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -181,14 +225,14 @@ export_id:   export file to be downloadable through the email link</code></pre>
       <pre class="lines">
 
 
-7
-8
 9
 10
-11</pre>
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/mailers/export_mailer.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'app/mailers/export_mailer.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_export_download'>export_download</span><span class='lparen'>(</span><span class='id identifier rubyid_emails'>emails</span><span class='comma'>,</span> <span class='id identifier rubyid_export_id'>export_id</span><span class='rparen'>)</span>
     <span class='ivar'>@export_file</span> <span class='op'>=</span> <span class='const'>Export</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='id identifier rubyid_export_id'>export_id</span>
