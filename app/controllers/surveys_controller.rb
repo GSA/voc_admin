@@ -1,19 +1,18 @@
+# Manages the Survey lifecycle.
 class SurveysController < ApplicationController
   # GET    /surveys(.:format)
   def index
-    @surveys = current_user.surveys.search(params[:q]).order("surveys.#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @surveys = current_user.surveys.search(params[:q]).order("surveys.name #{sort_direction}").page(params[:page]).per(10)
   end
 
   # GET    /surveys/:id(.:format)
   def show
     @survey = current_user.surveys.find(params[:id])
-
   end
 
   # GET    /surveys/new(.:format)
   def new
     @survey = current_user.surveys.new
-
   end
 
   # POST   /surveys(.:format)
@@ -54,10 +53,10 @@ class SurveysController < ApplicationController
 
   private
 
-  def sort_column
-    %w(name).include?(params[:sort]) ? params[:sort] : "name"
-  end
-
+  # Allows sorting by survey name alphabetically ascending or descending.
+  # Defaults to ascending if not specified or unexpected value.
+  #
+  # @return [String] "asc" or "desc"
   def sort_direction
     %w(asc desc).include?(params[:direction]) ? params[:direction] : "asc"
   end

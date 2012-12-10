@@ -1,3 +1,4 @@
+# Manages the lifecycle of TextQuestion entities.
 class TextQuestionsController < ApplicationController
   before_filter :get_survey_version
 
@@ -75,6 +76,9 @@ class TextQuestionsController < ApplicationController
 
   private
 
+  # Clean up any rules which exist for the given question.
+  #
+  # @param [ChoiceQuestion] qc the ChoiceQuestion to clean up after.
   def destroy_default_rule_and_display_field(qc)
     rule = @survey_version.rules.find_by_name(qc.statement)
     rule.destroy if rule.present?

@@ -1,3 +1,5 @@
+# Manages the UserSession lifecycle. Also provides password
+# reset functionality.
 class UserSessionsController < ApplicationController
   skip_before_filter :require_user, :only => [:new, :create, :reset_password, :do_pw_reset]
   before_filter :redirect_if_logged_in, :only => :new
@@ -28,7 +30,7 @@ class UserSessionsController < ApplicationController
   def do_pw_reset
     user = User.find_by_email(params["email_address"])
     if user
-      password =  PasswordGenerator::generate_password(2,2,2,2)
+      password = PasswordGenerator::generate_password(2,2,2,2)
       user.password = password
       user.password_confirmation = password
 
@@ -41,8 +43,10 @@ class UserSessionsController < ApplicationController
   end
 
   private
+
+  # If the user is already logged in and a new UserSession is requested,
+  # redirect the /surveys instead.
   def redirect_if_logged_in
     redirect_to surveys_path if current_user
   end
-
 end

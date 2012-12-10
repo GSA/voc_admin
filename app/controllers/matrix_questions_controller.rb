@@ -1,3 +1,4 @@
+# Manages the MatrixQuestion lifecycle.
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_version
 
@@ -87,6 +88,11 @@ class MatrixQuestionsController < ApplicationController
 
   private
   
+  # Removes the default Rule and DisplayField mappings for a given
+  # MatrixQuestion and a specific ChoiceQuestion.
+  #
+  # @param [MatrixQuestion] matrix_question the MatrixQuestion to clean up after
+  # @param [Hash] choice_question_params the ChoiceQuestion parameters to remove
   def remove_sub_question_display_field_and_rules(matrix_question, choice_question_params)
     matrix_statement = matrix_question.question_content.statement_changed? ? matrix_question.question_content.statement_was : matrix_question.question_content.statement
 
@@ -98,9 +104,13 @@ class MatrixQuestionsController < ApplicationController
 
     df = matrix_question.survey_version.display_fields.find_by_name(name)
     df.destroy if df.present?
-    Rails.logger.debug "Removing DispalyField: #{name}"
+    Rails.logger.debug "Removing DisplayField: #{name}"
   end
 
+  # Removes the default Rule and DisplayField mappings for a given
+  # MatrixQuestion across ChoiceQuestions.
+  #
+  # @param [MatrixQuestion] question the MatrixQuestion to clean up after
   def destroy_default_rule_and_display_field(question)
     question.choice_questions.each do |choice_question|
       name ="#{question.question_content.statement}: #{choice_question.question_content.statement}"

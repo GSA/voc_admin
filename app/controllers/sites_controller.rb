@@ -1,3 +1,4 @@
+# Manages the lifecycle of Site entities.
 class SitesController < ApplicationController
   before_filter :require_admin
 

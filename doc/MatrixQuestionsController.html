@@ -103,7 +103,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Manages the MatrixQuestion lifecycle.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -286,7 +297,6 @@
       <pre class="lines">
 
 
-15
 16
 17
 18
@@ -310,10 +320,11 @@
 36
 37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:choice_questions_attributes</span><span class='rbracket'>]</span>
@@ -372,7 +383,6 @@
       <pre class="lines">
 
 
-76
 77
 78
 79
@@ -382,10 +392,11 @@
 83
 84
 85
-86</pre>
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -430,17 +441,17 @@
       <pre class="lines">
 
 
-42
 43
 44
 45
 46
 47
 48
-49</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:choice_questions</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='symbol'>:question_content</span><span class='comma'>,</span> <span class='symbol'>:choice_answers</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -482,17 +493,17 @@
       <pre class="lines">
 
 
-5
 6
 7
 8
 9
 10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 6</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@matrix_question</span> <span class='op'>=</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_matrix_questions'>matrix_questions</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
@@ -534,7 +545,6 @@
       <pre class="lines">
 
 
-52
 53
 54
 55
@@ -555,10 +565,11 @@
 70
 71
 72
-73</pre>
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/matrix_questions_controller.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_choice_questions'>choice_questions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:matrix_question</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:choice_questions_attributes</span><span class='rbracket'>]</span>

@@ -1,3 +1,4 @@
+# Endpoints to move a SurveyElement up or down on a Page of a SurveyVersion.
 class SurveyElementsController < ApplicationController
   before_filter :get_survey_version
 

@@ -1,3 +1,4 @@
+# Manages the lifecycle of Rule entities.
 class RulesController < ApplicationController
   before_filter :get_survey_version, :except=>[:do_now, :check_do_now]
 
@@ -92,12 +93,15 @@ class RulesController < ApplicationController
 
   private
 
+  # Ensures that the proper ExecutionTrigger joins, Actions, and Criteria are built
+  # during Rule new/create/edit/update.
   def do_rule_builds
     @rule.execution_trigger_rules.build if  @rule.execution_trigger_rules.size == 0
     @rule.actions.build if @rule.actions.size == 0
     @rule.criteria.build if @rule.criteria.size == 0
   end
 
+  # Combines SurveyVersion#sources with DisplayField information to populate the Rule sources drop-down.
   def build_source_array
     @source_array = @survey_version.sources
     @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})

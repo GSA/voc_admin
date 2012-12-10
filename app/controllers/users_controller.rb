@@ -1,3 +1,5 @@
+# Manages the lifecycle of User entities. A User may edit his/her
+# own profile, but the remainder of functionality is reserved for admins.
 class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
 
@@ -73,6 +75,10 @@ class UsersController < ApplicationController
 
   private
   
+  # Modifies the fields available to non-admin users for edit.
+  #
+  # @param [Hash] user_attributes the PUT parameters from the update operation
+  # @return [Hash] the same Hash with Role and Site information removed for non-admin edits.
   def filtered_params(user_attributes)
     current_user.admin? ? user_attributes : user_attributes.except("role_id", "site_ids")
   end

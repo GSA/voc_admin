@@ -103,7 +103,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Manages the SurveyResponse lifecycle.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
   <h2>Constant Summary</h2>
   
     <dl class="constants">
@@ -292,7 +303,6 @@
       <pre class="lines">
 
 
-37
 38
 39
 40
@@ -304,10 +314,11 @@
 46
 47
 48
-49</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@survey_response</span> <span class='op'>=</span> <span class='const'>SurveyResponse</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -353,12 +364,12 @@
       <pre class="lines">
 
 
-22
 23
-24</pre>
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
   <span class='ivar'>@survey_response</span> <span class='op'>=</span> <span class='const'>SurveyResponse</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -394,7 +405,6 @@
       <pre class="lines">
 
 
-52
 53
 54
 55
@@ -405,11 +415,10 @@
 60
 61
 62
-63
-64</pre>
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_export_all'>export_all</span>
   <span class='ivar'>@survey_version</span> <span class='op'>=</span> <span class='const'>SurveyVersion</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:survey_version_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -417,12 +426,10 @@
   <span class='comment'># Generate the csv file in the background in case there are a large number of responses
 </span>  <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_delay'>delay</span><span class='period'>.</span><span class='id identifier rubyid_generate_responses_csv'>generate_responses_csv</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
 
-
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
     <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_html'>html</span> <span class='lbrace'>{</span><span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_survey_responses_path'>survey_responses_path</span><span class='lparen'>(</span><span class='symbol'>:survey_id</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_survey_id'>survey_id</span><span class='comma'>,</span> <span class='symbol'>:survey_version_id</span> <span class='op'>=&gt;</span> <span class='ivar'>@survey_version</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_format'>format</span><span class='period'>.</span><span class='id identifier rubyid_js'>js</span>
   <span class='kw'>end</span>
-
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -455,7 +462,6 @@
       <pre class="lines">
 
 
-7
 8
 9
 10
@@ -467,10 +473,11 @@
 16
 17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
   <span class='id identifier rubyid_build_survey_version_and_responses'>build_survey_version_and_responses</span>
@@ -516,17 +523,17 @@
       <pre class="lines">
 
 
-27
 28
 29
 30
 31
 32
 33
-34</pre>
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/survey_responses_controller.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='ivar'>@survey_response</span> <span class='op'>=</span> <span class='const'>SurveyResponse</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>

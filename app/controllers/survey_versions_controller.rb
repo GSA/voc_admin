@@ -1,3 +1,4 @@
+# Manages the SurveyVersion lifecycle.
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey
 
@@ -93,11 +94,17 @@ class SurveyVersionsController < ApplicationController
 
   private
 
+  # Prepares the survey and survey version instance. This is a one-off from the
+  # ApplicationController definition due to the :id parameter.
   def get_survey
     @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:id]) if params[:id]
   end
 
+  # Generates a clause string ready to be passed to #order(). Parameters are
+  # optional but will not generate sane content if omitted.
+  #
+  # @param [String] column the 
   def order_clause(column = nil, direction = nil)
     dir = sort_direction(direction)
     col = sort_column(column)
@@ -109,11 +116,21 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  # Allows sorting on a specific set of SurveyVersion columns. Defaults to
+  # major and minor survey version if not specified or unexpected value.
+  #
+  # @param [String] direction direction to sort by
+  # @return [String] "asc" or "desc"
   def sort_column(column = "major, minor")
     columns = ["major, minor", "published", "created_at", "updated_at"]
     columns.include?(column) ? column : "major, minor"
   end
 
+  # Allows sort directions of ascending or descending.
+  # Defaults to ascending if not specified or unexpected value.
+  #
+  # @param [String] direction direction to sort by
+  # @return [String] "asc" or "desc"
   def sort_direction(direction = "asc")
     directions = %w(asc desc)
     directions.include?(direction) ? direction : "asc"
