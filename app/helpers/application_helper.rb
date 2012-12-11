@@ -1,8 +1,14 @@
+# View helper repository for helpers used across functional areas of the application.
 module ApplicationHelper
 
   # Dynamic method to build child records (e.g. ChoiceAnswers for a ChoiceQuestion)
   # via links on new/edit forms.  The partial created generates the form structure to support
   # POSTing back to create/update actions.
+  # 
+  # @param [String] name the text to display within the generated link
+  # @param [ActionView::Helpers::FormBuilder] f the FormBuilder from the view
+  # @param [Symbol] association the child association of the FormBuilder's object
+  # @return [String] HTML href link to add child records
   def link_to_add_fields(name, f, association)
     new_object = f.object.class.reflect_on_association(association).klass.new
 
@@ -15,14 +21,21 @@ module ApplicationHelper
 
   # (see link_to_add_fields)
   # A variation on link_to_add_fields - specifically adding ChoiceAnswers to
-  # ChoiceQuestions associated with the MatrixQuestion
+  # ChoiceQuestions associated with the MatrixQuestion.
+  # 
+  # @param [String] name the text to display within the generated link
+  # @return [String] HTML href link to add a ChoiceAnswer
   def link_to_add_matrix_answer(name)
     fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer", :answer => nil})
 
     link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"newlink")
   end
 
-  # Adds sort arrows to table columns
+  # Adds sort arrow images to table columns.
+  # 
+  # @param [String] column the name of the column being sorted
+  # @param [String] title optional alternate display text for the column
+  # @return [String] HTML link for the column header text, with sort toggle information.
   def sortable(column, title = nil)
     direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
 
