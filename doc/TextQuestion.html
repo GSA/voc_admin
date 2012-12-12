@@ -216,7 +216,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Delegated method for Questionable.</p>
+</div></span>
   
 </li>
 
@@ -309,17 +311,17 @@
       <pre class="lines">
 
 
-29
 30
 31
 32
 33
 34
 35
-36</pre>
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
   <span class='comment'>#check the survey_response for a response to this question
@@ -398,7 +400,6 @@
       <pre class="lines">
 
 
-42
 43
 44
 45
@@ -413,10 +414,11 @@
 54
 55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:skip_observer</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -503,7 +505,6 @@
       <pre class="lines">
 
 
-63
 64
 65
 66
@@ -514,10 +515,11 @@
 71
 72
 73
-74</pre>
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
@@ -545,18 +547,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Delegated method for Questionable.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-20
 21
-22</pre>
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_true_value'>get_true_value</span><span class='lparen'>(</span><span class='id identifier rubyid_string_value'>string_value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string_value'>string_value</span>

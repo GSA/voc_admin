@@ -1,3 +1,6 @@
+# Error message handling functionality provided by
+# {https://github.com/ryanb/nifty-generators Nifty Generators}
+# and included here verbatim.
 module ErrorMessagesHelper
   # Render error messages for the given objects. The :message and :header_message options are allowed.
   def error_messages_for(*objects)

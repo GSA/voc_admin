@@ -1,3 +1,7 @@
+# URL Validation functionality provided by
+# {https://gist.github.com/1051088 Douglas F Shearer}
+# and provided here verbatim.
+
 # Require this file, or put this in where Rails will auto load it.
 
 # = Usage

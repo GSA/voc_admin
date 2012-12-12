@@ -1,16 +1,11 @@
+# View helpers for SurveyResponse functionality.
 module SurveyResponsesHelper
-  def display_question_answer(response)
-    return "<i>No Answer</i>".html_safe if response.nil?
-    case response.question_content.questionable_type
-    when "ChoiceQuestion"
-      ChoiceAnswer.find(response.answer.to_i).answer
-    when "TextQuestion"
-      response.answer
-    else
-      ""
-    end
-  end
 
+  # Adds sort arrow images to table DisplayField columns.
+  # 
+  # @param [String] column the name of the column being sorted
+  # @param [String] title optional alternate display text for the column
+  # @return [String] HTML link for the column header text, with sort toggle information
   def sortable_display_field column, title = nil
     direction = (column == params[:order_column] && params[:order_dir] == "asc") ? "desc" : "asc"
 
@@ -32,6 +27,11 @@ module SurveyResponsesHelper
     link_to_function title.html_safe, "sortByDisplayField('#{CGI.escape(column)}', '#{direction}')"
   end
 
+  # Retrieve the edit link for the current CustomView (or static text if no CustomView.)
+  # 
+  # @param [SurveyVersion] version the current survey version
+  # @param [CustomView, nil] current_view the current custom view, if applicable
+  # @return [String] HTML link for the edit link
   def get_edit_current_view_link version, current_view
     edit_link = "Edit Current View"
 
@@ -40,14 +40,26 @@ module SurveyResponsesHelper
     edit_link
   end
 
+  # Generates HTML option tags for an Include/Exclude dropdown.
+  #
+  # @param [Integer] default the default selection, if applicable
+  # @return [String] HTML option tags
   def options_for_include_exclude(default = nil)
-    options_for_select([ ['Include', 1], ['Exclude', 0]],
-     :selected => default
-    )
+    options_for_select([ ['Include', 1], ['Exclude', 0] ],
+                       :selected => default)
   end
 
+  # Generates HTML option tags for a dropdown of match conditions.
+  #
+  # @param [Integer] default the default selection, if applicable
+  # @return [String] HTML option tags
   def options_for_conditions(default = nil)
-    options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
-      :selected => default)
+    options_for_select([ ['Exactly Matches', 'equals'],
+                         ['Containing', 'contains'],
+                         ['Begins With', 'begins_with'],
+                         ['Ends With', 'ends_with'],
+                         ['Less Than', 'less_than'],
+                         ['Greater Than', 'greater_than'] ],
+                       :selected => default)
   end
 end

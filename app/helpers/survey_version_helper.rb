@@ -1,5 +1,11 @@
+# View helpers for SurveyResponse functionality.
 module SurveyVersionHelper
 
+  # Generates the page-level div tags for the SurveyVersion preview ("show") page
+  #
+  # @param [Page] page the Page instance to test
+  # @param [Hash] params a Hash of request params, used to determine current page
+  # @return [String] an HTML div tag with appropriate id and stylings
   def get_page_div_tag( page, params )
     options = Hash.new
 
@@ -12,14 +18,20 @@ module SurveyVersionHelper
     tag("div", options, true)
   end
 
-  # tests to determine if the given page is last in the survey version; used for
-  # visibility of the page level flow control dropdown
+  # Tests to determine if the given page is last in the SurveyVersion; used for
+  # visibility of the page-level flow control dropdown.
   #
   # @param [Page] page the Page instance to test
+  # @return [Boolean] true if last page; false if not
   def is_last_page(page)
     Page.where(:survey_version_id => page.survey_version_id).where("pages.page_number > ?", page.page_number).empty? and page.next_page_id.nil?
   end
 
+  # Generates a dropdown to specify the next page for flow control purposes.
+  # Note: since "Next Page" (+1) is default, numbering starts at current + 2
+  # 
+  # @param [Page] page the Page instance to use
+  # @return [String] HTML select and child option tags
   def select_for_next_page(page)
     select_tag(
       :next_page,
@@ -38,23 +50,36 @@ module SurveyVersionHelper
     )
   end
 
-  # assembles links for moving, copying, and deleting pages
-
+  # Assembles links for reordering pages.
+  # 
+  # @param [Survey] survey the Survey instance
+  # @param [SurveyVersion] survey_version the SurveyVersion instance
+  # @param [Page] page the Page instance
+  # @return [String] assembled HTML links
   def page_order_links(survey, survey_version, page)
     str = generate_page_up_arrow_link( move_page_survey_survey_version_page_path(survey, survey_version, page, :page_number => (page.page_number - 1)) )
 
     str += generate_page_down_arrow_link( move_page_survey_survey_version_page_path(survey, survey_version, page, :page_number => (page.page_number + 1)) )
   end
 
+  # Assembles links for copying and deleting pages.
+  # 
+  # @param [Survey] survey the Survey instance
+  # @param [SurveyVersion] survey_version the SurveyVersion instance
+  # @param [Page] page the Page instance
+  # @return [String] assembled HTML links
   def page_management_links(survey, survey_version, page)
 		str = generate_page_copy_link( copy_page_survey_survey_version_page_path(survey, survey_version, page) )
 
 		str += generate_page_delete_link( survey_survey_version_page_path(survey, survey_version, page), page.page_number )
   end
 
-  # assembles links for editing, moving, and deleting survey questions
-  # and other content
-
+  # Assembles links for reordering questions and other survey content.
+  # 
+  # @param [Survey] survey the Survey instance
+  # @param [SurveyVersion] survey_version the SurveyVersion instance
+  # @param [SurveyElement] element the SurveyElement instance
+  # @return [String] assembled HTML links
   def element_order_links(survey, survey_version, element)
     confirm_move_msg = "This action will remove the flow control from this question. Continue?"
 
@@ -65,16 +90,33 @@ module SurveyVersionHelper
                                             confirm_element_move_down(element) ? confirm_move_msg : nil )
   end
 
+  # Assembles a link for editing a question or other survey content.
+  # 
+  # @param [Survey] survey the Survey instance
+  # @param [SurveyVersion] survey_version the SurveyVersion instance
+  # @param [SurveyElement] element the SurveyElement instance
+  # @return [String] the assembled HTML link
   def element_edit_link(survey, survey_version, element)
     generate_element_edit_link( url_for([:edit, survey, survey_version, element.assetable]) )
   end
 
+  # Assembles a link for deleting a question or other survey content.
+  # 
+  # @param [Survey] survey the Survey instance
+  # @param [SurveyVersion] survey_version the SurveyVersion instance
+  # @param [SurveyElement] element the SurveyElement instance
+  # @return [String] the assembled HTML links
   def element_delete_link(survey, survey_version, element)
     generate_element_delete_link( url_for([survey, survey_version, element.assetable]) )
   end
 
-  # uses question properties to set onclick events for flow control and
-  # jumping to the next page upon response
+  # Uses question properties to set onclick events for flow control and
+  # jumping to the next page upon response.
+  #
+  # @param [ChoiceQuestion] element the ChoiceQuestion instance
+  # @param [Page] page the Page instance
+  # @param [ChoiceAnswer] answer the ChoiceAnswer instance
+  # @return [String] the JS to attach to the HTML element's onclick attribute
   def generate_onclick(element, page, answer)
     onclick = ""
     if element.assetable.question_content.flow_control
@@ -88,10 +130,10 @@ module SurveyVersionHelper
     onclick
   end
 
-  # generate each link using the context-appropriate data; the first group of
-  # parameters defines the image and text span, second group is for the
-  # link that wraps them
-
+  # Create the page move up link.
+  #
+  # @param [String] url the target of the link
+  # @return [String] the link-wrapped image HTML
   def generate_page_up_arrow_link(url)
     link_to image_tag("arrow_up.png", :alt => "move up"),
             url,
@@ -101,6 +143,10 @@ module SurveyVersionHelper
               :class => "upLink" }
   end
 
+  # Create the page move down link.
+  #
+  # @param [String] url the target of the link
+  # @return [String] the link-wrapped image HTML
   def generate_page_down_arrow_link(url)
     link_to image_tag("arrow_down.png", :alt => "move down"),
             url,
@@ -110,6 +156,10 @@ module SurveyVersionHelper
               :class => "downLink" }
   end
 
+  # Create the page copy link.
+  #
+  # @param [String] url the target of the link
+  # @return [String] the HTML link
   def generate_page_copy_link(url)
     link_to "&nbsp;".html_safe,
             url,
@@ -119,6 +169,10 @@ module SurveyVersionHelper
               :class => "copyLink" }
   end
 
+  # Create the page delete link.
+  #
+  # @param [String] url the target of the link
+  # @return [String] the HTML link
   def generate_page_delete_link(url, page_number)
     link_to "&nbsp;".html_safe,
             url,
@@ -129,6 +183,10 @@ module SurveyVersionHelper
               :confirm => "All items on page #{page_number} will be removed as well." }
   end
 
+  # Create the element edit link.
+  #
+  # @param [String] url the target of the link
+  # @return [String] the link-wrapped image HTML
   def generate_element_edit_link(url)
     link_to image_tag('edit.png', :alt=>"edit"),
             url,
@@ -138,6 +196,11 @@ module SurveyVersionHelper
               :class => "edit_asset_link" }
   end
 
+  # Create the element move up link.
+  #
+  # @param [String] url the target of the link
+  # @param [String] confirm_move_msg a message to present to the user to confirm (because we're breaking flow control)
+  # @return [String] the link-wrapped image HTML
   def generate_element_move_up_link(url, confirm_move_msg)
     link_to image_tag("arrow_up.png", :alt => "move up"),
             url,
@@ -148,6 +211,11 @@ module SurveyVersionHelper
               :confirm => confirm_move_msg }
   end
 
+  # Create the element move down link.
+  #
+  # @param [String] url the target of the link
+  # @param [String] confirm_move_msg a message to present to the user to confirm (because we're breaking flow control)
+  # @return [String] the link-wrapped image HTML
   def generate_element_move_down_link(url, confirm_move_msg)
     link_to image_tag("arrow_down.png", :alt => "move down"),
             url,
@@ -158,6 +226,10 @@ module SurveyVersionHelper
               :confirm => confirm_move_msg }
   end
 
+  # Create the element delete link.
+  #
+  # @param [String] url the target of the link
+  # @return [String] the HTML link
   def generate_element_delete_link(url)
     link_to "&nbsp;".html_safe,
             url,
@@ -168,16 +240,22 @@ module SurveyVersionHelper
               :confirm => "Are you sure?" }
   end
 
-  # returns true if a question contains flow control and moving it up would
-  # relocate it to the previous page
+  # Detects whether a question contains flow control and moving it up would
+  # relocate it to the previous page.
+  #
+  # @param [SurveyElement] element the SurveyElement instance to test
+  # @return [Boolean] the evaluated value
   def confirm_element_move_up(element)
     element.assetable_type == "ChoiceQuestion" &&
     element.assetable.question_content.flow_control &&
     element.element_order == 1
   end
 
-  # returns true if a question contains flow control and moving it up would
-  # relocate it to the next page
+  # Detects whether a question contains flow control and moving it down would
+  # relocate it to the next page.
+  #
+  # @param [SurveyElement] element the SurveyElement instance to test
+  # @return [Boolean] the evaluated value
   def confirm_element_move_down(element)
     element.assetable_type == "ChoiceQuestion" &&
     element.assetable.question_content.flow_control &&

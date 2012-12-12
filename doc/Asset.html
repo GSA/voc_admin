@@ -144,7 +144,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Questionable type.</p>
+</div></span>
   
 </li>
 
@@ -238,7 +240,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Aliases the "snippet" field to "statement".</p>
+</div></span>
   
 </li>
 
@@ -262,18 +266,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Questionable type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer_type'>answer_type</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTML snippet</span><span class='tstring_end'>&quot;</span></span>
@@ -347,16 +362,16 @@
       <pre class="lines">
 
 
-29
-30
 31
 32
 33
 34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_se_attribs'>se_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span>
@@ -434,14 +449,14 @@
       <pre class="lines">
 
 
-41
-42
 43
 44
-45</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_se_attribs'>se_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_element'>survey_element</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:page_id</span><span class='op'>=&gt;</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
@@ -516,18 +531,29 @@
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Aliases the "snippet" field to "statement".</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/asset.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_statement'>statement</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_snippet'>snippet</span>

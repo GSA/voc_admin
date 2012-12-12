@@ -248,20 +248,20 @@ do so you may need to add this line to your ApplicationController</p>
       <pre class="lines">
 
 
-23
-24
-25
-26
 27
 28
 29
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_flash_messages'>flash_messages</span><span class='lparen'>(</span><span class='id identifier rubyid_flash'>flash</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_flash'>flash</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -294,12 +294,12 @@ do so you may need to add this line to your ApplicationController</p>
       <pre class="lines">
 
 
-19
-20
-21</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_javascript'>javascript</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_content_for'>content_for</span><span class='lparen'>(</span><span class='symbol'>:head</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_javascript_include_tag'>javascript_include_tag</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -346,12 +346,12 @@ do so you may need to add this line to your ApplicationController</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_title?'>show_title?</span>
   <span class='ivar'>@show_title</span>
@@ -376,12 +376,12 @@ do so you may need to add this line to your ApplicationController</p>
       <pre class="lines">
 
 
-15
-16
-17</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stylesheet'>stylesheet</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_content_for'>content_for</span><span class='lparen'>(</span><span class='symbol'>:head</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_stylesheet_link_tag'>stylesheet_link_tag</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -406,13 +406,13 @@ do so you may need to add this line to your ApplicationController</p>
       <pre class="lines">
 
 
-6
-7
-8
-9</pre>
+10
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/layout_helper.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span><span class='lparen'>(</span><span class='id identifier rubyid_page_title'>page_title</span><span class='comma'>,</span> <span class='id identifier rubyid_show_title'>show_title</span> <span class='op'>=</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_content_for'>content_for</span><span class='lparen'>(</span><span class='symbol'>:title</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_h'>h</span><span class='lparen'>(</span><span class='id identifier rubyid_page_title'>page_title</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='rbrace'>}</span>

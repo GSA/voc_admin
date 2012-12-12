@@ -31,11 +31,11 @@ module ApplicationHelper
     link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"newlink")
   end
 
-  # Adds sort arrow images to table columns.
+  # Adds sort arrow images to table DisplayField columns.
   # 
   # @param [String] column the name of the column being sorted
   # @param [String] title optional alternate display text for the column
-  # @return [String] HTML link for the column header text, with sort toggle information.
+  # @return [String] HTML link for the column header text, with sort toggle information
   def sortable(column, title = nil)
     direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
 

@@ -119,12 +119,34 @@ DisplayFieldValue update.</p>
     <dl class="constants">
       
         <dt id="TEXT-constant" class="">TEXT =
-          
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Signifies that an Action is associated with a textual value.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Text</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
         <dt id="RESPONSE-constant" class="">RESPONSE =
-          
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Signifies than an Action is tied to a RawResponse value.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Response</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
@@ -227,8 +249,6 @@ question response) or specific text (for custom DisplayFields.)</p>
       <pre class="lines">
 
 
-14
-15
 16
 17
 18
@@ -236,10 +256,12 @@ question response) or specific text (for custom DisplayFields.)</p>
 20
 21
 22
-23</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/rule_models/action.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/models/rule_models/action.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_perform'>perform</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='rparen'>)</span>
   <span class='comment'>#get target DFV
