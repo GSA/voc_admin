@@ -15,11 +15,10 @@ gem 'paperclip'
 
 gem 'unicorn-rails'
 
-group :development do 
+group :development do
 	gem 'annotate'
 	gem 'metrical'
 	gem 'pry-rails'
-	gem 'debugger'
   gem 'yard'
 end
 
@@ -30,7 +29,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'capybara'
-  
+
   gem 'guard-rspec'
   gem 'growl'
   gem 'pry-rails'
