@@ -9,7 +9,7 @@ describe MatrixQuestionsController do
 
   before do
     activate_authlogic
-    user = User.create(:email => "jalvarado@ctacorp.com", :password => "password", :password_confirmation => "password", :f_name => "juan", :l_name => "alvarado")
+    user = User.create(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "example", :l_name => "user")
     user.sites << site
     UserSession.create user
     ExecutionTrigger.find_or_create_by_name("Test") do |et|

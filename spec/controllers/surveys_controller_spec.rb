@@ -6,7 +6,7 @@ describe SurveysController do
   context "when a user is logged in" do
     before(:each) do
       activate_authlogic
-      UserSession.create User.create(:email => "jalvarado@ctacorp.com", :password => "password", :password_confirmation => "password", :f_name => "juan", :l_name => "alvarado")
+      UserSession.create User.create(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "example", :l_name => "user")
     end
 
     describe "GET 'Index'" do

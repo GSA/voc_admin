@@ -1,5 +1,5 @@
 --- 
-chdir: /Users/jalvarado/apps/comment_tool
+chdir: /Users/[username]/apps/comment_tool
 environment: development
 address: 0.0.0.0
 port: 3000

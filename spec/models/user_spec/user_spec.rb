@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @valid_user = User.new(:email => "Example@example.com", :password => "password", :password_confirmation => "password", :f_name => "Example", :l_name => "User")
+    @valid_user = User.new(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "Example", :l_name => "User")
   end
   
   it "should be valid with valid attributes" do

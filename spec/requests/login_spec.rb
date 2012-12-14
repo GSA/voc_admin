@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "Login" do
   let(:user) do
     User.create!(
-      email: "user@example.com",
+      email: "email@example.com",
       password: "password",
       password_confirmation: "password",
       role_id: Role::ADMIN,
-      f_name: "User",
-      l_name: "Example"
+      f_name: "Example",
+      l_name: "User"
     )
   end
 

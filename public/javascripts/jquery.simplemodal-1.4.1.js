@@ -567,7 +567,6 @@
 			}
 
 			s.d.container.css({height: ch, width: cw});
-			//s.d.wrap.css({overflow: (dh > ch || dw > cw) ? 'auto' : 'visible'}); // jalvarado: commented out this line to remove double scroll bars
 			s.o.autoPosition && s.setPosition();
 		},
 		setPosition: function () {
