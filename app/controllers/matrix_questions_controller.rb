@@ -87,7 +87,7 @@ class MatrixQuestionsController < ApplicationController
   end
 
   private
-  
+
   # Removes the default Rule and DisplayField mappings for a given
   # MatrixQuestion and a specific ChoiceQuestion.
   #
@@ -100,11 +100,9 @@ class MatrixQuestionsController < ApplicationController
 
     rule = matrix_question.survey_version.rules.find_by_name(name)
     rule.destroy if rule.present?
-    Rails.logger.debug "Removing rule: #{name}"
 
     df = matrix_question.survey_version.display_fields.find_by_name(name)
     df.destroy if df.present?
-    Rails.logger.debug "Removing DisplayField: #{name}"
   end
 
   # Removes the default Rule and DisplayField mappings for a given

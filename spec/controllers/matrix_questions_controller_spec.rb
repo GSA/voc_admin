@@ -227,7 +227,7 @@ describe MatrixQuestionsController do
       mq = assigns(:matrix_question)
 
       mq.choice_questions.map {|cq| cq.statement }.should include("Updated sub-question 1")
-      mq.choice_questions.map {|cq| cq.statement}.should_not include("SubQuestion 1")
+      mq.choice_questions.map {|cq| cq.statement}.should_not include("Sub Question 1")
     end
 
     it 'should remove the sub-question when it is marked for deletion' do
@@ -235,9 +235,10 @@ describe MatrixQuestionsController do
         choice_questions_attributes: {
           '0' => {
             id: matrix_question.choice_questions.first.id,
-            _destroy: true,
             question_content_attributes:  {
-              statement: "Updated sub-question 1"
+              _destroy: "1",
+              statement: "Updated sub-question 1",
+              id: matrix_question.choice_questions.first.question_content.id
             } # question_content_attributes
           } # 0
         } # choice_questions_attributes
@@ -252,9 +253,62 @@ describe MatrixQuestionsController do
 
       expect { put :update, survey_id: survey.id, survey_version_id: survey_version.id,
         id: matrix_question.id, matrix_question: updated_attributes,
-        choice_answer_attributes: choice_answer_attributes }.to change { matrix_question.choice_questions.count }.by(-1)
+        choice_answer_attributes: choice_answer_attributes
+      }.to change { matrix_question.choice_questions.count }.by(-1)
+    end
 
+    it 'should remove the sub-question display field when the sub-question is removed' do
+      updated_attributes = {
+        choice_questions_attributes: {
+          '0' => {
+            id: matrix_question.choice_questions.first.id,
+            question_content_attributes: {
+              _destroy: "1",
+              statement: "Sub Question 1",
+              id: matrix_question.choice_questions.first.question_content.id
+            }
+          } # 0
+        } # choice_questions_attributes
+      }
 
+      choice_answer_attributes = {
+        "0"=>{"answer"=>"answer 1"},
+        "1"=>{"answer"=>"answer 2"},
+        "2"=>{"answer"=>"answer 3"},
+        "3"=>{"answer"=>""}
+      }
+
+      expect { put :update, survey_id: survey.id, survey_version_id: survey_version.id,
+        id: matrix_question.id, matrix_question: updated_attributes,
+        choice_answer_attributes: choice_answer_attributes
+      }.to change { DisplayField.count }.by(-1)
+
+    end
+
+    it 'should remove the sub-question default rule when the sub-question is removed' do
+      updated_attributes = {
+        choice_questions_attributes: {
+          '0' => {
+            id: matrix_question.choice_questions.first.id,
+            question_content_attributes: {
+              _destroy: "1",
+              statement: "Sub Question 1"
+            }
+          } # 0
+        } # choice_questions_attributes
+      }
+
+      choice_answer_attributes = {
+        "0"=>{"answer"=>"answer 1"},
+        "1"=>{"answer"=>"answer 2"},
+        "2"=>{"answer"=>"answer 3"},
+        "3"=>{"answer"=>""}
+      }
+
+      expect { put :update, survey_id: survey.id, survey_version_id: survey_version.id,
+        id: matrix_question.id, matrix_question: updated_attributes,
+        choice_answer_attributes: choice_answer_attributes
+      }.to change { Rule.count }.by(-1)
     end
 
 
