@@ -51,20 +51,16 @@ class MatrixQuestionsController < ApplicationController
 
   # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)
   def update
+    @matrix_question = MatrixQuestion.find(params[:id])
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
     choice_answer_attributes = params[:choice_answer_attributes] || {}
-    choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
-
-    @matrix_question = MatrixQuestion.find(params[:id])
-
-    choice_questions.each {|key, value| value['question_content_attributes'].merge!(:matrix_statement => @matrix_question.question_content.try(:statement))}
-
-    to_be_removed = choice_questions.select {|k, value| value[:question_content_attributes][:_destroy] == "1" }
-    to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(@matrix_question, choice_question_params)}
+    choice_questions.each {|key, value| value.deep_merge!({:choice_answers_attributes => choice_answer_attributes,
+     :answer_type => "radio", :question_content_attributes => {:matrix_statement => @matrix_question.question_content.try(:statement)}})}
 
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
+        @matrix_question.remove_deleted_sub_questions(choice_questions)
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
       else
         format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey_version.survey, :survey_version => @survey_version} }
@@ -87,24 +83,6 @@ class MatrixQuestionsController < ApplicationController
   end
 
   private
-
-  # Removes the default Rule and DisplayField mappings for a given
-  # MatrixQuestion and a specific ChoiceQuestion.
-  #
-  # @param [MatrixQuestion] matrix_question the MatrixQuestion to clean up after
-  # @param [Hash] choice_question_params the ChoiceQuestion parameters to remove
-  def remove_sub_question_display_field_and_rules(matrix_question, choice_question_params)
-    matrix_statement = matrix_question.question_content.statement_changed? ? matrix_question.question_content.statement_was : matrix_question.question_content.statement
-
-    name = "#{matrix_statement}: #{choice_question_params[:question_content_attributes][:statement]}"
-
-    rule = matrix_question.survey_version.rules.find_by_name(name)
-    rule.destroy if rule.present?
-
-    df = matrix_question.survey_version.display_fields.find_by_name(name)
-    df.destroy if df.present?
-  end
-
   # Removes the default Rule and DisplayField mappings for a given
   # MatrixQuestion across ChoiceQuestions.
   #

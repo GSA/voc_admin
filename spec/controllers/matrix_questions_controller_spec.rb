@@ -97,53 +97,53 @@ describe MatrixQuestionsController do
     q.tap { |mq| mq.save!}
   end
 
-  context 'remove_sub_question_display_field_and_rules' do
-    it 'should delete the subquestion display field' do
-      matrix_question
-      question_attributes = {
-        :question_content_attributes=>{
-          :required=>"false",
-          :_destroy=>"false",
-          :statement=>"Sub Question 1",
-          :matrix_statement => "Test Matrix Question"
-        },
-        :answer_type => "radio",
-        :choice_answers_attributes => {
-          "0" => { "answer" => "answer1" }
-        }
-      }
+  # context 'remove_sub_question_display_field_and_rules' do
+  #   it 'should delete the subquestion display field' do
+  #     matrix_question
+  #     question_attributes = {
+  #       :question_content_attributes=>{
+  #         :required=>"false",
+  #         :_destroy=>"false",
+  #         :statement=>"Sub Question 1",
+  #         :matrix_statement => "Test Matrix Question"
+  #       },
+  #       :answer_type => "radio",
+  #       :choice_answers_attributes => {
+  #         "0" => { "answer" => "answer1" }
+  #       }
+  #     }
 
-      DisplayField.count.should == 2
-      Rule.count.should == 2
+  #     DisplayField.count.should == 2
+  #     Rule.count.should == 2
 
-      expect {
-        MatrixQuestionsController.new.send(:remove_sub_question_display_field_and_rules, matrix_question, question_attributes)
-      }.to change {DisplayField.count}.by(-1)
-    end
+  #     expect {
+  #       MatrixQuestionsController.new.send(:remove_sub_question_display_field_and_rules, matrix_question, question_attributes)
+  #     }.to change {DisplayField.count}.by(-1)
+  #   end
 
-    it 'should delete the subquestion rule' do
-      matrix_question
-      question_attributes = {
-        :question_content_attributes=>{
-          :required=>"false",
-          :_destroy=>"false",
-          :statement=>"Sub Question 1",
-          :matrix_statement => "Test Matrix Question"
-        },
-        :answer_type => "radio",
-        :choice_answers_attributes => {
-          "0" => { "answer" => "answer1" }
-        }
-      }
+  #   it 'should delete the subquestion rule' do
+  #     matrix_question
+  #     question_attributes = {
+  #       :question_content_attributes=>{
+  #         :required=>"false",
+  #         :_destroy=>"false",
+  #         :statement=>"Sub Question 1",
+  #         :matrix_statement => "Test Matrix Question"
+  #       },
+  #       :answer_type => "radio",
+  #       :choice_answers_attributes => {
+  #         "0" => { "answer" => "answer1" }
+  #       }
+  #     }
 
-      DisplayField.count.should == 2
-      Rule.count.should == 2
+  #     DisplayField.count.should == 2
+  #     Rule.count.should == 2
 
-      expect {
-        MatrixQuestionsController.new.send(:remove_sub_question_display_field_and_rules, matrix_question, question_attributes)
-      }.to change {Rule.count}.by(-1)
-    end
-  end
+  #     expect {
+  #       MatrixQuestionsController.new.send(:remove_sub_question_display_field_and_rules, matrix_question, question_attributes)
+  #     }.to change {Rule.count}.by(-1)
+  #   end
+  # end
 
   context 'new' do
     # GET /matrix_questions/new
