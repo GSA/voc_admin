@@ -19,7 +19,7 @@ class MatrixQuestion < ActiveRecord::Base
   delegate :statement, :statement=, :required, :to => :question_content
 
   # Used in displaying the ChoiceAnswer values on the SurveyVersion show view.
-  # 
+  #
   # @return [Array<String>] an array of the first ChoiceQuestion's ChoiceAnswer values
   def column_headers
     return [] if self.choice_questions.empty?
@@ -27,7 +27,7 @@ class MatrixQuestion < ActiveRecord::Base
   end
 
   # Used for displaying ChoiceQuestion properties on the SurveyVersion show view.
-  # 
+  #
   # @return [ActiveRecord::Relation] an ActiveRecord::Relation of
   # the MatrixQuestion's ChoiceQuestions with proper joins included
   def rows
@@ -40,7 +40,7 @@ class MatrixQuestion < ActiveRecord::Base
   end
 
   # Makes a deep copy of the MatrixQuestion (when cloning a survey)
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [MatrixQuestion] the cloned MatrixQuestion
   def clone_me(target_sv)
@@ -94,7 +94,7 @@ class MatrixQuestion < ActiveRecord::Base
   end
 
   # Makes a deep copy of the MatrixQuestion (when cloning a Page)
-  # 
+  #
   # @param [Page] page the page to be cloned onto
   # @return [MatrixQuestion] the cloned copy
   def copy_to_page(page)
@@ -140,7 +140,32 @@ class MatrixQuestion < ActiveRecord::Base
     MatrixQuestion.create!(mq_attribs)
   end
 
+  # Removes display field and rule for matrix sub-questions which have been marked for
+  # destruction
+  #
+  # @param [Hash] choice_questions the ChoiceQuestion parameters for the matrix question
+  def remove_deleted_sub_questions(choice_questions)
+    to_be_removed = choice_questions.select {|k, value| value[:question_content_attributes][:_destroy] == "1" }
+    to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
+  end
+
   private
+  # Removes the default Rule and DisplayField mappings for a given
+  # MatrixQuestion and a specific ChoiceQuestion.
+  #
+  # @param [Hash] choice_question_params the ChoiceQuestion parameters to remove
+  def remove_sub_question_display_field_and_rules(choice_question_params)
+    matrix_statement = question_content.statement_changed? ? question_content.statement_was : question_content.statement
+
+    name = "#{matrix_statement}: #{choice_question_params[:question_content_attributes][:statement]}"
+
+    rule = survey_version.rules.find_by_name(name)
+    rule.destroy if rule.present?
+
+    df = survey_version.display_fields.find_by_name(name)
+    df.destroy if df.present?
+  end
+
   # Validation to ensure a MatrixQuestion contains at least one ChoiceQuestion
   def has_choice_questions
     self.errors.add(:base, "Matrix questions must have at least one question") if self.choice_questions.empty? or self.choice_questions.all? {|q| q.marked_for_destruction? or q.question_content.marked_for_destruction? }
