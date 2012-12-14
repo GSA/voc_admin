@@ -2,7 +2,7 @@
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey
 
-  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules(.:format)
+  # GET    /surveys/:survey_id/survey_versions(.:format)
   def index
     @survey_versions = @survey.survey_versions.get_unarchived.order(order_clause(params[:sort], params[:direction])).page(params[:page]).per(10)
     respond_to do |format|
@@ -11,7 +11,7 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
-  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id(.:format)
+  # GET    /surveys/:survey_id/survey_versions/:id(.:format)
   def show
     respond_to do |format|
       if @survey.archived || @survey_version.archived
@@ -23,7 +23,7 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
-  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/edit(.:format)
+  # GET    /surveys/:survey_id/survey_versions/:id/edit(.:format)
   def edit
     redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
     redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked
@@ -33,7 +33,7 @@ class SurveyVersionsController < ApplicationController
   def edit_thank_you_page
   end
 
-  # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id(.:format)
+  # PUT    /surveys/:survey_id/survey_versions/:id(.:format)
   def update
     if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
@@ -42,7 +42,7 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
-  # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id(.:format)
+  # DELETE /surveys/:survey_id/survey_versions/:id(.:format)
   def destroy
     @survey_version.update_attribute(:archived, true)
     respond_to do |format|
