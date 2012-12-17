@@ -5,11 +5,6 @@ class SurveysController < ApplicationController
     @surveys = current_user.surveys.search(params[:q]).order("surveys.name #{sort_direction}").page(params[:page]).per(10)
   end
 
-  # GET    /surveys/:id(.:format)
-  def show
-    @survey = current_user.surveys.find(params[:id])
-  end
-
   # GET    /surveys/new(.:format)
   def new
     @survey = current_user.surveys.new

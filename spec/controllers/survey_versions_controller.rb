@@ -147,6 +147,7 @@ describe SurveyVersionsController do
   context 'edit' do
     it 'should redirect to /surveys if survey archived' do
       Survey.any_instance.stub(:archived).and_return true
+      SurveyVersion.any_instance.stub(:archived).and_return false
 
       get :edit, survey_id: survey.id, id: survey_version.id
 
@@ -155,6 +156,7 @@ describe SurveyVersionsController do
     end
 
     it 'should redirect to /surveys if survey version archived' do
+      Survey.any_instance.stub(:archived).and_return false
       SurveyVersion.any_instance.stub(:archived).and_return true
 
       get :edit, survey_id: survey.id, id: survey_version.id
