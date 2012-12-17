@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SurveyResponsesController do
   include Authlogic::TestCase
-  
+
   before do
     activate_authlogic
     UserSession.create User.create(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "example", :l_name => "user")
@@ -37,13 +37,12 @@ describe SurveyResponsesController do
     end
 
     it "should return a csv download" do
-       #@controller.should_receive(:send_file).with(@file, {:filename => "responses.csv", :type => 'text/csv', :disposition => 'attachment'})
-       @request.env["HTTP_ACCEPT"] = "text/csv"
+      @request.env["HTTP_ACCEPT"] = "text/csv"
       sv = mock_model(SurveyVersion, :display_fields => DisplayField.scoped, :survey_responses => SurveyResponse.scoped)
       SurveyResponsesController.any_instance.stub(:set_custom_view)
       SurveyVersion.stub(:find).and_return(sv)
-       get :index, :survey_version_id => 1
-       response.headers['Content-Type'].index("text/csv").should_not be_nil
+      get :index, :survey_version_id => 1
+      response.headers['Content-Type'].index("text/csv").should_not be_nil
     end
   end
 end

@@ -60,14 +60,6 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
-  # GET    /surveys/:survey_id/survey_versions/:id/create_new_minor_version(.:format)
-  def create_new_minor_version
-    respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Minor Survey Version was successfully created.') }
-      format.xml  { head :ok }
-    end
-  end
-
   # GET    /surveys/:survey_id/survey_versions/:id/publish(.:format)
   def publish
     if @survey_version.questions.empty?

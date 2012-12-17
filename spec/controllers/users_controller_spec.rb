@@ -42,7 +42,7 @@ describe UsersController do
       response.should render_template(:new)
     end
 
-    it "create action shoudl redirect when model is valid" do
+    it "create action should redirect when model is valid" do
       post :create, :user => {
         email: "user@example.com",
         password: "password",
@@ -61,7 +61,7 @@ describe UsersController do
       response.should render_template(:edit)
     end
 
-    it "update action shoudl render edit template when model is invalid" do
+    it "update action should render edit template when model is invalid" do
       User.any_instance.stub(:update_attributes).and_return false
       put :update, :id => @user, :user => {:email => ""}
       response.should render_template(:edit)
