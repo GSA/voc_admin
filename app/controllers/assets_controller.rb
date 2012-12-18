@@ -19,7 +19,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       if @asset.save
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added HTML snippet."}
       else
         format.html {render :action => 'new'}
       end
@@ -43,7 +43,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       if @asset.update_attributes(params[:asset])
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully updated HTML snippet."}
       else
         format.html {render :action => 'edit'}
       end
@@ -57,7 +57,7 @@ class AssetsController < ApplicationController
     @asset.destroy
 
     respond_to do |format|
-      format.html { redirect_to text_questions_url, :notice => "Successfully deleted text question."}
+      format.html { redirect_to survey_path(@survey_version.survey), :notice => "Successfully deleted HTML snippet."}
       format.js { render :partial => "shared/element_destroy" }
     end
   end

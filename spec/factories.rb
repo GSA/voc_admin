@@ -113,6 +113,35 @@ FactoryGirl.define do
 
   # == Schema Information
   #
+  # Table name: survey_elements
+  #
+  #  id                :integer(4)      not null, primary key
+  #  page_id           :integer(4)
+  #  element_order     :integer(4)
+  #  assetable_id      :integer(4)
+  #  assetable_type    :string(255)
+  #  created_at        :datetime
+  #  updated_at        :datetime
+  #  survey_version_id :integer(4)
+  factory :survey_element do
+
+  end
+
+  # == Schema Information
+  #
+  # Table name: assets
+  #
+  #  id         :integer(4)      not null, primary key
+  #  snippet    :text
+  #  created_at :datetime
+  #  updated_at :datetime
+  factory :asset do
+    sequence(:snippet)        {|n| "Rspec Test Asset #{n}"}
+    survey_element
+  end
+
+  # == Schema Information
+  #
   # Table name: survey_responses
   #
   #  id                :integer(4)      not null, primary key
