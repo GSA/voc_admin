@@ -4,14 +4,17 @@ describe SurveyVersionsController do
   include Authlogic::TestCase
 
   let(:site) { create :site }
-  let(:survey) { create :survey, { :site => site }}
-  let(:survey_version) { survey.survey_versions.first }
+  let(:survey) { create :survey, { :site => site } }
+  let(:survey_version) { create :survey_version, { :survey => survey } }
 
   before do
     activate_authlogic
     user = User.create(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "example", :l_name => "user")
     user.sites << site
     UserSession.create user
+
+    User.any_instance.stub_chain(:surveys, :find).and_return(survey)
+    Survey.any_instance.stub_chain(:survey_versions, :find).and_return(survey_version)
   end
 
   def valid_attributes
@@ -20,7 +23,7 @@ describe SurveyVersionsController do
 
   context 'publish' do
     it "should redirect to index with error if there are no questions" do
-      SurveyVersion.any_instance.stub_chain(:questions, :empty?).and_return true
+      survey_version.stub_chain(:questions, :empty?).and_return true
 
       get :publish, survey_id: survey.id, id: survey_version.id
 
@@ -30,10 +33,11 @@ describe SurveyVersionsController do
 
     context "when there are questions" do
       before(:each) do
-        SurveyVersion.any_instance.stub_chain(:questions, :empty?).and_return false
+        survey_version.stub_chain(:questions, :empty?).and_return false
       end
 
       it "should redirect to index with message" do
+        survey_version.stub(:publish_me)
         Rails.stub_chain(:cache, :clear)
 
         get :publish, survey_id: survey.id, id: survey_version.id
@@ -45,12 +49,14 @@ describe SurveyVersionsController do
       it "should publish the survey version" do
         Rails.stub_chain(:cache, :clear)
 
-        SurveyVersion.any_instance.should_receive(:publish_me)
+        survey_version.should_receive(:publish_me)
 
         get :publish, survey_id: survey.id, id: survey_version.id
       end
 
       it "should clear the Rails cache" do
+        survey_version.stub(:publish_me)
+
         Rails.cache.should_receive(:clear).once
 
         get :publish, survey_id: survey.id, id: survey_version.id
@@ -67,7 +73,7 @@ describe SurveyVersionsController do
     end
 
     it "should unpublish the survey" do
-      SurveyVersion.any_instance.should_receive(:unpublish_me)
+      survey_version.should_receive(:unpublish_me)
 
       get :unpublish, survey_id: survey.id, id: survey_version.id
     end
@@ -75,13 +81,13 @@ describe SurveyVersionsController do
 
   context 'clone version' do
     it "should clone the survey version" do
-      SurveyVersion.any_instance.should_receive(:clone_me)
+      survey_version.should_receive(:clone_me)
 
       get :clone_version, survey_id: survey.id, id: survey_version.id
     end
 
     it "should redirect to index with message" do
-      SurveyVersion.any_instance.stub(:clone_me)
+      survey_version.stub(:clone_me)
 
       get :clone_version, survey_id: survey.id, id: survey_version.id
 
@@ -100,7 +106,7 @@ describe SurveyVersionsController do
 
   context 'update thank you page' do
     it "should render edit if update_attributes fails" do
-      SurveyVersion.any_instance.stub(:update_attributes).and_return(false)
+      survey_version.stub(:update_attributes).and_return(false)
 
       put :update, survey_id: survey.id, id: survey_version.id, survey_version: { thank_you_page: 'test contents' }
 
@@ -108,7 +114,7 @@ describe SurveyVersionsController do
     end
 
     it "should redirect to index with message" do
-      SurveyVersion.any_instance.stub(:update_attributes).and_return(true)
+      survey_version.stub(:update_attributes).and_return(true)
 
       put :update, survey_id: survey.id, id: survey_version.id, survey_version: { thank_you_page: 'test contents' }
 
@@ -118,16 +124,14 @@ describe SurveyVersionsController do
   end
 
   context 'create new major version' do
-    # does not work because of our before_filter setup of instance variables
-    #
-    # it "should create a new major version" do
-    #   Survey.any_instance.should_receive(:create_new_major_version)
+    it "should create a new major version" do
+      survey.should_receive(:create_new_major_version)
 
-    #   get :create_new_major_version, survey_id: survey.id
-    # end
+      get :create_new_major_version, survey_id: survey.id
+    end
 
     it "should redirect to index with message" do
-      Survey.any_instance.stub(:create_new_major_version)
+      survey.stub(:create_new_major_version)
 
       get :create_new_major_version, survey_id: survey.id
 
@@ -138,6 +142,8 @@ describe SurveyVersionsController do
 
   context 'index' do
     it 'should render the index template' do
+      survey.stub_chain(:survey_versions, :get_unarchived, :order, :page, :per).and_return survey
+
       get :index, survey_id: survey.id
 
       response.should render_template(:index)
@@ -146,8 +152,8 @@ describe SurveyVersionsController do
 
   context 'edit' do
     it 'should redirect to /surveys if survey archived' do
-      Survey.any_instance.stub(:archived).and_return true
-      SurveyVersion.any_instance.stub(:archived).and_return false
+      survey.stub(:archived).and_return true
+      survey_version.stub(:archived).and_return false
 
       get :edit, survey_id: survey.id, id: survey_version.id
 
@@ -156,8 +162,8 @@ describe SurveyVersionsController do
     end
 
     it 'should redirect to /surveys if survey version archived' do
-      Survey.any_instance.stub(:archived).and_return false
-      SurveyVersion.any_instance.stub(:archived).and_return true
+      survey.stub(:archived).and_return false
+      survey_version.stub(:archived).and_return true
 
       get :edit, survey_id: survey.id, id: survey_version.id
 
@@ -166,7 +172,7 @@ describe SurveyVersionsController do
     end
 
     it 'should redirect to index if locked' do
-      SurveyVersion.any_instance.stub(:locked).and_return true
+      survey_version.stub(:locked).and_return true
 
       get :edit, survey_id: survey.id, id: survey_version.id
 
@@ -190,16 +196,16 @@ describe SurveyVersionsController do
   end
 
   context 'update' do
-    it "update action should render edit template when model is invalid" do
-      SurveyVersion.any_instance.stub(:update_attributes).and_return false
+    it "should render edit template when model is invalid" do
+      survey_version.stub(:update_attributes).and_return false
 
       put :update, survey_id: survey, id: survey_version, survey_version: { major: nil }
 
       response.should render_template(:edit)
     end
 
-    it "update action should redirect to index when model is valid" do
-      SurveyVersion.any_instance.stub(:update_attributes).and_return true
+    it "should redirect to index when model is valid" do
+      survey_version.stub(:update_attributes).and_return true
 
       put :update, survey_id: survey, id: survey_version, survey_version: { notes: "Test Notes" }
 
@@ -210,7 +216,7 @@ describe SurveyVersionsController do
 
   context 'destroy' do
     it "should set archived true" do
-      SurveyVersion.any_instance.should_receive(:update_attribute).with(:archived, true)
+      survey_version.should_receive(:update_attribute).with(:archived, true)
 
       delete :destroy, survey_id: survey.id, id: survey_version.id
     end
