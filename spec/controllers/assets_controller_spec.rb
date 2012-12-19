@@ -32,6 +32,14 @@ describe AssetsController do
 
       response.should render_template(:new)
     end
+
+    it 'should render new.js' do
+      survey_version.stub_chain(:assets, :build)
+
+      get :new, survey_id: survey.id, survey_version_id: survey_version.id, format: :js
+
+      response.should render_template(:new)
+    end
   end
 
   context 'create' do
@@ -75,6 +83,16 @@ describe AssetsController do
       response.should redirect_to(survey_path survey)
       flash[:notice].should =~ /Successfully added HTML snippet./i
     end
+
+    it 'should render element_create.js' do
+      Asset.stub(:new).and_return(asset)
+      asset.stub_chain(:survey_element, :survey_version_id=)
+      asset.stub(:save)
+
+      post :create, survey_id: survey.id, survey_version_id: survey_version.id, format: :js
+
+      response.should render_template('shared/_element_create')
+    end
   end
 
   context 'edit' do
@@ -91,6 +109,14 @@ describe AssetsController do
       survey_version.stub_chain(:assets, :find)
 
       get :edit, survey_id: survey.id, survey_version_id: survey_version.id, id: asset.id
+
+      response.should render_template(:edit)
+    end
+
+    it 'should render edit.js' do
+      survey_version.stub_chain(:assets, :find)
+
+      get :edit, survey_id: survey.id, survey_version_id: survey_version.id, id: asset.id, format: :js
 
       response.should render_template(:edit)
     end
@@ -117,6 +143,14 @@ describe AssetsController do
       response.should redirect_to(survey_path survey)
       flash[:notice].should =~ /Successfully updated HTML snippet./i
     end
+
+    it 'should render element_create.js' do
+      asset.stub(:update_attributes)
+
+      put :update, survey_id: survey.id, survey_version_id: survey_version.id, id: asset.id, format: :js
+
+      response.should render_template('shared/_element_create')
+    end
   end
 
   context 'destroy' do
@@ -137,6 +171,16 @@ describe AssetsController do
       delete :destroy, survey_id: survey.id, survey_version_id: survey_version.id, id: asset.id
 
       response.should redirect_to(survey_path survey)
+      flash[:notice].should =~ /Successfully deleted HTML snippet./i
+    end
+
+    it 'should render element_destroy.js' do
+      survey_version.stub_chain(:assets, :find).and_return(asset)
+      asset.stub(:destroy)
+
+      delete :destroy, survey_id: survey.id, survey_version_id: survey_version.id, id: asset.id, format: :js
+
+      response.should render_template('shared/_element_destroy')
     end
   end
 end

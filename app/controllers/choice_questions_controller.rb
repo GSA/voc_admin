@@ -23,7 +23,7 @@ class ChoiceQuestionsController < ApplicationController
 
     respond_to do |format|
       if @choice_question.save
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added choice question."}
       else
         format.html {render :action => 'new'}
       end
@@ -46,7 +46,7 @@ class ChoiceQuestionsController < ApplicationController
     @choice_question = ChoiceQuestion.find(params[:id])
     respond_to do |format|
       if @choice_question.update_attributes(params[:choice_question])
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully updated choice question."}
       else
         format.html {render :action => 'edit'}
       end
@@ -59,12 +59,12 @@ class ChoiceQuestionsController < ApplicationController
   def destroy
     @choice_question = ChoiceQuestion.find(params[:id])
 
-    destroy_default_rule_and_display_field(@choice_question.question_content)
+    destroy_default_rule_and_display_field(@choice_question)
 
     @choice_question.destroy
 
     respond_to do |format|
-      format.html { redirect_to text_questions_url, :notice => "Successfully deleted text question."}
+      format.html { redirect_to survey_path(@survey_version.survey), :notice => "Successfully deleted choice question."}
       format.js { render :partial => "shared/element_destroy" }
     end
   end
@@ -72,11 +72,11 @@ class ChoiceQuestionsController < ApplicationController
   private
   
   # Clean up when destroying a ChoiceQuestion.
-  def destroy_default_rule_and_display_field(qc)
-    rule = @survey_version.rules.find_by_name(qc.statement)
+  def destroy_default_rule_and_display_field(choice_question)
+    rule = @survey_version.rules.find_by_name(choice_question.question_content.statement)
     rule.destroy if rule.present?
 
-    df = @survey_version.display_fields.find_by_name(qc.statement)
+    df = @survey_version.display_fields.find_by_name(choice_question.question_content.statement)
     df.destroy if df.present?
   end
 
@@ -86,5 +86,4 @@ class ChoiceQuestionsController < ApplicationController
 
     4.times {choice_question.choice_answers.build} if choice_question.choice_answers.empty?
   end
-
 end

@@ -142,6 +142,25 @@ FactoryGirl.define do
 
   # == Schema Information
   #
+  # Table name: question_contents
+  #
+  #  id                :integer(4)      not null, primary key
+  #  statement         :string(255)
+  #  questionable_type :string(255)
+  #  questionable_id   :integer(4)
+  #  flow_control      :boolean(1)
+  #  required          :boolean(1)      default(FALSE)
+  #  created_at        :datetime
+  #  updated_at        :datetime
+  factory :choice_question do
+    sequence(:statement)      {|n| "Rspec Test Asset #{n}"}
+    questionable_type         "ChoiceQuestion"
+    survey_element
+    question_content
+  end
+
+  # == Schema Information
+  #
   # Table name: survey_responses
   #
   #  id                :integer(4)      not null, primary key
