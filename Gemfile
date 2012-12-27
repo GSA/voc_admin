@@ -12,8 +12,16 @@ gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
 
+platform :ruby do
+  gem 'unicorn-rails'
+  gem 'mysql2', '< 0.3'
+end
 
-gem 'unicorn-rails'
+platform :jruby do
+  gem 'jruby-openssl'
+  gem 'activerecord-jdbcmysql-adapter'
+  gem 'warbler'
+end
 
 group :development do
 	gem 'annotate'
@@ -37,5 +45,3 @@ group :test do
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'rails_best_practices'
 end
-
-gem 'mysql2', '< 0.3'
