@@ -13,7 +13,7 @@
     <div class="bottom_side">
       <%= f.radio_button :action_type, "db", :id => "db_action_rule" %><%= label_tag "db_action_rule", "Database Action: allows you to update or set a field value" %>
       <br/>
-      <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><%= label_tag "email_action_rule", "Email Notification: allows you to send out an automated email when somethign happens" %>
+      <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><%= label_tag "email_action_rule", "Email Notification: allows you to send out an automated email when something happens" %>
     </div>
 		
 	  <div class="top_side">This rule will execute when a survey is: </div>
@@ -39,7 +39,7 @@
 
 	<%= field_set_tag "Actions" do %>
 	<div id="actions">
-    <div id="email_action" class="<%= @rule.action_type == 'db' || @rule.action_type.nil? ? 'hidden_page' : '' %>">
+    <div id="email_action" class="<%= @rule.action_type == 'db' || @rule.action_type.nil? ? 'displayNone' : '' %>">
       <% @rule.build_email_action if @rule.email_action.nil? %>
       <%= f.fields_for :email_action do |builder| %>
         <div class="left_side"><%= builder.label :emails, "Send email to: " %></div>
@@ -58,7 +58,7 @@
       <% end %>
     </div>
 
-    <div id="db_actions" class="<%= @rule.action_type == 'email' ? 'hidden_page' : '' %>">
+    <div id="db_actions" class="<%= @rule.action_type == 'email' ? 'displayNone' : '' %>">
       <%= f.fields_for :actions do |builder| %>
        <%= render :partial => "shared/action_fields", :locals => {:f => builder, :survey_version => @survey_version}%>
       <% end %>

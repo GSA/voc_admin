@@ -3,7 +3,7 @@
   $("#simplemodal-container").height($("#modalDiv").height());
   $("#simplemodal-container").width($("#modalDiv").width());
 <% else %>
-  $("#usersTable").replaceWith( "<%= escape_javascript( render(partial: 'users_table', locals: { users: User.page(params[:page]).per(10) }) ) %>");
+  $("#usersTable").replaceWith( "<%= escape_javascript( render(partial: 'users_table', locals: { users: User.listing.page(params[:page]).per(10) }) ) %>");
   $.modal.close();
   alert("Successfully Updated User");
 <% end %>

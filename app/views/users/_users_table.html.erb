@@ -7,7 +7,7 @@
   <% for user in users %>
     <tr class="<%= cycle('gray','white') %>">
       <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_user_path(user), :remote => true %></td>
-      <td class="col2"><%= link_to user.f_name + user.l_name, user %></td>
+      <td class="col2"><%= link_to user.f_name + ' ' + user.l_name, user %></td>
       <td class="col3"><%= user.email %></td>
       <td class="col4"><%= link_to "&nbsp;".html_safe, user, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink", :alt=>"delete" %></td>
     </tr>
