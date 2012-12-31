@@ -24,7 +24,7 @@
 	</div>
 </div>
 <div class="page-nav">
-  <%= link_to image_tag("edit.png", :alt=>"edit"), edit_site_path(@site) %>
+  <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_site_path(@site), :class=>"manage" %>
   <%= link_to "View All Sites", sites_path, :class=>"manage" %>
 </div>
 

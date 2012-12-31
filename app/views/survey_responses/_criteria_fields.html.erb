@@ -16,5 +16,5 @@
 	<%= select_tag "search[criteria][#{criteria_index}][condition]", options_for_conditions((params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:condition]) ) %>
 	<%= text_field_tag "search[criteria][#{criteria_index}][value]", ((params[:search].blank? or criteria_index == 'new_criteria_index') ? '' : params[:search][:criteria]["#{criteria_index}"][:value]) %>
 
-	<%= link_to_function "&nbsp;".html_safe, "remove_search_criteria(this); return false;", :class=>"deleteLink" %>
+	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_search_criteria(this); return false;", :class=>"deleteLink" %>
 </div>

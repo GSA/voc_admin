@@ -9,7 +9,7 @@
 </div>
 <div id="survey_info">
 	<div class="top_side">
-		Insrtuctions:
+		Instructions:
 	</div>
 	<div class="bottom_side">
 		<p>Place the following into a snippet to display image in survey: <%= "<img src='/images/hhs_image_lib/#{@file}'' />" %><%#= "#{image_tag(@file)}" %></p>
@@ -17,7 +17,7 @@
 </div>
 
 <div id="displayImage">
-	<%= image_tag "/images/hhs_image_lib/#{@file}" %>
+	<%= image_tag "/images/hhs_image_lib/#{@file}", :alt=>"#{@file}" %>
 </div>
 
 <div class="page-nav">

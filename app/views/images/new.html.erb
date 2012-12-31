@@ -2,8 +2,8 @@
 <h1> Add New Image</h1>
   <div id="newImage">
     <p class="copyBold">
-      <%= label_tag :upload, "Select File: "%>
-      <%= file_field 'upload', 'datafile' %>
+      <%= label_tag :upload, "Select File: ", :for=>"upload_datafile" %>
+      <%= file_field :upload, 'datafile' %>
       <%= submit_tag "Upload" -%>
     </p>
   </div>

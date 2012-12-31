@@ -63,6 +63,6 @@
 </div>
 
 <div class="page-nav">
-	<%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_survey_version_rule_path(@survey, @survey_version), :class=>"manage" %>
+	<%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_rule_path(@survey, @survey_version), :class=>"manage" %>
 	<%= link_to "View All Rules", survey_survey_version_rules_path(@survey, @survey_version), :class=>"manage" %>
 </div>
