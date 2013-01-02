@@ -7,7 +7,7 @@ gem 'rails', '3.0.13'
 
 gem 'jquery-rails'
 gem 'kaminari'
-gem 'delayed_job', '2.1.4'
+gem 'delayed_job'
 gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
@@ -22,6 +22,7 @@ platform :jruby do
   gem 'activerecord-jdbc-adapter'
   gem 'jdbc-mysql'
   gem 'activerecord-jdbcmysql-adapter'
+  gem 'delayed_job_active_record'
   gem 'warbler'
 end
 
