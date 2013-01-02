@@ -74,14 +74,14 @@
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
 							<%= hidden_field_tag "q_#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 
-							<% if element.assetable.answer_type == ChoiceAnswer::DROPDOWN
-								select_tag_id = "response[raw_responses_attributes][#{index}][answer]"
+							<% if element.assetable.answer_type == ChoiceAnswer::DROPDOWN or element.assetable_type == "TextQuestion"
+								answer_tag_id = "response[raw_responses_attributes][#{index}][answer]"
 							   elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT
-							   	select_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
+							   	answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
 							   end -%>
 
 							<div class="vocquestiontext"><span class="vocquestionnumber"><%= "#{question_number}." %> </span>
-							<%= select_tag_id ? label_tag(select_tag_id, element.assetable.question_content.statement) : element.assetable.question_content.statement %>
+							<%= answer_tag_id ? label_tag(answer_tag_id, element.assetable.question_content.statement) : element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
 								<% if element.assetable.answer_type == ChoiceAnswer::RADIO
@@ -100,12 +100,12 @@
 										<% end -%>
 									</div>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
-									<span class="vocdropdown"><%= select_tag select_tag_id,
+									<span class="vocdropdown"><%= select_tag answer_tag_id,
 										options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
 										:include_blank => true, :onchange => generate_next_page_on_change(element),
 										:class => "question_#{element.assetable.question_content.id}_answer" %></span>
 								<% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
-								  <span class="vocmultiselect"><%= select_tag select_tag_id,
+								  <span class="vocmultiselect"><%= select_tag answer_tag_id,
 										options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
 										:multiple => true,
 										:style => "width: 100px",
@@ -128,11 +128,10 @@
 								<% end # if ChoiceQuestion %>
 
 							<% elsif element.assetable_type == "TextQuestion" %>
-								<%= label_tag "response[raw_responses_attributes][#{index}][answer]", "Answer for question #{question_number}", :style => "display: none" %>
 								<% if element.assetable.answer_type == "field" %>
-                <span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size %></span>
+                <span class="voctextfield"><%= text_field_tag answer_tag_id, nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size %></span>
 								<% elsif element.assetable.answer_type == "area" %>
-									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => (element.assetable.row_size || ""), :cols => (element.assetable.column_size  || "") %></span>
+									<span class="voctextarea"><%= text_area_tag answer_tag_id, nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => (element.assetable.row_size || ""), :cols => (element.assetable.column_size  || "") %></span>
 
 								<% end -%>
 							<% end -%>
