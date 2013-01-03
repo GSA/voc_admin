@@ -4,7 +4,7 @@ require 'yaml'
 
 namespace :nightly_rules do
   desc "Start a nightly rule processing task instance"
-  task :parse do
+  task :process do
 
     #get configuration file
     parseryaml = YAML::load(File.open('config/response_parser.yml'))
