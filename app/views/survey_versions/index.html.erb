@@ -83,7 +83,7 @@
 		iFrame Instructions:
 	</div>
 	<div class="bottom_side">
-		<p>To link to published survey version, use: <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%></p>
+		<p>To link to published survey version, use: <%= "<iframe src='http://#{APP_CONFIG['host']}/surveys/#{@survey.id}'></iframe>"%></p>
 	</div>
 	<div class="top_side">
 		Javascript Widget Instructions:
@@ -95,7 +95,7 @@
   new voc.Survey({targetID: "[[ID of the div which will hold the survey]]", surveyID: <%= @survey.id %>}).loadSurvey();
 &lt;/script&gt;
 &lt;noscript&gt;
-  <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%>
+  <%= "<iframe src='http://#{APP_CONFIG['host']}/surveys/#{@survey.id}'></iframe>"%>
 &lt;/noscript&gt;
 		</pre>
 	</div>
