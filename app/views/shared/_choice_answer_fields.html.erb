@@ -11,5 +11,5 @@
 	<%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapAnswers(this, 'down')" %>
 
 	<%= f.hidden_field :_destroy %>
-	<%= link_to_function "&nbsp;".html_safe, "remove_fields(this)", :class=>"deleteLink" %>
+	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
 </p>

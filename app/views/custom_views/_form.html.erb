@@ -44,7 +44,7 @@
 	
 		<div class="center_side">
 			<%= link_to "ADD >>", nil, :id => "add_display_fields", :class=>"manage" %>
-			<br />
+			<br /><br />
 			<%= link_to "<< REMOVE", nil, :id => "remove_display_fields", :class=>"manage" %>
 		</div>
 	
@@ -99,9 +99,9 @@
 
 	<div class="submitButton">
 		<% if f.object.new_record? %>
-			<%= f.submit "Create Site", :type => :image, :src=>"/images/create-view.png" %>
+			<%= f.submit "Create Custom View", :type => :image, :src=>"/images/create-view.png", :alt=>"Create Custom View" %>
 		<% else %>
-			<%= f.submit "Edit Site", :type => :image, :src=>"/images/update-view.png" %>
+			<%= f.submit "Update Custom View", :type => :image, :src=>"/images/update-view.png", :alt=>"Update Custom View" %>
 		<% end %>
 	</div>
 <% end %>

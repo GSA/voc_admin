@@ -161,12 +161,12 @@ module SurveyVersionHelper
   # @param [String] url the target of the link
   # @return [String] the HTML link
   def generate_page_copy_link(url)
-    link_to "&nbsp;".html_safe,
+    link_to image_tag("clone.png", :alt=>"Copy Page"),
             url,
             { :method => :post,
               :remote => true,
-              :title => "Create a copy of this page.",
-              :class => "copyLink" }
+              :class => "copyLink",
+              :title => "Create a copy of this page." }
   end
 
   # Create the page delete link.
@@ -174,12 +174,12 @@ module SurveyVersionHelper
   # @param [String] url the target of the link
   # @return [String] the HTML link
   def generate_page_delete_link(url, page_number)
-    link_to "&nbsp;".html_safe,
+    link_to image_tag('delete.png', :alt=>"Delete"),
             url,
             { :method => :delete,
               :remote => true,
               :title => "Remove page",
-              :class => "deleteLink",
+              :class=>"deleteLink",
               :confirm => "All items on page #{page_number} will be removed as well." }
   end
 
@@ -231,12 +231,12 @@ module SurveyVersionHelper
   # @param [String] url the target of the link
   # @return [String] the HTML link
   def generate_element_delete_link(url)
-    link_to "&nbsp;".html_safe,
+    link_to image_tag("delete.png", :alt=>"Delete"),
             url,
             { :method => :delete,
               :remote => true,
               :title => "Delete page element",
-              :class => "deleteLink",
+              :class=>"deleteLink",
               :confirm => "Are you sure?" }
   end
 

@@ -45,7 +45,12 @@ $(function(){
 		} else {
 			$(this).next("input[type=text]").val($(this).siblings(".HiddenValueField").val());
 		}
-	})
+	});
+
+	/* Switch the Rule type based on the radio buttons */
+	$("input[name='rule[action_type]']").live("change", function() {
+		$("#email_action, #db_actions").toggleClass("displayNone");
+	});
 });
 
 function run_rule(rule_id, source){

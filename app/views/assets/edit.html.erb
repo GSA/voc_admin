@@ -2,11 +2,12 @@
 
   <p class="modalTitle">Edit Snippet</p>
   <div class="validation_errors"></div>
+  <div class="hidden_label"><%= f.label :snippet, "Snippet:" %></div>
   <%= f.text_area :snippet %>
   <br/>
 	<br/>
   <div class="pageLink">
   	<%= link_to "Cancel", nil, :class => "cancelLink" %>
-  	<%= f.submit "Update Snippet", :type => :image, :src=>"/images/update-snippet.png" %>
+  	<%= f.submit "Update Snippet", :type => :image, :src=>"/images/update-snippet.png", :alt=>"Update Snippet" %>
   </div>
 <% end -%>

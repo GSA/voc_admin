@@ -37,9 +37,9 @@
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>
-	  		<%= f.submit "Create Survey", :type => :image, :src=>"/images/Create-Survey.png" %>
+	  		<%= f.submit "Create Survey", :type => :image, :src=>"/images/Create-Survey.png", :alt=>"Create Survey" %>
 	  	<% else %>
-	  		<%= f.submit "Edit Survey", :type => :image, :src=>"/images/update-survey.png" %>
+	  		<%= f.submit "Update Survey", :type => :image, :src=>"/images/update-survey.png", :alt=>"Update Survey" %>
 	  	<% end %>
 		</div>
 

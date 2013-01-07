@@ -17,7 +17,7 @@
 			<td class="col2"><%= link_to site.name, site %></td>
 			<td class="col3"><%= site.url %></td>
 			<td class="col4"><%= site.description %></td>
-      <td class="col5"><%= link_to "&nbsp;".html_safe, site, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink", :title=>"delete" %></td>
+      <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete"), site, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
 		</tr>
 	<% end %>
 </table>

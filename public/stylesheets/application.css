@@ -2,6 +2,19 @@
 /**** This file is called admin.css on the public site ****/
 /**** All styles beginning with an * are IE7 and below specific ****/
 
+/**** Copied from hh's style_2009 ****/
+div#skipNav {
+position: relative;
+}
+div#skipNav a#skip, div#skipNav a#rightNav {
+position: absolute;
+top: -1000px;
+left: -1000px;
+height: 1px;
+width: 1px;
+overflow: hidden;
+}
+
 /**** General ****/
 body {
 	background-color: #f0eff7;
@@ -154,33 +167,6 @@ a.newlink {
 a.newlink:hover {
 	background: url(/images/clone_hover.png) no-repeat;
 	padding: 0px 0px 0px 12px;
-}
-.deleteLink {
-	background: url(/images/delete.png) no-repeat;
-	padding: 0px 0px 0px 11px;
-}
-.deleteLink:hover {
-	background: url(/images/delete_hover.png) no-repeat;
-	padding: 0px 0px 0px 11px;
-	text-decoration: none;
-}
-.copyLink {
-	background: url(/images/clone.png) no-repeat;
-	padding: 0px 0px 0px 11px;
-}
-.copyLink:hover {
-	background: url(/images/clone_hover.png) no-repeat;
-	padding: 0px 0px 0px 11px;
-	text-decoration: none;
-}
-.runLink {
-	background: url(/images/run.png) no-repeat top center;
-	padding: 0px 0px 0px 19px;
-}
-.runLink:hover {
-	background: url(/images/run_hover.png) no-repeat top center;
-	padding: 0px 0px 0px 19px;
-	text-decoration: none;
 }
 .page-nav {
 	margin: 10px 0px;
@@ -829,7 +815,7 @@ fieldset .left_side_c {
 	text-align: left;
 }
 fieldset .center_side {
-	margin: 35px 15px 0px;
+	margin: 30px 15px 0px;
 	display: inline-block;
 	vertical-align: middle;
 	width: 100px;
@@ -1079,4 +1065,9 @@ span.pageNum {
 #surveys_all .col4 {
 	width: 50px;
 	text-align: center;
+}
+.hidden_label {
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
 }

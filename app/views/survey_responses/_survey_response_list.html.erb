@@ -5,11 +5,12 @@
 	<%= hidden_field_tag :order_dir, @order_dir %>
 	<%= hidden_field_tag :page, params[:page] %>
 	<%= hidden_field_tag :custom_view_id, params[:custom_view_id] %>
-
-	<div class="pageNavTop">
+	<br />
+	<div class="pageNav">
 		<div class="inline">
       <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
         <%= hidden_field_tag :survey_version_id, version.id, :id => nil %>
+        <div class="hidden_label"><%= label_tag :simple_search, "Search:" %></div>
         <%= text_field_tag :simple_search, params[:simple_search] %>
         <%= submit_tag "Search" %>
       <% end -%>
@@ -60,7 +61,7 @@
 			:order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %> 
 		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
 		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %> 
-		<%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink" %> 
+		<%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink", :for=>"custom_view" %> 
 		<%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %> 
 		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %> 
 		<span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
@@ -85,7 +86,7 @@
 			<% objects.each do |sr| %>
 			  <tr class="<%= cycle('gray','white')%>">
 			  	<td class="col1">
-			  		<%= link_to "&nbsp;".html_safe, survey_response_path(sr, params.slice(*SurveyResponsesController::POST_PARAMS)), :method => :delete, :remote => true, :class => "deleteLink", :confirm => "Please confirm" %>
+			  		<%= link_to image_tag("delete.png", :alt=>"Delete"), survey_response_path(sr, params.slice(*SurveyResponsesController::POST_PARAMS)), :method => :delete, :remote => true, :confirm => "Please confirm", :class=>"deleteLink" %>
 			  		<%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_response_path(sr.id, {:survey_id => version.survey_id}.merge(params.slice(*SurveyResponsesController::POST_PARAMS))) %>
 			  	</td>
 			  	<td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
@@ -116,7 +117,7 @@
 			:order_dir => params[:order_dir], :search => params[:search], :simple_search => params[:simple_search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %>
 		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
 		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %>
-		<%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink" %> 
+		<%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink", :for=>"custom_view" %> 
 		<%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %>
 		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %>
 		<span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>

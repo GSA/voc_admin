@@ -24,10 +24,10 @@
 	</div>
 	<br />
 	<% if @user.role.nil? %>
-		<div class="right_side">
+		<div class="left_side">
   		Sites:
   	</div>
-  	<div class="left_side">
+  	<div class="right_side">
 	    <% @user.sites.each do |site| %>
 	    	<%= site.name %>
 	    <% end %>
@@ -36,6 +36,6 @@
 </div>
 
 <div class="page-nav">
-  <%= link_to image_tag('edit.png', :alt=>"edit"), edit_user_path(@user) %>
+  <%= link_to image_tag('edit.png', :alt=>"edit") + " Edit", edit_user_path(@user), :class=>"manage" %>
   <%= link_to "View All Users", users_path, :class=>"manage" %>
 </div>

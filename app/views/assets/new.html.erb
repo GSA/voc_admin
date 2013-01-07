@@ -2,6 +2,7 @@
 
   <h2>New Snippet</h2>
   <%= f.error_messages %>
+  <div class="hidden_label"><%= f.label :snippet, "Snippet:" %></div>
   <%= f.text_area :snippet %>
   <br/>
   <br/>
@@ -10,6 +11,6 @@
   <br/>
   <div class="pageLink">
   	<%= link_to "Cancel", [:edit, @survey, @survey_version], :class => "cancelLink"%>
-  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png" %>
+  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png", :alt=>"Create Snippet" %>
   </div>
 <% end -%>

@@ -70,9 +70,9 @@
 
 		<div class="submitButton">
 			<% if f.object.new_record? %>
-				<%= f.submit "Create Site", :type => :image, :src=>"/images/create-user.png" %>
+				<%= f.submit "Create User", :type => :image, :src=>"/images/create-user.png", :alt=>"Create User" %>
 			<% else %>
-				<%= f.submit "Edit Site", :type => :image, :src=>"/images/update-user.png" %>
+				<%= f.submit "Update User", :type => :image, :src=>"/images/update-user.png", :alt=>"Update User" %>
 			<% end %>
 		</div>
 	</div>

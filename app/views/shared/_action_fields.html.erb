@@ -12,6 +12,6 @@
 	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
 
 	<%= f.hidden_field :_destroy, :value => "", :class => "db_action_delete" %>
-	<%= link_to_function "&nbsp;".html_safe, "remove_fields(this)", :class=>"deleteLink" %>
+	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
 </div>
 <br/>

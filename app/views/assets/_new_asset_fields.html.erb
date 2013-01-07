@@ -1,6 +1,7 @@
 <p class="modalTitle">New Snippet</p>
 
 <%= form_for [survey, survey_version, asset], :remote => true do |f| %>
+	<div class="hidden_label"><%= f.label :snippet, "Snippet:" %></div>
 	<%= f.text_area :snippet %>
 	<br/>
 	<br/>
@@ -9,6 +10,6 @@
   <br/>
   <div class="pageLink">
 		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close"%>
-  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png" %>
+  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png", :alt=>"Create Snippet" %>
   </div>
 <% end -%>
