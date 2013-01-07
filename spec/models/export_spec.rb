@@ -2,37 +2,37 @@ require 'spec_helper'
 
 describe Export do
   context "basic validations" do
-    let(:export) do
+    before(:each) do
       Export.any_instance.stub(:generate_access_token)
-      build :export
+      @export = build :export, access_token: "abcdef0123456789"
     end
 
     it "should be valid" do
-      export.should be_valid
+      @export.should be_valid
     end
 
     it "should not be valid without an access_token" do
-      export.access_token = nil
-      export.should_not be_valid
-      export.errors[:access_token].should include("can't be blank")
+      @export.access_token = nil
+      @export.should_not be_valid
+      @export.errors[:access_token].should include("can't be blank")
     end
 
     it "should not be valid without a unique access_token" do
-      export.dup.save!
-      export.should_not be_valid
-      export.errors[:access_token].should include("has already been taken")
+      export2 = create :export, access_token: "abcdef0123456789"
+      @export.should_not be_valid
+      @export.errors[:access_token].should include("has already been taken")
     end
 
     it "should not be valid with an access_token longer than 255 characters" do
-      export.access_token = "a" * 256
-      export.should_not be_valid
-      export.errors[:access_token].should include("is too long (maximum is 255 characters)")
+      @export.access_token = "a" * 256
+      @export.should_not be_valid
+      @export.errors[:access_token].should include("is too long (maximum is 255 characters)")
     end
 
     it "should not be valid without an attached document" do
-      export.document = nil
-      export.should_not be_valid
-      export.errors[:document].should include("can't be blank")
+      @export.document = nil
+      @export.should_not be_valid
+      @export.errors[:document].should include("can't be blank")
     end
   end
 
@@ -42,10 +42,11 @@ describe Export do
     end
 
     it "should receive generate_access_token" do
-      Export.any_instance.stub(:generate_access_token)
-      Export.any_instance.should_receive(:generate_access_token)
+      export = build :export
 
-      create :export
+      export.should_receive(:generate_access_token)
+
+      export.save!
     end
   end
 

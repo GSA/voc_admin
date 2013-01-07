@@ -237,7 +237,7 @@ FactoryGirl.define do
   #  document_file_size    :integer(4)
   #  document_updated_at   :datetime
   factory :export do
-    sequence(:access_token)   {|n| n}
+    #sequence(:access_token)   {|n| n}
     document                  File.open(File.join(Rails.root, 'spec', 'fixtures', 'Null.png'), 'r')
   end
 end
