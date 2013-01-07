@@ -5,6 +5,8 @@ class DisplayFieldValue < ActiveRecord::Base
   belongs_to :display_field
   belongs_to :survey_response
 
+  VALUE_DELIMITER = '{%delim%}'
+
   # Arel named scopes
   scope :for_display_field, ->(df_id) { where(:display_field_id => df_id) }
   scope :value_eq,          ->(val) { arel_table[:value].eq(val) }
@@ -30,7 +32,7 @@ class DisplayFieldValue < ActiveRecord::Base
   # @param [Array<String>] arg the Array to store
   # @return [String] the serialized field value
   def value_array=(arg)
-  	self.value = arg.join('{%delim%}')
+  	self.value = arg.join(VALUE_DELIMITER)
   end
 
   private

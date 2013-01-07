@@ -11,7 +11,7 @@
 
 	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", false).each do |dfv| %>
 		<div class="left_side"><%= dfv.display_field.name %>:</div>
-		<div class="right_side"><%= dfv.value %></div>
+		<div class="right_side"><%= split_multiple_answer_selections(dfv.value) %></div>
 	<% end %>
 <% end %>
 

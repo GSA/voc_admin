@@ -62,4 +62,18 @@ module SurveyResponsesHelper
                          ['Greater Than', 'greater_than'] ],
                        :selected => default)
   end
+
+  # Leverages the DisplayFieldValue special delimiter value
+  # to display multiselect and checkbox responses on the
+  # Edit SurveyResponse view.
+  #
+  # @param [String] plain string or delimited string
+  # @return [String] plain string or HTML break-delimited string
+  def split_multiple_answer_selections(answer_values)
+    if answer_values.include?(DisplayFieldValue::VALUE_DELIMITER)
+      answer_values.split(DisplayFieldValue::VALUE_DELIMITER).join("<br/>").html_safe
+    else
+      answer_values
+    end
+  end
 end
