@@ -49,9 +49,9 @@ class SurveyResponse < ActiveRecord::Base
 
       # this is messy (re-joining the same table up to three times) but couldn't come up with
       # a more straightforward way to sort by the DisplayFieldValues for CustomViews
-      sorts.each do |c, o|
+      sorts.each { |c, o|
         relation = relation.joins("INNER JOIN (SELECT value, survey_response_id FROM display_field_values WHERE display_field_id = #{c}) t#{c} ON survey_responses.id = t#{c}.survey_response_id")
-      end
+      }
 
       # apply the order clause
       relation = relation.order(sorts.map {|c, o| "t#{c}.value #{o}" }.join(", "))
