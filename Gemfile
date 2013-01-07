@@ -7,17 +7,26 @@ gem 'rails', '3.0.13'
 
 gem 'jquery-rails'
 gem 'kaminari'
-gem 'delayed_job', '2.1.4'
+gem 'delayed_job_active_record'
 gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
 
+platform :ruby do
+  gem 'unicorn-rails'
+  gem 'mysql2', '< 0.3'
+end
 
-gem 'unicorn-rails'
+platform :jruby do
+  gem 'jruby-openssl', :require => false
+  gem 'activerecord-jdbc-adapter'
+  gem 'jdbc-mysql'
+  gem 'activerecord-jdbcmysql-adapter'
+  gem 'warbler'
+end
 
 group :development do
 	gem 'annotate'
-	gem 'metrical'
 	gem 'pry-rails'
   gem 'yard'
 end
@@ -37,5 +46,3 @@ group :test do
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'rails_best_practices'
 end
-
-gem 'mysql2', '< 0.3'
