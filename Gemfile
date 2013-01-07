@@ -13,6 +13,7 @@ gem 'memcache-client'
 gem 'paperclip'
 
 platform :ruby do
+  gem 'daemons'
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
 end

@@ -58,6 +58,7 @@ GEM
       sexp_processor
     coderay (1.0.8)
     colored (1.2)
+    daemons (1.1.9)
     database_cleaner (0.9.1)
     delayed_job (3.0.4)
       activesupport (~> 3.0)
@@ -232,6 +233,7 @@ DEPENDENCIES
   annotate
   authlogic
   capybara
+  daemons
   database_cleaner
   delayed_job_active_record
   factory_girl_rails
