@@ -1,7 +1,7 @@
 # Allows for the management of user-uploaded images.
 class ImagesController < ApplicationController
   # Define the directory used as an image repository.
-  Images_Folder = "#{Rails.root}/public/images/hhs_image_lib/"
+  Images_Folder = "#{Rails.public_path}/images/hhs_image_lib/"
 
   # GET    /images(.:format)
   def index
