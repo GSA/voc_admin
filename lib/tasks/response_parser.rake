@@ -149,6 +149,7 @@ namespace :response_parser do
           end
         end
       end
+      sleep 5
     end
   end
 
