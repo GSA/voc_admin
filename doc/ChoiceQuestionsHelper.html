@@ -94,6 +94,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -302,12 +318,12 @@ type, and/or some other arbitrary condition.</p>
       <pre class="lines">
 
 
-32
-33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer_placement_visibility'>answer_placement_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question'>choice_question</span><span class='rparen'>)</span>
 	<span class='kw'>return</span> <span class='id identifier rubyid_initial_element_visibility'>initial_element_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_new_record?'>new_record?</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question'>choice_question</span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>RADIO</span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>CHECKBOX</span><span class='rparen'>)</span>
@@ -379,12 +395,12 @@ type, and/or some other arbitrary condition.</p>
       <pre class="lines">
 
 
-24
-25
-26</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_auto_next_page_visibility'>auto_next_page_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question'>choice_question</span><span class='rparen'>)</span>
 	<span class='kw'>return</span> <span class='id identifier rubyid_initial_element_visibility'>initial_element_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_new_record?'>new_record?</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question'>choice_question</span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>RADIO</span><span class='rparen'>)</span>
@@ -473,12 +489,12 @@ type, and/or some other arbitrary condition.</p>
       <pre class="lines">
 
 
-42
-43
-44</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initial_element_visibility'>initial_element_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_cond'>cond</span><span class='comma'>,</span> <span class='id identifier rubyid_choice_question'>choice_question</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_answer_types'>answer_types</span><span class='rparen'>)</span>
 	<span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>style='display: none'</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_cond'>cond</span> <span class='op'>||</span> <span class='id identifier rubyid_answer_types'>answer_types</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_choice_question'>choice_question</span><span class='period'>.</span><span class='id identifier rubyid_answer_type'>answer_type</span><span class='rparen'>)</span>
@@ -552,12 +568,12 @@ type, and/or some other arbitrary condition.</p>
       <pre class="lines">
 
 
-16
-17
-18</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_for_answer_placement'>options_for_answer_placement</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options_for_select'>options_for_select</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>horizontal (side-by-side)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ChoiceQuestion</span><span class='op'>::</span><span class='const'>HORIZONTAL_PLACEMENT</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vertical (stacked)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ChoiceQuestion</span><span class='op'>::</span><span class='const'>VERTICAL_PLACEMENT</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:selected</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>
@@ -631,12 +647,12 @@ type, and/or some other arbitrary condition.</p>
       <pre class="lines">
 
 
-8
-9
-10</pre>
+10
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/choice_questions_helper.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_for_answer_type'>options_for_answer_type</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options_for_select'>options_for_select</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Radio</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>RADIO</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dropdown</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>DROPDOWN</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multi-select</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>MULTISELECT</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Check Boxes</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ChoiceAnswer</span><span class='op'>::</span><span class='const'>CHECKBOX</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='symbol'>:selected</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span>

@@ -111,6 +111,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -323,12 +339,12 @@ this is managed via JavaScript).</p>
       <pre class="lines">
 
 
-66
-67
-68</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new_page'>new_page</span> <span class='op'>=</span> <span class='const'>Page</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:survey_version</span><span class='op'>=&gt;</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='comma'>,</span> <span class='symbol'>:clone_of_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -382,8 +398,6 @@ this is managed via JavaScript).</p>
       <pre class="lines">
 
 
-73
-74
 75
 76
 77
@@ -396,10 +410,12 @@ this is managed via JavaScript).</p>
 84
 85
 86
-87</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_copy'>create_copy</span>
   <span class='comment'>#add page at end of survey
@@ -468,8 +484,6 @@ flow control does not create a loop.</p>
       <pre class="lines">
 
 
-39
-40
 41
 42
 43
@@ -489,10 +503,12 @@ flow control does not create a loop.</p>
 57
 58
 59
-60</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_page_to'>move_page_to</span><span class='lparen'>(</span><span class='id identifier rubyid_target_page_number'>target_page_number</span><span class='rparen'>)</span>
   <span class='comment'># Page number cannot be &lt;= 0 or &gt; number of total pages
@@ -566,16 +582,16 @@ incrementing current page number</p>
       <pre class="lines">
 
 
-18
-19
 20
 21
 22
 23
-24</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_page_with_page_id'>next_page_with_page_id</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_next_page_id'>next_page_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -634,12 +650,12 @@ this is managed via JavaScript)</p>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prev_page'>prev_page</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:page_number</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>

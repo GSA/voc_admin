@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # This class is not yet implemented.
 class DisplayFieldTextMulti < DisplayField
 end

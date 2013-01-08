@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # View helpers for SurveyResponse functionality.
 module SurveysHelper
 

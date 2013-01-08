@@ -113,6 +113,22 @@ object is modified.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -236,8 +252,6 @@ QuestionContent.statement changes.</p>
       <pre class="lines">
 
 
-10
-11
 12
 13
 14
@@ -254,10 +268,12 @@ QuestionContent.statement changes.</p>
 25
 26
 27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content_observer.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content_observer.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_after_create'>after_create</span><span class='lparen'>(</span><span class='id identifier rubyid_question_content'>question_content</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_matrix_question?'>matrix_question?</span> <span class='op'>||</span> <span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_skip_observer'>skip_observer</span>
@@ -330,8 +346,6 @@ QuestionContent.statement changes</p>
       <pre class="lines">
 
 
-33
-34
 35
 36
 37
@@ -349,10 +363,12 @@ QuestionContent.statement changes</p>
 49
 50
 51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content_observer.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content_observer.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_after_update'>after_update</span><span class='lparen'>(</span><span class='id identifier rubyid_question_content'>question_content</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_statement_changed?'>statement_changed?</span>

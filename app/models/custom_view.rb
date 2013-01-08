@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Custom Views are used to render survey responses with a given set of DisplayFields;
 # allows ordering on up to three distinct DisplayFields (with sort directions).
 # There can be a maximum of one "default" CustomView defined across a SurveyVersion,

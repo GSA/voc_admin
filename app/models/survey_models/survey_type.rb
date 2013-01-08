@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # There are three distinct types of surveys that may be created: Site, Page, and Poll.
 class SurveyType < ActiveRecord::Base
   has_many :surveys

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the MatrixQuestion lifecycle.
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_version

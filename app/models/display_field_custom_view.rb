@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Join table linking a CustomView to DisplayFields.
 class DisplayFieldCustomView < ActiveRecord::Base
 

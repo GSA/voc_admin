@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # RawResponse represents a single user answer to a single question. It is,
 # outside of the processing status, the immutable record of what one user
 # has entered for one question on a SurveyVersion.  From this entity,

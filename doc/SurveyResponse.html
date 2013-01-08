@@ -116,6 +116,22 @@ unedited responses as entered by the survey taker.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -330,8 +346,6 @@ for processing of nightly Rules.</p>
       <pre class="lines">
 
 
-126
-127
 128
 129
 130
@@ -351,10 +365,12 @@ for processing of nightly Rules.</p>
 144
 145
 146
-147</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_next_response'>get_next_response</span><span class='lparen'>(</span><span class='id identifier rubyid_worker_name'>worker_name</span><span class='comma'>,</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span>
   <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>Base</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -446,8 +462,6 @@ to process the survey responses asynchronously.</p>
       <pre class="lines">
 
 
-71
-72
 73
 74
 75
@@ -460,10 +474,12 @@ to process the survey responses asynchronously.</p>
 82
 83
 84
-85</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_process_response'>process_response</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version_id'>survey_version_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_client_id'>client_id</span> <span class='op'>=</span> <span class='const'>SecureRandom</span><span class='period'>.</span><span class='id identifier rubyid_hex'>hex</span><span class='lparen'>(</span><span class='int'>64</span><span class='rparen'>)</span>
@@ -517,13 +533,13 @@ to process the survey responses asynchronously.</p>
       <pre class="lines">
 
 
-150
-151
 152
-153</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_archive'>archive</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_archived'>archived</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -582,8 +598,6 @@ ExecutionTrigger.</p>
       <pre class="lines">
 
 
-91
-92
 93
 94
 95
@@ -609,10 +623,12 @@ ExecutionTrigger.</p>
 115
 116
 117
-118</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_response.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process_me'>process_me</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_trigger_id'>trigger_id</span><span class='rparen'>)</span>
 

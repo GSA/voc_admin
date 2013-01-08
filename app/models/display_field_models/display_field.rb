@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A DisplayField (at the base level) represents a column of question response or admin-defined data.
 #
 # The intersection of a SurveyResponse and a DisplayField is a DisplayFieldValue, which represents how a

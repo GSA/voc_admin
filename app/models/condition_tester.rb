@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Helper class for evaluating comparison truth.
 class ConditionTester
   

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Deprecated; used by the ResponseParser rake task to queue and process incoming
 # SurveyResponses so as not to hold up the thank you page response to the client.
 # ResponseParser is being phased out in preference to Delayed::Job.

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # The ChoiceAnswer class represents an answer to a ChoiceQuestion.
 class ChoiceAnswer < ActiveRecord::Base
   belongs_to :choice_question

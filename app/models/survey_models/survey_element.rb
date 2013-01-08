@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A single survey element (currently: TextQuestion, ChoiceQuestion, MatrixQuestion, Asset)
 # which exists on a Page within a SurveyVersion.
 class SurveyElement < ActiveRecord::Base

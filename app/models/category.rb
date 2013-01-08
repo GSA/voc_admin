@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # This class is not yet implemented.
 class Category < ActiveRecord::Base
   has_many :response_categories

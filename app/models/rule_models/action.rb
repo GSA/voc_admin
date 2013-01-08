@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # An Action is the component of the Rules system which performs the actual DisplayFieldValue update.
 class Action < ActiveRecord::Base
   belongs_to :rule

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # The Survey class represents a single survey or poll, and can contain multiple
 # versions of the same survey.
 class Survey < ActiveRecord::Base

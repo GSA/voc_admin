@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A MatrixQuestion is a set of ChoiceQuestions which share a single set of ChoiceAnswers.
 class MatrixQuestion < ActiveRecord::Base
   has_one :survey_element, :as => :assetable, :dependent => :destroy

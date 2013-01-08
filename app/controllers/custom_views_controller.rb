@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of SurveyResponse CustomViews.
 class CustomViewsController < ApplicationController
   before_filter :get_survey_version

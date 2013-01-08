@@ -112,6 +112,22 @@ multiple versions of the same survey.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -279,8 +295,6 @@ cloned into the new major version.</p>
       <pre class="lines">
 
 
-41
-42
 43
 44
 45
@@ -288,10 +302,12 @@ cloned into the new major version.</p>
 47
 48
 49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_new_major_version'>create_new_major_version</span>
   <span class='comment'>#get most recent version number
@@ -376,13 +392,13 @@ copy of the source SurveyVersion.</p>
       <pre class="lines">
 
 
-57
-58
 59
-60</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_new_minor_version'>create_new_minor_version</span><span class='lparen'>(</span><span class='id identifier rubyid_source_sv_id'>source_sv_id</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_source_sv'>source_sv</span> <span class='op'>=</span> <span class='id identifier rubyid_source_sv_id'>source_sv_id</span> <span class='op'>?</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_versions'>survey_versions</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_source_sv_id'>source_sv_id</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_newest_version'>newest_version</span>
@@ -438,12 +454,12 @@ exist.</p>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_newest_version'>newest_version</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_versions'>survey_versions</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>major desc, minor desc</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -498,12 +514,12 @@ published.</p>
       <pre class="lines">
 
 
-26
-27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_published_version'>published_version</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_versions'>survey_versions</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:published</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>major desc, minor desc</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>

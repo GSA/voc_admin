@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Facilitate searching SurveyResponses using simple boolean conditions.
 class SurveyResponseSearch
   attr_accessor :criteria, :conditions, :parameters

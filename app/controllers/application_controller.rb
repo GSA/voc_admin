@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Base Controller class; integrates Authlogic and provides gate keeper
 # before_filter functions.
 class ApplicationController < ActionController::Base

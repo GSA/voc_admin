@@ -114,6 +114,22 @@ DisplayFieldValue objects are instantiated and values populated.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -234,16 +250,16 @@ DisplayFieldValue objects are instantiated and values populated.</p>
       <pre class="lines">
 
 
-31
-32
 33
 34
 35
 36
-37</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/raw_response.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/raw_response.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_answer='>answer=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>==</span> <span class='const'>Array</span>
@@ -301,12 +317,12 @@ DisplayFieldValue objects are instantiated and values populated.</p>
       <pre class="lines">
 
 
-24
-25
-26</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/response_models/raw_response.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'app/models/response_models/raw_response.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_true_value'>get_true_value</span>
   <span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_get_true_value'>get_true_value</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span><span class='rparen'>)</span>

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 require 'csv'
 
 # Allows for the download of CSV exports of SurveyResponse data.

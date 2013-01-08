@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A Page is a container for one screen's worth of SurveyElements.
 class Page < ActiveRecord::Base
   belongs_to :survey_version, :touch => true

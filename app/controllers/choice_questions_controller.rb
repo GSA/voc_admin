@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of Choice Question HTML snippet entities.
 class ChoiceQuestionsController < ApplicationController
   before_filter :get_survey_version

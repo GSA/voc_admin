@@ -94,6 +94,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -207,6 +223,31 @@ CustomView.).</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#split_multiple_answer_selections-instance_method" title="#split_multiple_answer_selections (instance method)">- (String) <strong>split_multiple_answer_selections</strong>(answer_values) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Leverages the DisplayFieldValue special delimiter value to display
+multiselect and checkbox responses on the Edit SurveyResponse view.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -297,16 +338,16 @@ CustomView.)</p>
       <pre class="lines">
 
 
-35
-36
 37
 38
 39
 40
-41</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_edit_current_view_link'>get_edit_current_view_link</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='id identifier rubyid_current_view'>current_view</span>
   <span class='id identifier rubyid_edit_link'>edit_link</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Edit Current View</span><span class='tstring_end'>&quot;</span></span>
@@ -386,18 +427,18 @@ CustomView.)</p>
       <pre class="lines">
 
 
-56
-57
 58
 59
 60
 61
 62
 63
-64</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_for_conditions'>options_for_conditions</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options_for_select'>options_for_select</span><span class='lparen'>(</span><span class='lbracket'>[</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Exactly Matches</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>equals</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
@@ -479,13 +520,13 @@ CustomView.)</p>
       <pre class="lines">
 
 
-47
-48
 49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_for_include_exclude'>options_for_include_exclude</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options_for_select'>options_for_select</span><span class='lparen'>(</span><span class='lbracket'>[</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Include</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Exclude</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='int'>0</span><span class='rbracket'>]</span> <span class='rbracket'>]</span><span class='comma'>,</span>
@@ -578,8 +619,6 @@ CustomView.)</p>
       <pre class="lines">
 
 
-9
-10
 11
 12
 13
@@ -597,10 +636,12 @@ CustomView.)</p>
 25
 26
 27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sortable_display_field'>sortable_display_field</span> <span class='id identifier rubyid_column'>column</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_direction'>direction</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_column'>column</span> <span class='op'>==</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:order_column</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:order_dir</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>asc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>desc</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>asc</span><span class='tstring_end'>&quot;</span></span>
@@ -621,6 +662,94 @@ CustomView.)</p>
   <span class='id identifier rubyid_title'>title</span> <span class='op'>+=</span> <span class='id identifier rubyid_arrows'>arrows</span>
 
   <span class='id identifier rubyid_link_to_function'>link_to_function</span> <span class='id identifier rubyid_title'>title</span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sortByDisplayField('</span><span class='embexpr_beg'>#{</span><span class='const'>CGI</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_column'>column</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'>', '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_direction'>direction</span><span class='rbrace'>}</span><span class='tstring_content'>')</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="split_multiple_answer_selections-instance_method">
+  
+    - (<tt>String</tt>) <strong>split_multiple_answer_selections</strong>(answer_values) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Leverages the DisplayFieldValue special delimiter value to display
+multiselect and checkbox responses on the Edit SurveyResponse view.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>plain</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>string or delimited string</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>plain string or HTML break-delimited string</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_responses_helper.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_split_multiple_answer_selections'>split_multiple_answer_selections</span><span class='lparen'>(</span><span class='id identifier rubyid_answer_values'>answer_values</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_answer_values'>answer_values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'>DisplayFieldValue</span><span class='op'>::</span><span class='const'>VALUE_DELIMITER</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_answer_values'>answer_values</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='const'>DisplayFieldValue</span><span class='op'>::</span><span class='const'>VALUE_DELIMITER</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&lt;br/&gt;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_answer_values'>answer_values</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

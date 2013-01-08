@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # View helpers for ChoiceQuestion functionality.
 module ChoiceQuestionsHelper
 

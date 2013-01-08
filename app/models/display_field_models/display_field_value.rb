@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A DisplayFieldValue represents the intersection between a SurveyResponse and a DisplayField.
 # It is a single data point within a SurveyResponse and can represent a respondent's answer to a question
 # or admin-defined data.

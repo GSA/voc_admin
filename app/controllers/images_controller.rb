@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Allows for the management of user-uploaded images.
 class ImagesController < ApplicationController
   # Define the directory used as an image repository.

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the UserSession lifecycle. Also provides password
 # reset functionality.
 class UserSessionsController < ApplicationController

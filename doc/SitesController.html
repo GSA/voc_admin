@@ -113,6 +113,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -339,18 +355,18 @@
       <pre class="lines">
 
 
-21
-22
 23
 24
 25
 26
 27
 28
-29</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@site</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:site</span><span class='rbracket'>]</span>
@@ -392,16 +408,16 @@
       <pre class="lines">
 
 
-48
-49
 50
 51
 52
 53
-54</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@site</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>
@@ -441,12 +457,12 @@
       <pre class="lines">
 
 
-32
-33
-34</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
   <span class='ivar'>@site</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>
@@ -482,12 +498,12 @@
       <pre class="lines">
 
 
-6
-7
-8</pre>
+8
+9
+10</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
   <span class='ivar'>@sites</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name asc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_per'>per</span><span class='lparen'>(</span><span class='int'>10</span><span class='rparen'>)</span>
@@ -523,12 +539,12 @@
       <pre class="lines">
 
 
-16
-17
-18</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@site</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -564,12 +580,12 @@
       <pre class="lines">
 
 
-11
-12
-13</pre>
+13
+14
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
   <span class='ivar'>@site</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>
@@ -605,18 +621,18 @@
       <pre class="lines">
 
 
-37
-38
 39
 40
 41
 42
 43
 44
-45</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/sites_controller.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='ivar'>@site</span> <span class='op'>=</span> <span class='const'>Site</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>

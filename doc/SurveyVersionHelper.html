@@ -94,6 +94,22 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -645,14 +661,14 @@ relocate it to the next page.</p>
       <pre class="lines">
 
 
-259
-260
 261
 262
-263</pre>
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_confirm_element_move_down'>confirm_element_move_down</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_assetable_type'>assetable_type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ChoiceQuestion</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span>
@@ -729,14 +745,14 @@ relocate it to the previous page.</p>
       <pre class="lines">
 
 
-248
-249
 250
 251
-252</pre>
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_confirm_element_move_up'>confirm_element_move_up</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_assetable_type'>assetable_type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ChoiceQuestion</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span>
@@ -844,12 +860,12 @@ relocate it to the previous page.</p>
       <pre class="lines">
 
 
-109
-110
-111</pre>
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_element_delete_link'>element_delete_link</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_generate_element_delete_link'>generate_element_delete_link</span><span class='lparen'>(</span> <span class='id identifier rubyid_url_for'>url_for</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rparen'>)</span>
@@ -955,12 +971,12 @@ relocate it to the previous page.</p>
       <pre class="lines">
 
 
-99
-100
-101</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_element_edit_link'>element_edit_link</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_generate_element_edit_link'>generate_element_edit_link</span><span class='lparen'>(</span> <span class='id identifier rubyid_url_for'>url_for</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='symbol'>:edit</span><span class='comma'>,</span> <span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rparen'>)</span>
@@ -1066,18 +1082,18 @@ relocate it to the previous page.</p>
       <pre class="lines">
 
 
-83
-84
 85
 86
 87
 88
 89
 90
-91</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_element_order_links'>element_order_links</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_element'>element</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_confirm_move_msg'>confirm_move_msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This action will remove the flow control from this question. Continue?</span><span class='tstring_end'>&quot;</span></span>
@@ -1157,26 +1173,26 @@ relocate it to the previous page.</p>
       <pre class="lines">
 
 
-233
-234
 235
 236
 237
 238
 239
 240
-241</pre>
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_element_delete_link'>generate_element_delete_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_link_to'>link_to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;nbsp;</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>delete.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Delete</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
           <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
           <span class='lbrace'>{</span> <span class='symbol'>:method</span> <span class='op'>=&gt;</span> <span class='symbol'>:delete</span><span class='comma'>,</span>
             <span class='symbol'>:remote</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
             <span class='symbol'>:title</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Delete page element</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-            <span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deleteLink</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='symbol'>:class</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deleteLink</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
             <span class='symbol'>:confirm</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Are you sure?</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1248,17 +1264,17 @@ relocate it to the previous page.</p>
       <pre class="lines">
 
 
-190
-191
 192
 193
 194
 195
 196
-197</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_element_edit_link'>generate_element_edit_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>edit.png</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>edit</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -1354,18 +1370,18 @@ control)</p>
       <pre class="lines">
 
 
-219
-220
 221
 222
 223
 224
 225
 226
-227</pre>
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 221</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_element_move_down_link'>generate_element_move_down_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_confirm_move_msg'>confirm_move_msg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow_down.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>move down</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -1462,18 +1478,18 @@ control)</p>
       <pre class="lines">
 
 
-204
-205
 206
 207
 208
 209
 210
 211
-212</pre>
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 204</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_element_move_up_link'>generate_element_move_up_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_confirm_move_msg'>confirm_move_msg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow_up.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>move up</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -1586,8 +1602,6 @@ to the next page upon response.</p>
       <pre class="lines">
 
 
-120
-121
 122
 123
 124
@@ -1597,10 +1611,12 @@ to the next page upon response.</p>
 128
 129
 130
-131</pre>
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_onclick'>generate_onclick</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_onclick'>onclick</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -1683,25 +1699,25 @@ to the next page upon response.</p>
       <pre class="lines">
 
 
-163
-164
 165
 166
 167
 168
 169
-170</pre>
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_page_copy_link'>generate_page_copy_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_link_to'>link_to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;nbsp;</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>clone.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Copy Page</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
           <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
           <span class='lbrace'>{</span> <span class='symbol'>:method</span> <span class='op'>=&gt;</span> <span class='symbol'>:post</span><span class='comma'>,</span>
             <span class='symbol'>:remote</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
-            <span class='symbol'>:title</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a copy of this page.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-            <span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>copyLink</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+            <span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>copyLink</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='symbol'>:title</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a copy of this page.</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1772,26 +1788,26 @@ to the next page upon response.</p>
       <pre class="lines">
 
 
-176
-177
 178
 179
 180
 181
 182
 183
-184</pre>
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_page_delete_link'>generate_page_delete_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_page_number'>page_number</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_link_to'>link_to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;nbsp;</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_html_safe'>html_safe</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>delete.png</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Delete</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
           <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
           <span class='lbrace'>{</span> <span class='symbol'>:method</span> <span class='op'>=&gt;</span> <span class='symbol'>:delete</span><span class='comma'>,</span>
             <span class='symbol'>:remote</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
             <span class='symbol'>:title</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Remove page</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-            <span class='symbol'>:class</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deleteLink</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+            <span class='symbol'>:class</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deleteLink</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
             <span class='symbol'>:confirm</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>All items on page </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_page_number'>page_number</span><span class='rbrace'>}</span><span class='tstring_content'> will be removed as well.</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1863,17 +1879,17 @@ to the next page upon response.</p>
       <pre class="lines">
 
 
-150
-151
 152
 153
 154
 155
 156
-157</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_page_down_arrow_link'>generate_page_down_arrow_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow_down.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>move down</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -1952,17 +1968,17 @@ to the next page upon response.</p>
       <pre class="lines">
 
 
-137
-138
 139
 140
 141
 142
 143
-144</pre>
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_page_up_arrow_link'>generate_page_up_arrow_link</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_link_to'>link_to</span> <span class='id identifier rubyid_image_tag'>image_tag</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>arrow_up.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:alt</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>move up</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
@@ -2058,8 +2074,6 @@ page</p>
       <pre class="lines">
 
 
-9
-10
 11
 12
 13
@@ -2068,10 +2082,12 @@ page</p>
 16
 17
 18
-19</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_page_div_tag'>get_page_div_tag</span><span class='lparen'>(</span> <span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='id identifier rubyid_params'>params</span> <span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -2154,12 +2170,12 @@ visibility of the page-level flow control dropdown.</p>
       <pre class="lines">
 
 
-26
-27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_last_page'>is_last_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='const'>Page</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:survey_version_id</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_version_id'>survey_version_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pages.page_number &gt; ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='kw'>and</span> <span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_next_page_id'>next_page_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -2265,14 +2281,14 @@ visibility of the page-level flow control dropdown.</p>
       <pre class="lines">
 
 
-71
-72
 73
 74
-75</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_page_management_links'>page_management_links</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='id identifier rubyid_generate_page_copy_link'>generate_page_copy_link</span><span class='lparen'>(</span> <span class='id identifier rubyid_copy_page_survey_survey_version_page_path'>copy_page_survey_survey_version_page_path</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span> <span class='rparen'>)</span>
@@ -2380,14 +2396,14 @@ visibility of the page-level flow control dropdown.</p>
       <pre class="lines">
 
 
-59
-60
 61
 62
-63</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_page_order_links'>page_order_links</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='id identifier rubyid_generate_page_up_arrow_link'>generate_page_up_arrow_link</span><span class='lparen'>(</span> <span class='id identifier rubyid_move_page_survey_survey_version_page_path'>move_page_survey_survey_version_page_path</span><span class='lparen'>(</span><span class='id identifier rubyid_survey'>survey</span><span class='comma'>,</span> <span class='id identifier rubyid_survey_version'>survey_version</span><span class='comma'>,</span> <span class='id identifier rubyid_page'>page</span><span class='comma'>,</span> <span class='symbol'>:page_number</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rparen'>)</span>
@@ -2464,8 +2480,6 @@ Note: since "Next Page" (+1) is default, numbering starts at current + 2</p>
       <pre class="lines">
 
 
-35
-36
 37
 38
 39
@@ -2480,10 +2494,12 @@ Note: since "Next Page" (+1) is default, numbering starts at current + 2</p>
 48
 49
 50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/survey_version_helper.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_select_for_next_page'>select_for_next_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_select_tag'>select_tag</span><span class='lparen'>(</span>

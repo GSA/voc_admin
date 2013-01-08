@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Housekeeping Observer for the DisplayField model
 class DisplayFieldObserver < ActiveRecord::Observer
   observe :display_field

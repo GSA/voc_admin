@@ -113,8 +113,36 @@ can represent a respondent's answer to a question or admin-defined data.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="VALUE_DELIMITER-constant" class="">VALUE_DELIMITER =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>{%delim%}</span><span class='tstring_end'>'</span></span></pre></dd>
+      
+    </dl>
+  
+
 
 
 
@@ -263,16 +291,16 @@ can represent a respondent's answer to a question or admin-defined data.</p>
       <pre class="lines">
 
 
-19
-20
-21
-22
 23
 24
-25</pre>
+25
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_criteria'>criteria</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_search_scope'>search_scope</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -358,15 +386,15 @@ entered by a respondent.</p>
       <pre class="lines">
 
 
-32
-33
-34</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/models/display_field_models/display_field_value.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value_array='>value_array=</span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span>
-	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>{%delim%}</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+	<span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>VALUE_DELIMITER</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

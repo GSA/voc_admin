@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of Site entities.
 class SitesController < ApplicationController
   before_filter :require_admin

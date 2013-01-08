@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A Criterion is the evaluated portion of a Rule 
 class Criterion < ActiveRecord::Base
   belongs_to :rule

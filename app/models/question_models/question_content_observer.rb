@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # QuestionContentObserver is responsible for 1.) initially creating Rules, and
 # 2.) creating and maintaining DisplayFields, when the QuestionContent object is modified.
 class QuestionContentObserver < ActiveRecord::Observer

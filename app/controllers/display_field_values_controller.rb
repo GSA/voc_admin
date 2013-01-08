@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of DisplayFieldValues (modal edit
 # from the SurveyResponse grid.)
 class DisplayFieldValuesController < ApplicationController

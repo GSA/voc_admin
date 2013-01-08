@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Join table between Sites and the Users who have access to them.
 class SiteUser < ActiveRecord::Base
   attr_accessible :site_id, :user_id

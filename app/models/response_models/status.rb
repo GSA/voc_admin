@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Contains mapping values for the RawResponse processing status codes.
 class Status < ActiveRecord::Base
   # A freshly created record.

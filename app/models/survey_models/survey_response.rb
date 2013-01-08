@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Represents a single sent of answers to the questions contained within
 # a SurveyVersion. Where a SurveyVersion contains DisplayFields representing
 # the columns in the response (and custom fields), the SurveyResponse

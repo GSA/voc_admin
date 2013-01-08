@@ -1,5 +1,7 @@
 require 'csv'
 
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the SurveyResponse lifecycle.
 class SurveyResponsesController < ApplicationController
 

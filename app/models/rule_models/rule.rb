@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Upon stated criteria being fulfilled, Rules are used to send notification emails to recipients or update
 # question DisplayFieldValues or custom DisplayFields.  Rule Actions may insert/update values or copy
 # them between question DisplayFieldValues and custom DisplayFields as requested.

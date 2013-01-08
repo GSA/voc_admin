@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Choice Questions can act as standalone questions of several types (radio, checkbox, dropdown, multiselect)
 # or be part of a MatrixQuestion (radio only)
 class ChoiceQuestion < ActiveRecord::Base

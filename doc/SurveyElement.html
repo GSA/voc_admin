@@ -112,6 +112,22 @@ MatrixQuestion, Asset) which exists on a Page within a SurveyVersion.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Communication Training Analysis Corporation &lt;info@ctacorp.com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -404,12 +420,12 @@ contained SurveyElement.</p>
       <pre class="lines">
 
 
-8
-9
-10</pre>
+10
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_callbacks'>skip_callbacks</span>
   <span class='ivar'>@skip_callbacks</span>
@@ -473,14 +489,14 @@ Page or destroyed.</p>
       <pre class="lines">
 
 
-46
-47
 48
 49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_compact_element_order'>compact_element_order</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_se'>se</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
@@ -563,13 +579,13 @@ SurveyElement type. Used when cloning a SurveyVersion.</p>
       <pre class="lines">
 
 
-147
-148
 149
-150</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cloned_assetable'>cloned_assetable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
@@ -645,13 +661,13 @@ specific SurveyElement type.</p>
       <pre class="lines">
 
 
-157
-158
 159
-160</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_copy_of_assetable'>copy_of_assetable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_assetable'>assetable</span><span class='period'>.</span><span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
@@ -728,8 +744,6 @@ may be the same.</p>
       <pre class="lines">
 
 
-65
-66
 67
 68
 69
@@ -777,10 +791,12 @@ may be the same.</p>
 111
 112
 113
-114</pre>
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element'>move_element</span><span class='lparen'>(</span><span class='id identifier rubyid_page_num'>page_num</span><span class='comma'>,</span> <span class='id identifier rubyid_new_element_order'>new_element_order</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>SurveyElement</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -864,8 +880,6 @@ page if it's already the last SurveyElement on the page.</p>
       <pre class="lines">
 
 
-118
-119
 120
 121
 122
@@ -873,10 +887,12 @@ page if it's already the last SurveyElement on the page.</p>
 124
 125
 126
-127</pre>
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element_down'>move_element_down</span>
   <span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span><span class='id identifier rubyid_target_element'>target_element</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_maximum'>maximum</span><span class='lparen'>(</span><span class='symbol'>:element_order</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>  <span class='op'>?</span>
@@ -920,8 +936,6 @@ previous page if it's already the first SurveyElement on the page.</p>
       <pre class="lines">
 
 
-131
-132
 133
 134
 135
@@ -929,10 +943,12 @@ previous page if it's already the first SurveyElement on the page.</p>
 137
 138
 139
-140</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_element_up'>move_element_up</span>
   <span class='id identifier rubyid_target_page_num'>target_page_num</span><span class='comma'>,</span><span class='id identifier rubyid_target_element'>target_element</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>?</span>
@@ -993,13 +1009,13 @@ previous page if it's already the first SurveyElement on the page.</p>
       <pre class="lines">
 
 
-55
-56
 57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_to_end_of_page'>move_to_end_of_page</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_id'>page_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1037,12 +1053,12 @@ contained SurveyElement.</p>
       <pre class="lines">
 
 
-39
-40
-41</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'app/models/survey_models/survey_element.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_survey_version_updated_at'>update_survey_version_updated_at</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_update_attribute'>update_attribute</span><span class='lparen'>(</span><span class='symbol'>:updated_at</span><span class='comma'>,</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>

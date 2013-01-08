@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Layout functionality provided by
 # {https://github.com/ryanb/nifty-generators Nifty Generators}
 # and included here verbatim.

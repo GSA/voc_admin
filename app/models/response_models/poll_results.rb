@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Takes the SurveyResponses for a given SurveyVersion and bubbles up
 # response count totals.  Used for Poll survey types to populate
 # the thank you page with summary information.

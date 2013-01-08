@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of User entities. A User may edit his/her
 # own profile, but the remainder of functionality is reserved for admins.
 class UsersController < ApplicationController

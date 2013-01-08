@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # ExectionTriggers represent the SurveyResponse events which should
 # activate a given Rule.
 class ExecutionTrigger < ActiveRecord::Base

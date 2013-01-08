@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Join relationship between ExecutionTriggers and Rules.
 class ExecutionTriggerRule < ActiveRecord::Base
   belongs_to :rule

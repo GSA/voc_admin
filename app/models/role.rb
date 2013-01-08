@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # The User's Role within the admin application.
 class Role < ActiveRecord::Base
   attr_accessible :name

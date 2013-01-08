@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A distinct website from which Surveys will be hosted.
 class Site < ActiveRecord::Base
   attr_accessible :name, :url, :description

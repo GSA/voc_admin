@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # An EmailAction is the component of the Rules system which invokes the mailer to send a specific message.
 class EmailAction < ActiveRecord::Base
   belongs_to :rule

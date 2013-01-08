@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
   attr_accessible :f_name, :l_name, :password, :email, :password_confirmation, :site_ids, :role_id

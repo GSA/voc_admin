@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Contains mapping values for the Criterion comparison operators.
 class Conditional < ActiveRecord::Base
   has_many :criteria

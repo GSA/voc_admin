@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # QuestionContent contains fields shared between all question types (ChoiceQuestion,
 # TextQuestion, MatrixQuestion) and delegates behavior where appropriate.
 class QuestionContent < ActiveRecord::Base

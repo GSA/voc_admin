@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # An Asset is an HTML Snippet survey element.
 class Asset < ActiveRecord::Base
   has_one :survey_element, :as => :assetable, :dependent => :destroy

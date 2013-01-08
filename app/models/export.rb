@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Defines a SurveyResponse CSV data Export file.
 class Export < ActiveRecord::Base
   has_attached_file :document,

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the lifecycle of Rule entities.
 class RulesController < ApplicationController
   before_filter :get_survey_version, :except=>[:do_now, :check_do_now]

@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # The TextQuestion class can represent either a text field or a text area.
 class TextQuestion < ActiveRecord::Base
   require 'condition_tester'

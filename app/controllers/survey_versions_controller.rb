@@ -1,3 +1,5 @@
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # Manages the SurveyVersion lifecycle.
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey

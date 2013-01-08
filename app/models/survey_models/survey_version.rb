@@ -1,5 +1,7 @@
 require 'csv'
 
+# @author Communication Training Analysis Corporation <info@ctacorp.com>
+#
 # A SurveyVersion is a working copy of a survey.  Only one version may be published (and
 # therefore collecting responses from the public site application) at a time.
 class SurveyVersion < ActiveRecord::Base
