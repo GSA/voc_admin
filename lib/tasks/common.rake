@@ -18,4 +18,21 @@ namespace :application do
 
   desc "restart the application and all background jobs and processes"
   task :restart_all => [:stop_all, :start_all]
+
+  desc "(JRuby) start all required background jobs and processes"
+  task :start_jruby => :environment do
+    puts "starting delayed jobs workers with #{Rails.env} environment"
+    sh "#{Rails.root}/script/delayed_job start -n 5"
+    sh "rake response_parser:start"
+  end
+
+  desc "(JRuby) stop all background jobs and processes"
+  task :stop_jruby => :environment do
+    puts "stopping delayed jobs workers"
+    sh "#{Rails.root}/script/delayed_job stop"
+    sh "rake response_parser:stop"
+  end
+
+  desc "(JRuby) restart all background jobs and processes"
+  task :restart_jruby => [:stop_jruby, :start_jruby]
 end
