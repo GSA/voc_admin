@@ -11,9 +11,9 @@ gem 'delayed_job_active_record'
 gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
+gem 'daemons', :require => false
 
 platform :ruby do
-  gem 'daemons'
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
 end
