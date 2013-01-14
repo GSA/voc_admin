@@ -28,7 +28,7 @@ describe DisplayField do
   
   it "should be valid if it has the same name as another display field in another survey version" do
     @display_field_text.dup.save!
-    @display_field_text.survey_version = mock_model(SurveyVersion, :survey_responses => [])
+    @display_field_text.survey_version = mock_model(SurveyVersion, :survey_resposnes => [])
     @display_field_text.should be_valid
   end
 

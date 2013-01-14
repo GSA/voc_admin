@@ -25,8 +25,6 @@
   <br/><br/>
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => @choice_question, :survey => @survey, :survey_version => @survey_version}%>
   <br/><br/>
-  <div class="pageLink">
-  	<%= link_to "Cancel", nil, :class => "cancelLink" %>
-  	<%= f.submit "Create Question", :type => :image, :src=>"/images/create-question.png" %>
-  </div>
+  <%= f.submit "Add Question" %>
+  <%= link_to "Cancel", nil, :class => "simplemodal-close" %>
 <% end -%>

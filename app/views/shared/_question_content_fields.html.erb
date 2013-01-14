@@ -4,17 +4,16 @@
 
 <% if defined? matrix_question %>
 	<%= f.hidden_field "_destroy" %>
-	<%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapMatrixQuestion(this,'up')" %>
-	<%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapMatrixQuestion(this, 'down')" %>
-	<%= link_to_function "&nbsp;".html_safe, "remove_fields(this)", :class=>"deleteLink" %>
+	<%= link_to_function image_tag('arrow_up.png'), "swapMatrixQuestion(this,'up')" %>
+	<%= link_to_function image_tag('arrow_down.png'), "swapMatrixQuestion(this, 'down')" %>
+	<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redXmatrix"), "remove_fields(this)" %>
 <% end %>
 <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
-	<div id="flow_control_settings" style="display:inline">
-	  <%= f.hidden_field :flow_control, :value => f.object.flow_control %>
-	  <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
-		<%= f.label :flow_control_checkbox, "Flow control"%>
-	</div>
+<div id="flow_control_settings" style="display:inline">
+  <%= f.hidden_field :flow_control, :value => f.object.flow_control %>
+  <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
+	<%= f.label :flow_control_checkbox, "Flow Control"%>
+</div>
 <% end %>
-<br />
-<%= f.text_area :statement, :rows => 3%>
-<br />
+<br/>
+<%= f.text_area :statement, :rows => 3%><br/>

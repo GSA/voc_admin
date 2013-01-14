@@ -17,10 +17,11 @@ class AssetsController < ApplicationController
     respond_to do |format|
       if @asset.save
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js
       else
         format.html {render :action => 'new'}
+        format.js
       end
-      format.js { render :partial => "shared/element_create", :object => @asset, :as => :element }
     end
   end
 
@@ -40,10 +41,11 @@ class AssetsController < ApplicationController
     respond_to do |format|
       if @asset.update_attributes(params[:asset])
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js   {render :create }
       else
         format.html {render :action => 'edit'}
+        format.js   {render :create }
       end
-      format.js { render :partial => "shared/element_create", :object => @asset, :as => :element }
     end
   end
 
@@ -53,7 +55,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to text_questions_url, :notice => "Successfully deleted text question."}
-      format.js { render :partial => "shared/element_destroy" }
+      format.js
     end
   end
 

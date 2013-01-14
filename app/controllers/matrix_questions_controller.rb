@@ -1,6 +1,14 @@
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_and_survey_version
 
+  def index
+    @matrix_questions = @survey_version.matrix_questions
+  end
+
+  def show
+    @matrix_question = @survey_version.matrix_questions.find(params[:id])
+  end
+
   def new
     @matrix_question = @survey_version.matrix_questions.build
 
@@ -13,7 +21,7 @@ class MatrixQuestionsController < ApplicationController
   def create
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
-    choice_answer_attributes = params[:choice_answer_attributes] || {}
+    choice_answer_attributes = params[:choice_answer_attributes]
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
 
     @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question].merge({:survey_version_id => @survey_version.id}))
@@ -28,11 +36,12 @@ class MatrixQuestionsController < ApplicationController
 
     respond_to do |format|
       if @matrix_question.save
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js
       else
         format.html {render :new }
+        format.js
       end
-      format.js { render :partial => "shared/element_create", :object => @matrix_question, :as => :element }
     end
   end
 
@@ -48,7 +57,7 @@ class MatrixQuestionsController < ApplicationController
   def update
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
-    choice_answer_attributes = params[:choice_answer_attributes] || {}
+    choice_answer_attributes = params[:choice_answer_attributes]
     choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
 
     @matrix_question = MatrixQuestion.find(params[:id])
@@ -56,15 +65,21 @@ class MatrixQuestionsController < ApplicationController
     choice_questions.each {|key, value| value['question_content_attributes'].merge!(:matrix_statement => @matrix_question.question_content.try(:statement))}
 
     to_be_removed = choice_questions.select {|k, value| value[:question_content_attributes][:_destroy] == "1" }
-    to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(@matrix_question, choice_question_params)}
+    Rails.logger.debug "*" * 50
+    Rails.logger.debug to_be_removed
+    Rails.logger.debug "*" * 50
+    unless to_be_removed.empty?
+      to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
+    end
 
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.js   { render :create }
       else
-        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey_version.survey, :survey_version => @survey_version} }
+        format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey, :survey_version => @survey_version} }
+        format.js   { render :create }
       end
-      format.js { render :partial => "shared/element_create", :object => @matrix_question, :as => :element }
     end
   end
 
@@ -76,21 +91,21 @@ class MatrixQuestionsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully deleted Matrix question."}
-      format.js { render :partial => "shared/element_destroy" }
+      format.js
     end
   end
 
   private
-  def remove_sub_question_display_field_and_rules(matrix_question, choice_question_params)
-    matrix_statement = matrix_question.question_content.statement_changed? ? matrix_question.question_content.statement_was : matrix_question.question_content.statement
+  def remove_sub_question_display_field_and_rules(choice_question_params)
+    matrix_statement = @matrix_question.question_content.statement_changed? ? @matrix_question.question_content.statement_was : @matrix_question.question_content.statement
 
     name = "#{matrix_statement}: #{choice_question_params[:question_content_attributes][:statement]}"
 
-    rule = matrix_question.survey_version.rules.find_by_name(name)
+    rule = @survey_version.rules.find_by_name(name)
     rule.destroy if rule.present?
     Rails.logger.debug "Removing rule: #{name}"
 
-    df = matrix_question.survey_version.display_fields.find_by_name(name)
+    df = @survey_version.display_fields.find_by_name(name)
     df.destroy if df.present?
     Rails.logger.debug "Removing DispalyField: #{name}"
 

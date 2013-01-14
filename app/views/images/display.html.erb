@@ -1,26 +1,15 @@
-<h1>Display Image</h1>
-<div id="surveys">
-	<div class="left_side">
-		Image:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @file %></p>
-	</div>
-</div>
-<div id="survey_info">
-	<div class="top_side">
-		Insrtuctions:
-	</div>
-	<div class="bottom_side">
-		<p>Place the following into a snippet to display image in survey: <%= "<img src='/images/hhs_image_lib/#{@file}'' />" %><%#= "#{image_tag(@file)}" %></p>
-	</div>
+<p class="pageTitle"><%= @file %></p>
+
+<div>
+<p>Place the following into a snippet to display image in survey:</p>
+<p><%= "<img src='/images/hhs_image_lib/#{@file}'' />" %><%#= "#{image_tag(@file)}" %></p>
 </div>
 
 <div id="displayImage">
 	<%= image_tag "/images/hhs_image_lib/#{@file}" %>
 </div>
 
-<div class="page-nav">
-	<%= link_to "View All Images", images_path, :class=>"cancelLink" %>
+<div class="pageNav">
+	<%= link_to "Back", images_path, :class=>"pageNav" %>
 </div>
 

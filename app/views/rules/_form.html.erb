@@ -4,20 +4,19 @@
       <%= render :partial => 'shared/question_errors', :locals => {:object => @rule} %>
     </div>
   <% end %>
-  
-  <div id="survey_info">
-  	<div class="top_side"><%= f.label :name, "Name: " %></div>
-		<div class="bottom_side"><%= f.text_field :name%></div>
-		
-    <div class="top_side">Type: </div>
-    <div class="bottom_side">
+  <div class="above_fieldset">
+  	<div class="left_side"><%= f.label :name, "Name: " %></div>
+		<div class="right_side"><%= f.text_field :name%></div>
+		<br />
+    <div class="left_side">Type: </div>
+    <div class="right_side">
       <%= f.radio_button :action_type, "db", :id => "db_action_rule" %><%= label_tag "db_action_rule", "Database Action: allows you to update or set a field value" %>
       <br/>
       <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><%= label_tag "email_action_rule", "Email Notification: allows you to send out an automated email when somethign happens" %>
     </div>
-		
-	  <div class="top_side">This rule will execute when a survey is: </div>
-	  <div class="bottom_side">
+		<br />
+	  <div class="left_side">This rule will execute when a survey is: </div>
+	  <div class="right_side">
 	  	<input name="rule[execution_trigger_ids][]" type='hidden' />
 	  	<% ExecutionTrigger.all.each do |et| %>
 	  		<% unless et.id == 3 %>
@@ -50,7 +49,7 @@
         <div class="left_side"><%= builder.label :subject, "Subject Line: "%></div>
     		<div class="right_side"><%= builder.text_field :subject %></div>
 				<br />
-        <div class="left_side"><%= builder.label :body, "Message Content: " %></div>
+        <div class="left_side"><%= builder.label :body, "Message Content" %></div>
     		<div class="right_side">
     			<%= builder.text_area :body %>
           <%= builder.hidden_field :_destroy, :value => false, :id => "destroy_email_action" %>
@@ -69,13 +68,7 @@
   <% end %>
 
 
-	<p class="submitButton">
-		<% if f.object.new_record? %>
-			<%= f.submit "Create Site", :type => :image, :src=>"/images/create-rule.png" %>
-		<% else %>
-			<%= f.submit "Edit Site", :type => :image, :src=>"/images/update-rule.png" %>
-		<% end %>
-	</p>
+	<p class="submitButton"><%= f.submit %></p>
 <% end -%>
 
 <script type="javascript">

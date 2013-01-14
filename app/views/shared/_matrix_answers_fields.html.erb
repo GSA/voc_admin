@@ -1,8 +1,8 @@
 <p class="answer_fields">
       <%= label_tag "choice_answer_attributes[#{i}][answer]", "Answer: " %>
       <%= text_field_tag "choice_answer_attributes[#{i}][answer]", answer.presence %>
-			<%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapAnswers(this,'up')" %>
-      <%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapAnswers(this, 'down')" %>
-			<%= link_to_function "&nbsp;".html_safe, "remove_matrix_answer(this)", :class=>"deleteLink" %>
+			<%= link_to_function image_tag('arrow_up.png'), "swapAnswers(this,'up')" %>
+      <%= link_to_function image_tag('arrow_down.png'), "swapAnswers(this, 'down')" %>
+			<%= link_to_function image_tag("red_x.png", :alt=>"Remove", :class=>"redX"), "remove_matrix_answer(this)", :class=>"surveyNav" %>
 			<br/>
 </p>

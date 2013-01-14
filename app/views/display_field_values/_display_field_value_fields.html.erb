@@ -1,20 +1,16 @@
 <%= form_for [survey, version, display_field_value], :remote => true do |f| %>
   <%= f.error_messages %>
-  <div id="survey_info">
-  	<div class="top_side"><%= f.label :value %></div>
-  	<div class="bottom_side"><p>
-	  	<% if display_field_value.display_field.type == "DisplayFieldText" %>
-	   		<%= f.text_field :value %>
-	  	<% elsif display_field_value.display_field.type == "DisplayFieldChoiceSingle" %>
-	  		<%= f.select :value, display_field_value.display_field.choices.split %>
-	  	<% elsif display_field_value.display_field.type == "DisplayFieldChoiceMultiselect" %>
-	  		<% display_field_value.display_field.choices.split("\r\n").each_with_index do |val, index| %>
-	  			<%= check_box_tag "display_field_value[value_array][]", val, (display_field_value.value and display_field_value.value.include?(val)), {:id => "display_field_value[value_array][]"} %><%= val %><br/>
-	  		<% end %>
-	  	<% end %>
-	  </p></div>
-  </div>
-  <p class="submitButton">
-		<%= f.submit "Submit", :type => :image, :src=>"/images/update-value.png" %>
-	</p>
+  <p>
+  	<%= f.label :value %><br />
+  	<% if display_field_value.display_field.type == "DisplayFieldText" %>
+   		<%= f.text_field :value %>
+  	<% elsif display_field_value.display_field.type == "DisplayFieldChoiceSingle" %>
+  		<%= f.select :value, display_field_value.display_field.choices.split %>
+  	<% elsif display_field_value.display_field.type == "DisplayFieldChoiceMultiselect" %>
+  		<% display_field_value.display_field.choices.split("\r\n").each_with_index do |val, index| %>
+  			<%= check_box_tag "display_field_value[value_array][]", val, (display_field_value.value and display_field_value.value.include?(val)), {:id => "display_field_value[value_array][]"} %><%= val %><br/>
+  		<% end %>
+  	<% end %>
+  </p>
+  <p><%= f.submit %></p>
 <% end %>

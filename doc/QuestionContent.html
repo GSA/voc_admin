@@ -101,20 +101,7 @@
 </dl>
 <div class="clear"></div>
 
-<h2>Overview</h2><div class="docstring">
-  <div class="discussion">
-    
-<p>QuestionContent contains fields shared between all question types
-(ChoiceQuestion, TextQuestion, MatrixQuestion) and delegates behavior where
-appropriate.</p>
 
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
 
 
 
@@ -191,7 +178,7 @@ appropriate.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_my_clone_for-instance_method" title="#find_my_clone_for (instance method)">- (QuestionContent<sup>?</sup>) <strong>find_my_clone_for</strong>(clone_survey_version) </a>
+      <a href="#find_my_clone_for-instance_method" title="#find_my_clone_for (instance method)">- (Object) <strong>find_my_clone_for</strong>(clone_survey_version) </a>
     
 
     
@@ -205,10 +192,7 @@ appropriate.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Finds the original QuestionContent on a specified SurveyVersion from which
-the calling Question was cloned.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -293,12 +277,12 @@ the calling Question was cloned.</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matrix_statement'>matrix_statement</span>
   <span class='ivar'>@matrix_statement</span>
@@ -336,12 +320,12 @@ the calling Question was cloned.</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_observer'>skip_observer</span>
   <span class='ivar'>@skip_observer</span>
@@ -361,79 +345,29 @@ the calling Question was cloned.</p>
       <div class="method_details first">
   <h3 class="signature first" id="find_my_clone_for-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="QuestionContent (class)">QuestionContent</a></span></tt><sup>?</sup>) <strong>find_my_clone_for</strong>(clone_survey_version) 
+    - (<tt>Object</tt>) <strong>find_my_clone_for</strong>(clone_survey_version) 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Finds the original QuestionContent on a specified SurveyVersion from which
-the calling Question was cloned.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>clone_survey_version</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the SurveyVersion to search within</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="QuestionContent (class)">QuestionContent</a></span></tt>, <tt>nil</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the matching QuestionContent or nil</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-32
-33
-34
-35
-36
-37
-38
-39</pre>
+25
+26
+27
+28
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_my_clone_for'>find_my_clone_for</span><span class='lparen'>(</span><span class='id identifier rubyid_clone_survey_version'>clone_survey_version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_questions'>questions</span> <span class='op'>=</span> <span class='id identifier rubyid_clone_survey_version'>clone_survey_version</span><span class='period'>.</span><span class='id identifier rubyid_questions'>questions</span>
@@ -463,12 +397,12 @@ the calling Question was cloned.</p>
       <pre class="lines">
 
 
-19
-20
-21</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_display_field_header'>get_display_field_header</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_statement'>statement</span>
@@ -515,12 +449,12 @@ the calling Question was cloned.</p>
       <pre class="lines">
 
 
-23
-24
-25</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/question_content.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_matrix_question?'>matrix_question?</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_questionable_type'>questionable_type</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>MatrixQuestion</span><span class='tstring_end'>&quot;</span></span>

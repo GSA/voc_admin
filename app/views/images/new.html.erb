@@ -1,14 +1,14 @@
 <%= form_tag url_for(:action => "save_file"), :multipart => true %>
-<h1> Add New Image</h1>
+<p class="pageTitle">Add New Image</p>
   <div id="newImage">
     <p class="copyBold">
-      <%= label_tag :upload, "Select File: "%>
+      <%= label :upload, "Select File: "%>
       <%= file_field 'upload', 'datafile' %>
       <%= submit_tag "Upload" -%>
     </p>
   </div>
 </form>
 
-<div class="page-nav">
-	<%= link_to "View All Images", images_path, :class=>"cancelLink" %>
+<div class="pageNav">
+	<%= link_to "Cancel", images_path, :class=>"pageNav" %>
 </div>

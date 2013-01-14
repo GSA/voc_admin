@@ -1,43 +1,24 @@
-<h1>Edit Survey Version</h1>
+<p class="pageTitle">Editing <%= @survey.name %> version <%= "#{@survey_version.major}.#{@survey_version.minor}" %></p>
 <%= flash_messages(flash) %>
 <% javascript 'survey_builder.js' %>
 
-<div id="surveys">
-	<div class="left_side">
-		Survey:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @survey.name %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Version:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= "#{@survey_version.major}.#{@survey_version.minor}" %></p>
-	</div>
-</div>
-
-<div class="pageNav">
-  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
-  <%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
-  <%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "manage" %>
+<div class="pageNavEdit-upper">
+  <p class="left"><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p>
+  <p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p>
+  <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
 
 <div id="overlay_container">
-
   <div id="question_list">
   	<%= render :partial => 'question_list', :locals => {:survey_version => @survey_version, :survey => @survey} %>
   </div>
-  
   <div id="spinner_overlay"><img src='/images/ajax-loader.gif' id='ajax_spinner_question_list' alt="Spinner" /></div>
-
 </div>
 
-<div class="pageNav">
-  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
-	<%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
-  <%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "manage" %>
+<div class="pageNavEdit">
+  <p class="left"><%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNavEdit" %></p>
+	<p class="right"><%= link_to "Preview Survey", survey_survey_version_path(@survey, @survey_version), :class=>"pageNavEdit" %></p>
+  <p class="right"><%= link_to 'Publish', publish_survey_survey_version_path(@survey, @survey_version), :confirm => 'Are you sure?', :class => "pageNavEdit" %></p>
 </div>
 
 <div id="edit_modal" class="displayNone"></div>

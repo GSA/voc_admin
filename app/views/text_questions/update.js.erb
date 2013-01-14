@@ -1,0 +1,8 @@
+<% if @text_question.errors.any? %>
+	$("#edit_modal form").prepend("<%= escape_javascript( render( :partial => 'shared/question_errors', :locals => { :object => @text_question } ) ) %>");
+	$("#simplemodal-container").height($("#edit_modal").height());
+	$("#simplemodal-container").width($("#edit_modal").width());
+<% else %>
+	$("#question_list").html("<%= escape_javascript( render( :partial => 'survey_versions/question_list', :locals => {:survey_version => @survey_version}) ) %>")
+	$.modal.close();
+<% end %>

@@ -1,79 +1,64 @@
 <%= form_for @user, :remote => true do |f| %>
 	<% if @user.errors.any? %>
 		<div class="modalErrorBox">
-			<p class="title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</p>
-			<ul class="list">
+			<p class="modalErrorTitle"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</p>
+			<ul class="modalList">
 				<% @user.errors.full_messages.each do |msg| %>
-				  <li class="list"><%= msg %></li>
+				  <li class="modalList"><%= msg %></li>
 				<% end %>
 			</ul>
 		</div>
 	<% end %>
 
-	<div id="surveys">
-		<div class="left_side">
-	    <%= f.label :f_name, "First Name: "%>
+	<div id="create_form_widths">
+		<div class="copy">
+	    <span class="copyBold"><%= f.label :f_name, "First Name: "%></span><%= f.text_field :f_name, :size=>"30" %> &nbsp;&nbsp;
+	    <span class="copyBold"><%= f.label :l_name, "Last Name: " %></span><%= f.text_field :l_name, :size=>"30" %>
 	  </div>
-		<div class="right_side">
-	    <%= f.text_field :f_name %>
+
+	  <div class="leftside">
+	  	<p class="copyBold"><%= f.label :email, "Email: " %></p>
 	  </div>
-	  <br />
-		<div class="left_side">
-	    <%= f.label :l_name, "Last Name: " %>
-	  </div>
-		<div class="right_side">
-	    <%= f.text_field :l_name %>
-	  </div>
-		<br />
-	  <div class="left_side">
-	  	<%= f.label :email, "Email: " %>
-	  </div>
-	  <div class="right_side">
+	  <div class="rightside">
 	  	<%= f.text_field :email %>
 	  </div>
-		<br />
+
+
 		<% if @user.new_record? || @user == @current_user %>
-			<div class="left_side">
-			  <%= f.label :password, "Password: " %>
+			<div class="leftside">
+			  <p class="copyBold"><%= f.label :password, "Password: " %></p>
 		  </div>
-		  <div class="right_side">
+		  <div class="rightside">
 		  	<%= f.password_field :password%>
 		  </div>
-		  <br />
-		  <div class="left_side">
-			  <%= f.label :password_confirmation, "Password Confirmation: " %>
+		  <div class="leftside">
+			  <p class="copyBold"><%= f.label :password_confirmation, "Password Confirmation: " %></p>
 		  </div>
-		  <div class="right_side">
+		  <div class="rightside">
 		  	<%= f.password_field :password_confirmation%>
 		  </div>
-		  <br />
 		<% end -%>
 
 	  <% if @current_user.admin? %>
-			<div class="left_side">
-				<%= f.label :role_id, "Role: " %>
+			<div class="leftside">
+				<p class="copyBold"><%= f.label :role_id, "Role: " %></p>
 			</div>
-			<div class="right_side">
+			<div class="rightside">
 				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
 				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
 			</div>
 			<div id="sites_div" class="<%= @user.role.nil? ? '' : 'displayNone'%>">
-				<div class="left_side">
-					<%= f.label :site_ids, "Sites:" %>
+				<div class="leftside">
+					<p class="copyBold"><%= f.label :site_ids, "Sites:" %></p>
 				</div>
-				<div class="right_side">
+				<div class="rightside">
 		    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
 		  	</div>
-		  	<br />
 			</div>
 	  <% end %>
 
-		<div class="submitButton">
-			<% if f.object.new_record? %>
-				<%= f.submit "Create Site", :type => :image, :src=>"/images/create-user.png" %>
-			<% else %>
-				<%= f.submit "Edit Site", :type => :image, :src=>"/images/update-user.png" %>
-			<% end %>
+		<div class="sumbitButton">
+			<%= f.submit %>
 		</div>
 	</div>
 <% end %>

@@ -1,6 +1,6 @@
 class CustomViewsController < ApplicationController
   before_filter :get_survey_version
-  
+
   def index
     @custom_views = @survey_version.custom_views.all
   end
@@ -34,16 +34,16 @@ class CustomViewsController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
     @custom_view = @survey_version.custom_views.find(params[:id])
-    
+
     @custom_view.destroy
     flash[:notice] = "Successfully deleted custom view."
 
     redirect_to survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :notice => "Successfully removed custom view."
   end
-  
+
   private
   def get_survey_version
     @survey = Survey.find(params[:survey_id])

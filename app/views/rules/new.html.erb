@@ -1,9 +1,9 @@
 <% javascript 'rules.js' %>
 
-<h1>New Rule</h1>
+<p class="pageTitle">New Rule</p>
 
 <%= render 'form' %>
 
-<div class="align_cancel">
-	<%= link_to "Cancel", survey_survey_version_rules_path(@survey, @survey_version), :class=>"cancelLink" %>
+<div class="pageNav">
+	<%= link_to "Cancel", survey_survey_version_rules_path(@survey, @survey_version), :class=>"pageNav"%>
 </div>

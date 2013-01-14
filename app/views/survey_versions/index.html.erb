@@ -1,108 +1,62 @@
-<h1>Survey Versions</h1>
-
+<p class="pageTitle"><%= @survey.name.titleize %> Versions</p>
+<div class="pageNav-upper">
+	<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "pageNav" %>
+</div>
 <%= flash_messages(flash) %>
 
-<div id="surveys">
-	<div class="left_side">
-		Site:
-	</div>
-	<div class="right_side">
-		<p class="blue">site name here</p>
-	</div>
-	<br />
-	<div class="left_side">
-		Survey:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @survey.name.titleize %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Description:
-	</div>
-	<div class="right_side">
-		<p><%= @survey.description %></p>
-	</div>
-</div>
+<p>To link to published survey version use: <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%></p>
+<p>For the Javascript widget, include voc.widget.js, add a div with any ID and class="survey_target", then use:
+	<pre>
+  &lt;script type="text/javascript"&gt;
+    new voc.Survey({targetID: "[[ID of the div which will hold the survey]]", surveyID: <%= @survey.id %>}).loadSurvey();
+  &lt;/script&gt;
+  &lt;noscript&gt;
+    <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%>
+  &lt;/noscript&gt;
+	</pre>
+</p>
+
+<table id="versionTable">
+	<tr>
+		<th class="col1" scope="col"><%= sortable("major, minor", "Version") %></th>
+		<th class="col2" scope="col"><%= sortable("published") %></th>
+		<th class="col3" scope="col"><%= sortable "created_at", "Created" %></th>
+		<th class="col4" scope="col"><%= sortable "updated_at", "Last Updated" %></th>
+		<th colspan="6">&nbsp;</th>
+	</tr>
+	<% for version in @survey_versions %>
+	<tr class="<%= cycle('white','blue') %>">
+		<td class="col1"><%= version.version_number %></td>
+		<td class="col2"><%= version.published ? "Yes" : "No" %></td>
+		<td class="col3"><%= version.created_at.strftime("%m/%d/%Y") %></td>
+		<td class="col4"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
+		<td class="col5"><%= link_to 'Preview', survey_survey_version_path(@survey, version) %></td>
+		<td class="col6">
+			<% if version.locked %>
+			 Locked
+			<% else %>
+			 <%= link_to 'Edit', edit_survey_survey_version_path(@survey, version) %>
+			<% end -%>
+		</td>
+		<td class="col7"><%= link_to 'Delete', survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete %></td>
+		<td class="col8">
+			<% if version.published %>
+			 <%= link_to "Unpublish", unpublish_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to remove this survey from the public site" %>
+			<% else %>
+			 <%= link_to "Publish", publish_survey_survey_version_path(@survey, version), :confirm => "Are you sure?" %>
+			<% end %>
+		</td>
+		<td class="col9"><%= link_to "Clone", clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version"  %></td>
+		<td class="col10"><%= link_to "Thank You Page", [:edit_thank_you_page, @survey, version] %></td>
+	</tr>
+
+
+	<% end %>
+</table>
+
+<%= paginate @survey_versions %>
 
 <div class="pageNav">
-	<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "newlink" %>
-	<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
-</div>
-
-	<table id="versionTable">
-		<tr>
-			<th class="col1" scope="col">Edit</th>
-			<th class="col2-3" scope="col" colspan="2"><%= sortable("major, minor", "Survey Version") %></th>
-			<th class="col4" scope="col">Export CSV</th>
-			<th class="col5" scope="col">Thank You Page</th>
-			<th class="col6" scope="col">Published</th>
-			<th class="col7" scope="col"><%= sortable "created_at", "Created" %></th>
-			<th class="col8" scope="col"><%= sortable "updated_at", "Updated" %></th>
-			<th class="col9-10" scope="col" colspan="2"></th>
-		</tr>
-		<% for version in @survey_versions %>
-		<tr class="<%= cycle('gray','white') %>">
-			<td class="col1">
-				<% if version.locked %>
-				 <%= image_tag "locked.png", :alt=>"locked" %>
-				<% else %>
-				 <%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_survey_version_path(@survey, version) %>
-				<% end -%>
-			</td>
-			<td class="col2"><%= version.version_number %></td>
-			<td class="col3"><%= link_to @survey.name.titleize, survey_survey_version_path(@survey, version) %></td>
-			<td class="col4"><%= link_to "export", export_all_survey_responses_path(:survey_version_id => version), :remote => true %></td>
-			<td class="col5"><%= link_to image_tag("edit.png", :alt=>"edit thank you page"), [:edit_thank_you_page, @survey, version] %></td>
-			<td class="col6">
-				<% if version.published %>
-				 <%= link_to image_tag("published.png", :alt=>"published"), unpublish_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to remove this survey from the public site" %>
-				<% else %>
-				 <%= link_to image_tag("not_published.png", :alt=>"not published"), publish_survey_survey_version_path(@survey, version), :confirm => "Are you sure?" %>
-				<% end %>
-			</td>
-			<td class="col7"><%= version.created_at.strftime("%m/%d/%Y") %></td>
-			<td class="col8"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>			
-			<td class="col9"><%= link_to "&nbsp;".html_safe, clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version", :class=>"copyLink"  %></td>
-			<td class="col10"><%= link_to "&nbsp;".html_safe, survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
-		</tr>
-	
-	
-		<% end %>
-	</table>
-	
-	<%= paginate @survey_versions %>
-	
-	<div class="pageNav">
-		<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "newlink" %>
-		<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
-	</div>
-
-<div id="survey_info">
-	<div class="top_side">
-		iFrame Instructions:
-	</div>
-	<div class="bottom_side">
-		<p>To link to published survey version, use: <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%></p>
-	</div>
-	<div class="top_side">
-		Javascript Widget Instructions:
-	</div>
-	<div class="bottom_side">
-		<p>Include voc.widget.js, add a div with any ID and class="survey_target", then use:</p>
-		<pre>
-&lt;script type="text/javascript"&gt;
-  new voc.Survey({targetID: "[[ID of the div which will hold the survey]]", surveyID: <%= @survey.id %>}).loadSurvey();
-&lt;/script&gt;
-&lt;noscript&gt;
-  <%= "<iframe src='http://comment-app.hhs.gov/surveys/#{@survey.id}'></iframe>"%>
-&lt;/noscript&gt;
-		</pre>
-	</div>
-	<div class="top_side">
-		Webservice Instructions:
-	</div>
-	<div class="bottom_side">
-		<p><%= @survey.description %></p>
-	</div>
+	<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "pageNav" %> |
+	<%= link_to "Back", surveys_path, :class => "pageNav" %>
 </div>

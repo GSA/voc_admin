@@ -1,37 +1,6 @@
 FactoryGirl.define do
   # == Schema Information
   #
-  # Table name: users
-  #
-  #  id                :integer(4)      not null, primary key
-  #  f_name            :string(255)     not null
-  #  l_name            :string(255)     not null
-  #  locked            :boolean(1)
-  #  email             :string(255)     not null
-  #  crypted_password  :string(255)     not null
-  #  password_salt     :string(255)     not null
-  #  persistence_token :string(255)     not null
-  #  created_at        :datetime
-  #  updated_at        :datetime
-  #  role_id           :integer(4)
-  factory :user do
-    f_name                  "Test"
-    sequence(:l_name)       { |n| "User-#{n}"}
-    email                   { "#{f_name}.#{l_name}@example.com" }
-    password                "password"
-    password_confirmation   "password"
-
-    trait :admin do
-      role                  { Role::ADMIN }
-    end
-
-    trait :user do
-      role nil
-    end
-  end
-
-  # == Schema Information
-  #
   # Table name: sites
   #
   #  id          :integer(4)      not null, primary key

@@ -8,17 +8,17 @@ $(function() {
 
 function show_next_page(page){
 	var required_unanswered = false;
-
+	
 	required_unanswered = check_for_unanswered_required(page);
-
+	
 	if (!required_unanswered){
 		$("#page_" + page).hide();
 		var next_page = $("#page_" + page + "_next_page").val();
-
+    
     /* Set the prev page on next page */
    set_prev_page(page, next_page);
-
-		$("#page_"+ next_page).show();
+    
+		$("#page_"+ next_page).show();	
 		window.location.hash="PAGE_" + next_page;
 	} else {
 		alert('Please answer all required questions before moving on to the next page.');
@@ -45,7 +45,7 @@ function check_for_unanswered_required(page) {
 	required = false;
 		$("#page_"+page+" input[type=hidden].required_question").each(function(index){
 			if($(this).val() == 'true'){
-				question_number = $(this).attr('id').split('_')[1]; // q_{number}_required
+				question_number = $(this).attr('id').split('_')[0];
 				/* if the element is a radio button that is required then check to make sure one is checked */
 				if( $(".question_" + question_number + "_answer").attr('type') == "radio" && $(".question_" + question_number + "_answer:checked").length == 0 ) {
 					required =  true;
@@ -57,7 +57,7 @@ function check_for_unanswered_required(page) {
 					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
 					required =  true;
-				}
+				} 
 			}
 		});
 		return required;

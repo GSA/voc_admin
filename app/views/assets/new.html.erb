@@ -1,6 +1,6 @@
 <%= form_for [@survey, @survey_version, @asset], :remote => true do |f| %>
 
-  <h2>New Snippet</h2>
+  <p class="modalTitle">New Snippet</p>
   <%= f.error_messages %>
   <%= f.text_area :snippet %>
   <br/>
@@ -8,8 +8,6 @@
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => @asset, :survey => @survey, :survey_version => @survey_version}%>
   <br/>
   <br/>
-  <div class="pageLink">
-  	<%= link_to "Cancel", [:edit, @survey, @survey_version], :class => "cancelLink"%>
-  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png" %>
-  </div>
+  <%= f.submit "Create Snippet" %>
+  <%= link_to "Cancel", [:edit, @survey, @survey_version], :class => "simplemodal-close"%>
 <% end -%>

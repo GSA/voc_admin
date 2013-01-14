@@ -1,1 +1,1 @@
-$("#displayFieldValue_" + <%= @display_field_value.id %>).html('<%= sanitize(@display_field_value.value ? @display_field_value.value.gsub("{%delim%}",  "\n").gsub(",", "<br/>") : "" ) + image_tag("/images/edit.png", :alt=>"edit") %>')
+$("#displayFieldValue_" + <%= @display_field_value.id %>).html('<%= sanitize(@display_field_value.value ? @display_field_value.value.gsub("{%delim%}",  "\n").gsub(",", "<br/>") : "" ) + image_tag("/images/edit.png") %>')

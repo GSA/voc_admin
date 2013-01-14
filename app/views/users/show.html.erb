@@ -1,41 +1,29 @@
-<h1>User Details</h1>
+<p class="pageTitle">User Details</p>
 <%= flash_messages(flash) %>
+<p class="copyBold">
+  Name:
+  <span class="copy"><%= @user.f_name %> <%= @user.l_name %></span>
+</p>
+<p class="copyBoldMargin">
+  Email:
+  <span class="copy"><%= @user.email %></span>
+</p>
+<p class="copyBoldMargin">
+  Role:
+  <span class="copy"><%= @user.role.nil? ? 'User' : @user.role.name %></span>
+</p>
+<% if @user.role.nil? %>
+<p class="copyBoldMargin">
+  <div style="display: inline-block; vertical-align: top; font-weight: bold; color: black;">Sites:</div>
+  <div style="display: inline-block;">
+    <% @user.sites.each do |site| %>
+    <span class="copy"><%= site.name %></span><br/>
+    <% end %>
+  </div>
+</p>
+<% end %>
 
-<div id="showpage">
-	<div class="left_side">
-		Name:
-	</div>
-	<div class="right_side">
-		<p><%= @user.f_name %> <%= @user.l_name %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Email:
-	</div>
-	<div class="right_side">
-		<p><%= @user.email %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Role:
-	</div>
-	<div class="right_side">
-		<p><%= @user.role.nil? ? 'User' : @user.role.name %></p>
-	</div>
-	<br />
-	<% if @user.role.nil? %>
-		<div class="right_side">
-  		Sites:
-  	</div>
-  	<div class="left_side">
-	    <% @user.sites.each do |site| %>
-	    	<%= site.name %>
-	    <% end %>
-  	</div>
-	<% end %>
-</div>
-
-<div class="page-nav">
-  <%= link_to image_tag('edit.png', :alt=>"edit"), edit_user_path(@user) %>
-  <%= link_to "View All Users", users_path, :class=>"manage" %>
+<div class="pageNav">
+  <%= link_to "Edit", edit_user_path(@user), :class=>"pageNav" %> |
+  <%= link_to "View All", users_path, :class=>"pageNav" %>
 </div>

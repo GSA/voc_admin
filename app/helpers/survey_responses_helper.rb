@@ -19,8 +19,8 @@ module SurveyResponsesHelper
     arrows = content_tag :span, :class => "sort_arrows" do
       ret = ""
       if column == params[:order_column]
-        ret += image_tag "arrow_up_larger.png", :alt => "Sort"   if direction == "desc"
-        ret += image_tag "arrow_down_larger.png", :alt => "Sort" if direction == "asc"
+        ret += image_tag "arrow_up.png"   if direction == "desc"
+        ret += image_tag "arrow_down.png" if direction == "asc"
       else
         ret += image_tag "arrows.png", :alt => "Sort"
       end
@@ -35,7 +35,7 @@ module SurveyResponsesHelper
   def get_edit_current_view_link version, current_view
     edit_link = "Edit Current View"
 
-    edit_link = link_to edit_link, edit_survey_survey_version_custom_view_path(version.survey, version, current_view), {:class => "manage"} unless current_view.nil?
+    edit_link = link_to edit_link, edit_survey_survey_version_custom_view_path(version.survey, version, current_view), {:class => "pageNav"} unless current_view.nil?
 
     edit_link
   end

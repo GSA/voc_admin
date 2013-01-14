@@ -1,20 +1,4 @@
-<h1>Preview Survey</h1>
-
-<div id="surveys">
-	<div class="left_side">
-		Survey:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @survey.name.titleize %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Version:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= "#{@survey_version.major}.#{@survey_version.minor}" %></p>
-	</div>
-</div>
+<p class="pageTitle">Preview Survey: <%= @survey.name.titleize %> <%= "#{@survey_version.major}.#{@survey_version.minor}" %></p>
 
 <% javascript 'survey.js' %>
 
@@ -29,10 +13,8 @@
 	  <% index = 0 %>
 		<% for page in @survey_version.pages %>
 			<% question_number = 0 %>
-
-			<%= get_page_div_tag( page, params ) %>
-				<a name="PAGE_<%= page.page_number%>"></a>
-
+			<div class="<%= page.page_number == (params[:page].present? ? params[:page].to_i : 1) ? 'current_page' : 'hidden_page' %>" id="page_<%=page.page_number%>">
+				<a name="PAGE_<%= page.page_number%>">
 	      <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
 				<%= hidden_field_tag :prev_page, (params[:page].present? && params[:page].to_i == page.page_number ? 1 : page.prev_page.try(:page_number)), :id => "page_#{page.page_number}_prev_page" %>
 
@@ -58,11 +40,11 @@
 			                  <tr>
 			                    <th scope="row">
 														<%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
-														<%= hidden_field_tag "q_#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+														<%= hidden_field_tag "#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
 													</th>
 			                    <% row_header.choice_answers.each do |a| %>
 			                      <td>
-			                      <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id, :id => nil %>
+			                      <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id %>
 			                      <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer" %>
 			                      </td>
 			                    <% end %>
@@ -72,7 +54,7 @@
 			              </table>
 						<% elsif element.assetable_type != "Asset" %>
 							<%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
-							<%= hidden_field_tag "q_#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
+							<%= hidden_field_tag "#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
 
 							<div class="vocquestiontext"><span class="vocquestionnumber"><%= "#{question_number}." %> </span><%= element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%></div>
@@ -86,9 +68,9 @@
 	                      						:onclick => generate_onclick(element, page, answer),
 												:class => "question_#{element.assetable.question_content.id}_answer",
 												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
-												:id => "response_#{index}_#{answer.id}"
+												:id => "response[raw_responses_attributes][#{index}][answer]_#{answer.id}"
 											%>
-											<%=label_tag "response_#{index}_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
+											<%=label_tag "response[raw_responses_attributes][#{index}][answer]_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
 											<% if element.assetable.answer_placement %><br/><% end %>
 										<% end -%>
 									</div>
@@ -125,8 +107,7 @@
 								<% if element.assetable.answer_type == "field" %>
                 <span class="voctextfield"><%= text_field_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size %></span>
 								<% elsif element.assetable.answer_type == "area" %>
-									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => (element.assetable.row_size || ""), :cols => (element.assetable.column_size  || "") %></span>
-
+									<span class="voctextarea"><%= text_area_tag "response[raw_responses_attributes][#{index}][answer]", nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => element.assetable.row_size, :columns => element.assetable.column_size %></span>
 								<% end -%>
 							<% end -%>
 						<% else %>
@@ -136,14 +117,14 @@
 					<% index = index + 1%>
 				<% end %>
 				</ul>
-				<div class="page-nav">
+				<div class="surveyNav">
 					<% unless page.page_number == 1 or (params[:noback].to_s.downcase=="true") %>
-						<%= link_to_function "Previous Page", "show_prev_page(#{page.page_number})", :class=>"manage"  %>
+						<span class="surveyNavPrev"><%= link_to_function "Previous Page", "show_prev_page(#{page.page_number})", :class=>"surveyNav"  %></span> |
 					<% end %>
 					<% unless page.page_number == @survey_version.pages.count %>
-						<%= link_to_function "Next Page", "show_next_page(#{page.page_number})", :class=>"manage" %>
+						<span class="surveyNavNext"><%= link_to_function "Next Page", "show_next_page(#{page.page_number})", :class=>"surveyNav" %></span>
 					<% end %>
-					<%= submit_tag("Submit", :disabled => "disabled", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %>
+					<span class="surveyNavSub"><%= submit_tag("Submit Survey", :disabled => "disabled", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
 				</div>
 
 			</div> <!-- close page div -->
@@ -151,9 +132,9 @@
 	<% end -%>
 <% end -%>
 
-<div class="page-nav">
+<div class="pageNav">
 	<% unless @survey_version.published %>
-		<%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_survey_version_path(@survey, @survey_version) %>
+		<%= link_to "Edit Survey", edit_survey_survey_version_path(@survey, @survey_version), :class => "pageNav" %> |
 	<% end -%>
-	<%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
+	<%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"pageNav" %>
 </div>

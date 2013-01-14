@@ -1,3 +1,3 @@
 // You need to pass the @text_question to the partial in order for the fields to be properly populated
 $("#edit_modal").html("<%= escape_javascript(render(:partial => 'edit_text_question', :locals => {:survey_version => @survey_version, :survey => @survey_version.survey, :text_question => @text_question})) %>").
-	modal({autoResize:true, maxHeight:'100%', minWidth:'330px', maxWidth:'500px'});
+	modal({autoResize:true, maxHeight:'90%', minWidth:'330px', maxWidth:'500px'});

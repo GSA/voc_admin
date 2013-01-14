@@ -101,18 +101,7 @@
 </dl>
 <div class="clear"></div>
 
-<h2>Overview</h2><div class="docstring">
-  <div class="discussion">
-    
-<p>The TextQuestion class can represent either a text field or a text area.</p>
 
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
 
 
 
@@ -145,7 +134,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Used by Criteria in Rules to process survey_responses against Conditionals.</p>
+<p>return true of false based on conditional.</p>
 </div></span>
   
 </li>
@@ -154,7 +143,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (TextQuestion) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -168,9 +157,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Makes a deep copy of the TextQuestion (when cloning a survey).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -178,7 +165,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (TextQuestion) <strong>copy_to_page</strong>(page) </a>
+      <a href="#copy_to_page-instance_method" title="#copy_to_page (instance method)">- (Object) <strong>copy_to_page</strong>(page) </a>
     
 
     
@@ -192,9 +179,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Makes a deep copy of the TextQuestion (when cloning a Page).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -243,65 +228,13 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Used by Criteria in Rules to process survey_responses against Conditionals</p>
+<p>return true of false based on conditional</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>survey_response</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="SurveyResponse.html" title="SurveyResponse (class)">SurveyResponse</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>a SurveyResponse to test</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>conditional_id</span>
-      
-      
-        <span class='type'>(<tt>Integer</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the operator used to test</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>test_value</span>
-      
-      
-        <span class='type'>(<tt>Object</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the value to test</p>
-</div>
-      
-    </li>
-  
-</ul>
-
 
 </div><table class="source_code">
   <tr>
@@ -309,6 +242,17 @@
       <pre class="lines">
 
 
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
 29
 30
 31
@@ -316,18 +260,53 @@
 33
 34
 35
-36</pre>
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_condition'>check_condition</span><span class='lparen'>(</span><span class='id identifier rubyid_survey_response'>survey_response</span><span class='comma'>,</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
-  <span class='comment'>#check the survey_response for a response to this question
+  <span class='comment'>#check the survey_response for a response to this quesiton
 </span>  <span class='id identifier rubyid_raw_response'>raw_response</span> <span class='op'>=</span> <span class='id identifier rubyid_survey_response'>survey_response</span><span class='period'>.</span><span class='id identifier rubyid_raw_responses'>raw_responses</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_rr'>rr</span><span class='op'>|</span> <span class='id identifier rubyid_rr'>rr</span><span class='period'>.</span><span class='id identifier rubyid_question_content_id'>question_content_id</span> <span class='op'>==</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
   <span class='kw'>return</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_raw_response'>raw_response</span>
   <span class='id identifier rubyid_answer'>answer</span> <span class='op'>=</span> <span class='id identifier rubyid_raw_response'>raw_response</span><span class='period'>.</span><span class='id identifier rubyid_answer'>answer</span> 
   
-  <span class='const'>ConditionTester</span><span class='period'>.</span><span class='id identifier rubyid_test'>test</span><span class='lparen'>(</span><span class='id identifier rubyid_conditional_id'>conditional_id</span><span class='comma'>,</span> <span class='id identifier rubyid_answer'>answer</span><span class='comma'>,</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_conditional_id'>conditional_id</span>
+    <span class='kw'>when</span> <span class='int'>1</span> <span class='comment'>#&quot;=&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span> <span class='op'>==</span> <span class='id identifier rubyid_test_value'>test_value</span>
+    <span class='kw'>when</span> <span class='int'>2</span> <span class='comment'>#&quot;!=&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span> <span class='op'>!=</span> <span class='id identifier rubyid_test_value'>test_value</span>
+    <span class='kw'>when</span> <span class='int'>3</span> <span class='comment'>#&quot;contains&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_test_value'>test_value</span>
+    <span class='kw'>when</span> <span class='int'>4</span> <span class='comment'>#&quot;does not contain&quot;
+</span>      <span class='op'>!</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_test_value'>test_value</span>
+    <span class='kw'>when</span> <span class='int'>5</span> <span class='comment'>#&quot;&lt;&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+    <span class='kw'>when</span> <span class='int'>6</span> <span class='comment'>#&quot;&lt;=&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;=</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+    <span class='kw'>when</span> <span class='int'>7</span> <span class='comment'>#&quot;&gt;=&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+    <span class='kw'>when</span> <span class='int'>8</span> <span class='comment'>#&quot;&gt;&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_test_value'>test_value</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+    <span class='kw'>when</span> <span class='int'>9</span> <span class='comment'>#&quot;empty&quot;
+</span>      <span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='kw'>when</span> <span class='int'>10</span> <span class='comment'>#&quot;not empty&quot;
+</span>      <span class='op'>!</span><span class='id identifier rubyid_answer'>answer</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='kw'>else</span>
+      <span class='kw'>false</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -337,86 +316,37 @@
       <div class="method_details ">
   <h3 class="signature " id="clone_me-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Makes a deep copy of the TextQuestion (when cloning a survey)</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>target_sv</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the SurveyVersion destination</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the cloned TextQuestion</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
 54
 55
 56
-57</pre>
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:skip_observer</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -442,82 +372,33 @@
       <div class="method_details ">
   <h3 class="signature " id="copy_to_page-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>) <strong>copy_to_page</strong>(page) 
+    - (<tt>Object</tt>) <strong>copy_to_page</strong>(page) 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Makes a deep copy of the TextQuestion (when cloning a Page)</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>page</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the page to be cloned onto</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="TextQuestion (class)">TextQuestion</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the cloned copy</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-63
-64
-65
-66
-67
-68
-69
-70
 71
 72
 73
-74</pre>
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy_to_page'>copy_to_page</span><span class='lparen'>(</span><span class='id identifier rubyid_page'>page</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_qc_attribs'>qc_attribs</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_content'>question_content</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span>
@@ -551,12 +432,12 @@
       <pre class="lines">
 
 
-20
-21
-22</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'app/models/question_models/text_question.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_true_value'>get_true_value</span><span class='lparen'>(</span><span class='id identifier rubyid_string_value'>string_value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string_value'>string_value</span>

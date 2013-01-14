@@ -1,37 +1,30 @@
+<p class="pageTitleLogin">HHS VOC Tool Login</p>
+
 <%= flash_messages(flash) %>
 <% if @user_session.errors.any? %>
-	<div id="error_explanation">
-		<p class="title"><%= pluralize(@user_session.errors.count, "error") %> prohibited this login:</p>
-    <ul class="list">
+	<div id="error_explanation" class="modalErrorBox">
+	  <p class="modalErrorTitle"><%= pluralize(@user_session.errors.count, "error") %> prohibited this login:</p>
+      <ul class="modalList">
       <% @user_session.errors.full_messages.each do |msg| %>
-        <li class="list"><%= msg %></li>
+        <li class="modalList"><%= msg %></li>
       <% end %>
-    </ul>
-  </div>
-<% end %>
-  
+      </ul>
+    </div>
+  <% end %>
 
-<div class="login_box">
-	<p class="bold">HHS VOC Tool Login</p>
-	<%= form_for @user_session, :url => {:action => "create"} do |f| %>
-		<div class="left_side">
-			<p><%= f.label :email, "Email:"%></p>
-		</div>
-		<div class="right_side">
-			<%= f.text_field :email %>
-		</div>
-		<br />
-		<div class="left_side">
-			<p><%= f.label :password, "Password:" %></p>
-		</div>
-		<div class="right_side">
-			<%= f.password_field :password %>
-		</div>
-		<br />
-		<div class="options">
-			<%= f.submit "Login", :type => :image, :src=>"/images/sign-in.png" %>
-			<p class="reset"><a href="/reset_password" title="Request that new password be sent to you." >Reset Password?</a></p>
-		</div>
-	<% end %>
+
+<div class="loginBox">
+<%= form_for @user_session, :url => {:action => "create"} do |f| %>
+	<p class="copyBold">
+		<%= f.label :email, "Email:"%><br />
+		<%= f.text_field :email %>
+	</p>
+	<p class="copyBoldMargin">
+		<%= f.label :password, "Password:" %><br />
+		<%= f.password_field :password %>
+	</p>
+	<p class="sumbitButton"><%= f.submit "Login" %></p>
+	<p><a href="/reset_password" title="Request that new password be sent to you.">Reset Password</a></p>
+<% end %>
 </div>
 

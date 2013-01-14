@@ -5,34 +5,19 @@
 	  </div>
 	<% end %>
 
-	<div id="surveys">
-		<div class="left_side">
-			<%= f.label :name, "Name: " %>
-		</div>
-		<div class="right_side">
+	<div id="form_widths">
+		<p class="copy">
+	    <span class="copyBold"><%= f.label :name, "Name: " %></span><br />
 			<%= f.text_field :name %>
-		</div>
-		<br />
-	  <div class="left_side">
-			<%= f.label :url, "URL: " %><span class="notation">(format: http://www.site.gov)</span>
-		</div>
-		<div class="right_side">
+		</p>
+	  <p class="copyBoldMargin">
+			<%= f.label :url, "URL: " %><span class="copy">(format: http://www.site.gov)</span><br />
 			<%= f.text_field :url %>
-		</div>
-		<br />
-	  <div class="left_side">
-			<%= f.label :description, "Description: " %>
-		</div>
-		<div class="right_side">
+		</p>
+	  <p class="copyBoldMargin">
+			<%= f.label :description, "Description: " %><br/>
 			<%= f.text_area :description %>
-		</div>
+		</p>
 	</div>
-	<div class="pageLink">
-		<%= link_to "Cancel", sites_path, :class => "cancelLink" %>
-		<% if f.object.new_record? %>
-			<%= f.submit "Create Site", :type => :image, :src=>"/images/create-site.png" %>
-		<% else %>
-			<%= f.submit "Edit Site", :type => :image, :src=>"/images/update-site.png" %>
-		<% end %>
-	</div>
+	<p class="sumbitButton"><%= f.submit %></p>
 <% end %>

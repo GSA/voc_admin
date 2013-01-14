@@ -1,16 +1,26 @@
-<% unless survey_version.pages.count == 0 %>
-	<div class="surveyNav2">
-		<%= link_to "Add an open-ended question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version), :class=>"newlink", :remote => true %>
-		<%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version), :class=>"newlink", :remote => true %>
-		
+<div class="surveyNav">
+	<% unless survey_version.pages.count == 0 %>
+		<span class="surveyNav2">
+			<%= link_to "Add an open-ended question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version),
+			 :class=>"surveyNav", :remote => true %>
+		</span> |
+		<span class="surveyNav3">
+			<%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version),
+			 :class=>"surveyNav", :remote => true %>
+		</span> |
 		<% unless survey_version.survey.survey_type_id == SurveyType::POLL %>
-			<%= link_to "Add matrix question", new_survey_survey_version_matrix_question_path(survey_version.survey, survey_version), :class => "newlink", :remote => true %>		
+		<span class="surveyNav5">
+			<%= link_to "Add matrix question", new_survey_survey_version_matrix_question_path(survey_version.survey, survey_version),
+			 :class => "surveyNav", :remote => true %>
+		</span> |
 		<% end %>
-				
-		<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"newlink link_to_new_asset", :remote => true  %>
-	</div>
-<% end %>
+		<span class="surveyNav4">
+			<%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version), :class=>"surveyNav link_to_new_asset", :remote => true  %>
+		</span> |
 
-<div class="surveyNav1">
-	<%= link_to "Insert Page Here", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:page_number => survey_version.pages.count + 1}), :remote => true, :method => :post, :class=>"newlink link_to_new_page" %>
-</div> 
+	<% end # Close unless statement%>
+	<span class="surveyNav1">
+		<%= link_to "Add a new page", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:page_number => survey_version.pages.count + 1}),
+		 :remote => true, :method => :post, :class=>"surveyNav link_to_new_page" %>
+	</span>
+</div>

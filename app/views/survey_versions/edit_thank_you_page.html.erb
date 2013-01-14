@@ -1,14 +1,12 @@
-<h1>Customize Thank You Page</h1>
+<h1>Edit Custom Thank You Page</h1>
 
 <%= form_for [@survey, @survey_version] do |f| %>
-  <div id="survey_info">
-    <div class="top_side"><%= f.label :thank_you_page, "Thank You Page:" %></div>
-    <div class="bottom_side"><%= f.text_area :thank_you_page, :class=>"thankYouPageArea" %></div>
+  <div>
+    <%= f.label :thank_you_page, "Thank You Page:" %><br/>
+    <%= f.text_area :thank_you_page, class: "thankYouPageArea" %>
   </div>
 
-  <div class="pageLink">
-  	<%= link_to "Cancel", survey_survey_versions_path(@survey), :class=>"cancelLink" %>
-  	<%= f.submit "Update Thank You Page", :type => :image, :src=>"/images/Update-Thank-You-Page.png" %>
-  </div>
+  <div><%= f.submit "Update Thank You Page" %></div>
 <% end %>
 
+<div class="pageNav"><%= link_to "Cancel", survey_survey_versions_path(@survey), :class=>"pageNav" %></div>

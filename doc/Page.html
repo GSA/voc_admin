@@ -101,18 +101,7 @@
 </dl>
 <div class="clear"></div>
 
-<h2>Overview</h2><div class="docstring">
-  <div class="discussion">
-    
-<p>A Page is a container for one screen's worth of SurveyElements.</p>
 
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div>
 
 
 
@@ -130,7 +119,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Page) <strong>clone_me</strong>(target_sv) </a>
+      <a href="#clone_me-instance_method" title="#clone_me (instance method)">- (Object) <strong>clone_me</strong>(target_sv) </a>
     
 
     
@@ -144,9 +133,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Duplicates the Page upon cloning a SurveyVersion.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -154,7 +141,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#create_copy-instance_method" title="#create_copy (instance method)">- (Page) <strong>create_copy</strong> </a>
+      <a href="#create_copy-instance_method" title="#create_copy (instance method)">- (Object) <strong>create_copy</strong> </a>
     
 
     
@@ -168,9 +155,29 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Duplicates the Page and all contained SurveyElements.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#elements_with_includes-instance_method" title="#elements_with_includes (instance method)">- (Object) <strong>elements_with_includes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -192,9 +199,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Reorder pages.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -202,7 +207,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#next_page_with_page_id-instance_method" title="#next_page_with_page_id (instance method)">- (Page<sup>?</sup>) <strong>next_page_with_page_id</strong> </a>
+      <a href="#next_page_with_page_id-instance_method" title="#next_page_with_page_id (instance method)">- (Object) <strong>next_page_with_page_id</strong> </a>
     
 
     
@@ -216,10 +221,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The next page in the survey, either by explicit flow control or
-incrementing current page number.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -227,7 +229,7 @@ incrementing current page number.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#prev_page-instance_method" title="#prev_page (instance method)">- (Page<sup>?</sup>) <strong>prev_page</strong> </a>
+      <a href="#prev_page-instance_method" title="#prev_page (instance method)">- (Object) <strong>prev_page</strong> </a>
     
 
     
@@ -241,10 +243,7 @@ incrementing current page number.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Find the previous page (does not take flow control into consideration as
-this is managed via JavaScript).</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -262,73 +261,24 @@ this is managed via JavaScript).</p>
       <div class="method_details first">
   <h3 class="signature first" id="clone_me-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt>) <strong>clone_me</strong>(target_sv) 
+    - (<tt>Object</tt>) <strong>clone_me</strong>(target_sv) 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Duplicates the Page upon cloning a SurveyVersion.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>target_sv</span>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="SurveyVersion.html" title="SurveyVersion (class)">SurveyVersion</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the SurveyVersion destination for the new cloned copy</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the cloned page</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-66
-67
-68</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clone_me'>clone_me</span><span class='lparen'>(</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new_page'>new_page</span> <span class='op'>=</span> <span class='const'>Page</span><span class='period'>.</span><span class='id identifier rubyid_create!'>create!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attributes'>attributes</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='symbol'>:survey_version</span><span class='op'>=&gt;</span><span class='id identifier rubyid_target_sv'>target_sv</span><span class='comma'>,</span> <span class='symbol'>:clone_of_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -341,65 +291,36 @@ this is managed via JavaScript).</p>
       <div class="method_details ">
   <h3 class="signature " id="create_copy-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt>) <strong>create_copy</strong> 
+    - (<tt>Object</tt>) <strong>create_copy</strong> 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Duplicates the Page and all contained SurveyElements</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the duplicated page</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87</pre>
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_copy'>create_copy</span>
   <span class='comment'>#add page at end of survey
@@ -422,6 +343,36 @@ this is managed via JavaScript).</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="elements_with_includes-instance_method">
+  
+    - (<tt>Object</tt>) <strong>elements_with_includes</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+51
+52
+53</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 51</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_elements_with_includes'>elements_with_includes</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_elements'>survey_elements</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span><span class='id identifier rubyid_b'>b</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_element_order'>element_order</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="move_page_to-instance_method">
   
     - (<tt>Object</tt>) <strong>move_page_to</strong>(target_page_number) 
@@ -430,44 +381,23 @@ this is managed via JavaScript).</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Reorder pages. Contains logic for bounds checking and tries to ensure that
-flow control does not create a loop.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>target_page_number</span>
-      
-      
-        <span class='type'>(<tt>Integer</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the destination page number</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
 39
 40
 41
@@ -478,24 +408,13 @@ flow control does not create a loop.</p>
 46
 47
 48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60</pre>
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_page_to'>move_page_to</span><span class='lparen'>(</span><span class='id identifier rubyid_target_page_number'>target_page_number</span><span class='rparen'>)</span>
-  <span class='comment'># Page number cannot be &lt;= 0 or &gt; number of total pages
+  <span class='comment'># Page number cannot be &lt;=0 or &gt; number of total pages
 </span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_target_page_number'>target_page_number</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&lt;=</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_target_page_number'>target_page_number</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
   <span class='id identifier rubyid_current_page_number'>current_page_number</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span>
 
@@ -524,58 +443,28 @@ flow control does not create a loop.</p>
       <div class="method_details ">
   <h3 class="signature " id="next_page_with_page_id-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt><sup>?</sup>) <strong>next_page_with_page_id</strong> 
+    - (<tt>Object</tt>) <strong>next_page_with_page_id</strong> 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>The next page in the survey, either by explicit flow control or
-incrementing current page number</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt>, <tt>nil</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the next page in the survey or nil if this is the last page</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
+14
+15
+16
+17
 18
 19
-20
-21
-22
-23
-24</pre>
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_next_page_with_page_id'>next_page_with_page_id</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_next_page_id'>next_page_id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -592,54 +481,24 @@ incrementing current page number</p>
       <div class="method_details ">
   <h3 class="signature " id="prev_page-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt><sup>?</sup>) <strong>prev_page</strong> 
+    - (<tt>Object</tt>) <strong>prev_page</strong> 
   
 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Find the previous page (does not take flow control into consideration as
-this is managed via JavaScript)</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Page (class)">Page</a></span></tt>, <tt>nil</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>the previous page in the survey or nil if this is the first page</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'app/models/layout_models/page.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prev_page'>prev_page</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_survey_version'>survey_version</span><span class='period'>.</span><span class='id identifier rubyid_pages'>pages</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='symbol'>:page_number</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_number'>page_number</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>

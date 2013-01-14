@@ -1,24 +1,26 @@
 class SurveysController < ApplicationController
   # GET /surveys
   def index
-    @surveys = current_user.surveys.search(params[:q]).order("surveys.#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    # @current_user is set in the require_user before filter
+    @surveys = @current_user.surveys.search(params[:q]).order("surveys.#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+
   end
 
   # GET /surveys/1
   def show
-    @survey = current_user.surveys.find(params[:id])
+    @survey = @current_user.surveys.find(params[:id])
 
   end
 
   # GET /surveys/new
   def new
-    @survey = current_user.surveys.new
+    @survey = @current_user.surveys.new
 
   end
 
   # POST /surveys
   def create
-    @survey = current_user.surveys.new(params[:survey])
+    @survey = @current_user.surveys.new(params[:survey])
 
     if @survey.save  # Will save both survey and survey_version and run validations on both
       redirect_to([:edit, @survey, @survey.survey_versions.first], :notice => 'Survey was successfully created.')
@@ -29,12 +31,12 @@ class SurveysController < ApplicationController
 
   # GET /surveys/edit
   def edit
-   @survey = current_user.surveys.find(params[:id])
+   @survey = @current_user.surveys.find(params[:id])
   end
 
   # PUT /surveys/1
   def update
-     @survey = current_user.surveys.find(params[:id])
+     @survey = @current_user.surveys.find(params[:id])
      @survey.update_attributes(params[:survey])
 
      if @survey.update_attributes(params[:survey])
@@ -46,7 +48,7 @@ class SurveysController < ApplicationController
 
   # DELETE /surveys/1
   def destroy
-    @survey = current_user.surveys.find(params[:id])
+    @survey = @current_user.surveys.find(params[:id])
     @survey.update_attribute(:archived, true)
 
 

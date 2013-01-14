@@ -36,14 +36,14 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
 
-    redirect_to edit_user_path(current_user) if @user != current_user && !current_user.admin?
+    redirect_to edit_user_path(@current_user) if @user != @current_user && !@current_user.admin?
   end
 
   def update
     @user = User.find(params[:id])
 
     # Only an admin may update another user.
-    unless current_user.admin? || current_user == @user
+    unless @current_user.admin? || @current_user == @user
       redirect_to surveys_path
       return
     end
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(filtered_params(params[:user]))
-        format.html {redirect_to (current_user.admin? ? users_path : surveys_path), :notice  => "Successfully updated user."}
+        format.html {redirect_to (@current_user.admin? ? users_path : surveys_path), :notice  => "Successfully updated user."}
         format.js
       else
         format.html {render :action => 'edit'}
@@ -69,6 +69,6 @@ class UsersController < ApplicationController
 
 private
   def filtered_params(user_attributes)
-    current_user.admin? ? user_attributes : user_attributes.except("role_id", "site_ids")
+    @current_user.admin? ? user_attributes : user_attributes.except("role_id", "site_ids")
   end
 end
