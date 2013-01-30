@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     if self.admin?
       Survey.scoped
     else
-      Survey.includes(:site => :site_users).where(:site => {:site_users => { :user_id => self.id} })
+      Survey.includes(:site => :site_users).where(:site_users => { :user_id => self.id })
     end
   end
 
