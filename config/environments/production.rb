@@ -37,8 +37,9 @@ CommentToolApp::Application.configure do
   # Email Configuration is handled by the mailer_config.rb initializer and
   # mailer_settings.yml
 
-  # Enable threaded mode
-  # config.threadsafe!
+  # Enable threaded mode (currently only in linux jruby and running in jruby_rack)
+  require 'rbconfig'
+  config.threadsafe! if RUBY_PLATFORM == "java"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

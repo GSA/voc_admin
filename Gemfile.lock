@@ -93,6 +93,8 @@ GEM
     jruby-openssl (0.8.2)
       bouncy-castle-java (>= 1.5.0146.1)
     jruby-rack (1.1.12)
+    jruby-rack-worker (0.9.1)
+      jruby-rack (>= 1.1.10)
     json (1.7.6)
     json (1.7.6-java)
     kaminari (0.14.1)
@@ -242,6 +244,8 @@ DEPENDENCIES
   jdbc-mysql
   jquery-rails
   jruby-openssl
+  jruby-rack
+  jruby-rack-worker
   kaminari
   memcache-client
   mysql2 (< 0.3)

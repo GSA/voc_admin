@@ -28,6 +28,10 @@ platform :jruby do
   gem 'activerecord-jdbcmysql-adapter'
 
   gem 'jruby-openssl', :require => false
+
+  gem 'jruby-rack', :require => false
+  gem 'jruby-rack-worker', :require => false
+
   gem 'warbler'
 end
 
