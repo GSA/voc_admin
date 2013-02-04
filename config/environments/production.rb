@@ -38,7 +38,6 @@ CommentToolApp::Application.configure do
   # mailer_settings.yml
 
   # Enable threaded mode (currently only in linux jruby and running in jruby_rack)
-  require 'rbconfig'
   config.threadsafe! if RUBY_PLATFORM == "java"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
