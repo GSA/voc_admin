@@ -2,52 +2,51 @@
   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
   "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
-
   <context-param>
     <param-name>public.root</param-name>
     <param-value>/</param-value>
   </context-param>
 
-<context-param>
-  <param-name>rails.env</param-name>
-  <param-value>production</param-value>
-</context-param>
-<context-param>
-  <param-name>jruby.min.runtimes</param-name>
-  <param-value>1</param-value>
-</context-param>
-<context-param>
-  <param-name>jruby.max.runtimes</param-name>
-  <param-value>1</param-value>
-</context-param>
+  <context-param>
+    <param-name>rails.env</param-name>
+    <param-value>production</param-value>
+  </context-param>
+  <context-param>
+    <param-name>jruby.min.runtimes</param-name>
+    <param-value>1</param-value>
+  </context-param>
+  <context-param>
+    <param-name>jruby.max.runtimes</param-name>
+    <param-value>1</param-value>
+  </context-param>
 
-<filter>
-  <filter-name>RackFilter</filter-name>
-  <filter-class>org.jruby.rack.RackFilter</filter-class>
-  <!-- optional filter configuration init-params : -->
-  <init-param> 
-    <param-name>resetUnhandledResponse</param-name>
-    <param-value>true</param-value> <!-- true (default), false or buffer -->
-  </init-param>
-  <init-param> 
-    <param-name>addsHtmlToPathInfo</param-name>
-    <param-value>true</param-value> <!-- true (default), false -->
-  </init-param>
-  <init-param> 
-    <param-name>verifiesHtmlResource</param-name>
-    <param-value>false</param-value> <!-- true, false (default) -->
-  </init-param>
-</filter>
-<filter-mapping>
-  <filter-name>RackFilter</filter-name>
-  <url-pattern>/*</url-pattern>
-</filter-mapping>
+  <filter>
+    <filter-name>RackFilter</filter-name>
+    <filter-class>org.jruby.rack.RackFilter</filter-class>
+    <!-- optional filter configuration init-params : -->
+    <init-param> 
+      <param-name>resetUnhandledResponse</param-name>
+      <param-value>true</param-value> <!-- true (default), false or buffer -->
+    </init-param>
+    <init-param> 
+      <param-name>addsHtmlToPathInfo</param-name>
+      <param-value>true</param-value> <!-- true (default), false -->
+    </init-param>
+    <init-param> 
+      <param-name>verifiesHtmlResource</param-name>
+      <param-value>false</param-value> <!-- true, false (default) -->
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>RackFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
-<listener>
-  <listener-class>org.jruby.rack.rails.RailsServletContextListener</listener-class>
-</listener>
+  <listener>
+    <listener-class>org.jruby.rack.rails.RailsServletContextListener</listener-class>
+  </listener>
+
   <!-- jruby-rack-worker setup using the built-in libraries support : -->
-
   <context-param>
     <param-name>jruby.worker.script</param-name>
     <param-value> 
@@ -76,7 +75,8 @@
     </param-value>
   </context-param>
 
-  <!--<context-param>
+  <!-- Vanilla jruby-rack-worker behavior (doesn't log enough for VOC)
+  <context-param>
     <param-name>jruby.worker</param-name>
     <param-value>delayed_job</param-value>
   </context-param> -->
