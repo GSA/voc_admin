@@ -53,9 +53,12 @@ class PollResults
       answers.delete(k)
     end
 
-    ## If there were multiples removed then we need to reorder the answers hash
+    ## If there were multiples removed then we need to reorder the answers hash;
     unless multiple_answers.empty?
-      answers = Hash[answers.sort_by(&:last).reverse]
+
+      # sort by count (value) first, then  -1 * question id (key) to ensure the
+      # reversed counts are first in count, then id order
+      answers = Hash[answers.sort_by {|a| [a.last, -a.first.to_i] }.reverse]
     end
 
     return answers

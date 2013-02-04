@@ -5,6 +5,6 @@ configuration:
   log_file_path: log
   pid_path: tmp/pids
   redirect_out: true
-  new: 1
+  new: 0
   nightly: 1
   nightly_run_hour: 1

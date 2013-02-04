@@ -1,0 +1,88 @@
+<!DOCTYPE web-app PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+  <context-param>
+    <param-name>public.root</param-name>
+    <param-value>/</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>rails.env</param-name>
+    <param-value>production</param-value>
+  </context-param>
+  <context-param>
+    <param-name>jruby.min.runtimes</param-name>
+    <param-value>1</param-value>
+  </context-param>
+  <context-param>
+    <param-name>jruby.max.runtimes</param-name>
+    <param-value>1</param-value>
+  </context-param>
+
+  <filter>
+    <filter-name>RackFilter</filter-name>
+    <filter-class>org.jruby.rack.RackFilter</filter-class>
+    <!-- optional filter configuration init-params : -->
+    <init-param> 
+      <param-name>resetUnhandledResponse</param-name>
+      <param-value>true</param-value> <!-- true (default), false or buffer -->
+    </init-param>
+    <init-param> 
+      <param-name>addsHtmlToPathInfo</param-name>
+      <param-value>true</param-value> <!-- true (default), false -->
+    </init-param>
+    <init-param> 
+      <param-name>verifiesHtmlResource</param-name>
+      <param-value>false</param-value> <!-- true, false (default) -->
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>RackFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <listener>
+    <listener-class>org.jruby.rack.rails.RailsServletContextListener</listener-class>
+  </listener>
+
+  <!-- jruby-rack-worker setup using the built-in libraries support : -->
+  <context-param>
+    <param-name>jruby.worker.script</param-name>
+    <param-value> 
+      require 'jruby/rack/worker/logger'
+      require 'jruby/rack/worker/env'
+      env = JRuby::Rack::Worker::ENV
+      begin
+        require 'delayed/jruby_worker'
+        options = { :quiet => false }
+        options[:queues] = (env['QUEUES'] || env['QUEUE'] || '').split(',')
+        options[:min_priority] = env['MIN_PRIORITY']
+        options[:max_priority] = env['MAX_PRIORITY']
+        # beyond `rake delayed:work` compatibility :
+        if read_ahead = env['READ_AHEAD'] # DEFAULT_READ_AHEAD = 5
+          options[:read_ahead] = read_ahead.to_i
+        end
+        if sleep_delay = env['SLEEP_DELAY'] # DEFAULT_SLEEP_DELAY = 5
+          options[:sleep_delay] = sleep_delay.to_f
+        end
+        worker = Delayed::JRubyWorker.new(options)
+        worker.logger = JRuby::Rack::Worker.logger
+        worker.start
+      rescue => e
+        JRuby::Rack::Worker.log_error(e) || raise
+      end
+    </param-value>
+  </context-param>
+
+  <!-- Vanilla jruby-rack-worker behavior (doesn't log enough for VOC)
+  <context-param>
+    <param-name>jruby.worker</param-name>
+    <param-value>delayed_job</param-value>
+  </context-param> -->
+
+  <listener>
+    <listener-class>org.kares.jruby.rack.WorkerContextListener</listener-class>
+  </listener>
+
+</web-app>
