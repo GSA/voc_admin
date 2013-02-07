@@ -1,7 +1,7 @@
 # Mailer corresponding to the EmailAction class; sends an email
 # when criteria are met for an EmailAction to be triggered.
 class RulesMailer < ActionMailer::Base
-  default :from => "notifier@comment-adm.hhs.gov"
+  default :from => "notifier@#{smtp_settings[:domain] || default_url_options[:host]}"
 
   # Send an email notification due to a Rule with an EmailAction firing.
   # 
