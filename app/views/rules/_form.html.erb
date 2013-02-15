@@ -79,21 +79,3 @@
 		<% end %>
 	</p>
 <% end -%>
-
-<script type="javascript">
-  $(function() {
-    $("#email_action_rule").click(function(){
-      $("#email_action").show();
-      $("#db_actions").hide();
-      $("#destroy_email_action").val(false);
-      $(".db_action_delete").val(true);
-    });
-
-    $("#db_action_rule").click(function(){
-      $("#email_action").hide();
-      $("#db_actions").show();
-      $("#destroy_email_action").val(true);
-      $(".db_action_delete").val(false);
-    });
-  });
-</script>
