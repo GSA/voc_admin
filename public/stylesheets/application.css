@@ -3,7 +3,7 @@
 /**** All styles beginning with an * are IE7 and below specific ****/
 
 /**** Copied from hh's style_2009 ****/
-div#skipNav {
+/* div#skipNav {
 position: relative;
 }
 div#skipNav a#skip, div#skipNav a#rightNav {
@@ -13,6 +13,9 @@ left: -1000px;
 height: 1px;
 width: 1px;
 overflow: hidden;
+} */
+#skipNav{
+  display:none
 }
 
 /**** General ****/
@@ -844,6 +847,12 @@ fieldset .center {
 fieldset .center a {
 	text-align: center;
 	margin: 0px 10px;
+}
+fieldset#inmodal {
+	margin: 0px 0px 15px;
+}
+fieldset#inmodal legend {
+	font-weight: normal;
 }
 
 /**** Images ****/
