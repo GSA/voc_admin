@@ -3,7 +3,7 @@
 /**** All styles beginning with an * are IE7 and below specific ****/
 
 /**** Copied from hh's style_2009 ****/
-div#skipNav {
+/* div#skipNav {
 position: relative;
 }
 div#skipNav a#skip, div#skipNav a#rightNav {
@@ -13,7 +13,7 @@ left: -1000px;
 height: 1px;
 width: 1px;
 overflow: hidden;
-}
+} */
 
 /**** General ****/
 body {
@@ -22,9 +22,6 @@ body {
 	padding: 0px;
 	font-family: helvetica;
 	color: #464646;
-}
-#skipNav{
-  display:none
 }
 #container {
 	width: 960px;
@@ -795,7 +792,8 @@ fieldset .db_action label {
 	font-weight: bold;
 	width: 135px;
 }
-fieldset .db_action span {
+fieldset .db_action span,
+fieldset .db_action label.actasspan {
 	display: inline-block;
 	font-weight: bold;
 	width: 40px;
@@ -844,6 +842,12 @@ fieldset .center {
 fieldset .center a {
 	text-align: center;
 	margin: 0px 10px;
+}
+fieldset#inmodal {
+	margin: 0px 0px 15px;
+}
+fieldset#inmodal legend {
+	font-weight: normal;
 }
 
 /**** Images ****/
@@ -1070,4 +1074,10 @@ span.pageNum {
 	width: 0px;
 	height: 0px;
 	overflow: hidden;
+}
+#skipNav{
+    position: absolute;
+    left: -999em;
+    width: 1em;
+    overflow: hidden;
 }

@@ -51,6 +51,20 @@ $(function(){
 	$("input[name='rule[action_type]']").live("change", function() {
 		$("#email_action, #db_actions").toggleClass("displayNone");
 	});
+
+    $("#email_action_rule").live('click', function(){
+      $("#email_action").show();
+      $("#destroy_email_action").val(false);
+      $("#destroy_db_action").val(true);
+      $("#db_actions").hide();
+    });
+
+    $("#db_action_rule").live('click', function(){
+      $("#destroy_email_action").val(true);
+      $("#email_action").hide();
+      $("#db_actions").show();
+      $("#destroy_db_action").val(false);
+    });
 });
 
 function run_rule(rule_id, source){
