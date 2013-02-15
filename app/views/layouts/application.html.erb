@@ -20,7 +20,8 @@
 			<% if !current_user.blank? %>
 				<%= render :partial => 'layouts/navigation' %>
 			<% end %>
-
+			<a name="skip"></a>
+			
 				<!-- begin main content for intranet page -->
 				<div id="content">
 					<%= yield %>

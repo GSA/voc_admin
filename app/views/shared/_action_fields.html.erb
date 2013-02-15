@@ -2,11 +2,11 @@
   <%= f.label :display_field_id, "Update" %>
   <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
 	<br />
-	<%= f.label :value_type, " with "%>
+	<%= f.label :value_target, " with "%>
 	<%= f.hidden_field :value_type, :value => f.object.value_type || "Text" %>
 
 	<%= select_tag :value_target , options_for_select(survey_version.options_for_action_select), :include_blank => true, :class => "ActionTargetSelect" %>
-	<span>or</span>
+	<label class="actasspan">or</label>
 
 	<%= text_field_tag :value_text, nil ,{:class => "ActionManualValue"} %>
 	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
