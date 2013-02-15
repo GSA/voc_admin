@@ -4,6 +4,7 @@
 	$("#simplemodal-container").height($("#edit_modal").height());
 	$("#simplemodal-container").width($("#edit_modal").width());
 	$.modal.setPosition();
+	$(".modalErrorBox").focus();
 <% else %>
 	$("#question_list").html("<%= escape_javascript( render( :partial => 'survey_versions/question_list', :locals => {:survey_version => @survey_version}) ) %>");
 	$.modal.close();
