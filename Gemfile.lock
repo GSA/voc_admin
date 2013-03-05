@@ -1,7 +1,8 @@
-GEM
-  remote: http://rubygems.org/
+GIT
+  remote: git://github.com/rails/rails.git
+  revision: 182d4e37191d0243ed95aea6a7670d4025b6d4b0
+  ref: 182d4e3719
   specs:
-    abstract (1.0.0)
     actionmailer (3.0.20)
       actionpack (= 3.0.20)
       mail (~> 2.2.19)
@@ -24,14 +25,33 @@ GEM
       activesupport (= 3.0.20)
       arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
-    activerecord-jdbc-adapter (1.2.5)
-    activerecord-jdbcmysql-adapter (1.2.5)
-      activerecord-jdbc-adapter (~> 1.2.5)
-      jdbc-mysql (~> 5.1.0)
     activeresource (3.0.20)
       activemodel (= 3.0.20)
       activesupport (= 3.0.20)
     activesupport (3.0.20)
+    rails (3.0.20)
+      actionmailer (= 3.0.20)
+      actionpack (= 3.0.20)
+      activerecord (= 3.0.20)
+      activeresource (= 3.0.20)
+      activesupport (= 3.0.20)
+      bundler (~> 1.0)
+      railties (= 3.0.20)
+    railties (3.0.20)
+      actionpack (= 3.0.20)
+      activesupport (= 3.0.20)
+      rake (>= 0.8.7)
+      rdoc (~> 3.4)
+      thor (~> 0.14.4)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    abstract (1.0.0)
+    activerecord-jdbc-adapter (1.2.5)
+    activerecord-jdbcmysql-adapter (1.2.5)
+      activerecord-jdbc-adapter (~> 1.2.5)
+      jdbc-mysql (~> 5.1.0)
     addressable (2.3.2)
     annotate (2.5.0)
       rake
@@ -95,8 +115,8 @@ GEM
     jruby-rack (1.1.12)
     jruby-rack-worker (0.9.1)
       jruby-rack (>= 1.1.10)
-    json (1.7.6)
-    json (1.7.6-java)
+    json (1.7.7)
+    json (1.7.7-java)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -114,7 +134,7 @@ GEM
     memcache-client (1.8.5)
     metaclass (0.0.1)
     method_source (0.8.1)
-    mime-types (1.19)
+    mime-types (1.21)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
@@ -140,19 +160,11 @@ GEM
       spoon (~> 0.0)
     pry-rails (0.2.2)
       pry (>= 0.9.10)
-    rack (1.2.7)
+    rack (1.2.8)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
       rack (>= 1.0)
-    rails (3.0.20)
-      actionmailer (= 3.0.20)
-      actionpack (= 3.0.20)
-      activerecord (= 3.0.20)
-      activeresource (= 3.0.20)
-      activesupport (= 3.0.20)
-      bundler (~> 1.0)
-      railties (= 3.0.20)
     rails_best_practices (1.13.2)
       activesupport
       awesome_print
@@ -161,16 +173,10 @@ GEM
       erubis
       i18n
       progressbar
-    railties (3.0.20)
-      actionpack (= 3.0.20)
-      activesupport (= 3.0.20)
-      rake (>= 0.8.7)
-      rdoc (~> 3.4)
-      thor (~> 0.14.4)
     raindrops (0.10.0)
     rake (10.0.3)
     rb-fsevent (0.9.3)
-    rdoc (3.12)
+    rdoc (3.12.2)
       json (~> 1.4)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
@@ -207,7 +213,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.35)
+    tzinfo (0.3.36)
     unicorn (4.5.0)
       kgio (~> 2.6)
       rack
@@ -251,7 +257,7 @@ DEPENDENCIES
   mysql2 (< 0.3)
   paperclip
   pry-rails
-  rails (= 3.0.20)
+  rails!
   rails_best_practices
   rb-fsevent (~> 0.9.1)
   rspec-rails
