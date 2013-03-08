@@ -7,7 +7,6 @@ class UserSessionsMailer < ActionMailer::Base
   # @param [User] user the email recipient
   # @param [String] password the new password
   def reset_password(user, password)
-  	binding.pry
     @password = password
     mail(:to => user.email, :subject => "VOC Tool Password Reset")
   end
