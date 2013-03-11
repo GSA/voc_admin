@@ -3,6 +3,9 @@
 # Base Controller class; integrates Authlogic and provides gate keeper
 # before_filter functions.
 class ApplicationController < ActionController::Base
+  include OpenAmLib
+  OpenAmLib.openam_instance=OAM
+
   protect_from_forgery
   before_filter :require_user
   helper_method :current_user_session, :current_user
@@ -48,5 +51,10 @@ class ApplicationController < ActionController::Base
   def get_survey_version
     @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
+  end
+
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default) 
+    session[:return_to] = nil
   end
 end

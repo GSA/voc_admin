@@ -18,8 +18,9 @@ FactoryGirl.define do
     f_name                  "Test"
     sequence(:l_name)       { |n| "User-#{n}"}
     email                   { "#{f_name}.#{l_name}@example.com" }
-    password                "password"
-    password_confirmation   "password"
+    # password                "password"
+    # password_confirmation   "password"
+    hhs_id                  "8675309"
 
     trait :admin do
       role                  { Role::ADMIN }
