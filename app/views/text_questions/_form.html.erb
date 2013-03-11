@@ -1,10 +1,10 @@
 <%= form_for [survey, survey_version, text_question], :remote => true do |f| %>
 
-	<p>
-		Answer Type: 
-		<%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
-		<%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :area_radio_button, "Area" %>
-	</p>
+	<fieldset id="inmodal">
+		<legend>Answer Type:</legend> 
+		<%= f.radio_button :answer_type, "field", :id => "text_question_field_radio_button" %><%= f.label :field_radio_button, "Field" %>
+		<%= f.radio_button :answer_type, "area", :id => "text_question_area_radio_button" %><%= f.label :area_radio_button, "Area" %>
+	</fieldset>
   <%= f.label :answer_size, "Answer Size: " %>
   <%= f.select :answer_size, options_for_select( [ ["50 Characters", 50], ["75 Characters", 75], ["100 Characters", 100] ], text_question.answer_size) %>
   <%= f.label :row_size, "Row Size: ", :class => "HiddenLabel", :for=>"RowCountSelect" %>

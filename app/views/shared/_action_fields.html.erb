@@ -2,16 +2,16 @@
   <%= f.label :display_field_id, "Update" %>
   <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
 	<br />
-	<%= f.label :value, " with "%>
+	<%= label_tag :value_target, " with "%>
 	<%= f.hidden_field :value_type, :value => f.object.value_type || "Text" %>
 
 	<%= select_tag :value_target , options_for_select(survey_version.options_for_action_select), :include_blank => true, :class => "ActionTargetSelect" %>
-	<span>or</span>
 
-	<%= text_field_tag :value_text, nil ,{:class => "ActionManualValue"} %>
+	<%= label_tag :value_text, "or", {:class => "actasspan"} %>
+	<%= text_field_tag :value_text, f.object.value, {:class => "ActionManualValue"} %>
 	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
 
-	<%= f.hidden_field :_destroy, :value => "", :class => "db_action_delete" %>
+	<%= f.hidden_field :_destroy, :value => false, :id => "destroy_db_action" %>
 	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
 </div>
 <br/>
