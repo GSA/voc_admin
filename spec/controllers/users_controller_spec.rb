@@ -45,8 +45,9 @@ describe UsersController do
     it "create action should redirect when model is valid" do
       post :create, :user => {
         email: "user@example.com",
-        password: "password",
-        password_confirmation: "password",
+        hhs_id: "8675309",
+        # password: "password",
+        # password_confirmation: "password",
         f_name: "user",
         l_name: "test"
       }

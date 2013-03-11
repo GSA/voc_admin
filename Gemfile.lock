@@ -104,6 +104,9 @@ GEM
     guard-rspec (2.3.3)
       guard (>= 1.1)
       rspec (~> 2.11)
+    httparty (0.10.2)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.5.0)
     jdbc-mysql (5.1.22)
     jquery-rails (2.1.4)
@@ -138,6 +141,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
+    multi_xml (0.5.3)
     mysql2 (0.2.18)
     nokogiri (1.5.6)
     nokogiri (1.5.6-java)
@@ -247,6 +251,7 @@ DEPENDENCIES
   factory_girl_rails
   growl
   guard-rspec
+  httparty
   jdbc-mysql
   jquery-rails
   jruby-openssl

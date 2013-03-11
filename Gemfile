@@ -12,6 +12,7 @@ gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false
+gem 'httparty'
 
 platform :ruby do
   gem 'unicorn-rails'

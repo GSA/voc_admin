@@ -2,13 +2,17 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :f_name, :l_name, :password, :email, :password_confirmation, :site_ids, :role_id
+  attr_accessible :f_name, :l_name, :password, :email, :password_confirmation, :site_ids, :role_id, :hhs_id
 
   has_many :site_users
   has_many :sites,      :through => :site_users
   belongs_to :role
 
-  acts_as_authentic
+  acts_as_authentic do |c|
+    c.validate_password_field=false
+    c.ignore_blank_passwords=true
+    c.require_password_confirmation = false
+  end
 
   validates :email,     :presence => true
   validates :f_name,    :presence => true

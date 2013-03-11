@@ -5,7 +5,8 @@ describe SurveyResponsesController do
 
   before do
     activate_authlogic
-    UserSession.create User.create(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "example", :l_name => "user")
+    # user = User.create(email: "email@example.com", password: "password", password_confirmation: "password", f_name: "example", l_name: "user")
+    user = User.create(email: "email@example.com", hhs_id: "8675309", f_name: "example", l_name: "user")
   end
 
   def valid_attributes

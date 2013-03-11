@@ -31,23 +31,12 @@
 	  <div class="right_side">
 	  	<%= f.text_field :email %>
 	  </div>
-		<br />
-		<% if @user.new_record? || @user == @current_user %>
-			<div class="left_side">
-			  <%= f.label :password, "Password: " %>
-		  </div>
-		  <div class="right_side">
-		  	<%= f.password_field :password%>
-		  </div>
-		  <br />
-		  <div class="left_side">
-			  <%= f.label :password_confirmation, "Password Confirmation: " %>
-		  </div>
-		  <div class="right_side">
-		  	<%= f.password_field :password_confirmation%>
-		  </div>
-		  <br />
-		<% end -%>
+	  <div class="left_side">
+	  	<%= f.label :hhs_id, "HHS ID: " %>
+	  </div>
+	  <div class="right_side">
+	  	<%= f.text_field :hhs_id %>
+	  </div>
 
 	  <% if @current_user.admin? %>
 			<div class="left_side">
