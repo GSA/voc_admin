@@ -10,7 +10,7 @@
 			<%= f.label :site_id, "Site: " %>
 		</div>
 		<div class="right_side">
-			<%= f.collection_select :site_id, (current_user.admin? ? Site.all : current_user.sites), :id, :name, include_blank: true %>
+			<%= f.collection_select :site_id, sorted_site_list, :id, :name, include_blank: true %>
 		</div>
 		<br />
 		<div class="left_side">

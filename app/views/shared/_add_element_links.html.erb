@@ -12,5 +12,5 @@
 <% end %>
 
 <div class="surveyNav1">
-	<%= link_to "Insert Page Here", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:page_number => survey_version.pages.count + 1}), :remote => true, :method => :post, :class=>"newlink link_to_new_page" %>
+	<%= link_to "Add New Page", survey_survey_version_pages_path(survey_version.survey, survey_version, :page => {:page_number => survey_version.pages.count + 1}), :remote => true, :method => :post, :class=>"newlink link_to_new_page" %>
 </div> 
