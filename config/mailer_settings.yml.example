@@ -1,10 +1,21 @@
-# Example mailer_settings.yml layout
-#
+# Example mailer_settings.yml layouts, showing configuration for
+# sendmail or SMTP connections
+
 # development:
+#   raise_delivery_errors: false
+#   default_url_options:
+#     host: 'dev.example.com' # required parameter, determines FROM address
+#   delivery_method: :sendmail
+
+# production:
+#   raise_delivery_errors: false
+#   default_url_options:
+#     host: 'example.com' # required parameter, determines FROM address
+#   delivery_method: :smtp
 #   smtp_settings:
 #     :address: 'smtp.example.com'
 #     :port: 27
-#     :domain: 'example.com'
+#     :domain: 'example.com' # if a HELO / EHLO must be sent
 #     :user_name: 'smtp_user_name'
 #     :password: 'super_secure_password'
 #     :authentication: 'login'
