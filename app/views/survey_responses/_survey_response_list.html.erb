@@ -8,7 +8,7 @@
 	<br />
 	<div class="pageNav">
 		<div class="inline">
-      <%= form_tag survey_responses_path, :method => :get, :id => "simple_search_form" do %>
+      <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
         <%= hidden_field_tag :survey_version_id, version.id, :id => nil %>
         <div class="hidden_label"><%= label_tag :simple_search, "Search:" %></div>
         <%= text_field_tag :simple_search, params[:simple_search] %>
