@@ -82,15 +82,23 @@ class SurveyVersion < ActiveRecord::Base
     # when the Export instance is created.
     file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{self.survey.name[0..10]}-#{self.version_number}.csv"
     CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
-      csv << ["Date", "Page URL"].concat((custom_view || self).display_fields.map(&:name))
+
+      unless custom_view.present?
+        display_field_headers = self.display_fields.order("display_order asc").map(&:name)
+      else
+        display_field_headers = custom_view.ordered_display_fields.map(&:name)
+      end
+      csv << ["Date", "Page URL"].concat(display_field_headers)
 
       survey_responses.find_in_batches do |responses|
         responses.each do |response|
           if custom_view.present?
-            csv << [response.created_at, response.page_url].concat(response.display_field_values.where(:display_field_id => custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")})
+            response_record = response.display_field_values.where(:display_field_id => custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
           else
-            csv << [response.created_at, response.page_url].concat(response.display_field_values.includes(:display_field).order("display_fields.display_order asc").map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")})
+            response_record = response.display_field_values.includes(:display_field).order("display_fields.display_order asc").map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
           end
+
+          csv << [response.created_at, response.page_url].concat(response_record)
         end
       end
     end
