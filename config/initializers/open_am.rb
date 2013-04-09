@@ -1,1 +1,0 @@
-OAM = OpenAmLib::OpenAm.new

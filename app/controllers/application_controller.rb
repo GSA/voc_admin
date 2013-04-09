@@ -3,8 +3,6 @@
 # Base Controller class; integrates Authlogic and provides gate keeper
 # before_filter functions.
 class ApplicationController < ActionController::Base
-  include OpenAmLib
-  OpenAmLib.openam_instance=OAM
 
   protect_from_forgery
   before_filter :require_user

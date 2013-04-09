@@ -3,20 +3,23 @@
 # Manages the UserSession lifecycle. Also provides password
 # reset functionality.
 class UserSessionsController < ApplicationController
+
   skip_before_filter :require_user, :only => [:new, :create, :reset_password, :do_pw_reset]
   before_filter :redirect_if_logged_in, :only => :new
 
 	# GET    /user_sessions/new(.:format)
   def new
-    token_good, user_info = authenticate_token(request, nil, true) 
-    if token_good == true
-      user = User.find_by_hhs_id(sso_user_hhs_id)
+    am = OpenAm.new(request)
+    if am.authenticate
+      user = User.find_by_hhs_id(am.user_id)
       if user
         UserSession.create(user,true)
         redirect_back_or_default surveys_path              
       else
         render :unauthorized
       end
+    else
+      redirect_to SSO_OPTIONS['opensso_id_location']
     end
   end
 
@@ -38,7 +41,11 @@ class UserSessionsController < ApplicationController
   def destroy
     flash[:notice] = "Logout successful"
     current_user_session.destroy if current_user_session
-    logout(true)
+
+    am = OpenAm.new(request)
+    am.logout
+
+    redirect_to SSO_OPTIONS['opensso_id_location']
   end
 
   # def destroy

@@ -1,0 +1,1 @@
+SSO_OPTIONS = YAML.load(File.read("#{Rails.root}/config/sso_config.yml"))
