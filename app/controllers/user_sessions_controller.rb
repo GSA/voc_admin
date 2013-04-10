@@ -11,8 +11,7 @@ class UserSessionsController < ApplicationController
   def new
     am = OpenAm.new(request)
     if am.authenticate
-      user = User.find_by_hhs_id(am.user_id)
-      if user
+      if user = User.find_by_hhs_id(am.user_id)
         UserSession.create(user,true)
         redirect_back_or_default surveys_path              
       else
