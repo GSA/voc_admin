@@ -22,7 +22,6 @@
 #
 #   redirect_to SSO_OPTIONS['opensso_id_location']
 
-
 class OpenAm
   include HTTParty
 
