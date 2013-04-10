@@ -1,16 +1,27 @@
-# Direct use, authentication:
+# New:
 # 
-# am = OpenAm.new(request)
-# if am.authenticate
-#   if user = User.find_by_hhs_id(am.user_id)
-#     UserSession.create(user,true)
-#     redirect_back_or_default surveys_path              
+#   am = OpenAm.new(request)
+#   if am.authenticate
+#     if user = User.find_by_hhs_id(am.user_id)
+#       UserSession.create(user,true)
+#       redirect_back_or_default surveys_path              
+#     else
+#       render :unauthorized
+#     end
 #   else
-#     render :unauthorized
+#     redirect_to SSO_OPTIONS['opensso_id_location']
 #   end
-# else
+#
+# Destroy:
+#
+#   flash[:notice] = "Logout successful"
+#   current_user_session.destroy if current_user_session
+#
+#   am = OpenAm.new(request)
+#   am.logout
+#
 #   redirect_to SSO_OPTIONS['opensso_id_location']
-# end
+
 
 class OpenAm
   include HTTParty
