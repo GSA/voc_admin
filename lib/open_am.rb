@@ -38,7 +38,7 @@ class OpenAm
   
   # Upon authentication, there's either an HHS ID or a
   # reason why there isn't
-  attr_accessor :user_id, :failure_reason
+  attr_accessor :user_id, :user_roles, :failure_reason
 
   # Excuses...
   FAILURE_REASON_COOKIE = :cookie
@@ -65,7 +65,7 @@ class OpenAm
       return false
     end
 
-    @user_id = user_hhs_id
+    set_user_attributes
 
     # 3. Is there an HHS ID to return?
     # (safety: fail if we don't fetch HHS ID properly;
@@ -77,6 +77,15 @@ class OpenAm
 
     # Authenticated!  @user_id will now return a sane value (probably)
     true
+  end
+
+  # ENDPOINT: has_roles
+  # accepts a string, multiple strings, or an array of strings as parameter(s)
+  def has_roles(*roles)
+    roles_array = roles.flatten
+
+    # the intersection of desired roles and all user roles should equal desired roles
+    (roles_array & @user_roles) == roles_array
   end
 
   # ENDPOINT: logout
@@ -100,22 +109,25 @@ class OpenAm
   end
 
   # Gets the valid user's details and plucks HHS ID
-  def user_hhs_id
+  def set_user_attributes
     self.class.cookies({ COOKIE_NAME => token_cookie })
     response = self.class.post(USER_ATTRIBUTES_PATH, {:subjectid => token_cookie})
 
     attribute_name = ''
-    opensso_user = Hash.new
+    opensso_user = { "roles" => [] }
 
     lines = response.body.split(/\n/)
     lines.each do |line|
-      if line.match(/^userdetails.attribute.name=/)
+      if line.match(/^userdetails.role=id=/)
+        opensso_user["roles"] << line.gsub(/^userdetails.role=id=/, '').strip.split(",")[0]
+      elsif line.match(/^userdetails.attribute.name=/)
         attribute_name = line.gsub(/^userdetails.attribute.name=/, '').strip
       elsif line.match(/^userdetails.attribute.value=/)
         opensso_user[attribute_name] = line.gsub(/^userdetails.attribute.value=/, '').strip
       end
     end
 
-    opensso_user['employeenumber']
+    @user_id = opensso_user['employeenumber']
+    @user_roles = opensso_user['roles']
   end
 end
