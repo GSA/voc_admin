@@ -45,21 +45,25 @@ class OpenAm
   FAILURE_REASON_TOKEN = :token
   FAILURE_REASON_ID = :id
 
-  # Capture the HTTP Request object
-  def initialize(request)
-    @request = request
+  # # Capture the HTTP Request object
+  # def initialize(request)
+  #   @request = request
+  # end
+
+  def initialize(token)
+    @token = token
   end
 
   # ENDPOINT: authenticate
   def authenticate
     
-    # 1. Is there a cookie?
-    unless token_cookie
-      @failure_reason = FAILURE_REASON_COOKIE
-      return false
-    end
+    # # 1. Is there a cookie?
+    # unless token_cookie
+    #   @failure_reason = FAILURE_REASON_COOKIE
+    #   return false
+    # end
 
-    # 2. Is the cookie's token valid on AMS?
+    # 1. Is the token valid on AMS?
     unless validate_token
       @failure_reason = FAILURE_REASON_TOKEN
       return false
@@ -67,7 +71,7 @@ class OpenAm
 
     set_user_attributes
 
-    # 3. Is there an HHS ID to return?
+    # 2. Is there an HHS ID to return?
     # (safety: fail if we don't fetch HHS ID properly;
     # this prevents looking up User by nil hhs_id)
     unless @user_id.present?
@@ -91,27 +95,27 @@ class OpenAm
   # ENDPOINT: logout
   def logout
     # Call back to AMS to invalidate the token
-    self.class.cookies({ COOKIE_NAME => token_cookie })
-    self.class.post(LOGOUT_PATH, {:subjectid => token_cookie})
+    self.class.cookies({ COOKIE_NAME => @token })
+    self.class.post(LOGOUT_PATH, {:subjectid => @token})
   end
 
   private
 
-  # Retrieves the cookie from the HTTP Request
-  def token_cookie
-    @token_cookie ||= CGI.unescape(@request.cookies.fetch(COOKIE_NAME, nil).to_s.gsub('+', '%2B')).presence
-  end
+  # # Retrieves the cookie from the HTTP Request
+  # def token_cookie
+  #   @token_cookie ||= CGI.unescape(@request.cookies.fetch(COOKIE_NAME, nil).to_s.gsub('+', '%2B')).presence
+  # end
 
   # Checks the cookie's token with AMS
   def validate_token
-    response = self.class.get("#{VALIDATE_TOKEN_PATH}?tokenid=#{token_cookie}", {})
+    response = self.class.get("#{VALIDATE_TOKEN_PATH}?tokenid=#{@token}", {})
     response.body.split('=').last.strip === 'true'
   end
 
   # Gets the valid user's details and plucks HHS ID
   def set_user_attributes
-    self.class.cookies({ COOKIE_NAME => token_cookie })
-    response = self.class.post(USER_ATTRIBUTES_PATH, {:subjectid => token_cookie})
+    self.class.cookies({ COOKIE_NAME => @token })
+    response = self.class.post(USER_ATTRIBUTES_PATH, {:subjectid => @token})
 
     attribute_name = ''
     opensso_user = { "roles" => [] }
