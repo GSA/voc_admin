@@ -50,9 +50,4 @@ class ApplicationController < ActionController::Base
     @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
   end
-
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default) 
-    session[:return_to] = nil
-  end
 end
