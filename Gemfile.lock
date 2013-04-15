@@ -60,6 +60,11 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
     awesome_print (1.1.0)
+    better_errors (0.7.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
     bouncy-castle-java (1.5.0146.1)
     bourne (1.1.2)
       mocha (= 0.10.5)
@@ -80,6 +85,7 @@ GEM
     colored (1.2)
     daemons (1.1.9)
     database_cleaner (0.9.1)
+    debug_inspector (0.0.2)
     delayed_job (3.0.4)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.3)
@@ -244,6 +250,8 @@ DEPENDENCIES
   activerecord-jdbcmysql-adapter
   annotate
   authlogic
+  better_errors
+  binding_of_caller
   capybara
   daemons
   database_cleaner
