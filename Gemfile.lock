@@ -110,7 +110,7 @@ GEM
     guard-rspec (2.3.3)
       guard (>= 1.1)
       rspec (~> 2.11)
-    httparty (0.10.2)
+    httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     i18n (0.5.0)
@@ -143,14 +143,17 @@ GEM
     memcache-client (1.8.5)
     metaclass (0.0.1)
     method_source (0.8.1)
-    mime-types (1.21)
+    mime-types (1.22)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
-    multi_json (1.5.0)
+    multi_json (1.7.2)
     multi_xml (0.5.3)
     mysql2 (0.2.18)
     nokogiri (1.5.6)
     nokogiri (1.5.6-java)
+    openam (0.1.1)
+      httparty
+      rails (>= 3.0)
     paperclip (3.4.0)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -184,7 +187,7 @@ GEM
       i18n
       progressbar
     raindrops (0.10.0)
-    rake (10.0.3)
+    rake (10.0.4)
     rb-fsevent (0.9.3)
     rdoc (3.12.2)
       json (~> 1.4)
@@ -223,7 +226,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.36)
+    tzinfo (0.3.37)
     unicorn (4.5.0)
       kgio (~> 2.6)
       rack
@@ -268,6 +271,7 @@ DEPENDENCIES
   kaminari
   memcache-client
   mysql2 (< 0.3)
+  openam
   paperclip
   pry-rails
   rails!

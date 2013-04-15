@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'delayed_job_active_record'
 gem 'authlogic'
+gem 'openam'
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false
