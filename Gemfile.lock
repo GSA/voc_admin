@@ -44,6 +44,15 @@ GIT
       rdoc (~> 3.4)
       thor (~> 0.14.4)
 
+GIT
+  remote: https://ctac.unfuddle.com/git/ctac_amssso/
+  revision: ac4fc552c473e568a4e94654f8edf593a432e74a
+  ref: ac4fc55
+  specs:
+    openam (0.1.2)
+      httparty
+      rails (>= 3.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -151,9 +160,6 @@ GEM
     mysql2 (0.2.18)
     nokogiri (1.5.6)
     nokogiri (1.5.6-java)
-    openam (0.1.1)
-      httparty
-      rails (>= 3.0)
     paperclip (3.4.0)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -271,7 +277,7 @@ DEPENDENCIES
   kaminari
   memcache-client
   mysql2 (< 0.3)
-  openam
+  openam!
   paperclip
   pry-rails
   rails!
