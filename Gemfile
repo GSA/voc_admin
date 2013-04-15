@@ -9,7 +9,7 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'delayed_job_active_record'
 gem 'authlogic'
-gem 'openam', :git => 'https://ctac.unfuddle.com/git/ctac_amssso/', :ref => "ac4fc55"
+gem 'openam', :git => "https://ctac.unfuddle.com/git/ctac_amssso/", :ref => 'cdf49f7'
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false
