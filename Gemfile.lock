@@ -46,10 +46,9 @@ GIT
 
 GIT
   remote: https://ctac.unfuddle.com/git/ctac_amssso/
-  revision: cdf49f795ebdf1b4011e6c6f91074ec9126b716f
-  ref: cdf49f7
+  revision: eb0fb1a5623ff2689d1b41540ebce0c7069ce118
   specs:
-    openam (0.1.3)
+    openam (0.2.6)
       httparty
       rails (>= 3.0)
 
