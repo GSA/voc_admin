@@ -1,4 +1,8 @@
 <h1>Display Image</h1>
+
+<% relative_url_root = hostname_and_optional_port %>
+
+
 <div id="surveys">
 	<div class="left_side">
 		Image:
@@ -12,7 +16,9 @@
 		Instructions:
 	</div>
 	<div class="bottom_side">
-		<p>Place the following into a snippet to display image in survey: <%= "<img src='/images/hhs_image_lib/#{@file}'' />" %><%#= "#{image_tag(@file)}" %></p>
+		
+		<p>Place the following into a snippet to display image in survey: <%= "<img src='#{relative_url_root}/images/hhs_image_lib/#{@file}' />" %> 
+		
 	</div>
 </div>
 

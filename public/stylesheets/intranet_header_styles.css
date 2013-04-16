@@ -27,7 +27,7 @@
 #hhsMastHead {
   margin: 0px;
   padding: 0px;
-  background: url(/images/headerBack.jpg);
+  background: url(../images/headerBack.jpg);
   /* Fixes HHS logo bar height at top of page. */
 	height: 61px;
 }
@@ -38,7 +38,7 @@
   top:28px;
   *top: 10px;
   height:21px;
-  background:url(/images/utilityBack.jpg);
+  background:url(../images/utilityBack.jpg);
   padding-right:10px;
   min-width:24em
 }

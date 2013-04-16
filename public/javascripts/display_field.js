@@ -28,7 +28,7 @@ function dropdown_type_actions(){
 	//Flip the default value to a dropdown
 	select_tag = "<select id='display_field_default_value' style='' name='display_field[default_value]'><option value=''>SELECT ONE</option></select>";
 	$('#display_field_default_value').replaceWith(select_tag);
-	//Show default fields + label
+	//Show default fielimageds + label
 	$('#default_value_fields').show();
 	//Show the refresh link
 	$('a#refresh_link').show();

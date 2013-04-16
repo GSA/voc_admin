@@ -8,7 +8,9 @@
 
   <div class="pageLink">
   	<%= link_to "Cancel", survey_survey_versions_path(@survey), :class=>"cancelLink" %>
-  	<%= f.submit "Update Thank You Page", :type => :image, :src=>"/images/Update-Thank-You-Page.png", :alt=>"Update Thank You Page" %>
+  	
+  	<%= image_submit_tag "Update-Thank-You-Page.png", :alt=>"Update Thank You Page" %>
+  	<%#= f.submit "Update Thank You Page", :type => :image, :src=>"/images/Update-Thank-You-Page.png", :alt=>"Update Thank You Page" #%>
   </div>
 <% end %>
 

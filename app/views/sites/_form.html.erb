@@ -30,9 +30,11 @@
 	<div class="pageLink">
 		<%= link_to "Cancel", sites_path, :class => "cancelLink" %>
 		<% if f.object.new_record? %>
-			<%= f.submit "Create Site", :type => :image, :src=>"/images/create-site.png", :alt=>"Create Site" %>
+			<%= image_submit_tag "create-site.png", :alt=>"Create Site" %>
+			<%#= f.submit "Create Site", :type => :image, :src=>"/images/create-site.png", :alt=>"Create Site" #%>
 		<% else %>
-			<%= f.submit "Update Site", :type => :image, :src=>"/images/update-site.png", :alt=>"Update Site" %>
+			<%= image_submit_tag "update-site.png", :alt=>"Update Site" %>
+			<%#= f.submit "Update Site", :type => :image, :src=>"/images/update-site.png", :alt=>"Update Site" #%>
 		<% end %>
 	</div>
 <% end %>

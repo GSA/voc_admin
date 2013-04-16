@@ -1,6 +1,10 @@
+# Set RAILS_RELATIVE_URL_ROOT if not installing as root application on a domain
+ENV['RAILS_RELATIVE_URL_ROOT'] = "/vocsub"
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+
+
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -46,5 +50,6 @@ module CommentToolApp
 
     # This is suppose to cause the dig tag "field with errors" from breaking the styling.
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
+    # config.action_controller.relative_url_root = '/vocsub'
   end
 end

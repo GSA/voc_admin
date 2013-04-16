@@ -73,9 +73,11 @@
 
 	<p class="submitButton">
 		<% if f.object.new_record? %>
-			<%= f.submit "Create Rule", :type => :image, :src=>"/images/create-rule.png", :alt=>"Create Rule" %>
+			<%= image_submit_tag "create-rule.png", :alt=>"Create Rule" %>
+			<%#= f.submit "Create Rule", :type => :image, :src=>"/images/create-rule.png", :alt=>"Create Rule" #%>
 		<% else %>
-			<%= f.submit "Update Rule", :type => :image, :src=>"/images/update-rule.png", :alt=>"Update Rule" %>
+			<%= image_submit_tag "update-rule.png", :alt=>"Update Rule" %>
+			<%#= f.submit "Update Rule", :type => :image, :src=>"/images/update-rule.png", :alt=>"Update Rule" #%>
 		<% end %>
 	</p>
 <% end -%>
