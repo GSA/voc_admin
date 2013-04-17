@@ -14,7 +14,7 @@ Warbler::Config.new do |config|
   config.dirs = %w(app db config lib log vendor tmp)
 
   # Additional files/directories to include, above those in config.dirs
-  config.includes = FileList["Rakefile", "war_*.bat"]
+  config.includes = FileList["Rakefile", "war_*.bat", "war_*.sh"]
 
   # Additional files/directories to exclude
   # config.excludes = FileList["lib/tasks/*"]
