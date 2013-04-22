@@ -46,9 +46,9 @@ GIT
 
 GIT
   remote: https://ctac.unfuddle.com/git/ctac_amssso/
-  revision: eb0fb1a5623ff2689d1b41540ebce0c7069ce118
+  revision: 0dc6548390b7c0a17959f1dd3aefd9223acdb23c
   specs:
-    openam (0.2.6)
+    openam (0.2.8)
       httparty
       rails (>= 3.0)
 
@@ -151,7 +151,7 @@ GEM
     memcache-client (1.8.5)
     metaclass (0.0.1)
     method_source (0.8.1)
-    mime-types (1.22)
+    mime-types (1.23)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.7.2)
