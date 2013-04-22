@@ -1,4 +1,5 @@
 <h1>Display Image</h1>
+
 <div id="surveys">
 	<div class="left_side">
 		Image:
@@ -12,7 +13,9 @@
 		Instructions:
 	</div>
 	<div class="bottom_side">
-		<p>Place the following into a snippet to display image in survey: <%= "<img src='/images/hhs_image_lib/#{@file}'' />" %><%#= "#{image_tag(@file)}" %></p>
+		
+		<p>Place the following into a snippet to display the image in a survey: <%= "<img src='#{root_path}images/hhs_image_lib/#{@file}' />" %> 
+		
 	</div>
 </div>
 

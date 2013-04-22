@@ -36,9 +36,11 @@
 	<div class="pageLink">
 		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close" %>
 		<% if f.object.new_record? %>
-			<%= f.submit "Create Question", :type => :image, :src=>"/images/create-question.png", :alt=>"Create Question" %>
+		    <%= image_submit_tag "create-question.png", :alt=>"Create Question" %>
+			<%#= f.submit "Create Question", :type => :image, :src=>"images/create-question.png", :alt=>"Create Question"# %>
 		<% else %>
-			<%= f.submit "Update Question", :type => :image, :src=>"/images/update-question.png", :alt=>"Update Question" %>
+			<%= image_submit_tag "update-question.png", :alt=>"Update Question" %>
+			<%#= f.submit "Update Question", :type => :image, :src=>"images/update-question.png", :alt=>"Update Question" #%>
 		<% end %>
 	</div>
 <% end -%>

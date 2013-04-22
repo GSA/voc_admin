@@ -1,3 +1,9 @@
+# format of the file is as follows:
+
+# environment:
+#   host: this is the hostname and/or port of the PUBLIC application
+#   relative_url: 
+
 development:
   host: localhost:3000
 

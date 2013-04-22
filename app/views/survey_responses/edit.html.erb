@@ -42,7 +42,9 @@
 	<% end %>
 	</div>
 	<p class="submitButton">
-		<%= f.submit "Submit", :type => :image, :src=>"/images/update-record.png", :alt=>"Submit" %>
+		<%= image_submit_tag "update-record.png", :alt=>"Submit" %>
+		
+		<%#= f.submit "Submit", :type => :image, :src=>"images/update-record.png", :alt=>"Submit" #%>
 	</p>
 	<div class="align_cancel">
 		<%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"cancelLink" %>
