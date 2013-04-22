@@ -56,7 +56,7 @@ $(function(){
 
     /* Make the pagination links ajax calls */
     $("div.pagination a").live('ajax:beforeSend', function(){
-        $("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
+        $("#survey_response_list").html("<img src='images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
     });
 
     $(".edit_display_field_value").live('submit', function(){
@@ -74,7 +74,7 @@ $(function(){
             $("#survey_response_list").html(old_html);
         }, 5000);
 
-        $("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
+        $("#survey_response_list").html("<img src='images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
     });
 
     /* If the search AJAX request comes back, turn off the timer to replace with stale content. */
@@ -140,7 +140,7 @@ function getSurveyDisplayTable(survey_version_id, order_column, direction, custo
         data: data_string, //"survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
         dataType: "script",
         beforeSend: function(){
-            $("#survey_response_list").html("<img src='/images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
+            $("#survey_response_list").html("<img src='images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
         }
     })
 }
@@ -171,7 +171,7 @@ function getUrlParams(){
 
 /* Make an ajax call to get the list of versions for a survey and populate the select box */
 function getSurveyVersionList(survey_id){
-    var jqxhr = $.getJSON("/surveys/" + survey_id + "/survey_versions/", {ajax:'true'}, function(j){
+    var jqxhr = $.getJSON("surveys/" + survey_id + "/survey_versions/", {ajax:'true'}, function(j){
         var options = '';
         for(var i = 0; i < j.length ; i++){
             options += '<option value="' + j[i].value + '">' + j[i].display + '</option>';

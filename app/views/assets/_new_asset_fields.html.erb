@@ -10,6 +10,7 @@
   <br/>
   <div class="pageLink">
 		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close"%>
-  	<%= f.submit "Create Snippet", :type => :image, :src=>"/images/create-snippet.png", :alt=>"Create Snippet" %>
+    <%= image_submit_tag "create-snippet.png", :alt=>"Create Snippet" %>
+  	<%#= f.submit "Create Snippet", :type => :image, :src=>"images/create-snippet.png", :alt=>"Create Snippet" #%>
   </div>
 <% end -%>

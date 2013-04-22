@@ -41,7 +41,7 @@
 	  	<td class="col3"><%= link_to rule.name, [@survey, @survey_version, rule] %></td>
 	  	<td class="col4"><%= link_to image_tag('arrow_up_larger.png', :alt=>"move up"), [:decrement_rule_order, @survey, @survey_version, rule], :method => :put %></td>
 			<td class="col5"><%= link_to image_tag('arrow_down_larger.png', :alt=>"move down"), [:increment_rule_order, @survey, @survey_version, rule], :method => :put %></td>
-	  	<td class="col6"><%= link_to_function image_tag("run.png", :alt=>"Run Rule"), "run_rule(#{rule.id}, this)", :class=>"runLink" %></td>
+	  	<td class="col6"><%= link_to_function image_tag("run.png", :alt=>"Run Rule"), "run_rule('#{do_now_rule_path(rule.id)}', '#{check_do_now_rules_path}', this)", :class=>"runLink" %></td>
 			<td class="col7"><%= link_to image_tag("delete.png", :alt=>"Delete"), [@survey, @survey_version, rule], :method => :delete, :class=>"deleteLink" %></td>
 	  </tr>
 	<% end %>

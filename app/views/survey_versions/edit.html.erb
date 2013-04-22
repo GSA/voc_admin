@@ -30,7 +30,10 @@
   	<%= render :partial => 'question_list', :locals => {:survey_version => @survey_version, :survey => @survey} %>
   </div>
   
-  <div id="spinner_overlay"><img src='/images/ajax-loader.gif' id='ajax_spinner_question_list' alt="Spinner" /></div>
+  <div id="spinner_overlay">
+  	<%#= image_tag("ajax-loader.gif") #%>
+  	<img src='/images/ajax-loader.gif' id='ajax_spinner_question_list' alt="Spinner" />
+  </div>
 
 </div>
 

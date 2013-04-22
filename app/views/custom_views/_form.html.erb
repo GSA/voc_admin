@@ -99,9 +99,15 @@
 
 	<div class="submitButton">
 		<% if f.object.new_record? %>
-			<%= f.submit "Create Custom View", :type => :image, :src=>"/images/create-view.png", :alt=>"Create Custom View" %>
+
+			<%= image_submit_tag "create-view.png", :alt=>"Create Custom View" %>
+			<%#= f.submit "Create Custom View", :type => :image, :src=>"images/create-view.png", :alt=>"Create Custom View" #%>
+
+
 		<% else %>
-			<%= f.submit "Update Custom View", :type => :image, :src=>"/images/update-view.png", :alt=>"Update Custom View" %>
+
+	     	<%= image_submit_tag "update-view.png", :alt=>"Update Custom View" %>
+			<%#= f.submit "Update Custom View", :type => :image, :src=>"images/update-view.png", :alt=>"Update Custom View"# %>
 		<% end %>
 	</div>
 <% end %>

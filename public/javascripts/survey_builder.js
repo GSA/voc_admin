@@ -11,6 +11,7 @@ $(function(){
 	
 	/* Selecting the checkbox to enable flow control at the page level should remove the disabled flag from the select box
 	 * Unchecking the box should disable the select menu and clear the next_page_id from the page model
+	 * 4/22/2013 - Dead code branch?
 	 */
 	$(".page_level_flow_control").live("change", function () {
 		if( $(this).attr('checked') == true ) {

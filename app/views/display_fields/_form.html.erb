@@ -43,8 +43,10 @@
 
 	<p class="submitButton">
 		<% if f.object.new_record? %>
-			<%= f.submit "Create Display Field", :type => :image, :src=>"/images/create-display.png", :alt=>"Create Display Field" %>
+			 <%= image_submit_tag "create-display.png", :alt=>"Create Display Field" %>
+			<%#= f.submit "Create Display Field", :type => :image, :src=>"/images/create-display.png", :alt=>"Create Display Field" #%>
 		<% else %>
-			<%= f.submit "Update Display Field", :type => :image, :src=>"/images/update-display.png", :alt=>"Edit Display Field" %>
+			<%= image_submit_tag "update-display.png", :alt=>"Edit Display Field" %>
+			<%#= f.submit "Update Display Field", :type => :image, :src=>"/images/update-display.png", :alt=>"Edit Display Field" #%>
 		<% end %>
 	</p>

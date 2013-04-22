@@ -8,6 +8,7 @@
 	<br/>
   <div class="pageLink">
   	<%= link_to "Cancel", nil, :class => "cancelLink" %>
-  	<%= f.submit "Update Snippet", :type => :image, :src=>"/images/update-snippet.png", :alt=>"Update Snippet" %>
+    <%= image_submit_tag "update-snippet.png", :alt=>"Update Snippet" %>
+  	<%#= f.submit "Update Snippet", :type => :image, :src=>"images/update-snippet.png", :alt=>"Update Snippet" #%>
   </div>
 <% end -%>

@@ -67,20 +67,22 @@ $(function(){
     });
 });
 
-function run_rule(rule_id, source){
+function run_rule(do_rule_url, check_do_now_url, source){
+
 	$(source).hide();
-	$.ajax({url: "/rules/"+rule_id+"/do_now",
+	$.ajax({url: do_rule_url,
 			success: function(data){
 				//set waiting text
 				$(source).after("<div>Please Wait</div>");
 				
 				//setup timer to check for response
-				setTimeout(function(){check_run_rule(data, source)}, 5000);
+				setTimeout(function(){check_run_rule(check_do_now_url, data, source)}, 5000);
 			}});
 }
 
-function check_run_rule(job_id, source){
-	$.ajax({url: "/rules/check_do_now?job_id="+job_id,
+function check_run_rule(check_do_now_url, job_id, source){ 
+
+	$.ajax({url: check_do_now_url + "?job_id=" + job_id,
 		success: function(data){
 			//set waiting text
 			if(data == "done"){
@@ -89,7 +91,8 @@ function check_run_rule(job_id, source){
 			}
 			else
 			{
-				setTimeout(function(){check_run_rule(job_id, source)}, 5000);
+				setTimeout(function(){check_run_rule(check_do_now_url, job_id, source)}, 5000);
 			}
-		}});
+		}}
+		);
 }

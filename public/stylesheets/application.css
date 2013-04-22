@@ -158,11 +158,11 @@ a.manage-inline:hover {
 	text-decoration: none;
 }
 a.newlink {
-	background: url(/images/clone.png) no-repeat;
+	background: url(../images/clone.png) no-repeat;
 	padding: 0px 0px 0px 12px;
 }
 a.newlink:hover {
-	background: url(/images/clone_hover.png) no-repeat;
+	background: url(../images/clone_hover.png) no-repeat;
 	padding: 0px 0px 0px 12px;
 }
 .page-nav {
@@ -218,11 +218,15 @@ td a:hover {
 	display: block;
 	text-align: right;
 	margin: 15px 0px 0px;
+    
+
 }
+
+
 
 /*** Header ****/
 #header {
-	background: url(/images/header_background.png) no-repeat top left transparent;
+	background: url(../images/header_background.png) no-repeat top left transparent;
 	height: 115px;
 	margin: 0px;
 }
@@ -251,7 +255,7 @@ p.user {
 
 /**** Navigation ****/
 #navigation {
-	background: url(/images/nav_background.png) repeat-x top left transparent;
+	background: url(../images/nav_background.png) repeat-x top left transparent;
 	height: 43px;
 	*height: 28px;
 	margin: -5px 0px 0px;
@@ -898,7 +902,7 @@ fieldset#inmodal legend {
 
 /**** Footer ****/
 #footer {
-	background: url(/images/footer_background.png) no-repeat top left transparent;
+	background: url(../images/footer_background.png) no-repeat top left transparent;
 	height: 55px;
 	margin: 0px;
 	padding: 25px 0px 0px;
@@ -1081,3 +1085,17 @@ span.pageNum {
     width: 1em;
     overflow: hidden;
 }
+
+
+.deleteLink {  background: url(../images/delete.png)} 
+
+.deleteLink :hover{  background: url(../images/delete_hover.png)} 
+
+
+.copyLink {  background: url(../images/clone.png)} 
+
+.copyLink :hover{  background: url(../images/clone_hover.png)} 
+
+.runLink {  background: url(../images/run.png)} 
+
+.runLink :hover{  background: url(../images/run_hover.png)} 
