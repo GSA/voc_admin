@@ -1,10 +1,8 @@
 # Set RAILS_RELATIVE_URL_ROOT if not installing as root application on a domain
-ENV['RAILS_RELATIVE_URL_ROOT'] = "/vocsub"
+#ENV['RAILS_RELATIVE_URL_ROOT'] = "/vocsub"
+
 require File.expand_path('../boot', __FILE__)
-
 require 'rails/all'
-
-
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
