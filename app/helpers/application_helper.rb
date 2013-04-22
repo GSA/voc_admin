@@ -58,10 +58,4 @@ module ApplicationHelper
 
     link_to title.html_safe, {:sort => column, :direction => direction}
   end
-
-  def relative_url_path
-    # base_path = "#{request.protocol}#{request.host}"
-    # base_path += ":#{request.port}" if request.port 
-    base_path = "#{APP_CONFIG['relative_url']}" if APP_CONFIG['relative_url']
-  end
 end
