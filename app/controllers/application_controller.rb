@@ -38,8 +38,6 @@ class ApplicationController < ActionController::Base
   def require_user
     logger.debug "ApplicationController::require_user"
     unless current_user
-      session[:return_to] = request.env["REQUEST_URI"]
-
       flash[:error] = "You must be logged in to access this page."
       redirect_to login_url
       return false
