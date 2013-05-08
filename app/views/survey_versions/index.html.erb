@@ -80,29 +80,25 @@
 
 <div id="survey_info">
 	<div class="top_side">
-		iFrame Instructions:
+		IFRAME Instructions:
 	</div>
 	<div class="bottom_side">
-		<p>To link to published survey version, use: <%= "<iframe src='http://#{APP_CONFIG['host']}/surveys/#{@survey.id}'></iframe>"%></p>
+		<p>To link to published survey version, use: <%= "<iframe src=\"http://#{APP_CONFIG['host']}/surveys/#{@survey.id}\"></iframe>"%></p>
 	</div>
 	<div class="top_side">
 		Javascript Widget Instructions:
 	</div>
 	<div class="bottom_side">
-		<p>Include voc.widget.js, add a div with any ID and class="survey_target", then use:</p>
-		<pre>
-&lt;script type="text/javascript"&gt;
-  new voc.Survey({targetID: "[[ID of the div which will hold the survey]]", surveyID: <%= @survey.id %>}).loadSurvey();
-&lt;/script&gt;
-&lt;noscript&gt;
-  <%= "<iframe src='http://#{APP_CONFIG['host']}/surveys/#{@survey.id}'></iframe>"%>
-&lt;/noscript&gt;
-		</pre>
-	</div>
-	<div class="top_side">
-		Webservice Instructions:
-	</div>
-	<div class="bottom_side">
-		<p><%= @survey.description %></p>
+		<p>1. Add an empty DIV element and define an ID attribute; for example:</p>
+		<pre>&lt;div id="survey_target"&gt;&lt;/div&gt;</pre>
+
+		<p>2. Immediately after the new DIV, add the following for users without JavaScript (the IFRAME version):</p>
+		<pre>&lt;noscript&gt;
+  <%= "<iframe src=\"http://#{APP_CONFIG['host']}/surveys/#{@survey.id}\"></iframe>"%>
+&lt;/noscript&gt;</pre>
+
+		<p>3. Add this line to your JavaScript includes, ensuring the target_id parameter matches the DIV ID attribute:</p>
+		<pre><%= "<script type=\"text/javascript\"
+        src=\"http://#{APP_CONFIG['host']}/widget/widget.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %></pre>
 	</div>
 </div>
