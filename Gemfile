@@ -9,7 +9,9 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'delayed_job_active_record'
 gem 'authlogic'
-gem 'openam', :git => "https://ctac.unfuddle.com/git/ctac_amssso/"
+# openam: add your key to bitbucket per instructions here:
+#  https://confluence.atlassian.com/pages/viewpage.action?pageId=270827678
+gem 'openam', :git => "git@bitbucket.org:ctacdevteam/ams_sso.git"
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false

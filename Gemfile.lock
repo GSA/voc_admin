@@ -45,7 +45,7 @@ GIT
       thor (~> 0.14.4)
 
 GIT
-  remote: https://ctac.unfuddle.com/git/ctac_amssso/
+  remote: git@bitbucket.org:ctacdevteam/ams_sso.git
   revision: 0dc6548390b7c0a17959f1dd3aefd9223acdb23c
   specs:
     openam (0.2.8)
