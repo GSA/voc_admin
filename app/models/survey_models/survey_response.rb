@@ -7,6 +7,7 @@
 # the SurveyResponse links to the RawResponses, which are the historical
 # and unedited responses as entered by the survey taker.
 class SurveyResponse < ActiveRecord::Base
+  include ResqueAsyncRunner
 
   has_many :raw_responses, :dependent => :destroy
   has_many :display_field_values
@@ -26,6 +27,8 @@ class SurveyResponse < ActiveRecord::Base
     joins('INNER JOIN (select * from display_field_values) t1 on t1.survey_response_id = survey_responses.id')
     .where("t1.value LIKE ? ", "%#{search_text}%").select("DISTINCT survey_responses.*")
   end)
+
+  @queue = :response_processing
 
   # perform a fairly ugly join to accomplish the Custom View ordering,
   # while still supporting the original functionality
@@ -65,7 +68,12 @@ class SurveyResponse < ActiveRecord::Base
   # kaminari setting
   paginates_per 10
 
-  # Create a SurveyResponse from the RawResponse.  This is used by Delayed::Job to process the
+  # Wrapper for Resque job worker
+  def self.perform(response, survey_version_id)
+    self.process_response(response, survey_version_id)
+  end
+
+  # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
   # 
   # @param [Hash] response the response parameter hash to process from the controller

@@ -5,6 +5,8 @@ require 'csv'
 # A SurveyVersion is a working copy of a survey.  Only one version may be published (and
 # therefore collecting responses from the public site application) at a time.
 class SurveyVersion < ActiveRecord::Base
+  include ResqueAsyncRunner
+
   belongs_to :survey, :touch => true
   has_many :pages,           :dependent => :destroy
   has_many :survey_elements, :dependent => :destroy

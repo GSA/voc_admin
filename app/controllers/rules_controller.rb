@@ -67,7 +67,7 @@ class RulesController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/do_now(.:format)
   def do_now
     @rule = Rule.find(params[:id])
-    @job_id = @rule.delay.apply_me_all
+    @job_id = @rule.async(:apply_me_all)
 
     render :text => @job_id.id
   end
