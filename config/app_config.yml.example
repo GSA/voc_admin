@@ -6,9 +6,16 @@
 
 development:
   host: localhost:3000
+  redis: localhost:6379
+  redis-expire: 86400
 
 test:
   host: localhost:3000
+  redis: localhost:6379
+  redis-expire: 86400
 
 production:
   host: yourserver.domain.local
+  redis: localhost:6379
+  redis-expire: 86400
+

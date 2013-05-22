@@ -14,6 +14,9 @@
 #
 # DisplayFields are also tracked by CustomViews to determine column ordering.
 class DisplayField < ActiveRecord::Base
+  include ResqueAsyncRunner
+  @queue = :dfs
+
   require 'condition_tester'
 
   has_many :display_field_categories, :dependent => :destroy

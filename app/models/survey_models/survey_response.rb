@@ -8,6 +8,7 @@
 # and unedited responses as entered by the survey taker.
 class SurveyResponse < ActiveRecord::Base
   include ResqueAsyncRunner
+  @queue = :responses
 
   has_many :raw_responses, :dependent => :destroy
   has_many :display_field_values
@@ -27,8 +28,6 @@ class SurveyResponse < ActiveRecord::Base
     joins('INNER JOIN (select * from display_field_values) t1 on t1.survey_response_id = survey_responses.id')
     .where("t1.value LIKE ? ", "%#{search_text}%").select("DISTINCT survey_responses.*")
   end)
-
-  @queue = :response_processing
 
   # perform a fairly ugly join to accomplish the Custom View ordering,
   # while still supporting the original functionality

@@ -5,6 +5,7 @@
 # them between question DisplayFieldValues and custom DisplayFields as requested.
 class Rule < ActiveRecord::Base
   include ResqueAsyncRunner
+  @queue = :rules
 
   has_many :actions, :dependent => :destroy
   has_one  :email_action, :dependent => :destroy
