@@ -22,6 +22,7 @@ gem 'kaminari'
 # NEW: Resque
 gem 'resque'
 gem 'resque_mailer'
+gem 'resque-status'
 gem 'resque_unit', :group => :test
 
 platform :ruby do

@@ -201,6 +201,8 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    resque-status (0.4.1)
+      resque (~> 1.19)
     resque_mailer (2.2.3)
       actionmailer (~> 3.0)
     resque_unit (0.4.4)
@@ -296,6 +298,7 @@ DEPENDENCIES
   rails_best_practices
   rb-fsevent (~> 0.9.1)
   resque
+  resque-status
   resque_mailer
   resque_unit
   rspec-rails
