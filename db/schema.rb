@@ -277,8 +277,6 @@ ActiveRecord::Schema.define(:version => 20130610150503) do
 
   create_table "resqued_jobs", :force => true do |t|
     t.string   "class_name"
-    t.integer  "class_id"
-    t.string   "method_name"
     t.text     "job_arguments", :limit => 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"

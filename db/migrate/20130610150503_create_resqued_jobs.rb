@@ -2,8 +2,6 @@ class CreateResquedJobs < ActiveRecord::Migration
   def self.up
     create_table :resqued_jobs do |t|
       t.string :class_name
-      t.integer :class_id
-      t.string :method_name
       t.text :job_arguments, :limit => 16777215
 
       t.timestamps
