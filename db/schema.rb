@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130311174357) do
+ActiveRecord::Schema.define(:version => 20130610150503) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -274,6 +274,15 @@ ActiveRecord::Schema.define(:version => 20130311174357) do
 
   add_index "response_categories", ["category_id"], :name => "index_response_categories_on_category_id"
   add_index "response_categories", ["survey_version_id"], :name => "index_response_categories_on_survey_version_id"
+
+  create_table "resqued_jobs", :force => true do |t|
+    t.string   "class_name"
+    t.integer  "class_id"
+    t.string   "method_name"
+    t.text     "job_arguments", :limit => 2147483647
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"

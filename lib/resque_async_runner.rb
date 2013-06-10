@@ -8,7 +8,11 @@ module ResqueAsyncRunner
 	# We can pass this any class instance method that we want to
 	# run later.
 	def async(method, *args)
-		Resque.enqueue(self.class, id, method, *args)
+		begin
+			Resque.enqueue(self.class, id, method, *args)
+		rescue
+			
+		end
 	end
   end
 
