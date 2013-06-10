@@ -1,3 +1,3 @@
 class ResquedJob < ActiveRecord::Base
-	serialize :job_arguments, Hash
+	serialize :job_arguments, Array
 end

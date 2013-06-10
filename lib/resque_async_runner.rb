@@ -13,9 +13,7 @@ module ResqueAsyncRunner
 		rescue
 			ResquedJob.create(
 					class_name: self.class.to_s,
-					class_id: id,
-					method_name: method.to_s,
-					job_arguments: args
+					job_arguments: [id, method, args]
 				)
 		end
 	end
