@@ -67,11 +67,6 @@ class SurveyResponse < ActiveRecord::Base
   # kaminari setting
   paginates_per 10
 
-  # Wrapper for Resque job worker
-  def self.perform(response, survey_version_id)
-    self.process_response(response, survey_version_id)
-  end
-
   # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
   # 

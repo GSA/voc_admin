@@ -1,4 +1,6 @@
 class RuleJob
+	@queue = :rules
+
 	include Resque::Plugins::Status
 
 	def perform
