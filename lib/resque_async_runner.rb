@@ -8,12 +8,14 @@ module ResqueAsyncRunner
 	# We can pass this any class instance method that we want to
 	# run later.
 	def async(method, *args)
+		resque_args = [id, method].concat(args)
+
 		begin
-			Resque.enqueue(self.class, id, method, *args)
+			Resque.enqueue(self.class, *resque_args)
 		rescue
 			ResquedJob.create(
 					class_name: self.class.to_s,
-					job_arguments: [id, method].concat(args)
+					job_arguments: resque_args
 				)
 		end
 	end

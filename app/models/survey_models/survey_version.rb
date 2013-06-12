@@ -110,7 +110,13 @@ class SurveyVersion < ActiveRecord::Base
 
     # Notify the user that the export has been successful and is available for download
     if export_file.persisted?
-      ExportMailer.delay.export_download(User.find(user_id).email, export_file.id)
+      resque_args = User.find(user_id).email, export_file.id
+
+      begin
+        Resque.enqueue(ExportMailer, *resque_args)
+      rescue
+        ResquedJob.create(class_name: "ExportMailer", job_arguments: resque_args)
+      end
     end
 
     # Remove the temporary file used to create this export
