@@ -5,12 +5,11 @@ require 'yaml'
 namespace :resque do
 	desc "Attempt to feed failed jobs back into Redis through Resque after Redis outage"
 	task :rescue do
+		log_file = File.join("log","resque_rescue.log")
 
-	log_file = File.join("log","resque_rescue.log")
+		puts "Logging to: #{log_file}"
 
-	puts "Logging to: #{log_file}"
-
-	$stdout = File.new(log_file, 'a')
+		$stdout = File.new(log_file, 'a')
 
 		puts "--------------------------------------------------------------------------------"
 		puts "Starting Resque rescue"
