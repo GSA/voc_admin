@@ -1,5 +1,5 @@
 class RuleJob
-	@queue = :rules
+	@queue = :voc_rules
 
 	include Resque::Plugins::Status
 

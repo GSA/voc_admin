@@ -1,5 +1,5 @@
 class SurveyResponseCreateJob
-  @queue = :responses
+  @queue = :voc_responses
 
   # Wrapper for Resque job worker
   def self.perform(response, survey_version_id)

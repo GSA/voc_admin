@@ -6,7 +6,7 @@ require 'csv'
 # therefore collecting responses from the public site application) at a time.
 class SurveyVersion < ActiveRecord::Base
   include ResqueAsyncRunner
-  @queue = :csv
+  @queue = :voc_csv
 
   belongs_to :survey, :touch => true
   has_many :pages,           :dependent => :destroy

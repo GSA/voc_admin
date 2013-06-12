@@ -8,7 +8,7 @@
 # and unedited responses as entered by the survey taker.
 class SurveyResponse < ActiveRecord::Base
   include ResqueAsyncRunner
-  @queue = :responses
+  @queue = :voc_responses
 
   has_many :raw_responses, :dependent => :destroy
   has_many :display_field_values
