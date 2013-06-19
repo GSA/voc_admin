@@ -25,6 +25,9 @@ gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
 
+gem 'bson_ext'
+gem 'mongoid'
+
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
