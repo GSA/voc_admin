@@ -24,6 +24,8 @@ class SurveyResponse < ActiveRecord::Base
   after_create :queue_for_processing
   after_create :create_dfvs
 
+  after_save :export_for_reporting
+
   scope :search, (lambda do |search_text = ""|
     joins('INNER JOIN (select * from display_field_values) t1 on t1.survey_response_id = survey_responses.id')
     .where("t1.value LIKE ? ", "%#{search_text}%").select("DISTINCT survey_responses.*")
@@ -168,6 +170,14 @@ class SurveyResponse < ActiveRecord::Base
       dfv = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(self.id, df.id)
       dfv.update_attributes(:value => df.default_value)
     end
+  end
+
+  def export_for_reporting
+    resp = ReportableSurveyResponse.find_or_create_by(survey_id: self.survey_version.survey_id,
+                                                      survey_version_id: self.survey_version_id,
+                                                      survey_response_id: self.id)
+
+    
   end
 end
 
