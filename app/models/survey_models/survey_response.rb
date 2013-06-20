@@ -158,6 +158,29 @@ class SurveyResponse < ActiveRecord::Base
     self.save!
   end
 
+  def export_for_reporting
+    resp = ReportableSurveyResponse.find_or_create_by(survey_id: self.survey_version.survey_id,
+                                                      survey_version_id: self.survey_version_id,
+                                                      survey_response_id: self.id)
+
+    resp.answers = self.display_field_values.map do |dfv|
+      df = dfv.display_field
+
+      # This is more information than we need right now, most likely, in an attempt
+      # to see it working.
+      {
+        "display_field_id"    => df.id,
+        "display_field_type"  => df.type,
+        "display_field_name"  => df.name,
+        "display_field_order" => df.display_order,
+        "display_field_value"  => dfv.value
+      }
+
+    end
+
+    resp.save
+  end
+
   private
 
   def queue_for_processing
@@ -170,14 +193,6 @@ class SurveyResponse < ActiveRecord::Base
       dfv = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(self.id, df.id)
       dfv.update_attributes(:value => df.default_value)
     end
-  end
-
-  def export_for_reporting
-    resp = ReportableSurveyResponse.find_or_create_by(survey_id: self.survey_version.survey_id,
-                                                      survey_version_id: self.survey_version_id,
-                                                      survey_response_id: self.id)
-
-    
   end
 end
 
