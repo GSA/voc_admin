@@ -163,21 +163,21 @@ class SurveyResponse < ActiveRecord::Base
                                                       survey_version_id: self.survey_version_id,
                                                       survey_response_id: self.id)
 
-    resp.answers = self.display_field_values.map do |dfv|
+    answers = {}
+
+    self.display_field_values.map do |dfv|
       df = dfv.display_field
 
-      # This is more information than we need right now, most likely, in an attempt
-      # to see it working.
+      answers[df.id.to_s] =
       {
-        "display_field_id"    => df.id,
-        "display_field_type"  => df.type,
-        "display_field_name"  => df.name,
-        "display_field_order" => df.display_order,
-        "display_field_value"  => dfv.value
+        "type" => df.type,
+        "text" => df.name,
+        "order" => df.display_order.to_s,
+        "value" => dfv.value
       }
-
     end
 
+    resp.answers = answers
     resp.save
   end
 

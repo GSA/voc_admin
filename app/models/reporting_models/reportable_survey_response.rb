@@ -5,5 +5,5 @@ class ReportableSurveyResponse
 	field :survey_version_id, type: Integer
 	field :survey_response_id, type: Integer
 
-	field :answers, type: Array
+	field :answers, type: Hash
 end
