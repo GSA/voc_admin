@@ -6,4 +6,12 @@ class ReportableSurveyResponse
 	field :survey_response_id, type: Integer
 
 	field :answers, type: Hash
+	# answers[df.id.to_s] =
+	# {
+	#   "type" => df.type,
+	#   "text" => df.name,
+	#   "order" => df.display_order.to_s,
+	#   "value" => dfv.value
+	# }
+	
 end

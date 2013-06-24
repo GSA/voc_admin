@@ -1,12 +1,12 @@
 
 namespace :reporting do
-  desc "Push all survey responses to NOSQL"
+  desc "Push all once-plus-processed survey responses to NOSQL"
   task :export_all => [:environment] do
 
-    # criteria = SurveyResponse
+    criteria = SurveyResponse.processed
 
     # in case of failure / cancel, pick up where you left off:
-    criteria = SurveyResponse.where("id > 64276")
+    # criteria = criteria.where("id > 64276")
 
     total = criteria.count
     page_size = 500
