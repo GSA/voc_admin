@@ -178,6 +178,10 @@ class SurveyResponse < ActiveRecord::Base
     end
 
     resp.answers = answers
+
+    resp.created_at = self.created_at
+    resp.page_url = self.page_url
+
     resp.save
   end
 

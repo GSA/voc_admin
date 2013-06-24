@@ -5,6 +5,9 @@ class ReportableSurveyResponse
 	field :survey_version_id, type: Integer
 	field :survey_response_id, type: Integer
 
+	field :created_at, type: DateTime
+	field :page_url, type: String
+
 	field :answers, type: Hash
 	# answers[df.id.to_s] =
 	# {

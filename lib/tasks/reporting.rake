@@ -6,7 +6,7 @@ namespace :reporting do
     criteria = SurveyResponse.processed
 
     # in case of failure / cancel, pick up where you left off:
-    # criteria = criteria.where("id > 64276")
+    # criteria = criteria.where(survey_version_id: 76)
 
     total = criteria.count
     page_size = 500

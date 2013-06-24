@@ -42,6 +42,72 @@ class SurveyVersion < ActiveRecord::Base
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
 
+  NOSQL_BATCH = 1000
+
+  def generate_nosql_responses_csv(filter_params, user_id)
+    survey_response_query = ReportableSurveyResponse
+
+    unless filter_params[:simple_search].blank?
+      # TODO: come back to simple search later
+    end
+
+    unless filter_params[:search].blank?
+      # TODO: come back to advanced search later
+    end
+
+    custom_view = nil
+    if filter_params[:custom_view_id].blank?
+      custom_view = self.custom_views.find_by_default(true)
+    else
+      # Use find_by_id in order to return nil if a custom view with the specified id
+      # cannot be found instead of raising an error.
+      custom_view = self.custom_views.find_by_id(filter_params[:custom_view_id])
+    end
+
+    # Write the survey responses to a temporary CSV file which will be used to create the
+    # Export instance.  The document will be copied to the correct location by paperclip
+    # when the Export instance is created.
+    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{self.survey.name[0..10]}-#{self.version_number}.csv"
+    CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
+      unless custom_view.present?
+        display_field_headers = self.display_fields.order("display_order asc").map(&:name)
+      else
+        display_field_headers = custom_view.ordered_display_fields.map(&:name)
+      end
+      csv << ["Date", "Page URL"].concat(display_field_headers)
+
+      0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+        response_batch = survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+          if custom_view.present?
+            # come back to custom view
+            # response_record = response.display_field_values.where(:display_field_id => custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
+          else
+            ordered_display_fields = response.answers.map {|k,v| [k, v].sort_by { v["order"].to_i } }
+            response_record = ordered_display_fields.map { |odf| val = odf["value"].gsub("{%delim%}", ", ") }
+          end
+
+          csv << [response.created_at, response.page_url].concat(response_record)
+        end
+      end
+    end
+
+    export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
+
+    # Notify the user that the export has been successful and is available for download
+    if export_file.persisted?
+      resque_args = User.find(user_id).email, export_file.id
+
+      begin
+        Resque.enqueue(ExportMailer, *resque_args)
+      rescue
+        ResquedJob.create(class_name: "ExportMailer", job_arguments: resque_args)
+      end
+    end
+
+    # Remove the temporary file used to create this export
+    File.delete("#{Rails.root}/tmp/#{file_name}")
+  end
+
   # Create a CSV export of the survey responses and notify the requesting user by email
   # when the export has completed and is available for download.
   #
@@ -60,14 +126,6 @@ class SurveyVersion < ActiveRecord::Base
       search = SurveyResponseSearch.new(filter_params[:search])
 
       survey_responses = search.search(survey_responses)
-    end
-    custom_view = nil
-    if filter_params[:custom_view_id].blank?
-      custom_view = self.custom_views.find_by_default(true)
-    else
-      # Use find_by_id in order to return nil if a custom view with the specified id
-      # cannot be found instead of raising an error.
-      custom_view = self.custom_views.find_by_id(filter_params[:custom_view_id])
     end
 
     # Apply the custom view to the survey responses
