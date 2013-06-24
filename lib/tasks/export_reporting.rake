@@ -1,20 +1,37 @@
 
-desc "Push all survey responses to NOSQL"
-task :export_reporting => [:environment] do
+namespace :reporting do
+  desc "Push all survey responses to NOSQL"
+  task :export_all => [:environment] do
 
-  puts "Starting export for #{SurveyResponse.count} records..."
+    criteria = SurveyResponse.all
 
-  SurveyResponse.all.each do |sr|
-    puts "  Exporting ID# #{sr.id}..."
+    # in case of failure / cancel, pick up where you left off:
+    # criteria = SurveyResponse.where("id > 64276")
 
-    begin
-      sr.export_for_reporting
+    total = criteria.count
+    page_size = 500
+    batches = (total / page_size.to_f).ceil
+    errors = 0
 
-      puts "  ...exported."
-    rescue
-      puts "  ...failed with error: #{$!.to_s}"
+    puts "Starting export for #{total} records in #{batches} batches of #{page_size}..."
+
+    (1..batches).each do |num|
+      puts "  Starting batch #{num}..."
+
+      criteria.page(num).per(page_size).each do |sr|
+        puts "    (B #{num}/#{batches}: Exporting ID# #{sr.id}..."
+
+        begin
+          sr.export_for_reporting
+        rescue
+          puts "    ...failed with error: #{$!.to_s}"
+          errors += 1
+        end
+      end
+
+      puts "  ...batch #{num} finished."
     end
-  end
 
-  puts "...export finished."
+    puts "...export finished. #{errors} errors."
+  end
 end
