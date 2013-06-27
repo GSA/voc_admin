@@ -67,14 +67,9 @@ class SurveyVersion < ActiveRecord::Base
     # Ensures the custom view responses are coming back in the proper order before batching
     if custom_view.present?
       display_field_headers = custom_view.ordered_display_fields.map(&:name)
-
-      #so = custom_view.sorted_display_field_custom_views.map {|d| [ d.display_field_id, d.sort_direction ] }.first
-      #survey_response_query = survey_response_query.order_by([ "answers.#{so[0]}.value", so[1] ])
     else
       display_field_headers = self.display_fields.order("display_order asc").map(&:name)
     end
-
-    binding.pry
 
     # Write the survey responses to a temporary CSV file which will be used to create the
     # Export instance.  The document will be copied to the correct location by paperclip
@@ -84,18 +79,18 @@ class SurveyVersion < ActiveRecord::Base
       csv << ["Date", "Page URL"].concat(display_field_headers)
 
       0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-        response_batch = survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+        survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
           if custom_view.present?
             # come back to custom view
             # response_record = response.display_field_values.where(:display_field_id => custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
             response_record = custom_view.ordered_display_fields.map do |df|
                 response_answer = response.answers[df.id.to_s]
                 
-                response_answer ? response_answer["value"] : df.default_value.to_s
+                response_answer.presence ? response_answer : df.default_value.to_s
             end
           else
             ordered_display_fields = response.answers.map {|k,v| [k, v].sort_by { v["order"].to_i } }
-            response_record = ordered_display_fields.map { |k,v| (v["value"] || "").gsub("{%delim%}", ", ") }
+            response_record = ordered_display_fields.map { |k,v| (v || "").gsub("{%delim%}", ", ") }
           end
 
           csv << [response.created_at, response.page_url].concat(response_record)

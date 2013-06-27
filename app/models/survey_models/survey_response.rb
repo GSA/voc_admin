@@ -165,16 +165,8 @@ class SurveyResponse < ActiveRecord::Base
 
     answers = {}
 
-    self.display_field_values.map do |dfv|
-      df = dfv.display_field
-
-      answers[df.id.to_s] =
-      {
-        "type" => df.type,
-        "text" => df.name,
-        "order" => df.display_order.to_s,
-        "value" => dfv.value
-      }
+    self.display_field_values.each do |dfv|
+      answers[dfv.display_field_id.to_s] = dfv.value
     end
 
     resp.answers = answers
