@@ -1,4 +1,5 @@
 .bundle
+.idea/
 .rvmrc
 config/*.yml
 db/*.sqlite3
