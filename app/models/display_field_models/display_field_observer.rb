@@ -9,7 +9,7 @@ class DisplayFieldObserver < ActiveRecord::Observer
   # 
   # @param [DisplayField] display_field the DisplayField to call back to
   def after_create(display_field)
-    display_field.delay.populate_default_values!
+    display_field.async(:"populate_default_values!")
   end
 
   # On destroy of a DisplayField, reorder the remaining DisplayFields in the SurveyVersion.

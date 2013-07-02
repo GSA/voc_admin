@@ -7,6 +7,8 @@
 # the SurveyResponse links to the RawResponses, which are the historical
 # and unedited responses as entered by the survey taker.
 class SurveyResponse < ActiveRecord::Base
+  include ResqueAsyncRunner
+  @queue = :voc_responses
 
   has_many :raw_responses, :dependent => :destroy
   has_many :display_field_values
@@ -21,6 +23,8 @@ class SurveyResponse < ActiveRecord::Base
 
   after_create :queue_for_processing
   after_create :create_dfvs
+
+  after_save :export_for_reporting
 
   scope :search, (lambda do |search_text = ""|
     joins('INNER JOIN (select * from display_field_values) t1 on t1.survey_response_id = survey_responses.id')
@@ -65,7 +69,7 @@ class SurveyResponse < ActiveRecord::Base
   # kaminari setting
   paginates_per 10
 
-  # Create a SurveyResponse from the RawResponse.  This is used by Delayed::Job to process the
+  # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
   # 
   # @param [Hash] response the response parameter hash to process from the controller
@@ -152,6 +156,25 @@ class SurveyResponse < ActiveRecord::Base
   def archive
     self.archived = true
     self.save!
+  end
+
+  def export_for_reporting
+    resp = ReportableSurveyResponse.find_or_create_by(survey_id: self.survey_version.survey_id,
+                                                      survey_version_id: self.survey_version_id,
+                                                      survey_response_id: self.id)
+
+    answers = {}
+
+    self.display_field_values.each do |dfv|
+      answers[dfv.display_field_id.to_s] = dfv.value
+    end
+
+    resp.answers = answers
+
+    resp.created_at = self.created_at
+    resp.page_url = self.page_url
+
+    resp.save
   end
 
   private

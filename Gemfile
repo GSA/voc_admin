@@ -1,21 +1,32 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '182d4e3719' # 3.0.21, see https://github.com/rails/rails/pull/9126
+# 3.0 stable as of March 15, 2013, see https://github.com/rails/rails/commits/3-0-stable
+gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '77403a9'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'jquery-rails'
-gem 'kaminari'
-gem 'delayed_job_active_record'
+# Authentication:
 gem 'authlogic'
 # openam: add your key to bitbucket per instructions here:
 #  https://confluence.atlassian.com/pages/viewpage.action?pageId=270827678
 gem 'openam', :git => "git@bitbucket.org:ctacdevteam/ams_sso.git"
+# gem 'httparty' <-- should no longer need explicit inclusion with SSO gemified
+
 gem 'memcache-client'
 gem 'paperclip'
-gem 'daemons', :require => false
-gem 'httparty'
+gem 'jquery-rails'
+gem 'kaminari'
+
+# OLD! Delayed_Job for asynchronous processing
+# gem 'delayed_job_active_record'
+# gem 'daemons', :require => false
+
+# NEW: Resque
+gem 'resque'
+gem 'resque_mailer'
+gem 'resque-status'
+gem 'resque_unit', :group => :test
+
+gem 'bson_ext'
+gem 'mongoid'
 
 platform :ruby do
   gem 'unicorn-rails'
@@ -40,8 +51,8 @@ platform :jruby do
 end
 
 group :development do
-	gem 'annotate'
-	gem 'pry-rails'
+  gem 'annotate'
+  gem 'pry-rails'
   gem 'yard'
   gem 'better_errors'
   gem 'binding_of_caller'

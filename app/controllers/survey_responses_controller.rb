@@ -58,7 +58,7 @@ class SurveyResponsesController < ApplicationController
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
     # Generate the csv file in the background in case there are a large number of responses
-    @survey_version.delay.generate_responses_csv(params, current_user.id)
+    @survey_version.async(:generate_responses_csv, params, current_user.id)
 
     respond_to do |format|
       format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}

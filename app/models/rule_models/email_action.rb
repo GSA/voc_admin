@@ -13,7 +13,13 @@ class EmailAction < ActiveRecord::Base
   #
   # @param [SurveyResponse] survey_response the SurveyResponse to notify recipients about
   def perform(survey_response)
-    RulesMailer.delay.email_action_notification(self.emails, self.subject, self.body, survey_response.id)
+    resque_args = self.emails, self.subject, self.body, survey_response.id
+
+    begin
+      Resque.enqueue(RulesMailer, *resque_args)
+    rescue
+      ResquedJob.create(class_name: "RulesMailer", job_arguments: resque_args)
+    end
   end
 end
 
