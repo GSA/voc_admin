@@ -4,6 +4,9 @@
 # question DisplayFieldValues or custom DisplayFields.  Rule Actions may insert/update values or copy
 # them between question DisplayFieldValues and custom DisplayFields as requested.
 class Rule < ActiveRecord::Base
+  include ResqueAsyncRunner
+  @queue = :voc_rules
+
   has_many :actions, :dependent => :destroy
   has_one  :email_action, :dependent => :destroy
   has_many :criteria, :dependent => :destroy

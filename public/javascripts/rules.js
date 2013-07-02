@@ -85,7 +85,7 @@ function check_run_rule(check_do_now_url, job_id, source){
 	$.ajax({url: check_do_now_url + "?job_id=" + job_id,
 		success: function(data){
 			//set waiting text
-			if(data == "done"){
+			if(data == "completed"){
 				$(source).next("div").remove();
 				$(source).show();
 			}

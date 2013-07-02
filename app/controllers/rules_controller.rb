@@ -66,15 +66,14 @@ class RulesController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/do_now(.:format)
   def do_now
-    @rule = Rule.find(params[:id])
-    @job_id = @rule.delay.apply_me_all
+    @job_id = RuleJob.create(:id => params[:id])
 
-    render :text => @job_id.id
+    render :text => @job_id
   end
 
   # GET    /rules/check_do_now(.:format)
   def check_do_now
-    render :text => (Delayed::Job.exists?(params[:job_id]) ? "not done" : "done")
+    render :text => Resque::Plugins::Status::Hash.get(params[:job_id]).status
   end
 
   # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/rules/:id/increment_rule_order(.:format)
