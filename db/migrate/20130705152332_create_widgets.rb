@@ -1,9 +1,10 @@
 class CreateWidgets < ActiveRecord::Migration
   def self.up
     create_table :widgets do |t|
-      t.string :name
-      t.references :dashboard
-      t.references :report
+      t.string        :name
+      sort_order      :integer(4)
+      reportable_id   :integer(4)
+      reportable_type :string(255)
 
       t.timestamps
     end
