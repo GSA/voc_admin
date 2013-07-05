@@ -22,6 +22,9 @@ class SurveyVersion < ActiveRecord::Base
   has_many :survey_responses, :dependent => :destroy
   has_many :custom_views,     :dependent => :destroy
 
+  has_many :dashboards,       :dependent => :destroy
+  has_many :reports,          :dependent => :destroy
+
   attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
 
   accepts_nested_attributes_for :survey
