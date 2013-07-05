@@ -18,6 +18,8 @@ module CommentToolApp
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += %W(#{Rails.root}/lib)
 
+    config.generators.orm :active_record
+
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -48,6 +50,7 @@ module CommentToolApp
 
     # This is suppose to cause the dig tag "field with errors" from breaking the styling.
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
+
     # config.action_controller.relative_url_root = '/vocsub'
   end
 end
