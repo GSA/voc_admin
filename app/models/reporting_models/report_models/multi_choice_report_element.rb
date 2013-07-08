@@ -1,0 +1,3 @@
+class MultiChoiceReportElement < ChoiceReportElement
+	
+end
