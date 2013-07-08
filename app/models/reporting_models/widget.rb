@@ -1,4 +1,4 @@
 class Widget < ActiveRecord::Base
-  belongs_to :reportable, polymorphic: true, :dependent => :destroy
-  belongs_to :survey_version
+  belongs_to :dashboard
+  belongs_to :report
 end
