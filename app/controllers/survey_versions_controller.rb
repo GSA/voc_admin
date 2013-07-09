@@ -86,6 +86,10 @@ class SurveyVersionsController < ApplicationController
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
   end
 
+  def reporting
+    
+  end
+
   private
 
   # Prepares the survey and survey version instance. This is a one-off from the

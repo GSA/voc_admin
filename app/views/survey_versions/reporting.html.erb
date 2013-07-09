@@ -1,0 +1,32 @@
+<h1>Reporting</h1>
+
+<%= flash_messages(flash) %>
+
+<div class="pageNav">
+	<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
+</div>
+
+<div id="dashboards">
+	<h2>Dashboards</h2>
+	<ul>
+		<% for dashboard in @survey_version.dashboards %>
+			<li><%= dashboard.name %></li>
+		<% end %>
+	</ul>
+	<%= link_to "New Dashboard", new_survey_survey_version_dashboard_path(@survey, @survey_version), :class => "newlink" %>
+</div>
+
+<div id="reports">
+	<h2>Reports</h2>
+	<ul>
+		<% for report in @survey_version.reports %>
+			<li><%= report.name %></li>
+		<% end %>
+	</ul>
+	<%= link_to "New Report", new_survey_survey_version_report_path(@survey, @survey_version), :class => "newlink" %>
+</div>
+
+<div class="pageNav">
+	<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
+</div>
+

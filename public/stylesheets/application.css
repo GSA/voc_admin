@@ -357,21 +357,24 @@ a.navActive {
 	text-align: center;
 }
 #surveyTable .col3 {
-	width: 300px;
+	width: 24px;
 }
 #surveyTable .col4 {
 	width: 300px;
 }
 #surveyTable .col5 {
+	width: 300px;
+}
+#surveyTable .col6 {
 	width: 30px;
 	text-align: center;
 }
-#surveyTable .col6 {
-	width: 153px;
+#surveyTable .col7 {
+	width: 129px;
 	word-wrap:break-word;
 	word-break:break-all;
 }
-#surveyTable .col7 {
+#surveyTable .col8 {
 	width: 11px;
 }
 
