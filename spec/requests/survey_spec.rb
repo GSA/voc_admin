@@ -94,7 +94,7 @@ describe Survey do
       fill_in "survey_description", with: "Updated Survey Description Field"
       page.select survey_type.name, from: 'survey_survey_type_id'
       
-      click_button "survey_submit"
+      click_button "Update Survey"
       
       current_path.should == surveys_path
       page.should have_content("Updated Survey Name")
