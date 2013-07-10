@@ -44,7 +44,9 @@ end
 
 group :development do
 	gem 'annotate'
-	gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'jazz_hands'
   gem 'yard'
 end
 
@@ -58,7 +60,6 @@ group :test do
 
   gem 'guard-rspec'
   gem 'growl'
-  gem 'pry-rails'
   gem 'shoulda-matchers'
   gem 'rb-fsevent', '~> 0.9.1'
   
