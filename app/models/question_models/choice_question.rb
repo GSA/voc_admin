@@ -167,3 +167,4 @@ end
 #  clone_of_id        :integer(4)
 #  auto_next_page     :boolean(1)
 #  display_results    :boolean(1)
+#  answer_placement   :integer(4)
