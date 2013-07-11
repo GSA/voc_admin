@@ -24,6 +24,7 @@ class ChoiceQuestion < ActiveRecord::Base
 
   delegate :statement, :required, :flow_control, :flow_control?, :to => :question_content
 
+  # Stored in answer_placement
   # Lays the ChoiceAnswer options out vertically.
   HORIZONTAL_PLACEMENT = false
   # Lays the ChoiceAnswer options out from left to right.
