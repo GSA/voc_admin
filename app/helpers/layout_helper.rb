@@ -42,7 +42,7 @@ module LayoutHelper
   #
   # @return [String] configured stylesheet value or "application"
   def main_stylesheet_location
-    APP_CONFIG['branding'] and APP_CONFIG['branding']['css-filename'] or "application"
+    APP_CONFIG['branding'] and APP_CONFIG['branding']['css-filename'] or 'application'
   end
 
   # Reads the header partial name from app_config.yml or provides the default value;
