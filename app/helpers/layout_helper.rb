@@ -37,4 +37,31 @@ module LayoutHelper
 	    end
 	  end
   end
+
+  # Reads the stylesheet name from app_config.yml or provides the default value
+  #
+  # @return [String] configured stylesheet value or "application"
+  def main_stylesheet_location
+    APP_CONFIG['branding'] and APP_CONFIG['branding']['css-filename'] or "application"
+  end
+
+  # Reads the header partial name from app_config.yml or provides the default value;
+  # prepends "layouts/" to the string.  E.g. configured value "our_voc_header" returns
+  # "layouts/our_voc_header" and corresponds to /app/vuews/layouts/_our_voc_header.html.erb
+  # (note the underscore in the .erb partial view filename)
+  #
+  # @return [String] configured header partial location or "layouts/voc_header"
+  def header_partial_location
+    "layouts/#{APP_CONFIG['branding'] and APP_CONFIG['branding']['header-layout'] or 'voc_header'}"
+  end
+
+  # Reads the footer partial name from app_config.yml or provides the default value;
+  # prepends "layouts/" to the string.  E.g. configured value "our_voc_footer" returns
+  # "layouts/our_voc_footer" and corresponds to /app/vuews/layouts/_our_voc_footer.html.erb
+  # (note the underscore in the .erb partial view filename)
+  #
+  # @return [String] configured footer partial location or "layouts/voc_footer"
+  def footer_partial_location
+    "layouts/#{APP_CONFIG['branding'] and APP_CONFIG['branding']['footer-layout'] or 'voc_footer'}"
+  end
 end
