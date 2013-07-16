@@ -38,11 +38,15 @@ module LayoutHelper
 	  end
   end
 
+  def branding_config(property)
+    APP_CONFIG['branding'].try(:[], property)
+  end
+
   # Reads the stylesheet name from app_config.yml or provides the default value
   #
   # @return [String] configured stylesheet value or "application"
   def main_stylesheet_location
-    APP_CONFIG['branding'] and APP_CONFIG['branding']['css-filename'] or 'application'
+    branding_config('css-filename') || 'application'
   end
 
   # Reads the header partial name from app_config.yml or provides the default value;
@@ -52,7 +56,7 @@ module LayoutHelper
   #
   # @return [String] configured header partial location or "layouts/voc_header"
   def header_partial_location
-    "layouts/#{APP_CONFIG['branding'] and APP_CONFIG['branding']['header-layout'] or 'voc_header'}"
+    "layouts/#{branding_config('header-layout') || 'voc_header'}"
   end
 
   # Reads the footer partial name from app_config.yml or provides the default value;
@@ -62,6 +66,6 @@ module LayoutHelper
   #
   # @return [String] configured footer partial location or "layouts/voc_footer"
   def footer_partial_location
-    "layouts/#{APP_CONFIG['branding'] and APP_CONFIG['branding']['footer-layout'] or 'voc_footer'}"
+    "layouts/#{branding_config('footer-layout') || 'voc_footer'}"
   end
 end
