@@ -15,7 +15,7 @@ class Survey < ActiveRecord::Base
 
   scope :get_archived,            where(:archived => true)
   scope :get_unarchived,          where(:archived => false)
-  scope :get_alpha_list,          order('name asc')
+  scope :get_alpha_list,          order('surveys.name asc')
   scope :search,          ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
 
   default_scope where(:archived => false)

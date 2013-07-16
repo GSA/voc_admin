@@ -4,7 +4,7 @@
 
 
 	<%= label_tag "survey_id", "Survey: " %>
-	<%= select_tag "survey_id", options_from_collection_for_select(Survey.get_alpha_list, :id, :name, params[:survey_id].to_i), :include_blank => true %>
+	<%= select_tag "survey_id", options_from_collection_for_select(current_user.surveys.get_alpha_list, :id, :name, params[:survey_id].to_i), :include_blank => true %>
 
 	<%= label_tag "survey_version_id", "Version: "%>
 	<%= select_tag "survey_version_id", "", :include_blank => true %>
