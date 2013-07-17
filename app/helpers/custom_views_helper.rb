@@ -10,8 +10,9 @@ module CustomViewsHelper
   # @param [Array<DisplayFieldCustomView>] objs objects containing DisplayField id and sort direction info
   # @return [String] comma-delimited pairings of id and direction 
   def sort_orders(objs)
+    sorts = params[:custom_view].try(:[], :ordered_display_fields).try(:[], :sorts)
+    return sorts if sorts
     orders = ""
-
     orders = objs.map {|obj| "#{obj.display_field_id}:#{obj.sort_direction}" }.join(',') unless objs.blank?
   end
 end
