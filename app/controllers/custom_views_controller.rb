@@ -22,6 +22,7 @@ class CustomViewsController < ApplicationController
       #redirect_to survey_survey_version_custom_views_path, :notice => "Successfully created custom view."
       redirect_to survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id, :custom_view_id => @custom_view.id), :notice => "Successfully created custom view."
     else
+      set_fields_on_error
       render :new
     end
   end
@@ -39,6 +40,7 @@ class CustomViewsController < ApplicationController
       #redirect_to survey_survey_version_custom_views_path, :notice => "Successfully updated custom view"
       redirect_to survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id, :custom_view_id => @custom_view.id), :notice => "Successfully created custom view."
     else
+      set_fields_on_error
       render :edit
     end
   end
@@ -51,5 +53,14 @@ class CustomViewsController < ApplicationController
     flash[:notice] = "Successfully deleted custom view."
 
     redirect_to survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :notice => "Successfully removed custom view."
+  end
+
+  private
+  def set_fields_on_error
+    @custom_view.display_fields = params[:custom_view].
+        try(:[], :ordered_display_fields).
+        try(:[], :selected).
+        try(:split, ',').
+        try(:map) {|id| @survey_version.display_fields.find(id)}
   end
 end
