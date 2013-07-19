@@ -26,7 +26,7 @@ namespace :reporting do
         print "\r    #{num}/#{batches} => #{num_in_batch}/#{page_size} Exporting SRID #{sr.id}..."
 
         begin
-          sr.export_for_reporting
+          sr.export_values_for_reporting
         rescue Exception => e
           print "\n    ...failed with error: #{$!.to_s}\n Backtrace: #{e.backtrace}"
           errors += 1
