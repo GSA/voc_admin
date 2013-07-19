@@ -43,7 +43,10 @@ namespace :reporting do
 
   desc "Aggregate question data into the Mongo reporting schema"
   task :load_questions => [:environment] do
-    errors = 0
+    puts "Deleting all reporting collections first..."
+    ChoiceQuestionReporter.all.delete
+
+    errors = []
 
     survey_versions = SurveyVersion.all
     survey_version_count = survey_versions.count
@@ -51,36 +54,65 @@ namespace :reporting do
     survey_versions.each_with_index do |survey_version, index|
       puts "Now processing SV #{survey_version.id}, #{index} of #{survey_version_count}..."
 
+      survey = survey_version.survey
       display_fields = survey_version.display_fields.to_a
 
       print "\n  Choice questions:\n"
       survey_version.choice_questions.each do |choice_question|
-        display_field = display_fields.find {|df| df.name == choice_question.question_content.statement}
+        survey_element = choice_question.survey_element
+        question_text = choice_question.question_content.statement
+        choice_answers = choice_question.choice_answers.to_a
+
+        display_field = display_fields.find { |df| df.name == question_text }
 
         if display_field
           print "\r    Importing CQID #{choice_question.id} / DFID #{display_field.id}..."
 
+          display_field_values = display_field.display_field_values.to_a
+
           begin
-            question_report = ChoiceQuestionReporter.find_or_create_by(id: choice_question.id)
-            answers = {}
+            choice_question_reporter = ChoiceQuestionReporter.find_or_create_by(cq_id: choice_question.id)
 
-            # more work here, please
+            choice_question_reporter.s_id = survey.id
+            choice_question_reporter.sv_id = survey_version.id
+            choice_question_reporter.se_id = survey_element.id
 
-            question_report.answers = answers
+            choice_question_reporter.question = question_text
 
-            question_report.save
+            display_field_values.each do |display_field_value|
+              raw_display_field_value = display_field_value.value
+
+              answer_values = raw_display_field_value.try(:split, DisplayFieldValue::VALUE_DELIMITER)
+
+              if answer_values.present?
+                choice_question_reporter.inc(:responses, 1)
+                
+                permutations = choice_question_reporter.permutation_reporters.find_or_create_by(values: raw_display_field_value)
+                permutations.inc(:count, 1)
+
+                answer_values.each do |answer_value|
+                  answer = choice_question_reporter.answer_reporters.find_or_create_by(text: answer_value)
+                  answer.inc(:count, 1)
+
+                  answer.ca_id = choice_answers.find { |ca| ca.answer == answer_value }.try(:id)
+                end
+              end
+            end
+
           rescue Exception => e
             print "\rERROR: Failed import for #{choice_question.id};\n  Message: #{$!.to_s}\n  Backtrace: #{e.backtrace}\n"
-            errors += 1
+            errors << [choice_question.id, $!.to_s, e.backtrace]
           end
         else
-          print "\rERROR: Failed to find a matching DisplayField for ChoiceQuestion: #{choice_question.id}; text: #{choice_question.question_content.statement}\n"
+          print "\rERROR: Failed to find a matching DisplayField for ChoiceQuestion: #{choice_question.id}; text: #{question_text}\n"
+          errors << [choice_question.id, "mismatch", choice_question.question_content.statement]
         end
       end
 
       print "\n...finished processing SV #{survey_version.id}.\n\n"
     end
 
-    puts "...question import finished. #{errors} errors."
+    puts "...question import finished. #{errors.count} errors."
+
   end
 end
