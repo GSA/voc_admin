@@ -1,4 +1,4 @@
-class AnswerReporter
+class ChoiceAnswerReporter
   include Mongoid::Document
 
   field :ca_id, type: Integer

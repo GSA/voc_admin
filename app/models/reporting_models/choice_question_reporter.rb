@@ -11,6 +11,6 @@ class ChoiceQuestionReporter
 	# Total number of SurveyResponses for this ChoiceQuestion with values
 	field :responses, type: Integer, default: 0
 
-	embeds_many :answer_reporters
-	embeds_many :permutation_reporters
+	embeds_many :choice_answer_reporters
+	embeds_many :choice_permutation_reporters
 end

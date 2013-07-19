@@ -87,11 +87,11 @@ namespace :reporting do
               if answer_values.present?
                 choice_question_reporter.inc(:responses, 1)
                 
-                permutations = choice_question_reporter.permutation_reporters.find_or_create_by(values: raw_display_field_value)
+                permutations = choice_question_reporter.choice_permutation_reporters.find_or_create_by(values: raw_display_field_value)
                 permutations.inc(:count, 1)
 
                 answer_values.each do |answer_value|
-                  answer = choice_question_reporter.answer_reporters.find_or_create_by(text: answer_value)
+                  answer = choice_question_reporter.choice_answer_reporters.find_or_create_by(text: answer_value)
                   answer.inc(:count, 1)
 
                   answer.ca_id = choice_answers.find { |ca| ca.answer == answer_value }.try(:id)

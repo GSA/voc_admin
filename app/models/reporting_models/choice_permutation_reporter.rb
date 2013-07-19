@@ -1,4 +1,4 @@
-class PermutationReporter
+class ChoicePermutationReporter
   include Mongoid::Document
 
   field :values, type: String
