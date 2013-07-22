@@ -309,6 +309,10 @@ class SurveyVersion < ActiveRecord::Base
       new_sv
     end
   end
+
+  def choice_question_reporters
+    ChoiceQuestionReporter.where(:sv_id => id)
+  end
 end
 
 # == Schema Information
