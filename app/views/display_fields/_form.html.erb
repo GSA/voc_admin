@@ -1,12 +1,5 @@
 <% if @display_field.errors.any? %>
-  <div class="modalErrorBox">
-    <p class="title"><%= pluralize(@display_field.errors.count, "error") %> prohibited this display field from being saved:</p>
-    <ul class="list">
-      <% @display_field.errors.full_messages.each do |msg| %>
-        <li class="list"><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
+  <%= render('shared/errors', {object: @display_field, object_type: 'display field'}) %>
 <% end %>
 
 <div id="surveys">

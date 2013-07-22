@@ -1,13 +1,6 @@
 <%= form_for @user, :remote => true do |f| %>
 	<% if @user.errors.any? %>
-		<div class="modalErrorBox">
-			<p class="title"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</p>
-			<ul class="list">
-				<% @user.errors.full_messages.each do |msg| %>
-				  <li class="list"><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
+    <%= render('shared/errors', {object: @user, object_type: 'user'}) %>
 	<% end %>
 
 	<div id="surveys">

@@ -1,7 +1,7 @@
 <%= form_for [@survey, @survey_version, @rule], :html => {:id => "edit_rule"} do |f| %>
   <% if @rule.errors.any? %>
     <div id="error_explanation">
-      <%= render :partial => 'shared/question_errors', :locals => {:object => @rule} %>
+      <%= render('shared/errors', {object: @rule, object_type: 'rule'}) %>
     </div>
   <% end %>
   

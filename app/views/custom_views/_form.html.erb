@@ -1,13 +1,5 @@
 <% if @custom_view.errors.any? %>
-<div class="modalErrorBox">
-	<p class="title">
-		<%= pluralize(@custom_view.errors.count, "error") %>prohibited this view from being saved:</p>
-	<ul class="list">
-		<% @custom_view.errors.full_messages.each do |msg| %>
-			<li class="list"><%= msg %></li>
-		<% end %>
-	</ul>
-</div>
+  <%= render('shared/errors', {object: @custom_view, object_type: 'view'}) %>
 <% end %>
 
 <% javascript 'custom_views.js' %>
