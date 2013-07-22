@@ -1,7 +1,7 @@
 <%= form_for @site do |f| %>
 	<% if @site.errors.any? %>
 	  <div id="error_explanation">
-	    <%= render :partial => 'shared/question_errors', :locals => {:object => @site} %>
+	    <%= render('shared/errors', {object: @site, object_type: 'site'}) %>
 	  </div>
 	<% end %>
 
