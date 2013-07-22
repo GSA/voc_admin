@@ -85,7 +85,7 @@ namespace :reporting do
               answer_values = raw_display_field_value.try(:split, DisplayFieldValue::VALUE_DELIMITER)
 
               if answer_values.present?
-                choice_question_reporter.inc(:responses, 1)
+                choice_question_reporter.inc(:answered, 1)
                 
                 permutations = choice_question_reporter.choice_permutation_reporters.find_or_create_by(values: raw_display_field_value)
                 permutations.inc(:count, 1)
