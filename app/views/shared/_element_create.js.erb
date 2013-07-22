@@ -1,6 +1,6 @@
 <% if element.errors.any? %>
 	$(".modalErrorBox").remove();
-	$("#edit_modal form").prepend("<%= escape_javascript( render( :partial => 'shared/question_errors', :locals => { :object => element } ) ) %>");
+	$("#edit_modal form").prepend("<%= escape_javascript( render('shared/errors', {object: element, object_type: 'question'}) ) %>");
 	$("#simplemodal-container").height($("#edit_modal").height());
 	$("#simplemodal-container").width($("#edit_modal").width());
 	$.modal.setPosition();
