@@ -90,14 +90,20 @@ namespace :reporting do
                 permutations = choice_question_reporter.choice_permutation_reporters.find_or_create_by(values: raw_display_field_value)
                 permutations.inc(:count, 1)
 
+                permutations.save
+
                 answer_values.each do |answer_value|
                   answer = choice_question_reporter.choice_answer_reporters.find_or_create_by(text: answer_value)
                   answer.inc(:count, 1)
 
                   answer.ca_id = choice_answers.find { |ca| ca.answer == answer_value }.try(:id)
+
+                  answer.save
                 end
               end
             end
+
+            choice_question_reporter.save
 
           rescue Exception => e
             print "\rERROR: Failed import for #{choice_question.id};\n  Message: #{$!.to_s}\n  Backtrace: #{e.backtrace}\n"

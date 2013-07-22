@@ -138,6 +138,10 @@ class ChoiceQuestion < ActiveRecord::Base
                              :clone_of_id => nil))
   end
 
+  def reporter
+    ChoiceQuestionReporter.where(:cq_id => id).first
+  end
+
   private
   # Validation to ensure that a ChoiceQuestion is not created without at least one ChoiceAnswer.
   def must_have_at_least_one_choice_answer
