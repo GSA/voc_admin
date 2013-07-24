@@ -3,7 +3,7 @@
 # Manages the Dashboard lifecycle.
 class DashboardsController < ApplicationController
   before_filter :get_survey_version
-  before_filter :get_dashboard
+  before_filter :get_dashboard, except: [:new, :create]
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards(.:format)
   # def index

@@ -2,8 +2,24 @@
 
 <%= flash_messages(flash) %>
 
+<div id="showpage">
+	<div class="left_side">
+		Survey:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @survey.name.titleize %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Version:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @survey_version.version_number%></p>
+	</div>
+</div>
+
 <div class="pageNav">
-	<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
+  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
 </div>
 
 <div id="dashboards">
@@ -27,6 +43,5 @@
 </div>
 
 <div class="pageNav">
-	<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
+  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
 </div>
-
