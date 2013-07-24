@@ -47,7 +47,7 @@ class DashboardsController < ApplicationController
   def destroy
     @dashboard.destroy
 
-    redirect_to survey_survey_version_dashboards_path(@survey, @survey_version), :notice  => "Successfully deleted dashboard."
+    redirect_to reporting_survey_survey_version_path(@survey, @survey_version), :notice  => "Successfully deleted dashboard."
   end
 
   private

@@ -907,6 +907,20 @@ fieldset#inmodal legend {
 	text-align: center;
 }
 
+/**** Dashboard Tables ****/
+#dashboardsTable .col1 {
+	width: 870px;
+	word-wrap:break-word;
+	word-break:break-all;
+}
+#dashboardsTable .col2-3 {
+	width: 30px;
+}
+#dashboardsTable .col2, #dashboardsTable .col3 {
+	width: 15px;
+	text-align: center;
+}
+
 /**** Footer ****/
 #footer {
 	background: url(../images/footer_background.png) no-repeat top left transparent;
