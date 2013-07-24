@@ -1,0 +1,16 @@
+<h1>View Dashboard</h1>
+<%= flash_messages(flash) %>
+
+<div id="showpage">
+	<div class="left_side">
+		Dashboard Name:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @dashboard.name %></p>
+	</div>
+</div>
+
+<div class="page-nav">
+	<%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_dashboard_path(@survey, @survey_version), :class=>"manage" %>
+	<%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
+</div>
