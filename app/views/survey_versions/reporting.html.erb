@@ -24,11 +24,21 @@
 
 <div id="dashboards">
 	<h2>Dashboards</h2>
-	<ul>
+
+	<table id="dashboardTable">
+		<tr>
+			<th class="col1" scope="col">Name</th>
+			<th class="col2-3" scope="col" colspan="2"></th>
+		</tr>
 		<% for dashboard in @survey_version.dashboards %>
-			<li><%= dashboard.name %></li>
+			<tr class="<%= cycle('gray','white') %>">
+				<td class="col1"><%= dashboard.name %></td>
+				<td class="col2"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
+				<td class="col3"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+			</tr>
 		<% end %>
-	</ul>
+	</table>
+
 	<%= link_to "New Dashboard", new_survey_survey_version_dashboard_path(@survey, @survey_version), :class => "newlink" %>
 </div>
 
