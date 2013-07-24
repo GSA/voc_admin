@@ -32,7 +32,7 @@
 		</tr>
 		<% for dashboard in @survey_version.dashboards %>
 			<tr class="<%= cycle('gray','white') %>">
-				<td class="col1"><%= dashboard.name %></td>
+				<td class="col1"><%= link_to dashboard.name, survey_survey_version_dashboard_path(@survey, @survey_version, dashboard) %></td>
 				<td class="col2"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
 				<td class="col3"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
 			</tr>
