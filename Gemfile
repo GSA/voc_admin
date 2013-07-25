@@ -19,6 +19,7 @@ gem 'resque_unit', :group => :test
  
 gem 'bson_ext'
 gem 'mongoid'
+gem "ranked-model", "~> 0.2.1"
 
 platform :ruby do
   gem 'unicorn-rails'
