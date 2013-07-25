@@ -310,6 +310,10 @@ class SurveyVersion < ActiveRecord::Base
     end
   end
 
+  def reporters
+    survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }
+  end
+
   def choice_question_reporters
     ChoiceQuestionReporter.where(:sv_id => id)
   end

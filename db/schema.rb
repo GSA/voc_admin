@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130708164611) do
+ActiveRecord::Schema.define(:version => 20130725020639) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -23,8 +23,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "clone_of_id"
   end
 
-  add_index "actions", ["clone_of_id"], :name => "index_actions_on_clone_of_id"
-  add_index "actions", ["display_field_id"], :name => "index_actions_on_display_field_id"
   add_index "actions", ["rule_id"], :name => "index_actions_on_rule_id"
 
   create_table "assets", :force => true do |t|
@@ -51,8 +49,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
   end
 
   add_index "choice_answers", ["choice_question_id"], :name => "answers_choice_question_id"
-  add_index "choice_answers", ["clone_of_id"], :name => "index_choice_answers_on_clone_of_id"
-  add_index "choice_answers", ["next_page_id"], :name => "index_choice_answers_on_next_page_id"
 
   create_table "choice_questions", :force => true do |t|
     t.boolean  "multiselect"
@@ -65,9 +61,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.boolean  "display_results"
     t.boolean  "answer_placement"
   end
-
-  add_index "choice_questions", ["clone_of_id"], :name => "index_choice_questions_on_clone_of_id"
-  add_index "choice_questions", ["matrix_question_id"], :name => "index_choice_questions_on_matrix_question_id"
 
   create_table "conditionals", :force => true do |t|
     t.string   "name",       :null => false
@@ -86,10 +79,8 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "clone_of_id"
   end
 
-  add_index "criteria", ["clone_of_id"], :name => "index_criteria_on_clone_of_id"
   add_index "criteria", ["conditional_id"], :name => "index_criteria_conditional_id"
   add_index "criteria", ["rule_id"], :name => "index_criteria_on_rule_id"
-  add_index "criteria", ["source_id", "source_type"], :name => "index_criteria_on_source_id_and_source_type"
   add_index "criteria", ["source_id"], :name => "index_criteria_on_source_id"
 
   create_table "custom_views", :force => true do |t|
@@ -100,12 +91,17 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.datetime "updated_at"
   end
 
+  add_index "custom_views", ["survey_version_id"], :name => "index_custom_views_on_survey_version_id"
+
   create_table "dashboard_elements", :force => true do |t|
     t.string   "type"
     t.integer  "dashboard_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "survey_element_id"
   end
+
+  add_index "dashboard_elements", ["survey_element_id"], :name => "index_dashboard_elements_on_survey_element_id"
 
   create_table "dashboards", :force => true do |t|
     t.string   "name"
@@ -137,7 +133,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.datetime "updated_at"
   end
 
-  add_index "display_field_categories", ["category_id"], :name => "index_display_field_categories_on_category_id"
   add_index "display_field_categories", ["display_field_id"], :name => "index_dfc_on_display_field_id"
 
   create_table "display_field_custom_views", :force => true do |t|
@@ -149,6 +144,9 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "sort_order"
     t.string   "sort_direction"
   end
+
+  add_index "display_field_custom_views", ["custom_view_id"], :name => "index_display_field_custom_views_on_custom_view_id"
+  add_index "display_field_custom_views", ["display_field_id"], :name => "index_display_field_custom_views_on_display_field_id"
 
   create_table "display_field_values", :force => true do |t|
     t.integer  "display_field_id",   :null => false
@@ -176,7 +174,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.boolean  "editable",          :default => true
   end
 
-  add_index "display_fields", ["clone_of_id"], :name => "index_display_fields_on_clone_of_id"
   add_index "display_fields", ["survey_version_id"], :name => "index_dfs_survey_version_id"
 
   create_table "email_actions", :force => true do |t|
@@ -189,18 +186,12 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.datetime "updated_at"
   end
 
-  add_index "email_actions", ["clone_of_id"], :name => "index_email_actions_on_clone_of_id"
-  add_index "email_actions", ["rule_id"], :name => "index_email_actions_on_rule_id"
-
   create_table "execution_trigger_rules", :force => true do |t|
     t.integer  "rule_id",              :null => false
     t.integer  "execution_trigger_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "execution_trigger_rules", ["execution_trigger_id"], :name => "index_execution_trigger_rules_on_execution_trigger_id"
-  add_index "execution_trigger_rules", ["rule_id"], :name => "index_execution_trigger_rules_on_rule_id"
 
   create_table "execution_triggers", :force => true do |t|
     t.string   "name",       :null => false
@@ -225,9 +216,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "clone_of_id"
   end
 
-  add_index "matrix_questions", ["clone_of_id"], :name => "index_matrix_questions_on_clone_of_id"
-  add_index "matrix_questions", ["survey_version_id"], :name => "index_matrix_questions_on_survey_version_id"
-
   create_table "new_responses", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -246,8 +234,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "next_page_id"
   end
 
-  add_index "pages", ["clone_of_id"], :name => "index_pages_on_clone_of_id"
-  add_index "pages", ["next_page_id"], :name => "index_pages_on_next_page_id"
   add_index "pages", ["survey_version_id"], :name => "index_pages_survey_version_id"
 
   create_table "question_contents", :force => true do |t|
@@ -303,9 +289,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "survey_version_id",   :null => false
   end
 
-  add_index "response_categories", ["category_id"], :name => "index_response_categories_on_category_id"
-  add_index "response_categories", ["survey_version_id"], :name => "index_response_categories_on_survey_version_id"
-
   create_table "resqued_jobs", :force => true do |t|
     t.string   "class_name"
     t.text     "job_arguments", :limit => 2147483647
@@ -329,7 +312,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.string   "action_type",       :default => "db"
   end
 
-  add_index "rules", ["clone_of_id"], :name => "index_rules_on_clone_of_id"
   add_index "rules", ["survey_version_id"], :name => "index_rules_survey_version_id"
 
   create_table "site_users", :force => true do |t|
@@ -338,9 +320,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "site_users", ["site_id"], :name => "index_site_users_on_site_id"
-  add_index "site_users", ["user_id"], :name => "index_site_users_on_user_id"
 
   create_table "sites", :force => true do |t|
     t.string   "name"
@@ -368,7 +347,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
 
   add_index "survey_elements", ["assetable_id", "assetable_type"], :name => "index_elements_assetable"
   add_index "survey_elements", ["page_id"], :name => "survey_elements_page_id"
-  add_index "survey_elements", ["survey_version_id"], :name => "index_survey_elements_on_survey_version_id"
 
   create_table "survey_responses", :force => true do |t|
     t.string   "client_id"
@@ -416,9 +394,6 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "site_id"
   end
 
-  add_index "surveys", ["site_id"], :name => "index_surveys_on_site_id"
-  add_index "surveys", ["survey_type_id"], :name => "index_surveys_on_survey_type_id"
-
   create_table "text_questions", :force => true do |t|
     t.string   "answer_type"
     t.datetime "created_at"
@@ -429,21 +404,18 @@ ActiveRecord::Schema.define(:version => 20130708164611) do
     t.integer  "answer_size"
   end
 
-  add_index "text_questions", ["clone_of_id"], :name => "index_text_questions_on_clone_of_id"
-
   create_table "users", :force => true do |t|
-    t.string   "f_name",            :null => false
-    t.string   "l_name",            :null => false
+    t.string   "f_name",                          :null => false
+    t.string   "l_name",                          :null => false
     t.boolean  "locked"
-    t.string   "email",             :null => false
-    t.string   "crypted_password",  :null => false
-    t.string   "password_salt",     :null => false
-    t.string   "persistence_token", :null => false
+    t.string   "email",                           :null => false
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role_id"
+    t.string   "hhs_id",            :limit => 50
   end
-
-  add_index "users", ["role_id"], :name => "index_users_on_role_id"
 
 end

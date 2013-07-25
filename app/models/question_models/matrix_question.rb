@@ -151,6 +151,10 @@ class MatrixQuestion < ActiveRecord::Base
     to_be_removed.each {|key, choice_question_params| remove_sub_question_display_field_and_rules(choice_question_params)}
   end
 
+  def reporter
+    nil
+  end
+
   private
   # Removes the default Rule and DisplayField mappings for a given
   # MatrixQuestion and a specific ChoiceQuestion.

@@ -37,6 +37,8 @@ class SurveyElement < ActiveRecord::Base
   scope :questions, where('survey_elements.assetable_type in (?)', %w(TextQuestion ChoiceQuestion MatrixQuestion)).includes(:assetable => :question_content)
   scope :assets, where('survey_elements.assetable_type in (?)', %w(Asset)).includes(:assetable)
 
+  delegate :reporter, to: :assetable
+
   # Sets the SurveyVersion update timestamp whenever changes are made to a contained SurveyElement.
   def update_survey_version_updated_at
     self.survey_version.update_attribute(:updated_at, Time.now)
