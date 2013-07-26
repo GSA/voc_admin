@@ -5,11 +5,6 @@ class DashboardsController < ApplicationController
   before_filter :get_survey_version
   before_filter :get_dashboard, except: [:new, :create]
 
-  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards(.:format)
-  # def index
-  #   @dashboards = @survey_version.dashboards
-  # end
-
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/new(.:format)
   def new
     @dashboard = @survey_version.dashboards.build
