@@ -5,5 +5,5 @@ class DashboardElement < ActiveRecord::Base
   serialize :options
 
   include RankedModel
-  ranks :sort_order, :column => :dashboard_id
+  ranks :sort_order, :with_same => :dashboard_id
 end
