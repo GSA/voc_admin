@@ -1,0 +1,26 @@
+<%# add javascripts to the HEAD tag for flot charting support: http://www.flotcharts.org/ %>
+<% content_for :head do %>
+  	<!--[if lte IE 8]><%= javascript_include_tag 'excanvas.min.js' %><![endif]-->
+  	<%= javascript_include_tag 'jquery.flot.min.js' %>
+  	<%= javascript_include_tag 'jquery.flot.pie.min.js' %>
+  	<%# javascript_include_tag 'jquery.flot.js' %>
+  	<%# javascript_include_tag 'jquery.flot.pie.js' %>
+<% end %>
+
+<%# add the physical div to the page for each chart, alternate sides, and break between rows %>
+<% charts.each do |chart| %>
+	<div class="chartContainer">
+		<h3><%= truncate chart.survey_element.reporter.question, :length => 50, :separator => ' ', :omission => "&hellip;" %></h3>
+		<div class="<%= cycle("left", "right") %>_side" id="pieChart_<%= chart.id %>" style="height: 240px; width: 320px;"></div>
+		<%= cycle("", "<br/>") %>
+	</div>
+<% end %>
+
+<%# put together the library invocations to render the pie charts %>
+<% content_for :script do %>
+	<script type="text/javascript">
+		$(window).load(function() {
+			<%= generatePieChartsJS(charts) %>
+		});
+	</script>
+<% end %>
