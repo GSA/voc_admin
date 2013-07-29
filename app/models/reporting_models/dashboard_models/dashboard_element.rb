@@ -9,6 +9,8 @@ class DashboardElement < ActiveRecord::Base
   include RankedModel
   ranks :sort_order, :with_same => :dashboard_id
 
+  default_scope order(:sort_order)
+
   # Generate the data required to plot a pie chart.
   #
   # @return [String] JSON data
