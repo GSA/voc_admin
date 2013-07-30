@@ -25,14 +25,17 @@ $(document).ready(function() {
 });
 
 function addWidgetToDashboard() {
+  newId = new Date().getTime();
+  idText = "#dashboard_dashboard_elements_attributes_replaceId_";
   $("#dashboardElementsList").append("<li style='display: none'></li>");
   var li = $("#dashboardElementsList li:last");
   li.html($("#dashboardElementBlank").html());
-  li.find("#survey_element_id").first().val($("#dashboardModalShownDiv #survey_element_id option:selected").val());
-  li.find("#element_type").first().val($("#dashboardModalShownDiv #element_type option:selected").val());
+  li.find(idText + "survey_element_id").first().val($("#dashboardModalShownDiv #survey_element_id option:selected").val());
+  li.find(idText + "element_type").first().val($("#dashboardModalShownDiv #element_type option:selected").val());
   li.append($("#dashboardModalShownDiv #survey_element_id option:selected").text());
   li.append(" - ");
   li.append($("#dashboardModalShownDiv #element_type option:selected").text());
+  li.html(li.html().replace(/replaceId/g, newId));
   li.show();
   $.modal.close();
 };

@@ -15,7 +15,7 @@ class DashboardsController < ApplicationController
     @dashboard = @survey_version.dashboards.build params[:dashboard]
 
     if @dashboard.save
-      redirect_to reporting_survey_survey_version_path(@survey, @survey_version), :notice  => "Successfully created dashboard."
+      redirect_to survey_survey_version_dashboard_path(@survey, @survey_version, @dashboard), :notice  => "Successfully created dashboard."
     else
       render :new
     end
