@@ -10,7 +10,7 @@
 <%# add the physical div to the page for each chart, alternate sides, and break between rows %>
 <% charts.each do |chart| %>
 	<div class="pieChartDiv">
-		<h3 style="margin-left: 18px;"><%= truncate chart.survey_element.reporter.question, :length => 40, :separator => ' ', :omission => "..." %></h3>
+		<h3 style="margin-left: 18px;"><%= truncate_question chart.survey_element.reporter.question %></h3>
 		<div id="pieChart_<%= chart.id %>" class="pieChart"></div>
 	</div>
 	<%= cycle("", "<br/>").html_safe %>

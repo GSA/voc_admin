@@ -33,4 +33,8 @@ module DashboardsHelper
   def dashboard_element_types_arr
     DashboardElement::ELEMENT_TYPES.map {|k,v| [v, k]}
   end
+
+  def truncate_question(question)
+    truncate question, :length => 40, :separator => ' ', :omission => "..."
+  end
 end
