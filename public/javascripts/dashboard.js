@@ -14,14 +14,25 @@ $(document).ready(function() {
     $('#dashboardModalShownDiv').show();
   });
 
-  function addWidgetToDashboard() {
-    var li = document.createElement("li");
-    var se_id = document.create_element("input");
-    se_id.attr("type", "hidden");
-    se_id.attr("name", "dashboard[dashboard_elements_attributes][][survey_element_id]");
-    se_id.attr("value", $("#dashboardModalShownDiv #survey_element_id option:selected").val());
-    var se_text = $("#dashboardModalShownDiv #survey_element_id option:selected").text();
-    li.append(se_id, se_text);
-    $("#dashboardElementsList").append(li);
-  };
+  $('form .remove_element').click(function() {
+    $(this).prev('input[type=hidden]').val('1');
+    $(this).closest('li').hide();
+  });
+
+  $('form .remove_pending_element').live('click', function() {
+    $(this).closest('li').remove();
+  });
 });
+
+function addWidgetToDashboard() {
+  $("#dashboardElementsList").append("<li style='display: none'></li>");
+  var li = $("#dashboardElementsList li:last");
+  li.html($("#dashboardElementBlank").html());
+  li.find("#survey_element_id").first().val($("#dashboardModalShownDiv #survey_element_id option:selected").val());
+  li.find("#element_type").first().val($("#dashboardModalShownDiv #element_type option:selected").val());
+  li.append($("#dashboardModalShownDiv #survey_element_id option:selected").text());
+  li.append(" - ");
+  li.append($("#dashboardModalShownDiv #element_type option:selected").text());
+  li.show();
+  $.modal.close();
+};

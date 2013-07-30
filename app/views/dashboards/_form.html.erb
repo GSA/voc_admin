@@ -23,7 +23,10 @@
       <li>
         <%= elements_form.hidden_field :id %>
         <%= elements_form.hidden_field :survey_element_id %>
-        <%= elements_form.object.survey_element.reporter.question %>
+        <%= elements_form.hidden_field :element_type %>
+        <%= elements_form.hidden_field :_destroy %>
+        <%= link_to image_tag("delete.png"), "#", class: "remove_element" %>
+        <%= elements_form.object.survey_element.reporter.question %> - <%= elements_form.object.humanized_element_type %>
       </li>
     <% end %>
   </ul>
@@ -42,6 +45,13 @@
 <div id="dashboardModalDiv" style="display: none;">
   <h2>Add a New Widget</h2>
   <%= select_tag :survey_element_id, options_from_collection_for_select(@survey_version.reporters, :se_id, :question) %>
+  <%= select_tag :element_type, options_for_select(dashboard_element_types_arr) %>
   <%= link_to "Cancel", "#", :class => "simplemodal-close cancelLink-inline" %>
   <%= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %>
+</div>
+
+<div id="dashboardElementBlank" style="display: none;">
+  <%= hidden_field_tag :survey_element_id, nil, name: "dashboard[dashboard_elements_attributes][][survey_element_id]" %>
+  <%= hidden_field_tag :element_type, nil, name: "dashboard[dashboard_elements_attributes][][element_type]" %>
+  <%= link_to image_tag("delete.png"), "#", class: "remove_pending_element" %>
 </div>

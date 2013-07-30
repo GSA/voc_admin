@@ -9,6 +9,14 @@ class DashboardElement < ActiveRecord::Base
 
   default_scope order(:sort_order)
 
+  ELEMENT_TYPES = {
+    :count_per_answer_option => "Count Per Answer"
+  }.freeze
+
+  def humanized_element_type
+    ELEMENT_TYPES[element_type.try(:to_sym)]
+  end
+
   # Generate the data required to plot a pie chart.
   #
   # @return [String] JSON data
