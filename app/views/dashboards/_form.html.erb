@@ -18,12 +18,12 @@
     <%= link_to "New Widget", "#", :class => "newlink", :id => "newWidgetLink" %>
   </div>
 
-  <ul>
+  <ul id="dashboardElementsList">
     <%= f.fields_for :dashboard_elements do |elements_form| %>
       <li>
-        <%= elements_form.hidden_field :dashboard_element_id %>
+        <%= elements_form.hidden_field :id %>
         <%= elements_form.hidden_field :survey_element_id %>
-        <%= elements_form.hidden_field :sort_order_position %>
+        <%= elements_form.object.survey_element.reporter.question %>
       </li>
     <% end %>
   </ul>
@@ -43,4 +43,5 @@
   <h2>Add a New Widget</h2>
   <%= select_tag :survey_element_id, options_from_collection_for_select(@survey_version.reporters, :se_id, :question) %>
   <%= link_to "Cancel", "#", :class => "simplemodal-close cancelLink-inline" %>
+  <%= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %>
 </div>
