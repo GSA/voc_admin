@@ -29,4 +29,8 @@ module DashboardsHelper
 	def generatePieChartsJS(charts) 
 		charts.map { |chart| generatePieChart(chart) }.join("\n").html_safe
 	end
+
+  def dashboard_element_types_arr
+    DashboardElement::ELEMENT_TYPES.map {|k,v| [v, k]}
+  end
 end

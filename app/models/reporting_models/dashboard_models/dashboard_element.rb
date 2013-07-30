@@ -4,12 +4,18 @@ class DashboardElement < ActiveRecord::Base
   belongs_to :dashboard
   belongs_to :survey_element
 
-  serialize :options
-
   include RankedModel
   ranks :sort_order, :with_same => :dashboard_id
 
   default_scope order(:sort_order)
+
+  ELEMENT_TYPES = {
+    :count_per_answer_option => "Count Per Answer"
+  }.freeze
+
+  def humanized_element_type
+    ELEMENT_TYPES[element_type.try(:to_sym)]
+  end
 
   # Generate the data required to plot a pie chart.
   #
@@ -19,7 +25,7 @@ class DashboardElement < ActiveRecord::Base
 
     # build an array of data to convert to JSON
     [].tap do |data|
-      case options.try(:[], :type)
+      case element_type
       when 'count_per_answer_option'
         data.push(*count_per_answer_option_data(choice_answer_reporters))
       else
