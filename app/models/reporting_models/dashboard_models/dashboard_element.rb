@@ -4,8 +4,6 @@ class DashboardElement < ActiveRecord::Base
   belongs_to :dashboard
   belongs_to :survey_element
 
-  serialize :options
-
   include RankedModel
   ranks :sort_order, :with_same => :dashboard_id
 
@@ -19,7 +17,7 @@ class DashboardElement < ActiveRecord::Base
 
     # build an array of data to convert to JSON
     [].tap do |data|
-      case options.try(:[], :type)
+      case element_type
       when 'count_per_answer_option'
         data.push(*count_per_answer_option_data(choice_answer_reporters))
       else

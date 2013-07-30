@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726172243) do
+ActiveRecord::Schema.define(:version => 20130730154815) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(:version => 20130726172243) do
     t.datetime "updated_at"
     t.integer  "survey_element_id"
     t.integer  "sort_order"
-    t.string   "options"
+    t.string   "element_type"
   end
 
   add_index "dashboard_elements", ["survey_element_id"], :name => "index_dashboard_elements_on_survey_element_id"
