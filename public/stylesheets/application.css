@@ -921,6 +921,15 @@ fieldset#inmodal legend {
 	text-align: center;
 }
 
+/**** Dashboard Form ****/
+form #dashboardElementsList {
+  list-style-type: none;
+}
+
+form #dashboardElementsList li {
+  cursor: move;
+}
+
 /**** Pie Charts ****/
 .pieChartDiv {
 	display: inline-block;
