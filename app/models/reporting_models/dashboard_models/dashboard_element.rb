@@ -13,6 +13,11 @@ class DashboardElement < ActiveRecord::Base
     :count_per_answer_option => "Count Per Answer"
   }.freeze
 
+  def sort_order_position=(new_position)
+    @sort_order_position = new_position
+    sort_order_will_change!
+  end
+
   def humanized_element_type
     ELEMENT_TYPES[element_type.try(:to_sym)]
   end
