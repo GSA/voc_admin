@@ -22,6 +22,8 @@ $(document).ready(function() {
   $('form .remove_pending_element').live('click', function() {
     $(this).closest('li').remove();
   });
+
+  $('#dashboardElementsList').sortable();
 });
 
 function addWidgetToDashboard() {
