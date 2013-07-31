@@ -4,6 +4,7 @@
 class DashboardsController < ApplicationController
   before_filter :get_survey_version
   before_filter :get_dashboard, except: [:new, :create]
+  before_filter :update_sort_order, only: [:update]
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/new(.:format)
   def new
@@ -49,5 +50,13 @@ class DashboardsController < ApplicationController
 
   def get_dashboard
     @dashboard = @survey_version.dashboards.find(params[:id])
+  end
+
+  def update_sort_order
+    unless params[:dashboard].try(:[], :dashboard_elements_attributes).try(:empty?)
+      params[:dashboard][:dashboard_elements_attributes].each_with_index do |arr, index|
+        arr[1][:sort_order_position] = index
+      end
+    end
   end
 end
