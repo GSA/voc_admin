@@ -44,11 +44,7 @@ class DashboardElement < ActiveRecord::Base
   # @return [Array<Hash>] Hash of data for each answer option
   def count_per_answer_option_data(choice_answer_reporters)
     choice_answer_reporters.map do |choice_answer_reporter|
-      { label: shorten(choice_answer_reporter.text), data: choice_answer_reporter.count }
+      { label: choice_answer_reporter.text, data: choice_answer_reporter.count }
     end
-  end
-
-  def shorten(text, length = 20)
-    truncate text, :length => length, :separator => ' ', :omission => "&hellip;"
   end
 end

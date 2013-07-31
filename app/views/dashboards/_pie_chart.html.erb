@@ -10,12 +10,12 @@
 <%# add the physical div to the page for each chart, alternate sides, and break between rows %>
 <% charts.each do |chart| %>
 	<div class="pieChartDiv">
-		<h3 style="margin-left: 18px;"><%= truncate_question chart.survey_element.reporter.question %></h3>
+		<h4 class="pieChartHeader ellipse" title="<%= chart.survey_element.reporter.question %>"><%= chart.survey_element.reporter.question %></h4>
 		<div id="pieChart_<%= chart.id %>" class="pieChart"></div>
 	</div>
 	<%= cycle("", "<br/>").html_safe %>
 <% end %>
-<div id="hover" class="pieHover"></div>
+<div id="hover" class="pieHover"><span id="hoverPercent"></span> <div id="hoverText"></div></div>
 
 <%# put together the library invocations to render the pie charts %>
 <% content_for :script do %>
@@ -23,22 +23,42 @@
 		var hoverHandle;
 
 		function hideHoverHint() {
-			$("#hover").hide("slow");
+			$("#hover").hide();
 		}
 
 		function showHoverHint(x, y, label, percent) {
 			var $hover = $("#hover");
 
 			if ($hover.is(":hidden")) {
-				$hover.show("fast");
+				$hover.show();
 			}
 
-			$hover.css({ left: x - 25, top: y - 25 });
-			$hover.text(percent + "%: " + label);
+			$hover.css({ left: x + 25, top: y - 25 });
+			$hover.find("#hoverPercent").text(percent + "%:");
+			$hover.find("#hoverText").text(label);
 
 			clearTimeout(hoverHandle);
-			hoverHandle = setTimeout(hideHoverHint, 2000);
+			hoverHandle = setTimeout(hideHoverHint, 1200);
 		}
+
+		function pieChartLabelFormatter(label, series) {
+            return '<div class="pieChartLabel"><div class="ellipse" title="' + label + '">' + label + '</div> <div class="bold">' + series.data[0][1] + '</div></div>';
+		}
+
+		var pieOptions = {
+             series: {
+               pie: {
+                 show: true
+               }
+             },
+             grid: {
+               hoverable: true
+             },
+             legend: {
+               show: true,
+               labelFormatter: pieChartLabelFormatter
+             }
+        };
 
 		$(window).load(function() {
 			<%= generatePieChartsJS(charts) %>
