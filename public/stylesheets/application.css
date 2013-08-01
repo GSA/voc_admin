@@ -934,7 +934,7 @@ form #dashboardElementsList li {
 .pieChartDiv {
 	display: inline-block;
 	height: 270px;
-	width: 453px;
+	width: 452px;
 	border: 2px solid #ddd;
 	margin-top: 4px;
 }
@@ -1091,7 +1091,7 @@ form #dashboardElementsList li {
 }
 #simplemodal-container {
 	max-height: 100%;
-	overflow: auto;
+	/*overflow: auto;*/
 }
 .simplemodal-wrap {
 	overflow: visible !important;	

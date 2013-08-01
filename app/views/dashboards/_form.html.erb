@@ -46,8 +46,11 @@
   <h2>Add a New Widget</h2>
   <%= select_tag :survey_element_id, options_for_select(@survey_version.reporters.map {|r| [truncate_question(r.question), r.se_id]}) %>
   <%= select_tag :element_type, options_for_select(dashboard_element_types_arr) %>
-  <%= link_to "Cancel", "#", :class => "simplemodal-close cancelLink-inline" %>
-  <%= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %>
+  <br/>
+  <div class="pageNav">
+    <%= link_to "Cancel", "#", :class => "simplemodal-close cancelLink-inline" %>
+    <%= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %>
+  </div>
 </div>
 
 <div id="dashboardElementBlank" style="display: none;">
