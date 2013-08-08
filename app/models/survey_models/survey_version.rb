@@ -46,7 +46,17 @@ class SurveyVersion < ActiveRecord::Base
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
 
-  counter :visits
+  counter :recent_visits
+
+  # Increments visits by temporary recent_visits count
+  def update_visit_count
+    recent_visit_count = recent_visits.value
+    return visits if recent_visit_count == 0
+    SurveyVersion.update_counters id, :visits => recent_visit_count
+    recent_visits.decrement recent_visit_count
+    reload
+    visits
+  end
 
   NOSQL_BATCH = 1000
 
@@ -337,5 +347,6 @@ end
 #  created_at     :datetime
 #  updated_at     :datetime
 #  thank_you_page :text
+#  visits         :integer(4)      default(0)
 #
 

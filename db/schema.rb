@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130730154815) do
+ActiveRecord::Schema.define(:version => 20130807200702) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -381,6 +381,7 @@ ActiveRecord::Schema.define(:version => 20130730154815) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "thank_you_page"
+    t.integer  "visits",         :default => 0
   end
 
   add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"
