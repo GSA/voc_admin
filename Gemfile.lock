@@ -106,6 +106,7 @@ GEM
     diffy (2.1.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    escape_utils (0.3.2)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.1.0)
@@ -332,6 +333,7 @@ DEPENDENCIES
   daemons
   database_cleaner
   delayed_job_active_record
+  escape_utils
   factory_girl_rails
   growl
   guard-rspec
