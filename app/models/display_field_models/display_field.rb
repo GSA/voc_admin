@@ -15,7 +15,7 @@
 # DisplayFields are also tracked by CustomViews to determine column ordering.
 class DisplayField < ActiveRecord::Base
   include ResqueAsyncRunner
-  def self.queue; :dfs; end  # this has to be a class method because DisplayField is a parent
+  def self.queue; :voc_dfs; end  # this has to be a class method because DisplayField is a parent
 
   require 'condition_tester'
 

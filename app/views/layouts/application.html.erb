@@ -7,7 +7,7 @@
 
   	<%= stylesheet_link_tag main_stylesheet_location %> 
   	<%= stylesheet_link_tag 'simplemodal' %>
-  	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1' %>
+  	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1', 'jquery.ui' %>
   	<%= yield :head %>
   	<%= csrf_meta_tag %>
 
@@ -33,5 +33,6 @@
 			<%# Dynamic footer view partial. See: app/helpers/layout_helper.rb %>
 			<%= render :partial => footer_partial_location %>
 		</div>
+		<%= yield :script %>
 	</body>
 </html>

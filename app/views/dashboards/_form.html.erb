@@ -1,0 +1,60 @@
+<% javascript 'dashboard.js' %>
+
+<% if @dashboard.errors.any? %>
+  <%= render('shared/errors', {object: @dashboard, object_type: 'dashboard'}) %>
+<% end %>
+
+<%= form_for [@survey, @survey_version, @dashboard] do |f| %>
+	<%= field_set_tag "Options" do %>
+		<div class="left_side">
+			<%= f.label :name, "Name: " %>
+		</div>
+		<div class="right_side">
+			<%= f.text_field :name %>
+		</div>
+	<% end %>
+
+  <div class="page-nav">
+    <%= link_to "New Widget", "#", :class => "newlink", :id => "newWidgetLink" %>
+  </div>
+
+  <ul id="dashboardElementsList">
+    <%= f.fields_for :dashboard_elements do |elements_form| %>
+      <li>
+        <%= elements_form.hidden_field :id %>
+        <%= elements_form.hidden_field :survey_element_id %>
+        <%= elements_form.hidden_field :element_type %>
+        <%= elements_form.hidden_field :_destroy %>
+        <%= link_to image_tag("delete.png"), "#", class: "remove_element" %>
+        <%= truncate_question(elements_form.object.survey_element.reporter.question) %> - <%= elements_form.object.humanized_element_type %>
+      </li>
+    <% end %>
+  </ul>
+
+	<div class="submitButton">
+		<% if f.object.new_record? %>
+			<%= image_submit_tag "Submit.png", :alt=>"Create Dashboard" %>
+		<% else %>
+			<%= image_submit_tag "Submit.png", :alt=>"Update Dashboard" %>
+		<% end %>
+	</div>
+<% end %>
+
+<div id="dashboardModalShownDiv" style="display: none;"></div>
+
+<div id="dashboardModalDiv" style="display: none;">
+  <h2>Add a New Widget</h2>
+  <%= select_tag :survey_element_id, options_for_select(@survey_version.reporters.map {|r| [truncate_question(r.question), r.se_id]}) %>
+  <%= select_tag :element_type, options_for_select(dashboard_element_types_arr) %>
+  <br/>
+  <div class="pageNav">
+    <%= link_to "Cancel", "#", :class => "simplemodal-close cancelLink-inline" %>
+    <%= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %>
+  </div>
+</div>
+
+<div id="dashboardElementBlank" style="display: none;">
+  <%= hidden_field_tag :dashboard_dashboard_elements_attributes_replaceId_survey_element_id, nil, name: "dashboard[dashboard_elements_attributes][replaceId][survey_element_id]" %>
+  <%= hidden_field_tag :dashboard_dashboard_elements_attributes_replaceId_element_type, nil, name: "dashboard[dashboard_elements_attributes][replaceId][element_type]" %>
+  <%= link_to image_tag("delete.png"), "#", class: "remove_pending_element" %>
+</div>

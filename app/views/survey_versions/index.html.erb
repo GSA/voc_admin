@@ -35,11 +35,12 @@
 			<th class="col1" scope="col">Edit</th>
 			<th class="col2-3" scope="col" colspan="2"><%= sortable("major, minor", "Survey Version") %></th>
 			<th class="col4" scope="col">Export CSV</th>
-			<th class="col5" scope="col">Thank You Page</th>
-			<th class="col6" scope="col">Published</th>
-			<th class="col7" scope="col"><%= sortable "created_at", "Created" %></th>
-			<th class="col8" scope="col"><%= sortable "updated_at", "Updated" %></th>
-			<th class="col9-10" scope="col" colspan="2"></th>
+			<th class="col5" scope="col">Report</th>
+			<th class="col6" scope="col">Thank You Page</th>
+			<th class="col7" scope="col">Published</th>
+			<th class="col8" scope="col"><%= sortable "created_at", "Created" %></th>
+			<th class="col9" scope="col"><%= sortable "updated_at", "Updated" %></th>
+			<th class="col10-11" scope="col" colspan="2"></th>
 		</tr>
 		<% for version in @survey_versions %>
 		<tr class="<%= cycle('gray','white') %>">
@@ -53,18 +54,19 @@
 			<td class="col2"><%= version.version_number %></td>
 			<td class="col3"><%= link_to @survey.name.titleize, survey_survey_version_path(@survey, version) %></td>
 			<td class="col4"><%= link_to "export", export_all_survey_responses_path(:survey_version_id => version), :remote => true %></td>
-			<td class="col5"><%= link_to image_tag("edit.png", :alt=>"edit thank you page"), [:edit_thank_you_page, @survey, version] %></td>
-			<td class="col6">
+			<td class="col5"><%= link_to "[X]", reporting_survey_survey_version_path(:id => version.id, :survey_id => @survey.id) %></td>
+			<td class="col6"><%= link_to image_tag("edit.png", :alt=>"edit thank you page"), [:edit_thank_you_page, @survey, version] %></td>
+			<td class="col7">
 				<% if version.published %>
 				 <%= link_to image_tag("published.png", :alt=>"published"), unpublish_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to remove this survey from the public site" %>
 				<% else %>
 				 <%= link_to image_tag("not_published.png", :alt=>"not published"), publish_survey_survey_version_path(@survey, version), :confirm => "Are you sure?" %>
 				<% end %>
 			</td>
-			<td class="col7"><%= version.created_at.strftime("%m/%d/%Y") %></td>
-			<td class="col8"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>			
-			<td class="col9"><%= link_to image_tag("clone.png", :alt=>"Clone Survey"), clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version", :class=>"copyLink"  %></td>
-			<td class="col10"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+			<td class="col8"><%= version.created_at.strftime("%m/%d/%Y") %></td>
+			<td class="col9"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>			
+			<td class="col10"><%= link_to image_tag("clone.png", :alt=>"Clone Survey"), clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version", :class=>"copyLink"  %></td>
+			<td class="col11"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
 		</tr>
 	
 	

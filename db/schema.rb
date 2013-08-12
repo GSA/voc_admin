@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130610150503) do
+ActiveRecord::Schema.define(:version => 20130807200702) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -96,6 +96,24 @@ ActiveRecord::Schema.define(:version => 20130610150503) do
     t.integer  "survey_version_id"
     t.string   "name"
     t.boolean  "default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dashboard_elements", :force => true do |t|
+    t.integer  "dashboard_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "survey_element_id"
+    t.integer  "sort_order"
+    t.string   "element_type"
+  end
+
+  add_index "dashboard_elements", ["survey_element_id"], :name => "index_dashboard_elements_on_survey_element_id"
+
+  create_table "dashboards", :force => true do |t|
+    t.string   "name"
+    t.integer  "survey_version_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -264,6 +282,23 @@ ActiveRecord::Schema.define(:version => 20130610150503) do
   add_index "raw_responses", ["status_id"], :name => "index_rr_status_id"
   add_index "raw_responses", ["survey_response_id"], :name => "index_rr_survey_response_id"
 
+  create_table "report_elements", :force => true do |t|
+    t.string   "type"
+    t.integer  "report_id"
+    t.integer  "choice_question_id"
+    t.integer  "text_question_id"
+    t.integer  "matrix_question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reports", :force => true do |t|
+    t.string   "name"
+    t.integer  "survey_version_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "response_categories", :force => true do |t|
     t.integer  "category_id",         :null => false
     t.integer  "process_response_id", :null => false
@@ -371,6 +406,7 @@ ActiveRecord::Schema.define(:version => 20130610150503) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "thank_you_page"
+    t.integer  "visits",         :default => 0
   end
 
   add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"

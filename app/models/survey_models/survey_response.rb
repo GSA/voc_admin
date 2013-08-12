@@ -24,7 +24,7 @@ class SurveyResponse < ActiveRecord::Base
   after_create :queue_for_processing
   after_create :create_dfvs
 
-  after_save :export_for_reporting
+  after_save :export_values_for_reporting
 
   scope :search, (lambda do |search_text = ""|
     joins('INNER JOIN (select * from display_field_values) t1 on t1.survey_response_id = survey_responses.id')
@@ -158,10 +158,11 @@ class SurveyResponse < ActiveRecord::Base
     self.save!
   end
 
-  def export_for_reporting
-    resp = ReportableSurveyResponse.find_or_create_by(survey_id: self.survey_version.survey_id,
-                                                      survey_version_id: self.survey_version_id,
-                                                      survey_response_id: self.id)
+  def export_values_for_reporting
+    resp = ReportableSurveyResponse.find_or_create_by(survey_response_id: self.id)
+
+    resp.survey_id = self.survey_version.survey_id
+    resp.survey_version_id = self.survey_version_id
 
     answers = {}
 

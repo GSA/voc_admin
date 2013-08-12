@@ -5,6 +5,7 @@ require 'csv'
 # A SurveyVersion is a working copy of a survey.  Only one version may be published (and
 # therefore collecting responses from the public site application) at a time.
 class SurveyVersion < ActiveRecord::Base
+  include Redis::Objects
   include ResqueAsyncRunner
   @queue = :voc_csv
 
@@ -21,6 +22,9 @@ class SurveyVersion < ActiveRecord::Base
   has_many :display_fields,   :dependent => :destroy
   has_many :survey_responses, :dependent => :destroy
   has_many :custom_views,     :dependent => :destroy
+
+  has_many :dashboards,       :dependent => :destroy
+  has_many :reports,          :dependent => :destroy
 
   attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
 
@@ -41,6 +45,18 @@ class SurveyVersion < ActiveRecord::Base
 
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
+
+  counter :recent_visits
+
+  # Increments visits by temporary recent_visits count
+  def update_visit_count
+    recent_visit_count = recent_visits.value
+    return visits if recent_visit_count == 0
+    SurveyVersion.update_counters id, :visits => recent_visit_count
+    recent_visits.decrement recent_visit_count
+    reload
+    visits
+  end
 
   NOSQL_BATCH = 1000
 
@@ -306,6 +322,14 @@ class SurveyVersion < ActiveRecord::Base
       new_sv
     end
   end
+
+  def reporters
+    survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }
+  end
+
+  def choice_question_reporters
+    ChoiceQuestionReporter.where(:sv_id => id)
+  end
 end
 
 # == Schema Information
@@ -323,5 +347,6 @@ end
 #  created_at     :datetime
 #  updated_at     :datetime
 #  thank_you_page :text
+#  visits         :integer(4)      default(0)
 #
 

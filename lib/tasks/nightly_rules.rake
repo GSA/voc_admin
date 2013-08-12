@@ -81,6 +81,9 @@ namespace :nightly_rules do
         #set new run times
         date_last_run = Date.today
 
+        #update survey visit count from temporary count
+        SurveyVersion.find_each {|sv| sv.update_visit_count }
+
         #start processing
         loop do
           sr = SurveyResponse.get_next_response(who_am_i, "nightly", date_last_run)

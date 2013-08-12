@@ -9,7 +9,10 @@ class ReportableSurveyResponse
 	field :page_url, type: String
 
 	field :answers, type: Hash
-	# answers[df.id.to_s] =
+	# answers[df.id.to_s] = dfv.value
+
+	# ORIGINALLY:
+	# answers[df.id.to_s] = 
 	# {
 	#   "type" => df.type,
 	#   "text" => df.name,

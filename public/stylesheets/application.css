@@ -357,21 +357,24 @@ a.navActive {
 	text-align: center;
 }
 #surveyTable .col3 {
-	width: 300px;
+	width: 24px;
 }
 #surveyTable .col4 {
 	width: 300px;
 }
 #surveyTable .col5 {
+	width: 300px;
+}
+#surveyTable .col6 {
 	width: 30px;
 	text-align: center;
 }
-#surveyTable .col6 {
-	width: 153px;
+#surveyTable .col7 {
+	width: 129px;
 	word-wrap:break-word;
 	word-break:break-all;
 }
-#surveyTable .col7 {
+#surveyTable .col8 {
 	width: 11px;
 }
 
@@ -505,40 +508,44 @@ a.navActive {
 	text-align: center;
 }
 #versionTable .col2-3 {
-	width: 330px;
+	width: 300px;
 }
 #versionTable .col2 {
 	width: 20px;
 }
 #versionTable .col3 {
-	width: 300px;
+	width: 270px;
 }
 #versionTable .col4 {
 	width: 60px;
 	text-align: center;
 }
 #versionTable .col5 {
-	width: 70px;
+	width: 30px;
 	text-align: center;
 }
 #versionTable .col6 {
-	width: 80px;
+	width: 70px;
 	text-align: center;
 }
 #versionTable .col7 {
-	width: 108px;
+	width: 80px;
+	text-align: center;
 }
 #versionTable .col8 {
 	width: 108px;
 }
-#versionTable .col9-10 {
+#versionTable .col9 {
+	width: 108px;
+}
+#versionTable .col10-11 {
 	width: 45px;
 }
-#versionTable .col9 {
+#versionTable .col10 {
 	width: 15px;
 	text-align: center;
 }
-#versionTable .col10 {
+#versionTable .col11 {
 	width: 15px;
 	text-align: center;
 }
@@ -900,6 +907,91 @@ fieldset#inmodal legend {
 	text-align: center;
 }
 
+/**** Dashboard Tables ****/
+#dashboardsTable .col1 {
+	width: 870px;
+	word-wrap:break-word;
+	word-break:break-all;
+}
+#dashboardsTable .col2-3 {
+	width: 30px;
+}
+#dashboardsTable .col2, #dashboardsTable .col3 {
+	width: 15px;
+	text-align: center;
+}
+
+/**** Dashboard Form ****/
+form #dashboardElementsList {
+  list-style-type: none;
+}
+
+form #dashboardElementsList li {
+  cursor: move;
+}
+
+/**** Pie Charts ****/
+.pieChartDiv {
+	display: inline-block;
+	height: 270px;
+	width: 452px;
+	border: 2px solid #ddd;
+	margin-top: 4px;
+}
+
+.pieChart {
+	height: 200px;
+	width: 450px;
+}
+
+.pieChartHeader {
+	margin-left: 18px;
+	width: 414px;
+}
+
+.pieChartLabel {
+	display: inline-block;
+}
+
+.pieChartLabel .ellipse {
+	width: 125px;
+	display:inline-block;
+}
+
+.pieChartLabel .bold {
+	width: 50px;
+	text-align: right;
+	display: inline-block;
+}
+
+.ellipse {
+    white-space: nowrap;
+    overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
+    -o-text-overflow: ellipsis;    /* Opera < 11*/
+    text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
+}
+
+.pieHover {
+	position:absolute;
+	float: left;
+	display: none;
+	opacity:0.8;
+	filter:alpha(opacity=80);  /* For IE8 and earlier */
+	background-color: #ddd;
+	color: #000;
+	padding: 3px;
+}
+
+.pieHover div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.pieHover #hoverText {
+	max-width: 120px;
+	text-align: center;
+}
+
 /**** Footer ****/
 #footer {
 	background: url(../images/footer_background.png) no-repeat top left transparent;
@@ -999,7 +1091,7 @@ fieldset#inmodal legend {
 }
 #simplemodal-container {
 	max-height: 100%;
-	overflow: auto;
+	/*overflow: auto;*/
 }
 .simplemodal-wrap {
 	overflow: visible !important;	

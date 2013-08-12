@@ -15,18 +15,16 @@ gem 'paperclip'
 gem 'jquery-rails'
 gem 'kaminari'
 
-# OLD! Delayed_Job for asynchronous processing
-# gem 'delayed_job_active_record'
-# gem 'daemons', :require => false
-
-# NEW: Resque
-gem 'resque'
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
 
 gem 'bson_ext'
 gem 'mongoid'
+gem 'escape_utils'
+gem 'mongoid'
+gem 'ranked-model', '~> 0.2.1'
+gem 'redis-objects'
 
 platform :ruby do
   gem 'unicorn-rails'

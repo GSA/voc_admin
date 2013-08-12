@@ -1,14 +1,16 @@
-#simplemodal-overlay {
+.simplemodal-overlay {
 	background-color: #000;
 }
 
-#simplemodal-container {
+.simplemodal-container {
 	background-color: white;
 	border: 8px solid #444;
 	padding: 15px;
+/*	Taking these out as they mess up Chrome/FFX:
 	max-height: 90%;
 	*max-height: 85%;
 	min-width: 350px;
 	max-width: 550px;
 	*width: 550px;
+*/
 }
