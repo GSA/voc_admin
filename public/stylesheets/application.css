@@ -691,6 +691,12 @@ li.inner {
 }
 
 /**** Survey Responses ****/
+.total_responses {
+	font-size: 13px;
+	position: relative;
+	top: 30px;
+}
+
 #survey_response_table_div {
 	overflow: auto;
 	height: 100%;
