@@ -4,8 +4,7 @@ require 'yaml'
 
 namespace :nightly_rules do
   desc "Start a nightly rule processing task instance"
-  task :process do
-
+  task :process  => [:environment] do
     #get configuration file
     parseryaml = YAML::load(File.open('config/response_parser.yml'))
 
@@ -42,9 +41,9 @@ namespace :nightly_rules do
     end
 
     #Load rails
-    log_event("Starting Rails",3)
-    require File.dirname(__FILE__) + "/../../config/application"
-    Rails.application.require_environment!
+    # log_event("Starting Rails",3)
+    # require File.dirname(__FILE__) + "/../../config/application"
+    # Rails.application.require_environment!
 
     process_nightly(who_am_i, nightly_run_hour)
   end
@@ -98,6 +97,13 @@ namespace :nightly_rules do
             log_event("Error processing #{sr.id} - #{$!.to_s}",4)
           end
         end
+
+        log_event("Reloading question reporting DB...", 2)
+        
+        # run task and any dependent tasks
+        Rake::Task["reporting:load_questions"].execute
+
+        log_event("Finished reloading question reporting DB.")
       end
       sleep 5
     end
