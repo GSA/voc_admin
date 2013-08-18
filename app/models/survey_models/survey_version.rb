@@ -25,6 +25,7 @@ class SurveyVersion < ActiveRecord::Base
 
   has_many :dashboards,       :dependent => :destroy
   has_many :reports,          :dependent => :destroy
+  has_many :survey_visit_counts,    :dependent => :destroy
 
   attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
 
@@ -46,16 +47,28 @@ class SurveyVersion < ActiveRecord::Base
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
 
-  counter :recent_visits
+  hash_key :temp_visit_count
+
+  def increment_temp_visit_count
+    temp_visit_count.incr(today_string, 1)
+  end
 
   # Increments visits by temporary recent_visits count
-  def update_visit_count
-    recent_visit_count = recent_visits.value
-    return visits if recent_visit_count == 0
-    SurveyVersion.update_counters id, :visits => recent_visit_count
-    recent_visits.decrement recent_visit_count
-    reload
-    visits
+  def update_visit_counts
+    yesterday = today - 1.day
+    temp_visit_count.each do |visits_date_string, visits_count_string|
+      visits_date = Date.parse(visits_date_string)
+      visits_count = visits_count_string.to_i
+      if visits_count > 0
+        svc = survey_visit_counts.find_or_create_by_visit_date(visits_date)
+        SurveyVisitCount.update_counters svc.id, :visits => visits_count
+      end
+      if visits_date < yesterday
+        temp_visit_count.delete(visits_date_string)
+      else
+        temp_visit_count.incr(visits_date_string, -visits_count) if visits_count > 0
+      end
+    end
   end
 
   NOSQL_BATCH = 1000
@@ -330,6 +343,15 @@ class SurveyVersion < ActiveRecord::Base
   def choice_question_reporters
     ChoiceQuestionReporter.where(:sv_id => id)
   end
+
+  private
+  def today
+    Time.now.in_time_zone("Eastern Time (US & Canada)").to_date
+  end
+
+  def today_string
+    today.strftime("%Y-%m-%d")
+  end
 end
 
 # == Schema Information
@@ -347,6 +369,5 @@ end
 #  created_at     :datetime
 #  updated_at     :datetime
 #  thank_you_page :text
-#  visits         :integer(4)      default(0)
 #
 

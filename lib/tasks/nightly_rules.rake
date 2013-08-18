@@ -81,7 +81,7 @@ namespace :nightly_rules do
         date_last_run = Date.today
 
         #update survey visit count from temporary count
-        SurveyVersion.find_each {|sv| sv.update_visit_count }
+        SurveyVersion.find_each {|sv| sv.update_visit_counts }
 
         #start processing
         loop do
