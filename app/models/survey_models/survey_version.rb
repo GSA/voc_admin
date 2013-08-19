@@ -53,6 +53,10 @@ class SurveyVersion < ActiveRecord::Base
     temp_visit_count.incr(today_string, 1)
   end
 
+  def total_temp_visit_count
+    temp_visit_count.values.inject(0) {|result, element| result + element.to_i}
+  end
+
   # Increments visits by temporary recent_visits count
   def update_visit_counts
     yesterday = today - 1.day

@@ -140,6 +140,25 @@ describe SurveyVersion do
     end
   end
 
+  context "visit count" do
+    before do
+      @version.temp_visit_count.incr(5.days.ago.strftime("%Y-%m-%d"), 3)
+      5.times {@version.increment_temp_visit_count}
+    end
+
+    it "should increment the temporary version count" do
+      @version.total_temp_visit_count.should == 8
+    end
+
+    it "should create survey visit counts and decrement the temporary count" do
+      @version.update_visit_counts
+      @version.total_temp_visit_count.should == 0
+      @version.temp_visit_count.count.should == 1 # should delete old temp_visit_count keys
+      @version.survey_visit_counts.count_for_date_range(1.day.ago, Time.now).should == 5
+      @version.survey_visit_counts.count_for_date_range(6.days.ago, Time.now).should == 8
+    end
+  end
+
   it "should return the next page number" do # TODO: this test could be better
     @survey.survey_versions.first.next_page_number.should == @survey.survey_versions.first.pages.count + 1
   end
