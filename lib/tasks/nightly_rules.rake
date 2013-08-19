@@ -80,8 +80,12 @@ namespace :nightly_rules do
         #set new run times
         date_last_run = Date.today
 
+        log_event("Updating survey version visit counts...", 2)
+        
         #update survey visit count from temporary count
         SurveyVersion.find_each {|sv| sv.update_visit_count }
+
+        log_event("Finished pdating survey version visit counts.", 2)
 
         #start processing
         loop do
