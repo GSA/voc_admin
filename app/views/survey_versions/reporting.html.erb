@@ -16,6 +16,27 @@
 	<div class="right_side">
 		<p class="version"><%= @survey_version.version_number%></p>
 	</div>
+	<br />
+	<div class="left_side">
+		Visits:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @visit_count %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Completed:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @completion_count %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Completion Rate:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= number_to_percentage(@completion_rate, :precision => 0) %></p>
+	</div>
 </div>
 
 <div class="pageNav">
