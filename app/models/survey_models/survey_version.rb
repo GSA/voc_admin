@@ -341,7 +341,7 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def reporters
-    survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }
+    survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }.presence
   end
 
   def choice_question_reporters
