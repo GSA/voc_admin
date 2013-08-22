@@ -341,11 +341,12 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def reporters
-    survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }.presence
+    @reporters ||= QuestionReporter.where(:sv_id => id)
+    #survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }.presence
   end
 
   def choice_question_reporters
-    ChoiceQuestionReporter.where(:sv_id => id)
+    reporters.where(_type: "ChoiceQuestionReporter")
   end
 
   private
