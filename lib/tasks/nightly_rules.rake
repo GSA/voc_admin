@@ -83,7 +83,9 @@ namespace :nightly_rules do
         log_event("Updating survey version visit counts...", 2)
         
         #update survey visit count from temporary count
-        SurveyVersion.find_each {|sv| sv.update_visit_count }
+        SurveyVersion.find_each {|sv| sv.update_visit_counts }
+
+        log_event("Finished pdating survey version visit counts.", 2)
 
         log_event("Finished pdating survey version visit counts.", 2)
 

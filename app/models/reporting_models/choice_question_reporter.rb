@@ -1,11 +1,6 @@
-class ChoiceQuestionReporter
-	include Mongoid::Document
+class ChoiceQuestionReporter < QuestionReporter
 
 	field :cq_id, type: Integer		# ChoiceQuestion id
-	field :s_id, type: Integer		# Survey id
-	field :sv_id, type: Integer		# Survey Version id
-	field :se_id, type: Integer		# Survey Element id
-
 	field :question, type: String
 
 	# Total number of SurveyResponses for this ChoiceQuestion with values

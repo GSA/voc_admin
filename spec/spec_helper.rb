@@ -37,6 +37,10 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  config.after(:all) do
+    Redis.current.keys.each {|k| Redis.current.del k}
+  end
+
   # config.use_transactional_fixtures = false
   # 
   # config.before(:suite) do

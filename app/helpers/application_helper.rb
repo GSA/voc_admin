@@ -60,6 +60,6 @@ module ApplicationHelper
   end
 
   def get_reporting_link(survey, version)
-    link_to "[X]", reporting_survey_survey_version_path(:id => version.id, :survey_id => survey.id) if version && version.survey_responses.count > 0
+    link_to "[X]", reporting_survey_survey_version_path(:id => version.id, :survey_id => survey.id) if version && version.reporters.count > 0 && version.survey_responses.count > 0
   end
 end

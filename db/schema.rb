@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807200702) do
+ActiveRecord::Schema.define(:version => 20130815195520) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -381,10 +381,20 @@ ActiveRecord::Schema.define(:version => 20130807200702) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "thank_you_page"
-    t.integer  "visits",         :default => 0
   end
 
   add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"
+
+  create_table "survey_visit_counts", :force => true do |t|
+    t.integer  "survey_version_id"
+    t.date     "visit_date"
+    t.integer  "visits",            :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "survey_visit_counts", ["survey_version_id", "visit_date"], :name => "index_survey_visit_counts_on_survey_version_id_and_visit_date", :unique => true
+  add_index "survey_visit_counts", ["survey_version_id"], :name => "index_survey_visit_counts_on_survey_version_id"
 
   create_table "surveys", :force => true do |t|
     t.string   "name"
