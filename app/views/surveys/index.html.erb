@@ -29,12 +29,12 @@
   </tr>
 
 <% @surveys.each do |survey| %>
-  <% latest_version = survey.published_version.try(:id) || survey.survey_versions.last.id %>
+  <% latest_version = survey.published_version || survey.newest_version %>
   <tr class="<%= cycle('gray','white') %>">
     <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_path(survey) %></td>
     <td class="col2"><%= link_to image_tag('version.png', :alt=>"view versions"), survey_survey_versions_path(survey)%></td>
-    <td class="col3"><%= link_to "[X]", reporting_survey_survey_version_path(:id => latest_version, :survey_id => survey.id) %></td>
-    <td class="col4"><%= link_to survey.name, survey_responses_path(:survey_version_id => latest_version, :survey_id => survey.id) %></td>
+    <td class="col3"><%= get_reporting_link(survey, latest_version) %></td>
+    <td class="col4"><%= link_to survey.name, survey_responses_path(:survey_version_id => latest_version.id, :survey_id => survey.id) %></td>
     <td class="col5"><%= survey.description %></td>
     <td class="col6"><%= survey.survey_type.name.titleize %></td>
 		<td class="col7"><%= survey.site.name %></td>

@@ -54,7 +54,7 @@
 			<td class="col2"><%= version.version_number %></td>
 			<td class="col3"><%= link_to @survey.name.titleize, survey_survey_version_path(@survey, version) %></td>
 			<td class="col4"><%= link_to "export", export_all_survey_responses_path(:survey_version_id => version), :remote => true %></td>
-			<td class="col5"><%= link_to "[X]", reporting_survey_survey_version_path(:id => version.id, :survey_id => @survey.id) %></td>
+			<td class="col5"><%= get_reporting_link(@survey, version) %></td>
 			<td class="col6"><%= link_to image_tag("edit.png", :alt=>"edit thank you page"), [:edit_thank_you_page, @survey, version] %></td>
 			<td class="col7">
 				<% if version.published %>
