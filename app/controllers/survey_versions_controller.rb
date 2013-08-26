@@ -88,7 +88,7 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/reporting(.:format)
   def reporting
-		@visit_count = @survey_version.survey_visit_counts.sum(:visits)
+    @visit_count = @survey_version.total_visit_count
     @response_count = @survey_version.survey_responses.count
     @response_rate = 0
     if @visit_count > 0
