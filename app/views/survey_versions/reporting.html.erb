@@ -25,17 +25,17 @@
 	</div>
 	<br />
 	<div class="left_side">
-		Completed:
+		Responded:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= @completion_count %></p>
+		<p class="version"><%= @response_count %></p>
 	</div>
 	<br />
 	<div class="left_side">
-		Completion Rate:
+		Response Rate:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= number_to_percentage(@completion_rate, :precision => 0) %></p>
+		<p class="version"><%= number_to_percentage(@response_rate, :precision => 0) %></p>
 	</div>
 </div>
 
