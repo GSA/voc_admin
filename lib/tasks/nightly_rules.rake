@@ -4,14 +4,15 @@ namespace :nightly_rules do
   task :start => [:environment] do
     load_config 
 
-    #start worker
-    pid = fork do
-      Signal.trap("HUP") { log_event "Exiting...", 2; Process.exit }
+    ## Using Kernel.spawn and Process.detach because regular system() call would
+    ## cause the processes to quit when capistrano finishes
+    options = {
+            :pgroup => true,   # create a new process group
+            :err => [File.join(@log_path, @log_file), "a"],
+            :out => [File.join(@log_path, @log_file), "a"]
+          }
 
-      $stdout = File.new(File.join(@log_path, @log_file), 'a')
-
-      process_nightly
-    end
+    pid = spawn({ "RAILS_ENV" => @rails_env }, "rake nightly_rules:process", options)
 
     #record pid
     puts "Started worker with name #{@who_am_i} and pid #{pid}"
