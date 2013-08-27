@@ -28,7 +28,7 @@ namespace :reporting do
         begin
           sr.export_values_for_reporting
         rescue Exception => e
-          print "\n    ...failed with error: #{$!.to_s}\n Backtrace: #{e.backtrace}"
+          print "\n    ...failed with error: #{$!.to_s}"
           errors += 1
         end
 
@@ -107,7 +107,7 @@ namespace :reporting do
             choice_question_reporter.save
 
           rescue Exception => e
-            print "\rERROR: Failed import for #{choice_question.id};\n  Message: #{$!.to_s}\n  Backtrace: #{e.backtrace}\n"
+            print "\rERROR: Failed import for #{choice_question.id};\n  Message: #{$!.to_s}\n"
             errors << [choice_question.id, $!.to_s, e.backtrace]
           end
         else
@@ -116,7 +116,7 @@ namespace :reporting do
         end
       end
 
-      print "\n...finished processing SV #{survey_version.id}.\n\n"
+      print "\n...finished processing SV #{survey_version.id}.\n"
     end
 
     puts "...question import finished. #{errors.count} errors."
