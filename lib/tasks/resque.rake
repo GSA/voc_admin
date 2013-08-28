@@ -5,13 +5,14 @@ require 'resque/tasks'
 # task "resque:setup" => :environment
 
 # Start a worker with proper env vars and output redirection
-def run_worker(queues, num_workers = 1)
-  queues = queues.split('|').join(',')
+def run_worker(num_workers = 1)
+  env_vars = ENV.to_hash.slice("RAILS_ENV", "PIDFILE", "QUEUE")
 
-  puts "Starting #{num_workers} worker(s) with QUEUE: #{queues}"
+  raise 'no Resque queues defined in ENV["QUEUE"] - nothing to do!' unless env_vars["QUEUE"]
+
+  puts "Starting #{num_workers} worker(s) with QUEUE: #{env_vars['QUEUE']}"
   ops = {:pgroup => true, :err => [File.join(Rails.root, "log/resque_err.log"), "a"], 
                           :out => [File.join(Rails.root + "log/resque_stdout.log"), "a"]}
-  env_vars = {"QUEUE" => queues.to_s}
   num_workers.to_i.times {
     ## Using Kernel.spawn and Process.detach because regular system() call would
     ## cause the processes to quit when capistrano finishes
@@ -44,8 +45,10 @@ namespace :resque do
     end
   end
   
-  desc 'Start workers - takes ["queues|pipe|delimited", num_workers]'
-  task :start_workers, [:queues, :num_workers] => [:environment] do |t, args|
-    run_worker(args.queues, args.num_workers)
+  desc 'Start workers - takes optional [num_workers]'
+  task :start_workers, [:num_workers] => [:environment] do |t, args|
+    args.with_defaults(:num_workers => 1)
+
+    run_worker(args.num_workers)
   end
  end
