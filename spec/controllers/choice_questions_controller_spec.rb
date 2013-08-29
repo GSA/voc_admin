@@ -19,88 +19,65 @@ describe ChoiceQuestionsController do
   end
 
   context 'new' do
-    it 'should build a new ChoiceQuestion' do
+    before do
+      survey_version.stub_chain(:choice_questions, :build).and_return(choice_question)
       controller.stub(:build_default_choice_context)
+    end
 
+    it 'should build a new ChoiceQuestion' do
       survey_version.choice_questions.should_receive(:build).and_return(choice_question)
-
       get :new, survey_id: survey.id, survey_version_id: survey_version.id
     end
 
     it 'should render new' do
-      survey_version.stub_chain(:choice_questions, :build).and_return(choice_question)
-      controller.stub(:build_default_choice_context)
-
       get :new, survey_id: survey.id, survey_version_id: survey_version.id
-
       response.should render_template(:new)
     end
 
     it 'should render new.js' do
-      survey_version.stub_chain(:choice_questions, :build).and_return(choice_question)
-      controller.stub(:build_default_choice_context)
-
       get :new, survey_id: survey.id, survey_version_id: survey_version.id, format: :js
-
       response.should render_template(:new)
     end
   end
 
   context 'create' do
-    it 'should create a new ChoiceQuestion' do
+    before do
+      ChoiceQuestion.stub(:new).and_return(choice_question)
       choice_question.stub_chain(:survey_element, :survey_version_id=)
-      choice_question.stub(:save).and_return true
       controller.stub(:build_default_choice_context)
-
-      ChoiceQuestion.should_receive(:new).and_return(choice_question)
-
-      post :create, survey_id: survey.id, survey_version_id: survey_version.id
     end
 
-    it 'should assign survey_version_id to SurveyElement of ChoiceQuestion' do
-      ChoiceQuestion.stub(:new).and_return(choice_question)
-      choice_question.stub(:save).and_return true
-      controller.stub(:build_default_choice_context)
+    context 'valid choice question' do
+      before { choice_question.stub(:save).and_return true }
 
-      survey_element_double = double
-      choice_question.stub(:survey_element).and_return(survey_element_double)
-      survey_element_double.should_receive(:survey_version_id=)
+      it 'should create a new ChoiceQuestion' do
+        ChoiceQuestion.should_receive(:new).and_return(choice_question)
+        post :create, survey_id: survey.id, survey_version_id: survey_version.id
+      end
 
-      post :create, survey_id: survey.id, survey_version_id: survey_version.id
+      it 'should assign survey_version_id to SurveyElement of ChoiceQuestion' do
+        survey_element_double = double
+        choice_question.stub(:survey_element).and_return(survey_element_double)
+        survey_element_double.should_receive(:survey_version_id=)
+        post :create, survey_id: survey.id, survey_version_id: survey_version.id
+      end
+
+      it 'should redirect to show survey with message' do
+        post :create, survey_id: survey.id, survey_version_id: survey_version.id
+        response.should redirect_to(survey_path survey)
+        flash[:notice].should =~ /Successfully added choice question./i
+      end
+
+      it 'should render element_create.js' do
+        post :create, survey_id: survey.id, survey_version_id: survey_version.id, format: :js
+        response.should render_template('shared/_element_create')
+      end
     end
 
     it 'should render new if validation fails' do
-      ChoiceQuestion.stub(:new).and_return(choice_question)
-      choice_question.stub_chain(:survey_element, :survey_version_id=)
       choice_question.stub(:save).and_return false
-      controller.stub(:build_default_choice_context)
-
       post :create, survey_id: survey.id, survey_version_id: survey_version.id
-
       response.should render_template(:new)
-    end
-
-    it 'should redirect to show survey with message' do
-      ChoiceQuestion.stub(:new).and_return(choice_question)
-      choice_question.stub_chain(:survey_element, :survey_version_id=)
-      choice_question.stub(:save).and_return true
-      controller.stub(:build_default_choice_context)
-
-      post :create, survey_id: survey.id, survey_version_id: survey_version.id
-
-      response.should redirect_to(survey_path survey)
-      flash[:notice].should =~ /Successfully added choice question./i
-    end
-
-    it 'should render element_create.js' do
-      ChoiceQuestion.stub(:new).and_return(choice_question)
-      choice_question.stub_chain(:survey_element, :survey_version_id=)
-      choice_question.stub(:save)
-      controller.stub(:build_default_choice_context)
-
-      post :create, survey_id: survey.id, survey_version_id: survey_version.id, format: :js
-
-      response.should render_template('shared/_element_create')
     end
   end
 
@@ -163,20 +140,18 @@ describe ChoiceQuestionsController do
   end
 
   context 'destroy' do
-    it 'should call for destruction of the ChoiceQuestion' do
+    before do
       ChoiceQuestion.stub(:find).and_return(choice_question)
       controller.stub(:destroy_default_rule_and_display_field)
+      choice_question.stub(:destroy)
+    end
 
+    it 'should call for destruction of the ChoiceQuestion' do
       choice_question.should_receive(:destroy)
-
       delete :destroy, survey_id: survey.id, survey_version_id: survey_version.id, id: choice_question.id
     end
 
     it 'should redirect to show survey with message' do
-      ChoiceQuestion.stub(:find).and_return(choice_question)
-      controller.stub(:destroy_default_rule_and_display_field)
-      choice_question.stub(:destroy)
-
       delete :destroy, survey_id: survey.id, survey_version_id: survey_version.id, id: choice_question.id
 
       response.should redirect_to(survey_path survey)
@@ -184,12 +159,7 @@ describe ChoiceQuestionsController do
     end
 
     it 'should render element_destroy.js' do
-      ChoiceQuestion.stub(:find).and_return(choice_question)
-      controller.stub(:destroy_default_rule_and_display_field)
-      choice_question.stub(:destroy)
-
       delete :destroy, survey_id: survey.id, survey_version_id: survey_version.id, id: choice_question.id, format: :js
-
       response.should render_template('shared/_element_destroy')
     end
   end
