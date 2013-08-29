@@ -54,7 +54,7 @@ class TextQuestionsController < ApplicationController
 
     respond_to do |format|
       if @text_question.update_attributes(params[:text_question])
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully updated text question."}
       else
         format.html {render :action => 'edit'}
       end
