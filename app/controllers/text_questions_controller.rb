@@ -71,7 +71,7 @@ class TextQuestionsController < ApplicationController
     @text_question.destroy
 
     respond_to do |format|
-      format.html { redirect_to text_questions_url, :notice => "Successfully deleted text question."}
+      format.html { redirect_to survey_path(@survey_version.survey), :notice => "Successfully deleted text question."}
       format.js { render :partial => "shared/element_destroy" }
     end
   end
