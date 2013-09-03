@@ -1,0 +1,78 @@
+<h1>Reporting</h1>
+
+<%= flash_messages(flash) %>
+
+<div id="showpage">
+	<div class="left_side">
+		Survey:
+	</div>
+	<div class="right_side">
+		<p class="blue"><%= @survey.name.titleize %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Version:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @survey_version.version_number%></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Visits:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @visit_count %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Responses:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= @response_count %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Response Rate:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= number_to_percentage(@response_rate, :precision => 0) %></p>
+	</div>
+</div>
+
+<div class="pageNav">
+  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
+</div>
+
+<div id="dashboards">
+	<h2>Dashboards</h2>
+
+	<table id="dashboardsTable">
+		<tr>
+			<th class="col1" scope="col">Name</th>
+			<th class="col2-3" scope="col" colspan="2"></th>
+		</tr>
+		<% for dashboard in @survey_version.dashboards %>
+			<tr class="<%= cycle('gray','white') %>">
+				<td class="col1"><%= link_to dashboard.name, survey_survey_version_dashboard_path(@survey, @survey_version, dashboard) %></td>
+				<td class="col2"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
+				<td class="col3"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+			</tr>
+		<% end %>
+	</table>
+
+	<%= link_to "New Dashboard", new_survey_survey_version_dashboard_path(@survey, @survey_version), :class => "newlink" %>
+</div>
+
+<div id="reports">
+	<h2>Reports</h2>
+	<ul>
+		<% for report in @survey_version.reports %>
+			<li><%= report.name %></li>
+		<% end %>
+	</ul>
+	<%= link_to "New Report", new_survey_survey_version_report_path(@survey, @survey_version), :class => "newlink" %>
+</div>
+
+<div class="pageNav">
+  <%= link_to 'View All Versions', survey_survey_versions_path(@survey), :class=>"manage" %>
+</div>

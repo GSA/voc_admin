@@ -86,6 +86,16 @@ class SurveyVersionsController < ApplicationController
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/reporting(.:format)
+  def reporting
+    @visit_count = @survey_version.total_visit_count
+    @response_count = @survey_version.survey_responses.count
+    @response_rate = 0
+    if @visit_count > 0
+      @response_rate = @response_count * 100.0 / @visit_count
+    end
+  end
+
   private
 
   # Prepares the survey and survey version instance. This is a one-off from the

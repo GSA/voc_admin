@@ -5,6 +5,7 @@ require 'csv'
 # A SurveyVersion is a working copy of a survey.  Only one version may be published (and
 # therefore collecting responses from the public site application) at a time.
 class SurveyVersion < ActiveRecord::Base
+  include Redis::Objects
   include ResqueAsyncRunner
   @queue = :voc_csv
 
@@ -21,6 +22,10 @@ class SurveyVersion < ActiveRecord::Base
   has_many :display_fields,   :dependent => :destroy
   has_many :survey_responses, :dependent => :destroy
   has_many :custom_views,     :dependent => :destroy
+
+  has_many :dashboards,       :dependent => :destroy
+  has_many :reports,          :dependent => :destroy
+  has_many :survey_visit_counts,    :dependent => :destroy
 
   attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
 
@@ -42,9 +47,41 @@ class SurveyVersion < ActiveRecord::Base
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
 
+  hash_key :temp_visit_count
+
+  def increment_temp_visit_count
+    temp_visit_count.incr(today_string, 1)
+  end
+
+  def total_temp_visit_count
+    temp_visit_count.values.inject(0) {|result, element| result + element.to_i}
+  end
+
+  def total_visit_count
+    survey_visit_counts.sum(:visits) + total_temp_visit_count
+  end
+
+  # Increments visits by temporary recent_visits count
+  def update_visit_counts
+    yesterday = today - 1.day
+    temp_visit_count.each do |visits_date_string, visits_count_string|
+      visits_date = Date.parse(visits_date_string)
+      visits_count = visits_count_string.to_i
+      if visits_count > 0
+        svc = survey_visit_counts.find_or_create_by_visit_date(visits_date)
+        SurveyVisitCount.update_counters svc.id, :visits => visits_count
+      end
+      if visits_date < yesterday
+        temp_visit_count.delete(visits_date_string)
+      else
+        temp_visit_count.incr(visits_date_string, -visits_count) if visits_count > 0
+      end
+    end
+  end
+
   NOSQL_BATCH = 1000
 
-  def generate_nosql_responses_csv(filter_params, user_id)
+  def generate_responses_csv(filter_params, user_id)
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: self.id)
 
     unless filter_params[:simple_search].blank?
@@ -122,71 +159,71 @@ class SurveyVersion < ActiveRecord::Base
   #
   # @param [Hash] filter_params parameters for filtering the survey responses (Advanced Search, Simple Search, Custom Views)
   # @param [Integer] user_id ID for the user requesting the export
-  def generate_responses_csv(filter_params, user_id)
-    survey_responses = self.survey_responses.processed
+  # def generate_responses_csv(filter_params, user_id)
+  #   survey_responses = self.survey_responses.processed
 
-    # use the simple search
-    survey_responses = survey_responses.search(filter_params[:simple_search]) unless filter_params[:simple_search].blank?
+  #   # use the simple search
+  #   survey_responses = survey_responses.search(filter_params[:simple_search]) unless filter_params[:simple_search].blank?
 
-    # use the advanced search filters
-    unless filter_params[:search].blank?
-      search = SurveyResponseSearch.new(filter_params[:search])
+  #   # use the advanced search filters
+  #   unless filter_params[:search].blank?
+  #     search = SurveyResponseSearch.new(filter_params[:search])
 
-      survey_responses = search.search(survey_responses)
-    end
+  #     survey_responses = search.search(survey_responses)
+  #   end
 
-    # Apply the custom view to the survey responses
-    custom_view = nil
-    if filter_params[:custom_view_id].blank?
-      custom_view = self.custom_views.find_by_default(true)
-    else
-      # Use find_by_id in order to return nil if a custom view with the specified id
-      # cannot be found instead of raising an error.
-      custom_view = self.custom_views.find_by_id(filter_params[:custom_view_id])
-    end
+  #   # Apply the custom view to the survey responses
+  #   custom_view = nil
+  #   if filter_params[:custom_view_id].blank?
+  #     custom_view = self.custom_views.find_by_default(true)
+  #   else
+  #     # Use find_by_id in order to return nil if a custom view with the specified id
+  #     # cannot be found instead of raising an error.
+  #     custom_view = self.custom_views.find_by_id(filter_params[:custom_view_id])
+  #   end
 
-    # Write the survey responses to a temporary CSV file which will be used to create the
-    # Export instance.  The document will be copied to the correct location by paperclip
-    # when the Export instance is created.
-    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{self.survey.name[0..10]}-#{self.version_number}.csv"
-    CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
+  #   # Write the survey responses to a temporary CSV file which will be used to create the
+  #   # Export instance.  The document will be copied to the correct location by paperclip
+  #   # when the Export instance is created.
+  #   file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{self.survey.name[0..10]}-#{self.version_number}.csv"
+  #   CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
 
-      unless custom_view.present?
-        display_field_headers = self.display_fields.order("display_order asc").map(&:name)
-      else
-        display_field_headers = custom_view.ordered_display_fields.map(&:name)
-      end
-      csv << ["Date", "Page URL"].concat(display_field_headers)
+  #     unless custom_view.present?
+  #       display_field_headers = self.display_fields.order("display_order asc").map(&:name)
+  #     else
+  #       display_field_headers = custom_view.ordered_display_fields.map(&:name)
+  #     end
+  #     csv << ["Date", "Page URL"].concat(display_field_headers)
 
-      survey_responses.find_in_batches do |responses|
-        responses.each do |response|
-          if custom_view.present?
-            response_record = response.display_field_values.where(:display_field_id => custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
-          else
-            response_record = response.display_field_values.includes(:display_field).order("display_fields.display_order asc").map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
-          end
+  #     survey_responses.find_in_batches do |responses|
+  #       responses.each do |response|
+  #         if custom_view.present?
+  #           response_record = response.display_field_values.where(:display_field_id => custom_view.ordered_display_fields.map(&:id)).includes(:display_field => :display_field_custom_views).order('display_field_custom_views.display_order ASC').map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
+  #         else
+  #           response_record = response.display_field_values.includes(:display_field).order("display_fields.display_order asc").map {|dfv| dfv.value.blank? ? '' : dfv.value.gsub("{%delim%}", ", ")}
+  #         end
 
-          csv << [response.created_at, response.page_url].concat(response_record)
-        end
-      end
-    end
+  #         csv << [response.created_at, response.page_url].concat(response_record)
+  #       end
+  #     end
+  #   end
 
-    export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
+  #   export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
 
-    # Notify the user that the export has been successful and is available for download
-    if export_file.persisted?
-      resque_args = User.find(user_id).email, export_file.id
+  #   # Notify the user that the export has been successful and is available for download
+  #   if export_file.persisted?
+  #     resque_args = User.find(user_id).email, export_file.id
 
-      begin
-        Resque.enqueue(ExportMailer, *resque_args)
-      rescue
-        ResquedJob.create(class_name: "ExportMailer", job_arguments: resque_args)
-      end
-    end
+  #     begin
+  #       Resque.enqueue(ExportMailer, *resque_args)
+  #     rescue
+  #       ResquedJob.create(class_name: "ExportMailer", job_arguments: resque_args)
+  #     end
+  #   end
 
-    # Remove the temporary file used to create this export
-    File.delete("#{Rails.root}/tmp/#{file_name}")
-  end
+  #   # Remove the temporary file used to create this export
+  #   File.delete("#{Rails.root}/tmp/#{file_name}")
+  # end
 
   # Get all the SurveyElements that are Question elements.
   #
@@ -305,6 +342,24 @@ class SurveyVersion < ActiveRecord::Base
 
       new_sv
     end
+  end
+
+  def reporters
+    @reporters ||= QuestionReporter.where(:sv_id => id)
+    #survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }.presence
+  end
+
+  def choice_question_reporters
+    reporters.where(_type: "ChoiceQuestionReporter")
+  end
+
+  private
+  def today
+    Time.now.in_time_zone("Eastern Time (US & Canada)").to_date
+  end
+
+  def today_string
+    today.strftime("%Y-%m-%d")
   end
 end
 

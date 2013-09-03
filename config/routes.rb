@@ -69,6 +69,12 @@ CommentToolApp::Application.routes.draw do
        only: [:new, :create, :edit, :update, :destroy]
       get :create_new_major_version, :on => :collection
       get :create_new_minor_version, :on => :member
+
+      get :reporting, :on => :member
+      resources :dashboards do
+        resources :dashboard_elements, only: [:new, :create, :edit, :update, :destroy]
+      end
+      resources :reports
     end
   end
 

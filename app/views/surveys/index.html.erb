@@ -20,22 +20,25 @@
   <tr>
   	<th class="col1" scope="col">Edit</th>
   	<th class="col2" scope="col">Ver.</th>
-    <th class="col3" scope="col"><%= sortable "Survey" %> <span class="notation">(click to view responses)</span></th>
-    <th class="col4" scope="col">Description</th>
-    <th class="col5" scope="col">Type</th>
-    <th class="col6" scope="col">Site</th>
-    <th class="col7" scope="col"></th>
+    <th class="col3" scope="col">Report</th>
+    <th class="col4" scope="col"><%= sortable "Survey" %> <span class="notation">(click to view responses)</span></th>
+    <th class="col5" scope="col">Description</th>
+    <th class="col6" scope="col">Type</th>
+    <th class="col7" scope="col">Site</th>
+    <th class="col8" scope="col"></th>
   </tr>
 
 <% @surveys.each do |survey| %>
+  <% latest_version = survey.published_version || survey.newest_version %>
   <tr class="<%= cycle('gray','white') %>">
     <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_path(survey) %></td>
     <td class="col2"><%= link_to image_tag('version.png', :alt=>"view versions"), survey_survey_versions_path(survey)%></td>
-    <td class="col3"><%= link_to survey.name, survey_responses_path(:survey_version_id => survey.published_version.try(:id) || survey.survey_versions.last.id, :survey_id => survey.id) %></td>
-    <td class="col4"><%= survey.description %></td>
-    <td class="col5"><%= survey.survey_type.name.titleize %></td>
-		<td class="col6"><%= survey.site.name %></td>
-    <td class="col7"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+    <td class="col3"><%= get_reporting_link(survey, latest_version) %></td>
+    <td class="col4"><%= link_to survey.name, survey_responses_path(:survey_version_id => latest_version.id, :survey_id => survey.id) %></td>
+    <td class="col5"><%= survey.description %></td>
+    <td class="col6"><%= survey.survey_type.name.titleize %></td>
+		<td class="col7"><%= survey.site.name %></td>
+    <td class="col8"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
   </tr>
 <% end %>
 </table>

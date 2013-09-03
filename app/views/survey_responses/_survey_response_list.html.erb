@@ -6,6 +6,8 @@
 	<%= hidden_field_tag :page, params[:page] %>
 	<%= hidden_field_tag :custom_view_id, params[:custom_view_id] %>
 	<br />
+
+	<div class="total_responses">Total number of survey responses: <%= number_with_delimiter(version.survey_responses.count) %></div>
 	<div class="pageNav">
 		<div class="inline">
       <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
@@ -57,7 +59,7 @@
 	</div>
 	
 	<div class="page-nav">
-	  <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
+	    <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
 			:order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %> 
 		<%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
 		<%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %> 
@@ -66,9 +68,6 @@
 		<%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %> 
 		<span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
 	</div>
-
-	
-
 
 	<div id="survey_response_table_div">
 		<table summary="this table is used to display the results of a survey">

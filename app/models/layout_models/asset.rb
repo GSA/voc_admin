@@ -47,6 +47,10 @@ class Asset < ActiveRecord::Base
     se_attribs.delete("id")
     Asset.create!(self.attributes.merge(:survey_element_attributes=>se_attribs))
   end
+
+  def reporter
+    nil
+  end
 end
 
 # == Schema Information

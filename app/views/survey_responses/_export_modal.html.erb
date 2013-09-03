@@ -1,6 +1,11 @@
 <div id='modalDiv'>
   <h2>Export Request Submitted</h2>
-  <p>Your export request has been submitted.  An email will be sent to you to notifiy you when the export is ready for pick-up.</p>
-  <p>NOTE: The export will reflect any advanced filters applied to the current view and will include all rows of data that apply to those filters</p>
-  <%= button_to_function "Close", "$.modal.close();", :class => "simplemodal-close" %>
+  <p>Your export request has been submitted.  An email will be sent to you<br/>
+     to notify you when the export is ready for pick-up.</p>
+  <p>NOTE: The export will reflect any advanced filters applied to the current view<br/>
+     and will include all rows of data that apply to those filters.</p>
+  
+  <div class="pageNav">
+    <%= button_to_function "Close", "$.modal.close();", :class => "simplemodal-close" %>
+  </div>
 </div>
