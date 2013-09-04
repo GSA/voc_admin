@@ -70,5 +70,7 @@ If an admin user is needed, it can be added through the rails console. This meth
 For MRI Ruby, run `rails console` on the command line. For JRuby, run `jruby -S rails console`. This will open a new console for interacting with the application. To exit the console, type `exit`. To add a new admin user, type the following (with the various fields replaced as needed).
 
 ```
-User.create(:email => "sysadmin@YOURCOMPANYURL.com", :f_name => "System", :l_name => "Administrator", :password => "password", :password_confirmation => "password", :role => Role::ADMIN)
+User.create(:email => "sysadmin@YOURCOMPANYURL.com", :f_name => "System", 
+    :l_name => "Administrator", :password => "password", 
+    :password_confirmation => "password", :role => Role::ADMIN)
 ```
