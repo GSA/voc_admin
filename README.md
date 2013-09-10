@@ -33,7 +33,7 @@ Run `bundle install` to satisfy gem dependencies.
 Check the `config/` directory for examples of the YAML configuration files which
 need to be in place and generate appropriately.
 
-Also edit `db/seeds.rb` to set administrative user credentials.
+Edit `db/seeds.rb` to set the administrative user credentials. It's at the bottom, with the email address `sysadmin@YOURCOMPANYURL.com`. More admin users can be added to the end of `db/seeds.rb` prior to running the following commands. Simply copy/paste the section for `sysadmin@YOURCOMPANYURL.com`.
 
 Run database tasks:
 
@@ -62,3 +62,15 @@ Follow steps for MRI Ruby, but prepend `jruby -S` to all `rake` and
 
 Windows batch scripts have been provided for use with Tomcat (or other Java
 Servlet container.)
+
+### Adding New Admin Users
+
+If an admin user is needed, it can be added through the rails console. This method should only be used if unable to log into the website as an admin user. If able to log in as an admin user, add new users by clicking on the `Manage Users` tab on the website.
+
+For MRI Ruby, run `rails console` on the command line. For JRuby, run `jruby -S rails console`. This will open a new console for interacting with the application. To exit the console, type `exit`. To add a new admin user, type the following (with the various fields replaced as needed).
+
+```
+User.create(:email => "sysadmin@YOURCOMPANYURL.com", :f_name => "System", 
+    :l_name => "Administrator", :password => "password", 
+    :password_confirmation => "password", :role => Role::ADMIN)
+```
