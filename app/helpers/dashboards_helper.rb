@@ -2,15 +2,28 @@ module DashboardsHelper
 
   # Links the JSON data from the ChoiceQuestionReporter model
   # to the JQuery plugin function call.
-  def generatePieChart(chart)
+  def generate_element_data_script(element)
+    type = element.display_type
+
     %Q[
-	        var data_#{chart.id} = #{chart.pie_chart_data};
-	        $.plot("#pieChart_#{chart.id}", data_#{chart.id}, pieOptions);]
+	        var data_#{element.id} = #{element.element_data};
+	        $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);]
   end
 
-  # Spool through all charts and generate JS blocks for each
-  def generatePieChartsJS(charts)
-    charts.map { |chart| generatePieChart(chart) }.join("\n").html_safe
+  # Spool through all elements and generate JS blocks for each
+  def generate_dashboard_data_script(elements)
+    elements.map do |element|
+      generate_element_data_script(element)
+    end.join("\n").html_safe
+  end
+
+  def render_dashboard_element (dashboard_element)
+      type = dashboard_element.display_type
+
+      %Q[<div class="#{type}ElementDiv">
+        <h4 class="dashboardElementHeader ellipse" title="#{dashboard_element.question}">#{dashboard_element.question}</h4>
+        <div id="#{type}Element_#{dashboard_element.id}" class="dashboardElement"></div>
+      </div>].html_safe
   end
 
   def dashboard_element_types_arr

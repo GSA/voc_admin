@@ -28,7 +28,7 @@
 		<p class="blue"><%= @dashboard.name %></p>
 	</div>
 	<br />
-	<%= render partial: "pie_chart", locals: { charts: @dashboard.dashboard_elements } %>
+	<%= render partial: "dashboard_elements", locals: { dashboard_elements: @dashboard.dashboard_elements } %>
 </div>
 
 <div class="page-nav">

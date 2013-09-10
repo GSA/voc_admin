@@ -937,7 +937,7 @@ form #dashboardElementsList li {
 }
 
 /**** Pie Charts ****/
-.pieChartDiv {
+.dashboardElementDiv {
 	display: inline-block;
 	height: 270px;
 	width: 452px;
@@ -945,26 +945,26 @@ form #dashboardElementsList li {
 	margin-top: 4px;
 }
 
-.pieChart {
+.dashboardElement {
 	height: 200px;
 	width: 450px;
 }
 
-.pieChartHeader {
+.dashboardElementHeader {
 	margin-left: 18px;
 	width: 414px;
 }
 
-.pieChartLabel {
+.dashboardElementLabel {
 	display: inline-block;
 }
 
-.pieChartLabel .ellipse {
+.dashboardElementLabel .ellipse {
 	width: 125px;
 	display:inline-block;
 }
 
-.pieChartLabel .bold {
+.dashboardElementLabel .bold {
 	width: 50px;
 	text-align: right;
 	display: inline-block;

@@ -3,21 +3,19 @@
   	<!--[if lte IE 8]><%= javascript_include_tag 'excanvas.min.js' %><![endif]-->
   	<%= javascript_include_tag 'jquery.flot.min.js' %>
   	<%= javascript_include_tag 'jquery.flot.pie.min.js' %>
-  	<%# javascript_include_tag 'jquery.flot.js' %>
-  	<%# javascript_include_tag 'jquery.flot.pie.js' %>
 <% end %>
 
-<%# add the physical div to the page for each chart, alternate sides, and break between rows %>
-<% charts.each do |chart| %>
-	<div class="pieChartDiv">
-		<h4 class="pieChartHeader ellipse" title="<%= chart.survey_element.reporter.question %>"><%= chart.survey_element.reporter.question %></h4>
-		<div id="pieChart_<%= chart.id %>" class="pieChart"></div>
-	</div>
+<%# add the physical div to the page for each chart, alternate sides, and break between rows;
+    this will need to be revisited when we handle something other than choice questions
+    or different kinds of pie/bar charts %>
+<% dashboard_elements.each do |dashboard_element| %>
+	<%= render_dashboard_element(dashboard_element) %>
+
 	<%= cycle("", "<br/>").html_safe %>
 <% end %>
 <div id="hover" class="pieHover"><span id="hoverPercent"></span> <div id="hoverText"></div></div>
 
-<%# put together the library invocations to render the pie charts %>
+<%# put together the library invocations to render the dashboard elements %>
 <% content_for :script do %>
 	<script type="text/javascript">
 		var hoverHandle;
@@ -41,8 +39,8 @@
 			hoverHandle = setTimeout(hideHoverHint, 1200);
 		}
 
-		function pieChartLabelFormatter(label, series) {
-            return '<div class="pieChartLabel"><div class="ellipse" title="' + label + '">' + label + '</div> <div class="bold">' + series.data[0][1] + '</div></div>';
+		function pieElementLabelFormatter(label, series) {
+            return '<div class="pieElementLabel"><div class="ellipse" title="' + label + '">' + label + '</div> <div class="bold">' + series.data[0][1] + '</div></div>';
 		}
 
 		var pieOptions = {
@@ -56,14 +54,30 @@
              },
              legend: {
                show: true,
-               labelFormatter: pieChartLabelFormatter
+               labelFormatter: pieElementLabelFormatter
              }
         };
 
-		$(window).load(function() {
-			<%= generatePieChartsJS(charts) %>
+		var barOptions = {
+			xaxis: {
+				minTickSize: 1
+			},
+			series: {
+				bars: {
+					show: true,
+					barWidth: 0.9,
+					align: "center"
+				}
+			},
+			legend: {
+				show: true
+			}
+        };
 
-			$(".pieChart").bind("plothover", function(event, pos, obj) {
+		$(window).load(function() {
+			<%= generate_dashboard_data_script(dashboard_elements) %>
+
+			$(".pieElement").bind("plothover", function(event, pos, obj) {
 				if (!obj) { return; }
 
 				var percent = parseFloat(obj.series.percent).toFixed(2);
