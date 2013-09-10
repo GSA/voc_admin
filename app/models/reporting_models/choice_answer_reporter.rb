@@ -9,6 +9,6 @@ class ChoiceAnswerReporter
   embedded_in :choice_question_reporter
 
   def answer_percentage
-  	(count / choice_question_reporter.survey_version_responses.to_f) * 100
+    (count / choice_question_reporter.survey_version_responses.to_f) * 100
   end
 end
