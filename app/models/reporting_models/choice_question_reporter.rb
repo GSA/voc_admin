@@ -3,9 +3,6 @@ class ChoiceQuestionReporter < QuestionReporter
   field :cq_id, type: Integer    # ChoiceQuestion id
   field :question, type: String
 
-  # Total number of SurveyResponses for this ChoiceQuestion with values
-  field :answered, type: Integer, default: 0
-
   # Total number of Answers chosen across ChoiceQuestion responses;
   # used for simple average count of number of responses (for multiselect)
   field :chosen, type: Integer, default: 0

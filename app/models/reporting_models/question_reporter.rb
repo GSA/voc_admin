@@ -5,6 +5,9 @@ class QuestionReporter
   field :sv_id, type: Integer   # Survey Version id
   field :se_id, type: Integer   # Survey Element id
 
+  # Total number of SurveyResponses for this ChoiceQuestion with values
+  field :answered, type: Integer, default: 0
+
   def generate_element_data(*args)
     nil.to_json
   end
