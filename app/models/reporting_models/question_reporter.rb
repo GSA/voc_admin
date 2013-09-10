@@ -12,4 +12,34 @@ class QuestionReporter
   def allows_multiple_selection
     false
   end
+
+  def unanswered
+    survey_version_responses - answered
+  end
+
+  def percent_answered
+    @answered ||= (answered / survey_version_responses.to_f) * 100
+  end
+
+  def percent_unanswered
+    100 - percent_answered
+  end
+
+  protected
+
+  def survey
+    @survey ||= Survey.find(s_id)
+  end
+
+  def survey_version
+    @survey_version ||= SurveyVersion.find(sv_id)
+  end
+
+  def survey_version_responses
+    @survey_version_responses = survey_version.survey_responses.count
+  end
+
+  def survey_element
+    @survey_element ||= SurveyElement.find(se_id)
+  end
 end
