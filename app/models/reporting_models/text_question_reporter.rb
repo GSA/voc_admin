@@ -3,7 +3,7 @@ class TextQuestionReporter < QuestionReporter
   field :tq_id, type: Integer    # TextQuestion id
   field :question, type: String
 
-  COMMON_WORDS = %W(
+  COMMON_WORDS = %w(
       a actually after afterwards albeit all also althoughhowever an and another
       any anybody anything as at because before besides both but by concerning
       considering conversely each either equally especially eventually everybody
