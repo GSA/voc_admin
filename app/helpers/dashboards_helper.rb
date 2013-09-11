@@ -5,9 +5,13 @@ module DashboardsHelper
   def generate_element_data_script(element)
     type = element.display_type
 
-    %Q[
-          var data_#{element.id} = #{element.element_data};
-          $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);]
+    if type == 'cloud'
+      "$('##{type}Element_#{element.id}').jQCloud(#{element.element_data});"
+    else
+      %Q[
+            var data_#{element.id} = #{element.element_data};
+            $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);]
+    end
   end
 
   # Spool through all elements and generate JS blocks for each

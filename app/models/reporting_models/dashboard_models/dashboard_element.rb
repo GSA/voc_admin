@@ -10,7 +10,8 @@ class DashboardElement < ActiveRecord::Base
   default_scope order(:sort_order)
 
   ELEMENT_TYPES = {
-    :count_per_answer_option => "Count Per Answer"
+    :count_per_answer_option => "Count Per Answer",
+    :word_cloud => "Word Cloud"
   }.freeze
 
   def sort_order_position=(new_position)
@@ -36,6 +37,10 @@ class DashboardElement < ActiveRecord::Base
 
   # this should eventually be a db-backed property
   def display_type
-    reporter.allows_multiple_selection ? "bar" : "pie"
+    if element_type == "word_cloud"
+      "cloud"
+    else
+      reporter.allows_multiple_selection ? "bar" : "pie"
+    end
   end
 end
