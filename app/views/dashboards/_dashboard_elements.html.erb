@@ -13,7 +13,7 @@
 
 	<%= cycle("", "<br/>").html_safe %>
 <% end %>
-<div id="hover" class="pieHover"><span id="hoverPercent"></span> <div id="hoverText"></div></div>
+<div id="hover" class="dashboardHover"><span id="hoverValue"></span> <div id="hoverText"></div></div>
 
 <%# put together the library invocations to render the dashboard elements %>
 <% content_for :script do %>
@@ -24,7 +24,7 @@
 			$("#hover").hide();
 		}
 
-		function showHoverHint(x, y, label, percent) {
+		function showHoverHint(x, y, label, value, isPercent) {
 			var $hover = $("#hover");
 
 			if ($hover.is(":hidden")) {
@@ -32,7 +32,7 @@
 			}
 
 			$hover.css({ left: x + 25, top: y - 25 });
-			$hover.find("#hoverPercent").text(percent + "%:");
+			$hover.find("#hoverValue").text(value + (isPercent ? "%" : "") + ":");
 			$hover.find("#hoverText").text(label);
 
 			clearTimeout(hoverHandle);
@@ -60,29 +60,39 @@
 
 		var barOptions = {
 			xaxis: {
-				minTickSize: 1
+				minTickSize: 1,
+				tickDecimals: 0,
+				show: false
+			},
+			yaxis: {
+				tickDecimals: 0
 			},
 			series: {
 				bars: {
 					show: true,
-					barWidth: 0.9,
+					barWidth: 0.7,
 					align: "center"
 				}
 			},
 			legend: {
 				show: true
+			},
+			grid: {
+				hoverable: true
 			}
         };
 
 		$(window).load(function() {
 			<%= generate_dashboard_data_script(dashboard_elements) %>
 
-			$(".pieElement").bind("plothover", function(event, pos, obj) {
+			$(".dashboardElement").bind("plothover", function(event, pos, obj) {
 				if (!obj) { return; }
 
-				var percent = parseFloat(obj.series.percent).toFixed(2);
-
-				showHoverHint(pos.pageX, pos.pageY, obj.series.label, percent);
+				if (obj.series.percent) {
+					showHoverHint(pos.pageX, pos.pageY, obj.series.label, parseFloat(obj.series.percent).toFixed(2), true);
+				} else {
+					showHoverHint(pos.pageX, pos.pageY, obj.series.label, obj.datapoint[1], false);
+				}
 			});
 		});
 	</script>

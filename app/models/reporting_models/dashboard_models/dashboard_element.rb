@@ -34,6 +34,7 @@ class DashboardElement < ActiveRecord::Base
     reporter.generate_element_data(display_type, element_type)
   end
 
+  # this should eventually be a db-backed property
   def display_type
     reporter.allows_multiple_selection ? "bar" : "pie"
   end

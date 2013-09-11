@@ -977,7 +977,7 @@ form #dashboardElementsList li {
     text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
 }
 
-.pieHover {
+.dashboardHover {
 	position:absolute;
 	float: left;
 	display: none;
@@ -988,12 +988,12 @@ form #dashboardElementsList li {
 	padding: 3px;
 }
 
-.pieHover div {
+.dashboardHover div {
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.pieHover #hoverText {
+.dashboardHover #hoverText {
 	max-width: 120px;
 	text-align: center;
 }

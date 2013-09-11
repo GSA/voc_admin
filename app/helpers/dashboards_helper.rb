@@ -22,7 +22,7 @@ module DashboardsHelper
 
       %Q[<div class="#{type}ElementDiv">
         <h4 class="dashboardElementHeader ellipse" title="#{dashboard_element.question}">#{dashboard_element.question}</h4>
-        <div id="#{type}Element_#{dashboard_element.id}" class="dashboardElement"></div>
+        <div id="#{type}Element_#{dashboard_element.id}" class="dashboardElement #{type}Element"></div>
       </div>].html_safe
   end
 
