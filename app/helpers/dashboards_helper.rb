@@ -6,8 +6,8 @@ module DashboardsHelper
     type = element.display_type
 
     %Q[
-	        var data_#{element.id} = #{element.element_data};
-	        $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);]
+          var data_#{element.id} = #{element.element_data};
+          $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);]
   end
 
   # Spool through all elements and generate JS blocks for each
@@ -18,12 +18,12 @@ module DashboardsHelper
   end
 
   def render_dashboard_element (dashboard_element)
-      type = dashboard_element.display_type
+    type = dashboard_element.display_type
 
-      %Q[<div class="#{type}ElementDiv">
-        <h4 class="dashboardElementHeader ellipse" title="#{dashboard_element.question}">#{dashboard_element.question}</h4>
-        <div id="#{type}Element_#{dashboard_element.id}" class="dashboardElement #{type}Element"></div>
-      </div>].html_safe
+    %Q[<div class="#{type}ElementDiv">
+      <h4 class="dashboardElementHeader ellipse" title="#{dashboard_element.question}">#{dashboard_element.question}</h4>
+      <div id="#{type}Element_#{dashboard_element.id}" class="dashboardElement #{type}Element"></div>
+    </div>].html_safe
   end
 
   def dashboard_element_types_arr
