@@ -5,7 +5,7 @@ class TextQuestionReporter < QuestionReporter
 
   COMMON_WORDS = %w(
       a actually after afterwards albeit all also althoughhowever an and another
-      any anybody anything as at be because before besides both but by can com concerning
+      any anybody anything are aren't as at be because before besides both but by can com concerning
       considering conversely each either equally especially eventually everybody
       everyone everything excluding few finally for further furthermore he he's hence
       her hers herself him himself his however http i if i'm in incidentally including
