@@ -16,6 +16,10 @@ class QuestionReporter
     false
   end
 
+  def type
+    nil
+  end
+
   def unanswered
     survey_version_responses - answered
   end

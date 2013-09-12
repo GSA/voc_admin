@@ -22,6 +22,10 @@ class TextQuestionReporter < QuestionReporter
   # Words used in answers and their counts
   field :words, type: Hash, default: {}
 
+  def type
+    :text
+  end
+
   def exclude_common_words!
     words.except!(*COMMON_WORDS)
   end

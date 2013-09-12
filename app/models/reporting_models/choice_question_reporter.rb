@@ -10,6 +10,10 @@ class ChoiceQuestionReporter < QuestionReporter
   embeds_many :choice_answer_reporters
   embeds_many :choice_permutation_reporters
 
+  def type
+    :choice
+  end
+
   # average number of chosen Answer options across all answered questions
   def average_answers_chosen(precision = 1)
     (chosen / answered.to_f).round(precision)
