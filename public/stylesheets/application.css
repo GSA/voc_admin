@@ -939,20 +939,26 @@ form #dashboardElementsList li {
 /**** Charts ****/
 .pieElementDiv, .barElementDiv, .cloudElementDiv {
 	display: inline-block;
-	height: 270px;
-	width: 452px;
+	height: 540px;
+	width: 904px;
+/*	height: 270px;
+	width: 452px;*/
 	border: 2px solid #ddd;
 	margin-top: 4px;
 }
 
 .dashboardElement {
-	height: 200px;
-	width: 450px;
+	height: 400px;
+	width: 900px;
+/*	height: 200px;
+	width: 450px;*/
 }
 
 .dashboardElementHeader {
 	margin-left: 18px;
-	width: 414px;
+	width: 828px;
+/*	margin-left: 18px;
+	width: 414px;*/
 }
 
 .dashboardElementLabel {
@@ -960,12 +966,14 @@ form #dashboardElementsList li {
 }
 
 .dashboardElementLabel .ellipse {
-	width: 125px;
+	width: 350px;
+	/*width: 125px;*/
 	display:inline-block;
 }
 
 .dashboardElementLabel .bold {
-	width: 50px;
+	width: 150px;
+	/*width: 50px;*/
 	text-align: right;
 	display: inline-block;
 }
