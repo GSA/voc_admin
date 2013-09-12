@@ -11,7 +11,16 @@ $(document).ready(function() {
       }
     });
 
+    reporterType = $("#dashboardModalShownDiv #survey_element_id option:first").data("type");
+    hideElementTypes();
+    displayElementTypes(reporterType);
     $('#dashboardModalShownDiv').show();
+  });
+
+  $('#dashboardModalShownDiv #survey_element_id option').live('click', function() {
+    hideElementTypes();
+    displayElementTypes($(this).data("type"));
+    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option:visible").first().val());
   });
 
   $('form .remove_element').click(function() {
@@ -25,6 +34,22 @@ $(document).ready(function() {
 
   $('#dashboardElementsList').sortable();
 });
+
+function hideElementTypes() {
+  $("#dashboardModalShownDiv #element_type option").hide();
+}
+
+function displayElementTypes(reporterType) {
+  var dataType = "";
+  switch (reporterType) {
+    case "choice":
+      dataType = "count_per_answer_option"
+      break;
+    case "text":
+      dataType = "word_cloud"
+  }
+  $("#dashboardModalShownDiv #element_type option[data-type='" + dataType + "']").show();
+}
 
 function addWidgetToDashboard() {
   newId = new Date().getTime();

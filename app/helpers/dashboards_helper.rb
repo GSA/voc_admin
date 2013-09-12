@@ -31,7 +31,7 @@ module DashboardsHelper
   end
 
   def dashboard_element_types_arr
-    DashboardElement::ELEMENT_TYPES.map {|k,v| [v, k]}
+    DashboardElement::ELEMENT_TYPES.map {|k,v| [v, k, {"data-type" => k}]}
   end
 
   def truncate_question(question, length = 40)
