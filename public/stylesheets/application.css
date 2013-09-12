@@ -936,8 +936,8 @@ form #dashboardElementsList li {
   cursor: move;
 }
 
-/**** Pie Charts ****/
-.dashboardElementDiv {
+/**** Charts ****/
+.pieElementDiv, .barElementDiv, .cloudElementDiv {
 	display: inline-block;
 	height: 270px;
 	width: 452px;

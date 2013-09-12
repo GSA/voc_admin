@@ -83,7 +83,13 @@ namespace :reporting do
         display_field_values = display_field.display_field_values.to_a
 
         begin
-          choice_question_reporter = ChoiceQuestionReporter.find_or_create_by(cq_id: choice_question.id)
+          choice_question_reporter = ChoiceQuestionReporter.create!(cq_id: choice_question.id)
+
+          # initialize all answers with zero counts
+          choice_answers.each do |ca|
+            choice_question_reporter.choice_answer_reporters.create!(text: ca.answer, count: 0)
+          end
+
           set_common_question_fields(choice_question, choice_question_reporter, survey_version)
           choice_question_reporter.question = question_text
 
