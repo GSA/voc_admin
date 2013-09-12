@@ -49,13 +49,15 @@ class ChoiceQuestionReporter < QuestionReporter
   #
   # @return [Array<Hash>] Hash of data for each answer option
   def count_per_answer_option_data(display_type)
+    ordered_choice_answer_reporters = choice_answer_reporters.sort_by { |ocar| -ocar.count }
+
     case display_type
     when "pie"
-      choice_answer_reporters.map do |choice_answer_reporter|
+      ordered_choice_answer_reporters.map do |choice_answer_reporter|
         { label: choice_answer_reporter.text, data: choice_answer_reporter.count }
-      end
+      end.sort_by { |value| -value[:data] }
     when "bar"
-      choice_answer_reporters.each_with_index.map do |choice_answer_reporter, index|
+      ordered_choice_answer_reporters.map.each_with_index do |choice_answer_reporter, index|
         { data: [[index, choice_answer_reporter.count]], label: choice_answer_reporter.text }
       end
     else
