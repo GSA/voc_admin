@@ -8,4 +8,5 @@ coverage/
 db/*.sqlite3
 exports/
 log/*.log
+mails/
 tmp/
