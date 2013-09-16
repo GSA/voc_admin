@@ -44,6 +44,12 @@ class TextQuestionReporter < QuestionReporter
   #
   # @return [String] JSON data
   def generate_element_data(display_type, element_type)
-    top_words.map {|k,v| {text: k, weight: v}}.to_json
+    top_words.map do |k,v|
+      {
+        text: k,
+        weight: v,
+        html: {title: "#{k}: #{number_with_delimiter(v)}"}
+      }
+    end.to_json
   end
 end
