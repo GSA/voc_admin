@@ -956,9 +956,16 @@ form #dashboardElementsList li {
 
 .dashboardElementHeader {
 	margin-left: 18px;
+  margin-bottom: 10px;
 	width: 828px;
 /*	margin-left: 18px;
 	width: 414px;*/
+}
+
+.dashboardElementCount {
+	margin-left: 18px;
+  margin-bottom: 21px;
+	width: 828px;
 }
 
 .dashboardElementLabel {
