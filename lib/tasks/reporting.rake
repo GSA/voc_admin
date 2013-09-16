@@ -148,7 +148,7 @@ namespace :reporting do
           if answer_values.present?
             text_question_reporter.inc(:answered, 1)
 
-            answer_values.each do |answer_value|
+            answer_values.uniq.each do |answer_value|
               word = answer_value.downcase
               count = text_question_reporter.words[word] || 0
               text_question_reporter.words[word] = count + 1
