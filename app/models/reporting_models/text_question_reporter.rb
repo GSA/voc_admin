@@ -32,7 +32,7 @@ class TextQuestionReporter < QuestionReporter
     words.except!(*COMMON_WORDS)
   end
 
-  def populate_top_words!(word_limit = 25)
+  def populate_top_words!(word_limit = 50)
     new_words = words.sort_by {|k,v| v}
     if new_words.size > word_limit
       new_words = new_words[-word_limit..-1]
