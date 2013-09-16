@@ -174,6 +174,8 @@ class SurveyResponse < ActiveRecord::Base
 
     resp.created_at = self.created_at
     resp.page_url = self.page_url
+
+    resp.save
   end
 
   private
