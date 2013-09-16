@@ -156,6 +156,7 @@ namespace :reporting do
           end
         end
         text_question_reporter.exclude_common_words!
+        text_question_reporter.populate_top_words!
         text_question_reporter.save
 
       rescue Exception => e

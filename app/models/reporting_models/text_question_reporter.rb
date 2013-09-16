@@ -21,6 +21,7 @@ class TextQuestionReporter < QuestionReporter
 
   # Words used in answers and their counts
   field :words, type: Hash, default: {}
+  field :top_words, type: Hash, default: {}
 
   def type
     :text
@@ -30,10 +31,18 @@ class TextQuestionReporter < QuestionReporter
     words.except!(*COMMON_WORDS)
   end
 
+  def populate_top_words!(word_limit = 25)
+    new_words = words.sort_by {|k,v| v}
+    if new_words.size > word_limit
+      new_words = new_words[-word_limit..-1]
+    end
+    self.top_words = Hash[new_words]
+  end
+
   # Generate the data required to create a word cloud for a text question.
   #
   # @return [String] JSON data
   def generate_element_data(display_type, element_type)
-    words.map {|k,v| {text: k, weight: v}}.to_json
+    top_words.map {|k,v| {text: k, weight: v}}.to_json
   end
 end
