@@ -56,6 +56,7 @@ class UserSessionsController < ApplicationController
     redirect_to surveys_path if current_user
   end
 
+  # Apply the default CSRF protection to session creation.
   def protect_against_csrf
     if !verified_request?
       redirect_to root_path
