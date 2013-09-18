@@ -49,4 +49,12 @@ class ApplicationController < ActionController::Base
     @survey = @current_user.surveys.find(params[:survey_id])
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
   end
+
+  # Additional CSRF protection on unverified (pre-login) requests
+  # (Authlogic fix per https://github.com/binarylogic/authlogic/issues/310)
+  def handle_unverified_request
+    super
+    cookies.delete 'user_credentials'
+    @current_user_session = @current_user = nil
+  end
 end
