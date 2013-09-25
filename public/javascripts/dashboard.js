@@ -15,6 +15,7 @@ $(document).ready(function() {
     hideElementTypes();
     displayElementTypes(reporterType);
     $('#dashboardModalShownDiv').show();
+    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option:visible").first().val());
   });
 
   $('#dashboardModalShownDiv #survey_element_id option').live('click', function() {
