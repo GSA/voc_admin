@@ -5,14 +5,14 @@
 <% end %>
 
 <%= form_for [@survey, @survey_version, @dashboard] do |f| %>
-	<%= field_set_tag "Options" do %>
-		<div class="left_side">
-			<%= f.label :name, "Name: " %>
-		</div>
-		<div class="right_side">
-			<%= f.text_field :name %>
-		</div>
-	<% end %>
+  <%= field_set_tag "Options" do %>
+    <div class="left_side">
+      <%= f.label :name, "Name: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :name %>
+    </div>
+  <% end %>
 
   <div class="page-nav">
     <%= link_to "New Widget", "#", :class => "newlink", :id => "newWidgetLink" %>
@@ -31,20 +31,20 @@
     <% end %>
   </ul>
 
-	<div class="submitButton">
-		<% if f.object.new_record? %>
-			<%= image_submit_tag "Submit.png", :alt=>"Create Dashboard" %>
-		<% else %>
-			<%= image_submit_tag "Submit.png", :alt=>"Update Dashboard" %>
-		<% end %>
-	</div>
+  <div class="submitButton">
+    <% if f.object.new_record? %>
+      <%= image_submit_tag "Submit.png", :alt=>"Create Dashboard" %>
+    <% else %>
+      <%= image_submit_tag "Submit.png", :alt=>"Update Dashboard" %>
+    <% end %>
+  </div>
 <% end %>
 
 <div id="dashboardModalShownDiv" style="display: none;"></div>
 
 <div id="dashboardModalDiv" style="display: none;">
   <h2>Add a New Widget</h2>
-  <%= select_tag :survey_element_id, options_for_select(@survey_version.reporters.map {|r| [truncate_question(r.question), r.se_id]}) %>
+  <%= select_tag :survey_element_id, options_for_select(@survey_version.reporters.map {|r| [truncate_question(r.question), r.se_id, {"data-type" => r.type}]}) %>
   <%= select_tag :element_type, options_for_select(dashboard_element_types_arr) %>
   <br/>
   <div class="pageNav">

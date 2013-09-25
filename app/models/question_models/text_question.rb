@@ -77,7 +77,7 @@ class TextQuestion < ActiveRecord::Base
   end
 
   def reporter
-    nil
+    TextQuestionReporter.where(:tq_id => id).first
   end
 end
 

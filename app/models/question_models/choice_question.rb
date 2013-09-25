@@ -14,7 +14,7 @@ class ChoiceQuestion < ActiveRecord::Base
   validates :answer_type, :presence => true
   validates :question_content, :presence => true
   validate :must_have_at_least_one_choice_answer
-  validate :only_one_default_answer, :if => Proc.new {|obj| obj.answer_type == "radio" || obj.answer_type == "dropdown"}
+  validate :only_one_default_answer, :unless => Proc.new { |obj| obj.allows_multiple_selection }
 
   attr_accessible :answer_type, :question_content_attributes, :survey_element_attributes, :choice_answers_attributes, :clone_of_id, :choice_answers, :auto_next_page, :display_results, :answer_placement
 
@@ -141,6 +141,10 @@ class ChoiceQuestion < ActiveRecord::Base
 
   def reporter
     ChoiceQuestionReporter.where(:cq_id => id).first
+  end
+
+  def allows_multiple_selection
+    ["checkbox", "multiselect"].include?(answer_type)
   end
 
   private

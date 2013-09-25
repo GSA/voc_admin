@@ -9,6 +9,6 @@ class ChoicePermutationReporter
   Permutation = Struct.new(:values, :count)
 
   def permutation
-  	Permutation.new(values.split(DisplayFieldValue::VALUE_DELIMITER), count)
+    Permutation.new(values.split(DisplayFieldValue::VALUE_DELIMITER), count)
   end
 end
