@@ -15,13 +15,13 @@ $(document).ready(function() {
     hideElementTypes();
     displayElementTypes(reporterType);
     $('#dashboardModalShownDiv').show();
-    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option:visible").first().val());
+    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option[data-display='visible']").first().val());
   });
 
   $('#dashboardModalShownDiv #survey_element_id option').live('click', function() {
     hideElementTypes();
     displayElementTypes($(this).data("type"));
-    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option:visible").first().val());
+    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option[data-display='visible']").first().val());
   });
 
   $('form .remove_element').click(function() {
@@ -38,6 +38,7 @@ $(document).ready(function() {
 
 function hideElementTypes() {
   $("#dashboardModalShownDiv #element_type option").hide();
+  $("#dashboardModalShownDiv #element_type option").attr("data-display", "hidden");
 }
 
 function displayElementTypes(reporterType) {
@@ -50,6 +51,7 @@ function displayElementTypes(reporterType) {
       dataType = "word_cloud"
   }
   $("#dashboardModalShownDiv #element_type option[data-type='" + dataType + "']").show();
+  $("#dashboardModalShownDiv #element_type option[data-type='" + dataType + "']").attr("data-display", "visible");
 }
 
 function addWidgetToDashboard() {
