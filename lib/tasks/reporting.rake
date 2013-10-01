@@ -167,6 +167,19 @@ namespace :reporting do
   end
 
   def count_skips(survey_version, errors)
+    # generates an array of page data that looks like
+    # {
+    #   :page_id => 345,
+    #   :next_page_id => 346,
+    #   :elements => [
+    #     {
+    #       :element_id => 740,
+    #       :qc_id => 730,
+    #       :flow_control => true,
+    #       :flow_map => { "2013" => 346, "2014" => 348 }
+    #     }
+    #   ]
+    # }
     pages = []
     survey_version.pages.each do |page|
       elements = page.survey_elements.questions.map do |element|
