@@ -175,17 +175,14 @@ namespace :reporting do
   def count_skips(survey_version, errors)
     begin
       pages = pages_for_survey_version(survey_version)
+      first_page = pages.values.detect {|page| page[:page_number] == 1}.try(:[], :page_id)
       skip = 0
       total = 0
       survey_version.survey_responses.each do |sr|
         raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
-        next_page = pages.first[:page_id]
-        pages.each do |page|
-          if page[:page_id] == next_page
-            next_page = nil
-          else
-            next
-          end
+        next_page = first_page
+        while next_page do
+          page = pages[next_page]
           next_page = page[:next_page_id]
           page[:questions].each do |question|
             total += 1
@@ -198,7 +195,6 @@ namespace :reporting do
               skip += 1
             end
           end
-          break unless next_page
         end
       end
     rescue Exception => e
@@ -220,7 +216,7 @@ namespace :reporting do
   #   ]
   # }
   def pages_for_survey_version(survey_version)
-    pages = []
+    pages = {}
     survey_version.pages.each do |page|
       questions = []
       page.survey_elements.questions.each do |element|
@@ -231,7 +227,7 @@ namespace :reporting do
           questions << question_hash(element.assetable)
         end
       end
-      pages << {page_id: page.id, next_page_id: page.next_page.try(:id), questions: questions}
+      pages[page.id] = {page_id: page.id, page_number: page.page_number, next_page_id: page.next_page.try(:id), questions: questions}
     end
     pages
   end
