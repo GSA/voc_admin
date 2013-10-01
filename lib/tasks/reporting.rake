@@ -173,32 +173,37 @@ namespace :reporting do
   end
 
   def count_skips(survey_version, errors)
-    pages = pages_for_survey_version(survey_version)
-    skip = 0
-    total = 0
-    survey_version.survey_responses.each do |sr|
-      raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
-      next_page = pages.first[:page_id]
-      pages.each do |page|
-        if page[:page_id] == next_page
-          next_page = nil
-        else
-          next
-        end
-        next_page = page[:next_page_id]
-        page[:elements].each do |element|
-          total += 1
-          rr = raw_responses[element[:qc_id]]
-          if rr.present?
-            if element[:flow_control] && element[:flow_map][rr.answer].present?
-              next_page = element[:flow_map][rr.answer]
-            end
+    begin
+      pages = pages_for_survey_version(survey_version)
+      skip = 0
+      total = 0
+      survey_version.survey_responses.each do |sr|
+        raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
+        next_page = pages.first[:page_id]
+        pages.each do |page|
+          if page[:page_id] == next_page
+            next_page = nil
           else
-            skip += 1
+            next
           end
+          next_page = page[:next_page_id]
+          page[:elements].each do |element|
+            total += 1
+            rr = raw_responses[element[:qc_id]]
+            if rr.present?
+              if element[:flow_control] && element[:flow_map][rr.answer].present?
+                next_page = element[:flow_map][rr.answer]
+              end
+            else
+              skip += 1
+            end
+          end
+          break unless next_page
         end
-        break unless next_page
       end
+    rescue Exception => e
+      print "\rERROR: Failed skip counting for Survey Version #{survey_version.id};\n  Message: #{$!.to_s}\n"
+      errors << [survey_version.id, $!.to_s, e.backtrace]
     end
   end
 
