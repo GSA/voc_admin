@@ -166,45 +166,24 @@ namespace :reporting do
     end
   end
 
+  def set_common_question_fields(question, question_reporter, survey_version)
+    question_reporter.s_id = survey_version.survey_id
+    question_reporter.sv_id = survey_version.id
+    question_reporter.se_id = question.survey_element.id
+  end
+
   def count_skips(survey_version, errors)
-    # generates an array of page data that looks like
-    # {
-    #   :page_id => 345,
-    #   :next_page_id => 346,
-    #   :elements => [
-    #     {
-    #       :element_id => 740,
-    #       :qc_id => 730,
-    #       :flow_control => true,
-    #       :flow_map => { "2013" => 346, "2014" => 348 }
-    #     }
-    #   ]
-    # }
-    pages = []
-    survey_version.pages.each do |page|
-      elements = page.survey_elements.questions.map do |element|
-        element.assetable.reload # for some reason this is necessary to get some question content
-        qc = element.assetable.question_content
-        element_hash = {element_id: element.id, qc_id: qc.id, flow_control: qc.flow_control?}
-        if qc.flow_control?
-          element_hash[:flow_map] = Hash[element.assetable.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
-        end
-        element_hash
-      end
-      pages << {page_id: page.id, next_page_id: page.next_page.try(:id), elements: elements}
-    end
+    pages = pages_for_survey_version(survey_version)
     skip = 0
     total = 0
     survey_version.survey_responses.each do |sr|
       raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
-      next_page = nil
+      next_page = pages.first[:page_id]
       pages.each do |page|
-        if next_page
-          if page[:page_id] == next_page
-            next_page = nil
-          else
-            next
-          end
+        if page[:page_id] == next_page
+          next_page = nil
+        else
+          next
         end
         next_page = page[:next_page_id]
         page[:elements].each do |element|
@@ -223,9 +202,33 @@ namespace :reporting do
     end
   end
 
-  def set_common_question_fields(question, question_reporter, survey_version)
-    question_reporter.s_id = survey_version.survey_id
-    question_reporter.sv_id = survey_version.id
-    question_reporter.se_id = question.survey_element.id
+  # generates an array of page data that looks like
+  # {
+  #   :page_id => 345,
+  #   :next_page_id => 346,
+  #   :elements => [
+  #     {
+  #       :element_id => 740,
+  #       :qc_id => 730,
+  #       :flow_control => true,
+  #       :flow_map => { "2013" => 346, "2014" => 348 }
+  #     }
+  #   ]
+  # }
+  def pages_for_survey_version(survey_version)
+    pages = []
+    survey_version.pages.each do |page|
+      elements = page.survey_elements.questions.map do |element|
+        element.assetable.reload # for some reason this is necessary to get some question content
+        qc = element.assetable.question_content
+        element_hash = {element_id: element.id, qc_id: qc.id, flow_control: qc.flow_control?}
+        if qc.flow_control?
+          element_hash[:flow_map] = Hash[element.assetable.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
+        end
+        element_hash
+      end
+      pages << {page_id: page.id, next_page_id: page.next_page.try(:id), elements: elements}
+    end
+    pages
   end
 end
