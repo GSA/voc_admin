@@ -187,12 +187,12 @@ namespace :reporting do
             next
           end
           next_page = page[:next_page_id]
-          page[:elements].each do |element|
+          page[:questions].each do |question|
             total += 1
-            rr = raw_responses[element[:qc_id]]
+            rr = raw_responses[question[:qc_id]]
             if rr.present?
-              if element[:flow_control] && element[:flow_map][rr.answer].present?
-                next_page = element[:flow_map][rr.answer]
+              if question[:flow_control] && question[:flow_map][rr.answer].present?
+                next_page = question[:flow_map][rr.answer]
               end
             else
               skip += 1
@@ -211,9 +211,8 @@ namespace :reporting do
   # {
   #   :page_id => 345,
   #   :next_page_id => 346,
-  #   :elements => [
+  #   :questions => [
   #     {
-  #       :element_id => 740,
   #       :qc_id => 730,
   #       :flow_control => true,
   #       :flow_map => { "2013" => 346, "2014" => 348 }
@@ -223,17 +222,26 @@ namespace :reporting do
   def pages_for_survey_version(survey_version)
     pages = []
     survey_version.pages.each do |page|
-      elements = page.survey_elements.questions.map do |element|
+      questions = []
+      page.survey_elements.questions.each do |element|
         element.assetable.reload # for some reason this is necessary to get some question content
-        qc = element.assetable.question_content
-        element_hash = {element_id: element.id, qc_id: qc.id, flow_control: qc.flow_control?}
-        if qc.flow_control?
-          element_hash[:flow_map] = Hash[element.assetable.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
+        if element.assetable_type == "MatrixQuestion"
+          element.assetable.choice_questions.each {|cq| questions << question_hash(cq)}
+        else
+          questions << question_hash(element.assetable)
         end
-        element_hash
       end
-      pages << {page_id: page.id, next_page_id: page.next_page.try(:id), elements: elements}
+      pages << {page_id: page.id, next_page_id: page.next_page.try(:id), questions: questions}
     end
     pages
+  end
+
+  def question_hash(question)
+    qc = question.question_content
+    hash = {qc_id: qc.id, flow_control: qc.flow_control?}
+    if qc.flow_control?
+      hash[:flow_map] = Hash[question.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
+    end
+    hash
   end
 end
