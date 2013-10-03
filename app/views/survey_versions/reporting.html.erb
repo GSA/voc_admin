@@ -37,6 +37,20 @@
 	<div class="right_side">
 		<p class="version"><%= number_to_percentage(@response_rate, :precision => 0) %></p>
 	</div>
+	<br />
+	<div class="left_side">
+		Questions Skipped:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= number_with_delimiter(@survey_version.questions_skipped) %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Question Skip Rate:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= number_to_percentage(@survey_version.questions_skipped * 100.0 / @survey_version.questions_asked, :precision => 0) %></p>
+	</div>
 </div>
 
 <div class="pageNav">
