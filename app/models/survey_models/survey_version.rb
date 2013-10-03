@@ -353,6 +353,7 @@ class SurveyVersion < ActiveRecord::Base
     reporters.where(_type: "ChoiceQuestionReporter")
   end
 
+  # updates the number of questions asked and skipped in survey responses
   def update_questions_skipped_and_asked
     first_page = page_hash.values.detect {|page| page[:page_number] == 1}.try(:[], :page_id)
     skip = 0
