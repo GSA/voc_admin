@@ -77,8 +77,10 @@ class SurveyResponse < ActiveRecord::Base
   def self.process_response(response, survey_version_id)
     client_id = SecureRandom.hex(64)
 
+    # Remove extraneous data from the response
     response.slice!('page_url', 'raw_responses_attributes')
     response['raw_responses_attributes'].try(:values).try(:each) {|rr| rr.slice!('question_content_id', 'answer')}
+
     survey_response = SurveyResponse.new ({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
 
     ## Work around for associating the child raw responses with the survey_response
@@ -194,10 +196,11 @@ class SurveyResponse < ActiveRecord::Base
     end
   end
 
+  # question content ids associated with this survey version
   def question_content_ids
     return @question_content_ids unless @question_content_ids.nil?
     @question_content_ids = survey_version.try(:questions).try(:map) do |q|
-      if q.is_a?(MatrixQuestion)
+      if q.is_a?(MatrixQuestion) # get the ids of questins associated with MatrixQuestion
         q.choice_questions.map {|cq| cq.question_content.try(:id).to_s}
       else
         q.question_content.try(:id).to_s
@@ -209,6 +212,7 @@ class SurveyResponse < ActiveRecord::Base
     @question_content_ids
   end
 
+  # raw response is invalid if blank or if the question_content_id isn't part of this survey version
   def invalid_raw_response?(attr)
     attr['answer'].blank? || !question_content_ids.detect {|i| i == attr['question_content_id']}
   end
