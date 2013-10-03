@@ -232,6 +232,7 @@ namespace :reporting do
     pages
   end
 
+  # hash of question used by pages_for_survey_version
   def question_hash(question)
     qc = question.question_content
     hash = {qc_id: qc.id, flow_control: qc.flow_control?}
