@@ -107,7 +107,7 @@ with:
 
         log_event("Starting nightly rules processing.")
 
-        update_survey_version_visit_counts
+        update_survey_version_counts
 
         execute_nightly_rules
 
@@ -119,13 +119,16 @@ with:
     end
   end
 
-  def update_survey_version_visit_counts
-    log_event(" Updating survey version visit counts...", 2)
+  def update_survey_version_counts
+    log_event(" Updating survey version counts...", 2)
 
     #update survey visit count from temporary count
-    SurveyVersion.find_each {|sv| sv.update_visit_counts }
+    SurveyVersion.find_each do |sv| 
+      sv.update_visit_counts
+      sv.update_questions_skipped_and_asked
+    end
 
-    log_event(" Finished updating survey version visit counts.", 2)
+    log_event(" Finished updating survey version counts.", 2)
   end
 
   def execute_nightly_rules

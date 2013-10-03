@@ -353,6 +353,71 @@ class SurveyVersion < ActiveRecord::Base
     reporters.where(_type: "ChoiceQuestionReporter")
   end
 
+  def update_questions_skipped_and_asked
+    first_page = page_hash.values.detect {|page| page[:page_number] == 1}.try(:[], :page_id)
+    skip = 0
+    total = 0
+    survey_responses.each do |sr|
+      raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
+      next_page = first_page
+      while next_page do
+        page = page_hash[next_page]
+        next_page = page[:next_page_id]
+        page[:questions].each do |question|
+          total += 1
+          rr = raw_responses[question[:qc_id]]
+          if rr.present?
+            if question[:flow_control] && question[:flow_map][rr.answer].present?
+              next_page = question[:flow_map][rr.answer]
+            end
+          else
+            skip += 1
+          end
+        end
+      end
+    end
+    save
+    self.questions_skipped = skip
+    self.questions_asked = total
+    save
+  end
+
+  # generates a hash of page data that looks like
+  # {
+  #   345 => {
+  #     :page_id => 345,
+  #     :page_number => 1,
+  #     :next_page_id => 346,
+  #     :questions => [
+  #       {
+  #         :qc_id => 730,
+  #         :flow_control => true,
+  #         :flow_map => {
+  #           "2013" => 346,
+  #         "  2014" => 348
+  #         }
+  #       }
+  #     ]
+  #   }
+  # }
+  def page_hash
+    return @page_hash if @page_hash
+    @page_hash = {}
+    pages.each do |page|
+      questions = []
+      page.survey_elements.questions.each do |element|
+        element.assetable.reload # for some reason this is necessary to get some question content
+        if element.assetable_type == "MatrixQuestion"
+          element.assetable.choice_questions.each {|cq| questions << question_hash(cq)}
+        else
+          questions << question_hash(element.assetable)
+        end
+      end
+      @page_hash[page.id] = {page_id: page.id, page_number: page.page_number, next_page_id: page.next_page.try(:id), questions: questions}
+    end
+    @page_hash
+  end
+
   private
   def today
     Time.now.in_time_zone("Eastern Time (US & Canada)").to_date
@@ -361,20 +426,34 @@ class SurveyVersion < ActiveRecord::Base
   def today_string
     today.strftime("%Y-%m-%d")
   end
+
+
+  # hash of question used by pages_for_survey_version
+  def question_hash(question)
+    qc = question.question_content
+    hash = {qc_id: qc.id, flow_control: qc.flow_control?}
+    if qc.flow_control?
+      hash[:flow_map] = Hash[question.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
+    end
+    hash
+  end
 end
 
 # == Schema Information
 #
 # Table name: survey_versions
 #
-#  id             :integer(4)      not null, primary key
-#  survey_id      :integer(4)      not null
-#  major          :integer(4)
-#  minor          :integer(4)
-#  published      :boolean(1)      default(FALSE)
-#  locked         :boolean(1)      default(FALSE)
-#  archived       :boolean(1)      default(FALSE)
-#  notes          :text
+#  id                :integer(4)      not null, primary key
+#  survey_id         :integer(4)      not null
+#  major             :integer(4)
+#  minor             :integer(4)
+#  published         :boolean(1)      default(FALSE)
+#  locked            :boolean(1)      default(FALSE)
+#  archived          :boolean(1)      default(FALSE)
+#  notes             :text
+#  visits            :integer(4)      default(0)
+#  questions_skipped :integer(4)      default(0)
+#  questions_asked   :integer(4)      default(0)
 #  created_at     :datetime
 #  updated_at     :datetime
 #  thank_you_page :text
