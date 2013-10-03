@@ -408,6 +408,10 @@ a.navActive {
 #showpage .left_side {
   width: 90px;
 }
+#showpage.report-showpage .left_side {
+  width: 150px;
+  padding: 3px 0;
+}
 #surveys .left_side label,
 #showpage .left_side label {
   font-size: 14px;
@@ -418,6 +422,9 @@ a.navActive {
   display: inline-block;
   vertical-align: top;
   padding: 7px 0px;
+}
+#showpage.report-showpage .right_side {
+  padding: 3px 0;
 }
 #surveys .right_side p,
 #showpage .right_side p {
