@@ -6,6 +6,10 @@ class UserSessionsController < ApplicationController
   skip_before_filter :require_user, :only => [:new, :create, :reset_password, :do_pw_reset]
   before_filter :redirect_if_logged_in, :only => :new
 
+  #Rails doesn't seem to apply the default CSRF protection to session creation.
+  #All the information is present and usable, though.
+  before_filter :protect_against_csrf, :only => :create
+
 	# GET    /user_sessions/new(.:format)
   def new
     @user_session = UserSession.new
@@ -50,5 +54,12 @@ class UserSessionsController < ApplicationController
   # redirect the /surveys instead.
   def redirect_if_logged_in
     redirect_to surveys_path if current_user
+  end
+
+  # Apply the default CSRF protection to session creation.
+  def protect_against_csrf
+    if !verified_request?
+      redirect_to root_path
+    end
   end
 end

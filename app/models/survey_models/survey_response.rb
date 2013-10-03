@@ -18,7 +18,7 @@ class SurveyResponse < ActiveRecord::Base
 
   default_scope where(:archived => false)
 
-  accepts_nested_attributes_for :raw_responses, :reject_if => lambda {|attr| attr['answer'].blank?}
+  accepts_nested_attributes_for :raw_responses, :reject_if => :invalid_raw_response?
   accepts_nested_attributes_for :display_field_values
 
   after_create :queue_for_processing
@@ -76,6 +76,10 @@ class SurveyResponse < ActiveRecord::Base
   # @param [Integer] survey_version_id the id of the SurveyVersion
   def self.process_response(response, survey_version_id)
     client_id = SecureRandom.hex(64)
+
+    # Remove extraneous data from the response
+    response.slice!('page_url', 'raw_responses_attributes')
+    response['raw_responses_attributes'].try(:values).try(:each) {|rr| rr.slice!('question_content_id', 'answer')}
 
     survey_response = SurveyResponse.new ({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
 
@@ -190,6 +194,27 @@ class SurveyResponse < ActiveRecord::Base
       dfv = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(self.id, df.id)
       dfv.update_attributes(:value => df.default_value)
     end
+  end
+
+  # question content ids associated with this survey version
+  def question_content_ids
+    return @question_content_ids unless @question_content_ids.nil?
+    @question_content_ids = survey_version.try(:questions).try(:map) do |q|
+      if q.is_a?(MatrixQuestion) # get the ids of questins associated with MatrixQuestion
+        q.choice_questions.map {|cq| cq.question_content.try(:id).to_s}
+      else
+        q.question_content.try(:id).to_s
+      end
+    end
+    @question_content_ids ||= []
+    @question_content_ids.flatten!
+    @question_content_ids.reject! {|i| i.blank?}
+    @question_content_ids
+  end
+
+  # raw response is invalid if blank or if the question_content_id isn't part of this survey version
+  def invalid_raw_response?(attr)
+    attr['answer'].blank? || !question_content_ids.detect {|i| i == attr['question_content_id']}
   end
 end
 

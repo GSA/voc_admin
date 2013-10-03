@@ -1,7 +1,3 @@
-require "rubygems"
-require "active_record"
-require 'yaml'
-
 namespace :resque do
 	desc "Attempt to feed failed jobs back into Redis through Resque after Redis outage"
 	task :rescue do
