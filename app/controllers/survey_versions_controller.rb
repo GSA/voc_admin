@@ -94,6 +94,10 @@ class SurveyVersionsController < ApplicationController
     if @visit_count > 0
       @response_rate = @response_count * 100.0 / @visit_count
     end
+    @question_skip_rate = 0
+    if @survey_version.questions_asked > 0
+      @question_skip_rate = @survey_version.questions_skipped * 100.0 / @survey_version.questions_asked
+    end
   end
 
   private

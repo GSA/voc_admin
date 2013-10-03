@@ -49,7 +49,7 @@
 		Question Skip Rate:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= number_to_percentage(@survey_version.questions_skipped * 100.0 / @survey_version.questions_asked, :precision => 0) %></p>
+		<p class="version"><%= number_to_percentage(@question_skip_rate, :precision => 0) %></p>
 	</div>
 </div>
 
