@@ -21,14 +21,14 @@
 		Visits:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= @visit_count %></p>
+		<p class="version"><%= number_with_delimiter(@visit_count) %></p>
 	</div>
 	<br />
 	<div class="left_side">
 		Responses:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= @response_count %></p>
+		<p class="version"><%= number_with_delimiter(@response_count) %></p>
 	</div>
 	<br />
 	<div class="left_side">
