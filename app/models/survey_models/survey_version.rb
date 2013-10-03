@@ -394,7 +394,7 @@ class SurveyVersion < ActiveRecord::Base
   #         :flow_control => true,
   #         :flow_map => {
   #           "2013" => 346,
-  #         "  2014" => 348
+  #           "2014" => 348
   #         }
   #       }
   #     ]
