@@ -8,6 +8,14 @@ class SurveyVersionCount < ActiveRecord::Base
     for_date_range(start_date, end_date).sum(:visits)
   end
 
+  def self.questions_skipped_for_date_range(start_date, end_date)
+    for_date_range(start_date, end_date).sum(:questions_skipped)
+  end
+
+  def self.questions_asked_for_date_range(start_date, end_date)
+    for_date_range(start_date, end_date).sum(:questions_asked)
+  end
+
   def self.for_date_range(start_date, end_date)
     start_date = start_date.to_date unless start_date.is_a?(String)
     end_date = end_date.to_date unless end_date.is_a?(String)

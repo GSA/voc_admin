@@ -1,4 +1,5 @@
 require 'spec_helper'
+include SurveyHelpers
 
 describe SurveyVersion do
   before(:each) do
@@ -156,6 +157,22 @@ describe SurveyVersion do
       @version.temp_visit_count.count.should == 1 # should delete old temp_visit_count keys
       @version.survey_version_counts.visit_count_for_date_range(1.day.ago, Time.now).should == 5
       @version.survey_version_counts.visit_count_for_date_range(6.days.ago, Time.now).should == 8
+    end
+  end
+
+  context "questions skipped and questions asked" do
+    before do
+      publish_survey_version
+      build_three_simple_responses
+
+      # create a survey response where not every question is answered
+      @sr4 = build_survey_response @v, '104', { @q1 => "b" }, true
+      @v.update_questions_skipped_and_asked
+    end
+
+    it "should create survey version question counts" do
+      @v.total_questions_asked.should == 12
+      @v.total_questions_skipped.should == 2
     end
   end
 
