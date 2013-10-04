@@ -120,12 +120,15 @@ with:
   end
 
   def update_survey_version_counts
-    log_event(" Updating survey version counts...", 2)
+    log_event("Updating survey version counts...", 2)
 
-    #update survey visit count from temporary count
     SurveyVersion.find_each do |sv| 
-      sv.update_visit_counts
-      sv.update_questions_skipped_and_asked
+      begin
+        sv.update_visit_counts
+        sv.update_questions_skipped_and_asked
+      rescue
+        log_event("Error updating counts for survey version #{sv.id} - #{$!.to_s}", 4)
+      end
     end
 
     log_event(" Finished updating survey version counts.", 2)
