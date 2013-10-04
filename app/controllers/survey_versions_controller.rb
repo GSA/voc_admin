@@ -88,15 +88,14 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/reporting(.:format)
   def reporting
-    @visit_count = @survey_version.total_visit_count
     @response_count = @survey_version.survey_responses.count
     @response_rate = 0
-    if @visit_count > 0
-      @response_rate = @response_count * 100.0 / @visit_count
+    if @survey_version.total_visit_count > 0
+      @response_rate = @response_count * 100.0 / @survey_version.total_visit_count
     end
     @question_skip_rate = 0
-    if @survey_version.questions_asked > 0
-      @question_skip_rate = @survey_version.questions_skipped * 100.0 / @survey_version.questions_asked
+    if @survey_version.total_questions_asked > 0
+      @question_skip_rate = @survey_version.total_questions_skipped * 100.0 / @survey_version.total_questions_asked
     end
   end
 

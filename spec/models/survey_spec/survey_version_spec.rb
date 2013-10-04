@@ -154,8 +154,8 @@ describe SurveyVersion do
       @version.update_visit_counts
       @version.total_temp_visit_count.should == 0
       @version.temp_visit_count.count.should == 1 # should delete old temp_visit_count keys
-      @version.survey_visit_counts.count_for_date_range(1.day.ago, Time.now).should == 5
-      @version.survey_visit_counts.count_for_date_range(6.days.ago, Time.now).should == 8
+      @version.survey_version_counts.visit_count_for_date_range(1.day.ago, Time.now).should == 5
+      @version.survey_version_counts.visit_count_for_date_range(6.days.ago, Time.now).should == 8
     end
   end
 

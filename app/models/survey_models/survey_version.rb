@@ -25,7 +25,7 @@ class SurveyVersion < ActiveRecord::Base
 
   has_many :dashboards,       :dependent => :destroy
   has_many :reports,          :dependent => :destroy
-  has_many :survey_visit_counts,    :dependent => :destroy
+  has_many :survey_version_counts,    :dependent => :destroy
 
   attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
 
@@ -54,11 +54,11 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def total_temp_visit_count
-    temp_visit_count.values.inject(0) {|result, element| result + element.to_i}
+    @total_temp_visit_count ||= temp_visit_count.values.inject(0) {|result, element| result + element.to_i}
   end
 
   def total_visit_count
-    survey_visit_counts.sum(:visits) + total_temp_visit_count
+    @total_visit_count ||= survey_version_counts.sum(:visits) + total_temp_visit_count
   end
 
   # Increments visits by temporary recent_visits count
@@ -68,8 +68,8 @@ class SurveyVersion < ActiveRecord::Base
       visits_date = Date.parse(visits_date_string)
       visits_count = visits_count_string.to_i
       if visits_count > 0
-        svc = survey_visit_counts.find_or_create_by_visit_date(visits_date)
-        SurveyVisitCount.update_counters svc.id, :visits => visits_count
+        svc = survey_version_counts.find_or_create_by_count_date(visits_date)
+        SurveyVersionCount.update_counters svc.id, :visits => visits_count
       end
       if visits_date < yesterday
         temp_visit_count.delete(visits_date_string)
@@ -77,6 +77,14 @@ class SurveyVersion < ActiveRecord::Base
         temp_visit_count.incr(visits_date_string, -visits_count) if visits_count > 0
       end
     end
+  end
+
+  def total_questions_skipped
+    @total_questions_skipped ||= survey_version_counts.sum(:questions_skipped)
+  end
+
+  def total_questions_asked
+    @total_questions_asked ||= survey_version_counts.sum(:questions_asked)
   end
 
   NOSQL_BATCH = 1000
@@ -356,31 +364,33 @@ class SurveyVersion < ActiveRecord::Base
   # updates the number of questions asked and skipped in survey responses
   def update_questions_skipped_and_asked
     first_page = page_hash.values.detect {|page| page[:page_number] == 1}.try(:[], :page_id)
-    skip = 0
-    total = 0
+    skips = Hash.new {|hash, key| hash[key] = {:skip => 0, :total => 0}}
     survey_responses.each do |sr|
+      date = sr.created_at.in_time_zone("Eastern Time (US & Canada)").to_date
       raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
       next_page = first_page
       while next_page do
         page = page_hash[next_page]
         next_page = page[:next_page_id]
         page[:questions].each do |question|
-          total += 1
+          skips[date][:total] += 1
           rr = raw_responses[question[:qc_id]]
           if rr.present?
             if question[:flow_control] && question[:flow_map][rr.answer].present?
               next_page = question[:flow_map][rr.answer]
             end
           else
-            skip += 1
+            skips[date][:skip] += 1
           end
         end
       end
     end
-    save
-    self.questions_skipped = skip
-    self.questions_asked = total
-    save
+    skips.each do |count_date, hash|
+      svc = survey_version_counts.find_or_create_by_count_date(count_date)
+      svc.questions_skipped = hash[:skip]
+      svc.questions_asked = hash[:total]
+      svc.save
+    end
   end
 
   # generates a hash of page data that looks like
@@ -452,11 +462,6 @@ end
 #  locked            :boolean(1)      default(FALSE)
 #  archived          :boolean(1)      default(FALSE)
 #  notes             :text
-#  visits            :integer(4)      default(0)
-#  questions_skipped :integer(4)      default(0)
-#  questions_asked   :integer(4)      default(0)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  thank_you_page :text
-#
-
+#  created_at        :datetime
+#  updated_at        :datetime
+#  thank_you_page    :text

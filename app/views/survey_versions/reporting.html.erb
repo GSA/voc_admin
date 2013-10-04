@@ -21,7 +21,7 @@
 		Visits:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@visit_count) %></p>
+		<p class="version"><%= number_with_delimiter(@survey_version.total_visit_count) %></p>
 	</div>
 	<br />
 	<div class="left_side">
@@ -42,7 +42,7 @@
 		Questions Skipped:
 	</div>
 	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@survey_version.questions_skipped) %></p>
+		<p class="version"><%= number_with_delimiter(@survey_version.total_questions_skipped) %></p>
 	</div>
 	<br />
 	<div class="left_side">

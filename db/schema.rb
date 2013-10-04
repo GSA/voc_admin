@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003172525) do
+ActiveRecord::Schema.define(:version => 20131004182930) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -370,33 +370,33 @@ ActiveRecord::Schema.define(:version => 20131003172525) do
     t.datetime "updated_at"
   end
 
-  create_table "survey_versions", :force => true do |t|
-    t.integer  "survey_id",                            :null => false
-    t.integer  "major"
-    t.integer  "minor"
-    t.boolean  "published",         :default => false
-    t.boolean  "locked",            :default => false
-    t.boolean  "archived",          :default => false
-    t.text     "notes"
+  create_table "survey_version_counts", :force => true do |t|
+    t.integer  "survey_version_id"
+    t.date     "count_date"
+    t.integer  "visits",            :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "thank_you_page"
     t.integer  "questions_skipped", :default => 0
     t.integer  "questions_asked",   :default => 0
   end
 
-  add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"
+  add_index "survey_version_counts", ["survey_version_id", "count_date"], :name => "index_survey_visit_counts_on_survey_version_id_and_visit_date", :unique => true
+  add_index "survey_version_counts", ["survey_version_id"], :name => "index_survey_visit_counts_on_survey_version_id"
 
-  create_table "survey_visit_counts", :force => true do |t|
-    t.integer  "survey_version_id"
-    t.date     "visit_date"
-    t.integer  "visits",            :default => 0
+  create_table "survey_versions", :force => true do |t|
+    t.integer  "survey_id",                         :null => false
+    t.integer  "major"
+    t.integer  "minor"
+    t.boolean  "published",      :default => false
+    t.boolean  "locked",         :default => false
+    t.boolean  "archived",       :default => false
+    t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "thank_you_page"
   end
 
-  add_index "survey_visit_counts", ["survey_version_id", "visit_date"], :name => "index_survey_visit_counts_on_survey_version_id_and_visit_date", :unique => true
-  add_index "survey_visit_counts", ["survey_version_id"], :name => "index_survey_visit_counts_on_survey_version_id"
+  add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"
 
   create_table "surveys", :force => true do |t|
     t.string   "name"
