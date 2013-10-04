@@ -61,6 +61,13 @@ class SurveyVersion < ActiveRecord::Base
     @total_visit_count ||= survey_version_counts.sum(:visits) + total_temp_visit_count
   end
 
+  # Update survey_version_counts
+  def update_counts
+    update_visit_counts
+    update_questions_skipped_and_asked
+    update_attribute(:counts_updated_at, Time.now)
+  end
+
   # Increments visits by temporary recent_visits count
   def update_visit_counts
     yesterday = today - 1.day
@@ -363,9 +370,15 @@ class SurveyVersion < ActiveRecord::Base
 
   # updates the number of questions asked and skipped in survey responses
   def update_questions_skipped_and_asked
+    responses = survey_responses
+    if counts_updated_at.present?
+      d = counts_updated_at.in_time_zone("Eastern Time (US & Canada)") - 2.days
+      responses = survey_responses.where("created_at > ?", d.to_date)
+    end
+    return if responses.empty?
     first_page = page_hash.values.detect {|page| page[:page_number] == 1}.try(:[], :page_id)
     skips = Hash.new {|hash, key| hash[key] = {:skip => 0, :total => 0}}
-    survey_responses.each do |sr|
+    responses.each do |sr|
       date = sr.created_at.in_time_zone("Eastern Time (US & Canada)").to_date
       raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
       next_page = first_page
@@ -385,12 +398,7 @@ class SurveyVersion < ActiveRecord::Base
         end
       end
     end
-    skips.each do |count_date, hash|
-      svc = survey_version_counts.find_or_create_by_count_date(count_date)
-      svc.questions_skipped = hash[:skip]
-      svc.questions_asked = hash[:total]
-      svc.save
-    end
+    record_questions_skipped_and_asked(skips)
   end
 
   # generates a hash of page data that looks like
@@ -448,6 +456,16 @@ class SurveyVersion < ActiveRecord::Base
     end
     hash
   end
+
+  # saves the skips from update_questions_skipped_and_asked
+  def record_questions_skipped_and_asked(skips_hash)
+    skips_hash.each do |count_date, hash|
+      svc = survey_version_counts.find_or_create_by_count_date(count_date)
+      svc.questions_skipped = hash[:skip]
+      svc.questions_asked = hash[:total]
+      svc.save
+    end
+  end
 end
 
 # == Schema Information
@@ -462,6 +480,7 @@ end
 #  locked            :boolean(1)      default(FALSE)
 #  archived          :boolean(1)      default(FALSE)
 #  notes             :text
+#  counts_updated_at :datetime
 #  created_at        :datetime
 #  updated_at        :datetime
 #  thank_you_page    :text

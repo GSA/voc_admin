@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131004182930) do
+ActiveRecord::Schema.define(:version => 20131004200645) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -384,16 +384,17 @@ ActiveRecord::Schema.define(:version => 20131004182930) do
   add_index "survey_version_counts", ["survey_version_id"], :name => "index_survey_visit_counts_on_survey_version_id"
 
   create_table "survey_versions", :force => true do |t|
-    t.integer  "survey_id",                         :null => false
+    t.integer  "survey_id",                            :null => false
     t.integer  "major"
     t.integer  "minor"
-    t.boolean  "published",      :default => false
-    t.boolean  "locked",         :default => false
-    t.boolean  "archived",       :default => false
+    t.boolean  "published",         :default => false
+    t.boolean  "locked",            :default => false
+    t.boolean  "archived",          :default => false
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "thank_you_page"
+    t.datetime "counts_updated_at"
   end
 
   add_index "survey_versions", ["survey_id"], :name => "index_versions_on_survey_id"

@@ -124,8 +124,7 @@ with:
 
     SurveyVersion.find_each do |sv| 
       begin
-        sv.update_visit_counts
-        sv.update_questions_skipped_and_asked
+        sv.update_counts
       rescue
         log_event("Error updating counts for survey version #{sv.id} - #{$!.to_s}", 4)
       end
