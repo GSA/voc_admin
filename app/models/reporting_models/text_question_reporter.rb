@@ -43,7 +43,7 @@ class TextQuestionReporter < QuestionReporter
   # Generate the data required to create a word cloud for a text question.
   #
   # @return [String] JSON data
-  def generate_element_data(display_type, element_type)
+  def generate_element_data(display_type)
     top_words.map do |k,v|
       {
         text: k,

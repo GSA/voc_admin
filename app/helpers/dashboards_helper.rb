@@ -5,7 +5,7 @@ module DashboardsHelper
   def generate_element_data_script(element)
     type = element.display_type
 
-    if type == 'cloud'
+    if type == 'word_cloud'
       "$('##{type}Element_#{element.id}').jQCloud(#{element.element_data});"
     else
       %Q[
@@ -31,8 +31,8 @@ module DashboardsHelper
     </div>].html_safe
   end
 
-  def dashboard_element_types_arr
-    DashboardElement::ELEMENT_TYPES.map {|k,v| [v, k, {"data-type" => k}]}
+  def dashboard_element_display_types_arr
+    DashboardElement::DISPLAY_TYPES.map {|k,v| [v, k, {"data-type" => k}]}
   end
 
   def truncate_question(question, length = 40)

@@ -9,8 +9,10 @@ class DashboardElement < ActiveRecord::Base
 
   default_scope order(:sort_order)
 
-  ELEMENT_TYPES = {
-    :count_per_answer_option => "Count Per Answer",
+  # dashboard element types
+  DISPLAY_TYPES = {
+    :bar => "Bar Chart",
+    :pie => "Pie Chart",
     :word_cloud => "Word Cloud"
   }.freeze
 
@@ -19,8 +21,8 @@ class DashboardElement < ActiveRecord::Base
     sort_order_will_change!
   end
 
-  def humanized_element_type
-    ELEMENT_TYPES[element_type.try(:to_sym)]
+  def humanized_display_type
+    DISPLAY_TYPES[display_type.try(:to_sym)]
   end
 
   def reporter
@@ -32,15 +34,6 @@ class DashboardElement < ActiveRecord::Base
   end
 
   def element_data
-    reporter.generate_element_data(display_type, element_type)
-  end
-
-  # this should eventually be a db-backed property
-  def display_type
-    if element_type == "word_cloud"
-      "cloud"
-    else
-      reporter.allows_multiple_selection ? "bar" : "pie"
-    end
+    reporter.generate_element_data(display_type)
   end
 end

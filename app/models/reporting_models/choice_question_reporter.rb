@@ -23,32 +23,11 @@ class ChoiceQuestionReporter < QuestionReporter
     choice_permutation_reporters.desc(:count).limit(number).map(&:permutation)
   end
 
-  # Generate the data required to plot a chart for a choice question.
-  #
-  # @return [String] JSON data
-  def generate_element_data(display_type, element_type)
-    # build an array of data to convert to JSON
-    [].tap do |data|
-      case element_type
-      when 'count_per_answer_option'
-        data.push(*count_per_answer_option_data(display_type))
-      else
-        nil
-      end
-    end.to_json
-  end
-
-  def allows_multiple_selection
-    choice_question.allows_multiple_selection
-  end
-
-  private
-
-  # Generate data for the "Count per answer option" chart display. Creates an array
+  # Generate the data required to plot a chart for a choice question. Creates an array
   # of Hash objects, which are required for Flot charting.
   #
-  # @return [Array<Hash>] Hash of data for each answer option
-  def count_per_answer_option_data(display_type)
+  # @return [String] JSON data
+  def generate_element_data(display_type)
     ordered_choice_answer_reporters = choice_answer_reporters.sort_by { |ocar| -ocar.count }
 
     case display_type
@@ -62,8 +41,14 @@ class ChoiceQuestionReporter < QuestionReporter
       end
     else
       nil
-    end
+    end.to_json
   end
+
+  def allows_multiple_selection
+    choice_question.allows_multiple_selection
+  end
+
+  private
 
   def choice_question
     @choice_question = ChoiceQuestion.find(cq_id)

@@ -12,16 +12,16 @@ $(document).ready(function() {
     });
 
     reporterType = $("#dashboardModalShownDiv #survey_element_id option:first").data("type");
-    hideElementTypes();
-    displayElementTypes(reporterType);
+    hideDisplayTypes();
+    displayDisplayTypes(reporterType);
     $('#dashboardModalShownDiv').show();
-    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option[data-display='visible']").first().val());
+    $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
   });
 
   $('#dashboardModalShownDiv #survey_element_id option').live('click', function() {
-    hideElementTypes();
-    displayElementTypes($(this).data("type"));
-    $("#dashboardModalShownDiv #element_type").val($("#dashboardModalShownDiv #element_type option[data-display='visible']").first().val());
+    hideDisplayTypes();
+    displayDisplayTypes($(this).data("type"));
+    $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
   });
 
   $('form .remove_element').click(function() {
@@ -36,22 +36,24 @@ $(document).ready(function() {
   $('#dashboardElementsList').sortable();
 });
 
-function hideElementTypes() {
-  $("#dashboardModalShownDiv #element_type option").hide();
-  $("#dashboardModalShownDiv #element_type option").attr("data-display", "hidden");
+function hideDisplayTypes() {
+  $("#dashboardModalShownDiv #display_type option").hide();
+  $("#dashboardModalShownDiv #display_type option").attr("data-display", "hidden");
 }
 
-function displayElementTypes(reporterType) {
-  var dataType = "";
+function displayDisplayTypes(reporterType) {
+  var dataTypes = [];
   switch (reporterType) {
     case "choice":
-      dataType = "count_per_answer_option"
+      dataTypes = ["bar", "pie"]
       break;
     case "text":
-      dataType = "word_cloud"
+      dataTypes = ["word_cloud"]
   }
-  $("#dashboardModalShownDiv #element_type option[data-type='" + dataType + "']").show();
-  $("#dashboardModalShownDiv #element_type option[data-type='" + dataType + "']").attr("data-display", "visible");
+  $.each(dataTypes, function(i, dataType) {
+    $("#dashboardModalShownDiv #display_type option[data-type='" + dataType + "']").show();
+    $("#dashboardModalShownDiv #display_type option[data-type='" + dataType + "']").attr("data-display", "visible");
+  });
 }
 
 function addWidgetToDashboard() {
@@ -61,10 +63,10 @@ function addWidgetToDashboard() {
   var li = $("#dashboardElementsList li:last");
   li.html($("#dashboardElementBlank").html());
   li.find(idText + "survey_element_id").first().val($("#dashboardModalShownDiv #survey_element_id option:selected").val());
-  li.find(idText + "element_type").first().val($("#dashboardModalShownDiv #element_type option:selected").val());
+  li.find(idText + "display_type").first().val($("#dashboardModalShownDiv #display_type option:selected").val());
   li.append($("#dashboardModalShownDiv #survey_element_id option:selected").text());
   li.append(" - ");
-  li.append($("#dashboardModalShownDiv #element_type option:selected").text());
+  li.append($("#dashboardModalShownDiv #display_type option:selected").text());
   li.html(li.html().replace(/replaceId/g, newId));
   li.show();
   $.modal.close();
