@@ -137,28 +137,7 @@ namespace :reporting do
       print "\r    Importing TQID #{text_question.id}..."
 
       begin
-        text_question_reporter = TextQuestionReporter.find_or_create_by(tq_id: text_question.id)
-        set_common_question_fields(text_question, text_question_reporter, survey_version)
-        question_content = text_question.question_content
-        text_question_reporter.question = question_content.statement
-
-        question_content.raw_responses.each do |raw_response|
-          answer_values = raw_response.answer.try(:scan, /[\w'-]+/)
-
-          if answer_values.present?
-            text_question_reporter.inc(:answered, 1)
-
-            answer_values.uniq.each do |answer_value|
-              word = answer_value.downcase
-              count = text_question_reporter.words[word] || 0
-              text_question_reporter.words[word] = count + 1
-            end
-          end
-        end
-        text_question_reporter.exclude_common_words!
-        text_question_reporter.populate_top_words!
-        text_question_reporter.save
-
+        TextQuestionReporter.generate_reporter(survey_version, text_question)
       rescue Exception => e
         print "\rERROR: Failed import for TextQuestion #{text_question.id};\n  Message: #{$!.to_s}\n"
         errors << [text_question.id, $!.to_s, e.backtrace]

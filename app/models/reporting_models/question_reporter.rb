@@ -49,4 +49,10 @@ class QuestionReporter
   def survey_element
     @survey_element ||= SurveyElement.find(se_id)
   end
+
+  def self.set_common_fields(reporter, survey_version, question)
+    reporter.s_id = survey_version.survey_id
+    reporter.sv_id = survey_version.id
+    reporter.se_id = question.survey_element.id
+  end
 end

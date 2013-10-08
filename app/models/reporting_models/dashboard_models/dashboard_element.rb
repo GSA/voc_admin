@@ -34,6 +34,10 @@ class DashboardElement < ActiveRecord::Base
   end
 
   def element_data
-    reporter.generate_element_data(display_type)
+    reporter.generate_element_data(display_type, dashboard.start_date, dashboard.end_date)
+  end
+
+  def answered
+    reporter.answered_for_date_range(dashboard.start_date, dashboard.end_date)
   end
 end

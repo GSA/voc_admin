@@ -23,11 +23,16 @@ class ChoiceQuestionReporter < QuestionReporter
     choice_permutation_reporters.desc(:count).limit(number).map(&:permutation)
   end
 
+  def answered_for_date_range(start_date, end_date)
+    return answered if start_date.nil? && end_date.nil?
+    answered
+  end
+
   # Generate the data required to plot a chart for a choice question. Creates an array
   # of Hash objects, which are required for Flot charting.
   #
   # @return [String] JSON data
-  def generate_element_data(display_type)
+  def generate_element_data(display_type, start_date = nil, end_date = nil)
     ordered_choice_answer_reporters = choice_answer_reporters.sort_by { |ocar| -ocar.count }
 
     case display_type
