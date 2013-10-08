@@ -11,7 +11,7 @@ class ChoiceQuestionReporter < QuestionReporter
   embeds_many :choice_permutation_reporters
 
   def type
-    :choice
+    @type ||= allows_multiple_selection ? "choice-multiple".to_sym : "choice-single".to_sym
   end
 
   # average number of chosen Answer options across all answered questions

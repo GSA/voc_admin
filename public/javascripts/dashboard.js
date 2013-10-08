@@ -44,7 +44,10 @@ function hideDisplayTypes() {
 function displayDisplayTypes(reporterType) {
   var dataTypes = [];
   switch (reporterType) {
-    case "choice":
+    case "choice-multiple":
+      dataTypes = ["bar"]
+      break;
+    case "choice-single":
       dataTypes = ["bar", "pie"]
       break;
     case "text":
