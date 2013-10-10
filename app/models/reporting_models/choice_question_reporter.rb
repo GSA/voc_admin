@@ -106,14 +106,7 @@ class ChoiceQuestionReporter < QuestionReporter
   private
 
   def add_permutations(raw_response, answer_values, choice_answer_hash, date)
-    permutations = choice_per  def days_for_date_range(start_date, end_date)
-    days = choice_permutation_days
-    days = days.where(:date.gte => start_date.to_date) unless start_date.nil?
-    days = days.where(:date.lte => end_date.to_date) unless end_date.nil?
-    days
-  end
-
-mutation_reporters.where(ca_ids: raw_response.answer).first
+    permutations = choice_permutation_reporters.where(ca_ids: raw_response.answer).first
     unless permutations
       values = answer_values.map do |av|
         return false if choice_answer_hash[av].nil?
