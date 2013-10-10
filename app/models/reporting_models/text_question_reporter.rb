@@ -35,7 +35,7 @@ class TextQuestionReporter < QuestionReporter
     question_content = text_question.question_content
     text_question_reporter.question = question_content.statement
 
-    question_content.raw_responses.each do |raw_response|
+    question_content.raw_responses.find_each do |raw_response|
       answer_values = raw_response.answer.try(:downcase).try(:scan, /[\w'-]+/)
       text_question_reporter.add_answer_values(answer_values, raw_response.created_at)
     end

@@ -53,9 +53,49 @@ class ChoiceQuestionReporter < QuestionReporter
     choice_question.allows_multiple_selection
   end
 
+  def self.generate_reporter(survey_version, choice_question)
+    choice_question_reporter = ChoiceQuestionReporter.create!(cq_id: choice_question.id)
+    self.set_common_fields(choice_question_reporter, survey_version, choice_question)
+    choice_question_reporter.question = choice_question.question_content.statement
+
+    choice_answer_hash = {}
+    # initialize all answers with zero counts
+    choice_question.choice_answers.each do |ca|
+      car = choice_question_reporter.choice_answer_reporters.create!(ca_id: ca.id, text: ca.answer, count: 0)
+      choice_answer_hash[ca.id.to_s] = car
+    end
+
+    choice_question.question_content.raw_responses.find_each do |raw_response|
+      answer_values = raw_response.answer.split(",")
+
+      permutations = choice_question_reporter.choice_permutation_reporters.where(ca_ids: raw_response.answer).first
+      unless permutations
+        values = answer_values.map do |av|
+          next if choice_answer_hash[av].nil?
+          choice_answer_hash[av].text
+        end.compact.join(DisplayFieldValue::VALUE_DELIMITER)
+        next if values.empty? || answer_values.size != values.size
+        permutations = choice_question_reporter.choice_permutation_reporters.create(ca_ids: raw_response.answer, values: values)
+      end
+      permutations.inc(:count, 1)
+
+      permutations.save
+      choice_question_reporter.inc(:answered, 1)
+      choice_question_reporter.inc(:chosen, answer_values.count)
+
+      answer_values.each do |answer_value|
+        answer = choice_answer_hash[answer_value]
+        next unless answer
+        answer.inc(:count, 1)
+        answer.save
+      end
+    end
+    choice_question_reporter.save
+  end
+
   private
 
   def choice_question
-    @choice_question = ChoiceQuestion.find(cq_id)
+    @choice_question ||= ChoiceQuestion.find(cq_id)
   end
 end
