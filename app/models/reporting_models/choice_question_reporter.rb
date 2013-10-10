@@ -7,25 +7,44 @@ class ChoiceQuestionReporter < QuestionReporter
   # used for simple average count of number of responses (for multiselect)
   field :chosen, type: Integer, default: 0
 
+  embeds_many :choice_question_days
   embeds_many :choice_answer_reporters
   embeds_many :choice_permutation_reporters
+  index "choice_question_days.date" => 1
 
   def type
     @type ||= allows_multiple_selection ? "choice-multiple".to_sym : "choice-single".to_sym
   end
 
   # average number of chosen Answer options across all answered questions
-  def average_answers_chosen(precision = 1)
-    (chosen / answered.to_f).round(precision)
+  def average_answers_chosen_for_date_range(start_date, end_date, precision = 1)
+    chosen_for_dates = chosen_for_date_range(start_date, end_date)
+    answered_for_dates = answered_for_date_range(start_date, end_date)
+    (chosen_for_dates / answered_for_dates.to_f).round(precision)
   end
 
-  def top_permutations(number = 10)
-    choice_permutation_reporters.desc(:count).limit(number).map(&:permutation)
+  def top_permutations_for_date_range(start_date, end_date, number = 10)
+    permutations = choice_permutation_reporters.map {|cqr| cqr.permutation_for_date_range(start_date, end_date)}
+    permutations.sort_by {|p| -p.count}.first(number)
   end
 
   def answered_for_date_range(start_date, end_date)
     return answered if start_date.nil? && end_date.nil?
-    answered
+    val = days_for_date_range(start_date, end_date).sum(:answered)
+    val.nil? ? 0 : val
+  end
+
+  def chosen_for_date_range(start_date, end_date)
+    return chosen if start_date.nil? && end_date.nil?
+    val = days_for_date_range(start_date, end_date).sum(:chosen)
+    val.nil? ? 0 : val
+  end
+
+  def days_for_date_range(start_date, end_date)
+    days = choice_question_days
+    days = days.where(:date.gte => start_date.to_date) unless start_date.nil?
+    days = days.where(:date.lte => end_date.to_date) unless end_date.nil?
+    days
   end
 
   # Generate the data required to plot a chart for a choice question. Creates an array
@@ -33,16 +52,17 @@ class ChoiceQuestionReporter < QuestionReporter
   #
   # @return [String] JSON data
   def generate_element_data(display_type, start_date = nil, end_date = nil)
-    ordered_choice_answer_reporters = choice_answer_reporters.sort_by { |ocar| -ocar.count }
+    cars = choice_answer_reporters.map {|car| [car.text, car.count_for_date_range(start_date, end_date)]}
+    ordered_choice_answer_reporters = cars.sort_by { |car| -car[1] }
 
     case display_type
     when "pie"
-      ordered_choice_answer_reporters.map do |choice_answer_reporter|
-        { label: choice_answer_reporter.text, data: choice_answer_reporter.count }
-      end.sort_by { |value| -value[:data] }
+      ordered_choice_answer_reporters.map do |car|
+        { label: car[0], data: car[1] }
+      end
     when "bar"
-      ordered_choice_answer_reporters.map.each_with_index do |choice_answer_reporter, index|
-        { data: [[index, choice_answer_reporter.count]], label: choice_answer_reporter.text }
+      ordered_choice_answer_reporters.map.each_with_index do |car, index|
+        { data: [[index, car[1]]], label: car[0] }
       end
     else
       nil
@@ -75,8 +95,7 @@ class ChoiceQuestionReporter < QuestionReporter
     answer_values = raw_response.answer.split(",")
     date = raw_response.created_at.in_time_zone("Eastern Time (US & Canada)").to_date
     return unless add_permutations(raw_response, answer_values, choice_answer_hash, date)
-    inc(:answered, 1)
-    inc(:chosen, answer_values.count)
+    add_day(date, answer_values.count)
 
     answer_values.each do |answer_value|
       answer = choice_answer_hash[answer_value]
@@ -87,7 +106,14 @@ class ChoiceQuestionReporter < QuestionReporter
   private
 
   def add_permutations(raw_response, answer_values, choice_answer_hash, date)
-    permutations = choice_permutation_reporters.where(ca_ids: raw_response.answer).first
+    permutations = choice_per  def days_for_date_range(start_date, end_date)
+    days = choice_permutation_days
+    days = days.where(:date.gte => start_date.to_date) unless start_date.nil?
+    days = days.where(:date.lte => end_date.to_date) unless end_date.nil?
+    days
+  end
+
+mutation_reporters.where(ca_ids: raw_response.answer).first
     unless permutations
       values = answer_values.map do |av|
         return false if choice_answer_hash[av].nil?
@@ -97,6 +123,15 @@ class ChoiceQuestionReporter < QuestionReporter
     end
     permutations.add_day(date)
     true
+  end
+
+
+  def add_day(date, chosen_count)
+    day = choice_question_days.find_or_create_by(date: date)
+    day.inc(:answered, 1)
+    day.inc(:chosen, chosen_count)
+    inc(:answered, 1)
+    inc(:chosen, chosen_count)
   end
 
   def choice_question
