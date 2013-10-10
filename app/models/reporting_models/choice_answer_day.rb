@@ -1,7 +1,8 @@
 class ChoiceAnswerDay
   include Mongoid::Document
 
-  embedded_in :choice_answer_reporter
-
+  field :date, type: Date
   field :count, type: Integer, default: 0
+
+  embedded_in :choice_answer_reporter
 end

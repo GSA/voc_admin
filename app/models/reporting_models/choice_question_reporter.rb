@@ -66,34 +66,38 @@ class ChoiceQuestionReporter < QuestionReporter
     end
 
     choice_question.question_content.raw_responses.find_each do |raw_response|
-      answer_values = raw_response.answer.split(",")
-
-      permutations = choice_question_reporter.choice_permutation_reporters.where(ca_ids: raw_response.answer).first
-      unless permutations
-        values = answer_values.map do |av|
-          next if choice_answer_hash[av].nil?
-          choice_answer_hash[av].text
-        end.compact.join(DisplayFieldValue::VALUE_DELIMITER)
-        next if values.empty? || answer_values.size != values.size
-        permutations = choice_question_reporter.choice_permutation_reporters.create(ca_ids: raw_response.answer, values: values)
-      end
-      permutations.inc(:count, 1)
-
-      permutations.save
-      choice_question_reporter.inc(:answered, 1)
-      choice_question_reporter.inc(:chosen, answer_values.count)
-
-      answer_values.each do |answer_value|
-        answer = choice_answer_hash[answer_value]
-        next unless answer
-        answer.inc(:count, 1)
-        answer.save
-      end
+      choice_question_reporter.add_raw_response(raw_response, choice_answer_hash)
     end
     choice_question_reporter.save
   end
 
+  def add_raw_response(raw_response, choice_answer_hash)
+    answer_values = raw_response.answer.split(",")
+    date = raw_response.created_at.in_time_zone("Eastern Time (US & Canada)").to_date
+    return unless add_permutations(raw_response, answer_values, choice_answer_hash, date)
+    inc(:answered, 1)
+    inc(:chosen, answer_values.count)
+
+    answer_values.each do |answer_value|
+      answer = choice_answer_hash[answer_value]
+      answer.add_day(date)
+    end
+  end
+
   private
+
+  def add_permutations(raw_response, answer_values, choice_answer_hash, date)
+    permutations = choice_permutation_reporters.where(ca_ids: raw_response.answer).first
+    unless permutations
+      values = answer_values.map do |av|
+        return false if choice_answer_hash[av].nil?
+        choice_answer_hash[av].text
+      end.join(DisplayFieldValue::VALUE_DELIMITER)
+      permutations = choice_permutation_reporters.create(ca_ids: raw_response.answer, values: values)
+    end
+    permutations.add_day(date)
+    true
+  end
 
   def choice_question
     @choice_question ||= ChoiceQuestion.find(cq_id)

@@ -44,6 +44,7 @@ class TextQuestionReporter < QuestionReporter
 
   def add_answer_values(answer_values, date)
     return unless answer_values.present?
+    date = date.in_time_zone("Eastern Time (US & Canada)").to_date
     inc(:answered, 1)
     tqd = text_question_days.find_or_create_by(date: date)
     tqd.inc(:answered, 1)
