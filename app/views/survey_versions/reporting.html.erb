@@ -63,13 +63,17 @@
 	<table id="dashboardsTable">
 		<tr>
 			<th class="col1" scope="col">Name</th>
-			<th class="col2-3" scope="col" colspan="2"></th>
+			<th class="col2" scope="col">Start Date</th>
+			<th class="col3" scope="col">End Date</th>
+			<th class="col4-5" scope="col" colspan="2"></th>
 		</tr>
 		<% for dashboard in @survey_version.dashboards %>
 			<tr class="<%= cycle('gray','white') %>">
 				<td class="col1"><%= link_to dashboard.name, survey_survey_version_dashboard_path(@survey, @survey_version, dashboard) %></td>
-				<td class="col2"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
-				<td class="col3"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+				<td class="col2"><%= dashboard.start_date_str %></td>
+				<td class="col3"><%= dashboard.end_date_str %></td>
+				<td class="col4"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
+				<td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
 			</tr>
 		<% end %>
 	</table>

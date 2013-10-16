@@ -924,10 +924,13 @@ fieldset#inmodal legend {
   word-wrap:break-word;
   word-break:break-all;
 }
-#dashboardsTable .col2-3 {
+#dashboardsTable .col4-5 {
   width: 30px;
 }
 #dashboardsTable .col2, #dashboardsTable .col3 {
+  width: 80px;
+}
+#dashboardsTable .col4, #dashboardsTable .col5 {
   width: 15px;
   text-align: center;
 }
