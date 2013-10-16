@@ -122,7 +122,7 @@ with:
   def update_survey_version_counts
     log_event("Updating survey version counts...", 2)
 
-    SurveyVersion.find_each do |sv| 
+    SurveyVersion.locked.find_each do |sv|
       begin
         sv.update_counts
       rescue
