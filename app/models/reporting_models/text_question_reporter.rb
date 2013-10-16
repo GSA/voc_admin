@@ -72,8 +72,8 @@ class TextQuestionReporter < QuestionReporter
 
   def answered_for_date_range(start_date, end_date)
     return answered if start_date.nil? && end_date.nil?
-    days = text_question_days_for_date_range(start_date, end_date)
-    days.sum(:answered)
+    val = text_question_days_for_date_range(start_date, end_date).sum(:answered)
+    val.nil? ? 0 : val
   end
 
   def top_words(word_limit = 50, word_hash = nil)
