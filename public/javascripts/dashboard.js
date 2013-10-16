@@ -34,6 +34,7 @@ $(document).ready(function() {
   });
 
   $('#dashboardElementsList').sortable();
+  $('.datepicker').datepicker();
 });
 
 function hideDisplayTypes() {

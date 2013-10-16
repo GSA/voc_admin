@@ -12,6 +12,20 @@
     <div class="right_side">
       <%= f.text_field :name %>
     </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :start_date, "Start Date: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :start_date, :value => @dashboard.start_date_str, :class => "datepicker" %>
+    </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :end_date, "End Date: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :end_date, :value => @dashboard.end_date_str, :class => "datepicker" %>
+    </div>
   <% end %>
 
   <div class="page-nav">
