@@ -48,7 +48,7 @@ namespace :reporting do
     TextQuestionReporter.all.delete
     errors = []
 
-    survey_versions = SurveyVersion.all
+    survey_versions = SurveyVersion.locked
     survey_version_count = survey_versions.count
 
     survey_versions.each_with_index do |survey_version, index|

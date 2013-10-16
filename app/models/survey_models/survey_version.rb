@@ -39,6 +39,7 @@ class SurveyVersion < ActiveRecord::Base
   # Scopes for partitioning survey versions
   scope :published, where(:published => true)
   scope :unpublished, where(:published => false)
+  scope :locked, where(:locked => true)
 
   # these need updated to make sure the survey hasn't been archved
   scope :get_archived, where(:archived => true)
