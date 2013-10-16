@@ -6,7 +6,7 @@
   <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
 </div>
 
-<div id="showpage">
+<div id="showpage" class="report-showpage">
   <div class="left_side">
     Survey:
   </div>
@@ -25,21 +25,21 @@
     Dashboard Name:
   </div>
   <div class="right_side">
-    <p class="blue"><%= @dashboard.name %></p>
+    <p class="version"><%= @dashboard.name %></p>
   </div>
   <br />
   <div class="left_side">
     Start Date:
   </div>
   <div class="right_side">
-    <p class="blue"><%= @dashboard.start_date %></p>
+    <p class="version"><%= @dashboard.start_date %></p>
   </div>
   <br />
   <div class="left_side">
     End Date:
   </div>
   <div class="right_side">
-    <p class="blue"><%= @dashboard.end_date %></p>
+    <p class="version"><%= @dashboard.end_date %></p>
   </div>
   <br />
   <%= render partial: "dashboard_elements", locals: { dashboard_elements: @dashboard.dashboard_elements } %>
