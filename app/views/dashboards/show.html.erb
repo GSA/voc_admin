@@ -32,14 +32,14 @@
     Start Date:
   </div>
   <div class="right_side">
-    <p class="version"><%= @dashboard.start_date %></p>
+    <p class="version"><%= @dashboard.start_date_str %></p>
   </div>
   <br />
   <div class="left_side">
     End Date:
   </div>
   <div class="right_side">
-    <p class="version"><%= @dashboard.end_date %></p>
+    <p class="version"><%= @dashboard.end_date_str %></p>
   </div>
   <br />
   <%= render partial: "dashboard_elements", locals: { dashboard_elements: @dashboard.dashboard_elements } %>
