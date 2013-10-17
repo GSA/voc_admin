@@ -18,9 +18,10 @@ $(document).ready(function() {
     $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
   });
 
-  $(document).delegate('#dashboardModalShownDiv #survey_element_id option', 'click', function() {
+  $(document).delegate('#dashboardModalShownDiv #survey_element_id', 'change', function() {
     hideDisplayTypes();
-    displayDisplayTypes($(this).data("type"));
+    dataType = $('#dashboardModalShownDiv #survey_element_id').find("option:selected").data("type")
+    displayDisplayTypes(dataType);
     $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
   });
 
