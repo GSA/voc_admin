@@ -18,7 +18,7 @@ $(document).ready(function() {
     $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
   });
 
-  $('#dashboardModalShownDiv #survey_element_id option').live('click', function() {
+  $(document).delegate('#dashboardModalShownDiv #survey_element_id option', 'click', function() {
     hideDisplayTypes();
     displayDisplayTypes($(this).data("type"));
     $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
@@ -29,7 +29,7 @@ $(document).ready(function() {
     $(this).closest('li').hide();
   });
 
-  $('form .remove_pending_element').live('click', function() {
+  $(document).delegate('form .remove_pending_element', 'click', function() {
     $(this).closest('li').remove();
   });
 
