@@ -1,5 +1,6 @@
 class TextQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
+  include ActionView::Helpers::SanitizeHelper 
 
   field :tq_id, type: Integer    # TextQuestion id
   field :question, type: String
@@ -90,10 +91,11 @@ class TextQuestionReporter < QuestionReporter
   # @return [String] JSON data
   def generate_element_data(display_type, start_date = nil, end_date = nil)
     top_words_for_date_range(start_date, end_date).map do |k,v|
+      text = sanitize(k)
       {
-        text: k,
+        text: text,
         weight: v,
-        html: {title: "#{k}: #{number_with_delimiter(v)}"}
+        html: {title: "#{text}: #{number_with_delimiter(v)}"}
       }
     end.to_json
   end
