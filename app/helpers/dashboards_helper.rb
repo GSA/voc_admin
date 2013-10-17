@@ -6,7 +6,12 @@ module DashboardsHelper
     type = element.display_type
 
     if type == 'word_cloud'
-      "$('##{type}Element_#{element.id}').jQCloud(#{element.element_data});"
+      data = element.element_data
+      if data == "null"
+        ""
+      else
+        "$('##{type}Element_#{element.id}').jQCloud(#{data});"
+      end
     else
       %Q[
             var data_#{element.id} = #{element.element_data};
