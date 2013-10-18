@@ -1,0 +1,7 @@
+<h1>New Report</h1>
+
+<%= render :partial => 'form' %>
+
+<div class="align_cancel">
+  <%= link_to "Cancel", reporting_survey_survey_version_path(:survey_id => params[:survey_id], :id => params[:survey_version_id]), :class=>"cancelLink" %>
+</div>

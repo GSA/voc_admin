@@ -1,0 +1,50 @@
+<h1>View Report</h1>
+<%= flash_messages(flash) %>
+
+<div class="page-nav">
+  <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_report_path(@survey, @survey_version), :class=>"manage" %>
+  <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
+</div>
+
+<div id="showpage" class="report-showpage">
+  <div class="left_side">
+    Survey:
+  </div>
+  <div class="right_side">
+    <p class="blue"><%= @survey.name.titleize %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Version:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @survey_version.version_number%></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Report Name:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @report.name %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Start Date:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @report.start_date_str %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    End Date:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @report.end_date_str %></p>
+  </div>
+  <br />
+</div>
+
+<div class="page-nav">
+  <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_report_path(@survey, @survey_version), :class=>"manage" %>
+  <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
+</div>
