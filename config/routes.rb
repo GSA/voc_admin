@@ -71,9 +71,7 @@ CommentToolApp::Application.routes.draw do
       get :create_new_minor_version, :on => :member
 
       get :reporting, :on => :member
-      resources :dashboards do
-        resources :dashboard_elements, only: [:new, :create, :edit, :update, :destroy]
-      end
+      resources :dashboards
       resources :reports
     end
   end
