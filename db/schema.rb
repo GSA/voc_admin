@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131007194344) do
+ActiveRecord::Schema.define(:version => 20131018195415) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -282,6 +282,8 @@ ActiveRecord::Schema.define(:version => 20131007194344) do
     t.integer  "survey_version_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   create_table "response_categories", :force => true do |t|
