@@ -47,21 +47,23 @@ class ChoiceQuestionReporter < QuestionReporter
     days
   end
 
+  def ordered_choice_answer_reporters_for_date_range(start_date, end_date)
+    cars = choice_answer_reporters.map {|car| [car.text, car.count_for_date_range(start_date, end_date)]}
+    cars.sort_by { |car| -car[1] }
+  end
+
   # Generate the data required to plot a chart for a choice question. Creates an array
   # of Hash objects, which are required for Flot charting.
   #
   # @return [String] JSON data
   def generate_element_data(display_type, start_date = nil, end_date = nil)
-    cars = choice_answer_reporters.map {|car| [car.text, car.count_for_date_range(start_date, end_date)]}
-    ordered_choice_answer_reporters = cars.sort_by { |car| -car[1] }
-
     case display_type
     when "pie"
-      ordered_choice_answer_reporters.map do |car|
+      ordered_choice_answer_reporters_for_date_range(start_date, end_date).map do |car|
         { label: car[0], data: car[1] }
       end
     when "bar"
-      ordered_choice_answer_reporters.map.each_with_index do |car, index|
+      ordered_choice_answer_reporters_for_date_range(start_date, end_date).map.each_with_index do |car, index|
         { data: [[index, car[1]]], label: car[0] }
       end
     else

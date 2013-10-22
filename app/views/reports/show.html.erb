@@ -44,6 +44,34 @@
   <br />
 </div>
 
+<% if @text_question_reporters.count > 0 %>
+  <table>
+    <tr>
+      <th>Question</th>
+      <th>Top Words</th>
+    </tr>
+    <% @text_question_reporters.each do |tqr| %>
+      <tr>
+        <td><%= tqr.question %></td>
+        <td><%= tqr.top_words_for_date_range(@report.start_date, @report.end_date).map {|k, v| "#{sanitize(k)}: #{number_with_delimiter(v)}"}.reverse.join(", ")%></td>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @choice_question_reporters.count > 0 %>
+  <table>
+    <tr>
+      <th>Question</th>
+      <th>Answers</th>
+    </tr>
+    <% @choice_question_reporters.each do |cqr| %>
+      <tr>
+        <td><%= cqr.question %></td>
+        <td><%= cqr.ordered_choice_answer_reporters_for_date_range(@report.start_date, @report.end_date).map {|car| "#{car[0]}: #{number_with_delimiter(car[1])}"}.join(", ") %></td>
+    <% end %>
+  </table>
+<% end %>
+
 <div class="page-nav">
   <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_report_path(@survey, @survey_version), :class=>"manage" %>
   <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>

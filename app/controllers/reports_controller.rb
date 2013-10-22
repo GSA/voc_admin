@@ -23,6 +23,8 @@ class ReportsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/:id(.:format)
   def show
+    @text_question_reporters = TextQuestionReporter.where(sv_id: @survey_version.id)
+    @choice_question_reporters = ChoiceQuestionReporter.where(sv_id: @survey_version.id)
   end
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/:id/edit(.:format)
