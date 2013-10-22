@@ -53,7 +53,7 @@
     <% @text_question_reporters.each do |tqr| %>
       <tr>
         <td><%= tqr.question %></td>
-        <td><%= tqr.top_words_for_date_range(@report.start_date, @report.end_date).map {|k, v| "#{sanitize(k)}: #{number_with_delimiter(v)}"}.reverse.join(", ")%></td>
+        <td><%= top_words(tqr)%></td>
     <% end %>
   </table>
 <% end %>
@@ -67,7 +67,7 @@
     <% @choice_question_reporters.each do |cqr| %>
       <tr>
         <td><%= cqr.question %></td>
-        <td><%= cqr.ordered_choice_answer_reporters_for_date_range(@report.start_date, @report.end_date).map {|car| "#{car[0]}: #{number_with_delimiter(car[1])}"}.join(", ") %></td>
+        <td><%= choice_question_reporter_answers(cqr) %></td>
     <% end %>
   </table>
 <% end %>
