@@ -22,6 +22,7 @@ gem 'escape_utils'
 gem 'mongoid'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
+gem 'shrimp'
 
 platform :ruby do
   gem 'unicorn-rails'
