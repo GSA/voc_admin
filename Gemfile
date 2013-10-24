@@ -22,11 +22,12 @@ gem 'escape_utils'
 gem 'mongoid'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
-gem 'shrimp'
+gem 'pdfkit'
 
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
+  gem 'wkhtmltopdf-binary'
   
   group :test do
     gem 'rails_best_practices'

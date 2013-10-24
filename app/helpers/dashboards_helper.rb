@@ -13,9 +13,15 @@ module DashboardsHelper
         "$('##{type}Element_#{element.id}').jQCloud(#{data});"
       end
     else
+            # plotDataUrl = plotData.getCanvas().toDataURL();
+            # $("##{type}Element_#{element.id} .flot-base").after("<img src='" + plotDataUrl + "'>");
+            # $("##{type}Element_#{element.id} .flot-base").remove();
+            # $("##{type}Element_#{element.id}").show();
       %Q[
             var data_#{element.id} = #{element.element_data};
-            $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);]
+            $("##{type}Element_#{element.id}").hide();
+            plotData = $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);
+            ]
     end
   end
 
