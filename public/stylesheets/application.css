@@ -409,6 +409,10 @@ a.navActive {
   width: 90px;
 }
 #showpage.report-showpage .left_side {
+  width: 200px;
+  padding: 3px 0;
+}
+#showpage.report-page .left_side {
   width: 150px;
   padding: 3px 0;
 }
@@ -423,7 +427,7 @@ a.navActive {
   vertical-align: top;
   padding: 7px 0px;
 }
-#showpage.report-showpage .right_side {
+#showpage.report-showpage .right_side, #showpage.report-page .right_side {
   padding: 3px 0;
 }
 #surveys .right_side p,

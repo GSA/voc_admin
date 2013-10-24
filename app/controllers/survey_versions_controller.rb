@@ -88,7 +88,8 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/reporting(.:format)
   def reporting
-    @response_count = @survey_version.survey_responses.count
+    @first_count_date = @survey_version.survey_version_counts.where("visits > 0").minimum(:count_date)
+    @response_count = @survey_version.survey_responses.where("created_at >= ?", @first_count_date).count
     @response_rate = 0
     if @survey_version.total_visit_count > 0
       @response_rate = @response_count * 100.0 / @survey_version.total_visit_count

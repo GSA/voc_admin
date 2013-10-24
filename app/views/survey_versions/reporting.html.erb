@@ -25,7 +25,7 @@
 	</div>
 	<br />
 	<div class="left_side">
-		Responses:
+		Responses<%= " After #{(@first_count_date - 1.day).to_s(:text_field)}"unless @first_count_date.nil? %>:
 	</div>
 	<div class="right_side">
 		<p class="version"><%= number_with_delimiter(@response_count) %></p>
