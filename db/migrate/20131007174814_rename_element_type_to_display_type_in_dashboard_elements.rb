@@ -3,10 +3,14 @@ class RenameElementTypeToDisplayTypeInDashboardElements < ActiveRecord::Migratio
     rename_column :dashboard_elements, :element_type, :display_type
     DashboardElement.all.each do |de|
       if de.display_type == "count_per_answer_option"
-        if de.reporter.nil? || de.reporter.allows_multiple_selection
-          de.update_attribute :display_type, "bar"
-        else
-          de.update_attribute :display_type, "pie"
+        begin
+          if de.reporter.nil? || de.reporter.allows_multiple_selection
+            de.update_attribute :display_type, "bar"
+          else
+            de.update_attribute :display_type, "pie"
+          end
+        rescue
+          de.destroy
         end
       end
     end
