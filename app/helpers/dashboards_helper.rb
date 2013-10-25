@@ -4,24 +4,21 @@ module DashboardsHelper
   # to the JQuery plugin function call.
   def generate_element_data_script(element)
     type = element.display_type
+    data = element.element_data
 
     if type == 'word_cloud'
-      data = element.element_data
       if data == "null"
         ""
       else
         "$('##{type}Element_#{element.id}').jQCloud(#{data});"
       end
     else
-            # plotDataUrl = plotData.getCanvas().toDataURL();
-            # $("##{type}Element_#{element.id} .flot-base").after("<img src='" + plotDataUrl + "'>");
-            # $("##{type}Element_#{element.id} .flot-base").remove();
-            # $("##{type}Element_#{element.id}").show();
+      chart_type = type == 'pie' ? 'Pie' : 'Column'
       %Q[
-            var data_#{element.id} = #{element.element_data};
-            $("##{type}Element_#{element.id}").hide();
-            plotData = $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);
-            ]
+          var data_#{element.id} = google.visualization.arrayToDataTable(#{data}, false);
+          var chart_#{element.id} = new google.visualization.#{chart_type}Chart(document.getElementById('#{type}Element_#{element.id}'));
+          chart_#{element.id}.draw(data_#{element.id}, #{type}Options);
+        ]
     end
   end
 

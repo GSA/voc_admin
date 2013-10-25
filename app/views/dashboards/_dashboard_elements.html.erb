@@ -1,10 +1,9 @@
-<%# add javascripts to the HEAD tag for flot charting support: http://www.flotcharts.org/ %>
 <% content_for :head do %>
-    <!--[if lte IE 8]><%= javascript_include_tag 'excanvas.min.js' %><![endif]-->
-    <%= javascript_include_tag 'jquery.flot.min.js' %>
-    <%= javascript_include_tag 'jquery.flot.pie.min.js' %>
-    <%= javascript_include_tag 'jqcloud-1.0.4.min.js' %>
-    <%= stylesheet_link_tag 'jqcloud.css' %>
+  <%# add javascript to the HEAD tag for Google Charts: https://developers.google.com/chart %>
+  <%= javascript_include_tag 'https://www.google.com/jsapi' %>
+  <%# add javascript and stylesheet to the HEAD tag for jQCloud: https://github.com/lucaong/jQCloud %>
+  <%= javascript_include_tag 'jqcloud-1.0.4.min.js' %>
+  <%= stylesheet_link_tag 'jqcloud.css' %>
 <% end %>
 
 <%# add the physical div to the page for each chart, alternate sides, and break between rows;
@@ -20,82 +19,87 @@
 <%# put together the library invocations to render the dashboard elements %>
 <% content_for :script do %>
   <script type="text/javascript">
-    var hoverHandle;
 
-    function hideHoverHint() {
-      $("#hover").hide();
-    }
+    <%# var hoverHandle;%>
 
-    function showHoverHint(x, y, label, value, isPercent) {
-      var $hover = $("#hover");
+    <%# function hideHoverHint() {%>
+    <%#   $("#hover").hide();%>
+    <%# }%>
 
-      if ($hover.is(":hidden")) {
-        $hover.show();
-      }
+    <%# function showHoverHint(x, y, label, value, isPercent) {%>
+    <%#   var $hover = $("#hover");%>
 
-      $hover.css({ left: x + 25, top: y - 25 });
-      $hover.find("#hoverValue").text(value + (isPercent ? "%" : "") + ":");
-      $hover.find("#hoverText").text(label);
+    <%#   if ($hover.is(":hidden")) {%>
+    <%#     $hover.show();%>
+    <%#   }%>
 
-      clearTimeout(hoverHandle);
-      hoverHandle = setTimeout(hideHoverHint, 1200);
-    }
+    <%#   $hover.css({ left: x + 25, top: y - 25 });%>
+    <%#   $hover.find("#hoverValue").text(value + (isPercent ? "%" : "") + ":");%>
+    <%#   $hover.find("#hoverText").text(label);%>
 
-    function pieElementLabelFormatter(label, series) {
-            return '<div class="dashboardElementLabel"><div class="ellipse" title="' + label + '">' + label + '</div> <div class="bold">' + series.data[0][1] + '</div></div>';
-    }
+    <%#   clearTimeout(hoverHandle);%>
+    <%#   hoverHandle = setTimeout(hideHoverHint, 1200);%>
+    <%# }%>
 
-    var pieOptions = {
-             series: {
-               pie: {
-                 show: true
-               }
-             },
-             grid: {
-               hoverable: true
-             },
-             legend: {
-               show: true,
-               labelFormatter: pieElementLabelFormatter
-             }
-        };
+    <%# function pieElementLabelFormatter(label, series) {%>
+    <%#         return '<div class="dashboardElementLabel"><div class="ellipse" title="' + label + '">' + label + '</div> <div class="bold">' + series.data[0][1] + '</div></div>';%>
+    <%# }%>
 
-    var barOptions = {
-      xaxis: {
-        minTickSize: 1,
-        tickDecimals: 0,
-        show: false
-      },
-      yaxis: {
-        tickDecimals: 0
-      },
-      series: {
-        bars: {
-          show: true,
-          barWidth: 0.7,
-          align: "center"
-        }
-      },
-      legend: {
-        show: true
-      },
-      grid: {
-        hoverable: true
-      }
-        };
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawCharts);
+    function drawCharts() {
+      var pieOptions = {
+               <%# series: {%>
+               <%#   pie: {%>
+               <%#     show: true%>
+               <%#   }%>
+               <%# },%>
+               <%# grid: {%>
+               <%#   hoverable: true%>
+               <%# },%>
+               <%# legend: {%>
+               <%#   show: true,%>
+               <%#   labelFormatter: pieElementLabelFormatter%>
+               <%# }%>
+          };
 
-    $(window).load(function() {
+      var barOptions = {
+        <%# xaxis: {%>
+        <%#   minTickSize: 1,%>
+        <%#   tickDecimals: 0,%>
+        <%#   show: false%>
+        <%# },%>
+        <%# yaxis: {%>
+        <%#   tickDecimals: 0%>
+        <%# },%>
+        <%# series: {%>
+        <%#   bars: {%>
+        <%#     show: true,%>
+        <%#     barWidth: 0.7,%>
+        <%#     align: "center"%>
+        <%#   }%>
+        <%# },%>
+        <%# legend: {%>
+        <%#   show: true%>
+        <%# },%>
+        <%# grid: {%>
+        <%#   hoverable: true%>
+        <%# }%>
+          };
       <%= generate_dashboard_data_script(dashboard_elements) %>
+    };
 
-      $(".dashboardElement").bind("plothover", function(event, pos, obj) {
-        if (!obj) { return; }
+    <%# $(window).load(function() {%>
 
-        if (obj.series.percent) {
-          showHoverHint(pos.pageX, pos.pageY, obj.series.label, parseFloat(obj.series.percent).toFixed(2), true);
-        } else {
-          showHoverHint(pos.pageX, pos.pageY, obj.series.label, obj.datapoint[1], false);
-        }
-      });
-    });
+    <%#   $(".dashboardElement").bind("plothover", function(event, pos, obj) {%>
+    <%#     if (!obj) { return; }%>
+
+    <%#     if (obj.series.percent) {%>
+    <%#       showHoverHint(pos.pageX, pos.pageY, obj.series.label, parseFloat(obj.series.percent).toFixed(2), true);%>
+    <%#     } else {%>
+    <%#       showHoverHint(pos.pageX, pos.pageY, obj.series.label, obj.datapoint[1], false);%>
+    <%#     }%>
+    <%#   });%>
+    <%# });%>
   </script>
 <% end %>
