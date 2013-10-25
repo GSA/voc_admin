@@ -359,25 +359,21 @@ a.navActive {
   text-align: center;
 }
 #surveyTable .col3 {
-  width: 24px;
-  text-align: center;
+  width: 300px;
 }
 #surveyTable .col4 {
-  width: 288px;
+  width: 300px;
 }
 #surveyTable .col5 {
-  width: 289px;
-}
-#surveyTable .col6 {
   width: 30px;
   text-align: center;
 }
-#surveyTable .col7 {
-  width: 129px;
+#surveyTable .col6 {
+  width: 153px;
   word-wrap:break-word;
   word-break:break-all;
 }
-#surveyTable .col8 {
+#surveyTable .col7 {
   width: 11px;
 }
 
@@ -525,44 +521,41 @@ a.navActive {
   text-align: center;
 }
 #versionTable .col2-3 {
-  width: 300px;
+  width: 330px;
 }
 #versionTable .col2 {
   width: 20px;
 }
 #versionTable .col3 {
-  width: 270px;
+  width: 300px;
 }
 #versionTable .col4 {
   width: 60px;
   text-align: center;
 }
 #versionTable .col5 {
-  width: 30px;
-  text-align: center;
-}
-#versionTable .col6 {
   width: 70px;
   text-align: center;
 }
-#versionTable .col7 {
+#versionTable .col6 {
   width: 80px;
+  text-align: center;
+}
+#versionTable .col7 {
+  width: 108px;
   text-align: center;
 }
 #versionTable .col8 {
   width: 108px;
 }
-#versionTable .col9 {
-  width: 108px;
-}
-#versionTable .col10-11 {
+#versionTable .col9-10 {
   width: 45px;
 }
-#versionTable .col10 {
+#versionTable .col9 {
   width: 15px;
   text-align: center;
 }
-#versionTable .col11 {
+#versionTable .col10 {
   width: 15px;
   text-align: center;
 }
