@@ -1,11 +1,7 @@
 <% unless pdf? %>
   <h1>View Dashboard</h1>
   <%= flash_messages(flash) %>
-
-  <div class="page-nav">
-    <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_dashboard_path(@survey, @survey_version), :class=>"manage" %>
-    <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
-  </div>
+  <%= render 'show_page_nav' %>
 <% end %>
 
 <div id="showpage" class="report-page">
@@ -47,9 +43,4 @@
   <%= render partial: "dashboard_elements", locals: { dashboard_elements: @dashboard.dashboard_elements } %>
 </div>
 
-<% unless pdf? %>
-  <div class="page-nav">
-    <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_dashboard_path(@survey, @survey_version), :class=>"manage" %>
-    <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
-  </div>
-<% end %>
+<%= render 'show_page_nav' unless pdf? %>

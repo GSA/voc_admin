@@ -72,7 +72,7 @@ CommentToolApp::Application.routes.draw do
 
       get :reporting, :on => :member
       resources :dashboards
-      get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf"
+      get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
       resources :reports
     end
   end
