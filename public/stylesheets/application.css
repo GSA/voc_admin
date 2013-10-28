@@ -951,9 +951,10 @@ form #dashboardElementsList li {
 /**** Charts ****/
 .dashboardElementDiv {
 	padding-bottom:20px;	
+  page-break-inside: avoid;
 }
 
-.pieElementDiv, .barElementDiv, .cloudElementDiv {
+.pieElementDiv, .barElementDiv, .word_cloudElementDiv {
 	min-height: 400px;
 	width: 904px;
 	border: 2px solid #ddd;

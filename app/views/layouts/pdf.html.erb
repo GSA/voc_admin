@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>HHS VOC Tool Application</title>
+
+  	<%= stylesheet_link_tag main_stylesheet_location %> 
+  	<%= stylesheet_link_tag 'simplemodal' %>
+  	<%= stylesheet_link_tag 'jquery-ui.min' %>
+  	<%= stylesheet_link_tag 'pdf' %>
+  	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1', 'jquery.ui' %>
+  	<%= yield :head %>
+  	<%= csrf_meta_tag %>
+
+  	<!-- Community Imports -->
+	<%= yield :additional_scripts %>
+
+	</head>
+	<body>
+		<div id="container">
+			<div id="content">
+				<%= yield %>
+			</div>
+		</div>
+		<%= yield :script %>
+	</body>
+</html>
