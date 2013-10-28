@@ -6,45 +6,25 @@ module DashboardsHelper
     type = element.display_type
     data = element.element_data
 
-    if type == 'word_cloud'
+    case type
+    when 'word_cloud'
       if data == "null"
         ""
       else
         "$('##{type}Element_#{element.id}').jQCloud(#{data});"
       end
+
+    when 'pie'
+      %Q[
+          var data_#{element.id} = google.visualization.arrayToDataTable(#{data}, true);
+          var chart_#{element.id} = new google.visualization.PieChart(document.getElementById('#{type}Element_#{element.id}'));
+          chart_#{element.id}.draw(data_#{element.id}, pieOptions);
+      ]
     else
-      chart_type = type == 'pie' ? 'Pie' : 'Column'
-      if type == 'pie'
-        %Q[
-            var data_#{element.id} = new google.visualization.DataTable();
-            data_#{element.id}.addColumn('string', 'Question');
-            data_#{element.id}.addColumn('number', 'Count');
-            data_#{element.id}.addRows(#{data});
-            var chart_#{element.id} = new google.visualization.#{chart_type}Chart(document.getElementById('#{type}Element_#{element.id}'));
-            chart_#{element.id}.draw(data_#{element.id}, #{type}Options);
-          ]
-      elsif type == 'bar'
-        %Q[
-            var data_arr_#{element.id} = #{data};
-            var data_#{element.id} = google.visualization.arrayToDataTable(data_arr_#{element.id}, true);
-            var columns = [0];
-            for (var i = 0; i < data_#{element.id}.getNumberOfRows(); i++) {
-                columns.push({
-                    type: 'number',
-                    label: data_#{element.id}.getValue(i, 0),
-                    calc: (function (x) {
-                        return function (dt, row) {
-                            return (row == x) ? dt.getValue(row, 1) : null;
-                        }
-                    })(i)
-                });
-            }
-            var view_#{element.id} = new google.visualization.DataView(data_#{element.id});
-            view_#{element.id}.setColumns(columns);
-            var chart_#{element.id} = new google.visualization.#{chart_type}Chart(document.getElementById('#{type}Element_#{element.id}'));
-            chart_#{element.id}.draw(view_#{element.id}, #{type}Options);
-          ]
-      end
+      %Q[
+          var data_#{element.id} = #{element.element_data};
+          $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);
+      ]
     end
   end
 

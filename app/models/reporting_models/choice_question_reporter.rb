@@ -57,8 +57,17 @@ class ChoiceQuestionReporter < QuestionReporter
   #
   # @return [String] JSON data
   def generate_element_data(display_type, start_date = nil, end_date = nil)
-    ordered_choice_answer_reporters_for_date_range(start_date, end_date).map do |car|
-      [car[0], car[1]]
+    case display_type
+    when "pie"
+      ordered_choice_answer_reporters_for_date_range(start_date, end_date).map do |car|
+        [car[0], car[1]]
+      end
+    when "bar"
+      ordered_choice_answer_reporters_for_date_range(start_date, end_date).map.each_with_index do |car, index|
+        { data: [[index, car[1]]], label: car[0] }
+      end
+    else
+      nil
     end.to_json
   end
 
