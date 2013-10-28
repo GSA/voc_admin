@@ -52,20 +52,7 @@
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawCharts);
     function drawCharts() {
-      var pieOptions = {
-               <%# series: {%>
-               <%#   pie: {%>
-               <%#     show: true%>
-               <%#   }%>
-               <%# },%>
-               <%# grid: {%>
-               <%#   hoverable: true%>
-               <%# },%>
-               <%# legend: {%>
-               <%#   show: true,%>
-               <%#   labelFormatter: pieElementLabelFormatter%>
-               <%# }%>
-          };
+      var pieOptions = {};
 
       var barOptions = {
         xaxis: {
@@ -89,7 +76,7 @@
         grid: {
           hoverable: true
         }
-          };
+      };
       <%= generate_dashboard_data_script(dashboard_elements) %>
     };
     $(window).load(function() {
