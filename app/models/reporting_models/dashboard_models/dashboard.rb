@@ -7,3 +7,15 @@ class Dashboard < ActiveRecord::Base
 
   validates :name, :presence => true
 end
+
+# == Schema Information
+#
+# Table name: dashboards
+#
+#  id                :integer(4)      not null, primary key
+#  name              :string(255)
+#  survey_version_id :integer(4)      not null
+#  start_date        :date
+#  end_date          :date
+#  created_at        :datetime
+#  updated_at        :datetime

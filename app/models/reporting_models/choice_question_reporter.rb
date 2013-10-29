@@ -1,4 +1,5 @@
 class ChoiceQuestionReporter < QuestionReporter
+  include ActionView::Helpers::NumberHelper
 
   field :cq_id, type: Integer    # ChoiceQuestion id
   field :question, type: String
@@ -50,6 +51,17 @@ class ChoiceQuestionReporter < QuestionReporter
   def ordered_choice_answer_reporters_for_date_range(start_date, end_date)
     cars = choice_answer_reporters.map {|car| [car.text, car.count_for_date_range(start_date, end_date)]}
     cars.sort_by { |car| -car[1] }
+  end
+
+  def choice_answers_str(start_date, end_date)
+    answer_reporters = ordered_choice_answer_reporters_for_date_range(start_date, end_date)
+    total_answered = answered_for_date_range(start_date, end_date)
+    answer_array = answer_reporters.map do |car| 
+      answer_percent = total_answered == 0 ? 0 : car[1] * 100.0 / total_answered
+      answer_percent = number_to_percentage(answer_percent, precision: 2)
+      "#{car[0]}: #{number_with_delimiter(car[1])} (#{answer_percent})"
+    end
+    answer_array.join(", ")
   end
 
   # Generate the data required to plot a chart for a choice question. Creates an array

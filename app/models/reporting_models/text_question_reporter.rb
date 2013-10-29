@@ -86,6 +86,17 @@ class TextQuestionReporter < QuestionReporter
     Hash[new_words]
   end
 
+  def top_words_str(start_date, end_date)
+    words = top_words_for_date_range(start_date, end_date)
+    total_answered = answered_for_date_range(start_date, end_date)
+    words_array = words.map do |k, v| 
+      word_percent = total_answered == 0 ? 0 : v * 100.0 / total_answered
+      word_percent = number_to_percentage(word_percent, precision: 2)
+      "#{sanitize(k)}: #{number_with_delimiter(v)} (#{word_percent})"
+    end
+    words_array.reverse.join(", ")
+  end
+
   # Generate the data required to create a word cloud for a text question.
   #
   # @return [String] JSON data

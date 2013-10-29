@@ -2,6 +2,7 @@
 #ENV['RAILS_RELATIVE_URL_ROOT'] = "/vocsub"
 
 require File.expand_path('../boot', __FILE__)
+require 'csv'
 require 'rails/all'
 
 # If you have a Gemfile, require the gems listed there, including any gems

@@ -23,13 +23,14 @@ class ReportsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/:id(.:format)
   def show
-    @text_question_reporters = TextQuestionReporter.where(sv_id: @survey_version.id)
-    @choice_question_reporters = ChoiceQuestionReporter.where(sv_id: @survey_version.id)
+    respond_to do |format|
+      format.html
+      format.csv { send_data @report.to_csv }
+    end
   end
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/pdf/:id(.:format)
   def pdf
-    show
     render 'show', layout: 'pdf'
   end
 
