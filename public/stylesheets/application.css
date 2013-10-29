@@ -1027,6 +1027,11 @@ form #dashboardElementsList li {
   text-align: center;
 }
 
+/**** Reporting Show ****/
+.reportingEmailPdfDiv, .reportingEmailCsvDiv {
+  display: none;
+}
+
 /**** Footer ****/
 #footer {
   background: url(../images/footer_background.png) no-repeat top left transparent;

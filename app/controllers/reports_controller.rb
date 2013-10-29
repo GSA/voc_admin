@@ -54,6 +54,12 @@ class ReportsController < ApplicationController
     redirect_to reporting_survey_survey_version_path(@survey, @survey_version), :notice  => "Successfully deleted report."
   end
 
+  def email_csv
+  end
+
+  def email_pdf
+  end
+
   private
 
   def get_report

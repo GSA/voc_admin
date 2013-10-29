@@ -73,7 +73,12 @@ CommentToolApp::Application.routes.draw do
       get :reporting, :on => :member
       resources :dashboards
       get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
-      resources :reports
+      resources :reports do
+        member do
+          post :email_csv
+          post :email_pdf
+        end
+      end
       get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
     end
   end

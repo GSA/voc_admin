@@ -1,4 +1,5 @@
 <% unless pdf? %>
+  <% javascript 'reporting_show.js' %>
   <h1>View Report</h1>
   <%= flash_messages(flash) %>
   <%= render 'show_page_nav' %>
