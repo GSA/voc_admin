@@ -1,10 +1,8 @@
-<h1>View Report</h1>
-<%= flash_messages(flash) %>
-
-<div class="page-nav">
-  <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_report_path(@survey, @survey_version), :class=>"manage" %>
-  <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
-</div>
+<% unless pdf? %>
+  <h1>View Report</h1>
+  <%= flash_messages(flash) %>
+  <%= render 'show_page_nav' %>
+<% end %>
 
 <div id="showpage" class="report-page">
   <div class="left_side">
@@ -72,7 +70,4 @@
   </table>
 <% end %>
 
-<div class="page-nav">
-  <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_survey_survey_version_report_path(@survey, @survey_version), :class=>"manage" %>
-  <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
-</div>
+<%= render 'show_page_nav' unless pdf? %>

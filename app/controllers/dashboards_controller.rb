@@ -26,7 +26,7 @@ class DashboardsController < ApplicationController
   def show
   end
 
-  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/:id(.:format)
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/pdf/:id(.:format)
   def pdf
     render 'show', layout: 'pdf'
   end

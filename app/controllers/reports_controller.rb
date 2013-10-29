@@ -27,6 +27,12 @@ class ReportsController < ApplicationController
     @choice_question_reporters = ChoiceQuestionReporter.where(sv_id: @survey_version.id)
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/pdf/:id(.:format)
+  def pdf
+    show
+    render 'show', layout: 'pdf'
+  end
+
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/:id/edit(.:format)
   def edit
   end
