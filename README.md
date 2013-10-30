@@ -60,6 +60,8 @@ Navigate to the configured port to log into the administration interface.
 Follow steps for MRI Ruby, but prepend `jruby -S` to all `rake` and
 `rails` commands.
 
+The PDF generating software requires the wkhtmltopdf binary to be manually installed in Windows. Follow the instructions on the [pdfkit page](https://github.com/pdfkit/pdfkit/wiki/Installing-WKHTMLTOPDF).
+
 Windows batch scripts have been provided for use with Tomcat (or other Java
 Servlet container.)
 
