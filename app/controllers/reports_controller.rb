@@ -55,6 +55,9 @@ class ReportsController < ApplicationController
   end
 
   def email_csv
+    ReportsMailer.async(:report_csv, @report.id, params[:emails], current_user.email)
+    flash[:notice] = "Report will be sent to: #{params[:emails]}"
+    redirect_to survey_survey_version_report_path(@survey, @survey_version, @report)
   end
 
   def email_pdf
