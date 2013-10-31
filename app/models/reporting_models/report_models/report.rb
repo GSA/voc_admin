@@ -30,7 +30,7 @@ class Report < ActiveRecord::Base
     csv << ["Report Name: #{name}"]
     csv << ["Start Date: #{start_date_str}"]
     csv << ["End Date: #{end_date_str}"]
-    csv << [""]
+    csv << []
   end
 
   def csv_text_question_reporters(csv)
@@ -39,7 +39,7 @@ class Report < ActiveRecord::Base
       text_question_reporters.each do |tqr|
         csv << [tqr.question, tqr.top_words_str(start_date, end_date)]
       end
-      csv << [""]
+      csv << []
     end
   end
 
@@ -49,7 +49,7 @@ class Report < ActiveRecord::Base
       choice_question_reporters.each do |cqr|
         csv << [cqr.question, cqr.choice_answers_str(start_date, end_date)]
       end
-      csv << [""]
+      csv << []
     end
   end
 end
