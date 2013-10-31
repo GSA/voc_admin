@@ -8,8 +8,8 @@ class ReportsMailer < ActionMailer::Base
   def report_csv(report_id, emails, from_user)
     @report = Report.find(report_id)
     @from_user = from_user
-    attachments["report_#{report.id}.csv"] = {:mime_type => 'text/csv', :content => report.to_csv}
+    attachments["report_#{@report.id}.csv"] = {:mime_type => 'text/csv', :content => @report.to_csv}
     mail :to => emails, 
-         :subject => "Report: #{report.name}"
+         :subject => "Report: #{@report.name}"
   end
 end
