@@ -9,10 +9,10 @@ module ResqueAsyncMailRunner
 		resque_args = [method].concat(args)
 
 		begin
-			Resque.enqueue(self.class_name.constantize, *resque_args)
+			Resque.enqueue(self.name.constantize, *resque_args)
 		rescue
 			ResquedJob.create(
-					class_name: self.class_name,
+					class_name: self.name,
 					job_arguments: resque_args
 				)
 		end
