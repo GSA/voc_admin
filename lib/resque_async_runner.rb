@@ -11,10 +11,10 @@ module ResqueAsyncRunner
 		resque_args = [id, method].concat(args)
 
 		begin
-			Resque.enqueue(self.class, *resque_args)
+			Resque.enqueue(self.class_name.constantize, *resque_args)
 		rescue
 			ResquedJob.create(
-					class_name: self.class.to_s,
+					class_name: self.class_name,
 					job_arguments: resque_args
 				)
 		end
