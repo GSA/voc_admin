@@ -2,7 +2,9 @@
 #
 # Manages the Report lifecycle.
 class ReportsController < ApplicationController
-  before_filter :get_survey_version
+  skip_before_filter :require_user, only: :pdf
+  before_filter :require_token_or_user, :get_survey_version_with_token, only: :pdf
+  before_filter :get_survey_version, except: :pdf
   before_filter :get_report, except: [:new, :create]
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/new(.:format)
@@ -56,11 +58,15 @@ class ReportsController < ApplicationController
 
   def email_csv
     ReportsMailer.async(:report_csv, @report.id, params[:emails], current_user.email)
-    flash[:notice] = "Report will be sent to: #{params[:emails]}"
+    flash[:notice] = "Report CSV will be sent to: #{params[:emails]}"
     redirect_to survey_survey_version_report_path(@survey, @survey_version, @report)
   end
 
   def email_pdf
+    url = survey_survey_version_pdf_report_url(@survey, @survey_version, @report, :format => :pdf)
+    ReportsMailer.async(:report_pdf, @report.id, url, params[:emails], current_user.email)
+    flash[:notice] = "Report PDF will be sent to: #{params[:emails]}"
+    redirect_to survey_survey_version_report_path(@survey, @survey_version, @report)
   end
 
   private
