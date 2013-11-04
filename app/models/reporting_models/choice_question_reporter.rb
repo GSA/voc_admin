@@ -99,7 +99,7 @@ class ChoiceQuestionReporter < QuestionReporter
       choice_answer_hash[ca.id.to_s] = car
     end
 
-    choice_question.question_content.raw_responses.find_each do |raw_response|
+    choice_question.question_content.raw_responses.unscoped.find_each do |raw_response|
       choice_question_reporter.add_raw_response(raw_response, choice_answer_hash)
     end
     choice_question_reporter.save
