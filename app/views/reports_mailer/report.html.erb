@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+      Attached is a <%= @report_type %> of the following report:
+    </p>
+    <p>
+      Survey: <%= @report.survey_version.survey.name.titleize %>
+      <br/>
+      Version: <%= @report.survey_version.version_number %>
+      <br/>
+      Report Name: <%= @report.name %>
+      <br/>
+      Start Date: <%= @report.start_date_str %>
+      <br/>
+      End Date: <%= @report.end_date_str %>
+      <br/>
+      Generated: <%= Time.now.to_date.to_s(:text_field) %>
+      <br/>
+      Report Frequency: <%= @report_frequency %>
+      <br/>
+      Report sent by: <%= @from_user %>
+    </p>
+  </body>
+</html>
