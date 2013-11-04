@@ -3,6 +3,7 @@ class Report < ActiveRecord::Base
 
   belongs_to :survey_version
   has_many :report_elements, :dependent => :destroy
+  has_many :recurring_reports, :dependent => :destroy
   accepts_nested_attributes_for :report_elements, :allow_destroy => true
 
   validates :name, :presence => true

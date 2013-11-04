@@ -57,14 +57,13 @@ class ReportsController < ApplicationController
   end
 
   def email_csv
-    ReportsMailer.async(:report_csv, @report.id, params[:emails], current_user.email)
+    ReportsMailer.async(:report_csv, @report.id, params[:emails], current_user.email, 'once')
     flash[:notice] = "Report CSV will be sent to: #{params[:emails]}"
     redirect_to survey_survey_version_report_path(@survey, @survey_version, @report)
   end
 
   def email_pdf
-    url = survey_survey_version_pdf_report_url(@survey, @survey_version, @report, :format => :pdf)
-    ReportsMailer.async(:report_pdf, @report.id, url, params[:emails], current_user.email)
+    ReportsMailer.async(:report_pdf, @report.id, params[:emails], current_user.email, 'once')
     flash[:notice] = "Report PDF will be sent to: #{params[:emails]}"
     redirect_to survey_survey_version_report_path(@survey, @survey_version, @report)
   end

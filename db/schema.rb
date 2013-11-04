@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131023193147) do
+ActiveRecord::Schema.define(:version => 20131104170504) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -266,6 +266,22 @@ ActiveRecord::Schema.define(:version => 20131023193147) do
   add_index "raw_responses", ["question_content_id"], :name => "index_rr_question_content_id"
   add_index "raw_responses", ["status_id"], :name => "index_rr_status_id"
   add_index "raw_responses", ["survey_response_id"], :name => "index_rr_survey_response_id"
+
+  create_table "recurring_reports", :force => true do |t|
+    t.integer  "report_id"
+    t.integer  "user_created_by_id"
+    t.string   "user_created_by_string"
+    t.integer  "user_last_modified_by_id"
+    t.string   "frequency"
+    t.integer  "day_of_week"
+    t.integer  "day_of_month"
+    t.integer  "month"
+    t.string   "emails",                   :limit => 1000
+    t.boolean  "pdf"
+    t.datetime "last_sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "report_elements", :force => true do |t|
     t.string   "type"

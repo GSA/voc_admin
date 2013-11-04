@@ -108,10 +108,9 @@ with:
         log_event("Starting nightly rules processing.")
 
         update_survey_version_counts
-
         execute_nightly_rules
-
         reload_question_reporting_db
+        mail_recurring_reports
 
         log_event("Nightly rules processing complete.")
       end
@@ -171,6 +170,19 @@ with:
     log_event(" Finished reloading question reporting DB.")
   end
 
+  def mail_recurring_reports
+    log_event("Mailing recurring reports...", 2)
+
+    RecurringReport.find_each do |rr|
+      begin
+        rr.mail_report
+      rescue
+        log_event("Error mailing recurring report #{rr.id} - #{$!.to_s}", 4)
+      end
+    end
+
+    log_event(" Finished updating survey version counts.", 2)
+  end
   def log_event(message, level = 2)
     puts "#{Time.now.to_s} - #{log_levels[level]}: " + message if @log_level <= level && @log_level != 0
     $stdout.flush
