@@ -18,7 +18,7 @@ class ReportsMailer < ActionMailer::Base
   def report_pdf(report_id, emails, from_user, report_frequency)
     shared_settings(report_id, from_user, report_frequency)
     token, salt = token_and_salt
-    url = survey_survey_version_pdf_report_url(@report.survey_version.survey_id, @report.survey_version_id, @report, :format => :pdf)
+    url = survey_survey_version_pdf_report_url(@report.survey_version.survey_id, @report.survey_version_id, @report, :format => :pdf, :host => APP_CONFIG['admin_host'])
     file = open("#{url}?token=#{token}&salt=#{salt}").read
     attachments["report_#{@report.id}.pdf"] = {:mime_type => 'application/pdf', :content => file}
     @report_type = 'PDF'

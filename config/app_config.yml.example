@@ -5,7 +5,8 @@
 #   relative_url: 
 
 development:
-  host: localhost:3000
+  public_host: localhost:3000
+  admin_host: localhost:3001
   redis: localhost:6379
   redis-expire: 86400
   branding:		# optional block, defaults shown
@@ -14,12 +15,14 @@ development:
     footer-layout: voc_footer
 
 test:
-  host: localhost:3000
+  public_host: localhost:3000
+  admin_host: localhost:3001
   redis: localhost:6379
   redis-expire: 86400
 
 production:
-  host: yourserver.domain.local
+  public_host: your_public_server.domain.local
+  admin_host: your_admin_server.domain.local
   redis: localhost:6379
   redis-expire: 86400
 

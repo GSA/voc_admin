@@ -85,7 +85,7 @@
 		IFRAME Instructions:
 	</div>
 	<div class="bottom_side">
-		<p>To link to published survey version, use: <%= "<iframe src=\"http://#{APP_CONFIG['host']}/surveys/#{@survey.id}\"></iframe>"%></p>
+		<p>To link to published survey version, use: <%= "<iframe src=\"http://#{APP_CONFIG['public_host']}/surveys/#{@survey.id}\"></iframe>"%></p>
 	</div>
 	<div class="top_side">
 		Javascript Widget Instructions:
@@ -96,11 +96,11 @@
 
 		<p>2. Immediately after the new DIV, add the following for users without JavaScript (the IFRAME version):</p>
 		<pre>&lt;noscript&gt;
-  <%= "<iframe src=\"http://#{APP_CONFIG['host']}/surveys/#{@survey.id}\"></iframe>"%>
+  <%= "<iframe src=\"http://#{APP_CONFIG['public_host']}/surveys/#{@survey.id}\"></iframe>"%>
 &lt;/noscript&gt;</pre>
 
 		<p>3. Add this line to your JavaScript includes, ensuring the target_id parameter matches the DIV ID attribute:</p>
 		<pre><%= "<script type=\"text/javascript\"
-        src=\"http://#{APP_CONFIG['host']}/widget/widget.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %></pre>
+        src=\"http://#{APP_CONFIG['public_host']}/widget/widget.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %></pre>
 	</div>
 </div>
