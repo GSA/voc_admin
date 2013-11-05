@@ -1,0 +1,72 @@
+<h1>Recurring Reports</h1>
+
+<%= flash_messages(flash) %>
+
+<div class="page-nav">
+  <%= link_to "Return to Report", survey_survey_version_report_path(@survey, @survey_version, @report), :class=>"manage" %>
+  <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
+</div>
+
+<div id="showpage" class="report-page">
+  <div class="left_side">
+    Survey:
+  </div>
+  <div class="right_side">
+    <p class="blue"><%= @survey.name.titleize %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Version:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @survey_version.version_number%></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Report Name:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @report.name %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Start Date:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @report.start_date_str %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    End Date:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @report.end_date_str %></p>
+  </div>
+  <br />
+</div>
+
+<div id="reports">
+	<table id="recurringReportsTable">
+		<tr>
+			<th class="col1" scope="col">Frequency</th>
+			<th class="col2" scope="col">Emailed On</th>
+      <th class="col3" scope="col">Doc Type</th>
+			<th class="col4" scope="col">Emails</th>
+			<th class="col5" scope="col">Last Emailed</th>
+			<th class="col6-7" scope="col" colspan="2"></th>
+		</tr>
+		<% for recurring_report in @report.recurring_reports %>
+			<tr class="<%= cycle('gray','white') %>">
+				<td class="col1"><%= link_to recurring_report.frequency.capitalize, survey_survey_version_report_recurring_report_path(@survey, @survey_version, @report, recurring_report) %></td>
+				<td class="col2"><%= recurring_report.emailed_on_str %></td>
+				<td class="col3"><%= recurring_report.doc_type %></td>
+				<td class="col4"><%= recurring_report.emails %></td>
+        <td class="col5"><%= recurring_report.last_sent_at.try(:to_date).try(:to_s, :text_field) %>
+				<td class="col6"><%= link_to image_tag("edit.png", :alt=>"Edit Recurring Report"), edit_survey_survey_version_report_recurring_report_path(@survey, @survey_version, @report, recurring_report), :class=>"copyLink"  %></td>
+				<td class="col7"><%= link_to image_tag("delete.png", :alt=>"Delete Recurring Report"), survey_survey_version_report_recurring_report_path(@survey, @survey_version, @report, recurring_report), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+			</tr>
+		<% end %>
+	</table>
+
+	<%= link_to "New Recurring Report", new_survey_survey_version_report_recurring_report_path(@survey, @survey_version, @report), :class => "newlink" %>
+</div>

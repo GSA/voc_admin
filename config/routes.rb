@@ -74,6 +74,7 @@ CommentToolApp::Application.routes.draw do
       resources :dashboards
       get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
       resources :reports do
+        resources :recurring_reports, :except => :show
         member do
           post :email_csv
           post :email_pdf

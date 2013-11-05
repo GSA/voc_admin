@@ -1032,6 +1032,35 @@ form #dashboardElementsList li {
   display: none;
 }
 
+/**** Recurring Reports Tables ****/
+#recurringReportsTable .col1 {
+  width: 80px;
+}
+#recurringReportsTable .col6-7 {
+  width: 30px;
+}
+#recurringReportsTable .col2{
+  width: 160px;
+}
+#recurringReportsTable .col3 {
+  width: 80px;
+}
+#recurringReportsTable .col4 {
+  width: 610px;
+}
+#recurringReportsTable .col5 {
+  width: 100px;
+}
+#recurringReportsTable .col6, #recurringReportsTable .col7 {
+  width: 15px;
+  text-align: center;
+}
+
+.new_recurring_report fieldset .right_side input[type="text"], .new_recurring_report fieldset .right_side textarea,
+.edit_recurring_report fieldset .right_side input[type="text"], .edit_recurring_report fieldset .right_side textarea {
+  width: 600px;
+}
+
 /**** Footer ****/
 #footer {
   background: url(../images/footer_background.png) no-repeat top left transparent;

@@ -4,14 +4,29 @@ class RecurringReport < ActiveRecord::Base
   belongs_to :user_last_modified_by, :class_name => "User"
 
   validates_presence_of :report_id, :user_created_by_id, :frequency, :emails
-  validates_presence_of :day_of_week, :if => Proc.new {|r| r.freqency == 'weekly'}
+  validates_presence_of :day_of_week, :if => Proc.new {|r| r.frequency == 'weekly'}
   validates_presence_of :day_of_month, :if => Proc.new {|r| ['monthly', 'quarterly'].include?(r.frequency)}
   validates_presence_of :month, :if => Proc.new {|r| r.frequency == 'quarterly'}
 
+  FREQUENCIES = %w(daily weekly monthly quarterly)
+
   def from_string
     str = user_created_by_string
-    str += "and #{user_last_modified_by.email}" if user_last_modified
+    str += "and #{user_last_modified_by.email}" if user_last_modified && user_last_modified_id != user_created_by_id
     str
+  end
+
+  def emailed_on_str
+    case frequency
+    when "daily" then "Daily"
+    when "weekly" then Date::DAYNAMES[day_of_week]
+    when "monthly" then day_of_month.ordinalize
+    when "quarterly" then "#{months_str} #{day_of_month.ordinalize}"
+    end
+  end
+
+  def doc_type
+    pdf? ? 'PDF' : 'CSV'
   end
 
   def mail_report(force = false, skip_async = false)
@@ -51,9 +66,16 @@ class RecurringReport < ActiveRecord::Base
   end
 
   def quarterly_ready_to_mail?
-    months = [month, month + 3, month + 6, month + 9].map {|m| m % 12}
     return false unless months.include?(today.month)
     monthly_ready_to_mail?
+  end
+
+  def months
+    [month, month + 3, month + 6, month + 9].map {|m| m % 12}
+  end
+
+  def months_str
+    months.sort.map {|m| Date::ABBR_MONTHNAMES[m]}.join(', ')
   end
 
   def today

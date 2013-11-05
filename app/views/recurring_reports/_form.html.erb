@@ -1,0 +1,69 @@
+<% javascript 'recurring_reports.js' %>
+
+<% if @recurring_report.errors.any? %>
+  <%= render('shared/errors', {object: @recurring_report, object_type: 'recurring_report'}) %>
+<% end %>
+
+<%= form_for [@survey, @survey_version, @report, @recurring_report] do |f| %>
+  <%= field_set_tag "Options" do %>
+    <div class="left_side">
+      <%= f.label :frequency %>
+    </div>
+    <div class="right_side">
+      <%= f.select :frequency, RecurringReport::FREQUENCIES.map {|f| [f.capitalize, f]} %>
+    </div>
+    <br/>
+    <div id="dayOfWeek" class="dateOption">
+      <div class="left_side">
+        <%= f.label :day_of_week, "Day of Week" %>
+      </div>
+      <div class="right_side">
+        <%= f.select :day_of_week, (0..6).map {|i| [Date::DAYNAMES[i], i]} %>
+      </div>
+      <br/>
+    </div>
+    <div id="month" class="dateOption">
+      <div class="left_side">
+        <%= f.label :month, "Month to Start" %>
+      </div>
+      <div class="right_side">
+        <%= f.select :month, (1..12).map {|i| [Date::MONTHNAMES[i], i]} %>
+      </div>
+      <br/>
+    </div>
+    <div id="dayOfMonth" class="dateOption">
+      <div class="left_side">
+        <%= f.label :day_of_month, "Day of Month" %>
+      </div>
+      <div class="right_side">
+        <%= f.select :day_of_month, (1..31) %>
+      </div>
+      <br/>
+    </div>
+    <div class="left_side">
+      <%= f.label :pdf, "Doc Type" %>
+    </div>
+    <div class="right_side">
+      <%= f.radio_button :pdf, "true" %>
+      <%= f.label :pdf, "PDF", :value => "true" %>
+      <%= f.radio_button :pdf, "false" %>
+      <%= f.label :pdf, "CSV", :value => "false" %>
+    </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :emails %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :emails %>
+    </div>
+    <br/>
+  <% end %>
+
+  <div class="submitButton">
+    <% if f.object.new_record? %>
+      <%= image_submit_tag "Submit.png", :alt=>"Create Recurring Report" %>
+    <% else %>
+      <%= image_submit_tag "Submit.png", :alt=>"Update Recurring Report" %>
+    <% end %>
+  </div>
+<% end %>

@@ -4,6 +4,7 @@
   <%= link_to "Email PDF", '#', :class => 'reportingEmailPdf manage' %>
   <%= link_to "CSV for Report", survey_survey_version_report_path(@survey, @survey_version, @report, :format => :csv), :class => "manage" %>
   <%= link_to "Email CSV", '#', :class => 'reportingEmailCsv manage' %>
+  <%= link_to "Set Up Recurring Emails", survey_survey_version_report_recurring_reports_path(@survey, @survey_version, @report), :class => "manage" %>
   <%= link_to "Return to Reporting", reporting_survey_survey_version_path(@survey, @survey_version), :class=>"manage" %>
   <div class='reportingEmailPdfDiv'>
     <%= form_tag email_pdf_survey_survey_version_report_path(@survey, @survey_version, @report) do %>
