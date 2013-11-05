@@ -22,7 +22,21 @@ def run_worker(num_workers = 1)
 end
 
 namespace :resque do 
-  task :setup => :environment
+  task :setup => :environment do
+    Resque.before_fork = Proc.new { 
+      ActiveRecord::Base.establish_connection
+
+      # Open the new separate log file
+      logfile = File.open(File.join(Rails.root, 'log', 'resque.log'), 'a')
+
+      # Activate file synchronization
+      logfile.sync = true
+
+      # Create a new buffered logger
+      Resque.logger = ActiveSupport::BufferedLogger.new(logfile)
+      Resque.logger.level = Logger::WARNING
+    }
+  end
  
   # desc "Restart running workers"
   # task :restart_workers => :environment do
