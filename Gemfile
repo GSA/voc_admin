@@ -20,6 +20,7 @@ gem 'resque_unit', :group => :test
 gem 'bson_ext'
 gem 'escape_utils'
 gem 'mongoid'
+gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
