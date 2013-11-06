@@ -34,7 +34,7 @@ namespace :resque do
 
       # Create a new buffered logger
       Resque.logger = ActiveSupport::BufferedLogger.new(logfile)
-      Resque.logger.level = Logger::WARNING
+      Resque.logger.level = Logger::WARN
     }
   end
  
