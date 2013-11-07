@@ -12,7 +12,7 @@ class RecurringReport < ActiveRecord::Base
 
   def from_string
     str = user_created_by_string
-    str += "and #{user_last_modified_by.email}" if user_last_modified && user_last_modified_id != user_created_by_id
+    str += "and #{user_last_modified_by.email}" if user_last_modified_by && user_last_modified_by_id != user_created_by_id
     str
   end
 
