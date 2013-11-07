@@ -33,41 +33,43 @@ class RecurringReport < ActiveRecord::Base
     if user_created_by && user_created_by.email != user_created_by_string
       update_attribute(:user_created_by_string, user_created_by.email)
     end
-    return false unless force || ready_to_mail? 
+    time = Time.now
+    return false unless force || ready_to_mail?(time)
     async_method = pdf? ? :report_pdf : :report_csv
     if skip_async
       ReportsMailer.send(async_method, report_id, emails, from_string, frequency).deliver
     else
       ReportsMailer.async(async_method, report_id, emails, from_string, frequency)
     end
-    update_attribute :last_sent_at, today
+    update_attribute :last_sent_at, time
   end
 
-  private
-  def ready_to_mail?
-    return false if last_sent_at.try(:to_date) == today.to_date
+  def ready_to_mail?(time = nil)
+    time ||= Time.now
+    return false if last_sent_at.try(:to_date) == time.to_date
     case frequency
     when "daily" then true
-    when "weekly" then weekly_ready_to_mail?
-    when "monthly" then monthly_ready_to_mail?
-    when "quarterly" then quarterly_ready_to_mail?
+    when "weekly" then weekly_ready_to_mail?(time)
+    when "monthly" then monthly_ready_to_mail?(time)
+    when "quarterly" then quarterly_ready_to_mail?(time)
     else
       false
     end
   end
 
-  def weekly_ready_to_mail?
-    day_of_week == today.wday
+  private
+  def weekly_ready_to_mail?(time)
+    day_of_week == time.wday
   end
 
-  def monthly_ready_to_mail?
-    today.mday == day_of_month || 
-        (today.mday == last_day_of_month && today.mday < day_of_month)
+  def monthly_ready_to_mail?(time)
+    time.mday == day_of_month || 
+        (time.mday == time.end_of_month.day && time.mday < day_of_month)
   end
 
-  def quarterly_ready_to_mail?
-    return false unless months.include?(today.month)
-    monthly_ready_to_mail?
+  def quarterly_ready_to_mail?(time)
+    return false unless months.include?(time.month)
+    monthly_ready_to_mail?(time)
   end
 
   def months
@@ -76,14 +78,6 @@ class RecurringReport < ActiveRecord::Base
 
   def months_str
     months.sort.map {|m| Date::ABBR_MONTHNAMES[m]}.join(', ')
-  end
-
-  def today
-    @today ||= Time.now
-  end
-
-  def last_day_of_month
-    today.end_of_month.day
   end
 end
 
