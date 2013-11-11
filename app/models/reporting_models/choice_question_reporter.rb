@@ -11,6 +11,8 @@ class ChoiceQuestionReporter < QuestionReporter
   embeds_many :choice_question_days
   embeds_many :choice_answer_reporters
   embeds_many :choice_permutation_reporters
+
+  index "cq_id" => 1
   index "choice_question_days.date" => 1
 
   def type

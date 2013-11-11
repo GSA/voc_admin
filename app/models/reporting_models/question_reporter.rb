@@ -8,6 +8,9 @@ class QuestionReporter
   # Total number of SurveyResponses for this ChoiceQuestion with values
   field :answered, type: Integer, default: 0
 
+  index "sv_id" => 1
+  index "se_id" => 1
+
   def generate_element_data(*args)
     nil.to_json
   end

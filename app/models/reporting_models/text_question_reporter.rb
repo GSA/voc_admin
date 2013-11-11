@@ -7,6 +7,8 @@ class TextQuestionReporter < QuestionReporter
 
   embeds_many :text_question_days
 
+  index "tq_id" => 1
+
   COMMON_WORDS = %w(
       a actually after afterwards albeit all also althoughhowever am an and another
       any anybody anything are aren't as at be because before besides both but by can com concerning
