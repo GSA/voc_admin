@@ -7,7 +7,7 @@ analyzing the results.
 This (Admin) application is concerned with the administration interface,
 including site setup, survey creation and versioning, and results processing.
 In addition to the administration site, there are some additional task
-workers in the project which leverage [Delayed::Job](https://github.com/collectiveidea/delayed_job#delayedjob--).
+workers in the project which leverage [Resque](https://github.com/resque/resque).
 
 The [Public](https://github.com/HHS/voc-public) application is responsible for presenting surveys and collecting
 responses.
@@ -16,7 +16,9 @@ VOC currently works on Rails 3.0.13 and either MRI Ruby 1.9.3-p194 (Linux only)
 or the Win32 version of JRuby 1.7.1.
 
 Both versions rely on a database in [MySQL](http://www.mysql.com/) 5.1 or
-greater, shared between Admin and Public applications.
+greater and [Redis](http://redis.io/), shared between Admin and Public applications.
+
+The Admin application depends on [Mongo](http://www.mongodb.org/).
 
 ## Quick Installation and Usage
 
@@ -40,6 +42,7 @@ Run database tasks:
     rake db:create
     rake db:migrate
     rake db:seed
+    rake db:mongoid:create_indexes
 
 In one command window, start `webrick`:
 
@@ -47,7 +50,7 @@ In one command window, start `webrick`:
 
 In a second, start a jobs worker:
 
-    rake jobs:work
+    QUEUE=* rake resque:work
 
 In a third, start the nightly process runner:
 
