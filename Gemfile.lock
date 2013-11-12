@@ -366,5 +366,5 @@ DEPENDENCIES
   simplecov
   unicorn-rails
   warbler
-  wkhtmltopdf-binary
+  wkhtmltopdf-binary (~> 0.9.9.1)
   yard

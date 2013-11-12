@@ -28,7 +28,7 @@ gem 'pdfkit'
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
-  gem 'wkhtmltopdf-binary'
+  gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
   
   group :test do
     gem 'rails_best_practices'
