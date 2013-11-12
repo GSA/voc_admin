@@ -1,10 +1,12 @@
 development:
   host: localhost
   database: comment_tool_reporting_development
+  logger: false
 
 test:
   host: localhost
   database: comment_tool_reporting_test
+  logger: false
 
 # set these environment variables on your prod server
 production:
