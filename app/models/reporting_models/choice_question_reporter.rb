@@ -16,7 +16,7 @@ class ChoiceQuestionReporter < QuestionReporter
   index "choice_question_days.date" => 1
 
   def type
-    @type ||= allows_multiple_selection ? "choice-multiple".to_sym : "choice-single".to_sym
+    @type ||= allows_multiple_selection ? :"choice-multiple" : :"choice-single"
   end
 
   # average number of chosen Answer options across all answered questions

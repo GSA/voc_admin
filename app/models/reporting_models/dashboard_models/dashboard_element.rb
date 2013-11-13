@@ -4,6 +4,8 @@ class DashboardElement < ActiveRecord::Base
   belongs_to :dashboard
   belongs_to :survey_element
 
+  before_save :ensure_proper_display_type
+
   include RankedModel
   ranks :sort_order, :with_same => :dashboard_id
 
@@ -39,5 +41,19 @@ class DashboardElement < ActiveRecord::Base
 
   def answered
     reporter.answered_for_date_range(dashboard.start_date, dashboard.end_date)
+  end
+
+  protected
+
+  # Enforce proper display type in case the UI allows the user to select an incorrect one
+  def ensure_proper_display_type
+    case reporter.try(:type)
+    when :"choice-multiple"
+      self.display_type = "bar"
+    when :"choice-single"
+      self.display_type = "bar" unless %w(bar pie).include?(display_type)
+    when :text
+      self.display_type = "word_cloud"
+    end
   end
 end
