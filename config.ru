@@ -7,7 +7,7 @@
                   :expire_after => 2592000,
                   :secret => CommentToolApp::Application.config.secret_token
   require 'pdfkit'
-  use PDFKit::Middleware, {}, :only => %r[/pdf/]
+  use PDFKit::Middleware, {:'redirect-delay' => 400}, :only => %r[/pdf/]
 	run CommentToolApp::Application
 #end
 
