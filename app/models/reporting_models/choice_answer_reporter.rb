@@ -22,8 +22,8 @@ class ChoiceAnswerReporter
     days
   end
 
-  def count_for_date_range(start_date, end_date)
-    return count if start_date.nil? && end_date.nil?
+  def count_for_date_range(start_date, end_date, force = false)
+    return count if !force && start_date.nil? && end_date.nil?
     val = days_for_date_range(start_date, end_date).sum(:count)
     val.nil? ? 0 : val
   end

@@ -35,14 +35,27 @@ class TextQuestionReporter < QuestionReporter
   def self.generate_reporter(survey_version, text_question)
     text_question_reporter = TextQuestionReporter.find_or_create_by(tq_id: text_question.id)
     self.set_common_fields(text_question_reporter, survey_version, text_question)
-    question_content = text_question.question_content
-    text_question_reporter.question = question_content.statement
+    text_question_reporter.question = text_question.question_content.statement
+    text_question_reporter.update_reporter!
+  end
 
-    question_content.raw_responses.unscoped.find_each do |raw_response|
+  def update_reporter!
+    delete_recent_days!
+
+    responses_to_add(text_question.question_content).find_each do |raw_response|
       answer_values = raw_response.answer.try(:downcase).try(:scan, /[\w'-]+/)
-      text_question_reporter.add_answer_values(answer_values, raw_response.created_at)
+      add_answer_values(answer_values, raw_response.created_at)
     end
-    text_question_reporter.save
+    save
+  end
+
+  def delete_recent_days!
+    delete_date = begin_delete_date
+    return unless delete_date.present?
+    days_for_date_range(delete_date, nil).destroy
+    self.words = words_for_date_range(nil, nil, true)
+    self.answered = answered_for_date_range(nil, nil, true)
+    save
   end
 
   def add_answer_values(answer_values, date)
@@ -62,9 +75,9 @@ class TextQuestionReporter < QuestionReporter
     end
   end
 
-  def words_for_date_range(start_date, end_date)
-    return words if start_date.nil? && end_date.nil?
-    days = text_question_days_for_date_range(start_date, end_date)
+  def words_for_date_range(start_date, end_date, force = false)
+    return words if !force && start_date.nil? && end_date.nil?
+    days = days_for_date_range(start_date, end_date)
     days.inject({}) {|hash, day| hash.merge(day.words) {|k, oldval, newval| oldval + newval}}
   end
 
@@ -73,9 +86,9 @@ class TextQuestionReporter < QuestionReporter
     top_words(word_limit, word_hash)
   end
 
-  def answered_for_date_range(start_date, end_date)
-    return answered if start_date.nil? && end_date.nil?
-    val = text_question_days_for_date_range(start_date, end_date).sum(:answered)
+  def answered_for_date_range(start_date, end_date, force = false)
+    return answered if !force && start_date.nil? && end_date.nil?
+    val = days_for_date_range(start_date, end_date).sum(:answered)
     val.nil? ? 0 : val
   end
 
@@ -113,9 +126,13 @@ class TextQuestionReporter < QuestionReporter
     end.to_json
   end
 
+  def text_question
+    @text_question ||= TextQuestion.find(tq_id)
+  end
+
   protected
 
-  def text_question_days_for_date_range(start_date, end_date)
+  def days_for_date_range(start_date, end_date)
     days = text_question_days
     days = days.where(:date.gte => start_date.to_date) unless start_date.nil?
     days = days.where(:date.lte => end_date.to_date) unless end_date.nil?

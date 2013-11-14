@@ -4,21 +4,23 @@ class QuestionReporter
   field :s_id, type: Integer    # Survey id
   field :sv_id, type: Integer   # Survey Version id
   field :se_id, type: Integer   # Survey Element id
-
-  # Total number of SurveyResponses for this ChoiceQuestion with values
-  field :answered, type: Integer, default: 0
+  field :answered, type: Integer, default: 0 # Total number of responses
+  field :counts_updated_at, type: DateTime
 
   index "sv_id" => 1
   index "se_id" => 1
 
+  # Implement in subclass
   def generate_element_data(*args)
     nil.to_json
   end
 
+  # Implement in subclass
   def allows_multiple_selection
     false
   end
 
+  # Implement in subclass
   def type
     nil
   end
@@ -28,7 +30,7 @@ class QuestionReporter
   end
 
   def percent_answered
-    @answered ||= (answered / survey_version_responses.to_f) * 100
+    @percent_answered ||= (answered / survey_version_responses.to_f) * 100
   end
 
   def percent_unanswered
@@ -57,6 +59,23 @@ class QuestionReporter
 
   def survey_element
     @survey_element ||= SurveyElement.find(se_id)
+  end
+
+  def responses_to_add(question_content)
+    responses = question_content.raw_responses.reorder('')
+    if counts_updated_at.present?
+      d = counts_updated_at.in_time_zone("Eastern Time (US & Canada)") - 2.days
+      d = d.end_of_day
+      responses = responses.where("created_at > ?", d)
+    end
+    responses
+  end
+
+  def begin_delete_date
+    if counts_updated_at.present?
+      d = counts_updated_at.in_time_zone("Eastern Time (US & Canada)") - 1.days
+      d = d.to_date
+    end
   end
 
   def self.generate_choice_question_reporters(survey_version, errors)

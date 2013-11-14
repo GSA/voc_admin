@@ -43,9 +43,6 @@ namespace :reporting do
 
   desc "Aggregate question data into the Mongo reporting schema"
   task :load_questions => [:environment] do
-    puts "Deleting all reporting collections first..."
-    ChoiceQuestionReporter.all.delete
-    TextQuestionReporter.all.delete
     errors = []
 
     survey_versions = SurveyVersion.locked
@@ -57,6 +54,14 @@ namespace :reporting do
       print "\n...finished processing SV #{survey_version.id}.\n"
     end
     puts "...question import finished. #{errors.count} errors."
+  end
+
+  desc "Aggregate question data into the Mongo reporting schema after deleting existing reporters"
+  task :reload_questions => [:environment] do
+    puts "Deleting all reporting collections first..."
+    ChoiceQuestionReporter.all.delete
+    TextQuestionReporter.all.delete
+    Rake::Task["reporting:load_questions"].execute
   end
 
   private

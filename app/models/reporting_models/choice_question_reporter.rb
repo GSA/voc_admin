@@ -31,14 +31,14 @@ class ChoiceQuestionReporter < QuestionReporter
     permutations.sort_by {|p| -p.count}.first(number)
   end
 
-  def answered_for_date_range(start_date, end_date)
-    return answered if start_date.nil? && end_date.nil?
+  def answered_for_date_range(start_date, end_date, force = false)
+    return answered if !force && start_date.nil? && end_date.nil?
     val = days_for_date_range(start_date, end_date).sum(:answered)
     val.nil? ? 0 : val
   end
 
-  def chosen_for_date_range(start_date, end_date)
-    return chosen if start_date.nil? && end_date.nil?
+  def chosen_for_date_range(start_date, end_date, force = false)
+    return chosen if !force && start_date.nil? && end_date.nil?
     val = days_for_date_range(start_date, end_date).sum(:chosen)
     val.nil? ? 0 : val
   end
@@ -90,21 +90,45 @@ class ChoiceQuestionReporter < QuestionReporter
   end
 
   def self.generate_reporter(survey_version, choice_question)
-    choice_question_reporter = ChoiceQuestionReporter.create!(cq_id: choice_question.id)
+    choice_question_reporter = ChoiceQuestionReporter.find_or_create_by(cq_id: choice_question.id)
     self.set_common_fields(choice_question_reporter, survey_version, choice_question)
     choice_question_reporter.question = choice_question.question_content.statement
+    choice_question_reporter.update_reporter!
+  end
 
+  def update_reporter!
     choice_answer_hash = {}
+    delete_recent_days!
     # initialize all answers with zero counts
     choice_question.choice_answers.each do |ca|
-      car = choice_question_reporter.choice_answer_reporters.create!(ca_id: ca.id, text: ca.answer, count: 0)
+      car = choice_answer_reporters.find_or_create_by(ca_id: ca.id)
+      car.text = ca.answer
       choice_answer_hash[ca.id.to_s] = car
     end
 
-    choice_question.question_content.raw_responses.unscoped.find_each do |raw_response|
-      choice_question_reporter.add_raw_response(raw_response, choice_answer_hash)
+    update_time = Time.now
+    responses_to_add(choice_question.question_content).find_each do |raw_response|
+      add_raw_response(raw_response, choice_answer_hash)
     end
-    choice_question_reporter.save
+    self.counts_updated_at = update_time
+    save
+  end
+
+  def delete_recent_days!
+    delete_date = begin_delete_date
+    return unless delete_date.present?
+    days_for_date_range(delete_date, nil).destroy
+    self.answered = answered_for_date_range(nil, nil, true)
+    self.chosen = chosen_for_date_range(nil, nil, true)
+    choice_answer_reporters.each do |car|
+      car.days_for_date_range(delete_date, nil).destroy
+      car.count = car.count_for_date_range(nil, nil, true)
+    end
+    choice_permutation_reporters.each do |cpr|
+      cpr.days_for_date_range(delete_date, nil).destroy
+      cpr.count = cpr.count_for_date_range(nil, nil, true)
+    end
+    save
   end
 
   def add_raw_response(raw_response, choice_answer_hash)
@@ -117,6 +141,10 @@ class ChoiceQuestionReporter < QuestionReporter
       answer = choice_answer_hash[answer_value]
       answer.add_day(date)
     end
+  end
+
+  def choice_question
+    @choice_question ||= ChoiceQuestion.find(cq_id)
   end
 
   private
@@ -141,9 +169,5 @@ class ChoiceQuestionReporter < QuestionReporter
     day.inc(:chosen, chosen_count)
     inc(:answered, 1)
     inc(:chosen, chosen_count)
-  end
-
-  def choice_question
-    @choice_question ||= ChoiceQuestion.find(cq_id)
   end
 end
