@@ -42,10 +42,12 @@ class TextQuestionReporter < QuestionReporter
   def update_reporter!
     delete_recent_days!
 
+    update_time = Time.now
     responses_to_add(text_question.question_content).find_each do |raw_response|
       answer_values = raw_response.answer.try(:downcase).try(:scan, /[\w'-]+/)
       add_answer_values(answer_values, raw_response.created_at)
     end
+    self.counts_updated_at = update_time
     save
   end
 
