@@ -109,7 +109,7 @@ with:
 
         update_survey_version_counts
         execute_nightly_rules
-        reload_question_reporting_db
+        load_question_reporting_db
         mail_recurring_reports
 
         log_event("Nightly rules processing complete.")
@@ -161,8 +161,8 @@ with:
     end
   end
 
-  def reload_question_reporting_db
-    log_event(" Reloading question reporting DB...", 2)
+  def load_question_reporting_db
+    log_event(" Loading question reporting DB...", 2)
     
     # run task and any dependent tasks
     Rake::Task["reporting:load_questions"].execute
