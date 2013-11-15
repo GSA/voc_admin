@@ -66,9 +66,6 @@ namespace :reporting do
 
   private
 
-  def load_choice_questions(survey_version, errors)
-  end
-
   def set_common_question_fields(question, question_reporter, survey_version)
     question_reporter.s_id = survey_version.survey_id
     question_reporter.sv_id = survey_version.id
