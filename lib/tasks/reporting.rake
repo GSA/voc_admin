@@ -59,8 +59,7 @@ namespace :reporting do
   desc "Aggregate question data into the Mongo reporting schema after deleting existing reporters"
   task :reload_questions => [:environment] do
     puts "Deleting all reporting collections first..."
-    ChoiceQuestionReporter.all.delete
-    TextQuestionReporter.all.delete
+    QuestionReporter.all.delete
     Rake::Task["reporting:load_questions"].execute
   end
 
