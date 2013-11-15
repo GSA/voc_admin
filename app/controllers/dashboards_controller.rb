@@ -58,7 +58,7 @@ class DashboardsController < ApplicationController
   end
 
   def update_sort_order
-    unless params[:dashboard].try(:[], :dashboard_elements_attributes).try(:empty?)
+    if params[:dashboard].try(:[], :dashboard_elements_attributes).try(:empty?) == false
       params[:dashboard][:dashboard_elements_attributes].each_with_index do |arr, index|
         arr[1][:sort_order_position] = index
       end
