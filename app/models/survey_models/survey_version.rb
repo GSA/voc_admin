@@ -288,6 +288,11 @@ class SurveyVersion < ActiveRecord::Base
     #survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }.presence
   end
 
+  def reload_reporters
+    QuestionReporter.where(sv_id: id).destroy
+    QuestionReporter.generate_reporters(self)
+  end
+
   def choice_question_reporters
     reporters.where(_type: "ChoiceQuestionReporter")
   end
