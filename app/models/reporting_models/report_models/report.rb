@@ -9,11 +9,11 @@ class Report < ActiveRecord::Base
   validates :name, :presence => true
 
   def text_question_reporters
-    @text_question_reporters ||= TextQuestionReporter.where(sv_id: survey_version_id)
+    @text_question_reporters ||= SurveyVersionReporter.where(sv_id: survey_version_id).first.try(:text_question_reporters)
   end
 
   def choice_question_reporters
-    @choice_question_reporters ||= ChoiceQuestionReporter.where(sv_id: survey_version_id)
+    @choice_question_reporters ||= SurveyVersionReporter.where(sv_id: survey_version_id).first.try(:choice_question_reporters)
   end
 
   def to_csv
@@ -38,7 +38,7 @@ class Report < ActiveRecord::Base
     if text_question_reporters.count > 0
       csv << ["Question", "Top Words"]
       text_question_reporters.each do |tqr|
-        csv << [tqr.question, tqr.top_words_str(start_date, end_date)]
+        csv << [tqr.question_text, tqr.top_words_str(start_date, end_date)]
       end
       csv << []
     end
@@ -48,7 +48,7 @@ class Report < ActiveRecord::Base
     if choice_question_reporters.count > 0
       csv << ["Question", "Answers"]
       choice_question_reporters.each do |cqr|
-        csv << [cqr.question, cqr.choice_answers_str(start_date, end_date)]
+        csv << [cqr.question_text, cqr.choice_answers_str(start_date, end_date)]
       end
       csv << []
     end

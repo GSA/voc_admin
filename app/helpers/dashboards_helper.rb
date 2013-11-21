@@ -39,7 +39,7 @@ module DashboardsHelper
     type = dashboard_element.display_type
 
     %Q[<div class="dashboardElementDiv #{type}ElementDiv">
-      <h4 class="dashboardElementHeader ellipse" title="#{dashboard_element.question}">#{dashboard_element.question}</h4>
+      <h4 class="dashboardElementHeader ellipse" title="#{dashboard_element.question_text}">#{dashboard_element.question_text}</h4>
       <div class="dashboardElementCount">Number of responses: #{number_with_delimiter(dashboard_element.answered)}</div>
       <div id="#{type}Element_#{dashboard_element.id}" class="dashboardElement #{type}Element"></div>
     </div>].html_safe

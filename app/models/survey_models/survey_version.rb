@@ -62,6 +62,14 @@ class SurveyVersion < ActiveRecord::Base
     @total_visit_count ||= survey_version_counts.sum(:visits) + total_temp_visit_count
   end
 
+  def total_questions_asked
+    reporter ? reporter.questions_asked : 0
+  end
+
+  def total_questions_skipped
+    reporter ? reporter.questions_skipped : 0
+  end
+
   # Update survey_version_counts
   def update_counts
     update_visit_counts
@@ -85,14 +93,6 @@ class SurveyVersion < ActiveRecord::Base
         temp_visit_count.incr(visits_date_string, -visits_count) if visits_count > 0
       end
     end
-  end
-
-  def total_questions_skipped
-    @total_questions_skipped ||= survey_version_counts.sum(:questions_skipped)
-  end
-
-  def total_questions_asked
-    @total_questions_asked ||= survey_version_counts.sum(:questions_asked)
   end
 
   NOSQL_BATCH = 1000
@@ -283,51 +283,18 @@ class SurveyVersion < ActiveRecord::Base
     end
   end
 
+  def reporter
+    @reporter ||= SurveyVersionReporter.where(:sv_id => id).first
+  end
+
   def reporters
-    @reporters ||= QuestionReporter.where(:sv_id => id)
-    #survey_elements.map { |se| se.reporter }.reject { |r| r.nil? }.presence
+    @reporters ||= reporter ? reporter.question_reporters : []
   end
 
   def reload_reporters
-    QuestionReporter.where(sv_id: id).destroy
-    QuestionReporter.generate_reporters(self)
-  end
-
-  def choice_question_reporters
-    reporters.where(_type: "ChoiceQuestionReporter")
-  end
-
-  # updates the number of questions asked and skipped in survey responses
-  def update_questions_skipped_and_asked
-    responses = survey_responses
-    if counts_updated_at.present?
-      d = counts_updated_at.in_time_zone("Eastern Time (US & Canada)") - 2.days
-      responses = survey_responses.where("created_at > ?", d.to_date)
-    end
-    return if responses.empty?
-    first_page = page_hash.values.detect {|page| page[:page_number] == 1}.try(:[], :page_id)
-    skips = Hash.new {|hash, key| hash[key] = {:skip => 0, :total => 0}}
-    responses.each do |sr|
-      date = sr.created_at.in_time_zone("Eastern Time (US & Canada)").to_date
-      raw_responses = Hash[sr.raw_responses.map {|rr| [rr.question_content_id, rr]}]
-      next_page = first_page
-      while next_page do
-        page = page_hash[next_page]
-        next_page = page[:next_page_id]
-        page[:questions].each do |question|
-          skips[date][:total] += 1
-          rr = raw_responses[question[:qc_id]]
-          if rr.present?
-            if question[:flow_control] && question[:flow_map][rr.answer].present?
-              next_page = question[:flow_map][rr.answer]
-            end
-          else
-            skips[date][:skip] += 1
-          end
-        end
-      end
-    end
-    record_questions_skipped_and_asked(skips)
+    reporter.destroy
+    @reporter = SurveyVersionReporter.find_or_create_reporter(id)
+    reporter.update_reporter!
   end
 
   # generates a hash of page data that looks like
@@ -339,6 +306,8 @@ class SurveyVersion < ActiveRecord::Base
   #     :questions => [
   #       {
   #         :qc_id => 730,
+  #         :questionable_type => "ChoiceQuestion",
+  #         :questionable_id => 5,
   #         :flow_control => true,
   #         :flow_map => {
   #           "2013" => 346,
@@ -356,7 +325,7 @@ class SurveyVersion < ActiveRecord::Base
       page.survey_elements.questions.each do |element|
         element.assetable.reload # for some reason this is necessary to get some question content
         if element.assetable_type == "MatrixQuestion"
-          element.assetable.choice_questions.each {|cq| questions << question_hash(cq)}
+          element.assetable.choice_questions.each {|cq| questions << question_hash(cq, true)}
         else
           questions << question_hash(element.assetable)
         end
@@ -367,33 +336,24 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   private
-  def today
-    Time.now.in_time_zone("Eastern Time (US & Canada)").to_date
-  end
-
-  def today_string
-    today.strftime("%Y-%m-%d")
-  end
-
 
   # hash of question used by pages_for_survey_version
-  def question_hash(question)
+  def question_hash(question, matrix_question = false)
     qc = question.question_content
-    hash = {qc_id: qc.id, flow_control: qc.flow_control?}
+    questionable_type = matrix_question ? "MatrixChoiceQuestion" : qc.questionable_type
+    hash = {qc_id: qc.id, questionable_type: questionable_type, questionable_id: qc.questionable_id, flow_control: qc.flow_control?}
     if qc.flow_control?
       hash[:flow_map] = Hash[question.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
     end
     hash
   end
 
-  # saves the skips from update_questions_skipped_and_asked
-  def record_questions_skipped_and_asked(skips_hash)
-    skips_hash.each do |count_date, hash|
-      svc = survey_version_counts.find_or_create_by_count_date(count_date)
-      svc.questions_skipped = hash[:skip]
-      svc.questions_asked = hash[:total]
-      svc.save
-    end
+  def today
+    Time.now.in_time_zone("Eastern Time (US & Canada)").to_date
+  end
+
+  def today_string
+    today.strftime("%Y-%m-%d")
   end
 end
 

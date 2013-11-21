@@ -77,7 +77,7 @@ class TextQuestion < ActiveRecord::Base
   end
 
   def reporter
-    TextQuestionReporter.where(:tq_id => id).first
+    SurveyVersionReporter.find_text_question_reporter(self)
   end
 end
 

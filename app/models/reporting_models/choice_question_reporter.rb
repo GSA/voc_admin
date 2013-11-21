@@ -1,18 +1,19 @@
 class ChoiceQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
 
-  field :cq_id, type: Integer    # ChoiceQuestion id
+  field :q_id, type: Integer    # ChoiceQuestion id
   field :question, type: String
 
   # Total number of Answers chosen across ChoiceQuestion responses;
   # used for simple average count of number of responses (for multiselect)
   field :chosen, type: Integer, default: 0
 
+  embedded_in :survey_version_reporter
   embeds_many :choice_question_days
   embeds_many :choice_answer_reporters
   embeds_many :choice_permutation_reporters
 
-  index "cq_id" => 1
+  index "q_id" => 1
   index "choice_question_days.date" => 1
 
   def type
@@ -89,13 +90,6 @@ class ChoiceQuestionReporter < QuestionReporter
     choice_question.allows_multiple_selection
   end
 
-  def self.generate_reporter(survey_version, choice_question)
-    choice_question_reporter = ChoiceQuestionReporter.find_or_create_by(cq_id: choice_question.id)
-    self.set_common_fields(choice_question_reporter, survey_version, choice_question)
-    choice_question_reporter.question = choice_question.question_content.statement
-    choice_question_reporter.update_reporter!
-  end
-
   def update_reporter!
     choice_answer_hash = {}
     delete_recent_days!
@@ -144,7 +138,7 @@ class ChoiceQuestionReporter < QuestionReporter
   end
 
   def choice_question
-    @choice_question ||= ChoiceQuestion.find(cq_id)
+    @choice_question ||= ChoiceQuestion.find(q_id)
   end
 
   private

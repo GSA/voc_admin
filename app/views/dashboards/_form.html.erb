@@ -40,7 +40,7 @@
         <%= elements_form.hidden_field :display_type %>
         <%= elements_form.hidden_field :_destroy %>
         <%= link_to image_tag("delete.png"), "#", class: "remove_element" %>
-        <%= truncate_question(elements_form.object.survey_element.reporter.question) %> - <%= elements_form.object.humanized_display_type %>
+        <%= truncate_question(elements_form.object.survey_element.reporter.question_text) %> - <%= elements_form.object.humanized_display_type %>
       </li>
     <% end %>
   </ul>
@@ -58,7 +58,7 @@
 
 <div id="dashboardModalDiv" style="display: none;">
   <h2>Add a New Widget</h2>
-  <%= select_tag :survey_element_id, options_for_select(@survey_version.reporters.map {|r| [truncate_question(r.question), r.se_id, {"data-type" => r.type}]}) %>
+  <%= select_tag :survey_element_id, options_for_select(@survey_version.reporters.map {|r| [truncate_question(r.question_text), r.se_id, {"data-type" => r.type}]}) %>
   <%= select_tag :display_type, options_for_select(dashboard_element_display_types_arr) %>
   <br/>
   <div class="pageNav">

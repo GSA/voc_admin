@@ -2,12 +2,14 @@ class TextQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::SanitizeHelper 
 
-  field :tq_id, type: Integer    # TextQuestion id
-  field :question, type: String
+  field :q_id, type: Integer    # TextQuestion id
+  field :question_text, type: String
 
+  embedded_in :survey_version_reporter
   embeds_many :text_question_days
+  embeds_many :count_days
 
-  index "tq_id" => 1
+  index "q_id" => 1
 
   COMMON_WORDS = %w(
       a actually after afterwards albeit all also althoughhowever am an and another
@@ -32,18 +34,11 @@ class TextQuestionReporter < QuestionReporter
     :text
   end
 
-  def self.generate_reporter(survey_version, text_question)
-    text_question_reporter = TextQuestionReporter.find_or_create_by(tq_id: text_question.id)
-    self.set_common_fields(text_question_reporter, survey_version, text_question)
-    text_question_reporter.question = text_question.question_content.statement
-    text_question_reporter.update_reporter!
-  end
-
   def update_reporter!
     delete_recent_days!
 
     update_time = Time.now
-    responses_to_add(text_question.question_content).find_each do |raw_response|
+    responses_to_add(question.question_content).find_each do |raw_response|
       answer_values = raw_response.answer.try(:downcase).try(:scan, /[\w'-]+/)
       add_answer_values(answer_values, raw_response.created_at)
     end
@@ -128,8 +123,8 @@ class TextQuestionReporter < QuestionReporter
     end.to_json
   end
 
-  def text_question
-    @text_question ||= TextQuestion.find(tq_id)
+  def question
+    @question ||= TextQuestion.find(q_id)
   end
 
   protected

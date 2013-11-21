@@ -31,8 +31,8 @@ class DashboardElement < ActiveRecord::Base
     @reporter ||= survey_element.reporter
   end
 
-  def question
-    @question ||= reporter.question
+  def question_text
+    @question ||= reporter.question_text
   end
 
   def element_data

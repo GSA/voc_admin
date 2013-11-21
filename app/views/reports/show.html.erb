@@ -51,7 +51,7 @@
     </tr>
     <% @report.text_question_reporters.each do |tqr| %>
       <tr>
-        <td><%= tqr.question %></td>
+        <td><%= tqr.question_text %></td>
         <td><%= tqr.top_words_str(@report.start_date, @report.end_date) %></td>
     <% end %>
   </table>
@@ -65,7 +65,7 @@
     </tr>
     <% @report.choice_question_reporters.each do |cqr| %>
       <tr>
-        <td><%= cqr.question %></td>
+        <td><%= cqr.question_text %></td>
         <td><%= cqr.choice_answers_str(@report.start_date, @report.end_date) %></td>
     <% end %>
   </table>

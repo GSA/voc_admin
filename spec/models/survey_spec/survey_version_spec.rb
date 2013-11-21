@@ -160,22 +160,6 @@ describe SurveyVersion do
     end
   end
 
-  context "questions skipped and questions asked" do
-    before do
-      publish_survey_version
-      build_three_simple_responses
-
-      # create a survey response where not every question is answered
-      @sr4 = build_survey_response @v, '104', { @q1 => "b" }, true
-      @v.update_questions_skipped_and_asked
-    end
-
-    it "should create survey version question counts" do
-      @v.total_questions_asked.should == 12
-      @v.total_questions_skipped.should == 2
-    end
-  end
-
   it "should return the next page number" do # TODO: this test could be better
     @survey.survey_versions.first.next_page_number.should == @survey.survey_versions.first.pages.count + 1
   end

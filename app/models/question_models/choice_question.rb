@@ -140,7 +140,7 @@ class ChoiceQuestion < ActiveRecord::Base
   end
 
   def reporter
-    ChoiceQuestionReporter.where(:cq_id => id).first
+    SurveyVersionReporter.find_choice_question_reporter(self)
   end
 
   def allows_multiple_selection
