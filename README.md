@@ -79,3 +79,17 @@ User.create(:email => "sysadmin@YOURCOMPANYURL.com", :f_name => "System",
     :l_name => "Administrator", :password => "password", 
     :password_confirmation => "password", :role => Role::ADMIN)
 ```
+
+### Branding
+
+To use branding, uncomment the branding section in `config/app_config.yml`:
+
+```
+  branding:		# optional block, defaults shown
+    css-filename: application        # (minus the .css extension)
+    header-layout: voc_header
+    footer-layout: voc_footer
+```
+
+Place the branded css file in `public/stylesheets/your_stylesheet_name.css`. The branded headers and footers go in `app/views/layouts/_your_header_or_footer_name.html.erb`.
+
