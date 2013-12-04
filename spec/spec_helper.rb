@@ -37,21 +37,16 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  config.after(:all) do
+  config.before(:suite) do
     Redis.current.keys.each {|k| Redis.current.del k}
+    DatabaseCleaner[:mongoid].strategy = :truncation
   end
 
-  # config.use_transactional_fixtures = false
-  # 
-  # config.before(:suite) do
-  #   DatabaseCleaner.strategy = :truncation
-  # end
-  # 
-  # config.before(:each) do
-  #   DatabaseCleaner.start
-  # end
-  # 
-  # config.after(:each) do
-  #   DatabaseCleaner.clean
-  # end
+  config.before(:each) do
+    DatabaseCleaner[:mongoid].start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner[:mongoid].clean
+  end
 end
