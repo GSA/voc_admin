@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  $("#newWidgetLink").click(function() {
+  $("#newWidgetLink").click(function(event) {
+    event.preventDefault();
     $('#dashboardModalShownDiv').html($('#dashboardModalDiv').html());
 
     $("#dashboardModalShownDiv").modal({
@@ -25,13 +26,15 @@ $(document).ready(function() {
     $("#dashboardModalShownDiv #display_type").val($("#dashboardModalShownDiv #display_type option[data-display='visible']").first().val());
   });
 
-  $('form .remove_element').click(function() {
+  $('form .remove_element').click(function(event) {
     $(this).prev('input[type=hidden]').val('1');
     $(this).closest('li').hide();
+    event.preventDefault();
   });
 
-  $(document).delegate('form .remove_pending_element', 'click', function() {
+  $(document).delegate('form .remove_pending_element', 'click', function(event) {
     $(this).closest('li').remove();
+    event.preventDefault();
   });
 
   $('#dashboardElementsList').sortable();
