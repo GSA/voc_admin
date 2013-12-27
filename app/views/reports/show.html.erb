@@ -48,11 +48,17 @@
     <tr>
       <th>Question</th>
       <th>Top Words</th>
+      <% unless pdf? %>
+        <th></th>
+      <% end %>
     </tr>
     <% @report.text_question_reporters.each do |tqr| %>
       <tr>
         <td><%= tqr.question_text %></td>
         <td><%= tqr.top_words_str(@report.start_date, @report.end_date) %></td>
+        <% unless pdf? %>
+          <td><%= link_to "CSV", question_csv_survey_survey_version_report_path(@survey, @survey_version, @report, 'text', tqr.id, 'csv') %></td>
+        <% end %>
     <% end %>
   </table>
 <% end %>
@@ -62,11 +68,17 @@
     <tr>
       <th>Question</th>
       <th>Answers</th>
+      <% unless pdf? %>
+        <th></th>
+      <% end %>
     </tr>
     <% @report.choice_question_reporters.each do |cqr| %>
       <tr>
         <td><%= cqr.question_text %></td>
         <td><%= cqr.choice_answers_str(@report.start_date, @report.end_date) %></td>
+        <% unless pdf? %>
+          <td><%= link_to "CSV", question_csv_survey_survey_version_report_path(@survey, @survey_version, @report, 'choice', cqr.id, 'csv') %></td>
+        <% end %>
     <% end %>
   </table>
 <% end %>

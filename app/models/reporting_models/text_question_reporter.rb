@@ -102,9 +102,7 @@ class TextQuestionReporter < QuestionReporter
     words = top_words_for_date_range(start_date, end_date)
     total_answered = answered_for_date_range(start_date, end_date)
     words_array = words.map do |k, v| 
-      word_percent = total_answered == 0 ? 0 : v * 100.0 / total_answered
-      word_percent = number_to_percentage(word_percent, precision: 2)
-      "#{sanitize(k)}: #{number_with_delimiter(v)} (#{word_percent})"
+        "#{sanitize(k)}: #{number_with_delimiter(v)} (#{word_percent(v, total_answered)})"
     end
     words_array.reverse.join(", ")
   end
@@ -127,6 +125,22 @@ class TextQuestionReporter < QuestionReporter
     @question ||= TextQuestion.find(q_id)
   end
 
+  def to_csv(start_date = nil, end_date = nil)
+    CSV.generate do |csv|
+      csv << ["Question", "Word", "Count", "Percent"]
+      words = top_words_for_date_range(start_date, end_date)
+      total_answered = answered_for_date_range(start_date, end_date)
+      words_array = words.map do |k, v|
+        [k, number_with_delimiter(v), word_percent(v, total_answered)]
+      end
+      words_array.reverse!
+      first_line = [question_text]
+      first_line += words_array.shift if words_array.size > 0
+      csv << first_line
+      words_array.each {|word_arr| csv << [''] + word_arr}
+    end
+  end
+
   protected
 
   def days_for_date_range(start_date, end_date)
@@ -134,5 +148,10 @@ class TextQuestionReporter < QuestionReporter
     days = days.where(:date.gte => start_date.to_date) unless start_date.nil?
     days = days.where(:date.lte => end_date.to_date) unless end_date.nil?
     days
+  end
+
+  def word_percent(count, total)
+    wp = total == 0 ? 0 : count * 100.0 / total
+    number_to_percentage(wp, precision: 2)
   end
 end

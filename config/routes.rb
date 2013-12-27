@@ -78,6 +78,7 @@ CommentToolApp::Application.routes.draw do
         member do
           post :email_csv
           post :email_pdf
+          get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
         end
       end
       get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"

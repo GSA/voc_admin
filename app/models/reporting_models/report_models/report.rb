@@ -24,6 +24,24 @@ class Report < ActiveRecord::Base
     end
   end
 
+  def choice_question_csv(reporter_id)
+    reporter = choice_question_reporters.find(reporter_id)
+    reporter.to_csv(start_date, end_date)
+  end
+
+  def choice_question_csvs
+    choice_question_reporters.map {|cqr| cqr.to_csv(start_date, end_date)}
+  end
+
+  def text_question_csv(reporter_id)
+    reporter = text_question_reporters.find(reporter_id)
+    reporter.to_csv(start_date, end_date)
+  end
+
+  def text_question_csvs
+    text_question_reporters.map {|tqr| tqr.to_csv(start_date, end_date)}
+  end
+
   private
   def csv_report_information(csv)
     csv << ["Survey: #{survey_version.survey.name.titleize}"]

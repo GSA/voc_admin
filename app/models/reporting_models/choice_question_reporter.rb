@@ -60,9 +60,7 @@ class ChoiceQuestionReporter < QuestionReporter
     answer_reporters = ordered_choice_answer_reporters_for_date_range(start_date, end_date)
     total_answered = answered_for_date_range(start_date, end_date)
     answer_array = answer_reporters.map do |car| 
-      answer_percent = total_answered == 0 ? 0 : car[1] * 100.0 / total_answered
-      answer_percent = number_to_percentage(answer_percent, precision: 2)
-      "#{car[0]}: #{number_with_delimiter(car[1])} (#{answer_percent})"
+      "#{car[0]}: #{number_with_delimiter(car[1])} (#{answer_percent(car[1], total_answered)})"
     end
     answer_array.join(", ")
   end
@@ -141,6 +139,21 @@ class ChoiceQuestionReporter < QuestionReporter
     @choice_question ||= ChoiceQuestion.find(q_id)
   end
 
+  def to_csv(start_date = nil, end_date = nil)
+    CSV.generate do |csv|
+      csv << ["Question", "Answer", "Count", "Percent"]
+      answer_reporters = ordered_choice_answer_reporters_for_date_range(start_date, end_date)
+      total_answered = answered_for_date_range(start_date, end_date)
+      answer_array = answer_reporters.map do |car| 
+        [car[0], number_with_delimiter(car[1]), answer_percent(car[1], total_answered)]
+      end
+      first_line = [question_text]
+      first_line += answer_array.shift if answer_array.size > 0
+      csv << first_line
+      answer_array.each {|answer_arr| csv << [''] + answer_arr}
+    end
+  end
+
   private
 
   def add_permutations(raw_response, answer_values, choice_answer_hash, date)
@@ -163,5 +176,10 @@ class ChoiceQuestionReporter < QuestionReporter
     day.inc(:chosen, chosen_count)
     inc(:answered, 1)
     inc(:chosen, chosen_count)
+  end
+
+  def answer_percent(count, total)
+    ap = total == 0 ? 0 : count * 100.0 / total
+    number_to_percentage(ap, precision: 2)
   end
 end

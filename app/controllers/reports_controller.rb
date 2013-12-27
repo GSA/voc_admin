@@ -68,6 +68,19 @@ class ReportsController < ApplicationController
     redirect_to survey_survey_version_report_path(@survey, @survey_version, @report)
   end
 
+  def question_csv
+    respond_to do |format|
+      format.csv do
+        case params[:reporter_type]
+        when 'text'
+          send_data @report.text_question_csv(params[:reporter_id])
+        when 'choice'
+          send_data @report.choice_question_csv(params[:reporter_id])
+        end
+      end
+    end
+  end
+
   private
 
   def get_report
