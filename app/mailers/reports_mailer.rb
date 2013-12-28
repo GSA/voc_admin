@@ -40,7 +40,7 @@ class ReportsMailer < ActionMailer::Base
     reporters.each do |reporter|
       csv = reporter.to_csv(@report.start_date, @report.end_date)
       filename = friendly_filename("#{reporter.question_text}_#{reporter.id}")
-      attachments[filename] = {:mime_type => 'text/csv', :content => reporter.to_csv}
+      attachments["#{filename}.csv"] = {:mime_type => 'text/csv', :content => reporter.to_csv}
     end
   end
 
