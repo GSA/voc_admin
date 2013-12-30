@@ -42,6 +42,9 @@ h1 {
   font-weight: normal;
   font-size: 26px;
 }
+h2 {
+  font-weight: normal;
+}
 p, label, li {
   font-size: 13px;
   font-weight: normal;
