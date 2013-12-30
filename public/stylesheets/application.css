@@ -356,12 +356,13 @@ a.navActive {
 }
 #surveyTable .col3 {
   width: 24px;
+  text-align: center;
 }
 #surveyTable .col4 {
-  width: 300px;
+  width: 288px;
 }
 #surveyTable .col5 {
-  width: 300px;
+  width: 289px;
 }
 #surveyTable .col6 {
   width: 30px;
@@ -1248,15 +1249,21 @@ span.pageNum {
 }
 
 
-.deleteLink {  background: url(../images/delete.png)} 
-
-.deleteLink :hover{  background: url(../images/delete_hover.png)} 
-
-
-.copyLink {  background: url(../images/clone.png)} 
-
-.copyLink :hover{  background: url(../images/clone_hover.png)} 
-
-.runLink {  background: url(../images/run.png)} 
-
-.runLink :hover{  background: url(../images/run_hover.png)} 
+.deleteLink {
+  background: url(../images/delete.png) no-repeat;
+} 
+.deleteLink:hover{
+  background: url(../images/delete_hover.png) no-repeat;
+} 
+.copyLink {  
+  background: url(../images/clone.png) no-repeat;
+} 
+.copyLink:hover{  
+  background: url(../images/clone_hover.png) no-repeat;
+} 
+.runLink {  
+  background: url(../images/run.png) no-repeat;
+} 
+.runLink:hover{  
+  background: url(../images/run_hover.png) no-repeat;
+} 
