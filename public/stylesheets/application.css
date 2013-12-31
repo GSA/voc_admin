@@ -1034,6 +1034,10 @@ form #dashboardElementsList li {
 /**** Reporting Show ****/
 .reportingEmailPdfDiv, .reportingEmailCsvDiv {
   display: none;
+  margin: 10px 0px;
+}
+.reportingEmailPdfDiv label, .reportingEmailCsvDiv label {
+  font-weight: bold !important;
 }
 
 /**** Recurring Reports Tables ****/

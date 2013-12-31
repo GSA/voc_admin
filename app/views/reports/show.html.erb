@@ -46,14 +46,14 @@
 <% if @report.text_question_reporters.count > 0 %>
   <table>
     <tr>
-      <th>Question</th>
-      <th>Top Words</th>
+      <th scope="col">Question</th>
+      <th scope="col">Top Words</th>
       <% unless pdf? %>
-        <th></th>
+        <th scope="col"></th>
       <% end %>
     </tr>
     <% @report.text_question_reporters.each do |tqr| %>
-      <tr>
+      <tr class="<%= cycle('gray','white', :name => 'a') %>">
         <td><%= tqr.question_text %></td>
         <td><%= tqr.top_words_str(@report.start_date, @report.end_date) %></td>
         <% unless pdf? %>
@@ -66,14 +66,14 @@
 <% if @report.choice_question_reporters.count > 0 %>
   <table>
     <tr>
-      <th>Question</th>
-      <th>Answers</th>
+      <th scope="col">Question</th>
+      <th scope="col">Answers</th>
       <% unless pdf? %>
         <th></th>
       <% end %>
     </tr>
     <% @report.choice_question_reporters.each do |cqr| %>
-      <tr>
+      <tr class="<%= cycle('gray','white', :name => 'b') %>">
         <td><%= cqr.question_text %></td>
         <td><%= cqr.choice_answers_str(@report.start_date, @report.end_date) %></td>
         <% unless pdf? %>
