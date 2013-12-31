@@ -60,9 +60,10 @@
   <%= select_tag :display_type, options_for_select(dashboard_element_display_types_arr) %>
   <%= select_tag :display_type_with_options, options_for_select(dashboard_element_display_types_arr), style: "display: none;" %>
   <br/>
-  <div class="pageNav">
+  <div class="pageLink">
     <%= link_to "Cancel", "#", :class => "simplemodal-close cancelLink-inline" %>
-    <%= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %>
+    <!-- <%#= link_to "Add Widget", "#", :onclick => "addWidgetToDashboard();" %> -->
+    <%= link_to image_tag('update-survey.png', :alt=>"Add Widget"), "#", :onclick => "addWidgetToDashboard();" %>
   </div>
 </div>
 
