@@ -1,6 +1,7 @@
 class TextQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::SanitizeHelper 
+  include Rails.application.routes.url_helpers
 
   field :q_id, type: Integer    # TextQuestion id
   field :question_text, type: String
@@ -116,7 +117,8 @@ class TextQuestionReporter < QuestionReporter
       {
         text: text,
         weight: v,
-        html: {title: "#{text}: #{number_with_delimiter(v)}"}
+        html: {title: "#{text}: #{number_with_delimiter(v)}"},
+        link: survey_responses_path(survey_version_id: survey_version_reporter.sv_id, qc_id: question.question_content.id, search_rr: text)
       }
     end.to_json
   end
