@@ -2,7 +2,7 @@ class ChoiceQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
 
   field :q_id, type: Integer    # ChoiceQuestion id
-  field :question, type: String
+  field :question_text, type: String
 
   # Total number of Answers chosen across ChoiceQuestion responses;
   # used for simple average count of number of responses (for multiselect)
@@ -135,8 +135,8 @@ class ChoiceQuestionReporter < QuestionReporter
     end
   end
 
-  def choice_question
-    @choice_question ||= ChoiceQuestion.find(q_id)
+  def question
+    @question ||= ChoiceQuestion.find(q_id)
   end
 
   def to_csv(start_date = nil, end_date = nil)
