@@ -31,6 +31,12 @@ class SurveyResponse < ActiveRecord::Base
     .where("t1.value LIKE ? ", "%#{search_text}%").select("DISTINCT survey_responses.*")
   end)
 
+  scope :search_rr, (lambda do |qc_id, search_text = ""|
+    joins(:raw_responses)
+    .where(raw_responses: {question_content_id: qc_id})
+    .where("raw_responses.answer LIKE ?", "%#{search_text}%")
+  end)
+
   # perform a fairly ugly join to accomplish the Custom View ordering,
   # while still supporting the original functionality
   scope :order_by_display_field, (lambda do |column_id, order_dir|

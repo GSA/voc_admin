@@ -154,6 +154,8 @@ class SurveyResponsesController < ApplicationController
       @survey_responses = @search.search(@survey_responses)
     elsif params[:simple_search].present?
       @survey_responses = @survey_responses.search(params[:simple_search])
+    elsif params[:search_rr].present?
+      @survey_responses = @survey_responses.search_rr(params[:qc_id], params[:search_rr])
     end
   end
 end
