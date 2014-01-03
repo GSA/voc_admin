@@ -118,7 +118,7 @@ class TextQuestionReporter < QuestionReporter
         text: text,
         weight: v,
         html: {title: "#{text}: #{number_with_delimiter(v)}"},
-        link: survey_responses_path(survey_version_id: survey_version_reporter.sv_id, qc_id: question.question_content.id, search_rr: text)
+        link: survey_responses_path(survey_version_id: survey_version_reporter.sv_id, qc_id: qc_id, search_rr: text)
       }
     end.to_json
   end

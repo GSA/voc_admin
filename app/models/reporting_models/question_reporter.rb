@@ -2,6 +2,7 @@ class QuestionReporter
   include Mongoid::Document
 
   field :se_id, type: Integer   # Survey Element id
+  field :qc_id, type: Integer   # QuestionContent id
   field :answered, type: Integer, default: 0 # Total number of responses
   field :counts_updated_at, type: DateTime
   field :questions_asked, type: Integer

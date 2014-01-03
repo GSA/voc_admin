@@ -48,6 +48,7 @@ class SurveyVersionReporter
     choice_question_reporter = choice_question_reporters.where(q_id: choice_question.id).first
     return choice_question_reporter if choice_question_reporter
     choice_question_reporters.create(q_id: choice_question.id, 
+        qc_id: choice_question.question_content.id,
         se_id: choice_question.survey_element.id,
         question_text: choice_question.question_content.statement)
   end
@@ -56,6 +57,7 @@ class SurveyVersionReporter
     text_question_reporter = text_question_reporters.where(q_id: text_question.id).first
     return text_question_reporter if text_question_reporter
     text_question_reporters.create(q_id: text_question.id, 
+        qc_id: text_question.question_content.id,
         se_id: text_question.survey_element.id,
         question_text: text_question.question_content.statement)
   end
