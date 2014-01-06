@@ -16,9 +16,16 @@ module DashboardsHelper
 
     when 'pie'
       %Q[
+          var data_links_#{element.id} = #{Hash[element.reporter.choice_answer_reporters.map {|car| [car.text, car.ca_id]}].to_json};
           var data_#{element.id} = google.visualization.arrayToDataTable(#{data}, true);
           var chart_#{element.id} = new google.visualization.PieChart(document.getElementById('#{type}Element_#{element.id}'));
           chart_#{element.id}.draw(data_#{element.id}, pieOptions);
+          google.visualization.events.addListener(chart_#{element.id}, 'select', select#{element.id}Handler);
+          function select#{element.id}Handler(e) {
+            answer_text = data_#{element.id}.getValue(chart_#{element.id}.getSelection()[0].row, 0)
+            search_text = data_links_#{element.id}[answer_text]
+            window.location.href = "#{survey_responses_path(survey_version_id: @survey_version.id, qc_id: element.reporter.qc_id)}&search_rr=" + search_text
+          }
       ]
     else
       %Q[
