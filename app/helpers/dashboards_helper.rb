@@ -31,6 +31,11 @@ module DashboardsHelper
       %Q[
           var data_#{element.id} = #{element.element_data};
           $.plot("##{type}Element_#{element.id}", data_#{element.id}, #{type}Options);
+          $("##{type}Element_#{element.id}").bind("plotclick", function(event, pos, item) {
+            if (item) {
+              window.location.href = item.series.url;
+            }
+          });
       ]
     end
   end

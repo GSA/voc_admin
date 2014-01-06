@@ -1,5 +1,6 @@
 class ChoiceQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
+  include Rails.application.routes.url_helpers
 
   field :q_id, type: Integer    # ChoiceQuestion id
   field :question_text, type: String
@@ -52,7 +53,7 @@ class ChoiceQuestionReporter < QuestionReporter
   end
 
   def ordered_choice_answer_reporters_for_date_range(start_date, end_date)
-    cars = choice_answer_reporters.map {|car| [car.text, car.count_for_date_range(start_date, end_date)]}
+    cars = choice_answer_reporters.map {|car| [car.text, car.count_for_date_range(start_date, end_date), car.ca_id]}
     cars.sort_by { |car| -car[1] }
   end
 
@@ -77,7 +78,8 @@ class ChoiceQuestionReporter < QuestionReporter
       end
     when "bar"
       ordered_choice_answer_reporters_for_date_range(start_date, end_date).map.each_with_index do |car, index|
-        { data: [[index, car[1]]], label: car[0] }
+        url = survey_responses_path(survey_version_id: survey_version_reporter.sv_id, qc_id: qc_id, search_rr: car[2])
+        { data: [[index, car[1]]], label: car[0], url: url }
       end
     else
       nil
