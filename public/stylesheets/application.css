@@ -708,6 +708,7 @@ li.inner {
   font-size: 13px;
   position: relative;
   top: 30px;
+  width: 600px;
 }
 
 #survey_response_table_div {
