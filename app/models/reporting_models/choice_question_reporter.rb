@@ -87,21 +87,21 @@ class ChoiceQuestionReporter < QuestionReporter
   end
 
   def allows_multiple_selection
-    choice_question.allows_multiple_selection
+    question.allows_multiple_selection
   end
 
   def update_reporter!
     choice_answer_hash = {}
     delete_recent_days!
     # initialize all answers with zero counts
-    choice_question.choice_answers.each do |ca|
+    question.choice_answers.each do |ca|
       car = choice_answer_reporters.find_or_create_by(ca_id: ca.id)
       car.text = ca.answer
       choice_answer_hash[ca.id.to_s] = car
     end
 
     update_time = Time.now
-    responses_to_add(choice_question.question_content).find_each do |raw_response|
+    responses_to_add(question.question_content).find_each do |raw_response|
       add_raw_response(raw_response, choice_answer_hash)
     end
     self.counts_updated_at = update_time
