@@ -87,7 +87,7 @@
         if (obj.series.percent) {
           showHoverHint(pos.pageX, pos.pageY, obj.series.label, parseFloat(obj.series.percent).toFixed(2), true);
         } else {
-          showHoverHint(pos.pageX, pos.pageY, obj.series.label, obj.datapoint[1], false);
+          showHoverHint(pos.pageX, pos.pageY, obj.series.label, obj.series.count, false);
         }
       });
 
