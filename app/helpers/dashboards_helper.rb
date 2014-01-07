@@ -18,6 +18,8 @@ module DashboardsHelper
       %Q[
           var data_links_#{element.id} = #{Hash[element.reporter.choice_answer_reporters.map {|car| [car.text, car.ca_id]}].to_json};
           var data_#{element.id} = google.visualization.arrayToDataTable(#{data}, true);
+          var formatter = new google.visualization.NumberFormat({pattern: '###,###'});
+          formatter.format(data_#{element.id}, 1);
           var chart_#{element.id} = new google.visualization.PieChart(document.getElementById('#{type}Element_#{element.id}'));
           chart_#{element.id}.draw(data_#{element.id}, pieOptions);
           google.visualization.events.addListener(chart_#{element.id}, 'select', select#{element.id}Handler);
