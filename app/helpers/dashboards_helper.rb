@@ -15,11 +15,17 @@ module DashboardsHelper
       end
 
     when 'pie'
+      # create data_links, format number to have a delimiter, format legend, format tooltip
+      # create chart, capture select to go to link
       %Q[
           var data_links_#{element.id} = #{Hash[element.reporter.choice_answer_reporters.map {|car| [car.text, car.ca_id]}].to_json};
           var data_#{element.id} = google.visualization.arrayToDataTable(#{data}, true);
           var formatter = new google.visualization.NumberFormat({pattern: '###,###'});
           formatter.format(data_#{element.id}, 1);
+          formatter = new google.visualization.PatternFormat('{0}: {1} ({2})');
+          formatter.format(data_#{element.id}, [0, 1, 2]);
+          formatter = new google.visualization.PatternFormat('');
+          formatter.format(data_#{element.id}, [], 1);
           var chart_#{element.id} = new google.visualization.PieChart(document.getElementById('#{type}Element_#{element.id}'));
           chart_#{element.id}.draw(data_#{element.id}, pieOptions);
           google.visualization.events.addListener(chart_#{element.id}, 'select', select#{element.id}Handler);

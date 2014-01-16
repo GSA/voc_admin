@@ -52,7 +52,9 @@
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawCharts);
     function drawCharts() {
-      var pieOptions = {};
+      var pieOptions = {
+        tooltip: {text: 'value'} <%#Only show the value in the tooltip (which is hacked to be the text, value, and percent) %>
+      };
 
       var barOptions = {
         xaxis: {
