@@ -52,9 +52,7 @@
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(drawCharts);
     function drawCharts() {
-      var pieOptions = {
-        tooltip: {trigger: 'none'}
-      };
+      var pieOptions = {};
 
       var barOptions = {
         xaxis: {

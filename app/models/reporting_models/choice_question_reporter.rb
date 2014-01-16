@@ -73,10 +73,8 @@ class ChoiceQuestionReporter < QuestionReporter
   def generate_element_data(display_type, start_date = nil, end_date = nil)
     case display_type
     when "pie"
-      total_answered = answered_for_date_range(start_date, end_date)
       ordered_choice_answer_reporters_for_date_range(start_date, end_date).map do |car|
-        answer_legend = "#{car[0]}: #{number_with_delimiter(car[1])} (#{answer_percent(car[1], total_answered, 1)})"
-        [answer_legend, car[1]]
+        [car[0], car[1]]
       end
     when "bar"
       ordered_choice_answer_reporters_for_date_range(start_date, end_date).map.each_with_index do |car, index|
@@ -182,8 +180,8 @@ class ChoiceQuestionReporter < QuestionReporter
     inc(:chosen, chosen_count)
   end
 
-  def answer_percent(count, total, precision = 2)
+  def answer_percent(count, total)
     ap = total == 0 ? 0 : count * 100.0 / total
-    number_to_percentage(ap, precision: precision)
+    number_to_percentage(ap, precision: 2)
   end
 end
