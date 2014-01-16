@@ -79,7 +79,7 @@ class ChoiceQuestionReporter < QuestionReporter
       end
     when "bar"
       ordered_choice_answer_reporters_for_date_range(start_date, end_date).map.each_with_index do |car, index|
-        url = survey_responses_path(survey_version_id: survey_version_reporter.sv_id, qc_id: qc_id, search_rr: car[2])
+        url = survey_responses_path(survey_id: survey_version_reporter.s_id, survey_version_id: survey_version_reporter.sv_id, qc_id: qc_id, search_rr: car[2])
         { data: [[index, car[1]]], label: car[0], count: number_with_delimiter(car[1]), url: url }
       end
     else

@@ -32,7 +32,7 @@ module DashboardsHelper
           function select#{element.id}Handler(e) {
             answer_text = data_#{element.id}.getValue(chart_#{element.id}.getSelection()[0].row, 0)
             search_text = data_links_#{element.id}[answer_text]
-            window.location.href = "#{survey_responses_path(survey_version_id: @survey_version.id, qc_id: element.reporter.qc_id)}&search_rr=" + search_text
+            window.location.href = "#{survey_responses_path(survey_id: @survey.id, survey_version_id: @survey_version.id, qc_id: element.reporter.qc_id)}&search_rr=" + search_text
           }
       ]
     else
