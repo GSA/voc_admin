@@ -21,7 +21,7 @@ namespace :application do
 
   desc "(JRuby) start all required background jobs and processes"
   task :start_jruby => :environment do
-    sh "rake jobs:work"
+    sh "rake resque:work"
     sh "rake response_parser:start"
   end
 end
