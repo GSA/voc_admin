@@ -10,7 +10,7 @@ class ExecutionTrigger < ActiveRecord::Base
   UPDATE = 2
   # On delete of a SurveyResponse record
   DELETE = 3
-  # As part of the nightly Rules execution
+  # As part of the nightly Rules execution - UNSUPPORTED, WILL NOT RUN
   NIGHTLY = 4
 
   validates :name, :presence => true, :uniqueness => true

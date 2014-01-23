@@ -21,7 +21,7 @@
 		  <div id="execute">
 		  	<input name="rule[execution_trigger_ids][]" type='hidden' />
 		  	<% ExecutionTrigger.all.each do |et| %>
-		  		<% unless et.id == 3 %>
+		      <% unless [3, 4].include?(et.id) %>
 		  			<span><%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]", :id => et.name.capitalize) %><%= label_tag et.name.capitalize %></span>
 		  		<% end %>
 		  	<% end %>
