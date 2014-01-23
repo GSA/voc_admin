@@ -6,55 +6,55 @@
   <% end %>
   
   <div id="survey_info">
-  	<div class="top_side"><%= f.label :name, "Name: " %></div>
-		<div class="bottom_side"><%= f.text_field :name%></div>
-		
-		<%= field_set_tag "Type" do %>
-	    <div id="type">
-	      <%= f.radio_button :action_type, "db", :id => "db_action_rule" %><label for="db_action_rule"><span class="bold">Database Action:</span> allows you to update or set a field value</label>
-	      <br/>
-	      <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><label for="email_action_rule"><span class="bold">Email Notification:</span> allows you to send out an automated email when something happens</label>
-	    </div>
-		<% end %>
-		
-		<%= field_set_tag "This rule will execute when a survey is" do %>
-		  <div id="execute">
-		  	<input name="rule[execution_trigger_ids][]" type='hidden' />
-		  	<% ExecutionTrigger.all.each do |et| %>
-		      <% unless [3, 4].include?(et.id) %>
-		  			<span><%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]", :id => et.name.capitalize) %><%= label_tag et.name.capitalize %></span>
-		  		<% end %>
-		  	<% end %>
-		  </div>
-  	</div>
+    <div class="top_side"><%= f.label :name, "Name: " %></div>
+    <div class="bottom_side"><%= f.text_field :name%></div>
+    
+    <%= field_set_tag "Type" do %>
+      <div id="type">
+        <%= f.radio_button :action_type, "db", :id => "db_action_rule" %><label for="db_action_rule"><span class="bold">Database Action:</span> allows you to update or set a field value</label>
+        <br/>
+        <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><label for="email_action_rule"><span class="bold">Email Notification:</span> allows you to send out an automated email when something happens</label>
+      </div>
+    <% end %>
+    
+    <%= field_set_tag "This rule will execute when a survey is" do %>
+      <div id="execute">
+        <input name="rule[execution_trigger_ids][]" type='hidden' />
+        <% ExecutionTrigger.all.each do |et| %>
+          <% unless [3, 4].include?(et.id) %>
+            <span><%= check_box_tag(:execution_trigger_id, et.id.to_s, @rule.execution_triggers.include?(et), :name=>"rule[execution_trigger_ids][]", :id => et.name.capitalize) %><%= label_tag et.name.capitalize %></span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 
   <%= field_set_tag "Criteria" do %>
-	  <div id="criteria">
-				<%= f.fields_for :criteria do |builder| %>
-		    	<%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
-				<% end -%>
-				<div class="surveyNavMargin"><%= link_to_add_fields "Add Criteria", f, :criteria %></div>
-		</div>
+    <div id="criteria">
+        <%= f.fields_for :criteria do |builder| %>
+          <%= render :partial => "shared/criterion_fields", :locals => {:f => builder} %>
+        <% end -%>
+        <div class="surveyNavMargin"><%= link_to_add_fields "Add Criteria", f, :criteria %></div>
+    </div>
   <% end %>
 
 
-	<%= field_set_tag "Actions" do %>
-	<div id="actions">
+  <%= field_set_tag "Actions" do %>
+  <div id="actions">
     <div id="email_action" class="<%= @rule.action_type == 'db' || @rule.action_type.nil? ? 'displayNone' : '' %>">
       <% @rule.build_email_action if @rule.email_action.nil? %>
       <%= f.fields_for :email_action do |builder| %>
         <div class="left_side"><%= builder.label :emails, "Send email to: " %></div>
-    		<div class="right_side"><%= builder.text_field :emails %>
+        <div class="right_side"><%= builder.text_field :emails %>
           <span>Seperate email addresses with a comma</span>
         </div>
-				<br />
+        <br />
         <div class="left_side"><%= builder.label :subject, "Subject Line: "%></div>
-    		<div class="right_side"><%= builder.text_field :subject %></div>
-				<br />
+        <div class="right_side"><%= builder.text_field :subject %></div>
+        <br />
         <div class="left_side"><%= builder.label :body, "Message Content: " %></div>
-    		<div class="right_side">
-    			<%= builder.text_area :body %>
+        <div class="right_side">
+          <%= builder.text_area :body %>
           <%= builder.hidden_field :_destroy, :value => false, :id => "destroy_email_action" %>
         </div>
       <% end %>
@@ -67,17 +67,17 @@
       <div class="surveyNavMargin"><%= link_to_add_fields "Add Action", f, :actions %></div>
     </div>
 
-	</div>
+  </div>
   <% end %>
 
 
-	<p class="submitButton">
-		<% if f.object.new_record? %>
-			<%= image_submit_tag "create-rule.png", :alt=>"Create Rule" %>
-			<%#= f.submit "Create Rule", :type => :image, :src=>"/images/create-rule.png", :alt=>"Create Rule" #%>
-		<% else %>
-			<%= image_submit_tag "update-rule.png", :alt=>"Update Rule" %>
-			<%#= f.submit "Update Rule", :type => :image, :src=>"/images/update-rule.png", :alt=>"Update Rule" #%>
-		<% end %>
-	</p>
+  <p class="submitButton">
+    <% if f.object.new_record? %>
+      <%= image_submit_tag "create-rule.png", :alt=>"Create Rule" %>
+      <%#= f.submit "Create Rule", :type => :image, :src=>"/images/create-rule.png", :alt=>"Create Rule" #%>
+    <% else %>
+      <%= image_submit_tag "update-rule.png", :alt=>"Update Rule" %>
+      <%#= f.submit "Update Rule", :type => :image, :src=>"/images/update-rule.png", :alt=>"Update Rule" #%>
+    <% end %>
+  </p>
 <% end -%>
