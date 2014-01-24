@@ -20,10 +20,10 @@ namespace :memcache do
 
   private
   def pid_path
-    File.join(Rake.original_dir,'tmp','pids','memcache.pid')
+    File.join(Rails.root,'tmp','pids','memcache.pid')
   end
 
   def log_path
-    File.join(Rake.original_dir,'log','memcache.log')
+    File.join(Rails.root,'log','memcache.log')
   end
 end

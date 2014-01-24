@@ -5,20 +5,25 @@ require 'resque/tasks'
 # task "resque:setup" => :environment
 
 # Start a worker with proper env vars and output redirection
-def run_worker(num_workers = 1)
-  env_vars = ENV.to_hash.slice("RAILS_ENV", "PIDFILE", "QUEUE")
+def run_workers
+  env_vars = ENV.to_hash.slice("RAILS_ENV", "PIDFILE")
 
-  raise 'no Resque queues defined in ENV["QUEUE"] - nothing to do!' unless env_vars["QUEUE"]
-
-  puts "Starting #{num_workers} worker(s) with QUEUE: #{env_vars['QUEUE']}"
   ops = {:pgroup => true, :err => [File.join(Rails.root, "log/resque_err.log"), "a"], 
                           :out => [File.join(Rails.root + "log/resque_stdout.log"), "a"]}
-  num_workers.to_i.times {
-    ## Using Kernel.spawn and Process.detach because regular system() call would
-    ## cause the processes to quit when capistrano finishes
-    pid = spawn(env_vars, "rake resque:work", ops)
-    Process.detach(pid)
-  }
+  env_vars['COUNT'] = ENV['NUM_WORKERS']
+  env_vars['QUEUE'] = "voc_rules,voc_responses,voc_report_email,voc_dfs"
+  run_worker(env_vars, ops)
+  env_vars['COUNT'] = ENV['NUM_EXPORT_WORKERS']
+  env_vars['QUEUE'] = "voc_csv"
+  run_worker(env_vars, ops)
+end
+
+def run_worker(env_vars, ops)
+  puts "Starting #{env_vars['COUNT']} worker(s) with QUEUE: #{env_vars['QUEUE']}"
+  ## Using Kernel.spawn and Process.detach because regular system() call would
+  ## cause the processes to quit when capistrano finishes
+  pid = spawn(env_vars, "rake resque:workers", ops)
+  Process.detach(pid)
 end
 
 namespace :resque do 
@@ -47,19 +52,20 @@ namespace :resque do
   desc "Quit running workers"
   task :stop_workers => :environment do
     pids = Resque.workers.first.try(:worker_pids)
-    if pids.empty?
-      puts "No workers to kill"
+    if pids.blank?
+      puts "No Resque workers to kill"
     else
       syscmd = "kill -s QUIT #{pids.join(' ')}"
-      puts "Running syscmd: #{syscmd}"
+      puts "Stopping Resque with: #{syscmd}"
       system(syscmd)
     end
   end
   
-  desc 'Start workers - takes optional [num_workers]'
-  task :start_workers, [:num_workers] => [:environment] do |t, args|
-    args.with_defaults(:num_workers => 1)
+  desc 'Start workers - takes optional ENV vars NUM_WORKERS and NUM_EXPORT_WORKERS'
+  task :start_workers, :environment do
+    ENV['NUM_WORKERS'] ||= '1'
+    ENV['NUM_EXPORT_WORKERS'] ||= '1'
 
-    run_worker(args.num_workers)
+    run_workers
   end
- end
+end
