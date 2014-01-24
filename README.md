@@ -48,13 +48,17 @@ In one command window, start `webrick`:
 
     rails s webrick -p XXXX
 
-In a second, start a jobs worker:
+In a second, start a jobs worker. It takes the optional ENV variables NUM_WORKERS and NUM_EXPORT_WORKERS.
 
-    QUEUE=* rake resque:work
+    rake resque:start_workers
 
-In a third, start the nightly process runner:
+In production, this command can be run:
 
-    rake nightly_rules:process
+    rake application:start_all
+
+To run the daily reporting tasks, run manually or in a cronjob:
+
+    rake reporting:daily
 
 Navigate to the configured port to log into the administration interface.
 

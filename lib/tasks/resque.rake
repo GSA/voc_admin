@@ -62,7 +62,7 @@ namespace :resque do
   end
   
   desc 'Start workers - takes optional ENV vars NUM_WORKERS and NUM_EXPORT_WORKERS'
-  task :start_workers, :environment do
+  task :start_workers => :environment do
     ENV['NUM_WORKERS'] ||= '1'
     ENV['NUM_EXPORT_WORKERS'] ||= '1'
 
