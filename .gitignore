@@ -10,3 +10,6 @@ exports/
 log/*.log
 mails/
 tmp/
+config/*.yml
+.rvmrc
+db/schema.rb
