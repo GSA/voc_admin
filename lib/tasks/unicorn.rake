@@ -50,7 +50,7 @@ namespace :unicorn do
   # Raises ENOENT if the file doesn't exist
   def unicorn_pid
     begin
-      File.read("#{Rails.root}/tmp/pids/unicorn.pid").to_i
+      File.read(ENV['UNICORN_PID'] || "#{Rails.root}/tmp/pids/unicorn.pid").to_i
     rescue Errno::ENOENT
       raise "Unicorn doesn't seem to be running"
     end
