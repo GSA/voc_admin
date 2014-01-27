@@ -4,6 +4,7 @@ namespace :unicorn do
 
   desc "Start the unicorn server.  Use config/unicorn_config.rb if it exists."
   task :start, [:config_file] do |t, args|
+    args[:config_file] ||= ENV['UNICORN_CONFIG']
     # Default to use config file in config/unicorn_config.rb if it exists
     args.with_defaults( :config_file => "#{Rails.root}/config/unicorn_config.rb")
 
