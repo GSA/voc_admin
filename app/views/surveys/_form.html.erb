@@ -5,7 +5,7 @@
 	      <%= render('shared/errors', {object: @survey, object_type: 'survey'}) %>
 	    </div>
 		<% end %>
-	
+
 		<div class="left_side">
 			<%= f.label :site_id, "Site: " %>
 		</div>
@@ -33,7 +33,27 @@
 		<div class="right_side">
 			<%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
 		</div>
-	  
+    <br />
+    <div class="left_side">
+      <%= f.label :previous_page_text, "Previous Page Text: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :previous_page_text %>
+    </div>
+    <br />
+    <div class="left_side">
+      <%= f.label :next_page_text, "Next Page Text: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :next_page_text %>
+    </div>
+    <br />
+    <div class="left_side">
+      <%= f.label :submit_button_text, "Submit Button Text: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :submit_button_text %>
+    </div>
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>
