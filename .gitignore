@@ -2,3 +2,6 @@
 db/*.sqlite3
 log/*.log
 tmp/
+config/*.yml
+.rvmrc
+db/schema.rb
