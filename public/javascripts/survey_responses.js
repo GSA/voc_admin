@@ -1,3 +1,8 @@
+$(document).ready(function() {
+  /* Activating Best In Place */
+  $(".best_in_place").best_in_place();
+});
+
 var search_timer_id = null;
 var last_ajax_request_id = 0;
 
@@ -141,7 +146,11 @@ function getSurveyDisplayTable(survey_version_id, order_column, direction, custo
         dataType: "script",
         beforeSend: function(){
             $("#survey_response_list").html("<img src='images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
+        },
+        complete: function(){
+          $(".best_in_place").best_in_place();
         }
+
     })
 }
 

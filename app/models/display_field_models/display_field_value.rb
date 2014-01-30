@@ -4,6 +4,8 @@
 # It is a single data point within a SurveyResponse and can represent a respondent's answer to a question
 # or admin-defined data.
 class DisplayFieldValue < ActiveRecord::Base
+  include ActionView::Helpers::SanitizeHelper 
+
   belongs_to :display_field
   belongs_to :survey_response
 
@@ -35,6 +37,11 @@ class DisplayFieldValue < ActiveRecord::Base
   # @return [String] the serialized field value
   def value_array=(arg)
   	self.value = arg.join(VALUE_DELIMITER)
+  end
+
+  def display_value
+    sanitized_value = sanitize(value)
+    sanitized_value ? sanitized_value.gsub("\n", VALUE_DELIMITER).gsub(VALUE_DELIMITER,  "<br/>") : ""
   end
 
   private
