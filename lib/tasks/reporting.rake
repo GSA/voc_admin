@@ -3,13 +3,13 @@ namespace :reporting do
   task :daily => [:environment] do
     puts "Updating survey version counts..."
     Rake::Task["reporting:update_survey_version_counts"].execute
-    puts " Finished updating survey version counts."
-    puts " Loading question reporting DB..."
+    puts "  Finished updating survey version counts."
+    puts "Loading question reporting DB..."
     Rake::Task["reporting:load_questions"].execute
-    puts " Finished reloading question reporting DB."
+    puts "  Finished loading question reporting DB."
     puts "Mailing recurring reports..."
     Rake::Task["reporting:mail_recurring_reports"].execute
-    puts " Finished updating survey version counts."
+    puts "  Finished updating survey version counts."
   end
 
   desc "Update counts on survey version"
@@ -18,7 +18,7 @@ namespace :reporting do
       begin
         sv.update_counts
       rescue
-        puts "Error updating counts for survey version #{sv.id} - #{$!.to_s}"
+        puts "  Error updating counts for survey version #{sv.id} - #{$!.to_s}"
       end
     end
   end
@@ -29,7 +29,7 @@ namespace :reporting do
       begin
         rr.mail_report
       rescue
-        puts "Error mailing recurring report #{rr.id} - #{$!.to_s}"
+        puts "  Error mailing recurring report #{rr.id} - #{$!.to_s}"
       end
     end
   end
