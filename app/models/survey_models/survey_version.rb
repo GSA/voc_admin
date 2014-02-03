@@ -73,7 +73,6 @@ class SurveyVersion < ActiveRecord::Base
   # Update survey_version_counts
   def update_counts
     update_visit_counts
-    update_questions_skipped_and_asked
     update_attribute(:counts_updated_at, Time.now)
   end
 
