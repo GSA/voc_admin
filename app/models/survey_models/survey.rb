@@ -7,7 +7,8 @@ class Survey < ActiveRecord::Base
   belongs_to :survey_type
   belongs_to :site
 
-  attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text, :previous_page_text, :next_page_text
+  attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
+  :previous_page_text, :next_page_text, :js_required_fields_error
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
