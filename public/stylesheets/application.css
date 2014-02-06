@@ -462,8 +462,11 @@ a.navActive {
   width: 300px;
 }
 #surveys .right_side textarea {
-  width: 300px;
-  min-height: 100px;
+	width: 296px;
+	min-height: 100px;
+	padding: 3px;
+	font-family: helvetica;
+	font-size: 12px;
 }
 #surveys .right_side_bottom {
   display: inline-block;
