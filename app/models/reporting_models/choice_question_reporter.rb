@@ -57,11 +57,22 @@ class ChoiceQuestionReporter < QuestionReporter
     cars.sort_by { |car| -car[1] }
   end
 
-  def choice_answers_str(start_date, end_date)
+  def choice_answers_str(start_date, end_date, answer_limit = nil)
     answer_reporters = ordered_choice_answer_reporters_for_date_range(start_date, end_date)
     total_answered = answered_for_date_range(start_date, end_date)
+    limit_answers = answer_limit && answer_limit < answer_reporters.size
+    if limit_answers
+      additional_reporters = answer_reporters[answer_limit..-1]
+      answer_reporters = answer_reporters[0...answer_limit]
+    end
     answer_array = answer_reporters.map do |car| 
       "#{car[0]}: #{number_with_delimiter(car[1])} (#{answer_percent(car[1], total_answered)})"
+    end
+    if limit_answers
+      additional_answer_count = additional_reporters.inject(0) {|sum, car| sum + car[1]} # Add count for each reporter
+      other_str = "Other Answers: #{number_with_delimiter(additional_answer_count)}"
+      other_str << " (#{answer_percent(additional_answer_count, total_answered)})" unless allows_multiple_selection
+      answer_array << other_str
     end
     answer_array.join(", ")
   end

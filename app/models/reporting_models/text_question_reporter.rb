@@ -99,13 +99,24 @@ class TextQuestionReporter < QuestionReporter
     Hash[new_words]
   end
 
-  def top_words_str(start_date, end_date)
+  def top_words_str(start_date, end_date, answer_limit = nil)
     words = top_words_for_date_range(start_date, end_date)
     total_answered = answered_for_date_range(start_date, end_date)
-    words_array = words.map do |k, v| 
-        "#{sanitize(k)}: #{number_with_delimiter(v)} (#{word_percent(v, total_answered)})"
+    words_array = words.to_a.reverse
+    limit_answers = answer_limit && answer_limit < words_array.size
+    if limit_answers
+      additional_words = words_array[answer_limit..-1]
+      words_array = words_array[0...answer_limit]
     end
-    words_array.reverse.join(", ")
+    words_array = words_array.map do |word, count| 
+      "#{sanitize(word)}: #{number_with_delimiter(count)} (#{word_percent(count, total_answered)})"
+    end
+    # Don't add Other Words for now
+    # if limit_answers
+    #   additional_word_count = additional_words.inject(0) {|sum, a| sum + a[1]} # Add count for each word (Hash converted to Array)
+    #   words_array << "Other Words: #{number_with_delimiter(additional_word_count)} (#{word_percent(additional_word_count, total_answered)})"
+    # end
+    words_array.join(", ")
   end
 
   # Generate the data required to create a word cloud for a text question.

@@ -42,6 +42,10 @@ class Report < ActiveRecord::Base
     text_question_reporters.map {|tqr| tqr.to_csv(start_date, end_date)}
   end
 
+  def answer_limit(limit = 10)
+    limit_answers? ? limit : nil
+  end
+
   private
   def csv_report_information(csv)
     csv << ["Survey: #{survey_version.survey.name.titleize}"]
@@ -82,5 +86,6 @@ end
 #  survey_version_id :integer(4)      not null
 #  start_date        :date
 #  end_date          :date
+#  limit_answers     :boolean(1)      default(FALSE)
 #  created_at        :datetime
 #  updated_at        :datetime

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140103195438) do
+ActiveRecord::Schema.define(:version => 20140218211138) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -300,6 +300,7 @@ ActiveRecord::Schema.define(:version => 20140103195438) do
     t.datetime "updated_at"
     t.date     "start_date"
     t.date     "end_date"
+    t.boolean  "limit_answers",     :default => false
   end
 
   create_table "response_categories", :force => true do |t|
@@ -435,8 +436,12 @@ ActiveRecord::Schema.define(:version => 20140103195438) do
     t.integer  "survey_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "archived",       :default => false
+    t.boolean  "archived",                 :default => false
     t.integer  "site_id"
+    t.string   "submit_button_text"
+    t.string   "previous_page_text"
+    t.string   "next_page_text"
+    t.string   "js_required_fields_error"
   end
 
   create_table "text_questions", :force => true do |t|
