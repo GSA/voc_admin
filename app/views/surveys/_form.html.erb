@@ -49,18 +49,19 @@
     </div>
     <br />
     <div class="left_side">
-      <%= f.label :js_required_fields_error, "Error for Required Fields Text: " %>
-    </div>
-    <div class="right_side">
-      <%= f.text_area :js_required_fields_error, :rows => 3 %>
-    </div>
-    <br />
-    <div class="left_side">
       <%= f.label :submit_button_text, "Submit Button Text: " %>
     </div>
     <div class="right_side">
       <%= f.text_field :submit_button_text %>
     </div>
+    <br />
+    <div class="left_side">
+      <%= f.label :js_required_fields_error, "Error for Required Fields Text: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_area :js_required_fields_error, :rows => 3 %>
+    </div>
+    
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>
