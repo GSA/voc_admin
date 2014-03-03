@@ -15,6 +15,11 @@ logfile="${script_dir}/../log/mongod.log"
 RETVAL=0
 
 start() {
+  if [[ -e ${pid_file} ]]; then
+    echo "MongoDB is already running."
+    exit 0
+  fi
+
   if [[ -e ${config_file} ]]; then
     echo "Config file (mongod.conf) found in config directory."
     echo "Starting MongoDB using config file."
