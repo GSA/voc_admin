@@ -1,13 +1,13 @@
 #!/bin/sh
 
-# Start and stop mongod using the config file in config/mongod.cnf
+# Start and stop mongod using the config file in config/mongod.conf
 
 set -e
 
 mongod="/usr/local/bin/mongod"
 script_dir=$( cd $(dirname $0) ; pwd -P )
 config_dir="${script_dir}/../config"
-config_file="${config_dir}/mongod.cnf"
+config_file="${config_dir}/mongod.conf"
 pid_file="${script_dir}/../tmp/pids/mongod.pid"
 data_dir="${script_dir}/../db/mongo_data/"
 logfile="${script_dir}/../log/mongod.log"
@@ -16,7 +16,7 @@ RETVAL=0
 
 start() {
   if [[ -e ${config_file} ]]; then
-    echo "Config file (mongod.cnf) found in config directory."
+    echo "Config file (mongod.conf) found in config directory."
     echo "Starting MongoDB using config file."
 
     `${mongod} -f $config_file > /dev/null`
