@@ -1,0 +1,5 @@
+fork = true
+logpath = /Users/jalvarado/apps/ruby/comment_tool_app/log/mongod.log
+logappend = true
+dbpath = /Users/jalvarado/apps/ruby/comment_tool_app/db/mongo_data
+pidfilepath = /Users/jalvarado/apps/ruby/comment_tool_app/tmp/pids/mongod.pid
