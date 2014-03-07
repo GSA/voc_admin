@@ -55,7 +55,7 @@ function check_for_unanswered_required(page) {
 					required =  true;
 				} else if( $(".question_" + question_number + "_answer").attr('type') == "text" && $(".question_" + question_number + "_answer").val() == "") {
 					required =  true;
-				} else if( $(".question_" + question_number + "_answer").attr('type') == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
+				} else if( $(".question_" + question_number + "_answer").prop('tagName').toLowerCase() == "textarea" && $(".question_" + question_number + "_answer").val() == "") {
 					required =  true;
 				}
 			}
