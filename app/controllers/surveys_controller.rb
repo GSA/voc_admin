@@ -30,15 +30,16 @@ class SurveysController < ApplicationController
 
   # PUT    /surveys/:id(.:format)
   def update
-     @survey = current_user.surveys.find(params[:id])
-     @survey.update_attributes(params[:survey])
+    @survey = current_user.surveys.find(params[:id])
+    @survey.update_attributes(params[:survey])
 
-     if @survey.update_attributes(params[:survey])
-       redirect_to(surveys_url, :notice => "Survey was successfully updated.")
-     else
-       render :new
-     end
-   end
+    if @survey.update_attributes(params[:survey])
+      Rails.cache.clear if Rails.cache
+      redirect_to(surveys_url, :notice => "Survey was successfully updated.")
+    else
+      render :new
+    end
+  end
 
   # DELETE /surveys/:id(.:format)
   def destroy

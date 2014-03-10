@@ -8,11 +8,14 @@ class Survey < ActiveRecord::Base
   belongs_to :site
 
   attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
-  :previous_page_text, :next_page_text, :js_required_fields_error
+  :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent, 
+  :invitation_interval
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
+  validates :invitation_percent, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
+  validates :invitation_interval, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0}
 
   scope :get_archived,            where(:archived => true)
   scope :get_unarchived,          where(:archived => false)
@@ -67,13 +70,18 @@ end
 #
 # Table name: surveys
 #
-#  id             :integer(4)      not null, primary key
-#  name           :string(255)
-#  description    :text
-#  survey_type_id :integer(4)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  archived       :boolean(1)      default(FALSE)
-#  site_id        :integer(4)
+#  id                       :integer(4)      not null, primary key
+#  name                     :string(255)
+#  description              :text
+#  survey_type_id           :integer(4)
+#  created_at               :datetime
+#  updated_at               :datetime
+#  archived                 :boolean(1)      default(FALSE)
+#  site_id                  :integer(4)
+#  submit_button_text       :string(255)
+#  previous_page_text       :string(255)
+#  next_page_text           :string(255)
+#  js_required_fields_error :string(255)
+#  invitation_percent       :integer(4)      not null, default(100)
+#  invitation_interval      :integer(4)      not null, default(30)
 #
-
