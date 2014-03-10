@@ -42,6 +42,18 @@ module SurveyResponsesHelper
     edit_link
   end
 
+  # Retrieve the destroy link for hte current CustomView (or static text if no CustomView)
+  #
+  # @param [SurveyVersion] version the current survey version
+  # @param [CustomView, nil] current_view the current CustomView object
+  # @return [String] HTML link for the destroy link
+  def get_delete_current_view_link(version, current_view)
+    delete_link = "Delete Current View"
+    delete_link = link_to delete_link, survey_survey_version_custom_view_path(
+      version.survey, version, current_view), {method: :delete, :class => "manage"} unless current_view.nil?
+    delete_link
+  end
+
   # Generates HTML option tags for an Include/Exclude dropdown.
   #
   # @param [Integer] default the default selection, if applicable
