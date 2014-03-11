@@ -93,7 +93,7 @@ td {
 	border: 1px solid #f5f7f8;
 }
 .displayNone {
-	display:none; 
+  display:none;
 }
 .inline {
 	display: inline-block;
@@ -208,6 +208,7 @@ td a:hover {
 .looklikelink {
 	color: #404041;
 	font-size: 11px;
+	margin: 0px 0px 0px 15px;
 }
 .align_cancel {
 	display: block;
@@ -373,10 +374,10 @@ a.navActive {
 
 /** Advance Search Box **/
 #advanced_search {
-	background-color: #f5f7f8;
-	border: 1px solid black; 
-	margin: 0px 0px 20px; 
-	padding: 10px;
+  background-color: #f5f7f8;
+  border: 1px solid black;
+  margin: 0px 0px 20px;
+  padding: 10px;
 }
 #advanced_search .boxtitle {
 	clear:both;
@@ -666,11 +667,11 @@ li.inner {
 	margin: 0px 0px 2px;
 }
 .inner span.extra {
-	background-color: #F5F7F8;
-	padding: 3px 5px;
-	margin: 0px 5px;
-	font-size: 11px; 
-	color: #9f9f9f;
+  background-color: #F5F7F8;
+  padding: 3px 5px;
+  margin: 0px 5px;
+  font-size: 11px;
+  color: #9f9f9f;
 }
 .showList li {
 	margin: 10px 0px 20px;
@@ -834,7 +835,7 @@ fieldset .center_side .middle_links {
 	display: block;
 	padding: 5px 0px;
 }
-fieldset .left_side_c select, 
+fieldset .left_side_c select,
 fieldset .right_side_c select {
 	width: 320px;
 	min-height: 100px;
@@ -855,7 +856,7 @@ fieldset#inmodal legend {
 
 /**** Images ****/
 #images_index_table .col1 {
-	width: 848px;	
+  width: 848px;
 }
 #images_index_table td.col1 {
 	font-size: 13px;
@@ -1001,7 +1002,7 @@ fieldset#inmodal legend {
 	overflow: auto;
 }
 .simplemodal-wrap {
-	overflow: visible !important;	
+	overflow: visible !important;
 }
 #modalDiv #surveys .left_side {
 	width: 100px;
@@ -1084,3 +1085,15 @@ span.pageNum {
     width: 1em;
     overflow: hidden;
 }
+.deleteLink {  background: url(../images/delete.png)}
+
+.deleteLink :hover{  background: url(../images/delete_hover.png)}
+
+
+.copyLink {  background: url(../images/clone.png)}
+
+.copyLink :hover{  background: url(../images/clone_hover.png)}
+
+.runLink {  background: url(../images/run.png)}
+
+.runLink :hover{  background: url(../images/run_hover.png)}
