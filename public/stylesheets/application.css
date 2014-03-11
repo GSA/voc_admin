@@ -96,7 +96,7 @@ td {
   border: 1px solid #f5f7f8;
 }
 .displayNone {
-  display:none; 
+  display:none;
 }
 .inline {
   display: inline-block;
@@ -209,8 +209,9 @@ td a:hover {
   color: #396393;
 }
 .looklikelink {
-  color: #404041;
-  font-size: 11px;
+	color: #404041;
+	font-size: 11px;
+	margin: 0px 0px 0px 15px;
 }
 .align_cancel {
   display: block;
@@ -383,8 +384,8 @@ a.navActive {
 /** Advance Search Box **/
 #advanced_search {
   background-color: #f5f7f8;
-  border: 1px solid black; 
-  margin: 0px 0px 20px; 
+  border: 1px solid black;
+  margin: 0px 0px 20px;
   padding: 10px;
 }
 #advanced_search .boxtitle {
@@ -693,7 +694,7 @@ li.inner {
   background-color: #F5F7F8;
   padding: 3px 5px;
   margin: 0px 5px;
-  font-size: 11px; 
+  font-size: 11px;
   color: #9f9f9f;
 }
 .showList li {
@@ -865,7 +866,7 @@ fieldset .center_side .middle_links {
   display: block;
   padding: 5px 0px;
 }
-fieldset .left_side_c select, 
+fieldset .left_side_c select,
 fieldset .right_side_c select {
   width: 320px;
   min-height: 100px;
@@ -886,7 +887,7 @@ fieldset#inmodal legend {
 
 /**** Images ****/
 #images_index_table .col1 {
-  width: 848px;  
+  width: 848px;
 }
 #images_index_table td.col1 {
   font-size: 13px;
@@ -958,7 +959,7 @@ form #dashboardElementsList li {
 
 /**** Charts ****/
 .dashboardElementDiv {
-	padding-bottom:20px;	
+	padding-bottom:20px;
   page-break-inside: avoid;
 }
 
@@ -1175,7 +1176,7 @@ form #dashboardElementsList li {
   /*overflow: auto;*/
 }
 .simplemodal-wrap {
-  overflow: visible !important;  
+  overflow: visible !important;
 }
 #modalDiv #surveys .left_side {
   width: 100px;
@@ -1262,19 +1263,19 @@ span.pageNum {
 
 .deleteLink {
   background: url(../images/delete.png) no-repeat;
-} 
+}
 .deleteLink:hover{
   background: url(../images/delete_hover.png) no-repeat;
-} 
-.copyLink {  
+}
+.copyLink {
   background: url(../images/clone.png) no-repeat;
-} 
-.copyLink:hover{  
+}
+.copyLink:hover{
   background: url(../images/clone_hover.png) no-repeat;
-} 
-.runLink {  
+}
+.runLink {
   background: url(../images/run.png) no-repeat;
-} 
-.runLink:hover{  
+}
+.runLink:hover{
   background: url(../images/run_hover.png) no-repeat;
-} 
+}

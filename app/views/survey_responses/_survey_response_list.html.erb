@@ -115,7 +115,7 @@
     <%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %>
     <%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %>
     <span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
-
+    <span class="looklikelink"><%= get_delete_current_view_link(version, @custom_view) %></span>
   </div>
 
   <div id="dfv_edit_modal" style="display: none;">&nbsp;</div>
