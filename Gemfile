@@ -9,6 +9,9 @@ gem 'jquery-rails'
 gem 'kaminari'
 gem 'delayed_job_active_record'
 gem 'authlogic'
+gem 'net-ldap'
+
+
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false
@@ -16,7 +19,7 @@ gem 'daemons', :require => false
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
- 
+
 gem 'bson_ext'
 gem 'escape_utils'
 gem 'mongoid'
@@ -30,7 +33,7 @@ platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
   gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
-  
+
   group :test do
     gem 'rails_best_practices'
   end
@@ -55,6 +58,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'jazz_hands'
   gem 'yard'
+  gem 'pry'
 end
 
 gem 'rspec-rails', :group => [:development, :test]
@@ -69,5 +73,5 @@ group :test do
   gem 'growl'
   gem 'shoulda-matchers'
   gem 'rb-fsevent', '~> 0.9.1'
-  
+
 end

@@ -18,6 +18,13 @@
 	    <%= f.text_field :l_name %>
 	  </div>
 		<br />
+    <div class="left_side">
+      <%= f.label :username, "LDAP Username: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :username %>
+    </div>
+    <br />
 	  <div class="left_side">
 	  	<%= f.label :email, "Email: " %>
 	  </div>
@@ -25,22 +32,6 @@
 	  	<%= f.text_field :email %>
 	  </div>
 		<br />
-		<% if @user.new_record? || @user == @current_user %>
-			<div class="left_side">
-			  <%= f.label :password, "Password: " %>
-		  </div>
-		  <div class="right_side">
-		  	<%= f.password_field :password%>
-		  </div>
-		  <br />
-		  <div class="left_side">
-			  <%= f.label :password_confirmation, "Password Confirmation: " %>
-		  </div>
-		  <div class="right_side">
-		  	<%= f.password_field :password_confirmation%>
-		  </div>
-		  <br />
-		<% end -%>
 
 	  <% if @current_user.admin? %>
 			<div class="left_side">
@@ -64,7 +55,7 @@
 		<div class="submitButton">
 			<% if f.object.new_record? %>
 				<%= image_submit_tag "create-user.png", :alt=>"Create User" %>
-		
+
 				<%#= f.submit "Create User", :type => :image, :src=>"/images/create-user.png", :alt=>"Create User" #%>
 			<% else %>
 				<%= image_submit_tag "update-user.png", :alt=>"Update User" %>

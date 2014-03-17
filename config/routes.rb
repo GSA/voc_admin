@@ -2,6 +2,7 @@ CommentToolApp::Application.routes.draw do
   match '/exports/:id/download' => "exports#download",
     :as => 'exports_download'
 
+  match "/auth/:provider/callback" => "user_sessions#create"
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
   get 'reset_password' => 'user_sessions#reset_password',

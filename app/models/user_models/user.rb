@@ -2,13 +2,16 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :f_name, :l_name, :password, :email, :password_confirmation, :site_ids, :role_id
+  attr_accessible :f_name, :l_name, :password, :email,
+    :password_confirmation, :site_ids, :role_id, :username
 
   has_many :site_users
   has_many :sites,      :through => :site_users
   belongs_to :role
 
-  acts_as_authentic
+  acts_as_authentic do |config|
+    config.validate_password_field = false
+  end
 
   validates :email,     :presence => true
   validates :f_name,    :presence => true
@@ -41,6 +44,18 @@ class User < ActiveRecord::Base
   def admin?
     self.role == Role::ADMIN
   end
+
+  protected
+
+  def valid_ldap_credentials?(password)
+    ldap = Ldap.new(self.username,password)
+    if ldap.valid_connection?
+      return ldap.valid_user?
+    else
+      return false
+    end
+  end
+
 end
 
 # == Schema Information

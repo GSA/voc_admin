@@ -47,6 +47,11 @@ class UserSessionsController < ApplicationController
     flash.notice = "An email has been sent to #{params["email_address"]}, if the account existed."
     redirect_to login_path
   end
+  protected
+
+  def auth_hash
+    request.env['omniauth.auth']
+  end
 
   private
 

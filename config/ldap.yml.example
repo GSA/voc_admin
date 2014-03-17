@@ -1,0 +1,33 @@
+# This is currently fairly hard coded for CGI federals AD
+development:
+  host: 10.153.87.35
+  port: 389
+  # base string for LDAP, this should be the base group for the service account and users.
+  base: "dc=domain,dc=local"
+  # This is the object name that corresponds to just a users ID,
+  # openldap uses uid, AD use sAMAccountName
+  uid_name: "uid"
+  # users may be part of a group(s) that are different than admin account.
+  user_group: "ou=people"
+  # This needs to be a user that has ability to search in ldap.
+  # Its how we find the users actual account
+  service_user: "admin"
+  # service_domain is used for AD servers, not needed for openldap
+  # service_domain: "domain.local"
+  service_pass: "secretldappassword"
+
+production:
+  host: 172.22.76.56
+  port: 389
+  # base string for LDAP, this should be the base group for the admin account and users.
+  base: "OU=Users,OU=GSA-OCSIT-WEBSITES,OU=FEDCLOUD,DC=fedcloud,DC=cgipdc,DC=cginet"
+  # This is the object name that corresponds to just a users ID,
+  # openldap uses uid, AD use sAMAccountName
+  uid_name: "sAMAccountName"
+  # users may be part of a group(s) that are different than admin account.
+  # This needs to be a user that has ability to search in ldap.
+  # Its how we find the users actual account
+  service_user: "ocsit.phfts"
+  # service_domain is used for AD servers, not needed for openldap
+  service_domain: "fedcloud.cgipdc.cginet"
+  service_pass: "[REDACTED]"
