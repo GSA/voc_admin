@@ -8,6 +8,10 @@ class Ldap
     authenticate_admin!
   end
 
+  def initialize
+    authenticate_admin!
+  end
+
   def valid_connection?
     unless @ldap.bind
       Rails.logger.fatal "Unable to authenticate LDAP service account #{LDAP_CONFIG['service_user']}"

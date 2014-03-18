@@ -5,5 +5,12 @@ begin
   required_keys.each do |key|
       missing << key unless LDAP_CONFIG[key].blank?
   end
-  raise ArgumentError.new(missing.join(",") + "MUST be provided") unless missing.empty?
+  unless missing.empty?
+    raise ArgumentError.new(missing.join(",") + " MUST be provided")
+  else
+    ldap = Ldap.new
+    unless ldap.valid_connection?
+      raise ArgumentError.new("Service account invalid")
+    end
+  end
 end

@@ -8,7 +8,6 @@ development:
   # openldap uses uid, AD use sAMAccountName
   uid_name: "uid"
   # users may be part of a group(s) that are different than admin account.
-  user_group: "ou=people"
   # This needs to be a user that has ability to search in ldap.
   # Its how we find the users actual account
   service_user: "admin"
