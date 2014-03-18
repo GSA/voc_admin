@@ -76,17 +76,23 @@ class DisplayField < ActiveRecord::Base
   end
 
   # Invoked when increment_display_order or decrement_display_order are used; reorders other DisplayFields appropriately.
-  # 
+  #
   # @param [Integer] target_display_order defines the threshold index used to reorder DisplayFields
   def move_display_field(target_display_order)
     DisplayField.transaction do
-      start_index, end_index = target_display_order < self.display_order ? [target_display_order,self.display_order] : [self.display_order,target_display_order]
+      start_index, end_index = target_display_order < self.display_order ?
+        [target_display_order,self.display_order] :
+        [self.display_order,target_display_order]
 
       #shift range from target to source (overright source with it's neighbor in direction of target)
       if target_display_order < self.display_order
-        self.survey_version.display_fields.where(['display_order >= ? and display_order < ?', start_index, end_index]).update_all("display_order = display_order + 1")
+        self.survey_version.display_fields
+          .where(['display_order >= ? and display_order < ?', start_index, end_index])
+          .update_all("display_order = display_order + 1")
       else
-        self.survey_version.display_fields.where(['display_order > ? and display_order <= ?', start_index, end_index]).update_all("display_order = display_order - 1")
+        self.survey_version.display_fields
+          .where(['display_order > ? and display_order <= ?', start_index, end_index])
+          .update_all("display_order = display_order - 1")
       end
 
       #update source to target
@@ -113,11 +119,15 @@ class DisplayField < ActiveRecord::Base
     # TODO: reenable this when display field validations have been implemented
     # to allow a user to select a different display field type.
     #subclasses.map {|c| [c.to_s.titleize.split(' ')[2..-1].join(' '), c.to_s]}.sort
-    [['Text','DisplayFieldText'], ['Dropdown', 'DisplayFieldChoiceSingle'], ['Checkboxes', 'DisplayFieldChoiceMultiselect']]
+    [
+      ['Text','DisplayFieldText'],
+      ['Dropdown', 'DisplayFieldChoiceSingle'],
+      ['Checkboxes', 'DisplayFieldChoiceMultiselect']
+    ]
   end
 
   # Used by Criteria in Rules to process survey_responses against Conditionals
-  # 
+  #
   # @param [SurveyResponse] survey_response a SurveyResponse to test
   # @param [Integer] conditional_id the operator used to test
   # @param [Object] test_value the value to test
@@ -137,17 +147,23 @@ class DisplayField < ActiveRecord::Base
   end
 
   # Duplicates the DisplayField upon cloning a SurveyVersion.
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [DisplayField] the cloned DisplayField
   def clone_me(target_sv)
     df = target_sv.display_fields.find_by_name(self.name)
     return df if df
-    DisplayField.create!(self.attributes.merge(:clone_of_id=>self.id, :survey_version_id =>target_sv.id, :model_type=>self.type, :display_order => self.display_order))
+    DisplayField.create!(self.attributes.merge(
+        :clone_of_id=>self.id,
+        :survey_version_id =>target_sv.id,
+        :model_type=>self.type,
+        :display_order => self.display_order
+      )
+    )
   end
 
   # Retrieve the clone for this DisplayField within a cloned SurveyVersion.
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion to search for the cloned copy.
   # @return [DisplayField] the original DisplayField
   def find_my_clone_for(target_sv)
@@ -158,7 +174,10 @@ class DisplayField < ActiveRecord::Base
   def populate_default_values!
     self.survey_version.survey_responses.find_in_batches do |survey_responses|
       survey_responses.each do |sr|
-        self.display_field_values.create! :survey_response_id => sr.id, :value => self.default_value unless self.display_field_values.find_by_survey_response_id(sr.id)
+        unless self.display_field_values.find_by_survey_response_id(sr.id)
+          self.display_field_values.create! :survey_response_id => sr.id,
+            :value => self.default_value
+        end
       end
     end
   end
@@ -183,4 +202,3 @@ end
 #  choices           :string(255)
 #  editable          :boolean(1)      default(TRUE)
 #
-

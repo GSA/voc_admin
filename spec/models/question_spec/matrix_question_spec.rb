@@ -50,4 +50,9 @@ describe MatrixQuestion do
     cloned_question.choice_questions.first.choice_answers.first.answer.should == @choice_answer.answer
   end
 
+  it "should remove choice questions when the matrix question is destroyed" do
+    @matrix_question.save
+    expect{@matrix_question.destroy}.to change{ChoiceQuestion.count}.by(-1)
+  end
+
 end
