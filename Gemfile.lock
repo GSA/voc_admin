@@ -100,50 +100,30 @@ GEM
     daemons (1.1.9)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
-<<<<<<< HEAD
-    debugger (1.6.5)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.1)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.1)
-=======
     debugger (1.6.6)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.3.2)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.2)
->>>>>>> gemfile update
     delayed_job (4.0.0)
       activesupport (>= 3.0, < 4.1)
     delayed_job_active_record (4.0.0)
       activerecord (>= 3.0, < 4.1)
       delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
-<<<<<<< HEAD
-    diffy (3.0.1)
-=======
     diffy (3.0.3)
->>>>>>> gemfile update
     docile (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape_utils (1.0.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
-<<<<<<< HEAD
-    factory_girl_rails (4.4.0)
-      factory_girl (~> 4.4.0)
-      railties (>= 3.0.0)
-    ffi (1.9.3)
-=======
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
     ffi (1.9.3)
     ffi (1.9.3-java)
->>>>>>> gemfile update
     formatador (0.2.4)
     grit (2.5.0)
       diff-lcs (~> 1.1)
@@ -173,12 +153,6 @@ GEM
       pry-remote (>= 0.1.7)
       pry-stack_explorer (~> 0.4.9)
       railties (>= 3.0, < 5.0)
-<<<<<<< HEAD
-    jquery-rails (3.1.0)
-      railties (>= 3.0, < 5.0)
-      thor (>= 0.14, < 2.0)
-    json (1.8.1)
-=======
     jdbc-mysql (5.1.28)
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
@@ -191,7 +165,6 @@ GEM
       jruby-rack (>= 1.1.10)
     json (1.8.1)
     json (1.8.1-java)
->>>>>>> gemfile update
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -217,15 +190,6 @@ GEM
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
     mono_logger (1.1.0)
-<<<<<<< HEAD
-    multi_json (1.8.4)
-    mysql2 (0.2.22)
-    net-ldap (0.3.1)
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
-    open_uri_redirections (0.1.4)
-    paperclip (4.1.0)
-=======
     multi_json (1.9.0)
     mysql2 (0.2.22)
     nokogiri (1.6.1)
@@ -234,7 +198,6 @@ GEM
       mini_portile (~> 0.5.0)
     open_uri_redirections (0.1.4)
     paperclip (4.1.1)
->>>>>>> gemfile update
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
@@ -242,18 +205,11 @@ GEM
     pdfkit (0.6.1)
     polyglot (0.3.4)
     posix-spawn (0.3.8)
-    pry (0.9.12.6)
-      coderay (~> 1.0)
-      method_source (~> 0.8)
-      slop (~> 3.4)
-<<<<<<< HEAD
-=======
     pry (0.9.12.6-java)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
       spoon (~> 0.0)
->>>>>>> gemfile update
     pry-debugger (0.2.2)
       debugger (~> 1.3)
       pry (~> 0.9.10)
@@ -277,11 +233,7 @@ GEM
       rack (>= 1.0.0)
     rack-test (0.5.7)
       rack (>= 1.0)
-<<<<<<< HEAD
-    rails_best_practices (1.15.1)
-=======
     rails_best_practices (1.15.2)
->>>>>>> gemfile update
       activesupport
       awesome_print
       code_analyzer (>= 0.4.3)
@@ -307,11 +259,7 @@ GEM
     redis-objects (0.9.0)
       redis (>= 3.0.2)
     require_all (1.3.2)
-<<<<<<< HEAD
-    resque (1.25.1)
-=======
     resque (1.25.2)
->>>>>>> gemfile update
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.3)
@@ -327,11 +275,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-<<<<<<< HEAD
-    rspec-core (2.14.7)
-=======
     rspec-core (2.14.8)
->>>>>>> gemfile update
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.6)
@@ -343,14 +287,9 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-<<<<<<< HEAD
-    ruby-progressbar (1.4.1)
-    sexp_processor (4.4.1)
-=======
     ruby-progressbar (1.4.2)
     rubyzip (1.0.0)
     sexp_processor (4.4.2)
->>>>>>> gemfile update
     shoulda-matchers (2.5.0)
       activesupport (>= 3.0.0)
     simplecov (0.8.2)
@@ -362,23 +301,15 @@ GEM
       backports
       rack (~> 1.1, < 1.5)
       tilt (>= 1.2.2, < 2.0)
-<<<<<<< HEAD
-    slop (3.4.7)
-=======
     slop (3.5.0)
     spoon (0.0.4)
       ffi
->>>>>>> gemfile update
     thor (0.14.6)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-<<<<<<< HEAD
-    tzinfo (0.3.38)
-=======
     tzinfo (0.3.39)
->>>>>>> gemfile update
     unicorn (4.8.2)
       kgio (~> 2.6)
       rack
@@ -388,14 +319,11 @@ GEM
       unicorn
     vegas (0.1.11)
       rack (>= 1.0.0)
-<<<<<<< HEAD
-=======
     warbler (1.4.2)
       jruby-jars (>= 1.5.6, < 2.0)
       jruby-rack (>= 1.0.0)
       rake (>= 0.9.6)
       rubyzip (>= 0.9, < 1.1)
->>>>>>> gemfile update
     wkhtmltopdf-binary (0.9.9.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
