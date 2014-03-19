@@ -8,7 +8,7 @@ begin
   unless missing.empty?
     raise ArgumentError.new(missing.join(",") + " MUST be provided")
   else
-    ldap = Ldap.new
+    ldap = Ldap.new("testing","testing") #username and pass won't get checked here
     unless ldap.valid_connection?
       raise ArgumentError.new("Service account invalid")
     end
