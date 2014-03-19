@@ -7,3 +7,5 @@ en:
       user:
         f_name: "First Name"
         l_name: "Last Name"
+      survey:
+        js_required_fields_error: "Error for Required Fields Text"
