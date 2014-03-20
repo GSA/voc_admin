@@ -55,7 +55,7 @@
     <% @report.text_question_reporters.each do |tqr| %>
       <tr class="<%= cycle('gray','white', :name => 'a') %>">
         <td><%= tqr.question_text %></td>
-        <td><%= tqr.top_words_str(@report.start_date, @report.end_date) %></td>
+        <td><%= tqr.top_words_str(@report.start_date, @report.end_date, @report.answer_limit(10)) %></td>
         <% unless pdf? %>
           <td><%= link_to "CSV", question_csv_survey_survey_version_report_path(@survey, @survey_version, @report, 'text', tqr.id, 'csv') %></td>
         <% end %>
@@ -75,7 +75,7 @@
     <% @report.choice_question_reporters.each do |cqr| %>
       <tr class="<%= cycle('gray','white', :name => 'b') %>">
         <td><%= cqr.question_text %></td>
-        <td><%= cqr.choice_answers_str(@report.start_date, @report.end_date) %></td>
+        <td><%= cqr.choice_answers_str(@report.start_date, @report.end_date, @report.answer_limit(5)) %></td>
         <% unless pdf? %>
           <td><%= link_to "CSV", question_csv_survey_survey_version_report_path(@survey, @survey_version, @report, 'choice', cqr.id, 'csv') %></td>
         <% end %>

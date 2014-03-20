@@ -8,6 +8,14 @@ class SurveyVersionCount < ActiveRecord::Base
     for_date_range(start_date, end_date).sum(:visits)
   end
 
+  def self.invitation_count_for_date_range(start_date, end_date)
+    for_date_range(start_date, end_date).sum(:invitations)
+  end
+
+  def self.invitation_accepted_count_for_date_range(start_date, end_date)
+    for_date_range(start_date, end_date).sum(:invitations_accepted)
+  end
+
   def self.questions_skipped_for_date_range(start_date, end_date)
     for_date_range(start_date, end_date).sum(:questions_skipped)
   end
@@ -27,11 +35,13 @@ end
 #
 # Table name: survey_version_counts
 #
-#  id                :integer(4)      not null, primary key
-#  survey_version_id :integer(4)
-#  count_date        :date
-#  visits            :integer(4)      default(0)
-#  questions_skipped :integer(4)      default(0)
-#  questions_asked   :integer(4)      default(0)
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                    :integer(4)      not null, primary key
+#  survey_version_id     :integer(4)
+#  count_date            :date
+#  visits                :integer(4)      default(0)
+#  invitations           :integer(4)      default(0)
+#  invitations_accepted  :integer(4)      default(0)
+#  questions_skipped     :integer(4)      default(0)
+#  questions_asked       :integer(4)      default(0)
+#  created_at            :datetime
+#  updated_at            :datetime

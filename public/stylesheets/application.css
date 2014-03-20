@@ -209,8 +209,9 @@ td a:hover {
   color: #396393;
 }
 .looklikelink {
-  color: #404041;
-  font-size: 11px;
+	color: #404041;
+	font-size: 11px;
+	margin: 0px 0px 0px 15px;
 }
 .align_cancel {
   display: block;

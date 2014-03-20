@@ -7,6 +7,7 @@ class AssetsController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/assets/new(.:format)
   def new
     @asset = @survey_version.assets.build
+    @page = Page.find_by_id(params[:page_id])
 
     respond_to do |format|
       format.html #

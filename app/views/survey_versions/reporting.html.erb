@@ -25,6 +25,20 @@
 	</div>
 	<br />
 	<div class="left_side">
+		Invitations:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= number_with_delimiter(@survey_version.total_invitation_count) %></p>
+	</div>
+	<br />
+	<div class="left_side">
+		Invitations Accepted:
+	</div>
+	<div class="right_side">
+		<p class="version"><%= number_with_delimiter(@survey_version.total_invitation_accepted_count) %></p>
+	</div>
+	<br />
+	<div class="left_side">
 		Responses<%= " After #{(@first_count_date - 1.day).to_s(:text_field)}"unless @first_count_date.nil? %>:
 	</div>
 	<div class="right_side">
