@@ -49,17 +49,43 @@ class SurveyVersion < ActiveRecord::Base
   delegate :name, :description, :to => :survey, :prefix => true
 
   hash_key :temp_visit_count
+  hash_key :temp_invitation_count
+  hash_key :temp_invitation_accepted_count
 
   def increment_temp_visit_count
     temp_visit_count.incr(today_string, 1)
+  end
+
+  def increment_temp_invitation_count
+    temp_invitation_count.incr(today_string, 1)
+  end
+
+  def increment_temp_invitation_accepted_count
+    temp_invitation_accepted_count.incr(today_string, 1)
   end
 
   def total_temp_visit_count
     @total_temp_visit_count ||= temp_visit_count.values.inject(0) {|result, element| result + element.to_i}
   end
 
+  def total_temp_invitation_count
+    @total_temp_invitation_count ||= temp_invitation_count.values.inject(0) {|result, element| result + element.to_i}
+  end
+
+  def total_temp_invitation_accepted_count
+    @total_temp_invitation_accepted_count ||= temp_invitation_accepted_count.values.inject(0) {|result, element| result + element.to_i}
+  end
+
   def total_visit_count
     @total_visit_count ||= survey_version_counts.sum(:visits) + total_temp_visit_count
+  end
+
+  def total_invitation_count
+    @total_invitation_count ||= survey_version_counts.sum(:invitations) + total_temp_invitation_count
+  end
+
+  def total_invitation_accepted_count
+    @total_invitation_accepted_count ||= survey_version_counts.sum(:invitations_accepted) + total_temp_invitation_accepted_count
   end
 
   def total_questions_asked
@@ -72,24 +98,26 @@ class SurveyVersion < ActiveRecord::Base
 
   # Update survey_version_counts
   def update_counts
-    update_visit_counts
+    update_counts_for_attr(temp_visit_count, :visits)
+    update_counts_for_attr(temp_invitation_count, :invitations)
+    update_counts_for_attr(temp_invitation_accepted_count, :invitations_accepted)
     update_attribute(:counts_updated_at, Time.now)
   end
 
   # Increments visits by temporary recent_visits count
-  def update_visit_counts
+  def update_counts_for_attr(temp_count, attr_name)
     yesterday = today - 1.day
-    temp_visit_count.each do |visits_date_string, visits_count_string|
-      visits_date = Date.parse(visits_date_string)
-      visits_count = visits_count_string.to_i
-      if visits_count > 0
-        svc = survey_version_counts.find_or_create_by_count_date(visits_date)
-        SurveyVersionCount.update_counters svc.id, :visits => visits_count
+    temp_count.each do |date_string, count_string|
+      date = Date.parse(date_string)
+      count = count_string.to_i
+      if count > 0
+        svc = survey_version_counts.find_or_create_by_count_date(date)
+        SurveyVersionCount.update_counters svc.id, attr_name => count
       end
-      if visits_date < yesterday
-        temp_visit_count.delete(visits_date_string)
+      if date < yesterday
+        temp_count.delete(date_string)
       else
-        temp_visit_count.incr(visits_date_string, -visits_count) if visits_count > 0
+        temp_count.incr(date_string, -count) if count > 0
       end
     end
   end

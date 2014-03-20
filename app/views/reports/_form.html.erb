@@ -26,6 +26,13 @@
     <div class="right_side">
       <%= f.text_field :end_date, :value => @report.end_date_str, :class => "datepicker" %>
     </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :limit_answers, "Limit Answers: " %>
+    </div>
+    <div class="right_side">
+      <%= f.check_box :limit_answers %>
+    </div>
   <% end %>
 
   <div class="submitButton">

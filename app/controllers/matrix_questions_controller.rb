@@ -7,6 +7,7 @@ class MatrixQuestionsController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/new(.:format)
   def new
     @matrix_question = @survey_version.matrix_questions.build
+    @page = Page.find_by_id(params[:page_id])
 
     respond_to do |format|
       format.html #

@@ -4,7 +4,7 @@
 module SurveyResponsesHelper
 
   # Adds sort arrow images to table DisplayField columns.
-  # 
+  #
   # @param [String] column the name of the column being sorted
   # @param [String] title optional alternate display text for the column
   # @return [String] HTML link for the column header text, with sort toggle information
@@ -30,7 +30,7 @@ module SurveyResponsesHelper
   end
 
   # Retrieve the edit link for the current CustomView (or static text if no CustomView.)
-  # 
+  #
   # @param [SurveyVersion] version the current survey version
   # @param [CustomView, nil] current_view the current custom view, if applicable
   # @return [String] HTML link for the edit link
@@ -40,6 +40,19 @@ module SurveyResponsesHelper
     edit_link = link_to edit_link, edit_survey_survey_version_custom_view_path(version.survey, version, current_view), {:class => "manage"} unless current_view.nil?
 
     edit_link
+  end
+
+  # Retrieve the delete link for the current CustomView (or static text if no CustomView.)
+  #
+  # @param [SurveyVersion] version the current survey version
+  # @param [CustomView, nil] current_view the current custom view, if applicable
+  # @return [String] HTML link for the delete link
+  def get_delete_current_view_link version, current_view
+    delete_link = "Delete Current View"
+    delete_link = link_to delete_link, survey_survey_version_custom_view_path(
+      version.survey, version, current_view), {:class => "manage",
+      :method => "delete"} unless current_view.nil?
+    delete_link
   end
 
   # Generates HTML option tags for an Include/Exclude dropdown.
