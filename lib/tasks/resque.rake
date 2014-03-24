@@ -69,7 +69,6 @@ namespace :resque do
   task :start_workers => :environment do
     ENV['NUM_WORKERS'] ||= '1'
     ENV['NUM_EXPORT_WORKERS'] ||= '1'
-    File.delete(File.join(Rails.root+"tmp/pids/resque.pid")) if File.exists? File.join(Rails.root+"tmp/pids/resque.pid")
     run_workers
   end
 end
