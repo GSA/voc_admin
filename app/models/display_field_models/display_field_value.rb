@@ -5,6 +5,7 @@
 # or admin-defined data.
 class DisplayFieldValue < ActiveRecord::Base
   include ActionView::Helpers::SanitizeHelper 
+  include ActionView::Helpers::TextHelper
 
   belongs_to :display_field
   belongs_to :survey_response
@@ -42,6 +43,10 @@ class DisplayFieldValue < ActiveRecord::Base
   def display_value
     sanitized_value = sanitize(value)
     sanitized_value ? sanitized_value.gsub("\n", VALUE_DELIMITER).gsub(VALUE_DELIMITER,  "<br/>") : ""
+  end
+
+  def truncated_display_value
+    truncate(display_value, :length => 200)
   end
 
   private
