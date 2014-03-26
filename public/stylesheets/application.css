@@ -1233,6 +1233,12 @@ span.pageNum {
   color: #ffad05;
 }
 
+/**** Preview ****/
+.voctextarea textarea {
+  min-width: 200px;
+  min-height: 40px;
+}
+
 /**** Public Site ****/
 #surveys_all .col1 {
   width: 399px;
@@ -1261,6 +1267,7 @@ span.pageNum {
 }
 
 
+/**** Links ****/
 .deleteLink {
   background: url(../images/delete.png) no-repeat;
 }
