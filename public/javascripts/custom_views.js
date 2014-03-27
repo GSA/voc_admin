@@ -9,7 +9,7 @@ $(function(){
 	$("#move_display_field_down").click(moveDown);
 
 	$("#sort_by_1, #sort_by_2, #sort_by_3, input[type=radio][name^=sort_by_]").change(generateSortingParameterFromDropdowns);
-		
+
 }); // End onLoad binding
 
 // the Display Fields for the view are brought back as contents of the multiselect from the server;
@@ -79,7 +79,7 @@ function addFields() {
 
 	// add to selected_display_fields
 	// add options to each of the three sort_by_ select tags
-	selectedOptions.appendTo('#selected_display_fields, #sort_by_1, #sort_by_2, #sort_by_3');
+	selectedOptions.attr('selected', false).appendTo('#selected_display_fields, #sort_by_1, #sort_by_2, #sort_by_3');
 
 	generateSelectedDisplayFieldsParameter();
 	return false;
@@ -131,4 +131,3 @@ function moveDown() {
 	generateSelectedDisplayFieldsParameter();
 	return false;
 }
-
