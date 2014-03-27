@@ -1,11 +1,13 @@
 <p class="modalTitle">Edit Text Question</p>
 
 <%= form_for [@survey, @survey_version, @text_question], :remote => true, :html => {:class => "question_edit_form"} do |f| %>
-  <%= f.error_messages %>
-  <%= f.label :answer_type %>
-  <%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
-  <%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :are_radio_button, "Area" %>
-  <br/>
+  <% unless @survey_version.locked? %>
+    <%= f.error_messages %>
+    <%= f.label :answer_type %>
+    <%= f.radio_button :answer_type, "field", :id => "field_radio_button" %><%= f.label :field_radio_button, "Field" %>
+    <%= f.radio_button :answer_type, "area", :id => "area_radio_button" %><%= f.label :are_radio_button, "Area" %>
+    <br/>
+  <% end %>
 
   <% text_question.build_question_content unless @text_question.question_content %>
   <%= f.fields_for :question_content do |builder| %>

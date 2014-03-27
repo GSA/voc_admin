@@ -1,20 +1,24 @@
-<%= f.check_box :required, {}, true, false %>
-<%= f.label :required, "Require an answer to this question (optional)" %>
-<% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
-	<div id="flow_control_settings">
-	  <%= f.hidden_field :flow_control, :value => f.object.flow_control %>
-	  <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
-		<%= f.label :flow_control, "Flow control", :for=>"flow_control_checkbox"%>
-	</div>
+<% unless @survey_version.try(:locked?) %>
+  <%= f.check_box :required, {}, true, false %>
+  <%= f.label :required, "Require an answer to this question (optional)" %>
+  <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
+    <div id="flow_control_settings">
+      <%= f.hidden_field :flow_control, :value => f.object.flow_control %>
+      <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
+      <%= f.label :flow_control, "Flow control", :for=>"flow_control_checkbox"%>
+    </div>
+  <% end %>
+  <br />
 <% end %>
-<br />
 <%= f.label :statement, (f.object.questionable_type == "MatrixQuestion" ? "Statement: " : "Question: ")%>
 
-<% if defined? matrix_question %>
-	<%= f.hidden_field "_destroy" %>
-	<%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapMatrixQuestion(this,'up')" %>
-	<%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapMatrixQuestion(this, 'down')" %>
-	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
+<% unless @survey_version.try(:locked?) %>
+  <% if defined? matrix_question %>
+    <%= f.hidden_field "_destroy" %>
+    <%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapMatrixQuestion(this,'up')" %>
+    <%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapMatrixQuestion(this, 'down')" %>
+    <%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
+  <% end %>
 <% end %>
 <br />
 <%= f.text_area :statement, :rows => 3%>

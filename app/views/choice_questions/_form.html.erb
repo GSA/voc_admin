@@ -3,35 +3,40 @@
 		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
 	<% end -%>
 	<br />
-	<%= f.label :answer_type, "Answer Type: " %>
-	<%= f.select :answer_type, options_for_answer_type(f.object.answer_type), :id => "answer_type_dropdown" %>
-	<br /><br />
-	<p id="auto_next_page_fields" <%= auto_next_page_visibility(f, choice_question) %>>
-		<%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
-		<%= f.check_box :auto_next_page, {}, true, false %>
-	</p>
+  <% unless survey_version.locked? %>
+    <%= f.label :answer_type, "Answer Type: " %>
+    <%= f.select :answer_type, options_for_answer_type(f.object.answer_type), :id => "answer_type_dropdown" %>
+    <br /><br />
+    <p id="auto_next_page_fields" <%= auto_next_page_visibility(f, choice_question) %>>
+      <%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
+      <%= f.check_box :auto_next_page, {}, true, false %>
+    </p>
+  <% end %>
 
 	<%= f.fields_for :choice_answers do |answer_builder| %>
 		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey, :survey_version => survey_version} %>
 	<% end %>
 
-	<span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
+  <% unless survey_version.locked? %>
+    <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
 
-	<div id="answer_placement_fields" <%= answer_placement_visibility(f, choice_question) %>>
-		<br /><br />
-		<%= f.label :answer_placement, "Answer Placement: " %>
-		<%= f.select :answer_placement, options_for_answer_placement(f.object.answer_placement), :id => "answer_placement_dropdown" %>
-	</div>
+    <div id="answer_placement_fields" <%= answer_placement_visibility(f, choice_question) %>>
+      <br /><br />
+      <%= f.label :answer_placement, "Answer Placement: " %>
+      <%= f.select :answer_placement, options_for_answer_placement(f.object.answer_placement), :id => "answer_placement_dropdown" %>
+    </div>
 
-	<div id="allow_multiple" class="displayNone">
-  	<%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
-	</div>
+    <div id="allow_multiple" class="displayNone">
+      <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
+    </div>
 
-	<% if survey.survey_type_id == SurveyType::POLL %>
-		<div><%= f.label :display_results, "Display results on the thank-you page" %><%= f.check_box :display_results %></div>
-	<% end %>
-	<br /><br />
-	<%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
+    <% if survey.survey_type_id == SurveyType::POLL %>
+      <div><%= f.label :display_results, "Display results on the thank-you page" %><%= f.check_box :display_results %></div>
+    <% end %>
+    <br /><br />
+    <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
+  <% end %> 
+
 	<br /><br />
 	<div class="pageLink">
 		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close" %>

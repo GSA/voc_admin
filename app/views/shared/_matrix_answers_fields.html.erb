@@ -1,8 +1,10 @@
 <p class="answer_fields">
-      <%= label_tag "choice_answer_attributes[#{i}][answer]", "Answer: " %>
-      <%= text_field_tag "choice_answer_attributes[#{i}][answer]", answer.presence %>
-			<%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapAnswers(this,'up')" %>
-      <%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapAnswers(this, 'down')" %>
-			<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_matrix_answer(this)", :class=>"deleteLink" %>
-			<br/>
+  <%= label_tag "choice_answer_attributes[#{i}][answer]", "Answer: " %>
+  <%= text_field_tag "choice_answer_attributes[#{i}][answer]", answer.presence %>
+  <% unless @survey_version.try(:locked?) %>
+    <%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapAnswers(this,'up')" %>
+    <%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapAnswers(this, 'down')" %>
+    <%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_matrix_answer(this)", :class=>"deleteLink" %>
+  <% end %>
+  <br/>
 </p>

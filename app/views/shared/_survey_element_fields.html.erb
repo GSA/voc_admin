@@ -1,3 +1,4 @@
+<% return if @survey_version.try(:locked?) %>
 <% object.build_survey_element if object.new_record? %>
 <%= f.fields_for :survey_element do |builder| %>
   <% builder.object.page = @page if @page %>

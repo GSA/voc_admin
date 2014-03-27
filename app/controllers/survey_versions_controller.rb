@@ -28,7 +28,7 @@ class SurveyVersionsController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:id/edit(.:format)
   def edit
     redirect_to surveys_path, :flash => {:notice => "The survey you are trying to access has been removed"} if @survey.archived || @survey_version.archived
-    redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked
+    redirect_to survey_survey_versions_path(@survey), :flash => {:notice => "You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey"} if @survey_version.locked? && !@survey_version.published?
   end
 
   # GET    /surveys/:survey_id/survey_versions/:id/edit_thank_you_page(.:format)

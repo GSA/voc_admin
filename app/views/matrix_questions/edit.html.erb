@@ -12,7 +12,7 @@
       <%= render :partial => "shared/choice_question_fields", :locals => {:f => builder}%>
     <% end -%>
     <br />
-    <span><%= link_to_add_fields "Add Question", f, :choice_questions %></span>
+    <span><%= link_to_add_fields("Add Question", f, :choice_questions) unless @survey_version.locked? %></span>
   </div>
   <br />
 
@@ -21,7 +21,7 @@
 		  <%= render 'shared/matrix_answers_fields', :i => index, :answer => ca.answer%>
 		<% end %>
 	</div>
-	<span><%= link_to_add_matrix_answer "Add Answer" %>
+	<span><%= link_to_add_matrix_answer("Add Answer") unless @survey_version.locked? %>
 
   <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @matrix_question, :survey => @survey, :survey_version => @survey_version} %>
 

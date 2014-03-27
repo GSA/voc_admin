@@ -4,19 +4,21 @@
   <%= f.fields_for :question_content do |builder| %>
     <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
   <% end -%>
-	<p>
-		<%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
-		<%= f.check_box :auto_next_page, {}, true, false %>
-	</p>
+  <% unless @survey_version.locked? %>
+    <p>
+      <%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
+      <%= f.check_box :auto_next_page, {}, true, false %>
+    </p>
 
-  <%= f.label :answer_type, "Answer Type: " %>
-  <%= f.select :answer_type, options_for_answer_type(@choice_question.answer_type), :id => "answer_type_dropdown" %>
+    <%= f.label :answer_type, "Answer Type: " %>
+    <%= f.select :answer_type, options_for_answer_type(@choice_question.answer_type), :id => "answer_type_dropdown" %>
+  <% end %>
 
   <%= f.fields_for :choice_answers do |answer_builder| %>
     <%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => @survey, :survey_version => @survey_version} %>
   <% end %>
 
-  <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
+  <span><%= link_to_add_fields("Add Answer", f, :choice_answers) unless @survey_version.locked? %></span>
 
   <br/><br/>
   <%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => @choice_question, :survey => @survey, :survey_version => @survey_version} %>
