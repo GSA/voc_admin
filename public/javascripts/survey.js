@@ -6,7 +6,7 @@ $(function() {
 	}
 });
 
-function show_next_page(page){
+function show_next_page(page,message){
 	var required_unanswered = false;
 
 	required_unanswered = check_for_unanswered_required(page);
@@ -21,7 +21,12 @@ function show_next_page(page){
 		$("#page_"+ next_page).show();
 		window.location.hash="PAGE_" + next_page;
 	} else {
-		alert('Please answer all required questions before moving on to the next page.');
+		if (message) {
+			alert(message);
+		}
+		else {
+			alert('Please answer all required questions before moving on to the next page.');
+		}
 	}
 
 }

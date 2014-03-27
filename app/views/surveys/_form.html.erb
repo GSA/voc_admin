@@ -1,9 +1,7 @@
 <div id="surveys">
 	<%= form_for(@survey) do |f| %>
 	  <% if @survey.errors.any? %>
-	    <div id="error_explanation">
-	      <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
-	    </div>
+	    <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
 		<% end %>
 
 		<div class="left_side">
@@ -61,7 +59,7 @@
     <div class="right_side">
       <%= f.text_area :js_required_fields_error, :rows => 3 %>
     </div>
-    
+
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>

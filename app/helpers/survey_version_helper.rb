@@ -118,15 +118,16 @@ module SurveyVersionHelper
   # @param [ChoiceQuestion] element the ChoiceQuestion instance
   # @param [Page] page the Page instance
   # @param [ChoiceAnswer] answer the ChoiceAnswer instance
+  # @param [message] message the Survey js required fields error
   # @return [String] the JS to attach to the HTML element's onclick attribute
-  def generate_onclick(element, page, answer)
+  def generate_onclick(element, page, answer, message)
     onclick = ""
     if element.assetable.question_content.flow_control
       onclick += "set_next_page(#{page.page_number}, #{answer.page.try(:page_number) || (element.page.page_number + 1)});"
     end
 
     if element.assetable.auto_next_page
-      onclick += "show_next_page(#{page.page_number});"
+      onclick += "show_next_page(#{page.page_number},'#{message}');"
     end
 
     onclick

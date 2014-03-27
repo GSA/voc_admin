@@ -4,7 +4,7 @@
 class MatrixQuestion < ActiveRecord::Base
   has_one :survey_element, :as => :assetable, :dependent => :destroy
   has_one :question_content, :as => :questionable, :dependent => :destroy
-  has_many :choice_questions
+  has_many :choice_questions, :dependent => :destroy
   belongs_to :survey_version
 
   validates :question_content, :presence => true

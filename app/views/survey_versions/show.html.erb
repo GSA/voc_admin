@@ -90,7 +90,7 @@
 									<div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
 										<% for answer in element.assetable.choice_answers %>
 											<span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
-	                      						:onclick => generate_onclick(element, page, answer),
+	                      						:onclick => generate_onclick(element, page, answer, @survey.js_required_fields_error),
 												:class => "question_#{element.assetable.question_content.id}_answer",
 												:checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
 												:id => "response_#{index}_#{answer.id}"
@@ -144,12 +144,12 @@
 				</ul>
 				<div class="page-nav">
 					<% unless page.page_number == 1 or (params[:noback].to_s.downcase=="true") %>
-						<%= link_to_function "Previous Page", "show_prev_page(#{page.page_number})", :class=>"manage"  %>
+						<%= link_to_function (@survey.previous_page_text.blank? ? "Previous Page" : @survey.previous_page_text), "show_prev_page(#{page.page_number})", :class=>"manage"  %>
 					<% end %>
 					<% unless page.page_number == @survey_version.pages.count %>
-						<%= link_to_function "Next Page", "show_next_page(#{page.page_number})", :class=>"manage" %>
+					<%= link_to (@survey.next_page_text.blank? ? "Next Page" : @survey.next_page_text), "#", :onclick => "show_next_page(#{page.page_number}, '#{@survey.js_required_fields_error}')".html_safe, :class=>"manage" %>
 					<% end %>
-					<%= submit_tag("Submit", :disabled => "disabled", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %>
+					<%= submit_tag((@survey.submit_button_text.blank? ? "Submit" : @survey.submit_button_text), :disabled => "disabled", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %>
 				</div>
 
 			</div> <!-- close page div -->

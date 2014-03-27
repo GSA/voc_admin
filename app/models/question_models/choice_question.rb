@@ -37,15 +37,15 @@ class ChoiceQuestion < ActiveRecord::Base
 
   # If this is a standalone ChoiceQuestion, the contained SurveyElement will refer to the SurveyVersion; if part
   # of a MatrixQuestion, the parent MatrixQuestion will be the source for the SurveyVersion reference.
-  # 
+  #
   # @return [SurveyVersion] the SurveyVersion by association
   def survey_version
-    self.survey_element.nil? ? self.matrix_question.survey_version : self.survey_element.survey_version
+    self.survey_element.nil? ? self.matrix_question.try(:survey_version) : self.survey_element.survey_version
   end
 
   # Looks up from the DB and composes a safetied string of ChoiceAnswer values.
   # Used for checkbox ChoiceQuestions.
-  # 
+  #
   # @param [String] answer_string a comma-delimited string of ChoiceAnswer ids
   # @return [String] a custom-delimited string of ChoiceAnswer.answer field values
   def get_true_value(answer_string)
@@ -53,7 +53,7 @@ class ChoiceQuestion < ActiveRecord::Base
   end
 
   # Used by Criteria in Rules to process survey_responses against Conditionals
-  # 
+  #
   # @param [SurveyResponse] survey_response a SurveyResponse to test
   # @param [Integer] conditional_id the operator used to test
   # @param [Object] test_value the value to test
@@ -67,7 +67,7 @@ class ChoiceQuestion < ActiveRecord::Base
   end
 
   # Makes a deep copy of the ChoiceQuestion (when cloning a Page)
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [ChoiceQuestion] the cloned ChoiceQuestion
   def clone_me(target_sv)
@@ -104,7 +104,7 @@ class ChoiceQuestion < ActiveRecord::Base
   end
 
   # Makes a deep copy of the ChoiceQuestion (when cloning a page)
-  # 
+  #
   # @param [Page] page the page to be cloned onto
   # @return [ChoiceQuestion] the cloned copy
   def copy_to_page(page)

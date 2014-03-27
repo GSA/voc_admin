@@ -1,9 +1,7 @@
 <div id="newSurvey">
 	<%= form_for(@survey) do |f| %>
 	  <% if @survey.errors.any? %>
-	    <div id="error_explanation">
 	      <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
-	    </div>
 	  <% end %>
 
 	  <p class="copy">

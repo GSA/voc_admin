@@ -17,6 +17,7 @@ class TextQuestionsController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/new(.:format)
   def new
     @text_question = @survey_version.text_questions.build
+    @page = Page.find_by_id(params[:page_id])
     respond_to do |format|
       format.html #
       format.js
