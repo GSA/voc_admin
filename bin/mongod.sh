@@ -4,7 +4,7 @@
 
 set -e
 
-mongod="/usr/local/bin/mongod"
+mongod=$(command -v mongod)
 script_dir=$( cd $(dirname $0) ; pwd -P )
 config_dir="${script_dir}/../config"
 config_file="${config_dir}/mongod.conf"
@@ -13,6 +13,14 @@ data_dir="${script_dir}/../db/mongo_data/"
 logfile="${script_dir}/../log/mongod.log"
 
 RETVAL=0
+
+check_for_mongod() {
+  if ! command -v ${mongod} > /dev/null 2>&1; then
+    echo "Mongo DB is not installed."
+    echo "MongoDB is required to run the VOC application."
+    exit 1
+  fi
+}
 
 start() {
   if [[ -e ${pid_file} ]]; then
@@ -74,6 +82,9 @@ stop() {
     fi
   fi
 }
+
+check_for_mongod
+RETVAL=$?
 
 case "$1" in
   start)

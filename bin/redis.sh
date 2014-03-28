@@ -5,7 +5,7 @@
 # Stop the script if there is an error in a subprocess
 set -e
 
-redis="/usr/local/bin/redis-server"
+redis=$(command -v redis-server)
 script_dir=$( cd $(dirname $0) ; pwd -P )
 config_dir="${script_dir}/../config"
 config_file="${config_dir}/redis.conf"
@@ -13,6 +13,14 @@ pid_file="${script_dir}/../tmp/pids/redis.pid"
 logfile="${script_dir}/../log/redis.log"
 
 RETVAL=0
+
+check_for_redis_server() {
+  if ! command -v redis-server > /dev/null 2>&1;then
+    echo "Redis is not installed!"
+    echo "Redis must be installed to run VOC."
+    exit 1
+  fi
+}
 
 start() {
   if [[ -e ${config_file} ]]; then
@@ -53,6 +61,8 @@ stop() {
     fi
   fi
 }
+
+check_for_redis_server
 
 case "$1" in
   start)
