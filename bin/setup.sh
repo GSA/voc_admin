@@ -2,6 +2,10 @@
 
 ruby_version="ruby"
 
+function pause() {
+  read -p "$*"
+}
+
 # Load RVM into a shell session *as a function*
 if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
   # First try to load from a user install
@@ -43,6 +47,27 @@ done
 echo "copying config file: config/database.yml.${ruby_version}_example"
 cp -i "config/database.yml.${ruby_version}_example" "config/database.yml"
 
+read -d '' notice <<"NOTICE"
+
+Configuration example files have been copied to config/*.yml
+
+Please make sure to go into the config files and update the settings for your
+environment before continuing as the next steps will use the configuration
+files.
+
+NOTICE
+
+echo "**********************************"
+echo "$notice"
+echo "**********************************"
+
+pause 'press [Enter] key to continue...'
+
+# MySQL, Redis, and MongoDB must be running in order to run migrations.
+bin/start_all.sh
+
 # Setup the database.
-# db:setup runs: rake db:create; db:migrate; db:seed
-#rake db:setup
+rake db:create
+rake db:migrate
+rake db:seed
+rake db:mongoid:create_indexes
