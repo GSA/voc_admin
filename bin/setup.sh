@@ -1,5 +1,7 @@
 #!/bin/bash --login
 
+ruby_version="ruby"
+
 # Load RVM into a shell session *as a function*
 if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
   # First try to load from a user install
@@ -33,8 +35,13 @@ bundle install
 
 example_files=$( find config -name *.yml.example )
 for file in $example_files; do
-  echo "$file"
+  echo "copying config file: ${file%.example}"
+  cp -i $file ${file%.example}
 done
+
+# config/database.yml is a special case due to ruby/jruby examples
+echo "copying config file: config/database.yml.${ruby_version}_example"
+cp -i "config/database.yml.${ruby_version}_example" "config/database.yml"
 
 # Setup the database.
 # db:setup runs: rake db:create; db:migrate; db:seed
