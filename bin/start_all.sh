@@ -39,4 +39,4 @@ else
 fi
 
 echo "Congratulations! You are now ready to start running Comment Tool."
-
+echo "Use `rails s -p <port>` to run the rails server."
