@@ -2,14 +2,17 @@
   <tr>
   	<th class="col1" scope="col">Edit</th>
     <th class="col2" scope="col">User Name</th>
-    <th class="col3" scope="col">Email</th>
+    <th class="col3" scope="col">Role</th>
+    <th class="col4" scope="col">Email</th>
+    <th class="col5" scope="col">Delete</th>
   </tr>
   <% for user in users %>
     <tr class="<%= cycle('gray','white') %>">
       <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_user_path(user), :remote => true %></td>
       <td class="col2"><%= link_to user.f_name + " ".html_safe + user.l_name, user %></td>
-      <td class="col3"><%= user.email %></td>
-      <td class="col4"><%= link_to image_tag('delete.png', :alt=>"Delte"), user, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+      <td class="col3"><%= user.role.nil? ? 'User' : user.role.name %></td>
+      <td class="col4"><%= user.email %></td>
+      <td class="col5"><%= link_to image_tag('delete.png', :alt=>"Delte"), user, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
     </tr>
   <% end %>
 </table>

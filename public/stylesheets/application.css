@@ -904,13 +904,23 @@ fieldset#inmodal legend {
 
 /**** Users Table ****/
 #usersTable .col1 {
-  width: 50px;
+  width: 30px;
+  text-align: center;
 }
 #usersTable .col2 {
-  width: 406px;
+  width: 306px;
 }
 #usersTable .col3 {
+  width: 50px;
+  text-align: center;
+  padding-right: 30px;
+}
+#usersTable .col4 {
   width: 406px;
+}
+#usersTable .col5 {
+  width: 50px;
+  text-align: center;
 }
 
 /**** Site Tables ****/
