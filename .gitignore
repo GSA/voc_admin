@@ -4,8 +4,10 @@
 .ruby-version
 .rvmrc
 config/*.yml
+config/*.conf
 coverage/
 db/*.sqlite3
+db/mongo_data
 exports/
 log/*.log
 mails/
@@ -13,3 +15,4 @@ tmp/
 config/*.yml
 .rvmrc
 db/schema.rb
+db/dumps
