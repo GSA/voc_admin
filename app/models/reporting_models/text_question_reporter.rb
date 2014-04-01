@@ -1,6 +1,6 @@
 class TextQuestionReporter < QuestionReporter
   include ActionView::Helpers::NumberHelper
-  include ActionView::Helpers::SanitizeHelper 
+  include ActionView::Helpers::SanitizeHelper
   include Rails.application.routes.url_helpers
 
   field :q_id, type: Integer    # TextQuestion id
@@ -43,6 +43,7 @@ class TextQuestionReporter < QuestionReporter
       answer_values = raw_response.answer.try(:downcase).try(:scan, /[\w'-]+/)
       add_answer_values(answer_values, raw_response.created_at)
     end
+    self.question_text = question.question_content.statement
     self.counts_updated_at = update_time
     save
   end
@@ -108,7 +109,7 @@ class TextQuestionReporter < QuestionReporter
       additional_words = words_array[answer_limit..-1]
       words_array = words_array[0...answer_limit]
     end
-    words_array = words_array.map do |word, count| 
+    words_array = words_array.map do |word, count|
       "#{sanitize(word)}: #{number_with_delimiter(count)} (#{word_percent(count, total_answered)})"
     end
     # Don't add Other Words for now

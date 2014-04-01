@@ -65,7 +65,7 @@ class ChoiceQuestionReporter < QuestionReporter
       additional_reporters = answer_reporters[answer_limit..-1]
       answer_reporters = answer_reporters[0...answer_limit]
     end
-    answer_array = answer_reporters.map do |car| 
+    answer_array = answer_reporters.map do |car|
       "#{car[0]}: #{number_with_delimiter(car[1])} (#{answer_percent(car[1], total_answered)})"
     end
     if limit_answers
@@ -116,6 +116,7 @@ class ChoiceQuestionReporter < QuestionReporter
     responses_to_add(question.question_content).find_each do |raw_response|
       add_raw_response(raw_response, choice_answer_hash)
     end
+    self.question_text = question.question_content.statement
     self.counts_updated_at = update_time
     save
   end
@@ -158,7 +159,7 @@ class ChoiceQuestionReporter < QuestionReporter
       csv << ["Question", "Answer", "Count", "Percent"]
       answer_reporters = ordered_choice_answer_reporters_for_date_range(start_date, end_date)
       total_answered = answered_for_date_range(start_date, end_date)
-      answer_array = answer_reporters.map do |car| 
+      answer_array = answer_reporters.map do |car|
         [car[0], number_with_delimiter(car[1]), answer_percent(car[1], total_answered)]
       end
       first_line = [question_text]
