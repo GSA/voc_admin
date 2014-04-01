@@ -6,7 +6,7 @@ require 'csv'
 class SurveyResponsesController < ApplicationController
 
   # Used to limit the passthrough effects of params when updating or deleting SurveyResponses and the grid needs updating.
-  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id]
+  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr]
 
   # GET    /survey_responses(.:format)
   def index
@@ -25,6 +25,18 @@ class SurveyResponsesController < ApplicationController
 
   # GET    /survey_responses/:id/edit(.:format)
   def edit
+    if params[:id] == 'next_page'
+      params[:page] ||= 1
+      params[:page] = params[:page].to_i + 1
+    elsif params[:id] == 'previous_page'
+      params[:page] = params[:page].to_i - 1
+    end
+    build_survey_version_and_responses
+    if params[:id] == 'next_page'
+      params[:id] = @survey_responses.first.id.to_s
+    elsif params[:id] == 'previous_page'
+      params[:id] = @survey_responses[-1].id.to_s # Using #last gives the last record of all responses for some reason
+    end
     @survey_response = SurveyResponse.find(params[:id])
   end
 

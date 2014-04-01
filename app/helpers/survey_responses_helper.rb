@@ -91,4 +91,40 @@ module SurveyResponsesHelper
       answer_values
     end
   end
+
+  def previous_survey_response_link
+    return unless @survey_responses.try(:size) > 0 && current_survey_response_location
+    if current_survey_response_location == 0
+      if @survey_responses.first_page?
+        return
+      else
+        new_id = 'previous_page'
+      end
+    else
+      new_id = @survey_responses[current_survey_response_location - 1].id
+    end
+    previous_path = edit_survey_response_path(new_id, {:survey_id => params[:survey_id]}.merge(params.slice(*SurveyResponsesController::POST_PARAMS)))
+    link_to "Previous", previous_path
+  end
+
+  def next_survey_response_link
+    return unless @survey_responses.try(:size) > 0 && current_survey_response_location
+    if current_survey_response_location == @survey_responses.size - 1
+      if @survey_responses.last_page?
+        return
+      else
+        new_id = 'next_page'
+      end
+    else
+      new_id = @survey_responses[current_survey_response_location + 1].id
+    end
+    next_path = edit_survey_response_path(new_id, {:survey_id => params[:survey_id]}.merge(params.slice(*SurveyResponsesController::POST_PARAMS)))
+    link_to "Next", next_path
+  end
+
+  private
+
+  def current_survey_response_location
+    @current_survey_response_location ||= @survey_responses.index {|sr| sr.id.to_s == params[:id].to_s}
+  end
 end
