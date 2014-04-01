@@ -55,6 +55,7 @@ class TextQuestionsController < ApplicationController
 
     respond_to do |format|
       if @text_question.update_attributes(params[:text_question])
+        @survey_version.mark_reports_dirty! if @survey_version.published?
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully updated text question."}
       else
         format.html {render :action => 'edit'}

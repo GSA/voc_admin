@@ -362,6 +362,14 @@ class SurveyVersion < ActiveRecord::Base
     @page_hash
   end
 
+  def mark_reports_dirty!
+    update_attribute :dirty_reports, true
+  end
+
+  def mark_reports_clean!
+    update_attribute :dirty_reports, false
+  end
+
   private
 
   # hash of question used by pages_for_survey_version

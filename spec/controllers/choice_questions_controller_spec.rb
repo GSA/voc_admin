@@ -137,6 +137,18 @@ describe ChoiceQuestionsController do
 
       response.should render_template('shared/_element_create')
     end
+
+    it 'should mark the survey_version reports dirty if survey_version is published', focus: true do
+      choice_question.stub(:update_attributes).and_return true
+      survey_version.stub(:published?).and_return true
+      survey_version.should_receive :mark_reports_dirty!
+      put :update, survey_id: survey.id, survey_version_id: survey_version.id,
+        id: choice_question.id
+    end
+
+    it 'should not mark the survey version reports dirt if the survey version is not published' do
+
+    end
   end
 
   context 'destroy' do

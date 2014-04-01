@@ -98,6 +98,11 @@ class SurveyVersionsController < ApplicationController
     if @survey_version.total_questions_asked > 0
       @question_skip_rate = @survey_version.total_questions_skipped * 100.0 / @survey_version.total_questions_asked
     end
+
+    if @survey_version.dirty_reports?
+      flash.now[:error] = "The survey version has been edited.  Reports and Dashboards for this survey
+        version may not be accurate until the next report generation is completed."
+    end
   end
 
   private

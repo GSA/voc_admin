@@ -25,6 +25,13 @@ describe SurveyVersion do
     @version.save!
   end
 
+  context "mark_reports_dirty!" do
+    it "should set dirty_reports to true" do
+      @version.mark_reports_dirty!
+      @version.dirty_reports?.should == true
+    end
+  end
+
   context "scope tests" do
     context "published scope" do
       it "should include published SurveyVersions" do
@@ -115,7 +122,7 @@ describe SurveyVersion do
 
     it "should return a source array to be used in rule creation" do
       sources = @version.sources
-      
+
       sources.should have(3).Array
       sources.each do |s|
         s.should have(2).String
@@ -134,7 +141,7 @@ describe SurveyVersion do
         o.should have(2).String
         o.second.should match(/\d+/)
       end
-      
+
       options.first.first.should match(/Rspec Choice Question response/)
       options.second.first.should match(/Rspec Text Question response/)
       options.third.first.should match(/Matrix Question 1: Row 1 response/)
@@ -230,7 +237,7 @@ describe SurveyVersion do
     @matrix = MatrixQuestion.new
 
     @matrix.build_survey_element(
-      :element_order => 3, 
+      :element_order => 3,
       :survey_version => @version,
       :page => @page
     )
