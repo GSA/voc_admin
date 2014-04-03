@@ -27,5 +27,30 @@ namespace :fix_db do
     puts " "
     puts "You can exit when it reports 'Reverted.'"
   end
-end
 
+  desc "create join table entries for existing questions and display_field relationships"
+  task :populate_display_field_question_table => [:environment] do
+    QuestionContent.find_in_batches do |question_contents|
+      question_contents.each do |question_content|
+        next if question_content.matrix_question?
+        name = if question_content.questionable_type == "ChoiceQuestion" &&
+          question_content.questionable.matrix_question.present?
+            "#{question_content.questionable.matrix_question.question_content.statement}: #{question_content.statement}"
+          else
+            question_content.statement
+          end
+        next if question_content.survey_version.nil?
+        display_field = question_content.survey_version.display_fields
+          .find_by_name(name)
+
+        if display_field.nil?
+          puts "Did not find a display field for QC: #{question_content.id}"
+          next
+        else
+          puts "Adding DisplayField: #{display_field.id} to QuestionContent: #{question_content.id}"
+          question_content.display_fields << display_field
+        end
+      end
+    end
+  end
+end

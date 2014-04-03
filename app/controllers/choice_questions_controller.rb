@@ -48,6 +48,7 @@ class ChoiceQuestionsController < ApplicationController
     @choice_question = ChoiceQuestion.find(params[:id])
     respond_to do |format|
       if @choice_question.update_attributes(params[:choice_question])
+        @survey_version.mark_reports_dirty! if @survey_version.published?
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully updated choice question."}
       else
         format.html {render :action => 'edit'}

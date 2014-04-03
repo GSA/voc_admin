@@ -7,7 +7,7 @@ class QuestionContentObserver < ActiveRecord::Observer
 
   # Creates a DisplayField and a Rule for each TextQuestion or ChoiceQuestion
   # (incl. those contained within a MatrixQuestion.)
-  # 
+  #
   # @param [QuestionContent] question_content the QuestionContent being observed
   def after_create(question_content)
     return if question_content.matrix_question? || question_content.skip_observer
@@ -30,7 +30,7 @@ class QuestionContentObserver < ActiveRecord::Observer
   end
 
   # Updates the names of associated display fields when QuestionContent.statement changes
-  # 
+  #
   # @param [QuestionContent] question_content the QuestionContent being observed
   def after_update(question_content)
     return unless question_content.statement_changed?
@@ -65,6 +65,7 @@ class QuestionContentObserver < ActiveRecord::Observer
       :survey_version_id => question_content.survey_version.id,
       :editable => false
     )
+    question_content.display_fields << display_field
     display_field
   end
 

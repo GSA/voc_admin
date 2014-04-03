@@ -97,54 +97,6 @@ describe MatrixQuestionsController do
     q.tap { |mq| mq.save!}
   end
 
-  # context 'remove_sub_question_display_field_and_rules' do
-  #   it 'should delete the subquestion display field' do
-  #     matrix_question
-  #     question_attributes = {
-  #       :question_content_attributes=>{
-  #         :required=>"false",
-  #         :_destroy=>"false",
-  #         :statement=>"Sub Question 1",
-  #         :matrix_statement => "Test Matrix Question"
-  #       },
-  #       :answer_type => "radio",
-  #       :choice_answers_attributes => {
-  #         "0" => { "answer" => "answer1" }
-  #       }
-  #     }
-
-  #     DisplayField.count.should == 2
-  #     Rule.count.should == 2
-
-  #     expect {
-  #       MatrixQuestionsController.new.send(:remove_sub_question_display_field_and_rules, matrix_question, question_attributes)
-  #     }.to change {DisplayField.count}.by(-1)
-  #   end
-
-  #   it 'should delete the subquestion rule' do
-  #     matrix_question
-  #     question_attributes = {
-  #       :question_content_attributes=>{
-  #         :required=>"false",
-  #         :_destroy=>"false",
-  #         :statement=>"Sub Question 1",
-  #         :matrix_statement => "Test Matrix Question"
-  #       },
-  #       :answer_type => "radio",
-  #       :choice_answers_attributes => {
-  #         "0" => { "answer" => "answer1" }
-  #       }
-  #     }
-
-  #     DisplayField.count.should == 2
-  #     Rule.count.should == 2
-
-  #     expect {
-  #       MatrixQuestionsController.new.send(:remove_sub_question_display_field_and_rules, matrix_question, question_attributes)
-  #     }.to change {Rule.count}.by(-1)
-  #   end
-  # end
-
   context 'new' do
     # GET /matrix_questions/new
     it 'should assign a new matrix question to @matrix_question' do
@@ -400,6 +352,14 @@ describe MatrixQuestionsController do
         choice_answer_attributes: answer_attributes
 
     end
+
+    # it 'should mark the survey_version as dirty if survey_version is published', focus: true do
+    #   matrix_question.stub(:update_attributes).and_return true
+    #   survey_version.update_attribute :published, true
+    #   survey_version.should_receive :mark_reports_dirty!
+    #   put :update, survey_id: survey.id, survey_version_id: survey_version.id,
+    #     id: matrix_question.id
+    # end
 
   end # PUT /matrix_questions/:id
 

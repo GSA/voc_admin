@@ -47,7 +47,7 @@ class SurveyVersionReporter
   def find_or_create_choice_question_reporter(choice_question)
     choice_question_reporter = choice_question_reporters.where(q_id: choice_question.id).first
     return choice_question_reporter if choice_question_reporter
-    choice_question_reporters.create(q_id: choice_question.id, 
+    choice_question_reporters.create(q_id: choice_question.id,
         qc_id: choice_question.question_content.id,
         se_id: choice_question.survey_element.id,
         question_text: choice_question.question_content.statement)
@@ -56,7 +56,7 @@ class SurveyVersionReporter
   def find_or_create_text_question_reporter(text_question)
     text_question_reporter = text_question_reporters.where(q_id: text_question.id).first
     return text_question_reporter if text_question_reporter
-    text_question_reporters.create(q_id: text_question.id, 
+    text_question_reporters.create(q_id: text_question.id,
         qc_id: text_question.question_content.id,
         se_id: text_question.survey_element.id,
         question_text: text_question.question_content.statement)
@@ -72,6 +72,7 @@ class SurveyVersionReporter
     update_questions_skipped_and_asked
     self.counts_updated_at = Time.now
     save
+    survey_version.mark_reports_clean!
   end
 
   def question_reporters

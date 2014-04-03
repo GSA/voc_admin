@@ -55,7 +55,8 @@ class MatrixQuestionsController < ApplicationController
   # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)
   def update
     @matrix_question = MatrixQuestion.find(params[:id])
-    choice_questions = params[:matrix_question][:choice_questions_attributes]
+    choice_questions = params.fetch(:matrix_question, {})
+      .fetch(:choice_questions_attributes, {})
 
     choice_answer_attributes = params[:choice_answer_attributes] || {}
     choice_questions.each {|key, value| value.deep_merge!({:choice_answers_attributes => choice_answer_attributes,
@@ -64,6 +65,7 @@ class MatrixQuestionsController < ApplicationController
     respond_to do |format|
       if @matrix_question.update_attributes(params[:matrix_question])
         @matrix_question.remove_deleted_sub_questions(choice_questions)
+        @survey_version.mark_reports_dirty! if @survey_version.published?
         format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
       else
         format.html {render :partial => 'new_matrix_question', :locals => {:survey => @survey_version.survey, :survey_version => @survey_version} }

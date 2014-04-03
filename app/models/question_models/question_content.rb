@@ -6,7 +6,9 @@ class QuestionContent < ActiveRecord::Base
   belongs_to :questionable, :polymorphic => true, :dependent => :destroy
   has_many :criteria, :as => :source
   has_many :raw_responses, :foreign_key => "question_content_id" # likely currently unused. had a typo
-
+  has_many :question_content_display_fields
+  has_many :display_fields, through: :question_content_display_fields
+  
   validates :statement, :presence => true
 
   attr_accessible :statement, :question_number, :flow_control, :required, :questionable, :matrix_statement, :skip_observer
@@ -34,7 +36,7 @@ class QuestionContent < ActiveRecord::Base
 
   # Finds the original QuestionContent on a specified SurveyVersion from which
   # the calling Question was cloned.
-  # 
+  #
   # @param [SurveyVersion] clone_survey_version the SurveyVersion to search within
   # @return [QuestionContent, nil] the matching QuestionContent or nil
   def find_my_clone_for(clone_survey_version)

@@ -72,5 +72,4 @@ describe ChoiceQuestion do
     cloned_question.choice_answers.first.answer.should == @choice_question.choice_answers.first.answer
   end
 
-
 end

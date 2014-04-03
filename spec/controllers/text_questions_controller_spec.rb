@@ -135,6 +135,14 @@ describe TextQuestionsController do
 
       response.should render_template('shared/_element_create')
     end
+
+    it 'should call mark_reports_dirty! if survey is published.' do
+      text_question.stub(:update_attributes).and_return(true)
+      survey_version.stub(:published?).and_return(true)
+      survey_version.should_receive(:mark_reports_dirty!)
+      put :update, survey_id: survey.id, survey_version_id: survey_version.id,
+        id: text_question.id
+    end
   end
 
   context 'destroy' do
