@@ -6,7 +6,9 @@ class ChoiceAnswer < ActiveRecord::Base
   belongs_to :page, :foreign_key => :next_page_id
 
   validates :answer, :presence => true, :length => {:in => 1..255}
-  
+
+  after_update :update_display_field_values
+
   # ChoiceQuestion is represented as Radio buttons
   RADIO = "radio"
   # ChoiceQuestion is represented as Checkboxes
@@ -22,6 +24,18 @@ class ChoiceAnswer < ActiveRecord::Base
   # Before save, removes any trailing record separators or carriage returns.
   def chomp_answer
     self.answer.chomp!
+  end
+
+  def update_display_field_values
+    if choice_question.survey_version.published? && answer_changed?
+      display_field_ids = choice_question.display_fields.map(&:id)
+      DisplayFieldValue.where(
+        display_field_id: display_field_ids,
+        value: answer_was
+      ).update_all(
+        value: answer
+      )
+    end
   end
 end
 

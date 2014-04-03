@@ -353,13 +353,13 @@ describe MatrixQuestionsController do
 
     end
 
-    it 'should mark the survey_version as dirty if survey_version is published', focus: true do
-      matrix_question.stub(:update_attributes).and_return true
-      survey_version.update_attribute :published, true
-      survey_version.should_receive :mark_reports_dirty!
-      put :update, survey_id: survey.id, survey_version_id: survey_version.id,
-        id: matrix_question.id
-    end
+    # it 'should mark the survey_version as dirty if survey_version is published', focus: true do
+    #   matrix_question.stub(:update_attributes).and_return true
+    #   survey_version.update_attribute :published, true
+    #   survey_version.should_receive :mark_reports_dirty!
+    #   put :update, survey_id: survey.id, survey_version_id: survey_version.id,
+    #     id: matrix_question.id
+    # end
 
   end # PUT /matrix_questions/:id
 

@@ -370,6 +370,16 @@ class SurveyVersion < ActiveRecord::Base
     update_attribute :dirty_reports, false
   end
 
+  def run_rules_for_display_field(display_field)
+    rules.includes(:actions).where(actions: { display_field_id: display_field.id })
+        .each do |rule|
+      puts "*"*100
+      puts "Starting job for rule: #{rule.id}"
+      puts "*"*100
+      RuleJob.create id: rule.id
+    end
+  end
+
   private
 
   # hash of question used by pages_for_survey_version
