@@ -96,7 +96,21 @@
     <div class="right_side">
       <%= f.text_field :invitation_reject_button_text %>
     </div>
-    
+    <br/>
+    <div class="left_side">
+      <%= f.label :alarm, "Enable Daily Alarm Notifications: " %>
+    </div>
+    <div class="right_side">
+      <%= f.check_box :alarm %>
+    </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :alarm_notification_email, "Daily Alarm Notifications Email:" %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :alarm_notification_email %>
+    </div>
+
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>

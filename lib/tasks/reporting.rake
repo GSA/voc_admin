@@ -10,6 +10,8 @@ namespace :reporting do
     puts "Mailing recurring reports..."
     Rake::Task["reporting:mail_recurring_reports"].execute
     puts "  Finished updating survey version counts."
+    Rake::Task["alarm:notifications"].execute
+    puts " Finished sending alarm notifications out for survey responses"
   end
 
   desc "Update counts on survey version"
