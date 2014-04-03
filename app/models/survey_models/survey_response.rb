@@ -70,6 +70,9 @@ class SurveyResponse < ActiveRecord::Base
     end
   end)
 
+  #used for alarm notifications
+  scope :created_between, lambda {|start_date, end_date| where("created_at >= ? AND created_at <= ?", start_date, end_date )}
+
   scope :processed, where(:status_id => Status::DONE)
 
   # kaminari setting
@@ -77,7 +80,7 @@ class SurveyResponse < ActiveRecord::Base
 
   # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
-  # 
+  #
   # @param [Hash] response the response parameter hash to process from the controller
   # @param [Integer] survey_version_id the id of the SurveyVersion
   def self.process_response(response, survey_version_id)
