@@ -9,9 +9,10 @@ namespace :reporting do
     puts "  Finished loading question reporting DB."
     puts "Mailing recurring reports..."
     Rake::Task["reporting:mail_recurring_reports"].execute
-    puts "  Finished updating survey version counts."
+    puts "  Finished recurring reports."
+    puts "Sending out alarm notifications for surveys..."
     Rake::Task["alarm:notifications"].execute
-    puts " Finished sending alarm notifications out for survey responses"
+    puts " Finished sending alarm notifications"
   end
 
   desc "Update counts on survey version"
