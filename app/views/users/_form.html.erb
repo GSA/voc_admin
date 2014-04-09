@@ -31,6 +31,7 @@
 	  <div class="right_side">
 	  	<%= f.text_field :email %>
 	  </div>
+      <%= f.hidden_field :password, "see_ldap" %>
 		<br />
 
 	  <% if @current_user.admin? %>
