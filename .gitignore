@@ -13,3 +13,4 @@ tmp/
 config/*.yml
 .rvmrc
 db/schema.rb
+.DS_Store
