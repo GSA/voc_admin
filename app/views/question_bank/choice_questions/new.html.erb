@@ -16,7 +16,6 @@
     <%= render :partial => 'choice_answer_fields', :locals => {:f => answer_builder} %>
   <% end %>
 
-
   <span><%= link_to_add_fields "Add Answer", f, :choice_answers, 'choice_answer_fields' %></span>
 
   <div id="answer_placement_fields" <%= answer_placement_visibility(f, @choice_question) %>>
@@ -29,5 +28,8 @@
     <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
   </div>
 
-  <%= f.submit %>
+  <div class="pageLink">
+    <%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close" %>
+    <%= f.submit %>
+  </div>
 <% end -%>

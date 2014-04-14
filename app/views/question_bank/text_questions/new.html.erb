@@ -18,5 +18,8 @@
     <%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
   <% end -%>
 
-  <%= f.submit %>
+  <div class="pageLink">
+    <%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close" %>
+    <%= f.submit %>
+  </div>
 <% end -%>
