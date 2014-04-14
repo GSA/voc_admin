@@ -12,7 +12,7 @@ class SurveyElement < ActiveRecord::Base
 
   # If this is not a clone operation, sets element order. This is because cloning
   # already has element orders set, and element clone order is non deterministic.
-  # 
+  #
   # Triggered through accepts_nested_attributes_for on the individual survey element type ("caller").
   before_validation :set_element_order, :on => :create, :if =>  Proc.new {|object|
     # test the caller's member objects to ensure this isn't a clone operation
@@ -55,7 +55,7 @@ class SurveyElement < ActiveRecord::Base
   end
 
   # Moves a SurveyElement to the end of its Page.
-  # 
+  #
   # @return [false, Integer] false if no Page association exists, otherwise the determined element order
   def move_to_end_of_page
     return false if self.page_id.nil?
@@ -64,7 +64,7 @@ class SurveyElement < ActiveRecord::Base
 
   # Moves the element from any source Page to any destination Page, optionally specifying
   # an element order position.  Note: source and destination Pages may be the same.
-  # 
+  #
   # @param [Integer] page_num the destination Page id
   # @param [Integer] new_element_order an optional new element order
   def move_element(page_num, new_element_order = nil)
@@ -172,8 +172,15 @@ class SurveyElement < ActiveRecord::Base
     if self.new_record?
       return false unless self.page && self.survey_version
 
-      new_element_order = self.survey_version.survey_elements.includes(:page).where('pages.page_number <= ?', self.page.page_number).maximum(:element_order).to_i + 1
-      self.survey_version.survey_elements.update_all('survey_elements.element_order = survey_elements.element_order + 1', ['survey_elements.element_order >= ?', new_element_order])
+      new_element_order = self.survey_version.survey_elements.includes(:page)
+        .where(:pages => { :page_number => page.page_number })
+        .maximum(:element_order).to_i + 1
+
+      self.survey_version.survey_elements.update_all(
+        'survey_elements.element_order = survey_elements.element_order + 1',
+        ['survey_elements.element_order >= ? and page_id = ?', new_element_order,
+          page.id]
+      )
       self.element_order = new_element_order
     end
   end
