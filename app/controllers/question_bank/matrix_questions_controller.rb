@@ -25,4 +25,10 @@ class QuestionBank::MatrixQuestionsController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    @matrix_question = MatrixQuestion.find params[:id]
+    @matrix_question.destroy
+    redirect_to question_bank_path
+  end
 end
