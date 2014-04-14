@@ -1,0 +1,8 @@
+<% modal = render(
+    partial: 'select_question_to_add',
+    survey_version: @survey_version
+  )
+%>
+
+$("#edit_modal").html("<%= escape_javascript(modal) %>").
+  modal({autoResize:true, maxHeight:'100%', minWidth:'330px', maxWidth:'500px'});

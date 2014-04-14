@@ -1,0 +1,18 @@
+<p class="modalTitle">Question Bank</p>
+<ol>
+  <% @question_bank.questions.each do |question| %>
+    <li>
+      <%= question.statement %>
+      <%= button_to "Add", add_question_from_question_bank_path(
+          survey_version_id: @survey_version.id,
+          page_id: @page.id,
+          question_id: question.id,
+          question_type: question.class.to_s
+        ),
+        remote: true
+      %>
+    </li>
+  <% end %>
+</ol>
+
+<%= link_to "Close", nil, class: "simplemodal-close" %>

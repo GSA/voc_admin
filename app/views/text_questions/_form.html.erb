@@ -2,7 +2,7 @@
 
   <% unless survey_version.locked? %>
     <fieldset id="inmodal">
-      <legend>Answer Type:</legend> 
+      <legend>Answer Type:</legend>
       <%= f.radio_button :answer_type, "field", :id => "text_question_field_radio_button" %><%= f.label :field_radio_button, "Field" %>
       <%= f.radio_button :answer_type, "area", :id => "text_question_area_radio_button" %><%= f.label :area_radio_button, "Area" %>
     </fieldset>
@@ -18,18 +18,16 @@
 		<%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
 	<% end -%>
 	<br />
-	
+
 	<%= render :partial => 'shared/survey_element_fields', :locals => {:f => f, :object => text_question, :survey => survey, :survey_version => survey_version} %>
 	<br />
 	<div class="pageLink">
 		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close"%>
 		<% if f.object.new_record? %>
-			
+
 			<%= image_submit_tag "create-question.png", :alt=>"Create Question" %>
-			<%#= f.submit "Create Question", :type => :image, :src=>"/images/create-question.png", :alt=>"Create Question" #%>
 		<% else %>
 			<%= image_submit_tag "update-question.png", :alt=>"Update Question" %>
-			<%#= f.submit "Update Question", :type => :image, :src=>"/images/update-question.png", :alt=>"Update Question" # %>
 		<% end %>
 	</div>
 <% end -%>

@@ -1,0 +1,13 @@
+<ol>
+  <% @question_bank.questions.each do |question| %>
+    <li>
+      <%= question.statement %>
+    </li>
+  <% end %>
+</ol>
+
+<div>
+  <%= link_to "Add Text Question", new_question_bank_text_question_path %>
+  <%= link_to "Add Choice Question", new_question_bank_choice_question_path %>
+  <%= link_to "Add Matrix Question", new_question_bank_matrix_question_path %>
+</div>

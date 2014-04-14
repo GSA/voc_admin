@@ -1,0 +1,13 @@
+<p class="answer_fields">
+  <%= f.label :answer, "Answer: " %>
+  <%= f.text_field :answer %>
+
+    <%= f.label :is_default, "Default?" %>
+    <%= f.check_box :is_default %>
+    <%= link_to_function image_tag('arrow_up_larger.png', :alt=>"move up"), "swapAnswers(this,'up')" %>
+    <%= link_to_function image_tag('arrow_down_larger.png', :alt=>"move down"), "swapAnswers(this, 'down')" %>
+
+    <%= f.hidden_field :_destroy %>
+    <%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
+
+</p>

@@ -72,16 +72,18 @@ class ChoiceQuestion < ActiveRecord::Base
   #
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [ChoiceQuestion] the cloned ChoiceQuestion
-  def clone_me(target_sv)
+  def clone_me(target_sv, target_page = nil)
     return unless self.survey_element
     #build question content
     qc_attribs = self.question_content.attributes
     qc_attribs.delete("id")
 
+    target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
+
     #build Survey Element
     se_attribs = self.survey_element.attributes.merge(
       :survey_version_id=>target_sv.id,
-      :page_id=>(target_sv.pages.find_by_clone_of_id(self.survey_element.page_id).id))
+      :page_id=>target_page.id)
     se_attribs.delete("id")
 
     #build Choice Answers
@@ -92,17 +94,21 @@ class ChoiceQuestion < ActiveRecord::Base
 
       #update the next page pointer
       if answer_hash["next_page_id"]
-        answer_hash["next_page_id"] = (Page.find_by_survey_version_id_and_clone_of_id( target_sv.id, choice_answer.next_page_id).id)
+        answer_hash["next_page_id"] = (Page.find_by_survey_version_id_and_clone_of_id( target_sv.id,
+          choice_answer.next_page_id).id)
       end
       answer_hash
     end
 
-    #save it all
-    ChoiceQuestion.create!(self.attributes.merge(
-                             :question_content_attributes=>qc_attribs.merge(:skip_observer => true),
-                             :survey_element_attributes=>se_attribs,
-                             :choice_answers_attributes=>ca_attribs,
-                             :clone_of_id => (self.id)))
+    choice_question = ChoiceQuestion.new self.attributes.merge(
+     :question_content_attributes=>qc_attribs.merge(:skip_observer => true),
+     :survey_element_attributes=>se_attribs,
+     :choice_answers_attributes=>ca_attribs,
+     :clone_of_id => (self.id)
+    )
+
+    choice_question.save!
+    choice_question
   end
 
   # Makes a deep copy of the ChoiceQuestion (when cloning a page)
