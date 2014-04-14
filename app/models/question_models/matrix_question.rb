@@ -45,7 +45,7 @@ class MatrixQuestion < ActiveRecord::Base
   #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [MatrixQuestion] the cloned MatrixQuestion
-  def clone_me(target_sv)
+  def clone_me(target_sv, target_page = nil)
     #start matrix hash
     mq_qc_attribs = self.question_content.attributes
     mq_qc_attribs.delete("id")
@@ -57,10 +57,12 @@ class MatrixQuestion < ActiveRecord::Base
     mq_attribs.delete("id")
     mq_attribs.delete("statement")
 
+    target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
+
     #build se hash
     se_attribs = self.survey_element.attributes.merge(
                   :survey_version_id => target_sv.id,
-                  :page_id => (target_sv.pages.find_by_clone_of_id(self.survey_element.page_id).id)
+                  :page_id => (target_page.id)
                  )
     se_attribs.delete("id")
 

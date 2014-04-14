@@ -6,16 +6,18 @@ module ApplicationHelper
   # Dynamic method to build child records (e.g. ChoiceAnswers for a ChoiceQuestion)
   # via links on new/edit forms.  The partial created generates the form structure to support
   # POSTing back to create/update actions.
-  # 
+  #
   # @param [String] name the text to display within the generated link
   # @param [ActionView::Helpers::FormBuilder] f the FormBuilder from the view
   # @param [Symbol] association the child association of the FormBuilder's object
   # @return [String] HTML href link to add child records
-  def link_to_add_fields(name, f, association)
+  def link_to_add_fields(name, f, association, partial_name = nil)
     new_object = f.object.class.reflect_on_association(association).klass.new
 
+    partial_name ||= "shared/" + association.to_s.singularize + "_fields"
+
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render(:partial => "shared/" + association.to_s.singularize + "_fields", :locals => {:f => builder, :survey_version => @survey_version, :survey => @survey})
+      render(:partial => partial_name, :locals => {:f => builder, :survey_version => @survey_version, :survey => @survey})
     end
 
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"newlink")
@@ -24,7 +26,7 @@ module ApplicationHelper
   # (see link_to_add_fields)
   # A variation on link_to_add_fields - specifically adding ChoiceAnswers to
   # ChoiceQuestions associated with the MatrixQuestion.
-  # 
+  #
   # @param [String] name the text to display within the generated link
   # @return [String] HTML href link to add a ChoiceAnswer
   def link_to_add_matrix_answer(name)
@@ -34,7 +36,7 @@ module ApplicationHelper
   end
 
   # Adds sort arrow images to table DisplayField columns.
-  # 
+  #
   # @param [String] column the name of the column being sorted
   # @param [String] title optional alternate display text for the column
   # @return [String] HTML link for the column header text, with sort toggle information

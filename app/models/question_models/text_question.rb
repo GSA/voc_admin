@@ -7,25 +7,29 @@ class TextQuestion < ActiveRecord::Base
   has_one :survey_element, :as => :assetable, :dependent => :destroy
   has_one :question_content, :as => :questionable, :dependent => :destroy
   has_one :survey_version, :through => :survey_element
-  
+
+  has_many :question_bank_questions, as: :bankable, dependent: :destroy,
+    inverse_of: :bankable
+  has_many :question_banks, through: :question_bank_questions
+
   validates :answer_type, :presence => true
   validates :question_content, :presence => true
-  
+
   attr_accessible :answer_type, :question_content_attributes, :survey_element_attributes, :clone_of_id, :row_size, :answer_size
   accepts_nested_attributes_for :question_content
   accepts_nested_attributes_for :survey_element
-  
+
   delegate :statement, :required, :flow_control, :to => :question_content
-  
+
   default_scope includes(:question_content)
-  
+
   # Delegated method for Questionable.
   def get_true_value(string_value)
     string_value
   end
-  
+
   # Used by Criteria in Rules to process survey_responses against Conditionals
-  # 
+  #
   # @param [SurveyResponse] survey_response a SurveyResponse to test
   # @param [Integer] conditional_id the operator used to test
   # @param [Object] test_value the value to test
@@ -33,21 +37,23 @@ class TextQuestion < ActiveRecord::Base
     #check the survey_response for a response to this question
     raw_response = survey_response.raw_responses.detect {|rr| rr.question_content_id == self.question_content.id}
     return(false) unless raw_response
-    answer = raw_response.answer 
-    
+    answer = raw_response.answer
+
     ConditionTester.test(conditional_id, answer, test_value)
   end
 
   # Makes a deep copy of the TextQuestion (when cloning a survey)
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [TextQuestion] the cloned TextQuestion
-  def clone_me(target_sv)
+  def clone_me(target_sv, target_page = nil)
     qc_attribs = self.question_content.attributes.merge(:skip_observer => true)
     qc_attribs.delete("id")
+    target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
     se_attribs = self.survey_element.attributes.merge(
-                  :survey_version_id=>target_sv.id, 
-                  :page_id=>(target_sv.pages.find_by_clone_of_id(self.survey_element.page_id).id)
+                  :survey_version_id=>target_sv.id,
+                  :page_id=> target_page.id,
+                  :element_order => (target_page.survey_elements.maximum(:element_order) || 0) + 1
                  )
     se_attribs.delete("id")
     cloned_question = TextQuestion.new(self.attributes.merge(
@@ -58,9 +64,9 @@ class TextQuestion < ActiveRecord::Base
     cloned_question.save!
     cloned_question
   end
-  
+
   # Makes a deep copy of the TextQuestion (when cloning a Page)
-  # 
+  #
   # @param [Page] page the page to be cloned onto
   # @return [TextQuestion] the cloned copy
   def copy_to_page(page)
