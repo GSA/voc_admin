@@ -10,6 +10,9 @@ class ChoiceQuestion < ActiveRecord::Base
   has_many :choice_answers, :dependent => :destroy
   belongs_to :matrix_question
 
+  has_many :question_bank_questions, as: :bankable, dependent: :destroy
+  has_many :question_banks, through: :question_bank_questions
+
   # answer_type is how to display the choices.
   validates :answer_type, :presence => true
   validates :question_content, :presence => true

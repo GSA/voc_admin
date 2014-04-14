@@ -2,6 +2,7 @@
   <% @question_bank.questions.each do |question| %>
     <li>
       <%= question.statement %>
+      <%= button_to 'delete', [:question_bank, question], method: :delete %>
     </li>
   <% end %>
 </ol>

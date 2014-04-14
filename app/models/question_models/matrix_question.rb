@@ -7,6 +7,9 @@ class MatrixQuestion < ActiveRecord::Base
   has_many :choice_questions
   belongs_to :survey_version
 
+  has_many :question_bank_questions, as: :bankable, dependent: :destroy
+  has_many :question_banks, through: :question_bank_questions
+
   validates :question_content, :presence => true
   validate :has_choice_questions
 
