@@ -14,4 +14,10 @@ class QuestionBank::TextQuestionsController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    @text_question = TextQuestion.find params[:id]
+    @text_question.destroy
+    redirect_to question_bank_path
+  end
 end

@@ -13,4 +13,10 @@ class QuestionBank::ChoiceQuestionsController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    @choice_question = ChoiceQuestion.find params[:id]
+    @choice_question.destroy
+    redirect_to question_bank_path
+  end
 end
