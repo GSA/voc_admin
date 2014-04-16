@@ -1,7 +1,7 @@
 <div id="surveys">
 	<%= form_for(@survey) do |f| %>
 	  <% if @survey.errors.any? %>
-	    <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
+	    <%= render :partial => 'shared/errors', :locals => {:object => @survey, :object_type => 'survey'} %>
 		<% end %>
 
 		<div class="left_side">
@@ -107,6 +107,13 @@
     </div>
     <div class="right_side">
       <%= f.text_field :alarm_notification_email %>
+    </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :holding_page, "Survey Start Page HTML:" %>
+    </div>
+    <div class="right_side">
+      <%= f.text_area :holding_page, rows: 5 %>
     </div>
 
 	  <div class="pageLink">

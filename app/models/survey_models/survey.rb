@@ -10,7 +10,7 @@ class Survey < ActiveRecord::Base
   attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
   :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
   :invitation_interval, :invitation_text, :invitation_accept_button_text,
-  :invitation_reject_button_text, :alarm, :alarm_notification_email
+  :invitation_reject_button_text, :alarm, :alarm_notification_email, :holding_page
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
@@ -24,7 +24,7 @@ class Survey < ActiveRecord::Base
   validates :previous_page_text, length: { maximum: 255 }
   validates :next_page_text, length: { maximum: 255 }
   validates :submit_button_text, length: { maximum: 255 }
-  
+
   scope :get_archived,            where(:archived => true)
   scope :get_unarchived,          where(:archived => false)
   scope :get_alpha_list,          order('surveys.name asc')
