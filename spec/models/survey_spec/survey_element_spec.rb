@@ -80,20 +80,12 @@ describe SurveyElement do
     @element1.copy_to_page(@page)
   end
 
-  it "should set element_order to the next number" do
-    @element1.element_order.should eq(1)
-
-    @element2.element_order.should eq(2)
-
-    page_2 = @version.pages.create! :page_number => @version.next_page_number
-    element_3 = SurveyElement.new(:page => page_2, :survey_version => @version)
-    element_3.save!
-    element_3.element_order.should eq(3)
-
-    element_4 = SurveyElement.new(:page => @page, :survey_version => @version)
-    element_4.save!
-    element_4.element_order.should eq(3)
-    element_3.reload.element_order.should eq(4)
+  it "should set element_order to the next number for the page" do
+    page = @version.pages.first
+    element_3 = @version.survey_elements.create :assetable_type => "Asset",
+      :assetable_id => Asset.create(:snippet => "Asset 3").id,
+      :page_id => page.id
+    expect(element_3.element_order).to eq(page.survey_elements.count)
   end
 
   it "should clone it self" do # this test smells bad

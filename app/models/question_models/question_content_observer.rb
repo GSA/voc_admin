@@ -33,6 +33,7 @@ class QuestionContentObserver < ActiveRecord::Observer
   # 
   # @param [QuestionContent] question_content the QuestionContent being observed
   def after_update(question_content)
+    return if question_content.skip_observer
     return unless question_content.statement_changed?
 
     if question_content.questionable_type == "MatrixQuestion"

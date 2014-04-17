@@ -68,6 +68,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'selenium-webdriver'
 
   gem 'guard-rspec'
   gem 'growl'

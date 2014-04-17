@@ -1,13 +1,72 @@
 <% unless survey_version.pages.count == 0 %>
   <div class="surveyNav2">
-    <%= link_to "Add an open-ended question", new_survey_survey_version_text_question_path(survey_version.survey, survey_version, page_id: page_id), :class=>"newlink", :remote => true %>
-    <%= link_to "Add a multiple-choice question", new_survey_survey_version_choice_question_path(survey_version.survey, survey_version, page_id: page_id), :class=>"newlink", :remote => true %>
+  </div>
+  <div class="surveyNav1">
+  </div>
+<% else %>
+  <% unless survey_version.pages.count == 0 %>
+    <div class="surveyNav2">
+      <%= link_to "Add question from Question Bank", question_bank_path(
+          survey_version_id: survey_version.id,
+          page_id: page_id
+        ),
+        class: 'newlink',
+        remote: 'true'
+      %>
+      <%= link_to "Add an open-ended question",
+        new_survey_survey_version_text_question_path(
+          survey_version.survey,
+          survey_version,
+          page_id: page_id
+        ),
+        :class=>"newlink",
+        :remote => true
+      %>
+      <%= link_to "Add a multiple-choice question",
+        new_survey_survey_version_choice_question_path(
+          survey_version.survey,
+          survey_version,
+          page_id: page_id
+        ),
+        :class=>"newlink",
+        :remote => true
+      %>
 
-    <% if survey_version.survey.survey_type_id == SurveyType::SITE %>
-      <%= link_to "Add matrix question", new_survey_survey_version_matrix_question_path(survey_version.survey, survey_version, page_id: page_id), :class => "newlink", :remote => true %>
-    <% end %>
+      <% if survey_version.survey.survey_type_id == SurveyType::SITE %>
+        <%= link_to "Add matrix question",
+          new_survey_survey_version_matrix_question_path(
+            survey_version.survey,
+            survey_version,
+            page_id: page_id
+          ),
+          :class => "newlink",
+          :remote => true
+        %>
+      <% end %>
 
-    <%= link_to "Add snippet", new_survey_survey_version_asset_path(survey_version.survey, survey_version, page_id: page_id), :class=>"newlink link_to_new_asset", :remote => true  %>
+      <%= link_to "Add snippet",
+        new_survey_survey_version_asset_path(
+          survey_version.survey,
+          survey_version,
+          page_id: page_id
+        ),
+        :class=>"newlink link_to_new_asset",
+        :remote => true
+      %>
+    </div>
+  <% end %>
+
+  <div class="surveyNav1">
+    <%= link_to "Add New Page",
+      survey_survey_version_pages_path(
+        survey_version.survey,
+        survey_version,
+        :page => {:page_number => survey_version.pages.count + 1}
+      ),
+      :remote => true,
+      :method => :post,
+      :class=>"newlink link_to_new_page"
+    %>
   </div>
 <% end %>
 
