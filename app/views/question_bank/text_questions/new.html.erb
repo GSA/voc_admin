@@ -1,25 +1,2 @@
-<%= form_for [:question_bank, @text_question] do |f| %>
-  <% if @text_question.errors.any? %>
-    <%= render 'shared/errors', object: @text_question, object_type: 'text question' %>
-  <% end %>
-
-  <fieldset id="inmodal">
-    <legend>Answer Type:</legend>
-    <%= f.radio_button :answer_type, "field", :id => "@text_question_field_radio_button" %><%= f.label :field_radio_button, "Field" %>
-    <%= f.radio_button :answer_type, "area", :id => "@text_question_area_radio_button" %><%= f.label :area_radio_button, "Area" %>
-  </fieldset>
-  <%= f.label :answer_size, "Answer Size: " %>
-  <%= f.select :answer_size, options_for_select( [ ["50 Characters", 50], ["75 Characters", 75], ["100 Characters", 100], ["1,000 Characters", 1000], ["5,000 Characters", 5000] ], @text_question.answer_size) %>
-  <%= f.label :row_size, "Row Size: ", :class => "HiddenLabel", :for=>"RowCountSelect" %>
-  <%= f.select :row_size, options_for_select( [ ["", nil],["3 Lines", 3], ["4 Lines", 4], ["5 Lines", 5] ], @text_question.row_size), {}, :id => "RowCountSelect" %>
-
-  <% @text_question.build_question_content if @text_question.new_record? %>
-  <%= f.fields_for :question_content do |builder| %>
-    <%= render :partial => "shared/question_content_fields", :locals => {:f => builder} %>
-  <% end -%>
-
-  <div class="pageLink">
-    <%= link_to "Cancel", question_bank_path, :class => "cancelLink simplemodal-close" %>
-    <%= f.submit %>
-  </div>
-<% end -%>
+<h1>New Question Bank Text Question</h1>
+<%= render 'form' %>
