@@ -26,6 +26,35 @@ class QuestionBank::MatrixQuestionsController < ApplicationController
     end
   end
 
+  def edit
+    @matrix_question = MatrixQuestion.find params[:id]
+  end
+
+  def update
+    @matrix_question = MatrixQuestion.find(params[:id])
+    choice_questions = params.fetch(:matrix_question, {})
+      .fetch(:choice_questions_attributes, {})
+
+    choice_answer_attributes = params[:choice_answer_attributes] || {}
+    choice_questions.each {|key, value|
+      value.deep_merge!({
+        :choice_answers_attributes => choice_answer_attributes,
+        :answer_type => "radio",
+        :question_content_attributes => {
+          :matrix_statement => @matrix_question.question_content.try(:statement),
+          :skip_observer => true
+        }
+      })
+    }
+
+    if @matrix_question.update_attributes(params[:matrix_question])
+      @matrix_question.remove_deleted_sub_questions(choice_questions)
+      redirect_to question_bank_path
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @matrix_question = MatrixQuestion.find params[:id]
     @matrix_question.destroy
