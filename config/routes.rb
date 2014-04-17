@@ -4,11 +4,7 @@ CommentToolApp::Application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-  get 'reset_password' => 'user_sessions#reset_password',
-    :as => :reset_password
-  resources :user_sessions, only: [:new, :create, :destroy] do
-    post :do_pw_reset, :on => :collection
-  end
+  resources :user_sessions, only: [:new, :destroy]
 
 	resources :users
 	resources :sites
