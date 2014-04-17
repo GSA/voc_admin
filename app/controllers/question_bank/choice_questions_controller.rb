@@ -14,6 +14,21 @@ class QuestionBank::ChoiceQuestionsController < ApplicationController
     end
   end
 
+  def edit
+    @choice_question = ChoiceQuestion.find params[:id]
+  end
+
+  def update
+    @choice_question = ChoiceQuestion.find params[:id]
+    @choice_question.question_content.skip_observer = true
+
+    if @choice_question.update_attributes(params[:choice_question])
+      redirect_to question_bank_path
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @choice_question = ChoiceQuestion.find params[:id]
     @choice_question.destroy
