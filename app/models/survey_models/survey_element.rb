@@ -182,6 +182,7 @@ class SurveyElement < ActiveRecord::Base
           page.id]
       )
       self.element_order = new_element_order
+
     end
   end
 

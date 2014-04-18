@@ -15,6 +15,13 @@ CommentToolApp::Application.routes.draw do
 
   resources :surveys
 
+  resource :question_bank do
+    resources :text_questions, controller: 'question_bank/text_questions'
+    resources :choice_questions, controller: 'question_bank/choice_questions'
+    resources :matrix_questions, controller: 'question_bank/matrix_questions'
+    post :add_question_to_survey, collection: true, as: 'add_question_from'
+  end
+
   resources :survey_responses,
     only: [:create, :index, :edit, :update, :destroy] do
       get :export_all, :on => :collection, :as => 'export_all'

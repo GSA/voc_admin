@@ -16,7 +16,7 @@ gem 'daemons', :require => false
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
- 
+
 gem 'bson_ext'
 gem 'escape_utils'
 gem 'mongoid'
@@ -30,7 +30,7 @@ platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
   gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
-  
+
   group :test do
     gem 'rails_best_practices'
   end
@@ -64,10 +64,11 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'selenium-webdriver'
 
   gem 'guard-rspec'
   gem 'growl'
   gem 'shoulda-matchers'
   gem 'rb-fsevent', '~> 0.9.1'
-  
+
 end

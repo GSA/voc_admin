@@ -1,0 +1,35 @@
+<%= form_for [:question_bank, @choice_question] do |f| %>
+  <% if @choice_question.errors.any? %>
+    <%= render 'shared/errors', object: @choice_question, object_type: 'choice question' %>
+  <% end %>
+
+  <% @choice_question.build_question_content if @choice_question.question_content.nil? %>
+  <%= f.fields_for :question_content do |builder| %>
+    <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
+  <% end -%>
+
+  <%= f.label :answer_type, "Answer Type: " %>
+  <%= f.select :answer_type, options_for_answer_type(f.object.answer_type), :id => "answer_type_dropdown" %>
+
+  <% 4.times {@choice_question.choice_answers.build} if @choice_question.choice_answers.empty? %>
+  <%= f.fields_for :choice_answers do |answer_builder| %>
+    <%= render :partial => 'choice_answer_fields', :locals => {:f => answer_builder} %>
+  <% end %>
+
+  <span><%= link_to_add_fields "Add Answer", f, :choice_answers, 'choice_answer_fields' %></span>
+
+  <div id="answer_placement_fields" <%= answer_placement_visibility(f, @choice_question) %>>
+    <br /><br />
+    <%= f.label :answer_placement, "Answer Placement: " %>
+    <%= f.select :answer_placement, options_for_answer_placement(f.object.answer_placement), :id => "answer_placement_dropdown" %>
+  </div>
+
+  <div id="allow_multiple" class="displayNone">
+    <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
+  </div>
+
+  <div class="pageLink">
+    <%= link_to "Cancel", question_bank_path, :class => "cancelLink simplemodal-close" %>
+    <%= f.submit %>
+  </div>
+<% end -%>
