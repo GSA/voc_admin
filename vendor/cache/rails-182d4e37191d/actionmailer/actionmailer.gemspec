@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Heinemeier Hansson"]
-  s.date = "2014-03-19"
+  s.date = "2014-04-18"
   s.description = "Email on Rails. Compose, deliver, receive, and test emails using the familiar controller/view pattern. First-class support for multipart email and attachments."
   s.email = "david@loudthinking.com"
   s.files = ["CHANGELOG", "README.rdoc", "MIT-LICENSE", "lib/action_mailer", "lib/action_mailer/adv_attr_accessor.rb", "lib/action_mailer/base.rb", "lib/action_mailer/collector.rb", "lib/action_mailer/delivery_methods.rb", "lib/action_mailer/deprecated_api.rb", "lib/action_mailer/log_subscriber.rb", "lib/action_mailer/mail_helper.rb", "lib/action_mailer/old_api.rb", "lib/action_mailer/railtie.rb", "lib/action_mailer/test_case.rb", "lib/action_mailer/test_helper.rb", "lib/action_mailer/tmail_compat.rb", "lib/action_mailer/version.rb", "lib/action_mailer.rb", "lib/rails", "lib/rails/generators", "lib/rails/generators/mailer", "lib/rails/generators/mailer/mailer_generator.rb", "lib/rails/generators/mailer/templates", "lib/rails/generators/mailer/templates/mailer.rb", "lib/rails/generators/mailer/USAGE"]

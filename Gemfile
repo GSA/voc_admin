@@ -19,6 +19,7 @@ gem 'daemons', :require => false
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
+gem 'net-ldap'
 
 gem 'bson_ext'
 gem 'escape_utils'
