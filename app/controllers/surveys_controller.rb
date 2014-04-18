@@ -31,7 +31,6 @@ class SurveysController < ApplicationController
   # PUT    /surveys/:id(.:format)
   def update
     @survey = current_user.surveys.find(params[:id])
-    @survey.update_attributes(params[:survey])
 
     if @survey.update_attributes(params[:survey])
       Rails.cache.clear if Rails.cache
