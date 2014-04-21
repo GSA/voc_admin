@@ -75,12 +75,17 @@
     </div>
     <br />
     <div class="left_side">
-      <%= f.label :invitation_text, "Invitation Text: " %>
+      <%= f.label :invitation_text, "Invitation Modal HTML: " %>
     </div>
     <div class="right_side">
       <%= f.text_area :invitation_text, :rows => 3 %>
     </div>
-    <br />
+    <div class="instructions">
+				<em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
+			where the accept and reject buttons should be placed.  These tags will be
+			substitued with the appropriate working buttons using the specified text
+			from the fields below.
+		</div>
     <div class="left_side">
       <%= f.label :invitation_accept_button_text, "Invitation Accept Button Text: " %>
     </div>
@@ -115,15 +120,17 @@
     <div class="right_side">
       <%= f.text_area :holding_page, rows: 5 %>
     </div>
+		<div class="instructions">
+				A <em>{{start}}</em> tag should be inserted into the html in the location
+			where the start button should be placed.
+		</div>
 
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>
 	  		<%= image_submit_tag "Create-Survey.png", :alt=>"Create Survey" %>
-	  		<%#= f.submit "Create Survey", :type => :image, :src=>"/images/Create-Survey.png", :alt=>"Create Survey" #%>
 	  	<% else %>
 	  		<%= image_submit_tag "update-survey.png", :alt=>"Update Survey" %>
-	  		<%#= f.submit "Update Survey", :type => :image, :src=>"/images/update-survey.png", :alt=>"Update Survey" #%>
 	  	<% end %>
 		</div>
 

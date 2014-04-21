@@ -401,6 +401,10 @@ a.navActive {
 }
 
 /**** General View/Edit/Show pages ****/
+.instructions {
+  font-size: 10pt;
+  max-width: 450px;
+}
 #surveys .left_side,
 #showpage .left_side {
   width: 150px;
