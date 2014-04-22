@@ -59,6 +59,13 @@
     <div class="right_side">
       <%= f.text_area :js_required_fields_error, :rows => 3 %>
     </div>
+    <br/>
+    <div class="left_side">
+      <%= f.label :show_numbers, "Show Question Numbers:" %>
+    </div>
+    <div class="right_side">
+      <%= f.check_box :show_numbers %>
+    </div>
     <br />
     <div class="left_side">
       <%= f.label :invitation_percent, "Desktop Invitation Percent: " %>
