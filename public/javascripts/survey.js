@@ -21,7 +21,7 @@ function show_next_page(page){
 		$("#page_"+ next_page).show();
 		window.location.hash="PAGE_" + next_page;
 	} else {
-		alert('Please answer all required questions before moving on to the next page.');
+		alert(survey_required_fields_error);
 	}
 
 }
@@ -67,7 +67,7 @@ function validate_before_submit(page){
 	if (!check_for_unanswered_required(page)){
 		return true;
 	} else {
-		alert('Please answer all required questions before moving on to the next page.');
+		alert(survey_required_fields_error);
 		return false;
 	}
 
