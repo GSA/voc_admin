@@ -1,7 +1,7 @@
 <div id="surveys">
 	<%= form_for(@survey) do |f| %>
 	  <% if @survey.errors.any? %>
-	    <%= render :partial => 'shared/question_errors', :locals => {:object => @survey} %>
+        <%= render('shared/errors', {object: @survey, object_type: 'survey'}) %>
 		<% end %>
 
 		<div class="left_side">

@@ -4,7 +4,7 @@
 class Export < ActiveRecord::Base
   has_attached_file :document,
                     :processors => [],
-                    :path => ":rails_root/exports/:filename",
+                    :path => ":rails_root/public/system/exports/:filename",
                     :url  => "/exports/:access_token/download"
 
   before_validation :generate_access_token

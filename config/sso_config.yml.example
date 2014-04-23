@@ -1,0 +1,37 @@
+#stage
+#default_goto: http://stage-breach-admin.cloudoverdc.com:3000/breaches
+#wcd_portal: http://wcdportal-s.cloudoverdc.com/
+#ams_home: https://iam-stage.hhs.gov/
+#opensso_sp_location: http://wcdportal-s.cloudoverdc.com:8080/openam_10.0.0
+#opensso_id_location: https://iam-stage.hhs.gov/opensso/saml2/jsp/idpSSOInit.jsp?metaAlias=/HHS/AMS_IDP_STAGE&spEntityID=http://wcdportal-s.cloudoverdc.com:8080/wcdportalstage
+#ssl_ca_file: <add path>
+#ssl_ca_path: <add path> 
+#redirect_on: true
+
+# production settings that matter
+# -------------------------------
+
+# opensso_sp_location: https://wcdsso.cloud.hhs.gov/openam/
+# wcd_portal: https://wcdams.hhs.gov/ 
+# ams_home: https://iam.hhs.gov/
+# default_goto: http://local.hhs.gov:3000/surveys
+
+# never use these in production
+# -------------------------------
+
+# ams_home: http://localhost:3000
+# default_goto: http://localhost:3000
+# use_fake_data: true
+# fake_users:
+#   - hhs_id: 2001149591
+#     name: Jake Admin
+
+# Optional: (with defaults shown)
+#cookie_name: WCDAMS
+#logout_message: Logout successful
+
+# not usually used?
+# -----------------
+#redirect_on: true
+#opensso_id_location: https://iam.hhs.gov/opensso/saml2/jsp/idpSSOInit.jsp?metaAlias=/HHS/AMS_IDP&spEntityID=WCD_SP_PROD
+

@@ -2,19 +2,23 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :f_name, :l_name, :password, :email, :password_confirmation, :site_ids, :role_id
+  attr_accessible :f_name, :l_name, :password, :email, :password_confirmation, :site_ids, :role_id, :hhs_id
 
   has_many :site_users
   has_many :sites,      :through => :site_users
   belongs_to :role
-
-  acts_as_authentic
 
   validates :email,     :presence => true
   validates :f_name,    :presence => true
   validates :l_name,    :presence => true
 
   scope :listing,       order("l_name ASC, f_name ASC")
+
+  acts_as_authentic do |c|
+    c.validate_password_field=false
+    c.ignore_blank_passwords=true
+    c.require_password_confirmation = false
+  end
 
   # Gets all the surveys a user has access to.  Admins are able to see all surveys;
   # users are only able to see surveys which belong to sites they have access to.
