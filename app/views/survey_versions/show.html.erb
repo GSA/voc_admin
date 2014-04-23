@@ -142,16 +142,25 @@
 					<% index = index + 1%>
 				<% end %>
 				</ul>
-				<div class="page-nav">
+				<div class="surveyNav">
 					<% unless page.page_number == 1 or (params[:noback].to_s.downcase=="true") %>
-						<%= link_to_function (@survey.previous_page_text || "Previous Page"), "show_prev_page(#{page.page_number})", :class=>"manage"  %>
+            <% previous_page_text = @survey.previous_page_text.blank? ? "Previous Page" : @survey.previous_page_text %>
+						<span class="surveyNavPrev"><%= link_to_function previous_page_text, "show_prev_page(#{page.page_number})", :class=>"surveyNav"  %></span> |
 					<% end %>
 					<% unless page.page_number == @survey_version.pages.count %>
-						<%= link_to_function (@survey.next_page_text || "Next Page"), "show_next_page(#{page.page_number})", :class=>"manage" %>
+            <% next_page_text = @survey.next_page_text.blank? ? "Next Page" : @survey.next_page_text %>
+						<span class="surveyNavNext"><%= link_to_function next_page_text, "show_next_page(#{page.page_number})", :class=>"surveyNav" %></span>
 					<% end %>
-					<%= submit_tag((@survey.submit_button_text || "Submit"), :disabled => "disabled", :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %>
+          <% submit_button_text = @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text %>
+					<span class="surveyNavSub"><%= submit_tag(submit_button_text, :onclick=>"return validate_before_submit(#{page.page_number})")if page.page_number == @survey_version.pages.count %></span>
 				</div>
-
+        <script>
+        <% if @survey.js_required_fields_error.blank? %>
+          var survey_required_fields_error = "Please answer all required questions before moving on to the next page."
+        <% else %>
+          var survey_required_fields_error = "<%== @survey.js_required_fields_error %>";
+        <% end %>
+        </script>
 			</div> <!-- close page div -->
 		<% end -%>
 	<% end -%>
