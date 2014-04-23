@@ -4,11 +4,7 @@ CommentToolApp::Application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-  get 'reset_password' => 'user_sessions#reset_password',
-    :as => :reset_password
-  resources :user_sessions, only: [:new, :create, :destroy] do
-    post :do_pw_reset, :on => :collection
-  end
+  resources :user_sessions, only: [:new, :destroy]
 
 	resources :users
 	resources :sites
@@ -70,18 +66,20 @@ CommentToolApp::Application.routes.draw do
       get :create_new_major_version, :on => :collection
       get :create_new_minor_version, :on => :member
 
-      get :reporting, :on => :member
-      resources :dashboards
-      get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
-      resources :reports do
-        resources :recurring_reports, :except => :show
-        member do
-          post :email_csv
-          post :email_pdf
-          get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
-        end
-      end
-      get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
+      # Reporting routes, currently disabled for HHS:
+      # ---------------------------------------------
+      # get :reporting, :on => :member
+      # resources :dashboards
+      # get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
+      # resources :reports do
+      #   resources :recurring_reports, :except => :show
+      #   member do
+      #     post :email_csv
+      #     post :email_pdf
+      #     get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
+      #   end
+      # end
+      # get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
     end
   end
 
