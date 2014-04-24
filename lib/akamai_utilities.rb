@@ -4,7 +4,7 @@
       response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => auth, :headers => { 'Content-Type' => 'application/json' }, :body => { :type => 'arl', 
                 :action => 'remove',
                :domain => AKAMAI_CONFIG['domain'], 
-               :objects => ["{APP_CONFIG['host']}/surveys/#{survey_id}".to_s]}.to_json)
+               :objects => ["#{APP_CONFIG['public_host']}/surveys/#{survey_id}".to_s]}.to_json)
       parsed_response = JSON.parse(response.body)
       httpresponse = parsed_response['httpStatus']
       httpresponse
