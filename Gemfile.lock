@@ -362,6 +362,7 @@ DEPENDENCIES
   factory_girl_rails
   growl
   guard-rspec
+  httparty
   jazz_hands
   jdbc-mysql
   jquery-rails
