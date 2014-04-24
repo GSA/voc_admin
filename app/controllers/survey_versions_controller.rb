@@ -69,15 +69,15 @@ class SurveyVersionsController < ApplicationController
     if @survey_version.questions.empty?
       redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
     else
-        @survey_version.publish_me
-        Rails.cache.clear if Rails.cache
-        @flush_response = flush_akamai(Survey.id)
-        if @flush_response == 201
-          msg = "Successfully published survey and cache will be purged in 7 minutes."
-        else
-          msg = "Successfully published survey but there was a problem purging cache."
-        end
-        redirect_to survey_survey_versions_path(@survey), :notice => msg
+      @survey_version.publish_me
+      Rails.cache.clear if Rails.cache
+      flush_response = flush_akamai(@survey.id)
+      if flush_response == 201
+        msg = "Successfully published survey and cache will be purged in 7 minutes."
+      else
+        msg = "Successfully published survey but there was a problem purging cache."
+      end
+      redirect_to survey_survey_versions_path(@survey), :notice => msg
     end
   end
 
