@@ -4,13 +4,10 @@
       response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => auth, :headers => { 'Content-Type' => 'application/json' }, :body => { :type => 'arl', 
                 :action => 'remove',
                :domain => AKAMAI_CONFIG['domain'], 
-               :objects => [APP_CONFIG['host'] + '/surveys/' + (survey_id).to_s]}.to_json)
-      #test URL for staging http://stage-voc.cloud.hhs.gov.edgesuite-staging.net
+               :objects => ["{APP_CONFIG['host']}/surveys/#{survey_id}".to_s]}.to_json)
       parsed_response = JSON.parse(response.body)
-      # binding.pry
       httpresponse = parsed_response['httpStatus']
       httpresponse
-
     end
   end
 

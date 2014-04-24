@@ -267,8 +267,6 @@ class SurveyVersion < ActiveRecord::Base
     self.published = true
     self.locked = true
     self.save
-    #if saved successfully then flush the Akamai cache.
-    # flush_akamai
   end
 
   # Unpublish the SurveyVersion.
@@ -278,18 +276,6 @@ class SurveyVersion < ActiveRecord::Base
     self.published = false
     self.save
   end
-
-  # def flush_akamai
-  #   auth = {:username => AKAMAI_CONFIG['user_name'], :password => AKAMAI_CONFIG['password']}
-  #   response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => auth, :body => { :type => 'arl', 
-  #               :action => 'remove', 
-  #              :domain => AKAMAI_CONFIG['domain'], 
-  #              :objects => [APP_CONFIG['host'] + '/surveys/' + self.survey_id.to_str]}.to_json,
-  #             :headers => { 'Content-Type' => 'application/json' } )
-  # end
-
-
-#@response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => @auth, :headers => { 'Content-Type' => 'application/json' }, :body => {:objects => ["http://stage-voc.cloud.hhs.gov.edgesuite-staging.net/surveys/199"]}.to_json)                 
                                                                                                
 
   # Clone all elements of the SurveyVersion into a new minor version.
