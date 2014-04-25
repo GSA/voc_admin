@@ -82,10 +82,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.2)
       ffi (~> 1.0, >= 1.0.11)
-    climate_control (0.0.3)
-      activesupport (>= 3.0)
-    cocaine (0.5.4)
-      climate_control (>= 0.0.3, < 1.0)
+    cocaine (0.4.2)
     code_analyzer (0.4.5)
       sexp_processor
     coderay (1.1.0)
@@ -182,10 +179,11 @@ GEM
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     open_uri_redirections (0.1.4)
-    paperclip (4.1.1)
+    paperclip (3.4.0)
       activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-      cocaine (~> 0.5.3)
+      cocaine (~> 0.4.0)
       mime-types
     pdfkit (0.6.2)
     polyglot (0.3.4)
@@ -344,7 +342,7 @@ DEPENDENCIES
   mysql2 (< 0.3)
   net-ldap
   open_uri_redirections
-  paperclip
+  paperclip (= 3.4.0)
   pdfkit
   pry
   rails!

@@ -13,7 +13,7 @@ gem 'net-ldap'
 
 
 gem 'memcache-client'
-gem 'paperclip'
+gem 'paperclip', '3.4.0'
 gem 'daemons', :require => false
 
 gem 'resque_mailer'
