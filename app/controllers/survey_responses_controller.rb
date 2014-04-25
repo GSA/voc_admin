@@ -91,7 +91,7 @@ class SurveyResponsesController < ApplicationController
   # Largely responsible for ensuring that pagination shows the proper page if a survey
   # response is deleted by an admin user.  Will decrement page number of the current page
   # would no longer show any responses.
-  # 
+  #
   # @param [ActiveRecord::Relation] responses the ActiveRecord relation query
   # @param [Integer] pages the expected Page number
   # @return [ActiveRecord::Relation] the paginated Relation
@@ -107,7 +107,7 @@ class SurveyResponsesController < ApplicationController
   def set_custom_view
     # Set the custom view from the params
     @custom_view = nil
-    
+
     if params[:custom_view_id].blank?
       @custom_view = @survey_version.custom_views.find_by_default(true)
     else
