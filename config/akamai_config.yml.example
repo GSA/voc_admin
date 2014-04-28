@@ -1,0 +1,11 @@
+development:
+  development_mode: true
+
+test:
+  development_mode: true
+
+production:
+  user_name: 'email@ctacorp.com'
+  password: 'akamaipassword'
+  base_uri: 'https://api.ccu.akamai.com/ccu/v2/queues/default'
+  domain: 'staging' # or 'production'

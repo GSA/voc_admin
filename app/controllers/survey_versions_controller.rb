@@ -1,8 +1,10 @@
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Manages the SurveyVersion lifecycle.
+
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey
+  include AkamaiUtilities
 
   # GET    /surveys/:survey_id/survey_versions(.:format)
   def index
@@ -69,7 +71,12 @@ class SurveyVersionsController < ApplicationController
     else
       @survey_version.publish_me
       Rails.cache.clear if Rails.cache
-      redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
+      if flush_akamai(@survey.id)
+        msg = "Successfully published survey and cache will be purged in 7 minutes."
+      else
+        msg = "Successfully published survey but there was a problem purging cache."
+      end
+      redirect_to survey_survey_versions_path(@survey), :notice => msg
     end
   end
 
