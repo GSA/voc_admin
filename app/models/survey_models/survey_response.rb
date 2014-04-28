@@ -24,8 +24,6 @@ class SurveyResponse < ActiveRecord::Base
   after_create :queue_for_processing
   after_create :create_dfvs
 
-  after_save :export_values_for_reporting
-
   scope :search, (lambda do |search_text = ""|
     joins('INNER JOIN (select * from display_field_values) t1 on t1.survey_response_id = survey_responses.id')
     .where("t1.value LIKE ? ", "%#{search_text}%").select("DISTINCT survey_responses.*")
@@ -131,6 +129,12 @@ class SurveyResponse < ActiveRecord::Base
     sql = ActiveRecord::Base.connection();
     sql.delete("delete from new_responses where survey_response_id = #{self.id}")
     self.update_attributes(:worker_name => "", :last_processed => Time.now)
+
+    # Flatten the results and export to mongo.
+    # Note: Both process_me and export_values_for_reporting may be better off being moved to
+    # after_save callbacks to ensure they run in the correct order to avoid timing issues and
+    # cleanup the code.
+    export_values_for_reporting
   end
 
   # Mark the SurveyResponse as archived (soft deleted.)
