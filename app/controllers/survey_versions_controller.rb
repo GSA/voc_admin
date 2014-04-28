@@ -71,8 +71,7 @@ class SurveyVersionsController < ApplicationController
     else
       @survey_version.publish_me
       Rails.cache.clear if Rails.cache
-      flush_response = flush_akamai(@survey.id)
-      if flush_response == 201
+      if flush_akamai(@survey.id)
         msg = "Successfully published survey and cache will be purged in 7 minutes."
       else
         msg = "Successfully published survey but there was a problem purging cache."

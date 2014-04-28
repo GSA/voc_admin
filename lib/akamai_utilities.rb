@@ -1,13 +1,16 @@
   module AkamaiUtilities
     def flush_akamai(survey_id)
-      auth = {:username => AKAMAI_CONFIG['user_name'], :password => AKAMAI_CONFIG['password']}
-      response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => auth, :headers => { 'Content-Type' => 'application/json' }, :body => { :type => 'arl', 
+      unless AKAMAI_CONFIG['development_mode']
+        auth = {:username => AKAMAI_CONFIG['user_name'], :password => AKAMAI_CONFIG['password']}
+        response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => auth, :headers => { 'Content-Type' => 'application/json' }, :body => { :type => 'arl', 
                 :action => 'remove',
-               :domain => AKAMAI_CONFIG['domain'], 
-               :objects => ["http://#{APP_CONFIG['public_host']}/surveys/#{survey_id}".to_s]}.to_json)
-      parsed_response = JSON.parse(response.body)
-      httpresponse = parsed_response['httpStatus']
-      httpresponse
+                 :domain => AKAMAI_CONFIG['domain'], 
+                 :objects => ["http://#{APP_CONFIG['public_host']}/surveys/#{survey_id}".to_s]}.to_json)
+        parsed_response = JSON.parse(response.body)
+        httpresponse = parsed_response['httpStatus']
+
+        httpresponse == 201
+      end
     end
   end
 
