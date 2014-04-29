@@ -88,10 +88,97 @@
       <%= f.text_area :invitation_text, :rows => 3 %>
     </div>
     <div class="instructions">
-				<em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
-			where the accept and reject buttons should be placed.  These tags will be
-			substitued with the appropriate working buttons using the specified text
-			from the fields below.
+			<p>
+        <em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
+        where the accept and reject buttons should be placed.  These tags will be
+        substitued with the appropriate working buttons using the specified text
+        from the fields below.
+      </p>
+      <style type="text/css">
+        #vocModalOverlay {
+            width:100%;
+            height:100%;
+            z-index:9999; /* places the modal overlay between the main page and the modal dialog*/
+            background-color:#000;
+            opacity:0.5;
+            position:fixed;
+            top:0;
+            left:0;
+            display:none;
+            margin:0;
+            padding:0;
+        }
+
+        #vocModal {
+            width:50%;
+            margin-left:auto;
+            margin-right:auto;
+            padding: 25px;
+            border: thin #000 solid;
+            background-color:#fff;
+            z-index:10000; /* places the modal dialog on top of everything else */
+            position:fixed;
+            top:25%;
+            left:25%;
+            display:none;
+        }
+        #vocModal h1 {
+            text-align:center;
+        }
+
+        #vocEnter {
+          cursor: pointer;
+        }
+
+        .vocCancelButton {
+          cursor: pointer;
+        }
+
+        .banner {
+          padding-bottom: 10px;
+          border-bottom: 1px solid black;
+        }
+
+        .modalCloseButton {
+            float:right;
+            position:absolute;
+            top:10px;
+            left:95%;
+        }
+        .modalCloseButton img {
+            border:0;
+        }
+
+        .screen-reader-offscreen {
+            position:absolute;
+            left:-999px;
+            width:1px;
+            height:1px;
+            top:auto;
+        }
+
+        .top-right {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          text-decoration: none;
+          background-color: grey;
+          color: white;
+          font-size: 11px;
+        }
+
+      </style>
+      <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle'
+        aria-describedby='modalDescription' role='dialog' tabindex='-1'>
+        <input type="button" name="cancel" id="cancel" class="vocCancelButton top-right" value="X">
+        <p>
+          Would you like to take a survey?
+        </p>
+        <input type="button" name="vocEnter" id="vocEnter" value="<%= invitation_accept_button_text %>">
+        <input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">
+      </div>
+      <div id='vocModalOverlay'></div>
+      <%= link_to 'Preview', 'javascript:void(0);', id: "invitation_preview" %>
 		</div>
     <div class="left_side">
       <%= f.label :invitation_accept_button_text, "Invitation Accept Button Text: " %>
@@ -143,3 +230,5 @@
 
 	<% end %>
 </div>
+
+<%= javascript 'invitation_preview.js' %>
