@@ -73,6 +73,15 @@
       jQuery('#' + target_id).html(modalHTML);
     }
 
+    var stylesheet_url = jQuery("#preview_stylesheet").val();
+    if(stylesheet_url.length > 0) {
+      var fileref = document.createElement("link");
+      fileref.setAttribute("rel", "stylesheet");
+      fileref.setAttribute("type", "text/css");
+      fileref.setAttribute("href", stylesheet_url);
+      document.getElementsByTagName("head")[0].appendChild(fileref)
+    }
+
 
     showModal(jQuery('#vocModal'));
     jQuery('#startModal').click(function(e) {

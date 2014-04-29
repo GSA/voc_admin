@@ -88,6 +88,11 @@
       <%= f.text_area :invitation_text, :rows => 3 %>
     </div>
     <div class="instructions">
+      <%= link_to 'Preview', 'javascript:void(0);', id: "invitation_preview" %>
+      <div>
+        <%= label_tag :preview_stylesheet %>
+        <%= text_field_tag :preview_stylesheet %>
+      </div>
 			<p>
         <em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
         where the accept and reject buttons should be placed.  These tags will be
@@ -178,7 +183,6 @@
         <input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">
       </div>
       <div id='vocModalOverlay'></div>
-      <%= link_to 'Preview', 'javascript:void(0);', id: "invitation_preview" %>
 		</div>
     <div class="left_side">
       <%= f.label :invitation_accept_button_text, "Invitation Accept Button Text: " %>
