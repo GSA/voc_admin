@@ -4,11 +4,8 @@
 # own profile, but the remainder of functionality is reserved for admins.
 class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
-  helper_method :sort_column, :sort_direction
   # GET    /users(.:format)
   def index
-#    @users = User.listing.page(params[:page]).per(10)
-
     if params[:sort]
       @users = User.order(params[:sort] + ' ' + params[:direction]).listing.page(params[:page]).per(10)
     else
