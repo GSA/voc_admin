@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include TokenAndSalt
 
   private
-  
+
   # Used to restrict access to User and Site functionality.
   def require_admin
     logger.debug "ApplicationController::require_user"

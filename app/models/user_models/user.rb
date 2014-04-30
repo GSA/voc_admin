@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |config|
     config.validate_password_field = false
+    c.logged_in_timeout = 30.minutes
   end
 
   validates :email,     :presence => true
