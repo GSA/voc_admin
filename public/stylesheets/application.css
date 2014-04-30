@@ -853,6 +853,14 @@ fieldset#inmodal {
 fieldset#inmodal legend {
 	font-weight: normal;
 }
+fieldset.hide {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+fieldset fieldset.hide legend {
+	font-size: 13px;
+}
 
 /**** Images ****/
 #images_index_table .col1 {

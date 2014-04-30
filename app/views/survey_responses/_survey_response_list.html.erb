@@ -64,7 +64,7 @@
     <%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
     <%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %>
     <%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink", :for=>"custom_view" %>
-    <%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %>
+    <%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>"custome_view" %>
     <%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %>
     <span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
     <span class="looklikelink"><%= get_delete_current_view_link(version, @custom_view) %></span>
@@ -112,7 +112,7 @@
     <%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
     <%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %>
     <%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink", :for=>"custom_view" %>
-    <%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>nil %>
+    <%= select_tag "custom_view", "<option value='0'>Standard View</option>".html_safe + options_from_collection_for_select(version.custom_views, :id, :name, (params[:custom_view_id].blank?) ? Proc.new {|cv| cv.default? } : params[:custom_view_id]), :class=>"manage", :id=>"custom_view" %>
     <%= link_to "Add New View", new_survey_survey_version_custom_view_path(version.survey, version), :class=>"manage" %>
     <span class="looklikelink"><%= get_edit_current_view_link(version, @custom_view) %></span>
     <span class="looklikelink"><%= get_delete_current_view_link(version, @custom_view) %></span>
