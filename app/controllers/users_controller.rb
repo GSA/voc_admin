@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET    /users(.:format)
   def index
     if params[:sort]
-      @users = User.order(params[:sort] + ' ' + params[:direction]).listing.page(params[:page]).per(10)
+      @users = User.order("#{sort_column} #{sort_direction}").listing.page(params[:page]).per(10)
     else
       @users = User.listing.page(params[:page]).per(10)
     end
@@ -88,8 +88,8 @@ class UsersController < ApplicationController
     current_user.admin? ? user_attributes : user_attributes.except("role_id", "site_ids")
   end
 
-    def sort_column
-    params[:sort] || "name"
+  def sort_column
+    params[:sort] || "role_id"
   end
   
   def sort_direction
