@@ -28,7 +28,7 @@
 	
 	<%= field_set_tag "Display Fields (Columns)" do %>
 		<div class="left_side_c">
-			<div class="hidden_label"><%= f.label "available_display_fields" %></div>
+			<div class="hidden_label"><%= label_tag "available_display_fields" %></div>
 			<%= select_tag "available_display_fields", options_from_collection_for_select(@survey_version.display_fields - (@display_fields || f.object.display_fields), :id, :name), :multiple => true %>
 			<br />
 			<div class="center">
@@ -44,7 +44,7 @@
 		</div>
 	
 		<div class="right_side_c">
-			<div class="hidden_label"><%= f.label "selected_display_fields" %></div>
+			<div class="hidden_label"><%= label_tag "selected_display_fields" %></div>
 			<%= select_tag "selected_display_fields", options_from_collection_for_select(@display_fields || f.object.ordered_display_fields, :id, :name), :multiple => true %>
 			<%= hidden_field_tag "custom_view[ordered_display_fields][selected]" %>
 			<br />
