@@ -1,5 +1,5 @@
 <div class="criterion">
-	<div class="hidden_label"><%= f.label :source_select %><%= f.label :conditional_id %></div>
+	<div class="hidden_label"><%= f.label :source_select %><%= f.label :conditional_id %><%= f.label :value %></div>
   <%= f.collection_select :source_select, @source_array, :first, :last, {:selected => "#{f.object.source_id},#{f.object.source_type}"} %>
   <%= f.collection_select :conditional_id, Conditional.all, :id, :name %>
 
