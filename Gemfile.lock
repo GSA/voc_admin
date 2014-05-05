@@ -187,6 +187,7 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.9.2)
     mysql2 (0.2.18)
+    net-ldap (0.6.1)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     nokogiri (1.6.1-java)
@@ -357,6 +358,7 @@ DEPENDENCIES
   memcache-client
   mongoid
   mysql2 (< 0.3)
+  net-ldap
   open_uri_redirections
   paperclip
   pdfkit

@@ -1,12 +1,12 @@
-<a id="skipNav" href="#skip">Skip Navigation to go to Content</a> 
+<a id="skipNav" href="#skip">Skip Navigation to go to Content</a>
 
 <div id="header">
-	<%= image_tag "voc_large_logo.png", :class=>"large_logo", :alt=>"Voice of the Consumer, Department of Health and Human Services Logo" %>
-	<% if !current_user.blank? %>
-		<div class="user_details">
-			<p class="user"><%= current_user.email %></p>
-			<%= image_tag "half_separator.png", :class=>"separator", :alt=>"separator" %>
-			<%= link_to "Logout", logout_url, :class => "logout" %>
-		</div>
-	<% end %>
+  <%= image_tag "voc_large_logo.png", :class=>"large_logo", :alt=>"General Services Administration" %>
+  <% if !current_user.blank? %>
+    <div class="user_details">
+      <p class="user"><%= current_user.email %></p>
+      <%= image_tag "half_separator.png", :class=>"separator", :alt=>"separator" %>
+      <%= link_to "Logout", logout_url, :class => "logout" %>
+    </div>
+  <% end %>
 </div>
