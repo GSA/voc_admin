@@ -33,6 +33,13 @@
 		</div>
     <br />
     <div class="left_side">
+      <%= f.label :locale, "Survey Language: " %>
+    </div>
+    <div class="right_side">
+      <%= f.select :locale, [["English", "en"], ["Spanish", "es"]] %>
+    </div>
+    <br />
+    <div class="left_side">
       <%= f.label :previous_page_text, "Previous Page Text: " %>
     </div>
     <div class="right_side">
