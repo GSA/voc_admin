@@ -101,7 +101,7 @@ td {
 	*float: right;
 }
 img {
-	border: none;
+	border: 0px none;
 }
 br {
 	*clear: both;
@@ -626,7 +626,7 @@ li.outter tr:last-child {
 	display: inline-block;
 	width: 24px;
 	vertical-align: top;
-	margin: 5px 0px 0px;
+	margin: 0px 0px 0px;
 	*display: inline;
 }
 .edit_asset_link {
@@ -659,7 +659,7 @@ li.outter tr:last-child {
 }
 .asset_body {
 	width: 816px;
-	margin: -15px 0px 0px 25px;
+	margin: 2px 0px 0px 25px;
 	*margin: 0px 0px 0px 25px;
 }
 li.inner {
@@ -852,6 +852,14 @@ fieldset#inmodal {
 }
 fieldset#inmodal legend {
 	font-weight: normal;
+}
+fieldset.hide {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+fieldset fieldset.hide legend {
+	font-size: 13px;
 }
 
 /**** Images ****/
@@ -1099,15 +1107,22 @@ span.pageNum {
     width: 1em;
     overflow: hidden;
 }
-.deleteLink {  background: url(../images/delete.png)}
+.deleteLink {  
+	background: url(../images/delete.png) no-repeat top left;
+}
+.deleteLink:hover {  
+	background: url(../images/delete_hover.png) no-repeat top left;
+}
+.copyLink {
+  background: url(../images/clone.png) no-repeat top left;
+}
 
-.deleteLink :hover{  background: url(../images/delete_hover.png)}
-
-
-.copyLink {  background: url(../images/clone.png)}
-
-.copyLink :hover{  background: url(../images/clone_hover.png)}
-
-.runLink {  background: url(../images/run.png)}
-
-.runLink :hover{  background: url(../images/run_hover.png)}
+.copyLink:hover {
+  background: url(../images/clone_hover.png) no-repeat top left;
+}
+.runLink {
+  background: url(../images/run.png) no-repeat top left;
+}
+.runLink:hover{
+  background: url(../images/run_hover.png) no-repeat top left;
+}
