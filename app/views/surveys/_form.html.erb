@@ -229,6 +229,12 @@
 				A <em>{{start}}</em> tag should be inserted into the html in the location
 			where the start button should be placed.
 		</div>
+    <div class="left_side">
+      <%= f.label :start_screen_button_text, "Start Screen Button Text:" %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :start_screen_button_text %>
+    </div>
 
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
