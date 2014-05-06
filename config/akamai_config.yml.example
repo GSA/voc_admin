@@ -1,21 +1,14 @@
 development:
-  user_name: 'email@ctacorp.com'
-  password: 'akamaipassword'
-  base_uri: 'https://api.ccu.akamai.com/ccu/v2/queues/default'
-  domain: 'staging'
+  development_mode: true
 
 test:
-  #host: localhost:3000
-  user_name: 'email@ctacorp.com'
-  password: 'akamaipassword'
-  base_uri: 'https://api.ccu.akamai.com/ccu/v2/queues/default'
-  domain: 'staging'
+  development_mode: true
 
 production:
   user_name: 'email@ctacorp.com'
   password: 'akamaipassword'
   base_uri: 'https://api.ccu.akamai.com/ccu/v2/queues/default'
-  domain: 'production'
+  domain: 'staging' # or 'production'
 
 
 
