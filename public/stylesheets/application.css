@@ -1187,7 +1187,7 @@ form #dashboardElementsList li {
 }
 #simplemodal-container {
   max-height: 100%;
-  /*overflow: auto;*/
+  overflow: auto;
 }
 .simplemodal-wrap {
   overflow: visible !important;
