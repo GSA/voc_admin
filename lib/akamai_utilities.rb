@@ -1,17 +1,22 @@
 module AkamaiUtilities
   require 'logger'
-  def flush_akamai(survey_id, survey_version)
+  def flush_akamai(urls)
 
     logger = Logger.new('log/Akamai.log')
     logger.level = Logger::WARN
 
      unless AKAMAI_CONFIG['development_mode']
       auth = {:username => AKAMAI_CONFIG['user_name'], :password => AKAMAI_CONFIG['password']}
-      response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str, :basic_auth => auth, :headers => { 'Content-Type' => 'application/json' }, :body => { :type => 'arl',
-               :action => 'remove',
-                :domain => AKAMAI_CONFIG['domain'],
-               :objects => ["http://#{APP_CONFIG['public_host']}/surveys/#{survey_id}".to_s,
-                            "http://#{APP_CONFIG['public_host']}/surveys/#{survey_id}?version={survey_version}".to_s]}.to_json)
+      response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str,
+        :basic_auth => auth,
+        :headers => { 'Content-Type' => 'application/json' },
+        :body => {
+          :type => 'arl',
+          :action => 'remove',
+          :domain => AKAMAI_CONFIG['domain'],
+          :objects => urls
+        }.to_json
+      )
       parsed_response = JSON.parse(response.body)
       httpresponse = parsed_response['httpStatus']
       logger.warn(Time.now)
