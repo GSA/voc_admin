@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
   has_many :sites,      :through => :site_users
   belongs_to :role
 
-  acts_as_authentic do |config|
-    config.validate_password_field = false
-    config.logged_in_timeout = 30.minutes
+  acts_as_authentic do |c|
+    c.validate_password_field = false
+    c.logged_in_timeout = 30.minutes
   end
 
   validates :email,     :presence => true
@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
   protected
 
   def valid_ldap_credentials?(password)
+    puts "checking user"
     ldap = Ldap.new(self.username,password)
     if ldap.valid_connection?
       return ldap.valid_user?
@@ -56,7 +57,6 @@ class User < ActiveRecord::Base
       return false
     end
   end
-
 end
 
 # == Schema Information

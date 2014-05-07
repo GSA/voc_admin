@@ -10,8 +10,8 @@ class Survey < ActiveRecord::Base
   attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
   :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
   :invitation_interval, :invitation_text, :invitation_accept_button_text,
-  :invitation_reject_button_text, :alarm, :alarm_notification_email, :holding_page,
-  :show_numbers
+  :invitation_reject_button_text, :start_screen_button_text, :alarm, :alarm_notification_email, :holding_page,
+  :show_numbers, :locale, :start_page_title
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
@@ -71,6 +71,14 @@ class Survey < ActiveRecord::Base
   def create_new_minor_version(source_sv_id = nil)
     source_sv = source_sv_id ? self.survey_versions.find(source_sv_id) : self.newest_version
     source_sv.clone_me
+  end
+
+  def flushable_urls
+    [
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}",
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}",
+      "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"
+    ]
   end
 end
 

@@ -10,8 +10,6 @@ gem 'kaminari'
 gem 'delayed_job_active_record'
 gem 'authlogic'
 gem 'net-ldap'
-
-
 gem 'memcache-client'
 gem 'paperclip', '3.4.0'
 gem 'daemons', :require => false

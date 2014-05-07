@@ -33,6 +33,13 @@
 		</div>
     <br />
     <div class="left_side">
+      <%= f.label :locale, "Survey Language: " %>
+    </div>
+    <div class="right_side">
+      <%= f.select :locale, [["English", "en"], ["Spanish", "es"]] %>
+    </div>
+    <br />
+    <div class="left_side">
       <%= f.label :previous_page_text, "Previous Page Text: " %>
     </div>
     <div class="right_side">
@@ -193,7 +200,7 @@
     </div>
     <br />
     <div class="left_side">
-      <%= f.label :invitation_accept_button_text, "Invitation Reject Button Text: " %>
+      <%= f.label :invitation_reject_button_text, "Invitation Reject Button Text: " %>
     </div>
     <div class="right_side">
       <%= f.text_field :invitation_reject_button_text %>
@@ -214,15 +221,36 @@
     </div>
     <br/>
     <div class="left_side">
+      <%= f.label :start_page_title, "Survey Start Title:" %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :start_page_title %>
+    </div>
+    <br/>
+    <div class="left_side">
       <%= f.label :holding_page, "Survey Start Page HTML:" %>
     </div>
     <div class="right_side">
       <%= f.text_area :holding_page, rows: 5 %>
     </div>
 		<div class="instructions">
+			<%= link_to 'Preview', 'javascript:void(0);', "id" => "start_page_preview",
+			 	"data-id" => @survey.id %>
+			<div>
+				<%= label_tag :preview_start_page_stylesheet, 'Preview Stylesheet' %>
+				<%= text_field_tag :preview_start_page_stylesheet %>
+			</div>
+
 				A <em>{{start}}</em> tag should be inserted into the html in the location
 			where the start button should be placed.
 		</div>
+    <div class="left_side">
+      <%= f.label :start_screen_button_text, "Start Screen Button Text:" %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :start_screen_button_text %>
+    </div>
+
 	  <div class="pageLink">
 			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
 	  	<% if f.object.new_record? %>
@@ -236,3 +264,4 @@
 </div>
 
 <%= javascript 'invitation_preview.js' %>
+<%= javascript 'start_page_preview.js' %>

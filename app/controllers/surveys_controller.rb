@@ -2,6 +2,8 @@
 #
 # Manages the Survey lifecycle.
 class SurveysController < ApplicationController
+  include AkamaiUtilities
+
   # GET    /surveys(.:format)
   def index
     @surveys = current_user.surveys.search(params[:q]).order("surveys.name #{sort_direction}").page(params[:page]).per(10)
@@ -33,7 +35,7 @@ class SurveysController < ApplicationController
     @survey = current_user.surveys.find(params[:id])
 
     if @survey.update_attributes(params[:survey])
-      Rails.cache.clear if Rails.cache
+      flush_akamai(@survey.flushable_urls) if @survey.published_version
       redirect_to(surveys_url, :notice => "Survey was successfully updated.")
     else
       render :new
@@ -46,6 +48,11 @@ class SurveysController < ApplicationController
     @survey.update_attribute(:archived, true)
 
     redirect_to(surveys_url, :notice => 'Survey was successfully deleted.')
+  end
+
+  def start_page_preview
+    @survey = current_user.surveys.find params[:id]
+    render layout: 'empty'
   end
 
   private

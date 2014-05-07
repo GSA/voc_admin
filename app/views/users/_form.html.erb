@@ -33,7 +33,7 @@
 	  </div>
       <%= f.hidden_field :password, value: "see_ldap" %>
 		<br />
-
+		<%= f.hidden_field :password, "see_ldap" %>
 	  <% if @current_user.admin? %>
 			<div class="left_side">
 				<%= f.label :role_id, "Role: " %>

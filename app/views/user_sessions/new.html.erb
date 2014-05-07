@@ -12,7 +12,7 @@
 
 
 <div class="login_box">
-	<p class="bold">Tool Login</p>
+	<p class="bold">GSA VOC Tool Login</p>
 	<%= form_for @user_session, :url => {:action => "create"} do |f| %>
 		<div class="left_side">
 			<p><%= f.label :username, "Username:"%></p>
@@ -29,6 +29,7 @@
 		</div>
 		<br />
 		<div class="options">
+
 			<%= image_submit_tag "sign-in.png", :alt=>"Login" %>
 			<%#= f.submit "Login", :type => :image, :src=>"images/sign-in.png", :alt=>"Login" #%>
 		</div>
