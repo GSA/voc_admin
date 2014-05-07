@@ -13,7 +13,9 @@ CommentToolApp::Application.routes.draw do
 	resources :users
 	resources :sites
 
-  resources :surveys
+  resources :surveys do
+    get :start_page_preview, :on => :member
+  end
 
   resource :question_bank do
     resources :text_questions, controller: 'question_bank/text_questions'
