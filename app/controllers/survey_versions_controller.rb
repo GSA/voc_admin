@@ -39,7 +39,7 @@ class SurveyVersionsController < ApplicationController
   # PUT    /surveys/:survey_id/survey_versions/:id(.:format)
   def update
     if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
-      flush_akamai(@survey.id, @survey_version.version_number) if @survey_version.published?
+      flush_akamai(@survey.flushable_urls) if @survey_version.published?
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
     else
       render :edit
@@ -70,7 +70,7 @@ class SurveyVersionsController < ApplicationController
       redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
     else
       @survey_version.publish_me
-      flush_akamai(@survey.id, @survey_version.version_number)
+      flush_akamai(@survey.flushable_urls)
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
     end
   end
@@ -78,7 +78,7 @@ class SurveyVersionsController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:id/unpublish(.:format)
   def unpublish
     @survey_version.unpublish_me
-    flush_akamai(@survey.id, @survey_version.version_number)
+    flush_akamai(@survey.flushable_urls)
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
   end
 
