@@ -1,0 +1,56 @@
+<% title @survey.start_page_title if @survey.start_page_title.present? %>
+
+<% if params[:stylesheet].present?
+  stylesheet params[:stylesheet]
+end %>
+
+<% if @survey.holding_page.present? %>
+  <%= @survey.holding_page.gsub('{{start}}', render('start_survey_button')).html_safe %>
+<% else %>
+
+<style>
+.content {
+  margin: 25px 15px 25px 15px;
+}
+.banner {
+  display: block;
+  margin: 0 auto 10px auto;
+}
+.message {
+  margin: 15px 0 15px 0;
+}
+.footer {
+
+}
+.float-right {
+  float: right;
+}
+.privacy-policy {
+  text-decoration: none;
+  color: blue;
+  font-size: .9em;
+}
+.start-survey {
+  display: block;
+  margin: 25px auto 25px auto;
+  width: 150px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+</style>
+
+<div class='content'>
+  <%= image_tag 'http://www.usa.gov/resources/images/usagov_logo-mobile.gif', class: 'banner' %>
+
+  <div class='message'>
+    If your visit to our website is already complete, click 'Start Survey'. Otherwise, minimize this
+    window and return when you have completed your visit.
+  </div>
+
+  <%= render 'start_survey_button' %>
+
+  <div class='footer'>
+    <%= link_to 'Privacy Policy', nil, class: 'float-right privacy-policy' %>
+  </div>
+</div>
+<% end %>

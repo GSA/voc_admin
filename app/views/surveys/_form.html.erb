@@ -233,6 +233,13 @@
       <%= f.text_area :holding_page, rows: 5 %>
     </div>
 		<div class="instructions">
+			<%= link_to 'Preview', 'javascript:void(0);', "id" => "start_page_preview",
+			 	"data-id" => @survey.id %>
+			<div>
+				<%= label_tag :preview_start_page_stylesheet, 'Preview Stylesheet' %>
+				<%= text_field_tag :preview_start_page_stylesheet %>
+			</div>
+
 				A <em>{{start}}</em> tag should be inserted into the html in the location
 			where the start button should be placed.
 		</div>
@@ -256,3 +263,4 @@
 </div>
 
 <%= javascript 'invitation_preview.js' %>
+<%= javascript 'start_page_preview.js' %>

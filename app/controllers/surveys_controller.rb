@@ -50,6 +50,11 @@ class SurveysController < ApplicationController
     redirect_to(surveys_url, :notice => 'Survey was successfully deleted.')
   end
 
+  def start_page_preview
+    @survey = current_user.surveys.find params[:id]
+    render layout: 'empty'
+  end
+
   private
 
   # Allows sorting by survey name alphabetically ascending or descending.
