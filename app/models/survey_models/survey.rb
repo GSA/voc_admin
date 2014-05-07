@@ -73,6 +73,14 @@ class Survey < ActiveRecord::Base
     source_sv = source_sv_id ? self.survey_versions.find(source_sv_id) : self.newest_version
     source_sv.clone_me
   end
+
+  def flushable_urls
+    [
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}",
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}",
+      "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"
+    ]
+  end
 end
 
 # == Schema Information

@@ -35,7 +35,7 @@ class SurveysController < ApplicationController
     @survey = current_user.surveys.find(params[:id])
 
     if @survey.update_attributes(params[:survey])
-      flush_akamai(@survey, @survey.published_version.version_number) if @survey.published_version
+      flush_akamai(@survey.flushable_urls) if @survey.published_version
       redirect_to(surveys_url, :notice => "Survey was successfully updated.")
     else
       render :new
