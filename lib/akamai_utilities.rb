@@ -17,12 +17,17 @@ module AkamaiUtilities
           :objects => urls
         }.to_json
       )
-      parsed_response = JSON.parse(response.body)
-      httpresponse = parsed_response['httpStatus']
-      logger.warn(Time.now)
-      logger.warn(parsed_response)
+      begin
+        parsed_response = JSON.parse(response.body)
+        httpresponse = parsed_response['httpStatus']
+        logger.warn(Time.now)
+        logger.warn(parsed_response)
+        httpresponse == 201
+      rescue JSON::ParserError
+        logger.error($!)
+        return false
+      end
 
-      httpresponse == 201
     end
   end
 end

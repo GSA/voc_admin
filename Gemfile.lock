@@ -134,6 +134,9 @@ GEM
       guard (>= 1.1)
       rspec (~> 2.11)
     hirb (0.7.1)
+    httparty (0.13.1)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.5.0)
     jazz_hands (0.4.0)
       awesome_print (~> 1.1.0)
@@ -186,6 +189,7 @@ GEM
       tzinfo (~> 0.3.22)
     mono_logger (1.1.0)
     multi_json (1.9.2)
+    multi_xml (0.5.5)
     mysql2 (0.2.18)
     net-ldap (0.6.1)
     nokogiri (1.6.1)
@@ -348,6 +352,7 @@ DEPENDENCIES
   factory_girl_rails
   growl
   guard-rspec
+  httparty
   jazz_hands
   jdbc-mysql
   jquery-rails
