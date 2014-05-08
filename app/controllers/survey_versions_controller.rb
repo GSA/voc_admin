@@ -83,7 +83,7 @@ class SurveyVersionsController < ApplicationController
   # GET    /surveys/:survey_id/survey_versions/:id/unpublish(.:format)
   def unpublish
     @survey_version.unpublish_me
-    redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
+    redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version and cache will be purged in 15 minutes."
   end
 
   # GET    /surveys/:survey_id/survey_versions/:id/clone_version(.:format)
