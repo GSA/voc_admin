@@ -76,6 +76,7 @@
         <th scope="col" class="col1">Delete/ Edit</th>
         <th scope="col"><%= sortable_display_field 'survey_responses.created_at', 'Date' %></th>
         <th scope="col"><%= sortable_display_field 'page_url', 'Page URL' %></th>
+        <th scope="col"><%= sortable_display_field 'device', 'Device' %></th>
 
         <%# TODO: REfactor this code!!! %>
         <% (@custom_view || version).display_fields.order(:display_order).each do |df| %>
@@ -91,6 +92,7 @@
           </td>
           <td><%= sr.created_at.strftime("%m/%d/%Y - %T") %></td>
           <td><%= sr.page_url %></td>
+          <td><%= sr.device %></td>
           <% if @custom_view.present? %>
             <% sr.display_field_values.joins(:display_field => :display_field_custom_views).where(:display_field_id => @custom_view.ordered_display_fields.map(&:id)).where("display_field_custom_views.custom_view_id = ?", @custom_view.id).order('display_field_custom_views.display_order ASC').each do |dfv| %>
               <%= render 'display_field_value', :version => version, :dfv => dfv %>
