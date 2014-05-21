@@ -276,6 +276,7 @@ class SurveyVersion < ActiveRecord::Base
     self.published = false
     self.save
   end
+                                                                                               
 
   # Clone all elements of the SurveyVersion into a new minor version.
   #

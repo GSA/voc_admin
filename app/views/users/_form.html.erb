@@ -34,16 +34,18 @@
 		<br />
 
 	  <% if @current_user.admin? %>
-			<div class="left_side">
-				<%= f.label :role_id, "Role: " %>
-			</div>
-			<div class="right_side">
-				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
-				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
-			</div>
+	  	<fieldset class="hide">
+				<div class="left_side">
+					<legend class="label-like">Role:</legend>
+				</div>
+				<div class="right_side">
+					<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
+					<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
+				</div>
+			</fieldset>
 			<div id="sites_div" class="<%= @user.role.nil? ? '' : 'displayNone'%>">
 				<div class="left_side">
-					<%= f.label :site_ids, "Sites:" %>
+					<%= f.label "sites", "Sites:" %>
 				</div>
 				<div class="right_side">
 		    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
