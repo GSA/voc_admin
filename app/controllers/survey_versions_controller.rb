@@ -77,8 +77,9 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/unpublish(.:format)
   def unpublish
-    flush_akamai(@survey.flushable_urls)
+    flushable_urls = @survey.flushable_urls
     @survey_version.unpublish_me
+    flush_akamai(flushable_urls)
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
   end
 
