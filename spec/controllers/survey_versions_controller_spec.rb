@@ -34,6 +34,7 @@ describe SurveyVersionsController do
 
       it 'should redirect to index with message' do
         survey_version.stub(:publish_me)
+        survey.stub(:published_version => survey_version)
         Rails.stub_chain(:cache, :clear)
 
         get :publish, survey_id: survey.id, id: survey_version.id
@@ -44,16 +45,9 @@ describe SurveyVersionsController do
 
       it 'should publish the survey version' do
         Rails.stub_chain(:cache, :clear)
+        survey.stub(:published_version => survey_version)
 
         survey_version.should_receive(:publish_me)
-
-        get :publish, survey_id: survey.id, id: survey_version.id
-      end
-
-      it 'should clear the Rails cache' do
-        survey_version.stub(:publish_me)
-
-        Rails.cache.should_receive(:clear).once
 
         get :publish, survey_id: survey.id, id: survey_version.id
       end
@@ -62,6 +56,7 @@ describe SurveyVersionsController do
 
   context 'unpublish' do
     it 'should redirect to index with message' do
+      survey.stub(:published_version => survey_version)
       get :unpublish, survey_id: survey.id, id: survey_version.id
 
       response.should redirect_to(survey_survey_versions_path survey)
@@ -70,6 +65,7 @@ describe SurveyVersionsController do
 
     it 'should unpublish the survey' do
       survey_version.should_receive(:unpublish_me)
+      survey.stub(:published_version => survey_version)
 
       get :unpublish, survey_id: survey.id, id: survey_version.id
     end
@@ -165,15 +161,6 @@ describe SurveyVersionsController do
 
       response.should redirect_to(surveys_path)
       flash[:notice].should =~ /The survey you are trying to access has been removed/i
-    end
-
-    it 'should redirect to index if locked' do
-      survey_version.stub(:locked).and_return true
-
-      get :edit, survey_id: survey.id, id: survey_version.id
-
-      response.should redirect_to(survey_survey_versions_path survey)
-      flash[:notice].should =~ /You may not edit a survey once it has been published.  Please create a new version if you wish to make changes to this survey/i
     end
 
     it 'should render the edit template' do
