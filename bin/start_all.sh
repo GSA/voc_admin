@@ -38,5 +38,9 @@ else
   echo "Successfully started Redis."
 fi
 
+# Start the background workers
+bundle exec rake resque:start_workers
+echo "Successfully started resque workers."
+
 echo "Congratulations! You are now ready to start running Comment Tool."
 echo "Use 'rails s -p <port>' to run the rails server."
