@@ -127,12 +127,13 @@ class SurveyVersion < ActiveRecord::Base
   def generate_responses_csv(filter_params, user_id)
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
 
-    unless filter_params[:simple_search].blank?
+    unless filter_params['simple_search'].blank?
       # TODO: come back to simple search later
     end
 
-    unless filter_params[:search].blank?
-      # TODO: come back to advanced search later
+    unless filter_params['search'].blank?
+      response_search = ReportableSurveyResponseSearch.new filter_params[:search]
+      survey_response_query = response_search.search(survey_response_query)
     end
 
     custom_view, sort_orders = nil
