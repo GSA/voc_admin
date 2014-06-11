@@ -132,7 +132,7 @@ class SurveyVersion < ActiveRecord::Base
     end
 
     unless filter_params['search'].blank?
-      response_search = ReportableSurveyResponseSearch.new filter_params[:search]
+      response_search = ReportableSurveyResponseSearch.new filter_params['search']
       survey_response_query = response_search.search(survey_response_query)
     end
 
