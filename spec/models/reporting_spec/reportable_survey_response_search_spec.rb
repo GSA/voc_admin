@@ -1,15 +1,28 @@
 require 'spec_helper'
 
 describe ReportableSurveyResponseSearch, focus: true do
+  let!(:responses) do
+    [
+      FactoryGirl.create(:reportable_survey_response, :answers => {"1" => "Test 1"}),
+      FactoryGirl.create(:reportable_survey_response, :answers => {"1" => "Not Test"})
+    ]
+  end
+
+  it 'returns all entries with no conditions' do
+    response_search = ReportableSurveyResponseSearch.new({'criteria' => {}})
+    expect(response_search.search.entries).to eq(responses)
+  end
+
+  it 'applies the passed in scope' do
+    response_search = ReportableSurveyResponseSearch.new({'criteria' => {}})
+    base_scope = ReportableSurveyResponse.where(survey_version_id: 1)
+    excluded_response = FactoryGirl.create :reportable_survey_response,
+      survey_version_id: 2
+
+    expect(response_search.search(base_scope).entries).to_not include(excluded_response)
+  end
 
   context 'conditions' do
-    let!(:responses) do
-      [
-        FactoryGirl.create(:reportable_survey_response, :answers => {"1" => "Test 1"}),
-        FactoryGirl.create(:reportable_survey_response, :answers => {"1" => "Not Test"})
-      ]
-    end
-
     it '#equals' do
       response_search = new_response_search('1', 'equals', 'Test 1')
       expect(response_search.search.entries).to eq([responses.first])
