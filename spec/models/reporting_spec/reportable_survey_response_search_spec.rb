@@ -3,8 +3,16 @@ require 'spec_helper'
 describe ReportableSurveyResponseSearch, focus: true do
   let!(:responses) do
     [
-      FactoryGirl.create(:reportable_survey_response, :answers => {"1" => "Test 1"}),
-      FactoryGirl.create(:reportable_survey_response, :answers => {"1" => "Not Test"})
+      FactoryGirl.create(
+        :reportable_survey_response,
+        :created_at => Date.strptime('05/20/2014', '%m/%d/%Y'),
+        :answers => {"1" => "Test 1"}
+      ),
+      FactoryGirl.create(
+        :reportable_survey_response,
+        :created_at => Date.strptime('05/21/2014', '%m/%d/%Y'),
+        :answers => {"1" => "Not Test"}
+      )
     ]
   end
 
@@ -22,7 +30,45 @@ describe ReportableSurveyResponseSearch, focus: true do
     expect(response_search.search(base_scope).entries).to_not include(excluded_response)
   end
 
-  context 'conditions' do
+  context 'date conditions' do
+    context '#equals' do
+      it 'returns results for a specific date' do
+        response_search = new_response_search('survey_responses.created_at', 'equals', '05/20/2014')
+        expect(response_search.search.entries).to eq([responses.first])
+      end
+
+      it 'does not return results from other dates' do
+        response_search = new_response_search('survey_responses.created_at', 'equals', '05/20/2014')
+        expect(response_search.search.entries).to_not include(responses.last)
+      end
+    end
+
+    context '#greater_than' do
+      it 'returns results for later dates' do
+        response_search = new_response_search('survey_responses.created_at', 'greater_than', '05/20/2014')
+        expect(response_search.search.entries).to eq([responses.last])
+      end
+
+      it 'does not include the specified date' do
+        response_search = new_response_search('survey_responses.created_at', 'greater_than', '05/20/2014')
+        expect(response_search.search.entries).to_not include(responses.first)
+      end
+    end
+
+    context '#less_than' do
+      it 'returns results for earlier dates' do
+        response_search = new_response_search('survey_responses.created_at', 'less_than', '05/21/2014')
+        expect(response_search.search.entries).to eq([responses.first])
+      end
+
+      it 'does nto include the specified date' do
+        response_search = new_response_search('survey_responses.created_at', 'less_than', '05/21/2014')
+        expect(response_search.search.entries).to_not include(responses.last)
+      end
+    end
+  end
+
+  context 'String conditions' do
     it '#equals' do
       response_search = new_response_search('1', 'equals', 'Test 1')
       expect(response_search.search.entries).to eq([responses.first])

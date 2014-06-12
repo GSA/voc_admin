@@ -12,7 +12,8 @@ class ReportableSurveyResponseSearch
 
   NEGATION_CONDITIONS = {
     'equals' => proc {|base_scope, field_name, value| base_scope.where(field_name.to_sym.ne => value) },
-    'contains' => proc {|base_scope, field_name, value| }
+    'less_than' => proc {|base_scope, field_name, value| base_scope.where(:"#{field_name}".gte => value) },
+    'greater_than' => proc {|base_scope, field_name, value| base_scope.where(:"#{field_name}".lte => value) }
   }
 
   def initialize(attribs = nil)
@@ -33,7 +34,7 @@ class ReportableSurveyResponseSearch
         search_field = criterion['display_field_id'].split('.').last
       elsif criterion['display_field_id'] == 'survey_responses.created_at'
         value = parse_date_value(criterion['value'])
-        search_field = criterion['display_field_id']
+        search_field = 'created_at'
       else
         search_field = "answers.#{criterion['display_field_id']}"
       end
