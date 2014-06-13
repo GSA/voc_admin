@@ -30,6 +30,79 @@ describe ReportableSurveyResponseSearch, focus: true do
     expect(response_search.search(base_scope).entries).to_not include(excluded_response)
   end
 
+  context 'exclude conditions' do
+    it 'does not return matches' do
+      response_search = new_response_search('1', 'equals', 'Not Test', '0')
+      expect(response_search.search.entries).to_not include(responses.last)
+    end
+
+    it 'returns elements that do not match' do
+      response_search = new_response_search('1', 'equals', 'Not Test', '0')
+      expect(response_search.search.entries).to include(responses.first)
+    end
+  end
+
+  context 'multiple criteria' do
+    let!(:responses) do
+      [
+        FactoryGirl.create(
+          :reportable_survey_response,
+          :created_at => Date.strptime('05/20/2014', '%m/%d/%Y'),
+          :answers => {"1" => "Not Test"}
+        ),
+        FactoryGirl.create(
+          :reportable_survey_response,
+          :created_at => Date.strptime('05/21/2014', '%m/%d/%Y'),
+          :answers => {"1" => "Not Test"}
+        )
+      ]
+    end
+
+    it 'should combine multiple criteria' do
+      criteria = {
+        "criteria" => {
+          "0" => {
+            "include_exclude"=> '1',
+            "display_field_id"=> '1',
+            "condition"=> 'equals',
+            "value"=> 'Not Test'
+          },
+          "1" => {
+            "include_exclude" => '1',
+            "display_field_id" => 'survey_responses.created_at',
+            "condition" => 'greater_than',
+            "value" => '05/20/2014',
+            "join_clause" => "AND"
+          }
+        }
+      }
+      response_search = ReportableSurveyResponseSearch.new(criteria)
+      expect(response_search.search.entries).to eq([responses.last])
+    end
+
+    it 'handles multiple exclusionary criteria' do
+      criteria = {
+        "criteria" => {
+          "0" => {
+            "include_exclude"=> '1',
+            "display_field_id"=> '1',
+            "condition"=> 'equals',
+            "value"=> 'Not Test'
+          },
+          "1" => {
+            "include_exclude" => '0',
+            "display_field_id" => 'survey_responses.created_at',
+            "condition" => 'greater_than',
+            "value" => '05/20/2014',
+            "join_clause" => "AND"
+          }
+        }
+      }
+      response_search = ReportableSurveyResponseSearch.new(criteria)
+      expect(response_search.search.entries).to eq([responses.first])      
+    end
+  end
+
   context 'date conditions' do
     context '#equals' do
       it 'returns results for a specific date' do
@@ -126,11 +199,11 @@ describe ReportableSurveyResponseSearch, focus: true do
 
   end
 
-  def new_response_search(search_field, condition, value)
+  def new_response_search(search_field, condition, value, include_exclude = '1')
     ReportableSurveyResponseSearch.new({
       "criteria"=> {
         "0"=> {
-          "include_exclude"=>"1",
+          "include_exclude"=> include_exclude,
           "display_field_id"=> search_field,
           "condition"=> condition,
           "value"=> value

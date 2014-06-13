@@ -2,12 +2,24 @@ class ReportableSurveyResponseSearch
   attr_accessor :criteria, :conditions, :parameters, :clause_joins
 
   CONDITIONS = {
-    'equals' => proc {|base_scope, field_name, value| base_scope.where(field_name => value) },
-    'contains' => proc {|base_scope, field_name, value| base_scope.where(field_name => Regexp.new("#{value}")) },
-    'begins_with' => proc {|base_scope, field_name, value| base_scope.where(field_name => Regexp.new("^#{value}")) },
-    'ends_with' => proc {|base_scope, field_name, value| base_scope.where(field_name => Regexp.new("#{value}$")) },
-    'less_than' => proc {|base_scope, field_name, value| base_scope.where( :"#{field_name}".lt => value) },
-    'greater_than' => proc {|base_scope, field_name, value| base_scope.where( :"#{field_name}".gt => value) }
+    'equals' => proc {|base_scope, field_name, value, or_clause = false|
+        base_scope.where(field_name => value)
+    },
+    'contains' => proc {|base_scope, field_name, value, or_clause = false|
+        base_scope.where(field_name => Regexp.new("#{value}"))
+    },
+    'begins_with' => proc {|base_scope, field_name, value, or_clause = false|
+        base_scope.where(field_name => Regexp.new("^#{value}"))
+    },
+    'ends_with' => proc {|base_scope, field_name, value, or_clause = false|
+        base_scope.where(field_name => Regexp.new("#{value}$"))
+    },
+    'less_than' => proc {|base_scope, field_name, value, or_clause = false|
+        base_scope.where( :"#{field_name}".lt => value)
+    },
+    'greater_than' => proc {|base_scope, field_name, value, or_clause = false|
+        base_scope.where( :"#{field_name}".gt => value)
+    }
   }
 
   NEGATION_CONDITIONS = {
@@ -27,8 +39,10 @@ class ReportableSurveyResponseSearch
     base_scope ||= ReportableSurveyResponse.scoped
 
     criteria.each do |k, criterion|
+      query_hash = criterion['include_exclude'] == '0' ? NEGATION_CONDITIONS : CONDITIONS
       condition = criterion['condition']
       value = criterion['value']
+      join_clause = criterion['join_clause']
 
       if %w( survey_responses.page_url survey_responses.device ).include?(criterion['display_field_id'])
         search_field = criterion['display_field_id'].split('.').last
@@ -39,7 +53,7 @@ class ReportableSurveyResponseSearch
         search_field = "answers.#{criterion['display_field_id']}"
       end
 
-      base_scope = CONDITIONS[condition].call(base_scope, search_field, value)
+      base_scope = query_hash[condition].call(base_scope, search_field, value, join_clause == 'OR')
     end
 
     base_scope
