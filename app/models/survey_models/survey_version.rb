@@ -154,7 +154,7 @@ class SurveyVersion < ActiveRecord::Base
     # when the Export instance is created.
     file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.csv"
     CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
-      csv << ["Date", "Page URL"].concat(ordered_columns.map(&:name))
+      csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
       # For each response in batches...
       0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
@@ -170,7 +170,7 @@ class SurveyVersion < ActiveRecord::Base
           end.map! {|rr| rr.gsub("{%delim%}", ", ")}
 
           # Write the completed row to the CSV
-          csv << [response.created_at, response.page_url].concat(response_record)
+          csv << [response.created_at, response.page_url, response.device].concat(response_record)
         end
       end
     end
