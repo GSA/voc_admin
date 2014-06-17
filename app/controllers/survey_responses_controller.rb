@@ -144,7 +144,7 @@ class SurveyResponsesController < ApplicationController
       @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir)
 
     # if we're specifically sorting by date or page url
-    elsif %w(survey_responses.created_at page_url).include?(params[:order_column])
+  elsif %w(survey_responses.created_at page_url device).include?(params[:order_column])
       @survey_responses = @survey_responses.order("#{params[:order_column]} #{@order_dir}")
 
     # custom view!
