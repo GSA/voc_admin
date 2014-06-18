@@ -72,7 +72,7 @@ describe ReportableSurveyResponseSearch, focus: true do
             "display_field_id" => 'survey_responses.created_at',
             "condition" => 'greater_than',
             "value" => '05/20/2014',
-            "join_clause" => "AND"
+            "clause_join" => "AND"
           }
         }
       }
@@ -94,12 +94,12 @@ describe ReportableSurveyResponseSearch, focus: true do
             "display_field_id" => 'survey_responses.created_at',
             "condition" => 'greater_than',
             "value" => '05/20/2014',
-            "join_clause" => "AND"
+            "clause_join" => "AND"
           }
         }
       }
       response_search = ReportableSurveyResponseSearch.new(criteria)
-      expect(response_search.search.entries).to eq([responses.first])      
+      expect(response_search.search.entries).to eq([responses.first])
     end
   end
 
@@ -157,6 +157,23 @@ describe ReportableSurveyResponseSearch, focus: true do
         response_search = new_response_search('1', 'begins_with', 'Not')
         expect(response_search.search.entries).to eq([responses.last])
       end
+
+      it 'must match the whole string' do
+        response_search = new_response_search('1', 'begins_with', 'Na')
+        expect(response_search.search.entries).to be_empty
+      end
+
+      context 'negation' do
+        it 'does not include responses that begin with' do
+          response_search = new_response_search('1', 'begins_with', 'Not', '0')
+          expect(response_search.search.entries).to_not include(responses.last)
+        end
+
+        it 'includes responses that do not being with' do
+          response_search = new_response_search('1', 'begins_with', 'Not', '0')
+          expect(response_search.search.entries).to include(responses.first)
+        end
+      end
     end
 
     context '#ends_with' do
@@ -165,6 +182,7 @@ describe ReportableSurveyResponseSearch, focus: true do
       it 'includes answers ending with' do
         expect(response_search.search.entries).to eq([responses.last])
       end
+
     end
 
     context '#less_than' do

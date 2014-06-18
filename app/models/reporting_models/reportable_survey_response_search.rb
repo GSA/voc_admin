@@ -2,30 +2,45 @@ class ReportableSurveyResponseSearch
   attr_accessor :criteria, :conditions, :parameters, :clause_joins
 
   CONDITIONS = {
-    'equals' => proc {|base_scope, field_name, value, or_clause = false|
+    'equals' => proc {|base_scope, field_name, value|
         base_scope.where(field_name => value)
     },
-    'contains' => proc {|base_scope, field_name, value, or_clause = false|
+    'contains' => proc {|base_scope, field_name, value|
         base_scope.where(field_name => Regexp.new("#{value}"))
     },
-    'begins_with' => proc {|base_scope, field_name, value, or_clause = false|
+    'begins_with' => proc {|base_scope, field_name, value|
         base_scope.where(field_name => Regexp.new("^#{value}"))
     },
-    'ends_with' => proc {|base_scope, field_name, value, or_clause = false|
+    'ends_with' => proc {|base_scope, field_name, value|
         base_scope.where(field_name => Regexp.new("#{value}$"))
     },
-    'less_than' => proc {|base_scope, field_name, value, or_clause = false|
+    'less_than' => proc {|base_scope, field_name, value|
         base_scope.where( :"#{field_name}".lt => value)
     },
-    'greater_than' => proc {|base_scope, field_name, value, or_clause = false|
+    'greater_than' => proc {|base_scope, field_name, value|
         base_scope.where( :"#{field_name}".gt => value)
     }
   }
 
   NEGATION_CONDITIONS = {
-    'equals' => proc {|base_scope, field_name, value| base_scope.where(field_name.to_sym.ne => value) },
-    'less_than' => proc {|base_scope, field_name, value| base_scope.where(:"#{field_name}".gte => value) },
-    'greater_than' => proc {|base_scope, field_name, value| base_scope.where(:"#{field_name}".lte => value) }
+    'equals' => proc {|base_scope, field_name, value|
+      base_scope.where(field_name.to_sym.ne => value)
+    },
+    'contains' => proc {|base_scope, field_name, value|
+        base_scope.where(field_name => { "$not" => Regexp.new("#{value}") })
+    },
+    'less_than' => proc {|base_scope, field_name, value|
+      base_scope.where(:"#{field_name}".gte => value)
+    },
+    'greater_than' => proc {|base_scope, field_name, value|
+      base_scope.where(:"#{field_name}".lte => value)
+    },
+    'begins_with' => proc {|base_scope, field_name, value|
+      base_scope.where(:"#{field_name}" => { "$not" => Regexp.new("^#{value}") })
+    },
+    'ends_with' => proc {|base_scope, field_name, value|
+        base_scope.where(field_name => { "$not" => Regexp.new("#{value}$") })
+    },
   }
 
   def initialize(attribs = nil)
@@ -42,7 +57,7 @@ class ReportableSurveyResponseSearch
       query_hash = criterion['include_exclude'] == '0' ? NEGATION_CONDITIONS : CONDITIONS
       condition = criterion['condition']
       value = criterion['value']
-      join_clause = criterion['join_clause']
+      join_clause = criterion['clause_join']
 
       if %w( survey_responses.page_url survey_responses.device ).include?(criterion['display_field_id'])
         search_field = criterion['display_field_id'].split('.').last
@@ -53,7 +68,7 @@ class ReportableSurveyResponseSearch
         search_field = "answers.#{criterion['display_field_id']}"
       end
 
-      base_scope = query_hash[condition].call(base_scope, search_field, value, join_clause == 'OR')
+      base_scope = query_hash[condition].call(base_scope, search_field, value)
     end
 
     base_scope
