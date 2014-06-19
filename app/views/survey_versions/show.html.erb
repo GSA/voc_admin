@@ -45,7 +45,7 @@
 						end %>
 						<% if element.assetable_type == "MatrixQuestion" %>
 							<% if element.assetable_type != 'Asset'  %>
-								<span class="vocquestionnumber"><%= "#{question_number}. #{element.assetable.question_content.statement}" %></span>
+								<span class="vocquestionnumber"><%= "#{@survey.show_numbers? ? question_number + ". " : nil}#{element.assetable.question_content.statement}" %></span>
 							<% end %>
 			              <table>
 			                <tr>
@@ -80,7 +80,10 @@
 							   	answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
 							   end -%>
 
-							<div class="vocquestiontext"><span class="vocquestionnumber"><%= "#{question_number}." %> </span>
+							<div class="vocquestiontext">
+								<% if @survey.show_numbers? %>
+									<span class="vocquestionnumber"><%= "#{question_number}." %> </span>
+								<% end %>
 							<%= answer_tag_id ? label_tag(answer_tag_id, element.assetable.question_content.statement) : element.assetable.question_content.statement %>
 							<%= "*" if element.assetable.question_content.required%></div>
 							<% if element.assetable_type == "ChoiceQuestion" %>
