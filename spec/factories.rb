@@ -1,4 +1,15 @@
 FactoryGirl.define do
+
+  factory :reportable_survey_response do
+    survey_id 1
+    survey_version_id  1
+    survey_response_id 1
+    created_at  {Time.strptime("05/20/2014" + " #{Time.zone.now.formatted_offset}", "%m/%d/%Y %:z") }
+    page_url "http://localhost:3000/test"
+    device "Desktop"
+    answers { {"1" => "Test"} }
+  end
+
   # == Schema Information
   #
   # Table name: users
