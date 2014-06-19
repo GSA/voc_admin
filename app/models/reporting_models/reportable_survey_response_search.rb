@@ -57,7 +57,7 @@ class ReportableSurveyResponseSearch
       query_hash = criterion['include_exclude'] == '0' ? NEGATION_CONDITIONS : CONDITIONS
       condition = criterion['condition']
       value = criterion['value']
-      join_clause = criterion['clause_join']
+      clause_join = criterion['clause_join']
 
       if %w( survey_responses.page_url survey_responses.device ).include?(criterion['display_field_id'])
         search_field = criterion['display_field_id'].split('.').last
