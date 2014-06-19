@@ -61,8 +61,7 @@
   }
 
   function loadModal(target_id) {
-    var modalHTML = jQuery("#survey_invitation_text").text();
-
+    var modalHTML = jQuery("#survey_invitation_text").val();
     if(modalHTML.length > 0) {
       modalHTML = modalHTML.replace("{{accept}}",
         '<input type="button" name="vocEnter" id="vocEnter" value="' + acceptText() + '">');
@@ -73,7 +72,7 @@
       jQuery('#' + target_id).html(modalHTML);
     }
 
-    var stylesheet_url = jQuery("#preview_stylesheet").val();
+    var stylesheet_url = jQuery("#survey_invitation_preview_stylesheet").val();
     if(stylesheet_url.length > 0) {
       var fileref = document.createElement("link");
       fileref.setAttribute("rel", "stylesheet");
