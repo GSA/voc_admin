@@ -52,6 +52,19 @@ module SurveyVersionHelper
     )
   end
 
+  # Will render the question statement with, optionally, the question number
+  # prepended.
+  #
+  # @param [Survey] survey the Survey instance
+  # @param [SurveyElement] element the SurveyElement instance
+  # @param [Integer] question_number the question number to optionally render
+  def render_question_statement(survey, element, question_number)
+    statement = element.assetable.question_content.statement
+    statement = statement.insert(0, "#{question_number}. ") if survey.show_numbers?
+
+    statement
+  end
+
   # Assembles links for reordering pages.
   # 
   # @param [Survey] survey the Survey instance
