@@ -17,7 +17,8 @@ class Survey < ActiveRecord::Base
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  validates :invitation_percent, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
+  validates :invitation_percent, presence: true, :format => { :with => /\A((100(\.0{1,2})?)|(\d{0,2})(\.\d{1,2})?)\z/ },
+                                                 :numericality => {:greater_than => 0.01, :less_than_or_equal_to => 100}
   validates :invitation_interval, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0}
   validates :alarm_notification_email, presence: true, :if => :alarm
 
