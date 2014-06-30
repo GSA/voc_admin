@@ -5,7 +5,7 @@
 
   <% @matrix_question.build_question_content unless @matrix_question.question_content %>
   <%= f.fields_for :question_content do |builder| %>
-   <%= render :partial => "shared/question_content_fields", :locals => {:f => builder, :matrix_statement => true} %>
+   <%= render :partial => "shared/question_content_fields", :locals => {:f => builder, :matrix_statement => true, :skip_flow_control => true} %>
   <% end -%>
   <br />
   <div id="rows">

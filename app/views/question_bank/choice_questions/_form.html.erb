@@ -5,7 +5,7 @@
 
   <% @choice_question.build_question_content if @choice_question.question_content.nil? %>
   <%= f.fields_for :question_content do |builder| %>
-    <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
+    <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true, :skip_flow_control => true} %>
   <% end -%>
 
   <%= f.label :answer_type, "Answer Type: " %>
