@@ -18,14 +18,14 @@
 			<p><%= f.label :email, "Email:"%></p>
 		</div>
 		<div class="right_side">
-			<%= f.text_field :email %>
+			<%= f.text_field :email, { autocomplete: "off" }  %>
 		</div>
 		<br />
 		<div class="left_side">
 			<p><%= f.label :password, "Password:" %></p>
 		</div>
 		<div class="right_side">
-			<%= f.password_field :password %>
+			<%= f.password_field :password, { autocomplete: "off" } %>
 		</div>
 		<br />
 		<div class="options">
