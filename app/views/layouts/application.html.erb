@@ -2,38 +2,39 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<title>HHS VOC Tool Application</title>
+  <head>
+    <title>HHS VOC Tool Application</title>
 
-  	<%= stylesheet_link_tag main_stylesheet_location %>
-  	<%= stylesheet_link_tag 'simplemodal' %>
-  	<%= stylesheet_link_tag 'jquery-ui.min' %>
-  	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1', 'jquery.ui', 'survey_builder' %>
-  	<%= yield :head %>
-  	<%= csrf_meta_tag %>
+    <%= render :partial => 'shared/frame_buster' %>
+    <%= stylesheet_link_tag main_stylesheet_location %>
+    <%= stylesheet_link_tag 'simplemodal' %>
+    <%= stylesheet_link_tag 'jquery-ui.min' %>
+    <%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1', 'jquery.ui', 'survey_builder' %>
+    <%= yield :head %>
+    <%= csrf_meta_tag %>
 
-  	<!-- Community Imports -->
-	<%= yield :additional_scripts %>
+    <!-- Community Imports -->
+  <%= yield :additional_scripts %>
 
-	</head>
-	<body>
-		<div id="container">
-			<%# Dynamic header view partial. See: app/helpers/layout_helper.rb %>
-			<%= render :partial => header_partial_location %>
-			<% if !current_user.blank? %>
-				<%= render :partial => 'layouts/navigation' %>
-			<% end %>
-			<a name="skip"></a>
+  </head>
+  <body>
+    <div id="container">
+      <%# Dynamic header view partial. See: app/helpers/layout_helper.rb %>
+      <%= render :partial => header_partial_location %>
+      <% if !current_user.blank? %>
+        <%= render :partial => 'layouts/navigation' %>
+      <% end %>
+      <a name="skip"></a>
 
-			<!-- begin main content for intranet page -->
-			<div id="content">
-				<%= yield %>
-			</div>
-			<!-- end main content for intranet page -->
+      <!-- begin main content for intranet page -->
+      <div id="content">
+        <%= yield %>
+      </div>
+      <!-- end main content for intranet page -->
 
-			<%# Dynamic footer view partial. See: app/helpers/layout_helper.rb %>
-			<%= render :partial => footer_partial_location %>
-		</div>
-		<%= yield :script %>
-	</body>
+      <%# Dynamic footer view partial. See: app/helpers/layout_helper.rb %>
+      <%= render :partial => footer_partial_location %>
+    </div>
+    <%= yield :script %>
+  </body>
 </html>

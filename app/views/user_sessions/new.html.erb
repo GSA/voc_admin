@@ -1,7 +1,7 @@
 <%= flash_messages(flash) %>
 <% if @user_session.errors.any? %>
-	<div id="error_explanation">
-		<p class="title"><%= pluralize(@user_session.errors.count, "error") %> prohibited this login:</p>
+  <div id="error_explanation">
+    <p class="title"><%= pluralize(@user_session.errors.count, "error") %> prohibited this login:</p>
     <ul class="list">
       <% @user_session.errors.full_messages.each do |msg| %>
         <li class="list"><%= msg %></li>
@@ -12,28 +12,28 @@
   
 
 <div class="login_box">
-	<p class="bold">HHS VOC Tool Login</p>
-	<%= form_for @user_session, :url => {:action => "create"} do |f| %>
-		<div class="left_side">
-			<p><%= f.label :email, "Email:"%></p>
-		</div>
-		<div class="right_side">
-			<%= f.text_field :email %>
-		</div>
-		<br />
-		<div class="left_side">
-			<p><%= f.label :password, "Password:" %></p>
-		</div>
-		<div class="right_side">
-			<%= f.password_field :password %>
-		</div>
-		<br />
-		<div class="options">
-			
-			<%= image_submit_tag "sign-in.png", :alt=>"Login" %>
-			<%#= f.submit "Login", :type => :image, :src=>"images/sign-in.png", :alt=>"Login" #%>
-			<p class="reset"><a href="/reset_password" title="Request that new password be sent to you." >Reset Password?</a></p>
-		</div>
-	<% end %>
+  <p class="bold">HHS VOC Tool Login</p>
+  <%= form_for @user_session, :url => {:action => "create"} do |f| %>
+    <div class="left_side">
+      <p><%= f.label :email, "Email:"%></p>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :email, { autocomplete: "off" }  %>
+    </div>
+    <br />
+    <div class="left_side">
+      <p><%= f.label :password, "Password:" %></p>
+    </div>
+    <div class="right_side">
+      <%= f.password_field :password, { autocomplete: "off" } %>
+    </div>
+    <br />
+    <div class="options">
+      
+      <%= image_submit_tag "sign-in.png", :alt=>"Login" %>
+      <%#= f.submit "Login", :type => :image, :src=>"images/sign-in.png", :alt=>"Login" #%>
+      <p class="reset"><a href="/reset_password" title="Request that new password be sent to you." >Reset Password?</a></p>
+    </div>
+  <% end %>
 </div>
 
