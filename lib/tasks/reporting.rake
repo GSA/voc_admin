@@ -1,4 +1,15 @@
 namespace :reporting do
+  desc "Reset all reporting counts"
+  task :reset_counts => [:environment] do
+    SurveyVersion.all.each do |sv|
+      sv.temp_invitation_count.clear
+      sv.temp_visit_count.clear
+      sv.temp_invitation_accepted_count.clear
+      sv.survey_version_counts.destroy_all
+      sv.save
+    end
+  end
+
   desc "Run all daily reporting tasks - counts, loading questions, and mailing recurring reports"
   task :daily => [:environment] do
     puts "Updating survey version counts..."
