@@ -1,16 +1,13 @@
 namespace :remove_scan do
-  desc "Remove security scan entries from db"
-  task :delete_survey_responses => [:environment] do
-    puts "Starting at #{Time.now}"
-    #Your start date and end dates need to allign correctly.
-    start_date = ['2014-05-02','2014-06-02','2014-06-30', '2014-07-10', '2014-07-20']
-    end_date = ['2014-05-06','2014-06-03','2014-07-06', '2014-07-12', '2014-07-23']
-    @scancnt = 0
-    start_date.each do |dates|
-      @record_list = SurveyResponse.order("id").where("created_at > ? and created_at < ?", start_date[@scancnt].to_date, end_date[@scancnt].to_date + 1)
+  desc "Remove security entries. Expects parameters Start Date and End date in format YYYY-MM-DD"
 
+  task :delete_survey_responses, [:start, :end] => [:environment] do |t, args|
+    puts "Starting at #{Time.now}" 
+     start_date = args[:start]#:start#['2014-05-02','2014-06-02','2014-06-30', '2014-07-10', '2014-07-20']
+     end_date = args[:end]#:end #['2014-05-06','2014-06-03','2014-07-06', '2014-07-12', '2014-07-23']
+      @record_list = SurveyResponse.order("id").where("created_at > ? and created_at < ?", start_date, end_date)
       @recordcnt = 1
-      @record_list.each do |response|
+      @record_list.find_each do |response|
           if @recordcnt == 1
             @prev_record_date = response.created_at
             @current_record_date = response.created_at
@@ -43,7 +40,7 @@ namespace :remove_scan do
               s.save
 
             @raw_resp = RawResponse.where(:survey_response_id => response.id)
-            @raw_resp.each do |raw|
+            @raw_resp.find_each do |raw|
               r = ScanRawResponse.new
               r.raw_response_id = raw.id
               r.client_id = raw.client_id
@@ -56,7 +53,6 @@ namespace :remove_scan do
             end
             if SurveyResponse.destroy(response.id)
               RawResponse.where(:survey_response_id => response.id).destroy_all
-              puts "Response id is #{response.id}"
               @represponse = ReportableSurveyResponse.where(:survey_response_id => response.id).first
               unless @represponse.nil?
                 @represponse.remove
@@ -65,9 +61,8 @@ namespace :remove_scan do
           end
         @recordcnt += 1
        end
-      @scancnt += 1
-    end
-    puts "Ending at #{Time.now}"
+      # @scancnt += 1
+    #end
     puts "Total records removed is #{@recordcnt}"
   end
 end
