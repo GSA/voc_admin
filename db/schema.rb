@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 201408191627092) do
+ActiveRecord::Schema.define(:version => 20140625191132) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -308,8 +308,8 @@ ActiveRecord::Schema.define(:version => 201408191627092) do
     t.string   "uuid_key"
     t.integer  "survey_id"
     t.integer  "survey_version_id"
-    t.text     "post"
-    t.boolean  "submitted",         :default => false
+    t.text     "post",              :limit => 16777215
+    t.boolean  "submitted",                             :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -386,32 +386,6 @@ ActiveRecord::Schema.define(:version => 201408191627092) do
 
   add_index "rules", ["clone_of_id"], :name => "index_rules_on_clone_of_id"
   add_index "rules", ["survey_version_id"], :name => "index_rules_survey_version_id"
-
-  create_table "scan_deletes", :force => true do |t|
-    t.integer  "survey_response_id"
-    t.string   "client_id"
-    t.integer  "survey_version_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "status_id"
-    t.datetime "last_processed"
-    t.string   "worker_name"
-    t.text     "page_url"
-    t.boolean  "archived"
-    t.string   "device"
-  end
-
-  create_table "scan_raw_responses", :force => true do |t|
-    t.integer  "raw_response_id"
-    t.string   "client_id"
-    t.text     "answer"
-    t.integer  "question_content_id"
-    t.integer  "status_id"
-    t.string   "worker_name"
-    t.integer  "survey_response_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -559,17 +533,16 @@ ActiveRecord::Schema.define(:version => 201408191627092) do
   add_index "text_questions", ["clone_of_id"], :name => "index_text_questions_on_clone_of_id"
 
   create_table "users", :force => true do |t|
-    t.string   "f_name",                          :null => false
-    t.string   "l_name",                          :null => false
+    t.string   "f_name",            :null => false
+    t.string   "l_name",            :null => false
     t.boolean  "locked"
-    t.string   "email",                           :null => false
-    t.string   "crypted_password"
-    t.string   "password_salt",                   :null => false
-    t.string   "persistence_token",               :null => false
+    t.string   "email",             :null => false
+    t.string   "crypted_password",  :null => false
+    t.string   "password_salt",     :null => false
+    t.string   "persistence_token", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role_id"
-    t.string   "username",          :limit => 50
     t.datetime "last_request_at"
   end
 

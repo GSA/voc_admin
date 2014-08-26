@@ -127,12 +127,13 @@ class SurveyVersion < ActiveRecord::Base
   def generate_responses_csv(filter_params, user_id)
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
 
-    unless filter_params[:simple_search].blank?
+    unless filter_params['simple_search'].blank?
       # TODO: come back to simple search later
     end
 
-    unless filter_params[:search].blank?
-      # TODO: come back to advanced search later
+    unless filter_params['search'].blank?
+      response_search = ReportableSurveyResponseSearch.new filter_params['search']
+      survey_response_query = response_search.search(survey_response_query)
     end
 
     custom_view, sort_orders = nil
@@ -153,7 +154,7 @@ class SurveyVersion < ActiveRecord::Base
     # when the Export instance is created.
     file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.csv"
     CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
-      csv << ["Date", "Page URL"].concat(ordered_columns.map(&:name))
+      csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
       # For each response in batches...
       0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
@@ -169,7 +170,7 @@ class SurveyVersion < ActiveRecord::Base
           end.map! {|rr| rr.gsub("{%delim%}", ", ")}
 
           # Write the completed row to the CSV
-          csv << [response.created_at, response.page_url].concat(response_record)
+          csv << [response.created_at, response.page_url, response.device].concat(response_record)
         end
       end
     end

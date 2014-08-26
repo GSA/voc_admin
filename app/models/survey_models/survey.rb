@@ -11,13 +11,14 @@ class Survey < ActiveRecord::Base
   :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
   :invitation_interval, :invitation_text, :invitation_accept_button_text,
   :invitation_reject_button_text, :start_screen_button_text, :alarm, :alarm_notification_email, :holding_page,
-  :show_numbers, :locale, :start_page_title
+  :show_numbers, :locale, :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  validates :invitation_percent, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
+  validates :invitation_percent, presence: true, :format => { :with => /\A((100(\.0{1,2})?)|(\d{0,2})(\.\d{1,2})?)\z/ },
+                                                 :numericality => {:greater_than => 0.01, :less_than_or_equal_to => 100}
   validates :invitation_interval, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0}
   validates :alarm_notification_email, presence: true, :if => :alarm
 

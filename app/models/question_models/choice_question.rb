@@ -75,11 +75,12 @@ class ChoiceQuestion < ActiveRecord::Base
   #
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [ChoiceQuestion] the cloned ChoiceQuestion
-  def clone_me(target_sv, target_page = nil)
+  def clone_me(target_sv, target_page = nil, sv_clone = true)
     return unless self.survey_element
     #build question content
     qc_attribs = self.question_content.attributes
     qc_attribs.delete("id")
+    qc_attribs.merge!(:skip_observer => true) if sv_clone
 
     target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
 
@@ -104,7 +105,7 @@ class ChoiceQuestion < ActiveRecord::Base
     end
 
     choice_question = ChoiceQuestion.new self.attributes.merge(
-     :question_content_attributes=>qc_attribs.merge(:skip_observer => true),
+     :question_content_attributes=>qc_attribs,
      :survey_element_attributes=>se_attribs,
      :choice_answers_attributes=>ca_attribs,
      :clone_of_id => (self.id)

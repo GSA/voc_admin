@@ -102,8 +102,8 @@
     <div class="instructions">
       <%= link_to 'Preview', 'javascript:void(0);', id: "invitation_preview" %>
       <div>
-        <%= label_tag :preview_stylesheet %>
-        <%= text_field_tag :preview_stylesheet %>
+        <%= f.label :invitation_preview_stylesheet, "Preview Stylesheet" %>
+        <%= f.text_field :invitation_preview_stylesheet %>
       </div>
       <p>
         <em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
@@ -232,9 +232,9 @@
       <%= link_to 'Preview', 'javascript:void(0);', "id" => "start_page_preview",
         "data-id" => @survey.id %>
       <div>
-        <%= label_tag :preview_start_page_stylesheet, 'Preview Stylesheet' %>
-        <%= text_field_tag :preview_start_page_stylesheet %>
-      </div>
+        <%= f.label :survey_preview_stylesheet, 'Preview Stylesheet' %>
+        <%= f.text_field :survey_preview_stylesheet %>
+       </div>
 
         A <em>{{start}}</em> tag should be inserted into the html in the location
       where the start button should be placed.
