@@ -26,6 +26,7 @@ class SurveyVersion < ActiveRecord::Base
   has_many :dashboards,       :dependent => :destroy
   has_many :reports,          :dependent => :destroy
   has_many :survey_version_counts,    :dependent => :destroy
+  has_many :exports
 
   attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
 
@@ -174,7 +175,7 @@ class SurveyVersion < ActiveRecord::Base
       end
     end
 
-    export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
+    export_file = self.exports.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
 
     # Notify the user that the export has been successful and is available for download
     if export_file.persisted?

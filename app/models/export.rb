@@ -2,6 +2,7 @@
 #
 # Defines a SurveyResponse CSV data Export file.
 class Export < ActiveRecord::Base
+  belongs_to :survey_version
   has_attached_file :document,
                     :processors => [],
                     :path => ":rails_root/public/system/exports/:filename",
