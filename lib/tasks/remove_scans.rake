@@ -3,8 +3,8 @@ namespace :remove_scan do
 
   task :delete_survey_responses, [:start, :end] => [:environment] do |t, args|
     puts "Starting at #{Time.now}" 
-     start_date = args[:start]#:start#['2014-05-02','2014-06-02','2014-06-30', '2014-07-10', '2014-07-20']
-     end_date = args[:end]#:end #['2014-05-06','2014-06-03','2014-07-06', '2014-07-12', '2014-07-23']
+     start_date = args[:start]
+     end_date = args[:end]
       @record_list = SurveyResponse.order("id").where("created_at > ? and created_at < ?", start_date, end_date)
       @recordcnt = 1
       @record_list.find_each do |response|
@@ -61,8 +61,6 @@ namespace :remove_scan do
           end
         @recordcnt += 1
        end
-      # @scancnt += 1
-    #end
     puts "Total records removed is #{@recordcnt}"
   end
 end
