@@ -1,5 +1,10 @@
 # Releaes Notes
 
+## v5.2.2
+Aug 28, 2014
+
+* Update CSV Export email subject to include Survey name.
+
 ## v5.2.1
 May 22, 2014
 
