@@ -4,8 +4,8 @@ class CreateScanDeletes < ActiveRecord::Migration
       t.integer :survey_response_id
       t.string :client_id
       t.integer :survey_version_id
-      t.datetime :created_at
-      t.datetime :updated_at
+      t.datetime :orig_created_at
+      t.datetime :orig_updated_at
       t.integer :status_id
       t.datetime :last_processed
       t.string :worker_name

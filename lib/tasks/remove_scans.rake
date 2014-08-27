@@ -29,8 +29,8 @@ namespace :remove_scan do
               s.survey_response_id = response.id
               s.client_id =  response.client_id
               s.survey_version_id = response.survey_version_id
-              s.created_at =  response.created_at
-              s.updated_at =  response.updated_at
+              s.orig_created_at =  response.created_at
+              s.orig_updated_at =  response.updated_at
               s.status_id =  response.status_id
               s.last_processed =  response.last_processed
               s.worker_name =  response.worker_name
