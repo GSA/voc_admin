@@ -104,6 +104,15 @@ class SurveyVersion < ActiveRecord::Base
     update_attribute(:counts_updated_at, Time.now)
   end
 
+  # Reset all counts (visit, invitations, invitations accepted) to 0
+  def reset_counts!
+    temp_invitation_count.clear
+    temp_visit_count.clear
+    temp_invitation_accepted_count.clear
+    survey_version_counts.destroy_all
+    save
+  end
+
   # Increments visits by temporary recent_visits count
   def update_counts_for_attr(temp_count, attr_name)
     yesterday = today - 1.day
