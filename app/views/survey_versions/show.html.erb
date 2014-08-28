@@ -45,7 +45,7 @@
 						end %>
 						<% if element.assetable_type == "MatrixQuestion" %>
 							<% if element.assetable_type != 'Asset'  %>
-								<span class="vocquestionnumber"><%= "#{@survey.show_numbers? ? question_number + ". " : nil}#{element.assetable.question_content.statement}" %></span>
+								<span class="vocquestionnumber"><%= render_question_statement(@survey, element, question_number) %></span>
 							<% end %>
 			              <table>
 			                <tr>

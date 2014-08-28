@@ -6,12 +6,12 @@
 		<title>GSA VOC Tool Application</title>
 
     <%= render :partial => 'shared/frame_buster' %>
-    <%= stylesheet_link_tag main_stylesheet_location %>
-    <%= stylesheet_link_tag 'simplemodal' %>
-    <%= stylesheet_link_tag 'jquery-ui.min' %>
-    <%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.1', 'jquery.ui', 'survey_builder' %>
-    <%= yield :head %>
-    <%= csrf_meta_tag %>
+  	<%= stylesheet_link_tag main_stylesheet_location %>
+  	<%= stylesheet_link_tag 'simplemodal' %>
+  	<%= stylesheet_link_tag 'jquery-ui.min' %>
+  	<%= javascript_include_tag :defaults, 'jquery.simplemodal-1.4.5_unofficial', 'jquery.ui', 'survey_builder' %>
+  	<%= yield :head %>
+  	<%= csrf_meta_tag %>
 
     <!-- Community Imports -->
   <%= yield :additional_scripts %>
