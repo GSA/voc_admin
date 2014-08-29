@@ -76,11 +76,10 @@ class Survey < ActiveRecord::Base
   end
 
   def flushable_urls
-    [
-      "http://#{APP_CONFIG['public_host']}/surveys/#{id}",
-      "http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}",
-      "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"
-    ]
+    urls = ["http://#{APP_CONFIG['public_host']}/surveys/#{id}", "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"]
+    unless published_version.version_number.nil?
+      urls.push("http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}")
+    end
   end
 end
 
