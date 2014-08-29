@@ -77,7 +77,7 @@ class Survey < ActiveRecord::Base
 
   def flushable_urls
     urls = ["http://#{APP_CONFIG['public_host']}/surveys/#{id}", "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"]
-    unless published_version.nil?
+    if published_version.present?
       urls.push("http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}")
     end
   end
