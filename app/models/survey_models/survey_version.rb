@@ -141,9 +141,6 @@ class SurveyVersion < ActiveRecord::Base
       # TODO: come back to simple search later
     end
 
-    # check filter_params['format'] == 'xls'
-    
-
     unless filter_params['search'].blank?
       response_search = ReportableSurveyResponseSearch.new filter_params['search']
       survey_response_query = response_search.search(survey_response_query)
@@ -166,9 +163,9 @@ class SurveyVersion < ActiveRecord::Base
     # Export instance.  The document will be copied to the correct location by paperclip
     # when the Export instance is created.
 
-    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.csv" # 'xls'
+    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.csv"
    
-      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv| # after 'wb', col_sep: '\t') do |csv|
+      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
         csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
         # For each response in batches...
@@ -214,9 +211,6 @@ class SurveyVersion < ActiveRecord::Base
       # TODO: come back to simple search later
     end
 
-    # check filter_params['format'] == 'xls'
-    
-
     unless filter_params['search'].blank?
       response_search = ReportableSurveyResponseSearch.new filter_params['search']
       survey_response_query = response_search.search(survey_response_query)
@@ -239,9 +233,9 @@ class SurveyVersion < ActiveRecord::Base
     # Export instance.  The document will be copied to the correct location by paperclip
     # when the Export instance is created.
     
-    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.xls" # 'xls'
+    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.xls"
     
-      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", col_sep: "\t") do |csv| # after 'wb', col_sep: '\t') do |csv|
+      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", col_sep: "\t") do |csv|
         csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
         # For each response in batches...
