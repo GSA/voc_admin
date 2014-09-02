@@ -6,7 +6,7 @@ require 'csv'
 class SurveyResponsesController < ApplicationController
 
   # Used to limit the passthrough effects of params when updating or deleting SurveyResponses and the grid needs updating.
-  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr]
+  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr, :file_type]
 
   # GET    /survey_responses(.:format)
   def index
@@ -67,16 +67,33 @@ class SurveyResponsesController < ApplicationController
 
   # GET    /survey_responses/export_all(.:format)
   def export_all
-    @survey_version = SurveyVersion.find(params[:survey_version_id])
-
+    @survey_version = SurveyVersion.find(params[:survey_version_id])    
     # Generate the csv file in the background in case there are a large number of responses
-    @survey_version.async(:generate_responses_csv, params, current_user.id)
-
+    if (params[:file_type]=='xls')
+      @survey_version.async(:generate_responses_xls, params, current_user.id)
+    else
+      @survey_version.async(:generate_responses_csv, params, current_user.id)
+    end
     respond_to do |format|
       format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
       format.js
     end
   end
+
+
+  # added by sirisha
+  # GET    /survey_responses/export_all_xls(.:format)
+  # def export_all_xls
+  #   @survey_version = SurveyVersion.find(params[:survey_version_id])
+
+  #   # Generate the csv file in the background in case there are a large number of responses
+  #   @survey_version.async(:generate_responses_xls, params, current_user.id,(col_sep: "\t"))
+
+  #   respond_to do |format|
+  #     format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
+  #     format.js
+  #   end
+  # end
 
   private
 

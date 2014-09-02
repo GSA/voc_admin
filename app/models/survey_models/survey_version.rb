@@ -134,11 +134,15 @@ class SurveyVersion < ActiveRecord::Base
   NOSQL_BATCH = 1000
 
   def generate_responses_csv(filter_params, user_id)
+   
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
 
     unless filter_params['simple_search'].blank?
       # TODO: come back to simple search later
     end
+
+    # check filter_params['format'] == 'xls'
+    
 
     unless filter_params['search'].blank?
       response_search = ReportableSurveyResponseSearch.new filter_params['search']
@@ -161,28 +165,104 @@ class SurveyVersion < ActiveRecord::Base
     # Write the survey responses to a temporary CSV file which will be used to create the
     # Export instance.  The document will be copied to the correct location by paperclip
     # when the Export instance is created.
-    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.csv"
-    CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
-      csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
-      # For each response in batches...
-      0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-        survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.csv" # 'xls'
+   
+      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv| # after 'wb', col_sep: '\t') do |csv|
+        csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
-          # For each column we're looking to export...
-          response_record = ordered_columns.map do |df|
+        # For each response in batches...
+        0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+          survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
 
-            # Ask for the answer keyed on DisplayField id, fall back on default
-            response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
+            # For each column we're looking to export...
+            response_record = ordered_columns.map do |df|
 
-            # Pass the entire array through a filter to break up multiple selection answers when done
-          end.map! {|rr| rr.gsub("{%delim%}", ", ")}
+              # Ask for the answer keyed on DisplayField id, fall back on default
+              response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
 
-          # Write the completed row to the CSV
-          csv << [response.created_at, response.page_url, response.device].concat(response_record)
+              # Pass the entire array through a filter to break up multiple selection answers when done
+            end.map! {|rr| rr.gsub("{%delim%}", ", ")}
+
+            # Write the completed row to the CSV
+            csv << [response.created_at, response.page_url, response.device].concat(response_record)
+          end
         end
       end
+    
+
+    export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
+
+    # Notify the user that the export has been successful and is available for download
+    if export_file.persisted?
+      resque_args = User.find(user_id).email, export_file.id
+
+      begin
+        Resque.enqueue(ExportMailer, *resque_args)
+      rescue
+        ResquedJob.create(class_name: "ExportMailer", job_arguments: resque_args)
+      end
     end
+
+    # Remove the temporary file used to create this export
+    File.delete("#{Rails.root}/tmp/#{file_name}")
+  end
+  def generate_responses_xls(filter_params, user_id)    
+    survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
+
+    unless filter_params['simple_search'].blank?
+      # TODO: come back to simple search later
+    end
+
+    # check filter_params['format'] == 'xls'
+    
+
+    unless filter_params['search'].blank?
+      response_search = ReportableSurveyResponseSearch.new filter_params['search']
+      survey_response_query = response_search.search(survey_response_query)
+    end
+
+    custom_view, sort_orders = nil
+    if filter_params[:custom_view_id].blank?
+      custom_view = custom_views.find_by_default(true)
+    else
+      # Use find_by_id in order to return nil if a custom view with the specified id
+      # cannot be found instead of raising an error.
+      custom_view = custom_views.find_by_id(filter_params[:custom_view_id])
+    end
+
+    # Ensures the responses are coming back in the proper order before batching
+    ordered_columns = custom_view.ordered_display_fields if custom_view.present?
+    ordered_columns ||= display_fields.order(:display_order)
+
+    # Write the survey responses to a temporary CSV file which will be used to create the
+    # Export instance.  The document will be copied to the correct location by paperclip
+    # when the Export instance is created.
+    
+    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}.xls" # 'xls'
+    
+      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", col_sep: "\t") do |csv| # after 'wb', col_sep: '\t') do |csv|
+        csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
+
+        # For each response in batches...
+        0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+          survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+
+            # For each column we're looking to export...
+            response_record = ordered_columns.map do |df|
+
+              # Ask for the answer keyed on DisplayField id, fall back on default
+              response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
+
+              # Pass the entire array through a filter to break up multiple selection answers when done
+            end.map! {|rr| rr.gsub("{%delim%}", ", ")}
+
+            # Write the completed row to the CSV
+            csv << [response.created_at, response.page_url, response.device].concat(response_record)
+          end
+        end
+      end
+   
 
     export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
 
