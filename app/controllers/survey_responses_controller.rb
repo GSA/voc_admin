@@ -69,11 +69,7 @@ class SurveyResponsesController < ApplicationController
   def export_all
     @survey_version = SurveyVersion.find(params[:survey_version_id])    
     # Generate the csv file in the background in case there are a large number of responses
-    if (params[:file_type]=='xls')
-      @survey_version.async(:generate_responses_xls, params, current_user.id)
-    else
-      @survey_version.async(:generate_responses_csv, params, current_user.id)
-    end
+    @survey_version.async(:generate_responses_csv, params, current_user.id)
     respond_to do |format|
       format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
       format.js
