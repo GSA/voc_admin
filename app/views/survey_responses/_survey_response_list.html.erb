@@ -4,7 +4,7 @@
   <%= hidden_field_tag :order_column, @order_column_id %>
   <%= hidden_field_tag :order_dir, @order_dir %>
   <%= hidden_field_tag :page, params[:page] %>
-  <%= hidden_field_tag :custom_view_id, params[:custom_view_id] %>  
+  <%= hidden_field_tag :custom_view_id, params[:custom_view_id] %>
   <br />
 
   <div class="total_responses">Total number of survey responses: <%= number_with_delimiter(version.survey_responses.count) %></div>

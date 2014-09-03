@@ -67,7 +67,7 @@ class SurveyResponsesController < ApplicationController
 
   # GET    /survey_responses/export_all(.:format)
   def export_all
-    @survey_version = SurveyVersion.find(params[:survey_version_id])    
+    @survey_version = SurveyVersion.find(params[:survey_version_id])
     # Generate the csv file in the background in case there are a large number of responses
     @survey_version.async(:generate_responses_csv, params, current_user.id)
     respond_to do |format|

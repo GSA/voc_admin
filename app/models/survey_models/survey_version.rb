@@ -134,7 +134,6 @@ class SurveyVersion < ActiveRecord::Base
   NOSQL_BATCH = 1000
 
   def generate_responses_csv(filter_params, user_id)
-   
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
 
     unless filter_params['simple_search'].blank?
@@ -171,29 +170,27 @@ class SurveyVersion < ActiveRecord::Base
     # when the Export instance is created.
 
     file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}." + filter_params[:file_type].downcase
-   
-      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
-        csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
+    CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
+      csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
-        # For each response in batches...
-        0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-          survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+      # For each response in batches...
+      0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+        survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
 
-            # For each column we're looking to export...
-            response_record = ordered_columns.map do |df|
+          # For each column we're looking to export...
+          response_record = ordered_columns.map do |df|
 
-              # Ask for the answer keyed on DisplayField id, fall back on default
-              response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
+            # Ask for the answer keyed on DisplayField id, fall back on default
+            response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
 
-              # Pass the entire array through a filter to break up multiple selection answers when done
-            end.map! {|rr| rr.gsub("{%delim%}", ", ")}
+            # Pass the entire array through a filter to break up multiple selection answers when done
+          end.map! {|rr| rr.gsub("{%delim%}", ", ")}
 
-            # Write the completed row to the CSV
-            csv << [response.created_at, response.page_url, response.device].concat(response_record)
-          end
+          # Write the completed row to the CSV
+          csv << [response.created_at, response.page_url, response.device].concat(response_record)
         end
       end
-    
+    end
 
     export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
 
@@ -210,7 +207,7 @@ class SurveyVersion < ActiveRecord::Base
 
     # Remove the temporary file used to create this export
     File.delete("#{Rails.root}/tmp/#{file_name}")
-  end  
+  end
 
   # Get all the SurveyElements that are Question elements.
   #
