@@ -59,8 +59,10 @@
   </div>
 
   <div class="page-nav">
-      <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
-      :order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %>
+    <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
+      :order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id], :file_type => "csv" ), :class => "manage", :remote => true%>
+    <%= link_to "Export to XLS", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
+      :order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id], :file_type => "xls" ), :class => "manage", :remote => true %>
     <%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
     <%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %>
     <%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink", :for=>"custom_view" %>
@@ -110,7 +112,9 @@
 
   <div class="page-nav">
     <%= link_to "Export to CSV", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
-      :order_dir => params[:order_dir], :search => params[:search], :simple_search => params[:simple_search], :custom_view_id => params[:custom_view_id]), :class => "manage", :remote => true %>
+      :order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id], :file_type => "csv" ), :class => "manage", :remote => true%>
+    <%= link_to "Export to XLS", export_all_survey_responses_path(:survey_version_id => version, :order_column => params[:order_column],
+      :order_dir => params[:order_dir], :search => params[:search], :custom_view_id => params[:custom_view_id], :file_type => "xls" ), :class => "manage", :remote => true %>
     <%= link_to "Manage Rules", survey_survey_version_rules_path(version.survey, version), :class=>"manage" %>
     <%= link_to "Manage Display Fields", survey_survey_version_display_fields_path(version.survey, version), :class=>"manage" %>
     <%= label_tag "custom_view_id", "Select View: ", :class=>"looklikelink", :for=>"custom_view" %>

@@ -21,6 +21,7 @@ namespace :remove_scan do
               response.page_url.nil? or
               response.page_url.include?("passwd") or
               response.page_url == "undefined/surveys/111" or
+              response.page_url == "" or
               response.page_url == "undefined/surveys/1" or
               response.page_url == "undefined/surveys/11" or response.page_url == "undefined/surveys/31" or 
               response.page_url == "undefined/surveys/91" or response.page_url.include?("set&set") or 
