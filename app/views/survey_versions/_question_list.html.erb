@@ -56,7 +56,7 @@
                     <%= answer.answer %>
 
                     <% if answer.choice_question.flow_control? %>
-                      <span class="extra">Flows to Pg. <%= answer.page.page_number %></span>
+                      <span class="extra">Flows to Pg. <%= answer.page.page_number unless answer.page.nil?  %></span>
                     <% end %>
 
                     <% if answer.is_default? %>
