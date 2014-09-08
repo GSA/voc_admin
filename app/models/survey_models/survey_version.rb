@@ -159,17 +159,24 @@ class SurveyVersion < ActiveRecord::Base
     ordered_columns ||= display_fields.order(:display_order)
 
     # Check for file_type format 
-    if filter_params[:file_type].downcase == 'xls'
-      options = {col_sep: '\t'}
+    if filter_params["file_type"]
+      if filter_params["file_type"].downcase == 'xls'
+        options = {col_sep: '\t'}
+        file_extension = "xls"
+      else
+        options = {}
+        file_extension = "csv"
+      end
     else
       options = {}
+      file_extension = "csv"
     end
 
     # Write the survey responses to a temporary CSV file which will be used to create the
     # Export instance.  The document will be copied to the correct location by paperclip
     # when the Export instance is created.
 
-    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}." + filter_params[:file_type].downcase
+    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}." + file_extension
     CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
       csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
 
