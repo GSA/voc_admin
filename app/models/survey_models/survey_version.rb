@@ -150,8 +150,8 @@ class SurveyVersion < ActiveRecord::Base
    ordered_columns ||= display_fields.order(:display_order)
 
    # Check for file_type format 
-   if filter_params[:file_type]
-     if filter_params[:file_type].downcase == 'xls'
+   if filter_params["file_type"]
+     if filter_params["file_type"].downcase == 'xls'
        options = {col_sep: '\t'}
        file_extension = "xls"
      else
