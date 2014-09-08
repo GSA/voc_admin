@@ -10,8 +10,7 @@
 		options_for_include_exclude((params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:include_exclude].to_i)) %>
 
 	<%= select_tag "search[criteria][#{criteria_index}][display_field_id]",
-	  options_from_collection_for_select([Struct.new(:id, :name).new('survey_responses.page_url', 'Page URL'), Struct.new(:id, :name).new('survey_responses.created_at', 'Date')].concat(version.display_fields),
-	   :id, :name, :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:display_field_id]))
+	  options_from_collection_for_select([Struct.new(:id, :name).new('survey_responses.page_url', 'Page URL'), Struct.new(:id, :name).new('survey_responses.created_at', 'Date'), Struct.new(:id, :name).new('survey_responses.Device', 'Device')].concat(version.display_fields), :id, :name, :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:display_field_id]))
 	%>
 	<%= select_tag "search[criteria][#{criteria_index}][condition]", options_for_conditions((params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:condition]) ) %>
 	<%= text_field_tag "search[criteria][#{criteria_index}][value]", ((params[:search].blank? or criteria_index == 'new_criteria_index') ? '' : params[:search][:criteria]["#{criteria_index}"][:value]) %>
