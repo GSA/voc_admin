@@ -20,6 +20,7 @@ namespace :remove_scan do
               (@current_record_date - @prev_record_date ).round < 2) or
               response.page_url.nil? or
               response.page_url.include?("passwd") or
+              response.page_url.include?("88952634") or
               response.page_url == "undefined/surveys/111" or
               response.page_url == "" or
               response.page_url == "undefined/surveys/1" or
