@@ -55,7 +55,7 @@
                   <li class="inner">
                     <%= answer.answer %>
 
-                    <% if answer.choice_question.flow_control? %>
+                    <% if answer.choice_question.flow_control? && answer.page.present? %>
                       <span class="extra">Flows to Pg. <%= answer.page.page_number %></span>
                     <% end %>
 
