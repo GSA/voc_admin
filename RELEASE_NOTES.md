@@ -1,5 +1,10 @@
 # Releaes Notes
 
+## v5.2.4
+Sept 17, 2014
+
+* Added monthly reporting rake task.
+
 ## v5.2.2
 Aug 28, 2014
 
