@@ -12,13 +12,13 @@ namespace :reporting do
         end_of_month.strftime("End: %m/%d/%Y")
       ]
       csv << ["Year Total",
-        SurveyResponse.where(:created_at => beginning_of_month..end_of_month).count,
+        SurveyResponse.where(:created_at => beginning_of_year..end_of_month).count,
         "Time Period",
         beginning_of_month.strftime(" Start: 1/1/%Y"),
         end_of_month.strftime("End: %m/%d/%Y")
       ]
       csv << ["All Time Total",
-        SurveyResponse.all.count,
+        SurveyResponse.where("created_at < ? ", end_of_month).count,
         "Time Period",
         SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
         end_of_month.strftime("End: %m/%d/%Y")
