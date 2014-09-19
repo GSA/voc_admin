@@ -28,7 +28,7 @@ namespace :reporting do
         survey.survey_versions.each do |sv|
           month_response_count = sv.survey_responses.where(:created_at => beginning_of_month..end_of_month).count
           year_response_count = sv.survey_responses.where(:created_at=>beginning_of_year..end_of_month).count
-          all_response_count = sv.survey_responses.count
+          all_response_count = sv.survey_responses.where("created_at < ? ", end_of_month).count
           csv << [survey.id,
             survey.name,
             "v#{sv.major}.#{sv.minor}",
