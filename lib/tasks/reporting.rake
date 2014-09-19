@@ -18,7 +18,7 @@ namespace :reporting do
         end_of_month.strftime("End: %m/%d/%Y")
       ]
       csv << ["All Time Total",
-        SurveyResponse.where("created_at < ? ", end_of_month).count,
+        SurveyResponse.where("created_at <= ? ", end_of_month).count,
         "Time Period",
         SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
         end_of_month.strftime("End: %m/%d/%Y")
@@ -28,7 +28,7 @@ namespace :reporting do
         survey.survey_versions.each do |sv|
           month_response_count = sv.survey_responses.where(:created_at => beginning_of_month..end_of_month).count
           year_response_count = sv.survey_responses.where(:created_at=>beginning_of_year..end_of_month).count
-          all_response_count = sv.survey_responses.where("created_at < ? ", end_of_month).count
+          all_response_count = sv.survey_responses.where("created_at <= ? ", end_of_month).count
           csv << [survey.id,
             survey.name,
             "v#{sv.major}.#{sv.minor}",
