@@ -1,46 +1,4 @@
 namespace :reporting do
-  desc "create csv with counts in root dir"
-  task :csv_report, [:month, :year] => [:environment] do |t,args|
-    beginning_of_month = DateTime.new(args.year.to_i,args.month.to_i,1)
-    end_of_month = DateTime.new(args.year.to_i,args.month.to_i,-1)
-    beginning_of_year = DateTime.new(args.year.to_i, 1, 1)
-    CSV.open(Rails.root + "#{end_of_month.strftime("%m_%Y")}_report.csv","wb") do |csv|
-      csv << ["Monthly Total",
-        SurveyResponse.where(:created_at => beginning_of_month..end_of_month).count,
-        "Time Period",
-        beginning_of_month.strftime(" Start: %m/%d/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["Year Total",
-        SurveyResponse.where(:created_at => beginning_of_year..end_of_month).count,
-        "Time Period",
-        beginning_of_month.strftime(" Start: 1/1/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["All Time Total",
-        SurveyResponse.where("created_at <= ? ", end_of_month).count,
-        "Time Period",
-        SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["Survey ID", "Survey", "Survey Version", "Monthly - Number of Responses", "Year - Number of Responses", "Total - Number of Responses"]
-      Survey.all.each do |survey|
-        survey.survey_versions.each do |sv|
-          month_response_count = sv.survey_responses.where(:created_at => beginning_of_month..end_of_month).count
-          year_response_count = sv.survey_responses.where(:created_at=>beginning_of_year..end_of_month).count
-          all_response_count = sv.survey_responses.where("created_at <= ? ", end_of_month).count
-          csv << [survey.id,
-            survey.name,
-            "v#{sv.major}.#{sv.minor}",
-            month_response_count,
-            year_response_count,
-            all_response_count
-          ]
-        end
-      end
-    end
-  end
-
   desc "Run all daily reporting tasks - counts, loading questions, and mailing recurring reports"
   task :daily => [:environment] do
     puts "Updating survey version counts..."
@@ -130,6 +88,7 @@ namespace :reporting do
       end
 
       print "\n  ...batch #{num} finished.\n"
+      sleep 10
     end
 
     puts "...export finished. #{errors} errors."

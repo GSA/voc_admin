@@ -66,8 +66,4 @@ end
 #   host: http://stage-voc.cloud.hhs.gov.edgesuite-staging.net
 
 #   production:
-<<<<<<< HEAD
 #   host: yourserver.domain.local
-=======
-#   host: yourserver.domain.local
->>>>>>> eabd946b4c6f45b570e0178bc2dbf8df66d041d3
