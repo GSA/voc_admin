@@ -48,7 +48,7 @@ class MatrixQuestion < ActiveRecord::Base
   #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [MatrixQuestion] the cloned MatrixQuestion
-  def clone_me(target_sv, target_page = nil)
+  def clone_me(target_sv, target_page = nil, sv_clone = true)
     #start matrix hash
     mq_qc_attribs = self.question_content.attributes
     mq_qc_attribs.delete("id")
@@ -71,7 +71,8 @@ class MatrixQuestion < ActiveRecord::Base
 
     #build content question hash
     choice_questions = self.choice_questions.map do |choice_question|
-      qc_attribs = choice_question.question_content.attributes.merge({:matrix_statement => self.statement, :skip_observer => true})
+      qc_attribs = choice_question.question_content.attributes.merge(:matrix_statement => self.statement)
+      qc_attribs.merge!(:skip_observer => true) if sv_clone
       qc_attribs.delete("id")
 
       cq_attribs = choice_question.attributes
@@ -88,12 +89,12 @@ class MatrixQuestion < ActiveRecord::Base
         end
         answer_hash
       end
+      cq_attribs = cq_attribs.merge(:skip_observer => true) if sv_clone # is this skip_observer even needed?
       cq_attribs = cq_attribs.merge(
-                    :question_content_attributes => qc_attribs,
-                    :choice_answers_attributes => ca_attribs,
-                    :clone_of_id => (choice_question.id),
-                    :skip_observer => true
-                   )
+        :question_content_attributes => qc_attribs,
+        :choice_answers_attributes => ca_attribs,
+        :clone_of_id => (choice_question.id)
+      )
     end
 
     mq_attribs = mq_attribs.merge(:choice_questions_attributes => choice_questions, :survey_element_attributes => se_attribs)

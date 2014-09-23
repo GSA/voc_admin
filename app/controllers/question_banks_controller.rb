@@ -24,7 +24,7 @@ class QuestionBanksController < ApplicationController
     )
     survey_element.send(:set_element_order)
 
-    @cloned_question = @question.clone_me(@survey_version, @page)
+    @cloned_question = @question.clone_me(@survey_version, @page, false)
 
     respond_to do |format|
       format.js { render :partial => "shared/element_create", :object => @cloned_question, :as => :element }

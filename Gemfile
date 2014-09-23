@@ -59,11 +59,11 @@ group :development do
 end
 
 gem 'rspec-rails', :group => [:development, :test]
+gem 'factory_girl_rails', :group => [:development, :test]
 
 group :test do
   gem 'simplecov', :require => false
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'selenium-webdriver'
 

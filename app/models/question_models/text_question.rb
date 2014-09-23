@@ -46,9 +46,11 @@ class TextQuestion < ActiveRecord::Base
   #
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [TextQuestion] the cloned TextQuestion
-  def clone_me(target_sv, target_page = nil)
-    qc_attribs = self.question_content.attributes.merge(:skip_observer => true)
+  def clone_me(target_sv, target_page = nil, sv_clone = true)
+    qc_attribs = self.question_content.attributes
+    qc_attribs.merge!(:skip_observer => true) if sv_clone
     qc_attribs.delete("id")
+    
     target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
     se_attribs = self.survey_element.attributes.merge(
                   :survey_version_id=>target_sv.id,

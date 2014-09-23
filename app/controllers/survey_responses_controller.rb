@@ -6,7 +6,7 @@ require 'csv'
 class SurveyResponsesController < ApplicationController
 
   # Used to limit the passthrough effects of params when updating or deleting SurveyResponses and the grid needs updating.
-  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr]
+  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr, :file_type]
 
   # GET    /survey_responses(.:format)
   def index
@@ -68,10 +68,8 @@ class SurveyResponsesController < ApplicationController
   # GET    /survey_responses/export_all(.:format)
   def export_all
     @survey_version = SurveyVersion.find(params[:survey_version_id])
-
     # Generate the csv file in the background in case there are a large number of responses
     @survey_version.async(:generate_responses_csv, params, current_user.id)
-
     respond_to do |format|
       format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
       format.js
@@ -144,7 +142,7 @@ class SurveyResponsesController < ApplicationController
       @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir)
 
     # if we're specifically sorting by date or page url
-    elsif %w(survey_responses.created_at page_url).include?(params[:order_column])
+  elsif %w(survey_responses.created_at page_url device).include?(params[:order_column])
       @survey_responses = @survey_responses.order("#{params[:order_column]} #{@order_dir}")
 
     # custom view!
