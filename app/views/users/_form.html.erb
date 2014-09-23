@@ -25,34 +25,27 @@
 	  	<%= f.text_field :email %>
 	  </div>
 		<br />
-		<% if @user.new_record? || @user == @current_user %>
-			<div class="left_side">
-			  <%= f.label :password, "Password: " %>
-		  </div>
-		  <div class="right_side">
-		  	<%= f.password_field :password%>
-		  </div>
-		  <br />
-		  <div class="left_side">
-			  <%= f.label :password_confirmation, "Password Confirmation: " %>
-		  </div>
-		  <div class="right_side">
-		  	<%= f.password_field :password_confirmation%>
-		  </div>
-		  <br />
-		<% end -%>
+	  <div class="left_side">
+	  	<%= f.label :hhs_id, "HHS ID: " %>
+	  </div>
+	  <div class="right_side">
+	  	<%= f.text_field :hhs_id %>
+	  </div>
+		<br />
 
 	  <% if @current_user.admin? %>
-			<div class="left_side">
-				<%= f.label :role_id, "Role: " %>
-			</div>
-			<div class="right_side">
-				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
-				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
-			</div>
+	  	<fieldset class="hide">
+				<div class="left_side">
+					<legend class="label-like">Role:</legend>
+				</div>
+				<div class="right_side">
+					<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
+					<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
+				</div>
+			</fieldset>
 			<div id="sites_div" class="<%= @user.role.nil? ? '' : 'displayNone'%>">
 				<div class="left_side">
-					<%= f.label :site_ids, "Sites:" %>
+					<%= f.label "sites", "Sites:" %>
 				</div>
 				<div class="right_side">
 		    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>

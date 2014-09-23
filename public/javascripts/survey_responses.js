@@ -69,6 +69,7 @@ $(function(){
         refreshSurveyResponseTable();
     });
 
+    // When performing either search method, replace the survey results with the ajax spinner.
     $("#advanced_search_form, #simple_search_form").live('ajax:beforeSend', function() {
         $("#survey_response_list").html("<img src='images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");
     });
