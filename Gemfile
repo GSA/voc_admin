@@ -12,7 +12,6 @@ gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false
-gem 'httparty'
 
 gem 'openam', :git => "git@bitbucket.org:ctacdevteam/ams_sso.git", :tag => '0.5.4'
 
