@@ -1,7 +1,7 @@
 namespace :reporting do
   desc "Generate CSV report of published surveys"
   task :published_surveys => [:environment] do
-    CSV.open("published_surveys.csv", "wb") do |csv|
+    CSV.open("#{Rails.root}/published_surveys.csv", "wb") do |csv|
       surveys = SurveyVersion.where(published: true).includes(:survey)
       csv << ["Survey Name", "Version Number", "OMB Expiration Date"]
       surveys.map do |sv|
