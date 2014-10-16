@@ -178,8 +178,8 @@ class SurveyVersion < ActiveRecord::Base
     # when the Export instance is created.
 
     file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}." + file_extension
-    data = []
-    header = []
+    data = Array.new
+    header = Array.new
     header = ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
     0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
       survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
