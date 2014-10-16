@@ -7,7 +7,7 @@
   <%= hidden_field_tag :custom_view_id, params[:custom_view_id] %>
   <br />
 
-  <div class="total_responses">Total number of survey responses: <%= number_with_delimiter(version.survey_responses.count) %></div>
+  <div class="total_responses">Total number of survey responses: <%= number_with_delimiter(@survey_responses.total_count) %></div>
   <div class="pageNav">
     <div class="inline">
       <%= form_tag survey_responses_path, :method => :get, :remote => true, :id => "simple_search_form" do %>
