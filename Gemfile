@@ -26,6 +26,7 @@ gem 'redis-objects'
 gem 'pdfkit'
 gem "best_in_place", :git => 'https://github.com/eLafo/best_in_place', :branch => 'rails-3.0' # This version is require for < Rails 3.1
 gem 'httparty'
+gem 'spreadsheet', '1.0.0'
 
 platform :ruby do
   gem 'unicorn-rails'

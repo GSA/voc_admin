@@ -1,4 +1,5 @@
 require 'csv'
+require 'spreadsheet'
 
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
@@ -177,25 +178,50 @@ class SurveyVersion < ActiveRecord::Base
     # when the Export instance is created.
 
     file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}." + file_extension
-    CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
-      csv << ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
+    data = []
+    header = []
+    header = ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
+    0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+      survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
 
-      # For each response in batches...
-      0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-        survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+        # For each column we're looking to export...
+        response_record = ordered_columns.map do |df|
 
-          # For each column we're looking to export...
-          response_record = ordered_columns.map do |df|
+          # Ask for the answer keyed on DisplayField id, fall back on default
+          response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
 
-            # Ask for the answer keyed on DisplayField id, fall back on default
-            response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
+          # Pass the entire array through a filter to break up multiple selection answers when done
+        end.map! {|rr| rr.gsub("{%delim%}", ", ")}
 
-            # Pass the entire array through a filter to break up multiple selection answers when done
-          end.map! {|rr| rr.gsub("{%delim%}", ", ")}
+        # Write the completed row to the CSV
+        data << [response.created_at.strftime("%m/%d/%Y - %H:%M:%S"), response.page_url, response.device].concat(response_record)
+      end
+    end    
 
-          # Write the completed row to the CSV
-          csv << [response.created_at, response.page_url, response.device].concat(response_record)
-        end
+    if filter_params["file_type"] && filter_params["file_type"].downcase == 'xls'
+      body_format = Spreadsheet::Format.new(:text_wrap => true)
+      header_format = Spreadsheet::Format.new(:bold => true, :color => :black, :text_wrap => true)
+      col_width = 20
+      book = Spreadsheet::Workbook.new
+      sheet = book.create_worksheet
+      sheet.column(0).width = col_width
+      sheet.column(1).width = col_width
+      (3..header.count).each do |n|
+          sheet.column(n).width = col_width
+          sheet.column(n).default_format = body_format
+      end
+      sheet.row(0).default_format = header_format
+      sheet.row(0).concat header
+      data.each_with_index do |val, index|
+        sheet.row(index+1).concat val
+      end  
+      book.write("#{Rails.root}/tmp/#{file_name}")
+    else
+      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
+        csv << header
+        data.map do |d|
+          csv << d
+        end 
       end
     end
 
