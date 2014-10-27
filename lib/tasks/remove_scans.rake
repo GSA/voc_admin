@@ -38,7 +38,27 @@ namespace :remove_scan do
               response.page_url.include?("Andiparos") or
               response.page_url.include?(" AND ") or
               response.page_url.include?("waitfor delay") or
-              response.page_url.include?("Set-cookie:") 
+              response.page_url.include?("Set-cookie:") or
+              response.page_url.include?("${\"PRexfxa") or
+              response.page_url.include?("www.webinspect.hp.com") or
+              response.page_url.include?("15.216.12.12/serverinclude") or
+              response.page_url.include?("sPiDoM") or
+              response.page_url.include?("does.not.exist.spidynamics.com") or
+              response.page_url.include?("!@$^*") or
+              response.page_url == "%00" or
+              response.page_url == "%0a" or
+              response.page_url.include?("{}") or
+              response.page_url == "^'" or
+              response.page_url == "." or
+              response.page_url == "*" or
+              response.page_url == "/" or
+              response.page_url == "'" or
+              response.page_url == "/,%ENV,/" or
+              response.page_url == "@'" or
+              response.page_url == "`" or
+              response.page_url == "\u0000" or
+              response.page_url.starts_with?("set") or
+              response.page_url.ends_with?("A:B")
             s = ScanDelete.new
               s.survey_response_id = response.id
               s.client_id =  response.client_id
