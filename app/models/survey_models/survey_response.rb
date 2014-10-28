@@ -13,6 +13,7 @@ class SurveyResponse < ActiveRecord::Base
   has_many :raw_responses, :dependent => :destroy
   has_many :display_field_values
   belongs_to :survey_version
+  belongs_to :raw_submission
 
   validates :survey_version, :presence => true
 
