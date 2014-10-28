@@ -7,6 +7,9 @@ namespace :remove_scan do
      end_date = args[:end]
       @record_list = SurveyResponse.order("id").where("created_at > ? and created_at < ?", start_date, end_date)
       @recordcnt = 1
+
+      survey_version_arr = Array.new
+
       @record_list.find_each do |response|
           if @recordcnt == 1
             @prev_record_date = response.created_at
@@ -16,17 +19,46 @@ namespace :remove_scan do
             @current_record_date = response.created_at
           end
 
-          if ((@current_record_date - @prev_record_date).round >= 0 and 
-              (@current_record_date - @prev_record_date ).round < 2) or
-              response.page_url.nil? or
+          if  response.page_url.nil? or
               response.page_url.include?("passwd") or
               response.page_url.include?("88952634") or
               response.page_url == "undefined/surveys/111" or
               response.page_url == "" or
               response.page_url == "undefined/surveys/1" or
               response.page_url == "undefined/surveys/11" or response.page_url == "undefined/surveys/31" or 
-              response.page_url == "undefined/surveys/91" or response.page_url.include?("set&set") or 
-              response.page_url.include?("/../") or response.page_url.include?("5=5") or response.page_url == "undefined/surveys/41" 
+              response.page_url == "undefined/surveys/91" or response.page_url.include?("set&set") or
+              response.page_url =~ /undefined\/surveys\/./ or
+              response.page_url.include?("/../") or response.page_url.include?("5=5") or 
+              response.page_url == "undefined/surveys/41" or
+              response.page_url == "|" or
+              response.page_url == "+" or
+              response.page_url.include?("etc/passwd") or
+              response.page_url.include?("etc/\passwd") or
+              response.page_url.include?("<SCRIPT>alert") or
+              response.page_url.include?("Andiparos") or
+              response.page_url.include?(" AND ") or
+              response.page_url.include?("waitfor delay") or
+              response.page_url.include?("Set-cookie:") or
+              response.page_url.include?("${\"PRexfxa") or
+              response.page_url.include?("www.webinspect.hp.com") or
+              response.page_url.include?("15.216.12.12/serverinclude") or
+              response.page_url.include?("sPiDoM") or
+              response.page_url.include?("does.not.exist.spidynamics.com") or
+              response.page_url.include?("!@$^*") or
+              response.page_url == "%00" or
+              response.page_url == "%0a" or
+              response.page_url.include?("{}") or
+              response.page_url == "^'" or
+              response.page_url == "." or
+              response.page_url == "*" or
+              response.page_url == "/" or
+              response.page_url == "'" or
+              response.page_url == "/,%ENV,/" or
+              response.page_url == "@'" or
+              response.page_url == "`" or
+              response.page_url == "\u0000" or
+              response.page_url.starts_with?("set") or
+              response.page_url.ends_with?("A:B")
             s = ScanDelete.new
               s.survey_response_id = response.id
               s.client_id =  response.client_id
@@ -60,9 +92,22 @@ namespace :remove_scan do
                 @represponse.remove
               end
             end
+
+            if !survey_version_arr.include?(response.survey_version_id)
+              survey_version_arr << response.survey_version_id
+            end  
+            @recordcnt += 1
           end
-        @recordcnt += 1
        end
+
+    #reload questions here
+    survey_version_arr.each do |sv| 
+      svr = SurveyVersionReporter.where(:sv_id => sv).first
+      puts "deleting svreporter for survey version id.... " + sv.to_s
+      svr.destroy
+      puts "recreate svreporter for survey version id.... " + sv.to_s
+      SurveyVersionReporter.find_or_create_reporter(sv).update_reporter!
+    end   
     puts "Total records removed is #{@recordcnt}"
   end
 end
