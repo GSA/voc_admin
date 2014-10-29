@@ -11,10 +11,14 @@ class ElasticSearchResponse
 
   def self.transform(reportable_survey_response)
     reportable_survey_response = reportable_survey_response.attributes.to_hash
-    reportable_survey_response["answers"].try(:each) do |key,value|
+    reportable_survey_response["answers"].try(:each) do |key, value|
       reportable_survey_response["df_#{key}"] = value
     end
     reportable_survey_response.delete("answers")
+    reportable_survey_response["raw_answers"].try(:each) do |key, value|
+      reportable_survey_response["qc_#{key}"] = value
+    end
+    reportable_survey_response.delete("raw_answers")
     reportable_survey_response
   end
 
