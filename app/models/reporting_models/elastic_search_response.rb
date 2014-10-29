@@ -22,4 +22,11 @@ class ElasticSearchResponse
     reportable_survey_response
   end
 
+  def self.search(sv_id, search = nil, sort = "")
+    args = {index: 'survey_responses', type: "sv_id_#{sv_id}", _source: "survey_response_id"}
+    args[:q] = search if search.present?
+    results = ELASTIC_SEARCH_CLIENT.search(args)
+    ids = results["hits"]["hits"].map {|hit| hit["_source"]["survey_response_id"]}
+    [results, SurveyResponse.where(id: ids).order("field(id, #{ids.join(',')})")]
+  end
 end

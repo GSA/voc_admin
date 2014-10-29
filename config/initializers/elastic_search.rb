@@ -4,7 +4,7 @@ ELASTIC_SEARCH_HOSTS = config["elastic-search-hosts"] || "localhost:9200"
 
 ELASTIC_SEARCH_CLIENT = Elasticsearch::Client.new({
   hosts: ELASTIC_SEARCH_HOSTS,
-  log: true
+  log: false
 })
 
 unless ELASTIC_SEARCH_CLIENT.indices.exists index: 'survey_responses'
