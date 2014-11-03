@@ -97,4 +97,26 @@ namespace :reporting do
 
     puts "...export finished. #{errors} errors."
   end
+
+  desc "Update ReportableSurveyResponses archived value"
+  task :update_reportable_responses_archive => [:environment] do
+
+    ct = 0
+    sr_archived_arr = SurveyResponse.unscoped.where(:archived => true).map { |sr| sr.id }
+    ReportableSurveyResponse.unscoped.all.each do |rr|
+      begin
+        if sr_archived_arr.include?(rr.survey_response_id)
+          rr.archived = true
+          ct += 1
+        else
+          rr.archived = false
+        end
+        rr.save!
+      rescue
+        puts "  Error updating archive for survey responses - #{$!.to_s}"
+      end
+    end
+    puts "Number of archived responses updated is #{ct}"
+  end
+
 end
