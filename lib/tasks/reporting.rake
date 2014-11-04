@@ -102,7 +102,7 @@ namespace :reporting do
   task :update_reportable_responses_archive => [:environment] do
 
     ct = 0
-    sr_archived_arr = SurveyResponse.unscoped.where(:archived => true).map { |sr| sr.id }
+    sr_archived_arr = SurveyResponse.unscoped.where(:archived => true).select(:id).map(&:id)
     ReportableSurveyResponse.unscoped.all.each do |rr|
       begin
         if sr_archived_arr.include?(rr.survey_response_id)
