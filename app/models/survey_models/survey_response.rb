@@ -145,6 +145,11 @@ class SurveyResponse < ActiveRecord::Base
   def archive
     self.archived = true
     self.save!
+    resp = ReportableSurveyResponse.unscoped.where(survey_response_id: self.id).first
+    if resp
+      resp.archived = true
+      resp.save!
+    end  
   end
 
   def export_values_for_reporting
@@ -164,6 +169,7 @@ class SurveyResponse < ActiveRecord::Base
     resp.created_at = self.created_at
     resp.page_url = self.page_url
     resp.device = self.device
+    resp.archived = self.archived
 
     resp.save
   end
