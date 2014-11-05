@@ -109,6 +109,8 @@ namespace :reporting do
           rr.archived = true
           ct += 1
         else
+          rr.archived = "temp"
+          rr.save!
           rr.archived = false
         end
         rr.save!
