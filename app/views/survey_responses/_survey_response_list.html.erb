@@ -20,7 +20,7 @@
     <%= link_to_function "Advanced Search", "$('#advanced_search').toggle();return false;", :class=>"manage" %>
   </div>
 
-  <%#= render partial: 'advanced_search', locals: { version: version } %>
+  <%= render partial: 'advanced_search', locals: { version: version } %>
 
   <%= render partial: 'page_nav', locals: { version: version } %>
 

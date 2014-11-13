@@ -151,6 +151,9 @@ class SurveyResponsesController < ApplicationController
 
   # If search parameters are sent in, use them to build the proper WHERE clause.
   def search_responses
+    if params[:search].present?
+      @search = SurveyResponseSearch.new(params[:search])
+    end
     @es_results, @survey_responses = ElasticSearchResponse.search(
       @survey_version.id,
       params[:simple_search],

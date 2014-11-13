@@ -38,8 +38,12 @@ class ElasticSearchResponse
 
     results = ELASTIC_SEARCH_CLIENT.search args
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
+    responses = SurveyResponse.where(id: ids)
     # This will only work with MySQL
-    [results, SurveyResponse.where(id: ids).order("field(id, #{ids.join(',')})")]
+    if !ids.empty?
+      responses = responses.order("field(id, #{ids.join(',')})")
+    end
+    [results, responses]
   end
 
   private

@@ -134,7 +134,7 @@ function getSurveyDisplayTable(survey_version_id, order_column, direction, custo
       "&custom_view_id=" + custom_view_id + "&page=" + page_num;
 
     var simple_search = $("#simple_search").val();
-    if(simple_search !== undefined || simple_search != "") {
+    if(simple_search !== undefined && simple_search != "") {
       data_string += "&simple_search=" + simple_search;
     }
     last_ajax_request_id += 1;
