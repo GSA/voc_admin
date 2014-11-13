@@ -27,12 +27,12 @@ class ElasticSearchResponse
       index: 'survey_responses',
       type: "sv_id_#{survey_version_id}"
     }
-    if search
-      args[:body] = query_string_search(search)
-    else
+    if search.blank?
       args[:body] = empty_search
+    else
+      args[:body] = query_string_search(search)
     end
-    if sort
+    if sort.present?
       args[:body]["sort"] = sort
     end
 
