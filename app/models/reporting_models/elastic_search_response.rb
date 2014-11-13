@@ -22,11 +22,50 @@ class ElasticSearchResponse
     reportable_survey_response
   end
 
-  def self.search(sv_id, search = nil, sort = "")
-    args = {index: 'survey_responses', type: "sv_id_#{sv_id}", _source: "survey_response_id"}
-    args[:q] = search if search.present?
-    results = ELASTIC_SEARCH_CLIENT.search(args)
-    ids = results["hits"]["hits"].map {|hit| hit["_source"]["survey_response_id"]}
+  def self.search(survey_version_id, search = nil, sort = nil)
+    args = {
+      index: 'survey_responses',
+      type: "sv_id_#{survey_version_id}"
+    }
+    if search
+      args[:body] = query_string_search(search)
+    else
+      args[:body] = empty_search
+    end
+    if sort
+      args[:body]["sort"] = sort
+    end
+
+    results = ELASTIC_SEARCH_CLIENT.search args
+    ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
+    # This will only work with MySQL
     [results, SurveyResponse.where(id: ids).order("field(id, #{ids.join(',')})")]
+  end
+
+  private
+
+  def self.empty_search
+    {
+      "sort" => {
+        "created_at" => { "order" => "asc" }
+      },
+      "query" => {
+        "match_all" => {}
+      }
+    }
+  end
+
+  def self.query_string_search(search_query)
+    if search_query
+      {
+        "query" => {
+          "query_string" => {
+            "query" => search_query
+          }
+        }
+      }
+    else
+      nil
+    end
   end
 end

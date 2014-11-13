@@ -151,21 +151,14 @@ class SurveyResponsesController < ApplicationController
 
   # If search parameters are sent in, use them to build the proper WHERE clause.
   def search_responses
-    sv_id = @survey_version.id
-    if params[:search].present?
-      @search = SurveyResponseSearch.new(params[:search])
-
-      @survey_responses = @search.search(@survey_responses)
-    elsif params[:simple_search].present?
-      @es_results, @survey_responses = ElasticSearchResponse.search(sv_id, params[:simple_search], responses_order)
-    elsif params[:search_rr].present?
-      @survey_responses = @survey_responses.search_rr(params[:qc_id], params[:search_rr])
-    else
-      @es_results, @survey_responses = ElasticSearchResponse.search(sv_id, "", responses_order)
-    end
+    @es_results, @survey_responses = ElasticSearchResponse.search(
+      @survey_version.id,
+      params[:simple_search],
+      responses_order
+    )
   end
 
   def elastic_sort(column, sort_direction)
-    "#{column}.raw:#{sort_direction}"
+    { "#{column}.raw" => { "order" => sort_direction } }
   end
 end
