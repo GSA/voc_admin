@@ -39,7 +39,10 @@ class ElasticSearchResponse
     results = ELASTIC_SEARCH_CLIENT.search args
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
     responses = SurveyResponse.where(id: ids)
-    # This will only work with MySQL
+
+    # NOTE: This will only work with MySQL due to the field() method.  We can't
+    # use the field method if ids is empty.  It will cause an error in the MySQL
+    # statement, so we have to wrap the order clause in a guard statement.
     if !ids.empty?
       responses = responses.order("field(id, #{ids.join(',')})")
     end

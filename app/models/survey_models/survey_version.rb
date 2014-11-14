@@ -129,7 +129,10 @@ class SurveyVersion < ActiveRecord::Base
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
 
     unless filter_params[:simple_search].blank?
-      # TODO: come back to simple search later
+      survey_response_query = ReportableSurveyResponse.simple_search(
+        survey_response_query,
+        filter_params[:simple_search]
+      )
     end
 
     unless filter_params[:search].blank?
