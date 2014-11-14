@@ -74,6 +74,18 @@ class ReportableSurveyResponseSearch
     base_scope
   end
 
+  def self.simple_search(passed_scope, search_term)
+    df_ids = passed_scope.first.answers.keys
+    passed_scope = passed_scope.any_of(
+      df_ids.map { |df_id|
+        { "answers.#{df_id}" => /#{search_term}/i}
+      }.concat([
+        {"page_url" => /#{search_term}/i},
+        {"device" => /#{search_term}/i}
+      ])
+    )
+  end
+
   private
 
   def parse_date_value(value)
