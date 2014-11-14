@@ -67,7 +67,7 @@ class ElasticSearchResponse
       {
         "query" => {
           "query_string" => {
-            "query" => search_query
+            "query" => "*#{search_query}*"
           }
         }
       }
