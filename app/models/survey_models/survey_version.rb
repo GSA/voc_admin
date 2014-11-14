@@ -133,7 +133,8 @@ class SurveyVersion < ActiveRecord::Base
     end
 
     unless filter_params[:search].blank?
-      # TODO: come back to advanced search later
+      response_search = ReportableSurveyResponseSearch.new filter_params['search']
+      survey_response_query = response_search.search(survey_response_query)
     end
 
     custom_view, sort_orders = nil
@@ -277,7 +278,7 @@ class SurveyVersion < ActiveRecord::Base
     self.published = false
     self.save
   end
-                                                                                               
+
 
   # Clone all elements of the SurveyVersion into a new minor version.
   #
