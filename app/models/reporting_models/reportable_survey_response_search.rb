@@ -92,8 +92,3 @@ class ReportableSurveyResponseSearch
     Time.strptime(value + " #{Time.zone.now.formatted_offset}", time_string.chomp + " %:z")
   end
 end
-
-# {
-  # "search"=> {
-  # { "criteria"=> { "0"=> { "include_exclude"=>"1", "display_field_id"=>"survey_responses.created_at", "condition"=>"equals", "value"=>"05/20/2014" } } }
-# }
