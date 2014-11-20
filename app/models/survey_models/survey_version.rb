@@ -159,7 +159,7 @@ class SurveyVersion < ActiveRecord::Base
     ordered_columns = custom_view.ordered_display_fields if custom_view.present?
     ordered_columns ||= display_fields.order(:display_order)
 
-    # Check for file_type format 
+    # Check for file_type format
     if filter_params["file_type"]
       if filter_params["file_type"].downcase == 'xls'
         options = {col_sep: '\t'}
@@ -196,7 +196,7 @@ class SurveyVersion < ActiveRecord::Base
         # Write the completed row to the CSV
         data << [response.created_at.in_time_zone.strftime("%m/%d/%Y - %H:%M:%S"), response.page_url, response.device].concat(response_record)
       end
-    end    
+    end
 
     if filter_params["file_type"] && filter_params["file_type"].downcase == 'xls'
       body_format = Spreadsheet::Format.new(:text_wrap => true)
@@ -214,14 +214,14 @@ class SurveyVersion < ActiveRecord::Base
       sheet.row(0).concat header
       data.each_with_index do |val, index|
         sheet.row(index+1).concat val
-      end  
+      end
       book.write("#{Rails.root}/tmp/#{file_name}")
     else
       CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
         csv << header
         data.map do |d|
           csv << d
-        end 
+        end
       end
     end
 

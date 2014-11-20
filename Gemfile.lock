@@ -368,6 +368,7 @@ DEPENDENCIES
   open_uri_redirections
   paperclip
   pdfkit
+  pry-remote
   rails!
   rails_best_practices
   ranked-model (~> 0.2.1)
