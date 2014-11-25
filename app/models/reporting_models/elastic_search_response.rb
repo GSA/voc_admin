@@ -29,8 +29,10 @@ class ElasticSearchResponse
     }
     if search.blank?
       args[:body] = empty_search
-    else
+    elsif search.is_a?(String)
       args[:body] = query_string_search(search)
+    else
+      args[:body] = ElasticsearchAdvancedSearch.new(search).build_query
     end
     if sort.present?
       args[:body]["sort"] = sort
@@ -63,16 +65,12 @@ class ElasticSearchResponse
   end
 
   def self.query_string_search(search_query)
-    if search_query
-      {
-        "query" => {
-          "query_string" => {
-            "query" => "*#{search_query}*"
-          }
+    {
+      "query" => {
+        "query_string" => {
+          "query" => "*#{search_query}*"
         }
       }
-    else
-      nil
-    end
+    }
   end
 end

@@ -134,14 +134,14 @@ class SurveyResponsesController < ApplicationController
     @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir].downcase : 'asc'
 
     if @order_column_id
-      elastic_sort("df_#{@order_column_id}", @order_dir)
+      elastic_sort("df_#{@order_column_id}.raw", @order_dir)
     elsif params[:order_column] == "survey_responses.created_at"
       elastic_sort("created_at", @order_dir)
     elsif %w(page_url device).include?(params[:order_column])
       elastic_sort(params[:order_column], @order_dir)
     elsif @custom_view
       sort_arr = @custom_view.sorted_display_field_custom_views.map do |s|
-        elastic_sort("df_#{s.display_field_id}", s.sort_direction)
+        elastic_sort("df_#{s.display_field_id}.raw", s.sort_direction)
       end
       sort_arr.join(",")
     else # fall back on date if we have no other recourse
@@ -154,14 +154,17 @@ class SurveyResponsesController < ApplicationController
     if params[:search].present?
       @search = SurveyResponseSearch.new(params[:search])
     end
+
+    search_params = params[:search].presence || params[:simple_search]
+
     @es_results, @survey_responses = ElasticSearchResponse.search(
       @survey_version.id,
-      params[:simple_search],
+      search_params,
       responses_order
     )
   end
 
   def elastic_sort(column, sort_direction)
-    { "#{column}.raw" => { "order" => sort_direction } }
+    { column => { "order" => sort_direction } }
   end
 end
