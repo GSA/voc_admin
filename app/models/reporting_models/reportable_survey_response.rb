@@ -10,6 +10,9 @@ class ReportableSurveyResponse
   field :device, type: String
 
   field :answers, type: Hash
+  field :archived, type: Boolean, default: false
+  
+  default_scope where(:archived => false)
 
   # ORIGINALLY:
   # answers[df.id.to_s] =

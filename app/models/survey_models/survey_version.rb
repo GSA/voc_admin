@@ -135,7 +135,7 @@ class SurveyVersion < ActiveRecord::Base
   NOSQL_BATCH = 1000
 
   def generate_responses_csv(filter_params, user_id)
-    survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
+    survey_response_query = ReportableSurveyResponse.where(survey_version_id: id).order_by(:created_at => "asc")
 
     unless filter_params['simple_search'].blank?
       # TODO: come back to simple search later
@@ -194,9 +194,9 @@ class SurveyVersion < ActiveRecord::Base
         end.map! {|rr| rr.gsub("{%delim%}", ", ")}
 
         # Write the completed row to the CSV
-        data << [response.created_at.strftime("%m/%d/%Y - %H:%M:%S"), response.page_url, response.device].concat(response_record)
+        data << [response.created_at.in_time_zone.strftime("%m/%d/%Y - %H:%M:%S"), response.page_url, response.device].concat(response_record)
       end
-    end    
+    end
 
     if filter_params["file_type"] && filter_params["file_type"].downcase == 'xls'
       body_format = Spreadsheet::Format.new(:text_wrap => true)
@@ -214,14 +214,14 @@ class SurveyVersion < ActiveRecord::Base
       sheet.row(0).concat header
       data.each_with_index do |val, index|
         sheet.row(index+1).concat val
-      end  
+      end
       book.write("#{Rails.root}/tmp/#{file_name}")
     else
       CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
         csv << header
         data.map do |d|
           csv << d
-        end 
+        end
       end
     end
 

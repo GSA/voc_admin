@@ -56,7 +56,7 @@ class QuestionReporter
   end
 
   def responses_to_add(question_content)
-    responses = question_content.raw_responses.reorder('')
+    responses = question_content.raw_responses.not_archived.reorder('')
     if counts_updated_at.present?
       d = counts_updated_at.in_time_zone("Eastern Time (US & Canada)") - 2.days
       d = d.end_of_day

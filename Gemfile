@@ -57,6 +57,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'jazz_hands'
+  gem 'pry-remote'
   gem 'yard'
 end
 

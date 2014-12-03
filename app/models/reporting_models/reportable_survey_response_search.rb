@@ -3,16 +3,16 @@ class ReportableSurveyResponseSearch
 
   CONDITIONS = {
     'equals' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => value)
+        base_scope.where(field_name => Regexp.new("^#{value}$", Regexp::IGNORECASE))
     },
     'contains' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => Regexp.new("#{value}"))
+        base_scope.where(field_name => Regexp.new("#{value}", Regexp::IGNORECASE))
     },
     'begins_with' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => Regexp.new("^#{value}"))
+        base_scope.where(field_name => Regexp.new("^#{value}", Regexp::IGNORECASE))
     },
     'ends_with' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => Regexp.new("#{value}$"))
+        base_scope.where(field_name => Regexp.new("#{value}$", Regexp::IGNORECASE))
     },
     'less_than' => proc {|base_scope, field_name, value|
         base_scope.where( :"#{field_name}".lt => value)
@@ -24,10 +24,10 @@ class ReportableSurveyResponseSearch
 
   NEGATION_CONDITIONS = {
     'equals' => proc {|base_scope, field_name, value|
-      base_scope.where(field_name.to_sym.ne => value)
+      base_scope.where(field_name.to_sym.ne => Regexp.new("^#{value}$", Regexp::IGNORECASE))
     },
     'contains' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => { "$not" => Regexp.new("#{value}") })
+        base_scope.where(field_name => { "$not" => Regexp.new("#{value}", Regexp::IGNORECASE) })
     },
     'less_than' => proc {|base_scope, field_name, value|
       base_scope.where(:"#{field_name}".gte => value)
@@ -36,10 +36,10 @@ class ReportableSurveyResponseSearch
       base_scope.where(:"#{field_name}".lte => value)
     },
     'begins_with' => proc {|base_scope, field_name, value|
-      base_scope.where(:"#{field_name}" => { "$not" => Regexp.new("^#{value}") })
+      base_scope.where(:"#{field_name}" => { "$not" => Regexp.new("^#{value}", Regexp::IGNORECASE) })
     },
     'ends_with' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => { "$not" => Regexp.new("#{value}$") })
+        base_scope.where(field_name => { "$not" => Regexp.new("#{value}$", Regexp::IGNORECASE) })
     },
   }
 
