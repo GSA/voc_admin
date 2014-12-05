@@ -85,14 +85,8 @@ class SurveyResponsesController < ApplicationController
     @survey_version = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
 
     if @survey_version.present?
-      @survey_responses = @survey_version.survey_responses.processed
-
       set_custom_view
-
-      order_responses
-
       search_responses
-
       # Paginate the results
       @survey_responses = paginate_responses(@survey_responses.includes(:display_field_values), params[:page].to_i)
     else
@@ -103,15 +97,15 @@ class SurveyResponsesController < ApplicationController
   # Largely responsible for ensuring that pagination shows the proper page if a survey
   # response is deleted by an admin user.  Will decrement page number of the current page
   # would no longer show any responses.
-  # 
+  #
   # @param [ActiveRecord::Relation] responses the ActiveRecord relation query
   # @param [Integer] pages the expected Page number
   # @return [ActiveRecord::Relation] the paginated Relation
   def paginate_responses(responses, pages)
     # decrement the requested page if the response count falls below the pagination threshold
-    pages -= 1 if (pages - 1 > 0 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
-
-    responses.page(pages)
+    pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
+    total_count = @es_results["hits"]["total"]
+    Kaminari.paginate_array(responses, total_count: total_count).page(pages).per(SurveyResponse.default_per_page)
   end
 
   # Uses the query parameter CustomView, the default CustomView for
@@ -119,7 +113,7 @@ class SurveyResponsesController < ApplicationController
   def set_custom_view
     # Set the custom view from the params
     @custom_view = nil
-    
+
     if params[:custom_view_id].blank?
       @custom_view = @survey_version.custom_views.find_by_default(true)
     else
@@ -134,27 +128,24 @@ class SurveyResponsesController < ApplicationController
   #   Created By date or Page Url fields.
   #   Custom View.
   #   Default to Created By date.
-  def order_responses
+  def responses_order
     # Get the order column and direction
     @order_column_id = @survey_version.display_fields.find_by_name(params[:order_column]).try(:id)
-    @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
+    @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir].downcase : 'asc'
 
-    # if we have an order column, then order by that column
     if @order_column_id
-      @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir)
-
-    # if we're specifically sorting by date or page url
-    elsif %w(survey_responses.created_at page_url).include?(params[:order_column])
-      @survey_responses = @survey_responses.order("#{params[:order_column]} #{@order_dir}")
-
-    # custom view!
+      elastic_sort("df_#{@order_column_id}.raw", @order_dir)
+    elsif params[:order_column] == "survey_responses.created_at"
+      elastic_sort("created_at", @order_dir)
+    elsif %w(page_url device).include?(params[:order_column])
+      elastic_sort(params[:order_column], @order_dir)
     elsif @custom_view
-      columns, orders = @custom_view.sorted_display_field_custom_views.map {|s| [s.display_field_id, s.sort_direction] }.transpose
-      @survey_responses = @survey_responses.order_by_display_field(columns, orders)
-
-    # fall back on date if we have no other recourse
-    else
-      @survey_responses = @survey_responses.order("survey_responses.created_at #{@order_dir}")
+      sort_arr = @custom_view.sorted_display_field_custom_views.map do |s|
+        elastic_sort("df_#{s.display_field_id}.raw", s.sort_direction)
+      end
+      sort_arr.join(",")
+    else # fall back on date if we have no other recourse
+      elastic_sort("created_at", @order_dir)
     end
   end
 
@@ -162,12 +153,18 @@ class SurveyResponsesController < ApplicationController
   def search_responses
     if params[:search].present?
       @search = SurveyResponseSearch.new(params[:search])
-
-      @survey_responses = @search.search(@survey_responses)
-    elsif params[:simple_search].present?
-      @survey_responses = @survey_responses.search(params[:simple_search])
-    elsif params[:search_rr].present?
-      @survey_responses = @survey_responses.search_rr(params[:qc_id], params[:search_rr])
     end
+
+    search_params = params[:search].presence || params[:simple_search]
+
+    @es_results, @survey_responses = ElasticSearchResponse.search(
+      @survey_version.id,
+      search_params,
+      responses_order
+    )
+  end
+
+  def elastic_sort(column, sort_direction)
+    { column => { "order" => sort_direction } }
   end
 end

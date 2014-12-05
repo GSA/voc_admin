@@ -1,0 +1,11 @@
+<%= form_tag survey_path(@survey), method: :get do %>
+  <%= hidden_field_tag :stylesheet, params[:stylesheet] %>
+  <%= hidden_field_tag :page_url, params[:page_url] %>
+  <%= submit_tag start_screen_button_text, class: 'start-survey' %>
+<% end %>
+
+<script type='text/javascript'>
+  $("form").submit(function(event) {
+    return false;
+  });
+</script>

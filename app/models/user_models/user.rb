@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_many :sites,      :through => :site_users
   belongs_to :role
 
+  acts_as_authentic do |c|
+    c.logged_in_timeout = 30.minutes
+  end
+
   validates :email,     :presence => true
   validates :f_name,    :presence => true
   validates :l_name,    :presence => true

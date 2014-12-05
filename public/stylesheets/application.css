@@ -392,6 +392,10 @@ a.navActive {
 }
 
 /**** General View/Edit/Show pages ****/
+.instructions {
+  font-size: 10pt;
+  max-width: 450px;
+}
 #surveys .left_side,
 #showpage .left_side {
 	width: 150px;
@@ -1107,10 +1111,10 @@ span.pageNum {
     width: 1em;
     overflow: hidden;
 }
-.deleteLink {  
+.deleteLink {
 	background: url(../images/delete.png) no-repeat top left;
 }
-.deleteLink:hover {  
+.deleteLink:hover {
 	background: url(../images/delete_hover.png) no-repeat top left;
 }
 .copyLink {

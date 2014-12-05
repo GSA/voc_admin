@@ -62,17 +62,17 @@
 				<% end %>
 			</td>
 			<td class="col7"><%= version.created_at.strftime("%m/%d/%Y") %></td>
-			<td class="col8"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>			
+			<td class="col8"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
 			<td class="col9"><%= link_to image_tag("clone.png", :alt=>"Clone Survey"), clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version", :class=>"copyLink"  %></td>
 			<td class="col10"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
 		</tr>
-	
-	
+
+
 		<% end %>
 	</table>
-	
+
 	<%= paginate @survey_versions %>
-	
+
 	<div class="pageNav">
 		<%= link_to "New Version", create_new_major_version_survey_survey_versions_path(@survey), :class => "newlink" %>
 		<%= link_to "View All Surveys", surveys_path, :class => "manage" %>
@@ -99,6 +99,7 @@
 
 		<p>3. Add this line to your JavaScript includes, ensuring the target_id parameter matches the DIV ID attribute:</p>
 		<pre><%= "<script type=\"text/javascript\"
-        src=\"http://#{APP_CONFIG['public_host']}/widget/widget.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %></pre>
+        src=\"http://#{APP_CONFIG['public_host']}/widget/widget.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %>
+    </pre>
 	</div>
 </div>

@@ -1,0 +1,78 @@
+<h1>Question Bank</h1>
+
+<div id='question_list'>
+  <div class="page">
+    <ol class="outter">
+      <% @question_bank.questions.each_with_index do |question, index| %>
+        <li class="outter">
+          <div class="page_asset">
+            <div class="asset_content">
+              <span class="survey_element">
+                <%= "#{index+1}.  #{question.statement}" %>
+              </span>
+            </div>
+
+            <div class="asset_delete">
+              <span><%= question.answer_type.titleize %></span>
+              <%= link_to image_tag("edit.png", alt: "edit"), [:edit, :question_bank, question] %>
+              <%= link_to image_tag("delete.png", :alt=>"Delete"),
+                [:question_bank, question],
+                { :method => :delete,
+                  :title => "Delete question",
+                  :class=>"deleteLink",
+                  :confirm => "Are you sure?" }
+              %>
+            </div>
+
+            <div>
+              <% if question.is_a?(ChoiceQuestion) %>
+                <ol class="inner">
+                  <% question.choice_answers.each do |answer| %>
+                  <li class="inner">
+                    <%= answer.answer %>
+                    <% if answer.is_default? %>
+                      <span class='extra'>Default</span>
+                    <% end -%>
+                  </li>
+                  <% end -%>
+                </ol>
+              <% elsif question.is_a?(MatrixQuestion) %>
+                <div>
+                  <div class="italic">Questions (rows):</div>
+                  <ol class="inner">
+                    <% question.rows.each do |row_header| %>
+                    <li class="inner">
+                      <%= row_header.question_content.statement %>
+                      <% if row_header.question_content.required? %>
+                        <span class='extra'>Required</span>
+                      <% end -%>
+                    </li>
+                    <% end -%>
+                  </ol>
+                </div>
+                <br />
+                <div>
+                  <div class="italic">Radio Options (columns):</div>
+                  <ol class="inner">
+                    <% question.column_headers.each do |column_header| %>
+                    <li class="inner">
+                      <%= column_header%>
+                    </li>
+                    <% end %>
+                  </ol>
+                </div>
+              <% end # close the if statements %>
+            </div>
+          </div>
+
+        </li>
+      <% end # close the for loop %>
+    </ol>
+
+  </div>
+  <div class='surveyNav2'>
+    <%= link_to "Add Text Question", new_question_bank_text_question_path, class: 'newlink' %>
+    <%= link_to "Add Choice Question", new_question_bank_choice_question_path, class: 'newlink' %>
+    <%= link_to "Add Matrix Question", new_question_bank_matrix_question_path, class: 'newlink' %>
+  </div>
+</div>

@@ -10,7 +10,8 @@ class Survey < ActiveRecord::Base
   attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
   :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
   :invitation_interval, :invitation_text, :invitation_accept_button_text,
-  :invitation_reject_button_text, :alarm, :alarm_notification_email
+  :invitation_reject_button_text, :start_screen_button_text, :alarm, :alarm_notification_email, :holding_page,
+  :show_numbers, :locale, :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
@@ -24,7 +25,7 @@ class Survey < ActiveRecord::Base
   validates :previous_page_text, length: { maximum: 255 }
   validates :next_page_text, length: { maximum: 255 }
   validates :submit_button_text, length: { maximum: 255 }
-  
+
   scope :get_archived,            where(:archived => true)
   scope :get_unarchived,          where(:archived => false)
   scope :get_alpha_list,          order('surveys.name asc')
@@ -71,6 +72,14 @@ class Survey < ActiveRecord::Base
   def create_new_minor_version(source_sv_id = nil)
     source_sv = source_sv_id ? self.survey_versions.find(source_sv_id) : self.newest_version
     source_sv.clone_me
+  end
+
+  def flushable_urls
+    [
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}",
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}",
+      "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"
+    ]
   end
 end
 

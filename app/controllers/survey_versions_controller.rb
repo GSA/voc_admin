@@ -40,6 +40,7 @@ class SurveyVersionsController < ApplicationController
   # PUT    /surveys/:survey_id/survey_versions/:id(.:format)
   def update
     if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
+      flush_akamai(@survey.flushable_urls) if @survey_version.published?
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
     else
       render :edit
@@ -71,7 +72,7 @@ class SurveyVersionsController < ApplicationController
     else
       @survey_version.publish_me
       Rails.cache.clear if Rails.cache
-      if flush_akamai(@survey.id, @survey_version.version_number)
+      if flush_akamai(@survey.flushable_urls)
         msg = "Successfully published survey and cache will be purged in 7 minutes."
       else
         msg = "Successfully published survey but there was a problem purging cache."
@@ -82,6 +83,7 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/unpublish(.:format)
   def unpublish
+    flushable_urls = @survey.flushable_urls
     @survey_version.unpublish_me
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version and cache will be purged in 15 minutes."
   end
