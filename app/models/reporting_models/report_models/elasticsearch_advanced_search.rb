@@ -26,9 +26,7 @@ class ElasticsearchAdvancedSearch
   CONDITIONS = {
     "equals" => proc {|column, value|
       {
-        "query" => {
-          "match" => { column => value }
-        }
+        "term" => { column => value }
       }
     },
     "contains" => proc { |column, value|
