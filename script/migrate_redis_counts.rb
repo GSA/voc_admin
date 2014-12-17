@@ -13,7 +13,7 @@
 ## Load the terramark redis counts into aws
 require 'json'
 
-file = File.read('script/tm-redis-counts-hhs-voc.json')
+file = File.read("#{Rails.root}/script/tm-redis-counts-hhs-voc.json")
 json_data = JSON.parse(file)
 
 json_data.each_pair do |sv_id, count_data|
