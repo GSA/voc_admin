@@ -25,6 +25,15 @@
     }
   }
 
+  function addStylesheetToHead(targetWindow, stylesheetUrl) {
+    var head = targetWindow.document.head
+      , link = targetWindow.document.createElement('link');
+      link.type = 'text/css';
+      link.rel = 'stylesheet';
+      link.href = stylesheetUrl;
+      head.appendChild(link);
+  }
+
   function showPreview(){
     var invitationText = jQuery('#survey_invitation_text').val();
     var stylesheetUrl  = jQuery('#survey_invitation_preview_stylesheet').val();
@@ -36,7 +45,8 @@
     invitationHtml = invitationHtml.replace('{{reject}}',
       '<input type="button" name="vocCancelButton" class="vocCancelButton" value="' + rejectText() + '">');
 
-    invitationHtml = "<div style='width:100%'><div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog' tabindex='-1'>"
+    invitationHtml = "<div style='width:100%'>"
+      + "<div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle' aria-describedby='modalDescription' role='dialog' tabindex='-1'>"
       + invitationHtml
       + "</div></div><div id='vocModalOverlay'></div>";
 
@@ -45,20 +55,10 @@
     invitationPreview.document.write(invitationHtml)
 
     // Add the default styles
-    var head = invitationPreview.document.head
-      , defaultStylesheet = invitationPreview.document.createElement('link');
-    defaultStylesheet.type = 'text/css';
-    defaultStylesheet.rel = 'stylesheet';
-    defaultStylesheet.href = '/stylesheets/invite_preview.css';
-    head.appendChild(defaultStylesheet)
+    addStylesheetToHead(invitationPreview, '/stylesheets/invite_preview.css');
 
     if(stylesheetUrl.length > 0) {
-      var head = invitationPreview.document.head
-        , link = invitationPreview.document.createElement('link');
-      link.type = 'text/css';
-      link.rel = 'stylesheet';
-      link.href = stylesheetUrl;
-      head.appendChild(link);
+      addStylesheetToHead(invitationPreview, stylesheetUrl);
     }
 
   }
