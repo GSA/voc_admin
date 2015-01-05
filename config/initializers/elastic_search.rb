@@ -7,8 +7,8 @@ ELASTIC_SEARCH_CLIENT = Elasticsearch::Client.new({
   log: false
 })
 
-unless ELASTIC_SEARCH_CLIENT.indices.exists index: 'survey_responses'
-  ELASTIC_SEARCH_CLIENT.indices.create index: 'survey_responses', body: {
+ELASTIC_SEARCH_MAPPINGS = {
+  survey_responses: {
     mappings: {
       "_default_" => {
         dynamic_templates: [
@@ -52,5 +52,9 @@ unless ELASTIC_SEARCH_CLIENT.indices.exists index: 'survey_responses'
       }
     }
   }
+}
+
+unless ELASTIC_SEARCH_CLIENT.indices.exists index: 'survey_responses'
+  ELASTIC_SEARCH_CLIENT.indices.create index: 'survey_responses', body: ELASTIC_SEARCH_MAPPINGS[:survey_responses]
 end
 
