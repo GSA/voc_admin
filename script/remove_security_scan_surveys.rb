@@ -1,1 +1,1 @@
-Survey.where(description: "Security Scan").each {|survey| survey.update_attribute(:archived, true)}
+Survey.where(description: "Security Testing").each {|survey| survey.update_attribute(:archived, true)}
