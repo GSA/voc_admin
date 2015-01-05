@@ -21,9 +21,9 @@ namespace :elasticsearch do
   desc "Export to elastic search"
   task :export_to_elastic_search => [:environment] do
     per_batch = 1000
-    total = ReportableSurveyResponse.count
+    total = ReportableSurveyResponse.where(survey_id: 12).count
     0.step(total, per_batch) do |offset|
-      ReportableSurveyResponse.limit(per_batch).skip(offset).each(&:elastic_search_persist)
+      ReportableSurveyResponse.where(survey_id: 12).limit(per_batch).skip(offset).each(&:elastic_search_persist)
       puts "Exported batch to elasticsearch: #{offset+per_batch}/#{total}"
     end
   end
