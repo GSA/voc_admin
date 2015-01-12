@@ -165,6 +165,6 @@ class SurveyResponsesController < ApplicationController
   end
 
   def elastic_sort(column, sort_direction)
-    { column => { "order" => sort_direction } }
+    { column => { "order" => sort_direction, "ignore_unmapped" => true }}
   end
 end
