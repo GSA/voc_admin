@@ -128,25 +128,25 @@ class SurveyVersion < ActiveRecord::Base
   def generate_responses_csv(filter_params, user_id)
     survey_response_query = ReportableSurveyResponse.where(survey_version_id: id)
 
-    unless filter_params[:simple_search].blank?
+    unless filter_params['simple_search'].blank?
       survey_response_query = ReportableSurveyResponseSearch.simple_search(
         survey_response_query,
-        filter_params[:simple_search]
+        filter_params['simple_search']
       )
     end
 
-    unless filter_params[:search].blank?
+    unless filter_params['search'].blank?
       response_search = ReportableSurveyResponseSearch.new filter_params['search']
       survey_response_query = response_search.search(survey_response_query)
     end
 
     custom_view, sort_orders = nil
-    if filter_params[:custom_view_id].blank?
+    if filter_params['custom_view_id'].blank?
       custom_view = custom_views.find_by_default(true)
     else
       # Use find_by_id in order to return nil if a custom view with the specified id
       # cannot be found instead of raising an error.
-      custom_view = custom_views.find_by_id(filter_params[:custom_view_id])
+      custom_view = custom_views.find_by_id(filter_params['custom_view_id'])
     end
 
     # Ensures the responses are coming back in the proper order before batching
