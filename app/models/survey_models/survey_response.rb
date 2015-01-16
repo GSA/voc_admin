@@ -74,7 +74,7 @@ class SurveyResponse < ActiveRecord::Base
   scope :processed, where(:status_id => Status::DONE)
 
   # kaminari setting
-  paginates_per 10
+  paginates_per 50
 
   # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
