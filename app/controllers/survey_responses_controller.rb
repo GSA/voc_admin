@@ -103,9 +103,9 @@ class SurveyResponsesController < ApplicationController
   # @return [ActiveRecord::Relation] the paginated Relation
   def paginate_responses(responses, pages)
     # decrement the requested page if the response count falls below the pagination threshold
-    pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
-    total_count = @es_results["hits"]["total"]
-    Kaminari.paginate_array(responses, total_count: total_count).page(pages).per(SurveyResponse.default_per_page)
+    #pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
+    # total_count = @es_results["hits"]["total"]
+    Kaminari.paginate_array(responses).page(pages).per(SurveyResponse.default_per_page)
   end
 
   # Uses the query parameter CustomView, the default CustomView for
@@ -123,48 +123,11 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
-  # Calculate the proper ordering of the SurveyResponse grid. Order of precedence:
-  #   Explicit query parameter.
-  #   Created By date or Page Url fields.
-  #   Custom View.
-  #   Default to Created By date.
-  def responses_order
-    # Get the order column and direction
-    @order_column_id = @survey_version.display_fields.find_by_name(params[:order_column]).try(:id)
-    @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir].downcase : 'asc'
-
-    if @order_column_id
-      elastic_sort("df_#{@order_column_id}.raw", @order_dir)
-    elsif params[:order_column] == "survey_responses.created_at"
-      elastic_sort("created_at", @order_dir)
-    elsif %w(page_url device).include?(params[:order_column])
-      elastic_sort(params[:order_column], @order_dir)
-    elsif @custom_view
-      sort_arr = @custom_view.sorted_display_field_custom_views.map do |s|
-        elastic_sort("df_#{s.display_field_id}.raw", s.sort_direction)
-      end
-      sort_arr.join(",")
-    else # fall back on date if we have no other recourse
-      elastic_sort("created_at", @order_dir)
-    end
-  end
-
   # If search parameters are sent in, use them to build the proper WHERE clause.
   def search_responses
-    if params[:search].present?
-      @search = SurveyResponseSearch.new(params[:search])
-    end
-
-    search_params = params[:search].presence || params[:simple_search]
-
-    @es_results, @survey_responses = ElasticSearchResponse.search(
-      @survey_version.id,
-      search_params,
-      responses_order
-    )
+    survey_response_query = SurveyResponsesQuery.new(@survey_version, @custom_view, params)
+    @es_results, @survey_responses = survey_response_query.search
+    @search = survey_response_query.search_criteria
   end
 
-  def elastic_sort(column, sort_direction)
-    { column => { "order" => sort_direction, "ignore_unmapped" => true }}
-  end
 end
