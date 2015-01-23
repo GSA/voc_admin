@@ -65,7 +65,7 @@ class ReportableSurveyResponseSearch
         value = parse_date_value(criterion['value'])
         search_field = 'created_at'
       else
-        search_field = "answers.#{criterion['display_field_id']}"
+        search_field = "answers.#{criterion['display_field_id'].gsub('df_', '').last}"
       end
 
       base_scope = query_hash[condition].call(base_scope, search_field, value)

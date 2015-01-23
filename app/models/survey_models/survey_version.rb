@@ -168,7 +168,7 @@ class SurveyVersion < ActiveRecord::Base
           response_record = ordered_columns.map do |df|
 
             # Ask for the answer keyed on DisplayField id, fall back on default
-            response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
+            response.answers[df.id.to_s].presence || df.default_value.to_s
 
             # Pass the entire array through a filter to break up multiple selection answers when done
           end.map! {|rr| rr.gsub("{%delim%}", ", ")}
