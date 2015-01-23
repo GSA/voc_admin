@@ -50,8 +50,11 @@ class SitesController < ApplicationController
   def destroy
     @site = Site.find params[:id]
 
-    @site.destroy
-
-    redirect_to sites_path, :notice => "Successfully removed site."
+    if @site.surveys.size > 0
+      redirect_to sites_path, :notice => "Cannot delete a site with surveys."
+    else
+      @site.destroy
+      redirect_to sites_path, :notice => "Successfully removed site."
+    end
   end
 end
