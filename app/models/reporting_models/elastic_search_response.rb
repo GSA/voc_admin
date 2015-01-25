@@ -54,6 +54,11 @@ class ElasticSearchResponse
     [results, responses]
   end
 
+  def self.delete(reportable_survey_response)
+    ELASTIC_SEARCH_CLIENT.delete index: 'survey_responses', type: "sv_id_#{survey_version_id}",
+      id: reportable_survey_response.id
+  end
+
   private
 
   def self.empty_search
