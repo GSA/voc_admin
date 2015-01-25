@@ -22,7 +22,7 @@ class ElasticSearchResponse
     reportable_survey_response
   end
 
-  def self.search(survey_version_id, search = nil, sort = nil)
+  def self.search(survey_version_id, search = nil, sort = nil, options = {})
     args = {
       index: 'survey_responses',
       type: "sv_id_#{survey_version_id}"
@@ -37,6 +37,9 @@ class ElasticSearchResponse
     if sort.present?
       args[:body]["sort"] = sort
     end
+
+    args[:body][:size] = SurveyResponse.default_per_page
+    args[:body][:from] = options[:page] * SurveyResponse.default_per_page
 
     results = ELASTIC_SEARCH_CLIENT.search args
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}

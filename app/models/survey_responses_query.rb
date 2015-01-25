@@ -1,10 +1,11 @@
 class SurveyResponsesQuery
-  attr_accessor :params, :survey_version, :custom_view
+  attr_accessor :params, :survey_version, :custom_view, :options
 
-  def initialize(survey_version, custom_view = nil, params = {})
+  def initialize(survey_version, custom_view = nil, params = {}, options = {})
     @params = params
     @survey_version = survey_version
     @custom_view = custom_view
+    @options = options || {}
   end
 
   def search
@@ -15,7 +16,8 @@ class SurveyResponsesQuery
     ElasticSearchResponse.search(
       survey_version_id,
       search_params,
-      responses_order
+      responses_order,
+      options
     )
   end
 

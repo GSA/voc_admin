@@ -103,9 +103,9 @@ class SurveyResponsesController < ApplicationController
   # @return [ActiveRecord::Relation] the paginated Relation
   def paginate_responses(responses, pages)
     # decrement the requested page if the response count falls below the pagination threshold
-    #pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
-    # total_count = @es_results["hits"]["total"]
-    Kaminari.paginate_array(responses).page(pages).per(SurveyResponse.default_per_page)
+    # pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
+    total_count = @es_results["hits"]["total"]
+    Kaminari.paginate_array(responses, total_count: total_count).page(pages).per(SurveyResponse.default_per_page)
   end
 
   # Uses the query parameter CustomView, the default CustomView for
@@ -125,7 +125,8 @@ class SurveyResponsesController < ApplicationController
 
   # If search parameters are sent in, use them to build the proper WHERE clause.
   def search_responses
-    survey_response_query = SurveyResponsesQuery.new(@survey_version, @custom_view, params)
+    survey_response_query = SurveyResponsesQuery.new(@survey_version, @custom_view, params,
+      {page: params[:page].present? ? params[:page].to_i - 1 : 0 })
     @es_results, @survey_responses = survey_response_query.search
     @search = survey_response_query.search_criteria
   end
