@@ -106,5 +106,6 @@ class RulesController < ApplicationController
   def build_source_array
     @source_array = @survey_version.sources
     @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})
+    @source_array << ["0,PageUrl", "Page URL"]
   end
 end
