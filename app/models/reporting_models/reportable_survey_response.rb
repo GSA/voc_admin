@@ -18,6 +18,8 @@ class ReportableSurveyResponse
 
   def elastic_search_persist
     ElasticSearchResponse.create!(self)
+  rescue
+    puts $!
   end
 
   def elastic_search_remove

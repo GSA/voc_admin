@@ -9,23 +9,27 @@ class ExportResponsesToCsv
     @user_id = user_id
   end
 
+  def survey_response_query
+    @survey_response_query ||= begin
+      query = ReportableSurveyResponse.where(survey_version_id: survey_version.id)
+
+      unless filter_params['simple_search'].blank?
+        query = ReportableSurveyResponseSearch.simple_search(
+          query,
+          filter_params['simple_search']
+        )
+      end
+
+      unless filter_params['search'].blank?
+        response_search = ReportableSurveyResponseSearch.new filter_params['search']
+        query = response_search.search(query)
+      end
+
+      query
+    end
+  end
+
   def export_csv
-    puts "Exporting to CSV"
-    survey_response_query = ReportableSurveyResponse.where(survey_version_id: survey_version.id)
-
-    unless filter_params['simple_search'].blank?
-      survey_response_query = ReportableSurveyResponseSearch.simple_search(
-        survey_response_query,
-        filter_params['simple_search']
-      )
-    end
-
-    unless filter_params['search'].blank?
-      puts "Applying advanced search filters to csv export: #{filter_params['search']}"
-      response_search = ReportableSurveyResponseSearch.new filter_params['search']
-      survey_response_query = response_search.search(survey_response_query)
-    end
-
     # Write the survey responses to a temporary CSV file which will be used to create the
     # Export instance.  The document will be copied to the correct location by paperclip
     # when the Export instance is created.
