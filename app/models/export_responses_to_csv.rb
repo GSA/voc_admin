@@ -21,6 +21,7 @@ class ExportResponsesToCsv
     end
 
     unless filter_params['search'].blank?
+      puts "Applying advanced search filters to csv export: #{filter_params['search']}"
       response_search = ReportableSurveyResponseSearch.new filter_params['search']
       survey_response_query = response_search.search(survey_response_query)
     end
@@ -33,9 +34,6 @@ class ExportResponsesToCsv
 
       # For each response in batches...
       0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-        puts "limit: #{survey_response_query.count}"
-        puts "batch size: #{SurveyVersion::NOSQL_BATCH}"
-        puts "fetching batch #{offset}"
         survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
 
           # For each column we're looking to export...

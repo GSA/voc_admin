@@ -61,7 +61,7 @@ class ReportableSurveyResponseSearch
 
       if %w( survey_responses.page_url survey_responses.device ).include?(criterion['display_field_id'])
         search_field = criterion['display_field_id'].split('.').last
-      elsif criterion['display_field_id'] == 'survey_responses.created_at'
+      elsif criterion['display_field_id'] == 'created_at'
         value = parse_date_value(criterion['value'])
         search_field = 'created_at'
       else
