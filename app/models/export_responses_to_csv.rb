@@ -1,7 +1,7 @@
 class ExportResponsesToCsv
   attr_accessor :filter_params, :user_id, :survey_version, :export
 
-  BATCH_SIZE = 1000
+  DEFAULT_BATCH_SIZE = 1000
 
   def initialize(survey_version, filter_params, user_id)
     @survey_version = survey_version
@@ -29,11 +29,10 @@ class ExportResponsesToCsv
     end
   end
 
-  def survey_responses_in_batches
+  def survey_responses_in_batches(batch_size = DEFAULT_BATCH_SIZE)
     return to_enum(__callee__) unless block_given?
-    0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-      puts "Yielding batch #{offset}"
-      yield survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset)
+    0.step(survey_response_query.count, batch_size) do |offset|
+      yield survey_response_query.limit(batch_size).skip(offset)
     end
   end
 
@@ -46,27 +45,10 @@ class ExportResponsesToCsv
 
       survey_responses_in_batches do |batch|
         batch.each do |response|
-          # For each column we're looking to export...
-          response_record = ordered_columns.map do |df|
-
-            # Ask for the answer keyed on DisplayField id, fall back on default
-            response.answers[df.id.to_s].presence || df.default_value.to_s
-
-            # Pass the entire array through a filter to break up multiple selection answers when done
-          end.map! {|rr| rr.gsub("{%delim%}", ", ")}
-
           # Write the completed row to the CSV
-          csv << [response.created_at, response.page_url].concat(response_record)
+          csv << [response.created_at, response.page_url].concat(response_record(response))
         end
       end
-
-      # For each response in batches...
-      # 0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-      #   survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
-
-
-      #   end
-      # end
     end
 
     create_export
@@ -74,6 +56,16 @@ class ExportResponsesToCsv
 
     # Remove the temporary file used to create this export
     File.delete("#{Rails.root}/tmp/#{file_name}")
+  end
+
+  def response_record(response)
+    # For each column we're looking to export...
+    ordered_columns.map do |df|
+      # Ask for the answer keyed on DisplayField id, fall back on default
+      response.answers[df.id.to_s].presence || df.default_value.to_s
+
+      # Pass the entire array through a filter to break up multiple selection answers when done
+    end.map! {|rr| rr.gsub("{%delim%}", ", ")}
   end
 
   def file_name
