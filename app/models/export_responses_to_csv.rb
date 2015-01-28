@@ -29,6 +29,14 @@ class ExportResponsesToCsv
     end
   end
 
+  def survey_responses_in_batches
+    return to_enum(__callee__) unless block_given?
+    0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+      puts "Yielding batch #{offset}"
+      yield survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset)
+    end
+  end
+
   def export_csv
     # Write the survey responses to a temporary CSV file which will be used to create the
     # Export instance.  The document will be copied to the correct location by paperclip
@@ -36,10 +44,8 @@ class ExportResponsesToCsv
     CSV.open("#{Rails.root}/tmp/#{file_name}", "wb") do |csv|
       csv << ["Date", "Page URL"].concat(ordered_columns.map(&:name))
 
-      # For each response in batches...
-      0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-        survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
-
+      survey_responses_in_batches do |batch|
+        batch.each do |response|
           # For each column we're looking to export...
           response_record = ordered_columns.map do |df|
 
@@ -53,6 +59,14 @@ class ExportResponsesToCsv
           csv << [response.created_at, response.page_url].concat(response_record)
         end
       end
+
+      # For each response in batches...
+      # 0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
+      #   survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
+
+
+      #   end
+      # end
     end
 
     create_export
