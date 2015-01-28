@@ -43,7 +43,7 @@ class SurveyResponsesQuery
 
   def order_dir
     %w(asc desc).include?(params[:order_dir].try(:downcase)) ?
-      params[:order_dir].downcase : 'asc'
+      params[:order_dir].downcase : 'desc'
   end
 
   def order_column
