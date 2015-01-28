@@ -140,7 +140,7 @@ class SurveyVersion < ActiveRecord::Base
       survey_response_query = response_search.search(survey_response_query)
     end
 
-    custom_view, sort_orders = nil
+    custom_view = nil
     if filter_params['custom_view_id'].blank?
       custom_view = custom_views.find_by_default(true)
     else
