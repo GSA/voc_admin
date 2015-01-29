@@ -8,7 +8,7 @@ class ElasticsearchAdvancedSearch
   def filter_object
     @search_params['criteria'].map do |k, criteria|
       value = criteria['value']
-      value = convert_to_timestamp(value) if criteria['display_field_id'] == "created_at"
+      value = pase_date_in_local_time(value) if criteria['display_field_id'] == "created_at"
       [
         criteria['clause_join'],
         CONDITIONS[criteria['condition']].call(
@@ -89,7 +89,7 @@ class ElasticsearchAdvancedSearch
     end
   end
 
-  def convert_to_timestamp(value)
+  def pase_date_in_local_time(value)
     time_string = nil
     # chomp the value
     value.chomp!
