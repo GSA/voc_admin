@@ -27,6 +27,7 @@ class ElasticsearchAdvancedSearch
 
   CONDITIONS = {
     "equals" => proc {|column, value|
+
       {
         "query" => {
           "match" => { "#{column}.raw" => value }
@@ -106,8 +107,7 @@ class ElasticsearchAdvancedSearch
     end
 
     begin
-      date = DateTime.strptime(value, time_string)
-      date.to_s
+      DateTime.strptime(value + " #{Time.zone.now.formatted_offset}", time_string.chomp + " %:z").to_s
     rescue
       value
     end
