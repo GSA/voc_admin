@@ -38,7 +38,7 @@ class ElasticSearchResponse
       args[:body]["sort"] = sort
     end
 
-    args[:body][:size] = SurveyResponse.default_per_page
+    args[:body][:size] = options[:size] || SurveyResponse.default_per_page
     args[:body][:from] = options[:page] * SurveyResponse.default_per_page
 
     results = ELASTIC_SEARCH_CLIENT.search args
