@@ -21,6 +21,11 @@ class SurveyResponsesQuery
     )
   end
 
+  def count
+    results, _ = search
+    results['hits']['total']
+  end
+
   # Calculate the proper ordering of the SurveyResponse grid. Order of precedence:
   #   Explicit query parameter.
   #   Created By date or Page Url fields.

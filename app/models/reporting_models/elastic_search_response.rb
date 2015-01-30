@@ -39,7 +39,7 @@ class ElasticSearchResponse
     end
 
     args[:body][:size] = options[:size] || SurveyResponse.default_per_page
-    args[:body][:from] = options[:page] * SurveyResponse.default_per_page
+    args[:body][:from] = (options[:page] || 0) * SurveyResponse.default_per_page
 
     results = ELASTIC_SEARCH_CLIENT.search args
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
