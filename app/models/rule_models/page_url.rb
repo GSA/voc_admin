@@ -4,20 +4,22 @@
 # Use a Singleton that's pretending to be an AR model instead
 class PageUrl
   include Singleton
+  ID = 0
+  DISPLAY_FIELD_HEADER = "Page URL"
 
   # Fake AR method so the polymorphism works.
   def self.find(*args)
     PageUrl.instance
   end
 
-  # Use a source id of 0 because it doesn't really matter. Needed for polymorphism and rules cloning.
+  # Use an id of 0 because it doesn't really matter. Needed for polymorphism and rules cloning.
   def id
-    0
+    ID
   end
 
   # This gets displayed on the show page when a page url is a criterion.
   def get_display_field_header
-    "Page URL"
+    DISPLAY_FIELD_HEADER
   end
 
   # Needed for cloning a rule.
