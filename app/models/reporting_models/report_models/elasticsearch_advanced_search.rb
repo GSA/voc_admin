@@ -7,10 +7,10 @@ class ElasticsearchAdvancedSearch
 
   def filter_object
     @search_params['criteria'].map do |k, criteria|
-      value = criteria['value']
+      value = criteria['value'].chomp
       column = criteria['display_field_id']
       date_search = column == 'created_at'
-      time_string = '%m/%d/%Y' if /\d{1,2}\/\d{1,2}\/\d{4}/.match(value)
+      time_string = '%m/%d/%Y' if /\A\d{1,2}\/\d{1,2}\/\d{4}\z/.match(value)
       value = parse_date_in_local_time(value) if date_search
       [
         criteria['clause_join'],
@@ -163,7 +163,7 @@ class ElasticsearchAdvancedSearch
         return value
       end
 
-      DateTime.strptime(value + " #{Time.zone.now.formatted_offset}", time_string.chomp + " %:z").to_s
+      DateTime.strptime(value + " #{Time.zone.now.formatted_offset}", time_string.chomp + " %:z")
     rescue
       value
     end
