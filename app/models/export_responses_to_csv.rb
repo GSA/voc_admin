@@ -11,29 +11,14 @@ class ExportResponsesToCsv
 
   def survey_response_query
     @survey_response_query ||= begin
-      query = ReportableSurveyResponse.where(survey_version_id: survey_version.id)
-
-      unless filter_params['simple_search'].blank?
-        query = ReportableSurveyResponseSearch.simple_search(
-          query,
-          filter_params['simple_search']
-        )
-      end
-
-      unless filter_params['search'].blank?
-        response_search = ReportableSurveyResponseSearch.new filter_params['search']
-        query = response_search.search(query)
-      end
-
-      query
+      search_params = filter_params.fetch('search', nil) || filter_params.fetch('simple_search', nil)
+      ElasticsearchQuery.new(survey_version.id, search_params)
     end
   end
 
-  def survey_responses_in_batches(batch_size = DEFAULT_BATCH_SIZE)
-    return to_enum(__callee__) unless block_given?
-    0.step(survey_response_query.count, batch_size) do |offset|
-      yield survey_response_query.limit(batch_size).skip(offset)
-    end
+  def survey_responses_in_batches(batch_size = DEFAULT_BATCH_SIZE, &block)
+    return survey_response_query.reportable_survey_responses_in_batches unless block_given?
+    survey_response_query.reportable_survey_responses_in_batches(&block)
   end
 
   def export_csv
@@ -44,6 +29,7 @@ class ExportResponsesToCsv
       csv << ["Date", "Page URL"].concat(ordered_columns.map(&:name))
 
       survey_responses_in_batches do |batch|
+        puts "Exporting batch to CSV"
         batch.each do |response|
           # Write the completed row to the CSV
           csv << [response.created_at, response.page_url].concat(response_record(response))

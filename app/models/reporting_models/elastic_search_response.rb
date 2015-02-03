@@ -25,14 +25,17 @@ class ElasticSearchResponse
   def self.search(survey_version_id, search = nil, sort = nil, options = {})
     args = {
       index: 'survey_responses',
-      type: "sv_id_#{survey_version_id}"
+      type: "sv_id_#{survey_version_id}",
+      body: {}
     }
     if search.blank?
       args[:body] = empty_search
     elsif search.is_a?(String)
       args[:body] = query_string_search(search)
     else
-      args[:body] = ElasticsearchAdvancedSearch.new(search).build_query
+      args[:body] ||= {}
+      args[:body][:query] ||= {}
+      args[:body][:query][:filtered] = ElasticsearchAdvancedSearch.new(search).build_query
     end
     if sort.present?
       args[:body]["sort"] = sort
@@ -40,6 +43,8 @@ class ElasticSearchResponse
 
     args[:body][:size] = options[:size] || SurveyResponse.default_per_page
     args[:body][:from] = (options[:page] || 0) * SurveyResponse.default_per_page
+
+    puts "Searching elasticsearch with body: #{args.inspect}"
 
     results = ELASTIC_SEARCH_CLIENT.search args
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
