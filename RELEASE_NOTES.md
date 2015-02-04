@@ -1,5 +1,9 @@
 # Releaes Notes
 
+## 5.3.2
+
+* Add Page URL to rules criteria
+
 ## v5.2.4
 Sept 17, 2014
 
