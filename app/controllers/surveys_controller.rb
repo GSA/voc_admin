@@ -4,6 +4,8 @@
 class SurveysController < ApplicationController
   include AkamaiUtilities
 
+  before_filter :require_admin, only: :all_questions
+
   # GET    /surveys(.:format)
   def index
     @surveys = current_user.surveys.search(params[:q]).order("surveys.name #{sort_direction}").page(params[:page]).per(10)
