@@ -3,6 +3,7 @@
 ## 5.3.2
 
 * Add Page URL to rules criteria
+* Limit height of survey response table so horizontal scrollbar is accessible
 
 ## v5.2.4
 Sept 17, 2014
