@@ -686,7 +686,7 @@ li.inner {
 /**** Survey Responses ****/
 #survey_response_table_div {
 	overflow: auto;
-	height: 100%;
+	height: 500px;
 }
 #survey_response_list .col1 {
 	min-width: 45px;
