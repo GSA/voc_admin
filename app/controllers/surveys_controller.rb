@@ -55,6 +55,10 @@ class SurveysController < ApplicationController
     render layout: 'empty'
   end
 
+  def all_questions
+    @published_versions = SurveyVersion.where(published: true)
+  end
+
   private
 
   # Allows sorting by survey name alphabetically ascending or descending.

@@ -11,6 +11,7 @@ CommentToolApp::Application.routes.draw do
 
   resources :surveys do
     get :start_page_preview, :on => :member
+    get :all_questions, :on => :collection
   end
 
   resource :question_bank do
