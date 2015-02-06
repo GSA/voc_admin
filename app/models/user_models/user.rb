@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
   def admin?
     self.role == Role::ADMIN
   end
+
+  def name
+    "#{f_name} #{l_name}"
+  end
 end
 
 # == Schema Information

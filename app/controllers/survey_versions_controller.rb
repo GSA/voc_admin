@@ -57,7 +57,7 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/create_new_major_version(.:format)
   def create_new_major_version
-    @survey.create_new_major_version
+    @survey.create_new_major_version(@current_user.id)
     respond_to do |format|
       format.html { redirect_to(survey_survey_versions_path(@survey), :notice => 'Major Survey Version was successfully created.') }
       format.xml  { head :ok }
@@ -88,7 +88,7 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/clone_version(.:format)
   def clone_version
-    @minor_version = @survey_version.clone_me
+    @minor_version = @survey_version.clone_me(@current_user.id)
 
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
   end
