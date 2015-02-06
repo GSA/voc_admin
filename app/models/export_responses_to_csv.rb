@@ -10,10 +10,7 @@ class ExportResponsesToCsv
   end
 
   def survey_response_query
-    @survey_response_query ||= begin
-      search_params = filter_params.fetch('search', nil) || filter_params.fetch('simple_search', nil)
-      ElasticsearchQuery.new(survey_version.id, search_params)
-    end
+    @survey_response_query ||= ElasticsearchQuery.new(survey_version.id, search_params)
   end
 
   def survey_responses_in_batches(batch_size = DEFAULT_BATCH_SIZE, &block)
@@ -68,6 +65,10 @@ class ExportResponsesToCsv
 
   def create_export
     @export = survey_version.exports.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
+  end
+
+  def search_params
+    filter_params.fetch('search', nil) || filter_params.fetch('simple_search', nil)
   end
 
   def send_export_file
