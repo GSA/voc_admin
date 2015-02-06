@@ -5,6 +5,10 @@ class Elasticsearch::SearchCriteria
     @criteria_hash = criteria_hash
   end
 
+  def exclude_filter?
+    criteria_hash.fetch('include_exclude') == '0'
+  end
+
   def value
     @value ||= if date_search?
       parse_date_in_local_time criteria_hash.fetch('value', nil).try(:chomp)
