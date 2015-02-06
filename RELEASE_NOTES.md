@@ -4,6 +4,8 @@
 
 * Add Page URL to rules criteria
 * Limit height of survey response table so horizontal scrollbar is accessible
+* Add page to list all currently published questions (https://comment-adm.hhs.gov/surveys/all_questions).
+  This page is only accessible to administrators.
 
 ## v5.2.4
 Sept 17, 2014
