@@ -505,13 +505,13 @@ a.navActive {
 	text-align: center;
 }
 #versionTable .col2-3 {
-	width: 330px;
+	width: 202px;
 }
 #versionTable .col2 {
 	width: 20px;
 }
 #versionTable .col3 {
-	width: 300px;
+	width: 172px;
 }
 #versionTable .col4 {
 	width: 60px;
@@ -522,23 +522,30 @@ a.navActive {
 	text-align: center;
 }
 #versionTable .col6 {
-	width: 80px;
+	width: 50px;
 	text-align: center;
 }
 #versionTable .col7 {
-	width: 108px;
+	width: 80px;
+	text-align: center;
 }
 #versionTable .col8 {
 	width: 108px;
 }
-#versionTable .col9-10 {
+#versionTable .col9 {
+	width: 78px;
+}
+#versionTable .col10 {
+	width: 108px;
+}
+#versionTable .col11-12 {
 	width: 45px;
 }
-#versionTable .col9 {
+#versionTable .col11 {
 	width: 15px;
 	text-align: center;
 }
-#versionTable .col10 {
+#versionTable .col12 {
 	width: 15px;
 	text-align: center;
 }
@@ -678,7 +685,7 @@ li.inner {
 }
 
 /**** Thank You Page ****/
-.thankYouPageArea {
+.thankYouPageArea, .notesArea {
 	width: 908px;
 	min-height: 200px;
 }

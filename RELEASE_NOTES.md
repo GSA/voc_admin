@@ -2,6 +2,7 @@
 
 ## 5.3.2
 
+* Add changelog to survey versions
 * Add Page URL to rules criteria
 
 ## v5.2.4

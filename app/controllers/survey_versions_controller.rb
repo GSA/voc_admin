@@ -37,13 +37,22 @@ class SurveyVersionsController < ApplicationController
   def edit_thank_you_page
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/edit_notes(.:format)
+  def edit_notes
+  end
+
   # PUT    /surveys/:survey_id/survey_versions/:id(.:format)
   def update
-    if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
+    if params[:edit_notes].present?
+      if @survey_version.update_attributes(params[:survey_version].slice("notes"))
+        redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated notes"
+        return
+      end
+    elsif @survey_version.update_attributes(params[:survey_version].slice("thank_you_page"))
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
-    else
-      render :edit
+      return
     end
+    render :edit
   end
 
   # DELETE /surveys/:survey_id/survey_versions/:id(.:format)
