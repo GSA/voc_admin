@@ -2,6 +2,7 @@
 
 ## 5.3.2
 
+* Add changelog to survey versions
 * Add Page URL to rules criteria
 * Limit height of survey response table so horizontal scrollbar is accessible
 * Add page to list all currently published questions (https://comment-adm.hhs.gov/surveys/all_questions).

@@ -1,0 +1,16 @@
+<h1>Survey Version Notes - <%= @survey.name.titleize %> <%= @survey_version.version_number %></h1>
+<div></div>
+
+<%= form_for [@survey, @survey_version] do |f| %>
+  <div id="survey_info">
+    <%= hidden_field_tag :edit_notes, true %>
+    <div class="top_side"><%= f.label :notes %></div>
+    <div class="bottom_side"><%= f.text_area :notes, :class=>"notesArea" %></div>
+  </div>
+
+  <div class="pageLink">
+  	<%= link_to "Cancel", survey_survey_versions_path(@survey), :class=>"cancelLink" %>
+  	<%= image_submit_tag "Submit.png", :alt=>"Submit" %>
+  </div>
+<% end %>
+
