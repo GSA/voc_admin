@@ -7,6 +7,8 @@ class Survey < ActiveRecord::Base
   belongs_to :survey_type
   belongs_to :site
 
+  attr_accessor :created_by_id
+
   attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
   :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
   :invitation_interval, :invitation_text, :invitation_accept_button_text,
@@ -53,12 +55,13 @@ class Survey < ActiveRecord::Base
   # new major version.
   #
   # @return [SurveyVersion] the new empty SurveyVersion.
-  def create_new_major_version
+  def create_new_major_version(created_by_id = nil)
     #get most recent version number
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
 
     #create new version
     new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0, :published=>false, :locked => false, :archived => false)
+    new_sv.created_by_id = created_by_id || self.created_by_id
     new_sv.pages.build :page_number => 1, :survey_version => new_sv
     puts new_sv.pages.first.errors unless new_sv.valid?
     new_sv.tap {|sv| sv.save!}

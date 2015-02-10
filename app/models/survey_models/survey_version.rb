@@ -10,6 +10,7 @@ class SurveyVersion < ActiveRecord::Base
   @queue = :voc_csv
 
   belongs_to :survey, :touch => true
+  belongs_to :created_by, class_name: 'User'
   has_many :pages,           :dependent => :destroy
   has_many :survey_elements, :dependent => :destroy
 
@@ -222,7 +223,7 @@ class SurveyVersion < ActiveRecord::Base
   # SurveyVersion.
   #
   # @return [SurveyVersion] a new minor version of the SurveyVersion which is an exact copy of the cloned SurveyVersion
-  def clone_me
+  def clone_me(created_by_id = nil)
     ActiveRecord::Base.transaction do
       survey = self.survey
 
@@ -231,6 +232,7 @@ class SurveyVersion < ActiveRecord::Base
       new_sv = survey.survey_versions.build(self.attributes.merge(:minor => minor_version))
       new_sv.published = false
       new_sv.locked = false
+      new_sv.created_by_id = created_by_id
       new_sv.save!
 
       #clone members
@@ -354,6 +356,7 @@ end
 #  archived          :boolean(1)      default(FALSE)
 #  notes             :text
 #  counts_updated_at :datetime
+#  created_by_id     :integer(4)
 #  created_at        :datetime
 #  updated_at        :datetime
 #  thank_you_page    :text

@@ -19,6 +19,7 @@ class SurveysController < ApplicationController
   # POST   /surveys(.:format)
   def create
     @survey = current_user.surveys.new(params[:survey])
+    @survey.created_by_id = @current_user.id
 
     if @survey.save  # Will save both survey and survey_version and run validations on both
       redirect_to([:edit, @survey, @survey.survey_versions.first], :notice => 'Survey was successfully created.')

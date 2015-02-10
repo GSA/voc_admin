@@ -37,14 +37,23 @@ class SurveyVersionsController < ApplicationController
   def edit_thank_you_page
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/edit_notes(.:format)
+  def edit_notes
+  end
+
   # PUT    /surveys/:survey_id/survey_versions/:id(.:format)
   def update
-    if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
+    if params[:edit_notes].present?
+      if @survey_version.update_attributes(params[:survey_version].slice("notes"))
+        redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated notes"
+        return
+      end
+    elsif @survey_version.update_attributes(params[:survey_version].slice("thank_you_page"))
       flush_akamai(@survey.flushable_urls) if @survey_version.published?
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
-    else
-      render :edit
+      return
     end
+    render :edit
   end
 
   # DELETE /surveys/:survey_id/survey_versions/:id(.:format)
@@ -58,7 +67,7 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/create_new_major_version(.:format)
   def create_new_major_version
-    @survey.create_new_major_version
+    @survey.create_new_major_version(@current_user.id)
     respond_to do |format|
       format.html { redirect_to(survey_survey_versions_path(@survey), :notice => 'Major Survey Version was successfully created.') }
       format.xml  { head :ok }
@@ -90,7 +99,7 @@ class SurveyVersionsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:id/clone_version(.:format)
   def clone_version
-    @minor_version = @survey_version.clone_me
+    @minor_version = @survey_version.clone_me(@current_user.id)
 
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
   end
