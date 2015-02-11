@@ -21,8 +21,11 @@ class ElasticsearchAdvancedSearch
         build_filter(filters, *f)
       end
     }
-    include_filter['bool'] ||= {}
-    include_filter['bool']['must_not'] = not_filter
+
+    unless not_filter.empty?
+      include_filter['bool'] ||= {}
+      include_filter['bool']['must_not'] = not_filter
+    end
 
     include_filter
   end
