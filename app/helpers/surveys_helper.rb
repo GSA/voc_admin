@@ -5,7 +5,7 @@ module SurveysHelper
 
   # For a given ChoiceQuestion with flow control at the ChoiceAnswer level,
   # generates the Javascript logic to enforce correct page switching.
-  # 
+  #
   # @param [ChoiceQuestion] element the ChoiceQuestion instance
   # @return [String] the generated Javascript code
   def generate_next_page_on_change(element)
@@ -20,5 +20,29 @@ module SurveysHelper
   def sorted_site_list
     site_scope = current_user.admin? ? Site : current_user.sites
     site_scope.order("name asc")
+  end
+
+  def invitation_accept_button_text
+    if @survey.invitation_accept_button_text.blank?
+      "Yes"
+    else
+      @survey.invitation_accept_button_text
+    end
+  end
+
+  def invitation_reject_button_text
+    if @survey.invitation_reject_button_text.blank?
+      "No"
+    else
+      @survey.invitation_reject_button_text
+    end
+  end
+
+  def start_screen_button_text
+    if @survey.start_screen_button_text.blank?
+      "Start"
+    else
+      @survey.start_screen_button_text
+    end
   end
 end

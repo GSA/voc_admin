@@ -1,0 +1,34 @@
+<% @published_versions.includes(:survey).each do |survey_version| %>
+  <h2><%= "#{survey_version.survey_name} (#{survey_version.version_number})"%> </h2>
+  <div class="question_list">
+    <ol>
+    <% survey_version.questions.each do |question| %>
+      <li class="question" style="margin: 10px 5px">
+        <%= question.question_content.statement %>(<%= question.class %>)
+        <% if question.class == ChoiceQuestion %>
+          <ul>
+          <% question.choice_answers.each do |answer| %>
+            <li><%= answer.answer %></li>
+          <% end %>
+          </ul>
+        <% end %>
+
+        <% if question.class == MatrixQuestion %>
+          <div>Sub-questions</div>
+          <ul>
+            <% question.choice_questions.includes(:question_content).each do |choice_question| %>
+              <li><%= choice_question.question_content.statement %></li>
+            <% end %>
+          </ul>
+          <div>Answers</div>
+          <ul>
+            <% question.choice_questions.first.choice_answers.each do |answer| %>
+              <li><%= answer.answer %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+    </ol>
+  </div>
+<% end %>

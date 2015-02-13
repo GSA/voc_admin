@@ -9,7 +9,17 @@ CommentToolApp::Application.routes.draw do
 	resources :users
 	resources :sites
 
-  resources :surveys
+  resources :surveys do
+    get :start_page_preview, :on => :member
+    get :all_questions, :on => :collection
+  end
+
+  resource :question_bank do
+    resources :text_questions, controller: 'question_bank/text_questions'
+    resources :choice_questions, controller: 'question_bank/choice_questions'
+    resources :matrix_questions, controller: 'question_bank/matrix_questions'
+    post :add_question_to_survey, collection: true, as: 'add_question_from'
+  end
 
   resources :survey_responses,
     only: [:create, :index, :edit, :update, :destroy] do

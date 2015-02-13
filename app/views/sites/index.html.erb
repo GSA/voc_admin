@@ -1,4 +1,7 @@
 <h1>All Sites</h1>
+<div class="notice">
+<%= notice %>
+</div>
 <div class="page-nav">
 	<%= link_to "New Site", new_site_path, :class => "newlink" %>
 </div>
@@ -13,7 +16,7 @@
 	</tr>
 	<% @sites.each do |site| %>
 		<tr class="<%= cycle('gray','white') %>">
-      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_site_path(site) %></td>			
+      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_site_path(site) %></td>
 			<td class="col2"><%= link_to site.name, site %></td>
 			<td class="col3"><%= site.url %></td>
 			<td class="col4"><%= site.description %></td>

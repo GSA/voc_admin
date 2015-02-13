@@ -27,7 +27,7 @@ class ChoiceAnswer < ActiveRecord::Base
   end
 
   def update_display_field_values
-    if choice_question.survey_version.published? && answer_changed?
+    if choice_question.survey_version && choice_question.survey_version.published? && answer_changed?
       display_field_ids = choice_question.display_fields.map(&:id)
       DisplayFieldValue.where(
         display_field_id: display_field_ids,

@@ -74,7 +74,7 @@ class SurveyResponse < ActiveRecord::Base
   scope :processed, where(:status_id => Status::DONE)
 
   # kaminari setting
-  paginates_per 10
+  paginates_per 50
 
   # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
@@ -85,10 +85,10 @@ class SurveyResponse < ActiveRecord::Base
     client_id = SecureRandom.hex(64)
 
     # Remove extraneous data from the response
-    response.slice!('page_url', 'raw_responses_attributes')
+    response.slice!('page_url', 'raw_responses_attributes', 'device')
     response['raw_responses_attributes'].try(:values).try(:each) {|rr| rr.slice!('question_content_id', 'answer')}
 
-    survey_response = SurveyResponse.new ({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
+    survey_response = SurveyResponse.new({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
 
     ## Work around for associating the child raw responses with the survey_response
     survey_response.raw_responses.each do |raw_response|
@@ -143,6 +143,8 @@ class SurveyResponse < ActiveRecord::Base
   # Mark the SurveyResponse as archived (soft deleted.)
   def archive
     self.archived = true
+    reportable_survey_response = ReportableSurveyResponse.where(survey_response_id: id).first
+    reportable_survey_response.delete
     self.save!
   end
 
@@ -153,15 +155,21 @@ class SurveyResponse < ActiveRecord::Base
     resp.survey_version_id = self.survey_version_id
 
     answers = {}
-
     self.display_field_values.each do |dfv|
       answers[dfv.display_field_id.to_s] = dfv.value
     end
 
+    raw_answers = {}
+    raw_responses.each do |rr|
+      raw_answers[rr.question_content_id.to_s] = rr.answer
+    end
+
     resp.answers = answers
+    resp.raw_answers = raw_answers
 
     resp.created_at = self.created_at
     resp.page_url = self.page_url
+    resp.device = self.device
 
     resp.save
   end

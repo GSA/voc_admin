@@ -129,12 +129,19 @@ function getSurveyDisplayTable(survey_version_id, order_column, direction, custo
 
     var search_form_url_string = $("#advanced_search_form").serialize();
 
-    var data_string = search_form_url_string + "&order_column=" + order_column + "&order_dir=" + direction + "&survey_version_id=" + survey_version_id + "&custom_view_id=" + custom_view_id + "&page=" + page_num;
+    var data_string = search_form_url_string + "&order_column=" + order_column +
+      "&order_dir=" + direction + "&survey_version_id=" + survey_version_id +
+      "&custom_view_id=" + custom_view_id + "&page=" + page_num;
+
+    var simple_search = $("#simple_search").val();
+    if(simple_search !== undefined && simple_search != "") {
+      data_string += "&simple_search=" + simple_search;
+    }
     last_ajax_request_id += 1;
 
     $.ajax({
         url: "survey_responses.js",
-        data: data_string, //"survey_version_id=" + survey_version_id + "&search=" + search_text + "&order_column=" + order_column + "&order_dir=" + direction,
+        data: data_string,
         dataType: "script",
         beforeSend: function(){
             $("#survey_response_list").html("<img src='images/ajax-loader-response-table.gif' style='margin-top: 75px;margin-left: 275px;' />");

@@ -12,14 +12,13 @@ gem 'authlogic'
 gem 'memcache-client'
 gem 'paperclip'
 gem 'daemons', :require => false
-gem 'httparty'
 
 gem 'openam', :git => "git@bitbucket.org:ctacdevteam/ams_sso.git", :tag => '0.5.4'
 
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
- 
+
 gem 'bson_ext'
 gem 'escape_utils'
 gem 'mongoid'
@@ -28,12 +27,16 @@ gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
 gem "best_in_place", :git => 'https://github.com/eLafo/best_in_place', :branch => 'rails-3.0' # This version is require for < Rails 3.1
+gem 'httparty'
+
+gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
+
 
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
   gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
-  
+
   group :test do
     gem 'rails_best_practices'
   end
@@ -67,10 +70,11 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'selenium-webdriver'
 
   gem 'guard-rspec'
   gem 'growl'
   gem 'shoulda-matchers'
   gem 'rb-fsevent', '~> 0.9.1'
-  
+
 end
