@@ -29,7 +29,8 @@ class ExportResponsesToCsv
         puts "Exporting batch to CSV"
         batch.each do |response|
           # Write the completed row to the CSV
-          csv << [response.created_at, response.page_url].concat(response_record(response))
+          csv << [response.created_at.in_time_zone("Eastern Time (US & Canada)"),
+            response.page_url].concat(response_record(response))
         end
       end
     end
