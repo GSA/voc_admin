@@ -3,6 +3,7 @@
   <!--[if lte IE 8]><%= javascript_include_tag 'excanvas.min.js' %><![endif]-->
   <%= javascript_include_tag 'jquery.flot.min.js' %>
   <%= javascript_include_tag 'jquery.flot.pie.min.js' %>
+  <%= javascript_include_tag 'jquery.flot.time.js' %>
   <%# add javascript to the HEAD tag for Google Charts: https://developers.google.com/chart %>
   <%= javascript_include_tag 'https://www.google.com/jsapi' %>
   <%# add javascript and stylesheet to the HEAD tag for jQCloud: https://github.com/lucaong/jQCloud %>
@@ -70,6 +71,28 @@
             show: true,
             barWidth: 0.7,
             align: "center"
+          }
+        },
+        legend: {
+          show: true
+        },
+        grid: {
+          hoverable: true,
+          clickable: true
+        }
+      };
+      var lineOptions = {
+        xaxis: {
+          minTickSize: [1, "day"],
+          timeformat: "%m/%d/%y",
+          mode: "time"
+        },
+        yaxis: {
+          tickDecimals: 0
+        },
+        series: {
+          lines: {
+            show: true
           }
         },
         legend: {

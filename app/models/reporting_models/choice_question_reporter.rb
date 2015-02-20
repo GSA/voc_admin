@@ -93,6 +93,14 @@ class ChoiceQuestionReporter < QuestionReporter
         url = survey_responses_path(survey_id: survey_version_reporter.s_id, survey_version_id: survey_version_reporter.sv_id, qc_id: qc_id, search_rr: car[2])
         { data: [[index, car[1]]], label: car[0], count: number_with_delimiter(car[1]), url: url }
       end
+    when "line"
+      choice_answer_reporters.map do |car|
+        data_map = days_with_individual_counts(start_date, end_date).map do |date, count_hash|
+          [date.strftime("%Q"), count_hash[car.ca_id]]
+        end
+        url = survey_responses_path(survey_id: survey_version_reporter.s_id, survey_version_id: survey_version_reporter.sv_id, qc_id: qc_id, search_rr: car.ca_id)
+        { data: data_map, label: car.text, url: url }
+      end
     else
       nil
     end.to_json
@@ -167,6 +175,22 @@ class ChoiceQuestionReporter < QuestionReporter
       csv << first_line
       answer_array.each {|answer_arr| csv << [''] + answer_arr}
     end
+  end
+
+  def days_with_individual_counts(start_date, end_date)
+    @days_with_individual_counts ||= {}
+    memo_key = "#{start_date}_#{end_date}"
+    return @days_with_individual_counts[memo_key] if @days_with_individual_counts.has_key?(memo_key)
+    counts_hash = Hash.new {|hash, key| hash[key] = Hash.new {|h,k| h[k] = 0}}
+    days_for_date_range(start_date, end_date).asc(:date).each do |day|
+      counts_hash[day.date]
+    end
+    choice_answer_reporters.each do |car|
+      car.choice_answer_days.each do |day|
+        counts_hash[day.date][car.ca_id] = day.count
+      end
+    end
+    @days_with_individual_counts[memo_key] = counts_hash
   end
 
   private

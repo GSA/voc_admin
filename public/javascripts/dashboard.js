@@ -45,10 +45,10 @@ function addDisplayTypes(reporterType) {
   var dataTypes = [];
   switch (reporterType) {
     case "choice-multiple":
-      dataTypes = ["bar"]
+      dataTypes = ["bar", "line"]
       break;
     case "choice-single":
-      dataTypes = ["bar", "pie"]
+      dataTypes = ["bar", "pie", "line"]
       break;
     case "text":
       dataTypes = ["word_cloud"]
