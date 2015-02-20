@@ -43,7 +43,7 @@
       $hover.find("#hoverText").text(label);
 
       clearTimeout(hoverHandle);
-      hoverHandle = setTimeout(hideHoverHint, 1200);
+      hoverHandle = setTimeout(hideHoverHint, 4000);
     }
 
     <%# function pieElementLabelFormatter(label, series) {%>
@@ -93,6 +93,9 @@
         series: {
           lines: {
             show: true
+          },
+          points: {
+            show: true
           }
         },
         legend: {
@@ -108,8 +111,12 @@
     $(window).load(function() {
       $(".dashboardElement").bind("plothover", function(event, pos, obj) {
         if (!obj) { return; }
-
-        if (obj.series.percent) {
+        if (obj.series.lines.show) {
+          d = new Date(parseInt(obj.datapoint[0]))
+          dStr = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+          dStr += " - " + obj.datapoint[1]
+          showHoverHint(pos.pageX, pos.pageY, obj.series.label, dStr, false);
+        } else if (obj.series.percent) {
           showHoverHint(pos.pageX, pos.pageY, obj.series.label, parseFloat(obj.series.percent).toFixed(2), true);
         } else {
           showHoverHint(pos.pageX, pos.pageY, obj.series.label, obj.series.count, false);
