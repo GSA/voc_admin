@@ -15,6 +15,7 @@ class DashboardElement < ActiveRecord::Base
   DISPLAY_TYPES = {
     :bar => "Bar Chart",
     :pie => "Pie Chart",
+    :line => "Line Chart",
     :word_cloud => "Word Cloud"
   }.freeze
 
@@ -49,9 +50,9 @@ class DashboardElement < ActiveRecord::Base
   def ensure_proper_display_type
     case reporter.try(:type)
     when :"choice-multiple"
-      self.display_type = "bar"
+      self.display_type = "bar" unless %w(bar line).include?(display_type)
     when :"choice-single"
-      self.display_type = "bar" unless %w(bar pie).include?(display_type)
+      self.display_type = "bar" unless %w(bar pie line).include?(display_type)
     when :text
       self.display_type = "word_cloud"
     end
