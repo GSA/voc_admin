@@ -57,7 +57,7 @@ class Elasticsearch::SearchCriteria
 
   def parse_date_in_local_time(date_value)
     begin
-      DateTime.strptime(date_value + " #{Time.zone.now.formatted_offset}", time_string + " %:z")
+      Time.strptime(date_value + " #{Time.zone.name}", time_string + " %Z")
     rescue
       date_value
     end
