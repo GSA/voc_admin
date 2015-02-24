@@ -87,7 +87,7 @@ class Elasticsearch::SearchCriteria
       case time_string
       when "%m/%d/%Y"
         {
-          "range" => { column => { "gt" => value.end_of_day } }
+          "range" => { column => { "gt" => value.end_of_day.utc } }
         }
       else
         {
@@ -99,7 +99,7 @@ class Elasticsearch::SearchCriteria
       case time_string
       when "%m/%d/%Y"
         {
-          "range" => { column => { "lt" => value.beginning_of_day } }
+          "range" => { column => { "lt" => value.beginning_of_day.utc } }
         }
       else
         {
