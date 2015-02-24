@@ -57,7 +57,7 @@ class Elasticsearch::SearchCriteria
 
   def parse_date_in_local_time(date_value)
     begin
-      Time.strptime(date_value + " #{Time.zone.name}", time_string + " %Z")
+      Time.strptime(date_value + " Eastern Time (US & Canada)", time_string + " %Z")
     rescue
       date_value
     end
@@ -70,8 +70,8 @@ class Elasticsearch::SearchCriteria
         {
           "range" => {
             column => {
-              "gte" => value.beginning_of_day,
-              "lte" => value.end_of_day
+              "gte" => value.beginning_of_day.utc,
+              "lte" => value.end_of_day.utc
             }
           }
         }
