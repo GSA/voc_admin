@@ -55,7 +55,7 @@ class Elasticsearch::SearchCriteria
     [clause_join, filter_proc]
   end
 
-  def parse_date_in_local_time(date_value)
+  def parse_date_in_local_time(date_str)
     zone = "Eastern Time (US & Canada)"
     begin
       if date_str =~ /\A(\d{1,2})\/(\d{1,2})\/(\d{4})(.*)\z/
