@@ -56,10 +56,14 @@ class Elasticsearch::SearchCriteria
   end
 
   def parse_date_in_local_time(date_value)
+    zone = "Eastern Time (US & Canada)"
     begin
-      Time.strptime(date_value + " EDT", time_string + " %Z")
+      if date_str =~ /\A(\d{1,2})\/(\d{1,2})\/(\d{4})(.*)\z/
+        date_str = "#{$3}-#{$1}-#{$2}#{$4}"
+      end
+      ActiveSupport::TimeZone[zone].parse(date_str)
     rescue
-      date_value
+      date_str
     end
   end
 
