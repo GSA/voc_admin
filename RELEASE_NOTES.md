@@ -1,8 +1,9 @@
 # Releaes Notes
 
-## 5.3.2
+## 5.4.0
 
 * Add Page URL to rules criteria
+* Convert survey response list to use Elasticsearch
 
 ## v5.2.4
 Sept 17, 2014
