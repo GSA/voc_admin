@@ -60,7 +60,7 @@ class QuestionReporter
     if counts_updated_at.present?
       d = counts_updated_at.in_time_zone("Eastern Time (US & Canada)") - 2.days
       d = d.end_of_day
-      responses = responses.where("created_at > ?", d)
+      responses = responses.where("raw_responses.created_at > ?", d)
     end
     responses
   end
