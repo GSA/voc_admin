@@ -1,11 +1,13 @@
 # Releaes Notes
 
+## 5.5.0
+* Add changelog to survey versions
+
 ## 5.4.1
 * Advanced search should now correctly account for daylight savings when searching the date field.
 
 ## 5.4.0
 
-* Add changelog to survey versions
 * Add Page URL to rules criteria
 * Limit height of survey response table so horizontal scrollbar is accessible
 * Add page to list all currently published questions (https://comment-adm.hhs.gov/surveys/all_questions).
