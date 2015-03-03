@@ -73,7 +73,7 @@ class ElasticsearchQuery
   def each_page
     return to_enum(__callee__) unless block_given?
     total_pages.times do |page|
-      es_response, responses = search({from: page * limit})
+      _, responses = search({from: page * limit})
       yield responses
     end
   end

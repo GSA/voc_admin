@@ -55,11 +55,15 @@ class Elasticsearch::SearchCriteria
     [clause_join, filter_proc]
   end
 
-  def parse_date_in_local_time(date_value)
+  def parse_date_in_local_time(date_str)
+    zone = "Eastern Time (US & Canada)"
     begin
-      DateTime.strptime(date_value + " #{Time.zone.now.formatted_offset}", time_string + " %:z")
+      if date_str =~ /\A(\d{1,2})\/(\d{1,2})\/(\d{4})(.*)\z/
+        date_str = "#{$3}-#{$1}-#{$2}#{$4}"
+      end
+      ActiveSupport::TimeZone[zone].parse(date_str)
     rescue
-      date_value
+      date_str
     end
   end
 
@@ -70,8 +74,8 @@ class Elasticsearch::SearchCriteria
         {
           "range" => {
             column => {
-              "gte" => value.beginning_of_day,
-              "lte" => value.end_of_day
+              "gte" => value.beginning_of_day.utc,
+              "lte" => value.end_of_day.utc
             }
           }
         }
@@ -87,7 +91,7 @@ class Elasticsearch::SearchCriteria
       case time_string
       when "%m/%d/%Y"
         {
-          "range" => { column => { "gt" => value.end_of_day } }
+          "range" => { column => { "gt" => value.end_of_day.utc } }
         }
       else
         {
@@ -99,7 +103,7 @@ class Elasticsearch::SearchCriteria
       case time_string
       when "%m/%d/%Y"
         {
-          "range" => { column => { "lt" => value.beginning_of_day } }
+          "range" => { column => { "lt" => value.beginning_of_day.utc } }
         }
       else
         {
