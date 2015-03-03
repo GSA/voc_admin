@@ -121,4 +121,12 @@ namespace :reporting do
     puts "Number of archived responses updated is #{ct}"
   end
 
+  desc "Update question reporters"
+  task :update_question_reporters => [:environment] do
+    Report.all.each do |report|
+      puts "Updating report #{report.id}"
+      report.text_question_reporters.each(&:update_reporter!)
+      report.choice_question_reporters.each(&:update_reporter!)
+    end
+  end
 end
