@@ -59,7 +59,7 @@ class SurveysController < ApplicationController
   end
 
   def all_questions
-    @published_versions = SurveyVersion.where(published: true)
+    @published_versions = SurveyVersion.includes(:survey).where(published: true, surveys: { archived: false } )
   end
 
   private
