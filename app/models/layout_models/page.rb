@@ -15,7 +15,7 @@ class Page < ActiveRecord::Base
   validate :next_page_greater_than_current_page
 
   # The next page in the survey, either by explicit flow control or incrementing current page number
-  # 
+  #
   # @return [Page,nil] the next page in the survey or nil if this is the last page
   def next_page_with_page_id
     if self.next_page_id.nil?
@@ -28,7 +28,7 @@ class Page < ActiveRecord::Base
   alias_method_chain :next_page, :page_id
 
   # Find the previous page (does not take flow control into consideration as this is managed via JavaScript)
-  # 
+  #
   # @return [Page,nil] the previous page in the survey or nil if this is the first page
   def prev_page
     self.survey_version.pages.where(:page_number => (self.page_number - 1)).first
@@ -36,7 +36,7 @@ class Page < ActiveRecord::Base
 
   # Reorder pages. Contains logic for bounds checking and tries to ensure
   # that flow control does not create a loop.
-  # 
+  #
   # @param [Integer] target_page_number the destination page number
   def move_page_to(target_page_number)
     # Page number cannot be <= 0 or > number of total pages
@@ -62,7 +62,7 @@ class Page < ActiveRecord::Base
   end
 
   # Duplicates the Page upon cloning a SurveyVersion.
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [Page] the cloned page
   def clone_me(target_sv)
@@ -70,7 +70,7 @@ class Page < ActiveRecord::Base
   end
 
   # Duplicates the Page and all contained SurveyElements
-  # 
+  #
   # @return [Page] the duplicated page
   def create_copy
     #add page at end of survey
@@ -105,12 +105,13 @@ end
 #
 # Table name: pages
 #
-#  id                :integer(4)      not null, primary key
-#  page_number       :integer(4)
-#  survey_version_id :integer(4)
-#  style_id          :integer(4)
+#  id                :integer          not null, primary key
+#  page_number       :integer
+#  survey_version_id :integer
+#  style_id          :integer
 #  created_at        :datetime
 #  updated_at        :datetime
-#  clone_of_id       :integer(4)
-#  next_page_id      :integer(4)
+#  clone_of_id       :integer
+#  next_page_id      :integer
 #
+

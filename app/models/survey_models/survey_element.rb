@@ -194,15 +194,16 @@ class SurveyElement < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110413183938
 #
 # Table name: survey_elements
 #
-#  id                :integer(4)      not null, primary key
-#  page_id           :integer(4)
-#  element_order     :integer(4)
-#  assetable_id      :integer(4)
+#  id                :integer          not null, primary key
+#  page_id           :integer
+#  element_order     :integer
+#  assetable_id      :integer
 #  assetable_type    :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
-#  survey_version_id :integer(4)
+#  survey_version_id :integer
+#
+

@@ -18,11 +18,13 @@ end
 #
 # Table name: display_field_custom_views
 #
-#  id               :integer(4)      not null, primary key
-#  display_field_id :integer(4)
-#  custom_view_id   :integer(4)
-#  display_order    :integer(4)
-#  sort_order		:integer(4)
-#  sort_direction	:string(255)
+#  id               :integer          not null, primary key
+#  display_field_id :integer
+#  custom_view_id   :integer
+#  display_order    :integer
 #  created_at       :datetime
 #  updated_at       :datetime
+#  sort_order       :integer
+#  sort_direction   :string(255)
+#
+

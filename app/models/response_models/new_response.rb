@@ -12,11 +12,12 @@ class NewResponse < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110428194741
 #
 # Table name: new_responses
 #
-#  id                 :integer(4)      not null, primary key
+#  id                 :integer          not null, primary key
 #  created_at         :datetime
 #  updated_at         :datetime
-#  survey_response_id :integer(4)
+#  survey_response_id :integer
+#
+

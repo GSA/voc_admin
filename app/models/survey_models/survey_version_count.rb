@@ -35,13 +35,15 @@ end
 #
 # Table name: survey_version_counts
 #
-#  id                    :integer(4)      not null, primary key
-#  survey_version_id     :integer(4)
-#  count_date            :date
-#  visits                :integer(4)      default(0)
-#  invitations           :integer(4)      default(0)
-#  invitations_accepted  :integer(4)      default(0)
-#  questions_skipped     :integer(4)      default(0)
-#  questions_asked       :integer(4)      default(0)
-#  created_at            :datetime
-#  updated_at            :datetime
+#  id                   :integer          not null, primary key
+#  survey_version_id    :integer
+#  count_date           :date
+#  visits               :integer          default(0)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  questions_skipped    :integer          default(0)
+#  questions_asked      :integer          default(0)
+#  invitations          :integer          default(0)
+#  invitations_accepted :integer          default(0)
+#
+

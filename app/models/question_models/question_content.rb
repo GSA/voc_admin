@@ -8,7 +8,7 @@ class QuestionContent < ActiveRecord::Base
   has_many :raw_responses, :foreign_key => "question_content_id" # likely currently unused. had a typo
   has_many :question_content_display_fields
   has_many :display_fields, through: :question_content_display_fields
-  
+
   validates :statement, :presence => true
 
   attr_accessible :statement, :question_number, :flow_control, :required, :questionable, :matrix_statement, :skip_observer
@@ -60,12 +60,13 @@ end
 #
 # Table name: question_contents
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  statement         :string(255)
 #  questionable_type :string(255)
-#  questionable_id   :integer(4)
-#  flow_control      :boolean(1)
-#  required          :boolean(1)      default(FALSE)
+#  questionable_id   :integer
+#  flow_control      :boolean
+#  required          :boolean          default(FALSE)
 #  created_at        :datetime
 #  updated_at        :datetime
 #
+

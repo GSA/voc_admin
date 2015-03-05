@@ -174,13 +174,15 @@ end
 #
 # Table name: choice_questions
 #
-#  id                 :integer(4)      not null, primary key
-#  multiselect        :boolean(1)
+#  id                 :integer          not null, primary key
+#  multiselect        :boolean
 #  answer_type        :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
-#  matrix_question_id :integer(4)
-#  clone_of_id        :integer(4)
-#  auto_next_page     :boolean(1)
-#  display_results    :boolean(1)
-#  answer_placement   :integer(4)
+#  matrix_question_id :integer
+#  clone_of_id        :integer
+#  auto_next_page     :boolean
+#  display_results    :boolean
+#  answer_placement   :boolean
+#
+

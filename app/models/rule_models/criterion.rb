@@ -1,6 +1,6 @@
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
-# A Criterion is the evaluated portion of a Rule 
+# A Criterion is the evaluated portion of a Rule
 class Criterion < ActiveRecord::Base
   belongs_to :rule
   belongs_to :conditional
@@ -23,7 +23,7 @@ class Criterion < ActiveRecord::Base
 
   # Sets the source DisplayField id selected from the new/edit Rule page
   # for this Criteria
-  # 
+  #
   # @param [String] source_string the comma-delimited id and source type
   def source_select=(source_string)
     self.source_id, self.source_type = source_string.split(',')
@@ -31,16 +31,17 @@ class Criterion < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110524182200
 #
 # Table name: criteria
 #
-#  id             :integer(4)      not null, primary key
-#  rule_id        :integer(4)      not null
-#  source_id      :integer(4)      not null
-#  conditional_id :integer(4)      not null
+#  id             :integer          not null, primary key
+#  rule_id        :integer          not null
+#  source_id      :integer          not null
+#  conditional_id :integer          not null
 #  value          :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
-#  source_type    :string(255)     not null
-#  clone_of_id    :integer(4)
+#  source_type    :string(255)      not null
+#  clone_of_id    :integer
+#
+

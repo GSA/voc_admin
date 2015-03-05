@@ -17,3 +17,14 @@ end
 #  Conditional.create! :id=>8, :name=>">"
 #  Conditional.create! :id=>9, :name=>"empty"
 #  Conditional.create! :id=>10, :name=>"not empty"
+
+# == Schema Information
+#
+# Table name: conditionals
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+

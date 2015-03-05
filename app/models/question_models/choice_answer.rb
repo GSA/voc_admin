@@ -43,12 +43,14 @@ end
 #
 # Table name: choice_answers
 #
-#  id                 :integer(4)      not null, primary key
+#  id                 :integer          not null, primary key
 #  answer             :string(255)
-#  choice_question_id :integer(4)
-#  answer_order       :integer(4)
-#  next_page_id       :integer(4)
+#  choice_question_id :integer
+#  answer_order       :integer
+#  next_page_id       :integer
 #  created_at         :datetime
 #  updated_at         :datetime
-#  clone_of_id        :integer(4)
-#  is_default         :boolean(1)      default(FALSE)
+#  clone_of_id        :integer
+#  is_default         :boolean          default(FALSE)
+#
+

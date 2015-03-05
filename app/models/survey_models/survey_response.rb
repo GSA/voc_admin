@@ -214,13 +214,16 @@ end
 #
 # Table name: survey_responses
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  client_id         :string(255)
-#  survey_version_id :integer(4)
+#  survey_version_id :integer
 #  created_at        :datetime
 #  updated_at        :datetime
-#  status_id         :integer(4)      default(1), not null
+#  status_id         :integer          default(1), not null
 #  last_processed    :datetime
 #  worker_name       :string(255)
 #  page_url          :text
-#  archived          :boolean(1)      default(FALSE)
+#  archived          :boolean          default(FALSE)
+#  device            :string(255)      default("Desktop")
+#
+

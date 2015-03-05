@@ -91,11 +91,13 @@ end
 #
 # Table name: text_questions
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer          not null, primary key
 #  answer_type :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  clone_of_id :integer(4)
-#  row_size    :integer(4)
-#  column_size :integer(4)
-#  answer_size :integer(4)
+#  clone_of_id :integer
+#  row_size    :integer
+#  column_size :integer
+#  answer_size :integer
+#
+

@@ -189,12 +189,13 @@ class MatrixQuestion < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110524182200
 #
 # Table name: matrix_questions
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  created_at        :datetime
 #  updated_at        :datetime
-#  survey_version_id :integer(4)
-#  clone_of_id       :integer(4)
+#  survey_version_id :integer
+#  clone_of_id       :integer
+#
+
