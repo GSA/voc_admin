@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: choice_answers
+#
+#  id                 :integer          not null, primary key
+#  answer             :string(255)
+#  choice_question_id :integer
+#  answer_order       :integer
+#  next_page_id       :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  clone_of_id        :integer
+#  is_default         :boolean          default(FALSE)
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # The ChoiceAnswer class represents an answer to a ChoiceQuestion.

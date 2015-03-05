@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: question_contents
+#
+#  id                :integer          not null, primary key
+#  statement         :string(255)
+#  questionable_type :string(255)
+#  questionable_id   :integer
+#  flow_control      :boolean
+#  required          :boolean          default(FALSE)
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 require 'spec_helper'
 
 describe QuestionContent do

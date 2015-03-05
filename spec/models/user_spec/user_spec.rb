@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                :integer          not null, primary key
+#  f_name            :string(255)      not null
+#  l_name            :string(255)      not null
+#  locked            :boolean
+#  email             :string(255)      not null
+#  crypted_password  :string(255)
+#  password_salt     :string(255)
+#  persistence_token :string(255)      not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  role_id           :integer
+#  hhs_id            :string(50)
+#  last_request_at   :datetime
+#
+
 require 'spec_helper'
 
 describe User do

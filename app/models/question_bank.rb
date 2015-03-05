@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: question_banks
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class QuestionBank < ActiveRecord::Base
   has_many :question_bank_questions
   has_many :text_questions, through: :question_bank_questions,

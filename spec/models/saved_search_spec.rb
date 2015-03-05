@@ -1,18 +1,17 @@
 # == Schema Information
 #
-# Table name: dashboards
+# Table name: saved_searches
 #
 #  id                :integer          not null, primary key
 #  name              :string(255)
 #  survey_version_id :integer
+#  search_params     :text
 #  created_at        :datetime
 #  updated_at        :datetime
-#  start_date        :date
-#  end_date          :date
 #
 
 require 'spec_helper'
 
-describe Dashboard do
+describe SavedSearch do
   pending "add some examples to (or delete) #{__FILE__}"
 end

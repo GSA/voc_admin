@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: survey_versions
+#
+#  id                :integer          not null, primary key
+#  survey_id         :integer          not null
+#  major             :integer
+#  minor             :integer
+#  published         :boolean          default(FALSE)
+#  locked            :boolean          default(FALSE)
+#  archived          :boolean          default(FALSE)
+#  notes             :text
+#  created_at        :datetime
+#  updated_at        :datetime
+#  thank_you_page    :text
+#  counts_updated_at :datetime
+#  dirty_reports     :boolean
+#  created_by_id     :integer
+#
+
 require 'spec_helper'
 include SurveyHelpers
 

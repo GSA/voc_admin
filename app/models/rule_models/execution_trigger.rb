@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: execution_triggers
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # ExectionTriggers represent the SurveyResponse events which should

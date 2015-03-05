@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: assets
+#
+#  id         :integer          not null, primary key
+#  snippet    :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require 'spec_helper'
 
 describe Asset do

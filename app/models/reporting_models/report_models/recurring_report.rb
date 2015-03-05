@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: recurring_reports
+#
+#  id                       :integer          not null, primary key
+#  report_id                :integer
+#  user_created_by_id       :integer
+#  user_created_by_string   :string(255)
+#  user_last_modified_by_id :integer
+#  frequency                :string(255)
+#  day_of_week              :integer
+#  day_of_month             :integer
+#  month                    :integer
+#  emails                   :string(1000)
+#  pdf                      :boolean
+#  last_sent_at             :datetime
+#  created_at               :datetime
+#  updated_at               :datetime
+#
+
 class RecurringReport < ActiveRecord::Base
   belongs_to :report
   belongs_to :user_created_by, :class_name => "User"

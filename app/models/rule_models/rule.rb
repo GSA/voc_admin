@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: rules
+#
+#  id                :integer          not null, primary key
+#  name              :string(255)      not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  survey_version_id :integer          not null
+#  rule_order        :integer          not null
+#  clone_of_id       :integer
+#  action_type       :string(255)      default("db")
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Upon stated criteria being fulfilled, Rules are used to send notification emails to recipients or update

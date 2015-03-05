@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: survey_elements
+#
+#  id                :integer          not null, primary key
+#  page_id           :integer
+#  element_order     :integer
+#  assetable_id      :integer
+#  assetable_type    :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  survey_version_id :integer
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # A single survey element (currently: TextQuestion, ChoiceQuestion, MatrixQuestion, Asset)

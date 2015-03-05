@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: raw_responses
+#
+#  id                  :integer          not null, primary key
+#  client_id           :string(255)
+#  answer              :text
+#  question_content_id :integer
+#  status_id           :integer          default(1), not null
+#  created_at          :datetime
+#  updated_at          :datetime
+#  worker_name         :string(255)
+#  survey_response_id  :integer          not null
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # RawResponse represents a single user answer to a single question. It is,

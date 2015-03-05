@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  id                :integer          not null, primary key
+#  page_number       :integer
+#  survey_version_id :integer
+#  style_id          :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  clone_of_id       :integer
+#  next_page_id      :integer
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # A Page is a container for one screen's worth of SurveyElements.

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: sites
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  url         :string(255)
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 require 'spec_helper'
 
 describe Site do
@@ -70,16 +82,3 @@ describe Site do
   end
 
 end
-
-# == Schema Information
-#
-# Table name: sites
-#
-#  id          :integer(4)      not null, primary key
-#  name        :string(255)
-#  url         :string(255)
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
-#
-

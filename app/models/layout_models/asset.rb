@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: assets
+#
+#  id         :integer          not null, primary key
+#  snippet    :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # An Asset is an HTML Snippet survey element.

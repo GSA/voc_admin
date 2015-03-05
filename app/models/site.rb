@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: sites
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  url         :string(255)
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # A distinct website from which Surveys will be hosted.

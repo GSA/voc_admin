@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: actions
+#
+#  id               :integer          not null, primary key
+#  rule_id          :integer          not null
+#  display_field_id :integer          not null
+#  value            :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#  value_type       :string(255)
+#  clone_of_id      :integer
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # An Action is the component of the Rules system which performs the actual DisplayFieldValue update.

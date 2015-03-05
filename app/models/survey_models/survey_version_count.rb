@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: survey_version_counts
+#
+#  id                   :integer          not null, primary key
+#  survey_version_id    :integer
+#  count_date           :date
+#  visits               :integer          default(0)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  questions_skipped    :integer          default(0)
+#  questions_asked      :integer          default(0)
+#  invitations          :integer          default(0)
+#  invitations_accepted :integer          default(0)
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Represents a visit count on a date for a survey version.

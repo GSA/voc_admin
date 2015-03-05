@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: exports
+#
+#  id                    :integer          not null, primary key
+#  access_token          :string(255)
+#  created_at            :datetime
+#  updated_at            :datetime
+#  document_file_name    :string(255)
+#  document_content_type :string(255)
+#  document_file_size    :integer
+#  document_updated_at   :datetime
+#  survey_version_id     :integer
+#
+
 require 'spec_helper'
 
 describe Export do

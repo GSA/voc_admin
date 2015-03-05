@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: survey_elements
+#
+#  id                :integer          not null, primary key
+#  page_id           :integer
+#  element_order     :integer
+#  assetable_id      :integer
+#  assetable_type    :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  survey_version_id :integer
+#
+
 require 'spec_helper'
 
 describe SurveyElement do

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: custom_views
+#
+#  id                :integer          not null, primary key
+#  survey_version_id :integer
+#  name              :string(255)
+#  default           :boolean
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Custom Views are used to render survey responses with a given set of DisplayFields;
@@ -84,17 +96,3 @@ class CustomView < ActiveRecord::Base
     self.survey_version.custom_views.where(:default => true).update_all(:default => false) if self.default
   end
 end
-
-# == Schema Information
-#
-# Table name: custom_views
-#
-#  id                :integer(4)      not null, primary key
-#  survey_version_id :integer(4)
-#  name              :string(255)
-#  order_clause      :text
-#  default           :boolean(1)
-#  created_at        :datetime
-#  updated_at        :datetime
-#
-

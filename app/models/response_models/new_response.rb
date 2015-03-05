@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: new_responses
+#
+#  id                 :integer          not null, primary key
+#  created_at         :datetime
+#  updated_at         :datetime
+#  survey_response_id :integer
+#
+
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Deprecated; used by the ResponseParser rake task to queue and process incoming
