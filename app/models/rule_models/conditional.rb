@@ -1,13 +1,3 @@
-# == Schema Information
-#
-# Table name: conditionals
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)      not null
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Contains mapping values for the Criterion comparison operators.

@@ -1,13 +1,3 @@
-# == Schema Information
-#
-# Table name: roles
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # The User's Role within the admin application.

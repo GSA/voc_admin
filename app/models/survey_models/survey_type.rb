@@ -1,13 +1,3 @@
-# == Schema Information
-#
-# Table name: survey_types
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # There are three distinct types of surveys that may be created: Site, Page, and Poll.

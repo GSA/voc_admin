@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: display_field_values
-#
-#  id                 :integer          not null, primary key
-#  display_field_id   :integer          not null
-#  survey_response_id :integer          not null
-#  value              :text
-#  created_at         :datetime
-#  updated_at         :datetime
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # A DisplayFieldValue represents the intersection between a SurveyResponse and a DisplayField.

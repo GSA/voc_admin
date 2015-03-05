@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: custom_views
-#
-#  id                :integer          not null, primary key
-#  survey_version_id :integer
-#  name              :string(255)
-#  default           :boolean
-#  created_at        :datetime
-#  updated_at        :datetime
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Custom Views are used to render survey responses with a given set of DisplayFields;

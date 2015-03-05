@@ -1,18 +1,3 @@
-# == Schema Information
-#
-# Table name: criteria
-#
-#  id             :integer          not null, primary key
-#  rule_id        :integer          not null
-#  source_id      :integer          not null
-#  conditional_id :integer          not null
-#  value          :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  source_type    :string(255)      not null
-#  clone_of_id    :integer
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # A Criterion is the evaluated portion of a Rule 

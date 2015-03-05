@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: text_questions
-#
-#  id          :integer          not null, primary key
-#  answer_type :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  clone_of_id :integer
-#  row_size    :integer
-#  column_size :integer
-#  answer_size :integer
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # The TextQuestion class can represent either a text field or a text area.

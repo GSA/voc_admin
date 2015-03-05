@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: survey_responses
-#
-#  id                :integer          not null, primary key
-#  client_id         :string(255)
-#  survey_version_id :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  status_id         :integer          default(1), not null
-#  last_processed    :datetime
-#  worker_name       :string(255)
-#  page_url          :text
-#  archived          :boolean          default(FALSE)
-#  device            :string(255)      default("Desktop")
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Represents a single sent of answers to the questions contained within

@@ -1,17 +1,3 @@
-# == Schema Information
-#
-# Table name: email_actions
-#
-#  id          :integer          not null, primary key
-#  emails      :string(255)
-#  subject     :string(255)
-#  body        :text
-#  rule_id     :integer
-#  clone_of_id :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#
-
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # An EmailAction is the component of the Rules system which invokes the mailer to send a specific message.
