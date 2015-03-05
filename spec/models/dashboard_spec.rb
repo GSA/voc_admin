@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: dashboards
-#
-#  id                :integer          not null, primary key
-#  name              :string(255)
-#  survey_version_id :integer
-#  created_at        :datetime
-#  updated_at        :datetime
-#  start_date        :date
-#  end_date          :date
-#
-
 require 'spec_helper'
 
 describe Dashboard do
