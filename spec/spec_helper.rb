@@ -41,36 +41,47 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
-    Redis.current.keys.each {|k| Redis.current.del k}
-    DatabaseCleaner[:mongoid].strategy = :truncation
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    DatabaseCleaner[:mongoid].start
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 
-  config.after(:each) do
-    DatabaseCleaner[:mongoid].clean
-  end
-
-  config.before(:suite) do
-    DatabaseCleaner[:active_record].clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner[:active_record].strategy = :transaction
-  end
-
-  config.before(:each, :js => true) do
-    DatabaseCleaner[:active_record].strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner[:active_record].start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner[:active_record].clean
-  end
+  # config.before(:suite) do
+  #   Redis.current.keys.each {|k| Redis.current.del k}
+  #   DatabaseCleaner[:mongoid].strategy = :truncation
+  # end
+  #
+  # config.before(:each) do
+  #   DatabaseCleaner[:mongoid].start
+  # end
+  #
+  # config.after(:each) do
+  #   DatabaseCleaner[:mongoid].clean
+  # end
+  #
+  # config.before(:suite) do
+  #   DatabaseCleaner[:active_record].clean_with(:truncation)
+  # end
+  #
+  # config.before(:each) do
+  #   DatabaseCleaner[:active_record].strategy = :transaction
+  # end
+  #
+  # config.before(:each, :js => true) do
+  #   DatabaseCleaner[:active_record].strategy = :truncation
+  # end
+  #
+  # config.before(:each) do
+  #   DatabaseCleaner[:active_record].start
+  # end
+  #
+  # config.after(:each) do
+  #   DatabaseCleaner[:active_record].clean
+  # end
 
 end

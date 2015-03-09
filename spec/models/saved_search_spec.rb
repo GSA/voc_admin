@@ -1,7 +1,9 @@
 require 'spec_helper'
 
-describe SavedSearch do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe SavedSearch, focus: true do
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:search_params) }
+  it { should belong_to(:survey_version) }
 end
 
 # == Schema Information
@@ -15,4 +17,3 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #
-
