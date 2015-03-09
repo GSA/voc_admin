@@ -143,8 +143,7 @@ class SurveyResponse < ActiveRecord::Base
   # Mark the SurveyResponse as archived (soft deleted.)
   def archive
     self.archived = true
-    reportable_survey_response = ReportableSurveyResponse.where(survey_response_id: id).first
-    reportable_survey_response.delete
+    reportable_survey_response = ReportableSurveyResponse.where(survey_response_id: id).first.try(:delete)
     self.save!
   end
 
@@ -226,4 +225,3 @@ end
 #  archived          :boolean          default(FALSE)
 #  device            :string(255)      default("Desktop")
 #
-

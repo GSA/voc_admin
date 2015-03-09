@@ -19,7 +19,7 @@ FactoryGirl.define do
     sequence(:l_name)       { |n| "User-#{n}"}
     email                   { "#{f_name}.#{l_name}@example.com" }
     password                "password"
-    password_confirmation   "password"
+    # password_confirmation   "password"
 
     trait :admin do
       role                  { Role::ADMIN }

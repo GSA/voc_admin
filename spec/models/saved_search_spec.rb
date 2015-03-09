@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SavedSearch, focus: true do
+describe SavedSearch do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:search_params) }
   it { should belong_to(:survey_version) }

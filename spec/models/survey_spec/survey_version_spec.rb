@@ -178,12 +178,18 @@ describe SurveyVersion do
       @version.total_temp_visit_count.should == 8
     end
 
+    it 'should create survey_version_counts when updating counts' do
+      @version.survey_version_counts.should be_empty
+      @version.update_counts
+      @version.survey_version_counts.should_not be_empty
+    end
+
     it "should create survey visit counts and decrement the temporary count" do
-      @version.update_visit_counts
+      @version.update_counts
       @version.total_temp_visit_count.should == 0
       @version.temp_visit_count.count.should == 1 # should delete old temp_visit_count keys
-      @version.survey_version_counts.visit_count_for_date_range(1.day.ago, Time.now).should == 5
-      @version.survey_version_counts.visit_count_for_date_range(6.days.ago, Time.now).should == 8
+      @version.survey_version_counts.visit_count_for_date_range(1.day.ago, Date.today).should == 5
+      @version.survey_version_counts.visit_count_for_date_range(6.days.ago, Date.today).should == 8
     end
   end
 

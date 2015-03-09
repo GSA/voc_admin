@@ -134,11 +134,11 @@ describe SurveyResponse do
       # verified by spreadsheet!  just happens to be reverse table order.
       relation.map{|r| r.client_id}.should eq(['784', '783', '782', '781', '780', '779', '778', '777'])
     end
+  end
 
-    it "should set archived" do
-      @sr.should_not be_archived
-      @sr.archive
-      @sr.should be_archived
-    end
+  it "should set archived" do
+    @sr.should_not be_archived
+    @sr.archive
+    @sr.should be_archived
   end
 end
