@@ -8,7 +8,14 @@
 
   <br/>
   <div class="total_responses">
-    Total survey responses: <%= number_with_delimiter(objects.total_count) %>
+    Displaying
+    <% offset = SurveyResponse.default_per_page * (params.fetch(:page,1).to_i - 1) + 1 %>
+    <% if objects.total_count > 0 %>
+      <%= "#{number_with_delimiter(offset)} - #{number_with_delimiter(offset + objects.count - 1)}" %>
+    <% else %>
+      0
+    <% end %>
+    of <%= number_with_delimiter(objects.total_count) %>
   </div>
   <div class="pageNav">
     <div class="inline">
