@@ -39,6 +39,8 @@ CommentToolApp::Application.routes.draw do
       get :edit_thank_you_page, :on => :member, :as => "edit_thank_you_page"
       get :edit_notes, :on => :member, :as => :edit_notes
 
+      resources :saved_searches, only: [:index, :create, :destroy]
+
       resources :rules do
         put :increment_rule_order, :on => :member
         put :decrement_rule_order, :on => :member

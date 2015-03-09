@@ -11,6 +11,7 @@ class SurveyVersion < ActiveRecord::Base
 
   belongs_to :survey, :touch => true
   belongs_to :created_by, class_name: 'User'
+  has_many :saved_searches, :dependent => :destroy
   has_many :pages,           :dependent => :destroy
   has_many :survey_elements, :dependent => :destroy
 
@@ -362,4 +363,3 @@ end
 #  dirty_reports     :boolean
 #  created_by_id     :integer
 #
-
