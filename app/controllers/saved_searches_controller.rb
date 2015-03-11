@@ -10,13 +10,19 @@ class SavedSearchesController < ApplicationController
 
     if @saved_search.save
       respond_to do |format|
-        format.js { render status: 201, json: nil }
+        redirect_to survey_responses_path @saved_search.query_params
       end
     else
       respond_to do |format|
         format.js { render status: 400, json: {errors: @saved_search.errors.full_messages.to_json} }
       end
     end
+  end
+
+  def destroy
+    @saved_search = @survey_version.saved_searches.find params[:id]
+    @saved_search.destroy
+    redirect_to survey_responses_path suvey_version_id: @survey_version.id, survey_id: @survey.id
   end
 
   private
