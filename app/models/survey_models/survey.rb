@@ -13,7 +13,8 @@ class Survey < ActiveRecord::Base
   :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
   :invitation_interval, :invitation_text, :invitation_accept_button_text,
   :invitation_reject_button_text, :start_screen_button_text, :alarm, :alarm_notification_email, :holding_page,
-  :show_numbers, :locale, :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet
+  :show_numbers, :locale, :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet,
+  :omb_expiration_date
 
   validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
