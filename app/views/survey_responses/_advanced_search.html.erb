@@ -12,10 +12,7 @@
       <% if params[:search].blank? || @search.criteria.empty? %>
         <div class="searchCriteria">
           <%= select_tag "search[criteria][0][include_exclude]",
-            options_for_select(
-              [ ['Include', 1], ['Exclude', 0]],
-              :selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:include_exclude].to_i)
-            )
+            options_for_select([ ['Include', 1], ['Exclude', 0]])
           %>
           <%= select_tag "search[criteria][0][display_field_id]",
             options_from_collection_for_select(
@@ -26,25 +23,30 @@
                   Struct.new(:id, :name).new("df_#{df.id}", df.name)
                 }),
               :id,
-              :name,
-              :selected => (
-                (params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:display_field_id]
-              )
+              :name
             ) %>
-          <%= select_tag "search[criteria][0][condition]", options_for_select( [['Exactly Matches', 'equals'], ['Containing', 'contains'], ['Begins With', 'begins_with'], ['Ends With', 'ends_with'], ['Less Than', 'less_than'], ['Greater Than', 'greater_than']],
-              :selected => ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:condition]) ) %>
-          <%= text_field_tag "search[criteria][0][value]", ((params[:search].blank? or params[:search][:criteria]['0'].blank?) ? '' : params[:search][:criteria]['0'][:value]) %>
+          <%= select_tag "search[criteria][0][condition]",
+                options_for_select( [
+                  ['Exactly Matches', 'equals'],
+                  ['Containing', 'contains'],
+                  ['Begins With', 'begins_with'],
+                  ['Ends With', 'ends_with'],
+                  ['Less Than', 'less_than'],
+                  ['Greater Than', 'greater_than']
+                ],
+              ) %>
+          <%= text_field_tag "search[criteria][0][value]" %>
         </div>
       <% else %>
         <% @search.criteria.keys.each_with_index do |criteria_index, index| %>
-          <%= render :partial => 'criteria_fields', :locals => { :criteria_index => criteria_index, :version => version, :index => index } %>
+          <%= render :partial => 'survey_responses/criteria_fields', :locals => { :criteria_index => criteria_index, :version => version, :index => index } %>
         <% end # params[:search].each %>
 
       <% end # if else %>
     </div>
     <br />
     <div>
-      <%= link_to_function "Add Criteria", "add_search_criteria(this, '#{escape_javascript(render(:partial => 'criteria_fields', :locals => {:version => version, :criteria_index => 'new_criteria_index', :index => 'new_index'}))}')", :class=>"manage" %>
+      <%= link_to_function "Add Criteria", "add_search_criteria(this, '#{escape_javascript(render(:partial => 'survey_responses/criteria_fields', :locals => {:version => version, :criteria_index => 'new_criteria_index', :index => 'new_index'}))}')", :class=>"manage" %>
     </div>
     <br />
     <div>
