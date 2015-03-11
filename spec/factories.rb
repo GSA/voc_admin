@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :saved_search do
+    sequence(:name) {|n| "saved_search #{n}"}
+    search_params "survey_version_id=324&survey_id=132&search%5Bcriteria%5D%5B0%5D%5Binclude_exclude%5D=1&search%5Bcriteria%5D%5B0%5D%5Bdisplay_field_id%5D=created_at&search%5Bcriteria%5D%5B0%5D%5Bcondition%5D=equals&search%5Bcriteria%5D%5B0%5D%5Bvalue%5D=01%2F01%2F2015"
+    survey_version
+  end
+
   # == Schema Information
   #
   # Table name: users

@@ -3,6 +3,10 @@ class SavedSearch < ActiveRecord::Base
 
   validates :name, presence: true
   validates :search_params, presence: true
+
+  def query_params
+    Rack::Utils.parse_nested_query(search_params)
+  end
 end
 
 # == Schema Information
@@ -16,4 +20,3 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #
-

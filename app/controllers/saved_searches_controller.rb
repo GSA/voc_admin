@@ -10,7 +10,7 @@ class SavedSearchesController < ApplicationController
 
     if @saved_search.save
       respond_to do |format|
-        format.js { render status: 200, json: nil }
+        format.js { render status: 201, json: nil }
       end
     else
       respond_to do |format|

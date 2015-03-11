@@ -98,17 +98,13 @@ $(function(){
         }
       }
       var body = $.param(search_params);
-      console.log("Saving Search Criteria: " + search_form.serialize());
-      console.log("SurveyId = " + surveyId);
-      console.log("SurveyVersionId = " + surveyVersionId);
-      console.log("Combined params: " + body);
-      console.log('Posting form to: ' + $(this).attr('action'));
 
       /* Send the search parameters through AJAX */
       $.ajax({
         type: 'POST',
         url: $(this).attr('action'),
-        data: body
+        data: body,
+        success: function() { $("#new_saved_search").hide(); }
       });
 
       e.preventDefault();
