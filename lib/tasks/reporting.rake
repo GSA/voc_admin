@@ -1,13 +1,20 @@
 namespace :reporting do
   desc "create csv with counts in root dir"
   task :csv_report, [:month, :year] => [:environment] do |t,args|
-    beginning_of_month = DateTime.new(args.year.to_i,args.month.to_i,1)
-    end_of_month = DateTime.new(args.year.to_i,args.month.to_i,-1)
-    beginning_of_year = DateTime.new(args.year.to_i, 1, 1)
+
+    # Parse the date in the correct timezone
+    date_str = "#{args.year.to_i}-#{args.month.to_i}-1"
+    zone = "Eastern Time (US & Canada)"
+    beginning_of_month = ActiveSupport::TimeZone[zone].parse(date_str)
+    end_of_month = beginning_of_month.end_of_month
+    beginning_of_year = beginning_of_month.beginning_of_year
+
     CSV.open(Rails.root + "#{end_of_month.strftime("%m_%Y")}_report.csv","wb") do |csv|
       total_month = 0
       total_year = 0
       total_all = 0
+
+      # default_scope unarchived
       Survey.all.each do |survey|
         survey.survey_versions.each do |sv|
           month_response_count = sv.survey_responses.where(:created_at => beginning_of_month..end_of_month).count
@@ -18,6 +25,7 @@ namespace :reporting do
           total_all = all_response_count + total_all
         end
       end
+
       csv << ["Monthly Total",
         total_month,
         "Time Period",
