@@ -149,7 +149,7 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def export_values_for_reporting
-    resp = ReportableSurveyResponse.find_or_create_by(survey_response_id: self.id)
+    resp = ReportableSurveyResponse.find_or_initialize_by(survey_response_id: self.id)
 
     resp.survey_id = self.survey_version.survey_id
     resp.survey_version_id = self.survey_version_id
