@@ -10,6 +10,7 @@ class SurveyResponsesController < ApplicationController
 
   # GET    /survey_responses(.:format)
   def index
+    params.reject! {|k,v| v.blank?}
     build_survey_version_and_responses
 
     respond_to do |format|
