@@ -89,11 +89,10 @@ end
 #
 # Table name: custom_views
 #
-#  id                :integer(4)      not null, primary key
-#  survey_version_id :integer(4)
+#  id                :integer          not null, primary key
+#  survey_version_id :integer
 #  name              :string(255)
-#  order_clause      :text
-#  default           :boolean(1)
+#  default           :boolean
 #  created_at        :datetime
 #  updated_at        :datetime
 #

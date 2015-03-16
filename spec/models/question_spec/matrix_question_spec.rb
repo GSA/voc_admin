@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: matrix_questions
+#
+#  id                :integer          not null, primary key
+#  created_at        :datetime
+#  updated_at        :datetime
+#  survey_version_id :integer
+#  clone_of_id       :integer
+#
+
 require 'spec_helper'
 
 describe MatrixQuestion do

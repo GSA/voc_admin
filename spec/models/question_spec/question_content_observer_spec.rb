@@ -28,7 +28,7 @@ describe QuestionContentObserver do
         QuestionContentObserver.should_not_receive(:create_default_rule)
 
         QuestionContentObserver.instance.after_create mock_model(QuestionContent, matrix_question?: true, skip_observer: true)
-      end      
+      end
     end # skip_observer == true
 
     context "question_content.questionable_type == ChoiceQuestion && question_content.questionable.matrix_question" do
@@ -51,7 +51,7 @@ describe QuestionContentObserver do
 
         QuestionContentObserver.instance.stub(:create_default_rule).and_return mock_model(Rule, present?: true)
 
-        QuestionContentObserver.instance.after_create(qc)       
+        QuestionContentObserver.instance.after_create(qc)
       end
     end # question_content.questionable_type == ChoiceQuestion && question_content.questionable.matrix_question
 
@@ -60,13 +60,14 @@ describe QuestionContentObserver do
         qc = mock_model QuestionContent
         qc.stub_chain(:survey_version, :display_fields, :count).and_return 0
         qc.stub_chain(:survey_version, :id).and_return 1
+        qc.stub(:display_fields).and_return []
 
         DisplayField.should_receive(:create!).with({
           :name => "Rspec Test Statement",
           :required => false,
           :searchable => false,
           :default_value => "",
-          :display_order => 1, 
+          :display_order => 1,
           :survey_version_id => 1,
           :editable => false
         })
@@ -83,15 +84,15 @@ describe QuestionContentObserver do
         df = mock_model(DisplayField, :id => 1016)
 
         rules_proxy.should_receive(:create!).with({
-          :name=>"Rspec Test Statement", 
-          :rule_order=>1, 
-          :execution_trigger_ids=>[1], 
-          :action_type=>"db", 
-          :criteria_attributes=>[{:source_id=> qc.id, :source_type=>"QuestionContent", :conditional_id=>10, :value=>""}], 
+          :name=>"Rspec Test Statement",
+          :rule_order=>1,
+          :execution_trigger_ids=>[1],
+          :action_type=>"db",
+          :criteria_attributes=>[{:source_id=> qc.id, :source_type=>"QuestionContent", :conditional_id=>10, :value=>""}],
           :actions_attributes=>[{:display_field_id=>df.id, :value_type=>"Response", :value=> qc.id.to_s}]
         })
 
-        QuestionContentObserver.instance.send :create_default_rule, qc, df, "Rspec Test Statement"        
+        QuestionContentObserver.instance.send :create_default_rule, qc, df, "Rspec Test Statement"
       end
 
     end # create_default_rule
@@ -128,7 +129,7 @@ describe QuestionContentObserver do
   # before do
   #   DisplayFieldObserver.instance.stub(:after_create)
   #   question_content.stub_chain(:questionable, :matrix_question).and_return false
-  #   question_content.stub_chain(:questionable, :errors, :add)   
+  #   question_content.stub_chain(:questionable, :errors, :add)
   # end
 
   # context "create_default_display_field" do
@@ -145,7 +146,7 @@ describe QuestionContentObserver do
   #     question_content.survey_version.stub_chain(:display_fields, :count).and_return 0
 
   #     display_field = QuestionContentObserver.instance.send(:create_default_display_field, question_content, name)
-  #     display_field.display_order.should == 1      
+  #     display_field.display_order.should == 1
   #   end
   # end
 
@@ -184,6 +185,6 @@ describe QuestionContentObserver do
   #       it "prepends the matrix statement to the name of the rule"
 
   #     end # Part of matrix question
-  #   end # ChoiceQuestion 
+  #   end # ChoiceQuestion
   # end # after_create
 end

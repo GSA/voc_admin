@@ -6,13 +6,14 @@ class ResponseCategory < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110420181413
 #
 # Table name: response_categories
 #
-#  id                  :integer(4)      not null, primary key
-#  category_id         :integer(4)      not null
-#  process_response_id :integer(4)      not null
+#  id                  :integer          not null, primary key
+#  category_id         :integer          not null
+#  process_response_id :integer          not null
 #  created_at          :datetime
 #  updated_at          :datetime
-#  survey_version_id   :integer(4)      not null
+#  survey_version_id   :integer          not null
+#
+

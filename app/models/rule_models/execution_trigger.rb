@@ -17,11 +17,12 @@ class ExecutionTrigger < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110420193126
 #
 # Table name: execution_triggers
 #
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)     not null
+#  id         :integer          not null, primary key
+#  name       :string(255)      not null
 #  created_at :datetime
 #  updated_at :datetime
+#
+

@@ -28,15 +28,16 @@ class Action < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110524182200
 #
 # Table name: actions
 #
-#  id               :integer(4)      not null, primary key
-#  rule_id          :integer(4)      not null
-#  display_field_id :integer(4)      not null
+#  id               :integer          not null, primary key
+#  rule_id          :integer          not null
+#  display_field_id :integer          not null
 #  value            :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
 #  value_type       :string(255)
-#  clone_of_id      :integer(4)
+#  clone_of_id      :integer
+#
+

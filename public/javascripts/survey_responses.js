@@ -80,6 +80,36 @@ $(function(){
     });
 
     $('select[name="custom_view"]').live("change", change_responses_view);
+
+    $('#new_saved_search').hide();
+    $('.js-saveSearch').live("click", function(e) {
+      $('#new_saved_search').show();
+    });
+    $('#new_saved_search').live('submit', function(e) {
+      var search_form = $('#advanced_search_form');
+      var surveyId = $("#survey_id").val();
+      var surveyVersionId = $("#survey_version_id").val();
+      var search_params = {
+        survey_id: surveyId,
+        survey_version_id: surveyVersionId,
+        saved_search: {
+          name: $('#saved_search_name').val(),
+          search_params: search_form.serialize()
+        }
+      }
+      var body = $.param(search_params);
+
+      /* Send the search parameters through AJAX */
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: body,
+        success: function() { $("#new_saved_search").hide(); }
+      });
+
+      e.preventDefault();
+      return false;
+    });
 });
 
 function add_search_criteria(link, content){

@@ -16,3 +16,13 @@ class QuestionBank < ActiveRecord::Base
     question_bank_questions.collect {|q| q.bankable }
   end
 end
+
+# == Schema Information
+#
+# Table name: question_banks
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime
+#  updated_at :datetime
+#
+

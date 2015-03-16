@@ -1,24 +1,37 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                :integer          not null, primary key
+#  f_name            :string(255)      not null
+#  l_name            :string(255)      not null
+#  locked            :boolean
+#  email             :string(255)      not null
+#  crypted_password  :string(255)
+#  password_salt     :string(255)
+#  persistence_token :string(255)      not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  role_id           :integer
+#  hhs_id            :string(50)
+#  last_request_at   :datetime
+#
+
 require 'spec_helper'
 
 describe User do
   before(:each) do
     @valid_user = User.new(:email => "email@example.com", :password => "password", :password_confirmation => "password", :f_name => "Example", :l_name => "User")
   end
-  
+
   it "should be valid with valid attributes" do
     @valid_user.should be_valid
   end
-  
+
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:f_name) }
   it { should validate_presence_of(:l_name) }
 
-  it "is not valid without a password" do
-    @valid_user.password = nil
-    @valid_user.password_confirmation = nil
-    @valid_user.should_not be_valid
-  end
-  
   it "should write the email to the database in lowercase" do
     email = "CAPITAL_EMAIL@TEST.COM"
     User.new(:email => email).email.should == email.downcase

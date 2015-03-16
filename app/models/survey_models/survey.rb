@@ -91,18 +91,31 @@ end
 #
 # Table name: surveys
 #
-#  id                       :integer(4)      not null, primary key
-#  name                     :string(255)
-#  description              :text
-#  survey_type_id           :integer(4)
-#  created_at               :datetime
-#  updated_at               :datetime
-#  archived                 :boolean(1)      default(FALSE)
-#  site_id                  :integer(4)
-#  submit_button_text       :string(255)
-#  previous_page_text       :string(255)
-#  next_page_text           :string(255)
-#  js_required_fields_error :string(255)
-#  invitation_percent       :integer(4)      not null, default(100)
-#  invitation_interval      :integer(4)      not null, default(30)
+#  id                            :integer          not null, primary key
+#  name                          :string(255)
+#  description                   :text
+#  survey_type_id                :integer
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  archived                      :boolean          default(FALSE)
+#  site_id                       :integer
+#  submit_button_text            :string(255)
+#  previous_page_text            :string(255)
+#  next_page_text                :string(255)
+#  js_required_fields_error      :string(255)
+#  invitation_percent            :integer          default(100), not null
+#  invitation_interval           :integer          default(30), not null
+#  invitation_text               :text
+#  invitation_accept_button_text :string(255)
+#  invitation_reject_button_text :string(255)
+#  alarm                         :boolean
+#  alarm_notification_email      :string(255)
+#  holding_page                  :text
+#  show_numbers                  :boolean          default(TRUE)
+#  locale                        :string(255)
+#  start_screen_button_text      :string(255)
+#  start_page_title              :string(255)
+#  invitation_preview_stylesheet :string(255)
+#  survey_preview_stylesheet     :string(255)
 #
+

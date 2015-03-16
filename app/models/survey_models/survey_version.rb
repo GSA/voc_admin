@@ -11,6 +11,7 @@ class SurveyVersion < ActiveRecord::Base
 
   belongs_to :survey, :touch => true
   belongs_to :created_by, class_name: 'User'
+  has_many :saved_searches, :dependent => :destroy
   has_many :pages,           :dependent => :destroy
   has_many :survey_elements, :dependent => :destroy
 
@@ -347,16 +348,18 @@ end
 #
 # Table name: survey_versions
 #
-#  id                :integer(4)      not null, primary key
-#  survey_id         :integer(4)      not null
-#  major             :integer(4)
-#  minor             :integer(4)
-#  published         :boolean(1)      default(FALSE)
-#  locked            :boolean(1)      default(FALSE)
-#  archived          :boolean(1)      default(FALSE)
+#  id                :integer          not null, primary key
+#  survey_id         :integer          not null
+#  major             :integer
+#  minor             :integer
+#  published         :boolean          default(FALSE)
+#  locked            :boolean          default(FALSE)
+#  archived          :boolean          default(FALSE)
 #  notes             :text
-#  counts_updated_at :datetime
-#  created_by_id     :integer(4)
 #  created_at        :datetime
 #  updated_at        :datetime
 #  thank_you_page    :text
+#  counts_updated_at :datetime
+#  dirty_reports     :boolean
+#  created_by_id     :integer
+#

@@ -7,12 +7,13 @@ class DisplayFieldCategory < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110420181413
 #
 # Table name: display_field_categories
 #
-#  id               :integer(4)      not null, primary key
-#  display_field_id :integer(4)      not null
-#  category_id      :integer(4)      not null
+#  id               :integer          not null, primary key
+#  display_field_id :integer          not null
+#  category_id      :integer          not null
 #  created_at       :datetime
 #  updated_at       :datetime
+#
+

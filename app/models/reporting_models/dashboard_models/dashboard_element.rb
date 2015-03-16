@@ -57,3 +57,17 @@ class DashboardElement < ActiveRecord::Base
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: dashboard_elements
+#
+#  id                :integer          not null, primary key
+#  dashboard_id      :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#  survey_element_id :integer
+#  sort_order        :integer
+#  display_type      :string(255)
+#
+

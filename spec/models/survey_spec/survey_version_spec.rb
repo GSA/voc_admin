@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: survey_versions
+#
+#  id                :integer          not null, primary key
+#  survey_id         :integer          not null
+#  major             :integer
+#  minor             :integer
+#  published         :boolean          default(FALSE)
+#  locked            :boolean          default(FALSE)
+#  archived          :boolean          default(FALSE)
+#  notes             :text
+#  created_at        :datetime
+#  updated_at        :datetime
+#  thank_you_page    :text
+#  counts_updated_at :datetime
+#  dirty_reports     :boolean
+#  created_by_id     :integer
+#
+
 require 'spec_helper'
 include SurveyHelpers
 
@@ -158,12 +178,18 @@ describe SurveyVersion do
       @version.total_temp_visit_count.should == 8
     end
 
+    it 'should create survey_version_counts when updating counts' do
+      @version.survey_version_counts.should be_empty
+      @version.update_counts
+      @version.survey_version_counts.should_not be_empty
+    end
+
     it "should create survey visit counts and decrement the temporary count" do
-      @version.update_visit_counts
+      @version.update_counts
       @version.total_temp_visit_count.should == 0
       @version.temp_visit_count.count.should == 1 # should delete old temp_visit_count keys
-      @version.survey_version_counts.visit_count_for_date_range(1.day.ago, Time.now).should == 5
-      @version.survey_version_counts.visit_count_for_date_range(6.days.ago, Time.now).should == 8
+      @version.survey_version_counts.visit_count_for_date_range(1.day.ago, Date.today).should == 5
+      @version.survey_version_counts.visit_count_for_date_range(6.days.ago, Date.today).should == 8
     end
   end
 

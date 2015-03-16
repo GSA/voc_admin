@@ -8,9 +8,9 @@ end
 #
 # Table name: site_users
 #
-#  id         :integer(4)      not null, primary key
-#  site_id    :integer(4)
-#  user_id    :integer(4)
+#  id         :integer          not null, primary key
+#  site_id    :integer
+#  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime
 #

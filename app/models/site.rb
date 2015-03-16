@@ -17,9 +17,11 @@ end
 #
 # Table name: sites
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer          not null, primary key
 #  name        :string(255)
 #  url         :string(255)
 #  description :text
 #  created_at  :datetime
 #  updated_at  :datetime
+#
+

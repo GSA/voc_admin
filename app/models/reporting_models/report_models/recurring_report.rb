@@ -63,7 +63,7 @@ class RecurringReport < ActiveRecord::Base
   end
 
   def monthly_ready_to_mail?(time)
-    time.mday == day_of_month || 
+    time.mday == day_of_month ||
         (time.mday == time.end_of_month.day && time.mday < day_of_month)
   end
 
@@ -85,17 +85,19 @@ end
 #
 # Table name: recurring_reports
 #
-#  id                       :integer(4)      not null, primary key
-#  report_id                :integer(4)
-#  user_created_by_id       :integer(4)
-#  user_created_by_string   :string(255) - in case the user gets destroyed
-#  user_last_modified_by_id :integer(4)
-#  frequency                :string(255) - daily, weekly, monthly, quarterly
-#  day_of_week              :integer(4)
-#  day_of_month             :integer(4)
-#  month                    :integer(4)
+#  id                       :integer          not null, primary key
+#  report_id                :integer
+#  user_created_by_id       :integer
+#  user_created_by_string   :string(255)
+#  user_last_modified_by_id :integer
+#  frequency                :string(255)
+#  day_of_week              :integer
+#  day_of_month             :integer
+#  month                    :integer
 #  emails                   :string(1000)
-#  pdf                      :boolean(1)
+#  pdf                      :boolean
 #  last_sent_at             :datetime
 #  created_at               :datetime
 #  updated_at               :datetime
+#
+

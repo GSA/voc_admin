@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: choice_questions
+#
+#  id                 :integer          not null, primary key
+#  multiselect        :boolean
+#  answer_type        :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  matrix_question_id :integer
+#  clone_of_id        :integer
+#  auto_next_page     :boolean
+#  display_results    :boolean
+#  answer_placement   :boolean
+#
+
 require "spec_helper"
 
 describe ChoiceQuestion do
