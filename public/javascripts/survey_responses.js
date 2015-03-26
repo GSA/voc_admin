@@ -81,9 +81,9 @@ $(function(){
 
     $('select[name="custom_view"]').live("change", change_responses_view);
 
-    $('#new_saved_search').hide();
+    $('#saved_search_form').hide();
     $('.js-saveSearch').live("click", function(e) {
-      $('#new_saved_search').show();
+      $('#saved_search_form').show();
     });
     $('#new_saved_search').live('submit', function(e) {
       var search_form = $('#advanced_search_form');
