@@ -12,9 +12,6 @@ $(function(){
             $("#dfv_edit_modal").modal();
     });
 
-    /* replace the survey_response_list when a delete call is made */
-    //$(".archive_link").live('ajax:success', refreshSurveyResponseTable);
-
     /* Populate the version select box based on the survey selection */
     $("#survey_id").change(function(){
         var survey_id = $(this).val();
@@ -104,7 +101,10 @@ $(function(){
         type: 'POST',
         url: $(this).attr('action'),
         data: body,
-        success: function() { $("#new_saved_search").hide(); }
+        success: function() {
+          $("#new_saved_search").hide();
+          $("#advanced_search_form").submit();
+        }
       });
 
       e.preventDefault();

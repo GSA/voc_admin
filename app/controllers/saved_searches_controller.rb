@@ -10,7 +10,7 @@ class SavedSearchesController < ApplicationController
 
     if @saved_search.save
       respond_to do |format|
-        redirect_to survey_responses_path @saved_search.query_params
+        format.js { redirect_to survey_responses_path @saved_search.query_params }
       end
     else
       respond_to do |format|
@@ -22,7 +22,8 @@ class SavedSearchesController < ApplicationController
   def destroy
     @saved_search = @survey_version.saved_searches.find params[:id]
     @saved_search.destroy
-    redirect_to survey_responses_path suvey_version_id: @survey_version.id, survey_id: @survey.id
+
+    redirect_to survey_responses_path survey_version_id: @survey_version.id, survey_id: @survey.id
   end
 
   private
