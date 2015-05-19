@@ -61,15 +61,19 @@ class ChoiceQuestionsController < ApplicationController
   # Also removes default Rule and Display Fields.
   def destroy
     @choice_question = ChoiceQuestion.find(params[:id])
-
+    question_content_id = @choice_question.question_content.id
     destroy_default_rule_and_display_field(@choice_question)
-
     @choice_question.destroy
-
     respond_to do |format|
       format.html { redirect_to survey_path(@survey_version.survey), :notice => "Successfully deleted choice question."}
       format.js { render :partial => "shared/element_destroy" }
     end
+    # Remove any rules which have actions that point to the choice question_content that just got deleted. 
+    Action.where("value LIKE ?", question_content_id).each do |a|
+      if a.rule.present?
+        a.rule.destroy      
+      end      
+    end    
   end
 
   private

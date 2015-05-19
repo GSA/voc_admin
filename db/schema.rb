@@ -474,6 +474,7 @@ ActiveRecord::Schema.define(:version => 201408191627092) do
     t.text     "page_url"
     t.boolean  "archived",          :default => false
     t.string   "device",            :default => "Desktop"
+    t.integer  "raw_submission_id"
   end
 
   add_index "survey_responses", ["status_id"], :name => "index_srs_status_id"
