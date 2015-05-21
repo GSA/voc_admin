@@ -62,6 +62,15 @@ class SurveysController < ApplicationController
     @published_versions = SurveyVersion.includes(:survey).where(published: true, surveys: { archived: false } )
   end
 
+  def import_survey_version
+    @survey = Survey.find(params[:survey_id])
+    @survey.import_survey_version(params[:file], current_user.id)
+    respond_to do |format|
+      format.html { redirect_to(survey_survey_versions_path(@survey), :notice => 'Survey Version was imported successfully.') }
+      format.xml  { head :ok }
+    end
+  end
+
   private
 
   # Allows sorting by survey name alphabetically ascending or descending.

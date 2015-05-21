@@ -157,6 +157,21 @@ class ChoiceQuestion < ActiveRecord::Base
     ["checkbox", "multiselect"].include?(answer_type)
   end
 
+  def describe_me(assetable_type, element_order)
+    {id: id,
+     assetable_type: assetable_type,
+     element_order: element_order,
+     statement: question_content.statement,
+     multiselect: multiselect, 
+     answer_type: answer_type, 
+     matrix_question_id: matrix_question_id, 
+     clone_of_id: clone_of_id, 
+     auto_next_page: auto_next_page, 
+     display_results: display_results, 
+     answer_placement: answer_placement,
+     choice_answers: choice_answers.map(&:describe_me)}.reject {|k, v| v.blank? }
+  end
+
   private
   # Validation to ensure that a ChoiceQuestion is not created without at least one ChoiceAnswer.
   def must_have_at_least_one_choice_answer

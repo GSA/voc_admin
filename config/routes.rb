@@ -12,6 +12,7 @@ CommentToolApp::Application.routes.draw do
   resources :surveys do
     get :start_page_preview, :on => :member
     get :all_questions, :on => :collection
+    post 'import_survey_version'
   end
 
   resource :question_bank do
@@ -38,7 +39,7 @@ CommentToolApp::Application.routes.draw do
       get :clone_version, :on => :member, :as => "clone"
       get :edit_thank_you_page, :on => :member, :as => "edit_thank_you_page"
       get :edit_notes, :on => :member, :as => :edit_notes
-
+      get :export_survey, :on => :collection, :as => 'export_survey'
       resources :saved_searches, only: [:index, :create, :destroy]
 
       resources :rules do

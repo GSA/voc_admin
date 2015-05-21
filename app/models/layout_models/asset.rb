@@ -51,6 +51,15 @@ class Asset < ActiveRecord::Base
   def reporter
     nil
   end
+
+  def describe_me(assetable_type, element_order)
+    {
+      id: id,
+      assetable_type: assetable_type,
+      element_order: element_order,
+      snippet: snippet
+    }.reject {|k, v| v.blank? }
+  end
 end
 
 # == Schema Information

@@ -69,6 +69,14 @@ class Page < ActiveRecord::Base
     new_page = Page.create!(self.attributes.merge(:survey_version=>target_sv, :clone_of_id => self.id))
   end
 
+  def describe_me
+    {
+      id: id, page_number: page_number, survey_version_id: survey_version_id,
+      style_id: style_id, clone_of_id: clone_of_id, next_page: next_page.try(:page_number),
+      survey_elements: survey_elements.map(&:describe_me)
+    }.reject {|k, v| v.blank? }
+  end
+
   # Duplicates the Page and all contained SurveyElements
   #
   # @return [Page] the duplicated page

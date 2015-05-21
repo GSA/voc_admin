@@ -65,6 +65,20 @@ class TextQuestion < ActiveRecord::Base
     cloned_question
   end
 
+  def describe_me(assetable_type, element_order)
+    {
+      id: id,
+      assetable_type: assetable_type,
+      element_order: element_order,
+      statement: question_content.statement,
+      answer_type: answer_type, 
+      clone_of_id: clone_of_id,
+      row_size: row_size,
+      column_size: column_size,
+      answer_size: answer_size
+    }.reject {|k, v| v.blank? }
+  end
+
   # Makes a deep copy of the TextQuestion (when cloning a Page)
   #
   # @param [Page] page the page to be cloned onto

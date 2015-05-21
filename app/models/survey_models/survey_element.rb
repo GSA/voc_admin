@@ -164,6 +164,10 @@ class SurveyElement < ActiveRecord::Base
     copy_of_assetable.survey_element
   end
 
+  def describe_me
+    assetable.describe_me(assetable_type, element_order)
+  end
+
   private
 
   # On create validation, sets the order of an added SurveyElement; refactors

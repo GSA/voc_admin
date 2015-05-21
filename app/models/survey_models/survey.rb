@@ -78,6 +78,88 @@ class Survey < ActiveRecord::Base
     source_sv.clone_me
   end
 
+   def import_survey_version(file, source_sv_id = nil)
+    # errorfile = File.open("import_errors.csv", "w")
+    file = File.read('../../Downloads/' + file.original_filename)
+    data_hash = JSON.parse(file)
+    new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
+    
+    new_sv = self.survey_versions.build.tap do |sv|
+      sv.major = new_maj_ver
+      sv.minor = 0
+      sv.published = false
+      sv.locked  =  false
+      sv.archived  =  false
+      sv.notes  =  'Created via Import Process'
+      sv.created_by_id = source_sv_id
+    end
+    new_sv.save!
+
+    data_hash["pages"].each do |page|
+      new_p = new_sv.pages.build( :page_number => page["page_number"], :survey_version => new_sv )
+      new_p.save!
+
+      page["survey_elements"].each do |element|
+
+        if element["assetable_type"] == "ChoiceQuestion"
+          new_cq = new_sv.choice_questions.build(answer_type: element["answer_type"], auto_next_page: element["auto_next_page"])
+          
+          new_cq.build_survey_element.tap do |se|
+            se.page = new_p
+            # puts "Inserting element_order " + element["element_order"].to_s
+            se.element_order = element["element_order"]
+            se.survey_version = new_sv
+          end
+
+          new_cq.build_question_content.tap do |qc|
+            qc.statement = element["statement"]
+          end
+
+          element["choice_answers"].each do |answer|
+            new_cq.choice_answers.build(answer: answer["answer"])
+
+          end
+
+          new_cq.save!
+        end
+
+        if element["assetable_type"] == "TextQuestion"
+          new_tq = new_sv.text_questions.build(answer_type: element["answer_type"], answer_size: element["answer_size"])
+          
+          new_tq.build_survey_element.tap do |se|
+            se.page = new_p
+            # puts "Inserting element_order " + element["element_order"].to_s
+            se.element_order = element["element_order"]
+            se.survey_version = new_sv
+          end
+          new_tq.build_question_content.tap do |tc|
+            tc.statement = element["statement"]
+          end
+          new_tq.save!
+        end
+
+        if element["assetable_type"] == "Asset"
+          new_asset = new_sv.assets.build(snippet: element["snippet"])
+          
+          new_asset.build_survey_element.tap do |asset|
+            asset.page = new_p
+            # puts "Inserting asset element_order " + element["element_order"].to_s
+            asset.element_order = element["element_order"]
+            asset.survey_version = new_sv
+          end
+          # new_asset.build_question_content.tap do |tc|
+          #   tc.statement = element["statement"]
+          # end
+          new_asset.save!
+        end
+
+      end
+    end
+
+    # errorfile.puts "Error processing JSON "
+    # errorfile.close
+  end
+
   def flushable_urls
     [
       "http://#{APP_CONFIG['public_host']}/surveys/#{id}",

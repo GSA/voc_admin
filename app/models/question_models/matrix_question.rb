@@ -160,6 +160,10 @@ class MatrixQuestion < ActiveRecord::Base
     nil
   end
 
+  def describe_me(assetable_type, element_order)
+    {id: id, assetable_type: assetable_type, element_order: element_order, statement: question_content.statement, survey_version_id: survey_version_id, clone_of_id: clone_of_id}.reject {|k, v| v.blank? }
+  end
+
   private
   # Removes the default Rule and DisplayField mappings for a given
   # MatrixQuestion and a specific ChoiceQuestion.

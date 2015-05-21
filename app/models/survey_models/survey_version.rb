@@ -30,7 +30,7 @@ class SurveyVersion < ActiveRecord::Base
   has_many :survey_version_counts,    :dependent => :destroy
   has_many :exports
 
-  attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
+  attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page, :created_by_id
 
   accepts_nested_attributes_for :survey
 
@@ -322,7 +322,24 @@ class SurveyVersion < ActiveRecord::Base
     end
   end
 
+  def export_survey_definition
+    survey_version_json = describe_me.to_json
+
+    File.open(File.join("../../Downloads/", 'survey_export.json'), 'w') do |f|
+      f.puts survey_version_json
+    end
+  end
+
   private
+
+  def describe_me
+    {
+      survey_id: survey_id, major: major, minor: minor,
+      published: published, locked: locked, archived: archived,
+      notes: notes, created_at: created_at, updated_at: updated_at,
+      thank_you_page: thank_you_page, pages: pages.map(&:describe_me)
+    }.reject {|k, v| v.blank? }
+  end
 
   # hash of question used by pages_for_survey_version
   def question_hash(question, matrix_question = false)

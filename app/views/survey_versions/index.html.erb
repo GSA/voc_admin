@@ -23,6 +23,13 @@
 	<div class="right_side">
 		<p><%= @survey.description %></p>
 	</div>
+	<br />
+	<div class="left_side">
+		Import Survey Version:
+	</div>
+	<div class="right_side">
+		<%= form_tag survey_import_survey_version_path(@survey) , multipart: true do %> <%= file_field_tag :file %> <%= submit_tag "Import" %><% hidden_field_tag 'survey_id', @survey.id %><% end %>
+	</div>
 </div>
 
 <div class="pageNav">
@@ -34,7 +41,7 @@
 		<tr>
 			<th class="col1" scope="col">Edit</th>
 			<th class="col2-3" scope="col" colspan="2"><%= sortable("major, minor", "Survey Version") %></th>
-			<th class="col4" scope="col">Export CSV</th>
+			<th class="col4" scope="col">Export</th>
 			<th class="col5" scope="col">Thank You Page</th>
       <th class="col6" scope="col">Notes</th>
 			<th class="col7" scope="col">Published</th>
@@ -54,7 +61,7 @@
 			</td>
 			<td class="col2"><%= version.version_number %></td>
 			<td class="col3"><%= link_to @survey.name.titleize, survey_survey_version_path(@survey, version) %></td>
-			<td class="col4"><%= link_to "export", export_all_survey_responses_path(:survey_version_id => version), :remote => true %></td>
+			<td class="col4"><%= link_to "csv", export_all_survey_responses_path(:survey_version_id => version), :remote => true %>/<%= link_to "json", export_survey_survey_survey_versions_path(:survey_version_id => version), :remote => false  %></td>
 			<td class="col5"><%= link_to image_tag("edit.png", :alt=>"edit thank you page"), [:edit_thank_you_page, @survey, version] %></td>
 			<td class="col6"><%= link_to image_tag("edit.png", :alt=>"edit notes"), [:edit_notes, @survey, version] %></td>
 			<td class="col7">

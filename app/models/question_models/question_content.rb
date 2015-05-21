@@ -11,7 +11,7 @@ class QuestionContent < ActiveRecord::Base
 
   validates :statement, :presence => true
 
-  attr_accessible :statement, :question_number, :flow_control, :required, :questionable, :matrix_statement, :skip_observer
+  attr_accessible :statement, :question_number, :flow_control, :required, :questionable, :matrix_statement, :skip_observer, :questionable_type
   attr_accessor :matrix_statement, :skip_observer
 
   delegate :check_condition, :get_true_value, :to => :questionable
