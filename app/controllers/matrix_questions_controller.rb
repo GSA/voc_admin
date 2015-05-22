@@ -77,14 +77,26 @@ class MatrixQuestionsController < ApplicationController
   # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id(.:format)
   def destroy
     @matrix_question = @survey_version.matrix_questions.find(params[:id])
-
+    qc_ids = Array.new
+    @matrix_question.choice_questions.each do |c|
+      qc_ids << c.question_content.id
+    end
     destroy_default_rule_and_display_field(@matrix_question)
     @matrix_question.destroy
-
     respond_to do |format|
       format.html { redirect_to [@survey, @survey_version] , :notice => "Successfully deleted Matrix question."}
       format.js { render :partial => "shared/element_destroy" }
     end
+    #Remove any rules which have actions pointing to the question_content of the matrix_question which just got deleted.
+    qc_ids.each do |q|
+      if !QuestionContent.find_by_id(q).present?
+        Action.where("value LIKE ?", q).each do |a|
+          if a.rule.present?
+            a.rule.destroy      
+          end      
+        end
+      end
+    end     
   end
 
   private

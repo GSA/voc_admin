@@ -67,15 +67,19 @@ class TextQuestionsController < ApplicationController
   # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/text_questions/:id(.:format)
   def destroy
     @text_question = TextQuestion.find(params[:id])
-
+    question_content_id = @text_question.question_content.id
     destroy_default_rule_and_display_field(@text_question.question_content)
-
     @text_question.destroy
-
     respond_to do |format|
       format.html { redirect_to survey_path(@survey_version.survey), :notice => "Successfully deleted text question."}
       format.js { render :partial => "shared/element_destroy" }
     end
+    # Remove any rules which have actions that point to the text question_content that just got deleted.
+    Action.where("value LIKE ?", question_content_id).each do |a|
+      if a.rule.present?
+        a.rule.destroy      
+      end      
+    end     
   end
 
   private

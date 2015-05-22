@@ -15,7 +15,7 @@
   <p class="bold">HHS VOC Tool Login</p>
   <%= form_for @user_session, :url => {:action => "create"} do |f| %>
     <div class="left_side">
-      <p><%= f.label :email, "Email:"%></p>
+      <p><%= f.label :username, "Email:"%></p>
     </div>
     <div class="right_side">
       <%= f.text_field :username, { autocomplete: "off" }  %>

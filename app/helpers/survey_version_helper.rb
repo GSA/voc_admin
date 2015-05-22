@@ -122,7 +122,7 @@ module SurveyVersionHelper
   # @param [SurveyElement] element the SurveyElement instance
   # @return [String] the assembled HTML links
   def element_delete_link(survey, survey_version, element)
-    generate_element_delete_link( url_for([survey, survey_version, element.assetable]) )
+    generate_element_delete_link( url_for([survey, survey_version, element.assetable]), rule_deletion_warning(element) )
   end
 
   # Uses question properties to set onclick events for flow control and
@@ -245,14 +245,17 @@ module SurveyVersionHelper
   #
   # @param [String] url the target of the link
   # @return [String] the HTML link
-  def generate_element_delete_link(url)
+  def generate_element_delete_link(url, msg)
+    if msg.empty?
+      msg = "Are you sure?"
+    end
     link_to image_tag("delete.png", :alt=>"Delete"),
             url,
             { :method => :delete,
               :remote => true,
               :title => "Delete page element",
               :class=>"deleteLink",
-              :confirm => "Are you sure?" }
+              :confirm => msg}
   end
 
   # Detects whether a question contains flow control and moving it up would
@@ -276,4 +279,40 @@ module SurveyVersionHelper
     element.assetable.question_content.flow_control &&
     element.element_order.to_i == element.page.survey_elements.maximum(:element_order).to_i
   end
+
+  # Checks if the question being deleted is referenced by rules for other 
+  # questions (more specifically, the actions of those rules). Returns
+  # a warning message string if so.  
+  #
+  # @param [SurveyElement] element the SurveyElement instance
+  # @return [String] the warning message, or empty string
+  def rule_deletion_warning(element)
+    msg = ""
+    if element.assetable_type == "ChoiceQuestion" || element.assetable_type == "TextQuestion" 
+      qc = Object.const_get(element.assetable_type).find_by_id(element.assetable_id).question_content
+      Action.where("value LIKE ?", qc.id).each do |a|
+        if a.rule.name != qc.statement
+          #msg += "\n* " + edit_survey_survey_version_rule_url(a.rule.survey_version.survey.id, a.rule.survey_version.id, a.rule.id)
+          msg += "\n* " + a.rule.name      
+        end
+      end
+    elsif element.assetable_type == "MatrixQuestion"
+      qc_ids = Array.new
+      Object.const_get(element.assetable_type).find_by_id(element.assetable_id).choice_questions.each do |c|
+        qc_ids << c.question_content.id
+      end
+      qc_ids.each do |q|
+        qc = QuestionContent.find_by_id(q)
+        Action.where("value LIKE ?", q).each do |a|
+          if !a.rule.name.include?(qc.statement)
+            msg += "\n* " + a.rule.name                  
+          end      
+        end
+      end 
+    end
+    if !msg.empty?
+      msg = "Rules referencing this question will also be DELETED. Would you like to proceed? \n\n Affected rules: \n " + msg
+    end    
+    return msg
+  end   
 end
