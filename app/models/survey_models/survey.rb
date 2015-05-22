@@ -98,16 +98,14 @@ class Survey < ActiveRecord::Base
     data_hash["pages"].each do |page|
       new_p = new_sv.pages.build( :page_number => page["page_number"], :survey_version => new_sv )
       new_p.save!
+      page_array = []
 
       page["survey_elements"].each do |element|
-
         if element["assetable_type"] == "ChoiceQuestion"
           new_cq = new_sv.choice_questions.build(answer_type: element["answer_type"], auto_next_page: element["auto_next_page"])
           
           new_cq.build_survey_element.tap do |se|
             se.page = new_p
-            # puts "Inserting element_order " + element["element_order"].to_s
-            se.element_order = element["element_order"]
             se.survey_version = new_sv
           end
 
@@ -121,6 +119,7 @@ class Survey < ActiveRecord::Base
           end
 
           new_cq.save!
+          s_asset = new_cq.survey_element.id
         end
 
         if element["assetable_type"] == "TextQuestion"
@@ -128,14 +127,13 @@ class Survey < ActiveRecord::Base
           
           new_tq.build_survey_element.tap do |se|
             se.page = new_p
-            # puts "Inserting element_order " + element["element_order"].to_s
-            se.element_order = element["element_order"]
             se.survey_version = new_sv
           end
           new_tq.build_question_content.tap do |tc|
             tc.statement = element["statement"]
           end
           new_tq.save!
+          s_asset = new_tq.survey_element.id
         end
 
         if element["assetable_type"] == "Asset"
@@ -143,19 +141,20 @@ class Survey < ActiveRecord::Base
           
           new_asset.build_survey_element.tap do |asset|
             asset.page = new_p
-            # puts "Inserting asset element_order " + element["element_order"].to_s
-            asset.element_order = element["element_order"]
             asset.survey_version = new_sv
           end
-          # new_asset.build_question_content.tap do |tc|
-          #   tc.statement = element["statement"]
-          # end
           new_asset.save!
+          s_asset = new_asset.survey_element.id
         end
-
+        element_array = [new_p.id, element["element_order"], s_asset]
+        page_array.push(element_array)
+      end
+      page_array.each do |x|
+        se = SurveyElement.find(x[2])
+        se.element_order = x[1]
+        se.save
       end
     end
-
     # errorfile.puts "Error processing JSON "
     # errorfile.close
   end
