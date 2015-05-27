@@ -324,10 +324,9 @@ class SurveyVersion < ActiveRecord::Base
 
   def export_survey_definition
     survey_version_json = describe_me.to_json
-
-    File.open(File.join("../../Downloads/", 'survey_export.json'), 'w') do |f|
-      f.puts survey_version_json
-    end
+    # File.open(File.join("../../Downloads/", 'survey_export.json'), 'w') do |f|
+    #   f.puts survey_version_json
+    # end
   end
 
   private

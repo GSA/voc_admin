@@ -79,7 +79,8 @@ class Survey < ActiveRecord::Base
   end
 
    def import_survey_version(file, source_sv_id = nil)
-    file = File.read('../../Downloads/' + file.original_filename)
+    binding.pry
+    file = file.read #File.read('../../Downloads/' + file.original_filename)
     data_hash = JSON.parse(file)
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
 
@@ -100,6 +101,7 @@ class Survey < ActiveRecord::Base
       page_array = []
 
       page["survey_elements"].each do |element|
+
         if element["assetable_type"] == "ChoiceQuestion"
           new_cq = new_sv.choice_questions.build(answer_type: element["answer_type"], auto_next_page: element["auto_next_page"])
 
@@ -169,6 +171,7 @@ class Survey < ActiveRecord::Base
           new_asset.save!
           s_asset = new_asset.survey_element.id
         end
+
         element_array = [new_p.id, element["element_order"], s_asset]
         page_array.push(element_array)
       end

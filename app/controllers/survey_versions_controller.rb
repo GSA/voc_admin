@@ -68,11 +68,10 @@ class SurveyVersionsController < ApplicationController
   def export_survey
     @survey_version = SurveyVersion.find(params[:survey_version_id])
 
-    @survey_version.export_survey_definition
-    respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Survey Version was exported successfully.') }
-      format.xml  { head :ok }
-    end
+
+    send_data @survey_version.export_survey_definition, :type => 'application/json',
+      :filename => "#{@survey.name.gsub(' ', '_')[0..20]}_#{@survey_version.version_number}_Export.json"
+    # redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Survey Version was exported successfully.')
   end
 
   # GET    /surveys/:survey_id/survey_versions/create_new_major_version(.:format)
