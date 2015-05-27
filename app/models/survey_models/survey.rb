@@ -79,8 +79,7 @@ class Survey < ActiveRecord::Base
   end
 
    def import_survey_version(file, source_sv_id = nil)
-    binding.pry
-    file = file.read #File.read('../../Downloads/' + file.original_filename)
+    file = file.read
     data_hash = JSON.parse(file)
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
 
@@ -182,6 +181,16 @@ class Survey < ActiveRecord::Base
       #   se.save
       # end
     end
+
+    data_hash["pages"].each do |page_data|
+      next if page_data["next_page"].nil?
+      if page_data["page_number"].to_i != (page_data["next_page"].to_i - 1)
+        page = new_sv.pages.find_by_page_number(page_data["page_number"].to_i)
+        next_page_id = new_sv.pages.find_by_page_number(page_data["next_page"].to_i).id
+        page.update_attribute(:next_page_id, next_page_id)
+      end
+    end
+
   end
 
   def flushable_urls
