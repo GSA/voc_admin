@@ -79,11 +79,10 @@ class Survey < ActiveRecord::Base
   end
 
    def import_survey_version(file, source_sv_id = nil)
-    # errorfile = File.open("import_errors.csv", "w")
     file = File.read('../../Downloads/' + file.original_filename)
     data_hash = JSON.parse(file)
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
-    
+
     new_sv = self.survey_versions.build.tap do |sv|
       sv.major = new_maj_ver
       sv.minor = 0
@@ -103,7 +102,7 @@ class Survey < ActiveRecord::Base
       page["survey_elements"].each do |element|
         if element["assetable_type"] == "ChoiceQuestion"
           new_cq = new_sv.choice_questions.build(answer_type: element["answer_type"], auto_next_page: element["auto_next_page"])
-          
+
           new_cq.build_survey_element.tap do |se|
             se.page = new_p
             se.survey_version = new_sv
@@ -124,7 +123,7 @@ class Survey < ActiveRecord::Base
 
         if element["assetable_type"] == "TextQuestion"
           new_tq = new_sv.text_questions.build(answer_type: element["answer_type"], answer_size: element["answer_size"])
-          
+
           new_tq.build_survey_element.tap do |se|
             se.page = new_p
             se.survey_version = new_sv
@@ -136,9 +135,33 @@ class Survey < ActiveRecord::Base
           s_asset = new_tq.survey_element.id
         end
 
+        if element["assetable_type"] == "MatrixQuestion"
+          new_mq = new_sv.matrix_questions.new(survey_version_id: new_sv.id)
+          # new_mq = new_sv.matrix_questions.build
+          new_mq.build_survey_element.tap do |se|
+            se.page = new_p
+            se.survey_version = new_sv
+          end
+          new_mq.build_question_content.tap do |mc|
+            mc.statement = element["statement"]
+          end
+          element["choice_questions"].each do |cq|
+            new_cq = new_mq.choice_questions.build(answer_type: cq["answer_type"], auto_next_page: cq["auto_next_page"])
+            new_cq.build_question_content.tap do |qc|
+              qc.statement = cq["statement"]
+            end
+            cq["choice_answers"].each do |answer|
+             new_cq.choice_answers.build(answer: answer["answer"])
+            end
+          end
+
+          new_mq.save!
+          s_asset = new_mq.survey_element.id
+        end
+
         if element["assetable_type"] == "Asset"
           new_asset = new_sv.assets.build(snippet: element["snippet"])
-          
+
           new_asset.build_survey_element.tap do |asset|
             asset.page = new_p
             asset.survey_version = new_sv
@@ -149,14 +172,13 @@ class Survey < ActiveRecord::Base
         element_array = [new_p.id, element["element_order"], s_asset]
         page_array.push(element_array)
       end
-      page_array.each do |x|
-        se = SurveyElement.find(x[2])
-        se.element_order = x[1]
-        se.save
-      end
+      # page_array.each do |x|
+      #   se = SurveyElement.find(x[2])
+      #   se.element_order = x[1]
+      #   # push page_number and possibly element["next_page"]into the array so we can set that in survey element.
+      #   se.save
+      # end
     end
-    # errorfile.puts "Error processing JSON "
-    # errorfile.close
   end
 
   def flushable_urls
