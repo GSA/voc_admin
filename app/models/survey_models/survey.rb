@@ -94,10 +94,11 @@ class Survey < ActiveRecord::Base
     end
     new_sv.save!
 
+    choice_answer_page_mappings = {}
+
     data_hash["pages"].each do |page|
       new_p = new_sv.pages.build( :page_number => page["page_number"], :survey_version => new_sv )
       new_p.save!
-      page_array = []
 
       page["survey_elements"].each do |element|
 
@@ -111,15 +112,22 @@ class Survey < ActiveRecord::Base
 
           new_cq.build_question_content.tap do |qc|
             qc.statement = element["statement"]
+            qc.flow_control = element["flow_control"]
           end
 
           element["choice_answers"].each do |answer|
             new_cq.choice_answers.build(answer: answer["answer"])
-
           end
 
           new_cq.save!
-          s_asset = new_cq.survey_element.id
+
+          # map out the choice answers "next page" to page numbers (which may not be persisted yet)
+          next_pages = element["choice_answers"].map { |choice_answer| choice_answer["next_page"] }
+          choice_answer_page_mappings.tap do |map|
+            new_cq.choice_answers.each_with_index do |choice_answer, index|
+              map[choice_answer] = next_pages[index]
+            end
+          end
         end
 
         if element["assetable_type"] == "TextQuestion"
@@ -145,11 +153,13 @@ class Survey < ActiveRecord::Base
           end
           new_mq.build_question_content.tap do |mc|
             mc.statement = element["statement"]
+            mc.flow_control = element["flow_control"]
           end
           element["choice_questions"].each do |cq|
             new_cq = new_mq.choice_questions.build(answer_type: cq["answer_type"], auto_next_page: cq["auto_next_page"])
             new_cq.build_question_content.tap do |qc|
               qc.statement = cq["statement"]
+              qc.flow_control = element["flow_control"]
             end
             cq["choice_answers"].each do |answer|
              new_cq.choice_answers.build(answer: answer["answer"])
@@ -157,6 +167,7 @@ class Survey < ActiveRecord::Base
           end
 
           new_mq.save!
+
           s_asset = new_mq.survey_element.id
         end
 
@@ -170,16 +181,7 @@ class Survey < ActiveRecord::Base
           new_asset.save!
           s_asset = new_asset.survey_element.id
         end
-
-        element_array = [new_p.id, element["element_order"], s_asset]
-        page_array.push(element_array)
       end
-      # page_array.each do |x|
-      #   se = SurveyElement.find(x[2])
-      #   se.element_order = x[1]
-      #   # push page_number and possibly element["next_page"]into the array so we can set that in survey element.
-      #   se.save
-      # end
     end
 
     data_hash["pages"].each do |page_data|
@@ -191,6 +193,10 @@ class Survey < ActiveRecord::Base
       end
     end
 
+    choice_answer_page_mappings.each_pair do |choice_answer, page_number|
+      next_page_id = new_sv.pages.find_by_page_number(page_number).id
+      choice_answer.update_attribute(:next_page_id, next_page_id)
+    end
   end
 
   def flushable_urls
