@@ -195,7 +195,7 @@ class Survey < ActiveRecord::Base
 
     choice_answer_page_mappings.each_pair do |choice_answer, page_number|
       next_page_id = new_sv.pages.find_by_page_number(page_number).id
-      choice_answer.update_attribute(:next_page_id, next_page_id)
+      choice_answer.update_attribute!(:next_page_id, next_page_id)
     end
   end
 
