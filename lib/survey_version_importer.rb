@@ -15,6 +15,73 @@ class SurveyVersionImporter
     survey.survey_versions.maximum(:major).to_i + 1
   end
 
+  def create_asset(asset_data, page)
+    survey_version.assets.build(
+      snippet: asset_data["snippet"],
+      survey_element_attributes: {
+        page: page,
+        survey_version: survey_version
+      }
+    )
+    new_asset.save!
+  end
+
+  def create_choice_question(choice_question_data, page)
+    new_cq = survey_version.choice_questions.build(
+      answer_type: choice_question_data["answer_type"],
+      auto_next_page: choice_question_data["auto_next_page"]
+    )
+
+    new_cq.build_survey_element(
+      page: page,
+      survey_version: survey_version
+    )
+
+    new_cq.build_question_content(
+      statement: choice_question_data["statement"],
+      flow_control: choice_question_data["flow_control"]
+    )
+
+    choice_question_data["choice_answers"].each do |answer|
+      choice_answer = new_cq.choice_answers.build(answer: answer["answer"])
+      if answer["next_page"].present?
+        choice_answer_page_mappings[choice_answer] = answer["next_page"]
+      end
+    end
+
+    new_cq.save!
+  end
+
+  def create_matrix_question(matrix_question_data, page)
+    new_mq = survey_version.matrix_questions.new(
+      survey_version_id: survey_version.id,
+      survey_element_attributes: {
+        page: page,
+        survey_version: survey_version
+      },
+      question_content_attributes: {
+        statement: matrix_question_data["statement"],
+        flow_control: matrix_question_data["flow_control"]
+      }
+    )
+
+    matrix_question_data["choice_questions"].each do |cq|
+      new_cq = new_mq.choice_questions.build(
+        answer_type: cq["answer_type"],
+        auto_next_page: cq["auto_next_page"],
+        question_content_attributes: {
+          statement: cq["statement"],
+          flow_control: cq["flow_control"]
+        }
+      )
+      cq["choice_answers"].each do |answer|
+       new_cq.choice_answers.build(answer: answer["answer"])
+      end
+    end
+
+    new_mq.save!
+  end
+
   def create_survey_version
     @survey_version = survey.survey_versions.create(
       major: next_major_version_number,
@@ -25,6 +92,22 @@ class SurveyVersionImporter
       notes: 'Created via Import Process',
       created_by_id: source_sv_id
     )
+  end
+
+  def create_text_question(text_question_data, page)
+    new_tq = survey_version.text_questions.build(
+      answer_type: text_question_data["answer_type"],
+      answer_size: text_question_data["answer_size"],
+      question_content_attributes: {
+        statement: text_question_data["statement"]
+      },
+      survey_element_attributes: {
+        page: page,
+        survey_version: survey_version
+      }
+    )
+
+    new_tq.save!
   end
 
   def create_page(page_number)
@@ -46,82 +129,19 @@ class SurveyVersionImporter
       page["survey_elements"].each do |element|
 
         if element["assetable_type"] == "ChoiceQuestion"
-          new_cq = survey_version.choice_questions.build(
-            answer_type: element["answer_type"],
-            auto_next_page: element["auto_next_page"]
-          )
-
-          new_cq.build_survey_element(
-            page: new_page,
-            survey_version: survey_version
-          )
-
-          new_cq.build_question_content(
-            statement: element["statement"],
-            flow_control: element["flow_control"]
-          )
-
-          element["choice_answers"].each do |answer|
-            choice_answer = new_cq.choice_answers.build(answer: answer["answer"])
-            if answer["next_page"].present?
-              choice_answer_page_mappings[choice_answer] = answer["next_page"]
-            end
-          end
-
-          new_cq.save!
+          create_choice_question(element, new_page)
         end
 
         if element["assetable_type"] == "TextQuestion"
-          new_tq = survey_version.text_questions.build(answer_type: element["answer_type"], answer_size: element["answer_size"])
-
-          new_tq.build_survey_element.tap do |se|
-            se.page = new_page
-            se.survey_version = survey_version
-          end
-          new_tq.build_question_content.tap do |tc|
-            tc.statement = element["statement"]
-          end
-          new_tq.save!
-          s_asset = new_tq.survey_element.id
+          create_text_question(element, new_page)
         end
 
         if element["assetable_type"] == "MatrixQuestion"
-          new_mq = survey_version.matrix_questions.new(survey_version_id: survey_version.id)
-          # new_mq = survey_version.matrix_questions.build
-          new_mq.build_survey_element.tap do |se|
-            se.page = new_page
-            se.survey_version = survey_version
-          end
-          new_mq.build_question_content.tap do |mc|
-            mc.statement = element["statement"]
-            mc.flow_control = element["flow_control"]
-          end
-          element["choice_questions"].each do |cq|
-            new_cq = new_mq.choice_questions.build(answer_type: cq["answer_type"], auto_next_page: cq["auto_next_page"])
-            new_cq.build_question_content.tap do |qc|
-              qc.statement = cq["statement"]
-              qc.flow_control = element["flow_control"]
-            end
-            cq["choice_answers"].each do |answer|
-             new_cq.choice_answers.build(answer: answer["answer"])
-            end
-          end
-
-          new_mq.save!
-
-          s_asset = new_mq.survey_element.id
+          create_matrix_question(element, new_page)
         end
 
         if element["assetable_type"] == "Asset"
-          new_asset = survey_version.assets.build(
-            snippet: element["snippet"],
-            survey_element_attributes: {
-              page: new_page,
-              survey_version: survey_version
-            }
-          )
-          new_asset.save!
-          s_asset = new_asset.survey_element.id
+          create_asset(element, new_page)
         end
       end
     end
