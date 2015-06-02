@@ -73,7 +73,7 @@
 			</td>
 			<td class="col8"><%= version.created_by.try(:name) %></td>
 			<td class="col9"><%= version.created_at.strftime("%m/%d/%Y") %></td>
-			<td class="col10"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>			
+			<td class="col10"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
 			<td class="col11"><%= link_to image_tag("clone.png", :alt=>"Clone Survey"), clone_survey_survey_version_path(@survey, version), :confirm => "Are you sure you wish to clone this version", :class=>"copyLink"  %></td>
 			<td class="col12"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey_survey_version_path(@survey, version), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
 		</tr>
@@ -112,5 +112,30 @@
 		<pre><%= "<script type=\"text/javascript\"
         src=\"http://#{APP_CONFIG['public_host']}/widget/widget.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %>
     </pre>
+	</div>
+	<div class="top_side">
+		Invitation Pop-up Instructions:
+	</div>
+	<div class="bottom_side">
+		<p>1. Add an empty DIV element and define an ID attribute; for example:</p>
+		<pre>&lt;div id="survey_target"&gt;&lt;/div&gt;</pre>
+
+		<p>2. Immediately after the new DIV, add the following for users without JavaScript (the IFRAME version):</p>
+		<pre>&lt;noscript&gt;
+  <%= "<iframe src=\"http://#{APP_CONFIG['public_host']}/surveys/#{@survey.id}\"></iframe>"%>
+&lt;/noscript&gt;</pre>
+
+		<p>3. Add this line to your JavaScript includes, ensuring the target_id parameter matches the DIV ID attribute:</p>
+		<pre><%= "<script type=\"text/javascript\"
+        src=\"http://#{APP_CONFIG['public_host']}/widget/invitation.js?survey_id=#{@survey.id}&target_id=survey_target\"></script>" %>
+    </pre>
+
+		<p>
+			On acceptance of the survey invitation, the survey may either be shown in a new window (default)
+			or shown in a modal on the current page.  To show the survey in a modal on the current page,
+			set the "modal" url parameter to true in the invitation script tag as shown below.
+		</p>
+		<pre><%= "<script type=\"text/javascript\" src=\"http://#{APP_CONFIG['public_host']}/widget/invitation.js?survey_id=#{@survey.id}&target_id=survey_target&modal=true\"></script>" %>
+		</pre>
 	</div>
 </div>
