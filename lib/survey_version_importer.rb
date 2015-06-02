@@ -35,47 +35,47 @@ class SurveyVersionImporter
     @survey_version ||= create_survey_version
   end
 
-  def import
-    choice_answer_page_mappings = {}
+  def choice_answer_page_mappings
+    @choice_answer_page_mappings ||= {}
+  end
 
+  def import
     data_hash["pages"].each do |page|
-      new_p = create_page page["page_number"]
+      new_page = create_page page["page_number"]
 
       page["survey_elements"].each do |element|
 
         if element["assetable_type"] == "ChoiceQuestion"
-          new_cq = survey_version.choice_questions.build(answer_type: element["answer_type"], auto_next_page: element["auto_next_page"])
+          new_cq = survey_version.choice_questions.build(
+            answer_type: element["answer_type"],
+            auto_next_page: element["auto_next_page"]
+          )
 
-          new_cq.build_survey_element.tap do |se|
-            se.page = new_p
-            se.survey_version = survey_version
-          end
+          new_cq.build_survey_element(
+            page: new_page,
+            survey_version: survey_version
+          )
 
-          new_cq.build_question_content.tap do |qc|
-            qc.statement = element["statement"]
-            qc.flow_control = element["flow_control"]
-          end
+          new_cq.build_question_content(
+            statement: element["statement"],
+            flow_control: element["flow_control"]
+          )
 
           element["choice_answers"].each do |answer|
-            new_cq.choice_answers.build(answer: answer["answer"])
+            choice_answer = new_cq.choice_answers.build(answer: answer["answer"])
+            if answer["next_page"].present?
+              choice_answer_page_mappings[choice_answer] = answer["next_page"]
+            end
           end
 
           new_cq.save!
-
-          # map out the choice answers "next page" to page numbers (which may not be persisted yet)
-          next_pages = element["choice_answers"].map { |choice_answer| choice_answer["next_page"] }
-          choice_answer_page_mappings.tap do |map|
-            new_cq.choice_answers.each_with_index do |choice_answer, index|
-              map[choice_answer] = next_pages[index]
-            end
-          end
         end
 
         if element["assetable_type"] == "TextQuestion"
           new_tq = survey_version.text_questions.build(answer_type: element["answer_type"], answer_size: element["answer_size"])
 
           new_tq.build_survey_element.tap do |se|
-            se.page = new_p
+            se.page = new_page
             se.survey_version = survey_version
           end
           new_tq.build_question_content.tap do |tc|
@@ -89,7 +89,7 @@ class SurveyVersionImporter
           new_mq = survey_version.matrix_questions.new(survey_version_id: survey_version.id)
           # new_mq = survey_version.matrix_questions.build
           new_mq.build_survey_element.tap do |se|
-            se.page = new_p
+            se.page = new_page
             se.survey_version = survey_version
           end
           new_mq.build_question_content.tap do |mc|
@@ -116,7 +116,7 @@ class SurveyVersionImporter
           new_asset = survey_version.assets.build(
             snippet: element["snippet"],
             survey_element_attributes: {
-              page: new_p,
+              page: new_page,
               survey_version: survey_version
             }
           )
