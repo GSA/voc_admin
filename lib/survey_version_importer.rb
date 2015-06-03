@@ -146,6 +146,11 @@ class SurveyVersionImporter
       end
     end
 
+    set_page_level_flow_control
+    set_question_level_flow_control
+  end
+
+  def set_page_level_flow_control
     data_hash["pages"].each do |page_data|
       next if page_data["next_page"].nil?
       if page_data["page_number"].to_i != (page_data["next_page"].to_i - 1)
@@ -154,7 +159,9 @@ class SurveyVersionImporter
         page.update_attribute(:next_page_id, next_page_id)
       end
     end
+  end
 
+  def set_questin_level_flow_control
     choice_answer_page_mappings.each_pair do |choice_answer, page_number|
       next_page_id = survey_version.pages.find_by_page_number(page_number).id
       choice_answer.update_attribute(:next_page_id, next_page_id)
