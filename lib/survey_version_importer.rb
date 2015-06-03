@@ -22,8 +22,7 @@ class SurveyVersionImporter
         page: page,
         survey_version: survey_version
       }
-    )
-    new_asset.save!
+    ).save
   end
 
   def create_choice_question(choice_question_data, page)
@@ -161,7 +160,7 @@ class SurveyVersionImporter
     end
   end
 
-  def set_questin_level_flow_control
+  def set_question_level_flow_control
     choice_answer_page_mappings.each_pair do |choice_answer, page_number|
       next_page_id = survey_version.pages.find_by_page_number(page_number).id
       choice_answer.update_attribute(:next_page_id, next_page_id)
