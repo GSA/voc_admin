@@ -22,23 +22,21 @@ class SurveyVersionImporter
         page: page,
         survey_version: survey_version
       }
-    ).save
+    ).save!
   end
 
   def create_choice_question(choice_question_data, page)
     new_cq = survey_version.choice_questions.build(
       answer_type: choice_question_data["answer_type"],
-      auto_next_page: choice_question_data["auto_next_page"]
-    )
-
-    new_cq.build_survey_element(
-      page: page,
-      survey_version: survey_version
-    )
-
-    new_cq.build_question_content(
-      statement: choice_question_data["statement"],
-      flow_control: choice_question_data["flow_control"]
+      auto_next_page: choice_question_data["auto_next_page"],
+      survey_element_attributes: {
+        page: page,
+        survey_version: survey_version
+      },
+      question_content_attributes: {
+        statement: choice_question_data["statement"],
+        flow_control: choice_question_data["flow_control"]
+      }
     )
 
     choice_question_data["choice_answers"].each do |answer|
