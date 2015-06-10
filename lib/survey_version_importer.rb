@@ -120,6 +120,7 @@ class SurveyVersionImporter
   end
 
   def import
+    return false if export_file.nil?
     data_hash["pages"].each do |page|
       new_page = create_page page["page_number"]
 

@@ -1000,6 +1000,16 @@ fieldset fieldset.hide legend {
   background-color: #fbeff3;
 }
 
+#flash_alert {
+  color: #980024;
+  font-weight: bold;
+  font-size: 12px;
+  margin: -10px 0px 10px;
+  border: 1px solid #980024;
+  padding: 5px;
+  background-color: #fbeff3;
+}
+
 /**** Spinner ****/
 #ajax_spinner_question_list {
   position: absolute;

@@ -64,10 +64,13 @@ class SurveysController < ApplicationController
 
   def import_survey_version
     @survey = Survey.find(params[:survey_id])
-    @survey.import_survey_version(params[:file], current_user.id)
-    respond_to do |format|
-      format.html { redirect_to(survey_survey_versions_path(@survey), :notice => 'Survey Version was imported successfully.') }
-      format.xml  { head :ok }
+    if params[:file].present?
+      @survey.import_survey_version(params[:file], current_user.id)
+      redirect_to(survey_survey_versions_path(@survey),
+        :notice => 'Survey Version was imported successfully.')
+    else
+      redirect_to survey_survey_versions_path(@survey),
+        :alert => "Please select a file before clicking the import button."
     end
   end
 
