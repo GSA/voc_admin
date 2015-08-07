@@ -29,6 +29,7 @@ class SurveyVersionImporter
     new_cq = survey_version.choice_questions.build(
       answer_type: choice_question_data["answer_type"],
       auto_next_page: choice_question_data["auto_next_page"],
+      answer_placement: choice_question_data["answer_placement"],
       survey_element_attributes: {
         page: page,
         survey_version: survey_version
