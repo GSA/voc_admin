@@ -162,6 +162,7 @@ class ChoiceQuestion < ActiveRecord::Base
      assetable_type: assetable_type,
      element_order: element_order,
      statement: question_content.statement,
+     required: question_content.required,
      flow_control: question_content.flow_control,
      multiselect: multiselect,
      answer_type: answer_type,

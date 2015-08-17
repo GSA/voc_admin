@@ -36,7 +36,8 @@ class SurveyVersionImporter
       },
       question_content_attributes: {
         statement: choice_question_data["statement"],
-        flow_control: choice_question_data["flow_control"]
+        flow_control: choice_question_data["flow_control"],
+        required: choice_question_data["required"]
       }
     )
 
@@ -59,7 +60,8 @@ class SurveyVersionImporter
       },
       question_content_attributes: {
         statement: matrix_question_data["statement"],
-        flow_control: matrix_question_data["flow_control"]
+        flow_control: matrix_question_data["flow_control"],
+        required: matrix_question_data["required"]
       }
     )
 
@@ -69,7 +71,8 @@ class SurveyVersionImporter
         auto_next_page: cq["auto_next_page"],
         question_content_attributes: {
           statement: cq["statement"],
-          flow_control: cq["flow_control"]
+          flow_control: cq["flow_control"],
+          required: cq["required"]
         }
       )
       cq["choice_answers"].each do |answer|
@@ -97,7 +100,8 @@ class SurveyVersionImporter
       answer_type: text_question_data["answer_type"],
       answer_size: text_question_data["answer_size"],
       question_content_attributes: {
-        statement: text_question_data["statement"]
+        statement: text_question_data["statement"],
+        required: text_question_data["required"]
       },
       survey_element_attributes: {
         page: page,
