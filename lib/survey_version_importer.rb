@@ -91,7 +91,8 @@ class SurveyVersionImporter
       locked: false,
       archived: false,
       notes: 'Created via Import Process',
-      created_by_id: source_sv_id
+      created_by_id: source_sv_id,
+      thank_you_page: data_hash["thank_you_page"]
     )
   end
 
