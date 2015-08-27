@@ -324,9 +324,6 @@ class SurveyVersion < ActiveRecord::Base
 
   def export_survey_definition
     survey_version_json = describe_me.to_json
-    # File.open(File.join("../../Downloads/", 'survey_export.json'), 'w') do |f|
-    #   f.puts survey_version_json
-    # end
   end
 
   private
@@ -336,8 +333,7 @@ class SurveyVersion < ActiveRecord::Base
       survey_id: survey_id, major: major, minor: minor,
       published: published, locked: locked, archived: archived,
       notes: notes, created_at: created_at, updated_at: updated_at,
-      thank_you_page: thank_you_page, pages: pages.map(&:describe_me)
-    }.reject {|k, v| v.blank? }
+      thank_you_page: thank_you_page, pages: pages.map(&:describe_me)}.reject {|k, v| v.blank? }
   end
 
   # hash of question used by pages_for_survey_version

@@ -165,6 +165,7 @@ class MatrixQuestion < ActiveRecord::Base
      assetable_type: assetable_type,
      element_order: element_order,
      statement: question_content.statement,
+     required: question_content.required,
      survey_version_id: survey_version_id,
      clone_of_id: clone_of_id,
      choice_questions: choice_questions.map {|cq| cq.describe_me("ChoiceQuestion", nil)}

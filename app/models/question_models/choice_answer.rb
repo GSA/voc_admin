@@ -22,8 +22,8 @@ class ChoiceAnswer < ActiveRecord::Base
 
   def describe_me
     {
-      id: id, 
-      answer: answer, 
+      id: id,
+      answer: answer,
       choice_question_id: choice_question_id,
       answer_order: answer_order,
       next_page: page.try(:page_number),
