@@ -3,6 +3,7 @@
 # Base Controller class; integrates Authlogic and provides gate keeper
 # before_filter functions.
 class ApplicationController < ActionController::Base
+  config.relative_url_root = ""
   protect_from_forgery
   before_filter :require_user
   helper_method :current_user_session, :current_user
