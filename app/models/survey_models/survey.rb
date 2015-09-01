@@ -61,7 +61,10 @@ class Survey < ActiveRecord::Base
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
 
     #create new version
-    new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0, :published=>false, :locked => false, :archived => false)
+    new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0)
+    new_sv.published = false
+    new_sv.locked = false
+    new_sv.archived = false
     new_sv.created_by_id = created_by_id || self.created_by_id
     new_sv.pages.build :page_number => 1, :survey_version => new_sv
     puts new_sv.pages.first.errors unless new_sv.valid?

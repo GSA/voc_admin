@@ -31,6 +31,8 @@ gem 'httparty'
 
 gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
 
+gem 'test-unit'
+
 # Needed for the new asset pipeline
 group :assets do
   gem 'sass-rails', '~> 3.2.6'
