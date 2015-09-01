@@ -31,7 +31,6 @@ gem 'httparty'
 
 gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
 
-
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '< 0.3'
@@ -56,18 +55,20 @@ platform :jruby do
 end
 
 group :development do
-	gem 'annotate'
+  gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'yard'
 end
 
-gem 'rspec-rails', :group => [:development, :test]
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl_rails'
+end
 
 group :test do
   gem 'simplecov', :require => false
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'selenium-webdriver'
 
