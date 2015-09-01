@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
-#gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '182d4e3719' # 3.0.21, see https://github.com/rails/rails/pull/9126
-gem 'rails', '3.1.12'
+gem 'rails', '3.2.21'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -34,8 +33,8 @@ gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use m
 
 # Needed for the new asset pipeline
 group :assets do
-  gem 'sass-rails', '~> 3.1.7'
-  gem 'coffee-rails', '~> 3.1.1'
+  gem 'sass-rails', '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
   gem 'uglifier', '>= 1.0.3'
 end
 
