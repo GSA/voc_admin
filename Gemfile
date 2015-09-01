@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '182d4e3719' # 3.0.21, see https://github.com/rails/rails/pull/9126
+#gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '182d4e3719' # 3.0.21, see https://github.com/rails/rails/pull/9126
+gem 'rails', '3.1.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,14 +27,21 @@ gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
-gem "best_in_place", :git => 'https://github.com/eLafo/best_in_place', :branch => 'rails-3.0' # This version is require for < Rails 3.1
+gem "best_in_place"#, :git => 'https://github.com/eLafo/best_in_place', :branch => 'rails-3.0' # This version is require for < Rails 3.1
 gem 'httparty'
 
 gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
 
+# Needed for the new asset pipeline
+group :assets do
+  gem 'sass-rails', '~> 3.1.7'
+  gem 'coffee-rails', '~> 3.1.1'
+  gem 'uglifier', '>= 1.0.3'
+end
+
 platform :ruby do
   gem 'unicorn-rails'
-  gem 'mysql2', '< 0.3'
+  gem 'mysql2', '~> 0.3'
   gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
 
   group :test do

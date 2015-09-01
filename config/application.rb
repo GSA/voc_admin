@@ -53,5 +53,9 @@ module CommentToolApp
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
 
     # config.action_controller.relative_url_root = '/vocsub'
+
+    # Required configuration for the asset pipeline
+    config.assets.enabled = false
+    config.assets.version = '1.0'
   end
 end
