@@ -230,7 +230,11 @@ class SurveyVersion < ActiveRecord::Base
 
       #get greatest minor version
       minor_version = self.survey.survey_versions.where(:major => self.major).order('survey_versions.minor desc').first.minor + 1
-      new_sv = survey.survey_versions.build(self.attributes.merge(:minor => minor_version))
+      new_attributes = self.attributes.except(
+        "id", "survey_id", "published", "locked", "archived", "created_at", 
+        "updated_at", "counts_updated_at", "dirty_reports"
+      )
+      new_sv = survey.survey_versions.build(new_attributes.merge(:minor => minor_version))
       new_sv.published = false
       new_sv.locked = false
       new_sv.created_by_id = created_by_id
