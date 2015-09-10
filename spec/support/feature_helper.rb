@@ -18,7 +18,6 @@ module FeatureHelper
   end
 
   def create_test_site
-    Site.find_by_name("Test Site") || 
-    Site.create!(name: "Test Site", url: "https://test.com", description: "Test Site")
+    FactoryGirl.create(:site, name: "Test Site")
   end
 end
