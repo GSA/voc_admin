@@ -1,4 +1,40 @@
 namespace :reporting do
+  desc <<-EOS
+  Export SurveyResponses created between <start_date> and <end_date>
+  Dates must be formatted as YYYY-mm-dd
+  EOS
+  task :export_in_range, [:start_date_str, :end_date_str] => [:environment] do |t, args|
+    TIMEZONE_STR = "Eastern Time (US & Canada)"
+    DATE_FORMAT_REGEX = /\A\d{4}-\d{1,2}-\d{1,2}\z/
+    USAGE = <<-EOS
+      usage: rake reporting:export_in_range[<start_date>,<end_date>]
+
+      start_date and end_date must be in the format YYYY-mm-dd and are inclusive dates.
+    EOS
+
+    raise USAGE if args.start_date_str.blank? || args.end_date_str.blank?
+
+    start_date_str = args.start_date_str
+    end_date_str = args.end_date_str
+
+    raise "Start date must use format YYYY-mm-dd" unless start_date_str.match(DATE_FORMAT_REGEX)
+    raise "End date must use format YYYY-mm-dd" unless end_date_str.match(DATE_FORMAT_REGEX)
+
+    start_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(start_date_str)
+    end_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(end_date_str)
+
+    survey_responses = SurveyResponse.where("created_at >= ? AND created_at <= ?", start_date, end_date)
+    total_to_export = survey_responses.count
+
+    puts "Exporting #{total_to_export} responses between #{start_date} and #{end_date} to MongoDB"
+
+    total_exported = 0
+    survey_responses.find_in_batches do |batch|
+      batch.each(&:export_values_for_reporting)
+      puts "exported #{total_exported += batch.size}/#{total_to_export}"
+    end
+  end
+
   desc "create csv with counts in root dir"
   task :csv_report, [:month, :year] => [:environment] do |t,args|
 
