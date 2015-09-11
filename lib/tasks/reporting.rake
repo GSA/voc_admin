@@ -21,7 +21,7 @@ namespace :reporting do
     raise "End date must use format YYYY-mm-dd" unless end_date_str.match(DATE_FORMAT_REGEX)
 
     start_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(start_date_str)
-    end_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(end_date_str)
+    end_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(end_date_str).end_of_day
 
     survey_responses = SurveyResponse.where("created_at >= ? AND created_at <= ?", start_date, end_date)
     total_to_export = survey_responses.count
