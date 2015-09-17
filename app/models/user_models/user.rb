@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   #
   # @return [Boolean] true if the user is an admin, false otherwise
   def admin?
-    self.role == Role::ADMIN
+    self.role_id == Role::ADMIN.id
   end
 
   def name

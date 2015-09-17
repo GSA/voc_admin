@@ -1,6 +1,6 @@
 module FeatureHelper
   def login_user
-    admin_user = create_admin_user
+    create_admin_user
     visit login_path
     click_on "Jake Admin"
   end

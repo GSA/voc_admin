@@ -9,19 +9,24 @@ class Survey < ActiveRecord::Base
 
   attr_accessor :created_by_id
 
-  attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
-  :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
-  :invitation_interval, :invitation_text, :invitation_accept_button_text,
-  :invitation_reject_button_text, :start_screen_button_text, :alarm, :alarm_notification_email, :holding_page,
-  :show_numbers, :locale, :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet,
-  :omb_expiration_date
+  attr_accessible :name, :description, :survey_type_id, :site_id, 
+    :submit_button_text, :previous_page_text, :next_page_text, 
+    :js_required_fields_error, :invitation_percent,
+    :invitation_interval, :invitation_text, :invitation_accept_button_text,
+    :invitation_reject_button_text, :start_screen_button_text, :alarm, 
+    :alarm_notification_email, :holding_page, :show_numbers, :locale, 
+    :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet,
+    :omb_expiration_date
 
-  validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
+  validates :name, :presence => true, :length => {:in => 1..255}, 
+    :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  validates :invitation_percent, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
-  validates :invitation_interval, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0}
+  validates :invitation_percent, presence: true, numericality: {
+    only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
+  validates :invitation_interval, presence: true, numericality: {
+    only_integer: true, greater_than_or_equal_to: 0}
   validates :alarm_notification_email, presence: true, :if => :alarm
 
   validates :js_required_fields_error, length: { maximum: 255 }
@@ -32,7 +37,9 @@ class Survey < ActiveRecord::Base
   scope :get_archived,            where(:archived => true)
   scope :get_unarchived,          where(:archived => false)
   scope :get_alpha_list,          order('surveys.name asc')
-  scope :search,          ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
+  scope :search, ->(q = nil) { 
+    where("surveys.name like ?", "%#{q}%") unless q.blank?
+  }
 
   default_scope where(:archived => false)
 

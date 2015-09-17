@@ -8,7 +8,8 @@ class SurveysController < ApplicationController
 
   # GET    /surveys(.:format)
   def index
-    @surveys = current_user.surveys.search(params[:q]).order("surveys.name #{sort_direction}").page(params[:page]).per(10)
+    @surveys = current_user.surveys.search(params[:q])
+      .order("surveys.name #{sort_direction}").page(params[:page]).per(10)
   end
 
   # GET    /surveys/new(.:format)
@@ -21,8 +22,10 @@ class SurveysController < ApplicationController
     @survey = current_user.surveys.new(params[:survey])
     @survey.created_by_id = @current_user.id
 
-    if @survey.save  # Will save both survey and survey_version and run validations on both
-      redirect_to([:edit, @survey, @survey.survey_versions.first], :notice => 'Survey was successfully created.')
+    # Will save both survey and survey_version and run validations on both
+    if @survey.save
+      redirect_to([:edit, @survey, @survey.survey_versions.first],
+                  :notice => 'Survey was successfully created.')
     else
       render :action => "new"
     end
