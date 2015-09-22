@@ -6,6 +6,7 @@ RSpec.describe SurveysController, type: :controller do
   context "when a user is logged in" do
     let(:site) { FactoryGirl.create :site }
     let(:user) { FactoryGirl.create :user, sites: [site] }
+    let(:survey) { create :survey, site: site }
 
     before(:each) do
       login_user(user)
@@ -128,7 +129,6 @@ RSpec.describe SurveysController, type: :controller do
     end # POST /create
 
     describe "GET /edit" do
-      let(:survey) { create :survey, site: site }
       it "renders the edit template" do
         get :edit, id: survey.id
         expect(response).to render_template("edit")
@@ -141,7 +141,6 @@ RSpec.describe SurveysController, type: :controller do
     end # GET /edit
 
     describe "PUT /update" do
-      let(:survey) { create :survey, site: site }
       context "with valid attributes" do
         it "locates the requested survey" do
           put :update, id: survey, survey: attributes_for(:survey)
@@ -175,6 +174,21 @@ RSpec.describe SurveysController, type: :controller do
           expect(response).to render_template("edit")
         end
       end
+    end # PUT /update
+
+    describe "DELETE /destroy" do
+      before(:each) { survey }
+      it "deletes the survey" do
+        expect {
+          delete :destroy, id: survey
+        }.to change(Survey, :count).by(-1)
+      end
+
+      it "redirects to the surveys index" do
+        delete :destroy, id: survey
+        expect(response).to redirect_to(surveys_path)
+      end
+
     end
   end
 
