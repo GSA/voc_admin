@@ -30,7 +30,7 @@ RSpec.describe SurveysController, type: :controller do
           expect(surveys.last).to eq  second_survey
         end
 
-        it "should change the sort direction with the direction param" do
+        it "changes sort direction with the direction param" do
           get :index, direction: "desc"
           expect(assigns(:surveys)).to eq [second_survey, first_survey]
         end
@@ -49,7 +49,7 @@ RSpec.describe SurveysController, type: :controller do
       context "and search parameter is passed" do
         let!(:survey) { FactoryGirl.create :survey, name: "Found in search",
                         site: site }
-        let!(:filtered_survey) {FactoryGirl.create :survey, 
+        let!(:filtered_survey) {FactoryGirl.create :survey,
                                 name: "Should be filtered", site: site }
 
         it "should filter resultes based on the search" do
@@ -66,7 +66,7 @@ RSpec.describe SurveysController, type: :controller do
 
       context "and the user is not an admin" do
         it "should only list surveys for the sites of the logged in user" do
-          excluded_survey = FactoryGirl.create :survey, 
+          excluded_survey = FactoryGirl.create :survey,
             site: FactoryGirl.create(:site)
           included_survey = FactoryGirl.create :survey, site: site
           get :index
@@ -87,6 +87,20 @@ RSpec.describe SurveysController, type: :controller do
       end
     end
 
+  end
+
+  context "GET /new" do
+    before(:each) { login_user }
+
+    it "renders the new template" do
+      get :new
+      expect(response).to render_template("new")
+    end
+
+    it "assigns @survey" do
+      get :new
+      expect(assigns(:survey)).to be_a Survey
+    end
   end
 
   def login_user user = FactoryGirl.create(:user,
