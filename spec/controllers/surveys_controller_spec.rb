@@ -19,6 +19,15 @@ RSpec.describe SurveysController, type: :controller do
         login_user(user)
       end
 
+      it "should sort the surveys by name" do
+        second_survey = FactoryGirl.create :survey, name: "B", site: site
+        first_survey = FactoryGirl.create :survey, name: "A", site: site
+        get :index
+        surveys = assigns(:surveys)
+        expect(surveys.first).to eq first_survey
+        expect(surveys.last).to eq  second_survey
+      end
+
       it "should render the index.html.erb template" do
         get :index
         expect(response).to render_template("index")
