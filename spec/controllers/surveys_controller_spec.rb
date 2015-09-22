@@ -93,6 +93,39 @@ RSpec.describe SurveysController, type: :controller do
         expect(assigns(:survey)).to be_a Survey
       end
     end # GET /new
+
+    describe "POST /create" do
+      context "with valid attributes" do
+        let(:valid_attributes) { FactoryGirl.attributes_for(:survey, 
+                                                            site_id: site.id) }
+        it "saves the survey to the database" do
+          expect {
+            post :create, survey: valid_attributes
+          }.to change(Survey, :count).by(1)
+        end
+
+        it "redirects to the survey version edit page" do
+          post :create, survey: valid_attributes
+          expect(response).to redirect_to(
+            [:edit, assigns(:survey), assigns(:survey).survey_versions.first]
+          )
+        end
+      end
+
+      context "with invalid attributes" do
+        let(:invalid_attributes) { attributes_for(:survey, name: nil) }
+        it "does not save the survey to the database" do
+          expect {
+            post :create, survey: invalid_attributes
+          }.to_not change(Survey, :count)
+        end
+
+        it "re-renders the :new template" do
+          post :create, survey: invalid_attributes
+          expect(response).to render_template("new")
+        end
+      end
+    end
   end
 
   context "when a user is not logged in" do
@@ -102,6 +135,7 @@ RSpec.describe SurveysController, type: :controller do
     end
   end
 
+  private
   def login_user user = FactoryGirl.create(:user,
                                            sites: [FactoryGirl.create(:site)])
     UserSession.create(user, true)
