@@ -3,20 +3,23 @@ require "rails_helper"
 RSpec.describe SurveysController, type: :controller do
   setup :activate_authlogic
 
-  describe "GET /", "#index" do
-    context "when a user is not logged in" do
-      it "redirects to the login path" do
-        get :index
-        expect(response).to redirect_to login_path
-      end
+  context "when a user is logged in" do
+    let(:site) { FactoryGirl.create :site }
+    let(:user) { FactoryGirl.create :user, sites: [site] }
+
+    before(:each) do
+      login_user(user)
     end
 
-    context "when a user is logged in" do
-      let(:site) { FactoryGirl.create :site }
-      let(:user) { FactoryGirl.create :user, sites: [site] }
+    describe "GET /", "#index" do
+      it "should render the index.html.erb template" do
+        get :index
+        expect(response).to render_template("index")
+      end
 
-      before(:each) do
-        login_user(user)
+      it "should assign @surveys" do
+        get :index
+        expect(assigns(:surveys)).to_not be_nil
       end
 
       context "sorting" do
@@ -34,16 +37,6 @@ RSpec.describe SurveysController, type: :controller do
           get :index, direction: "desc"
           expect(assigns(:surveys)).to eq [second_survey, first_survey]
         end
-      end
-
-      it "should render the index.html.erb template" do
-        get :index
-        expect(response).to render_template("index")
-      end
-
-      it "should assign @surveys" do
-        get :index
-        expect(assigns(:surveys)).to_not be_nil
       end
 
       context "and search parameter is passed" do
@@ -85,21 +78,27 @@ RSpec.describe SurveysController, type: :controller do
           expect(assigns(:surveys)).to include(survey)
         end
       end
-    end
+    end # GET /
 
+    describe "GET /new" do
+      before(:each) { login_user }
+
+      it "renders the new template" do
+        get :new
+        expect(response).to render_template("new")
+      end
+
+      it "assigns @survey" do
+        get :new
+        expect(assigns(:survey)).to be_a Survey
+      end
+    end # GET /new
   end
 
-  context "GET /new" do
-    before(:each) { login_user }
-
-    it "renders the new template" do
-      get :new
-      expect(response).to render_template("new")
-    end
-
-    it "assigns @survey" do
-      get :new
-      expect(assigns(:survey)).to be_a Survey
+  context "when a user is not logged in" do
+    it "redirects to the login path" do
+      get :index
+      expect(response).to redirect_to login_path
     end
   end
 
