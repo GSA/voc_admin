@@ -44,7 +44,7 @@ class SurveysController < ApplicationController
       flush_akamai(@survey.flushable_urls) if @survey.published_version
       redirect_to(surveys_url, :notice => "Survey was successfully updated.")
     else
-      render :new
+      render :edit
     end
   end
 

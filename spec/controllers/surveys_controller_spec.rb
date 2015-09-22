@@ -125,6 +125,56 @@ RSpec.describe SurveysController, type: :controller do
           expect(response).to render_template("new")
         end
       end
+    end # POST /create
+
+    describe "GET /edit" do
+      let(:survey) { create :survey, site: site }
+      it "renders the edit template" do
+        get :edit, id: survey.id
+        expect(response).to render_template("edit")
+      end
+
+      it "assigns the @survey variable" do
+        get :edit, id: survey.id
+        expect(assigns(:survey)).to be_present
+      end
+    end # GET /edit
+
+    describe "PUT /update" do
+      let(:survey) { create :survey, site: site }
+      context "with valid attributes" do
+        it "locates the requested survey" do
+          put :update, id: survey, survey: attributes_for(:survey)
+          expect(assigns(:survey)).to eq survey
+        end
+
+        it "changes @survey's attributes" do
+          put :update, id: survey, survey: attributes_for(:survey,
+                                                          name: "updated")
+          survey.reload
+          expect(survey.name).to eq("updated")
+        end
+
+        it "redirects to the surveys index" do
+          put :update, id: survey, survey: attributes_for(:survey)
+          expect(response).to redirect_to surveys_path
+        end
+      end
+
+      context "with invalid attributes" do
+        it "does not change the survey's attributes" do
+          put :update, id: survey, survey: attributes_for(:survey,
+                                                          name: "updated",
+                                                          description: nil)
+          survey.reload
+          expect(survey.name).not_to eq("updated")
+        end
+
+        it "re-renders the :edit template" do
+          put :update, id: survey, survey: attributes_for(:survey, name: nil)
+          expect(response).to render_template("edit")
+        end
+      end
     end
   end
 
