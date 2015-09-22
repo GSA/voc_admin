@@ -1,4 +1,5 @@
 module FeatureHelper
+  ADMIN_HHS_ID = 2001149591
   def login_user
     create_admin_user
     visit login_path
@@ -6,18 +7,7 @@ module FeatureHelper
   end
 
   def create_admin_user
-    user_attributes = {
-      f_name: "John",
-      l_name: "Doe",
-      email: "jdoe@example.com",
-      hhs_id: 2001149591,
-      role_id: Role::ADMIN.id
-    }
-
-    User.find_by_hhs_id(user_attributes[:hhs_id]) || User.create!(user_attributes)
-  end
-
-  def create_test_site
-    FactoryGirl.create(:site, name: "Test Site")
+    User.find_by_hhs_id(ADMIN_HHS_ID) ||
+      FactoryGirl.create(:user, :admin, hhs_id: ADMIN_HHS_ID)
   end
 end

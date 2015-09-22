@@ -61,6 +61,7 @@ RSpec.describe SurveysController, type: :controller do
       context "and the user is an admin" do
         let(:admin_user) { FactoryGirl.create :user, :admin, f_name: "Admin" }
         before(:each) { login_user(admin_user) }
+
         it "should list all surveys" do
           survey = FactoryGirl.create :survey, site: site
           get :index
