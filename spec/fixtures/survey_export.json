@@ -1,0 +1,22 @@
+{
+  "survey_id": 197,
+  "major": 1,
+  "minor": 7,
+  "created_at": "2014-07-07T21:56:36-04:00",
+  "updated_at": "2014-07-07T21:56:36-04:00",
+  "pages": [{
+    "id": 2444,
+    "page_number": 1,
+    "survey_version_id": 873,
+    "clone_of_id": 2377,
+    "survey_elements": [{
+      "id": 2041,
+      "assetable_type": "TextQuestion",
+      "element_order": 1,
+      "statement": "Akamai Test",
+      "answer_type": "field",
+      "clone_of_id": 2003,
+      "answer_size": 50
+    }]
+  }]
+}

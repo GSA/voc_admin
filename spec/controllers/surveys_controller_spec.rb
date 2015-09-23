@@ -97,7 +97,7 @@ RSpec.describe SurveysController, type: :controller do
 
     describe "POST /create" do
       context "with valid attributes" do
-        let(:valid_attributes) { FactoryGirl.attributes_for(:survey, 
+        let(:valid_attributes) { FactoryGirl.attributes_for(:survey,
                                                             site_id: site.id) }
         it "saves the survey to the database" do
           expect {
@@ -241,7 +241,37 @@ RSpec.describe SurveysController, type: :controller do
           end
         end
       end
-    end
+
+      context "when not logged in as an admin" do
+        it "redirects to the surveys index" do
+          get :all_questions
+          expect(response).to redirect_to(surveys_path)
+        end
+      end
+    end # GET /all_questions
+
+    describe "POST /import_survey_version" do
+      it "assigns @survey" do
+        post :import_survey_version, survey_id: survey
+        expect(assigns(:survey)).to eq survey
+      end
+      context "with params[:file]" do
+        it "calls import_survey_version on @survey" do
+          survey = instance_spy(Survey)
+          allow(Survey).to receive(:find) { 1 }.and_return survey
+          file = fixture_file_upload("/survey_export.json", "application/json")
+          expect(survey).to receive(:import_survey_version)
+          post :import_survey_version, survey_id: 1, file: file
+        end
+      end
+
+      context "without params[:file]" do
+        it "redirects to survey_versions list" do
+          post :import_survey_version, survey_id: survey
+          expect(response).to redirect_to(survey_survey_versions_path(survey))
+        end
+      end
+    end # POST /import_survey_version
   end
 
   context "when a user is not logged in" do
