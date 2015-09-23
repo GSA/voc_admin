@@ -189,6 +189,58 @@ RSpec.describe SurveysController, type: :controller do
         expect(response).to redirect_to(surveys_path)
       end
 
+      it "sets the archived flag" do
+        delete :destroy, id: survey
+        survey.reload
+        expect(survey.archived).to be true
+      end
+    end # DELETE /destroy
+
+    describe "GET /start_page_preview" do
+      it "sets @survey" do
+        get :start_page_preview, id: survey
+        expect(assigns(:survey)).to eq survey
+      end
+
+      it "renders the :start_page_preview template" do
+        get :start_page_preview, id: survey
+        expect(response).to render_template(:start_page_preview)
+      end
+
+      it "does not render the application layout template" do
+        get :start_page_preview, id: survey
+        expect(response).to_not render_template(layout: "application")
+      end
+    end # GET /start_page_preview
+
+    describe "GET /all_questions" do
+      context "when logged in as admin" do
+        before(:each) do
+          login_user FactoryGirl.create(:user, :admin, sites: [site])
+        end
+
+        context "with no published versions" do
+          it "sets @published_versions to an empty array" do
+            get :all_questions
+            expect(assigns(:published_versions)).to be_empty
+          end
+        end
+
+        context "with some published and some unpublished versions" do
+          it "should set @published_versions to an array of only published versions" do
+            published_version = survey.survey_versions.first
+            published_version.publish_me
+            get :all_questions
+            expect(assigns(:published_versions)).to eq [published_version]
+          end
+
+          it "does not include unpublished versions" do
+            unpublished_version = survey.survey_versions.first
+            get :all_questions
+            expect(assigns(:published_versions)).to_not include(unpublished_version)
+          end
+        end
+      end
     end
   end
 
