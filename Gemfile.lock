@@ -402,6 +402,3 @@ DEPENDENCIES
   warbler
   wkhtmltopdf-binary (~> 0.9.9.1)
   yard
-
-BUNDLED WITH
-   1.10.6

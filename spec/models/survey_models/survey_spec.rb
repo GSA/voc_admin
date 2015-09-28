@@ -80,4 +80,20 @@ RSpec.describe Survey, type: :model do
       end
     end
   end #published_version
+
+  context "#newest_version" do
+    it "returns the version with the highest major version" do
+      survey = create :survey
+      new_version = survey.survey_versions.create major: 2, minor: 0
+      expect(survey.newest_version).to eq new_version
+    end
+
+    it "returns the version with the highest minor version of those with the highest major version" do
+      survey = create :survey
+      new_version = survey.survey_versions.create major: 2, minor: 0
+      survey.survey_versions.create major: 1, minor: 1
+      expect(survey.newest_version).to eq new_version
+    end
+
+  end
 end
