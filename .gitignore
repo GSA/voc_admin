@@ -15,3 +15,5 @@ config/*.yml
 .rvmrc
 db/schema.rb
 db/dumps
+spec.old/
+*.rdb
