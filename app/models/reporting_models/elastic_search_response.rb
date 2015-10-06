@@ -42,7 +42,7 @@ class ElasticSearchResponse
     end
 
     args[:body][:size] = options[:size] || SurveyResponse.default_per_page
-    args[:body][:from] = (options[:page] || 0) * SurveyResponse.default_per_page
+    args[:body][:from] = (options[:page] || 0) * args[:body][:size]
 
     puts "Searching elasticsearch with body: #{args.inspect}"
 
