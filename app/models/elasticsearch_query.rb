@@ -35,7 +35,8 @@ class ElasticsearchQuery
   end
 
   def search(opts = {})
-    results = ELASTIC_SEARCH_CLIENT.search(search_criteria.merge(opts))
+    puts "Searching Elasticsearch with: #{search_criteria.deep_merge(opts).to_json}"
+    results = ELASTIC_SEARCH_CLIENT.search(search_criteria.deep_merge(opts))
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
     responses = SurveyResponse.where(id: ids)
 
@@ -52,7 +53,7 @@ class ElasticsearchQuery
     return to_enum(__callee__) unless block_given?
     num_batches = (count / batch_size.to_f).ceil
     num_batches.times do |batch|
-      _, responses = search({from: (batch_size * batch), size: batch_size})
+      _, responses = search({body: {from: (batch_size * batch), size: batch_size}})
       yield responses
     end
   end
@@ -61,7 +62,7 @@ class ElasticsearchQuery
     return to_enum(__callee__) unless block_given?
     num_batches = (count / batch_size.to_f).ceil
     num_batches.times do |batch|
-      es_results, _ = search({from: (batch_size * batch), size: batch_size})
+      es_results, _ = search({body: {from: (batch_size * batch), size: batch_size}})
       reportable_survey_responses = ReportableSurveyResponse
         .where(survey_version_id: survey_version_id)
         .in(survey_response_id: es_results['hits']['hits'].map {|hit| hit['_source']}
@@ -80,10 +81,12 @@ class ElasticsearchQuery
 
   def search_criteria
     {
-      sort: sort,
-      size: limit,
-      from: offset
-    }.merge(args)
+      body: {
+        sort: sort,
+        size: limit,
+        from: offset
+      }
+    }.deep_merge(args)
   end
 
   def total_pages
@@ -99,12 +102,12 @@ class ElasticsearchQuery
   end
 
   def offset
-    (options[:page] || 0) * SurveyResponse.default_per_page
+    (options[:page] || 0) * limit
   end
 
   def sort
     {
-      "created_at" => { "order" => "asc" }
+      "created_at" => { "order" => "desc" }
     }
   end
 
