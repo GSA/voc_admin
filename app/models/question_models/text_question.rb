@@ -15,7 +15,9 @@ class TextQuestion < ActiveRecord::Base
   validates :answer_type, :presence => true
   validates :question_content, :presence => true
 
-  attr_accessible :answer_type, :question_content_attributes, :survey_element_attributes, :clone_of_id, :row_size, :answer_size
+  attr_accessible :answer_type, :question_content_attributes, 
+    :survey_element_attributes, :clone_of_id, :row_size, :answer_size,
+    :column_size
   accepts_nested_attributes_for :question_content
   accepts_nested_attributes_for :survey_element
 
@@ -47,16 +49,19 @@ class TextQuestion < ActiveRecord::Base
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [TextQuestion] the cloned TextQuestion
   def clone_me(target_sv, target_page = nil)
-    qc_attribs = self.question_content.attributes.merge(:skip_observer => true)
-    qc_attribs.delete("id")
+    qc_attribs = self.question_content.attributes
+      .except("id", "created_at", "updated_at", "questionable_id")
+      .merge(:skip_observer => true)
     target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
-    se_attribs = self.survey_element.attributes.merge(
-                  :survey_version_id=>target_sv.id,
-                  :page_id=> target_page.id,
-                  :element_order => (target_page.survey_elements.maximum(:element_order) || 0) + 1
-                 )
-    se_attribs.delete("id")
-    cloned_question = TextQuestion.new(self.attributes.merge(
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        :survey_version_id=>target_sv.id,
+        :page_id=> target_page.id,
+        :element_order => (target_page.survey_elements.maximum(:element_order) || 0) + 1
+    )
+    cloneable_attributes = self.attributes.except("id", "created_at", "updated_at")
+    cloned_question = TextQuestion.new(cloneable_attributes.merge(
                         :question_content_attributes=>qc_attribs,
                         :survey_element_attributes=>se_attribs,
                         :clone_of_id => (self.id)
