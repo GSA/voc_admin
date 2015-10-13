@@ -153,7 +153,9 @@ class DisplayField < ActiveRecord::Base
   def clone_me(target_sv)
     df = target_sv.display_fields.find_by_name(self.name)
     return df if df
-    DisplayField.create!(self.attributes.merge(
+    cloneable_attributes = self.attributes
+      .except("id", "type", "created_at", "updated_at")
+    DisplayField.create!(cloneable_attributes.merge(
         :clone_of_id=>self.id,
         :survey_version_id =>target_sv.id,
         :model_type=>self.type,
@@ -167,7 +169,7 @@ class DisplayField < ActiveRecord::Base
   # @param [SurveyVersion] target_sv the SurveyVersion to search for the cloned copy.
   # @return [DisplayField] the original DisplayField
   def find_my_clone_for(target_sv)
-    df = target_sv.display_fields.find_by_clone_of_id(self.id)
+    target_sv.display_fields.find_by_clone_of_id(self.id)
   end
 
   # Creates default DisplayFieldValue mappings on the current SurveyVersion's SurveyResponses.
