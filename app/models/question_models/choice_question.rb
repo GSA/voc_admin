@@ -19,11 +19,16 @@ class ChoiceQuestion < ActiveRecord::Base
   validate :must_have_at_least_one_choice_answer
   validate :only_one_default_answer, :unless => Proc.new { |obj| obj.allows_multiple_selection }
 
-  attr_accessible :answer_type, :question_content_attributes, :survey_element_attributes, :choice_answers_attributes, :clone_of_id, :choice_answers, :auto_next_page, :display_results, :answer_placement
+  attr_accessible :answer_type, :question_content_attributes, 
+    :survey_element_attributes, :choice_answers_attributes, :clone_of_id, 
+    :choice_answers, :auto_next_page, :display_results, :answer_placement,
+    :multiselect, :matrix_question_id
 
-  accepts_nested_attributes_for :question_content, :allow_destroy => true, :reject_if => :all_blank
+  accepts_nested_attributes_for :question_content, :allow_destroy => true, 
+    :reject_if => :all_blank
   accepts_nested_attributes_for :survey_element
-  accepts_nested_attributes_for :choice_answers, :allow_destroy => true, :reject_if => proc { |obj| obj['answer'].blank? }
+  accepts_nested_attributes_for :choice_answers, :allow_destroy => true, 
+    :reject_if => proc { |obj| obj['answer'].blank? }
 
   delegate :statement, :required, :flow_control, :flow_control?, :display_fields,
     :to => :question_content
@@ -79,21 +84,25 @@ class ChoiceQuestion < ActiveRecord::Base
     return unless self.survey_element
     #build question content
     qc_attribs = self.question_content.attributes
-    qc_attribs.delete("id")
+      .except("id", "created_at", "updated_at", "questionable_id")
 
     target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
 
     #build Survey Element
-    se_attribs = self.survey_element.attributes.merge(
-      :survey_version_id=>target_sv.id,
-      :page_id=>target_page.id)
-    se_attribs.delete("id")
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        :survey_version_id=>target_sv.id,
+        :page_id=>target_page.id
+      )
 
     #build Choice Answers
     ca_attribs = self.choice_answers.map do |choice_answer|
-      answer_hash = choice_answer.attributes.merge(
-        :clone_of_id=>(choice_answer.id))
-      answer_hash.delete("id")
+      answer_hash = choice_answer.attributes
+        .except("id", "created_at", "updated_at")
+        .merge(
+          :clone_of_id=>(choice_answer.id)
+        )
 
       #update the next page pointer
       if answer_hash["next_page_id"]
@@ -103,7 +112,8 @@ class ChoiceQuestion < ActiveRecord::Base
       answer_hash
     end
 
-    choice_question = ChoiceQuestion.new self.attributes.merge(
+    cloneable_attributes = self.attributes.except("id", "updated_at", "created_at")
+    choice_question = ChoiceQuestion.new cloneable_attributes.merge(
      :question_content_attributes=>qc_attribs.merge(:skip_observer => true),
      :survey_element_attributes=>se_attribs,
      :choice_answers_attributes=>ca_attribs,
