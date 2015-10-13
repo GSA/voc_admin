@@ -7,7 +7,7 @@ class ChoiceQuestion < ActiveRecord::Base
 
   has_one :survey_element, :as => :assetable, :dependent => :destroy
   has_one :question_content, :as => :questionable, :dependent => :destroy
-  has_many :choice_answers, :dependent => :destroy
+  has_many :choice_answers, :dependent => :destroy, :autosave => true
   belongs_to :matrix_question
 
   has_many :question_bank_questions, as: :bankable, dependent: :destroy
@@ -42,7 +42,9 @@ class ChoiceQuestion < ActiveRecord::Base
   # Verifies that only one "default" answer is selected across the question's associated answers.
   def only_one_default_answer
     defaults = self.choice_answers.map{|ca| ca.is_default}.reject{|is_default| is_default == false}
-    errors.add_to_base("#{answer_type.titlecase} style questions can have only one default answer") if(defaults.size > 1)
+    if(defaults.size > 1)
+      errors.add_to_base("#{answer_type.titlecase} style questions can have only one default answer")
+    end
   end
 
   # If this is a standalone ChoiceQuestion, the contained SurveyElement will refer to the SurveyVersion; if part
@@ -111,7 +113,6 @@ class ChoiceQuestion < ActiveRecord::Base
       end
       answer_hash
     end
-
     cloneable_attributes = self.attributes.except("id", "updated_at", "created_at")
     choice_question = ChoiceQuestion.new cloneable_attributes.merge(
      :question_content_attributes=>qc_attribs.merge(:skip_observer => true),

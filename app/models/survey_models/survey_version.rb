@@ -229,7 +229,8 @@ class SurveyVersion < ActiveRecord::Base
       survey = self.survey
 
       #get greatest minor version
-      minor_version = self.survey.survey_versions.where(:major => self.major).order('survey_versions.minor desc').first.minor + 1
+      minor_version = self.survey.survey_versions.where(:major => self.major)
+        .order('survey_versions.minor desc').first.minor + 1
       new_attributes = self.attributes.except(
         "id", "survey_id", "published", "locked", "archived", "created_at", 
         "updated_at", "counts_updated_at", "dirty_reports"
