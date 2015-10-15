@@ -13,13 +13,14 @@ class MatrixQuestion < ActiveRecord::Base
   validates :question_content, :presence => true
   validate :has_choice_questions
 
-  attr_accessible :choice_questions_attributes, :question_content_attributes, :survey_element_attributes, :clone_of_id, :survey_version_id
+  attr_accessible :choice_questions_attributes, :question_content_attributes,
+    :survey_element_attributes, :clone_of_id, :survey_version_id
 
   accepts_nested_attributes_for :question_content, :allow_destroy => false, :reject_if => :all_blank
   accepts_nested_attributes_for :choice_questions, :allow_destroy => true
   accepts_nested_attributes_for :survey_element
 
-  after_validation :remove_old_answers
+  before_update :remove_old_answers
 
   delegate :statement, :statement=, :required, :to => :question_content
 
@@ -99,7 +100,7 @@ class MatrixQuestion < ActiveRecord::Base
     end
 
     mq_attribs = mq_attribs.merge(
-      :choice_questions_attributes => choice_questions, 
+      :choice_questions_attributes => choice_questions,
       :survey_element_attributes => se_attribs
     )
     MatrixQuestion.create!(mq_attribs)
@@ -201,7 +202,9 @@ class MatrixQuestion < ActiveRecord::Base
 
   # MatrixQuestions need to rebuild the ChoiceAnswers on update. This method does this after validation.
   def remove_old_answers
-    self.choice_questions.includes(:choice_answers).each {|x| x.choice_answers.each(&:destroy)}
+    if self.valid?
+      self.choice_questions.includes(:choice_answers).each {|x| x.choice_answers.each(&:destroy)}
+    end
   end
 end
 
