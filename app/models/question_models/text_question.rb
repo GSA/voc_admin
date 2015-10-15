@@ -15,7 +15,7 @@ class TextQuestion < ActiveRecord::Base
   validates :answer_type, :presence => true
   validates :question_content, :presence => true
 
-  attr_accessible :answer_type, :question_content_attributes, 
+  attr_accessible :answer_type, :question_content_attributes,
     :survey_element_attributes, :clone_of_id, :row_size, :answer_size,
     :column_size
   accepts_nested_attributes_for :question_content
@@ -90,16 +90,22 @@ class TextQuestion < ActiveRecord::Base
   # @param [Page] page the page to be cloned onto
   # @return [TextQuestion] the cloned copy
   def copy_to_page(page)
-      qc_attribs = self.question_content.attributes
-      qc_attribs = qc_attribs.merge(:statement => "#{self.question_content.statement} (copy)")
-      qc_attribs.delete("id")
-      se_attribs = self.survey_element.attributes.merge(:page_id=>page.id)
-      se_attribs.delete("id")
-      TextQuestion.create!(self.attributes.merge(
-                            :question_content_attributes=>qc_attribs,
-                            :survey_element_attributes=>se_attribs,
-                            :clone_of_id => nil
-                          ))
+    qc_attribs = self.question_content.attributes
+      .except("id", "created_at", "updated_at", "questionable_id")
+      .merge("statement" => "#{self.question_content.statement} (copy)")
+
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge("page_id" => page.id)
+
+    new_question_attributes = self.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        "question_content_attributes" => qc_attribs,
+        "survey_element_attributes" => se_attribs,
+        "clone_of_id" => nil
+      )
+    TextQuestion.create!(new_question_attributes)
   end
 
   def reporter

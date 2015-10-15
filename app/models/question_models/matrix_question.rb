@@ -113,41 +113,53 @@ class MatrixQuestion < ActiveRecord::Base
   def copy_to_page(page)
     #start matrix hash
     mq_qc_attribs = self.question_content.attributes
-    mq_qc_attribs.delete("id")
-    mq_attribs = self.attributes.merge(:clone_of_id => nil, :question_content_attributes => mq_qc_attribs.merge(:statement => "#{self.question_content.statement} (copy)"))
-    mq_attribs.delete("id")
+      .except("id", "created_at", "updated_at", "questionable_id")
+
+    cloneable_attributes = self.attributes
+      .except("id", "created_at", "updated_at", "statement")
+    mq_attribs = cloneable_attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        :clone_of_id => nil,
+        :question_content_attributes => mq_qc_attribs.merge("statement" => "#{self.question_content.statement} (copy)")
+      )
 
 
     #build se hash
-    se_attribs = self.survey_element.attributes.merge(:page_id => page.id)
-    se_attribs.delete("id")
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at", "questionable_id")
+      .merge("page_id" => page.id)
 
     #build content question hash
     choice_questions = self.choice_questions.map do |choice_question|
-      qc_attribs = choice_question.question_content.attributes.merge({:matrix_statement => "#{self.question_content.statement} (copy)"})
-      qc_attribs = qc_attribs.merge(:statement => "#{choice_question.question_content.statement} (copy)")
-      qc_attribs.delete("id")
+      qc_attribs = choice_question.question_content.attributes
+        .except("id", "created_at", "updated_at", "questionable_id")
+        .merge(
+          "matrix_statement" => "#{self.question_content.statement} (copy)",
+          "statement" => "#{choice_question.question_content.statement} (copy)"
+        )
 
       cq_attribs = choice_question.attributes
-      cq_attribs.delete("id")
+        .except("id", "created_at", "updated_at")
       ca_attribs = choice_question.choice_answers.map do |choice_answer|
-        answer_hash = choice_answer.attributes.merge(
-          :clone_of_id => nil
-        )
-        answer_hash.delete("id")
+        answer_hash = choice_answer.attributes
+          .except("id", "updated_at", "created_at")
+          .merge("clone_of_id" => nil)
 
         #update the next page pointer
         if answer_hash["next_page_id"]
-          answer_hash["next_page_id"] = nil #clear pointer since copied question pointers would be invalid
+          answer_hash["next_page_id"] = nil
         end
         answer_hash
       end
-      cq_attribs = cq_attribs.merge(
-                    :question_content_attributes => qc_attribs,
-                    :choice_answers_attributes => ca_attribs,
-                    :clone_of_id => (choice_question.id)
-                   )
+      cq_attribs.merge(
+        :question_content_attributes => qc_attribs,
+        :choice_answers_attributes => ca_attribs,
+        :clone_of_id => (choice_question.id)
+      )
     end
+
+    puts choice_questions.inspect
 
     mq_attribs = mq_attribs.merge(:choice_questions_attributes => choice_questions, :survey_element_attributes => se_attribs)
     MatrixQuestion.create!(mq_attribs)

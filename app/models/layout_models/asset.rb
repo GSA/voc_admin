@@ -43,9 +43,13 @@ class Asset < ActiveRecord::Base
   # @param [Page] page the Page destination for the new cloned copy
   # @return [Asset] the newly-copied Asset
   def copy_to_page(page)
-    se_attribs = self.survey_element.attributes.merge(:page_id=>page.id)
-    se_attribs.delete("id")
-    Asset.create!(self.attributes.merge(:survey_element_attributes=>se_attribs))
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(:page_id=>page.id)
+    Asset.create!(self.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(:survey_element_attributes=>se_attribs)
+    )
   end
 
   def reporter
