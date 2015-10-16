@@ -69,7 +69,7 @@ class ElasticSearchResponse
   def self.empty_search
     {
       "sort" => {
-        "created_at" => { "order" => "asc" }
+        "created_at" => { "order" => "asc", "ignore_unmapped" => true }
       },
       "query" => {
         "match_all" => {}
