@@ -89,7 +89,10 @@ class SurveyResponsesController < ApplicationController
       set_custom_view
       search_responses
       # Paginate the results
-      @survey_responses = paginate_responses(@survey_responses.includes(:display_field_values), params[:page].to_i)
+      @survey_responses = paginate_responses(
+        @survey_responses.includes(:display_field_values), 
+        params[:page].to_i
+      )
     else
       @survey_responses = []
     end
@@ -106,7 +109,9 @@ class SurveyResponsesController < ApplicationController
     # decrement the requested page if the response count falls below the pagination threshold
     # pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
     total_count = @es_results["hits"]["total"]
-    Kaminari.paginate_array(responses, total_count: total_count).page(pages).per(SurveyResponse.default_per_page)
+    Kaminari.paginate_array(responses, total_count: total_count)
+      .page(pages)
+      .per(SurveyResponse.default_per_page)
   end
 
   # Uses the query parameter CustomView, the default CustomView for
