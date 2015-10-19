@@ -1,1 +1,1 @@
-THIS IS A TEST: <%= @msg.gsub('##URL##', edit_survey_response_url(@survey_response)) %>
+THIS IS A TEST: <%= @msg.gsub('##URL##', edit_survey_response_url(@survey_response, :host => MailConfig["default_url_options"]["host"])) %>
