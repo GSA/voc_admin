@@ -11,7 +11,8 @@ class Export < ActiveRecord::Base
   before_validation :generate_access_token
 
   validates :access_token, presence: true, uniqueness: true, length: { maximum: 255 }
-  validates_attachment_presence :document
+  validates_attachment :document, presence: true
+  do_not_validate_attachment_file_type :document
 
   private
   # Generate a unique identifier.
