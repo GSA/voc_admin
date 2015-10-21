@@ -37,65 +37,7 @@ namespace :reporting do
 
   desc "create csv with counts in root dir"
   task :csv_report, [:month, :year] => [:environment] do |t,args|
-
-    # Parse the date in the correct timezone
-    date_str = "#{args.year.to_i}-#{args.month.to_i}-1"
-    zone = "Eastern Time (US & Canada)"
-    beginning_of_month = ActiveSupport::TimeZone[zone].parse(date_str)
-    end_of_month = beginning_of_month.end_of_month
-    beginning_of_year = beginning_of_month.beginning_of_year
-
-    CSV.open(Rails.root + "#{end_of_month.strftime("%m_%Y")}_report.csv","wb") do |csv|
-      total_month = 0
-      total_year = 0
-      total_all = 0
-
-      # default_scope unarchived
-      Survey.all.each do |survey|
-        survey.survey_versions.each do |sv|
-          month_response_count = sv.survey_responses.where(:created_at => beginning_of_month..end_of_month).count
-          year_response_count = sv.survey_responses.where(:created_at=>beginning_of_year..end_of_month).count
-          all_response_count = sv.survey_responses.where("created_at <= ? ", end_of_month).count
-          total_month = month_response_count + total_month
-          total_year = year_response_count + total_year
-          total_all = all_response_count + total_all
-        end
-      end
-
-      csv << ["Monthly Total",
-        total_month,
-        "Time Period",
-        beginning_of_month.strftime(" Start: %m/%d/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["Year Total",
-        total_year,
-        "Time Period",
-        beginning_of_month.strftime(" Start: 1/1/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["All Time Total",
-        total_all,
-        "Time Period",
-        SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["Survey ID", "Survey", "Survey Version", "Monthly - Number of Responses", "Year - Number of Responses", "Total - Number of Responses"]
-      Survey.all.each do |survey|
-        survey.survey_versions.each do |sv|
-          month_response_count = sv.survey_responses.where(:created_at => beginning_of_month..end_of_month).count
-          year_response_count = sv.survey_responses.where(:created_at=>beginning_of_year..end_of_month).count
-          all_response_count = sv.survey_responses.where("created_at <= ? ", end_of_month).count
-          csv << [survey.id,
-            survey.name,
-            "v#{sv.major}.#{sv.minor}",
-            month_response_count,
-            year_response_count,
-            all_response_count
-          ]
-        end
-      end
-    end
+    MonthlyReport.new(args.month.to_i, args.year.to_i).generate
   end
 
   desc "Run all daily reporting tasks - counts, loading questions, and mailing recurring reports"
