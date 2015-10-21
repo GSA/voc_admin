@@ -7,7 +7,7 @@ class MonthlyReport
   end
 
   def generate
-    CSV.open(Rails.root + "#{end_of_month.strftime("%m_%Y")}_report.csv","wb") do |csv|
+    CSV.open(Rails.root + file_name,"wb") do |csv|
       csv << ["Monthly Total",
         total_responses_for_month,
         "Time Period",
@@ -26,22 +26,32 @@ class MonthlyReport
         SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
         end_of_month.strftime("End: %m/%d/%Y")
       ]
-      csv << ["Survey ID", "Survey", "Survey Version", "Monthly - Number of Responses", "Year - Number of Responses", "Total - Number of Responses"]
-      Survey.includes(:survey_versions).each do |survey|
-        survey.survey_versions.each do |sv|
-          csv << [survey.id,
-            survey.name,
-            "v#{sv.major}.#{sv.minor}",
-            version_response_counts_for_month.fetch(sv.id, 0),
-            version_response_counts_for_year.fetch(sv.id, 0),
-            version_response_counts.fetch(sv.id, 0)
-          ]
-        end
+      csv << ["Survey ID", "Survey", "Survey Version",
+        "Monthly - Number of Responses", "Year - Number of Responses",
+        "Total - Number of Responses"]
+
+      SurveyVersion.includes(:survey)
+        .where(surveys: { archived: false }, survey_versions: { archived: false })
+        .order(
+          surveys: { id: :asc },
+          survey_responses: { major: :asc, minor: :asc },
+        ).each do |sv|
+        csv << [sv.survey_id,
+          sv.survey_name,
+          "v#{sv.version_number}",
+          version_response_counts_for_month.fetch(sv.id, 0),
+          version_response_counts_for_year.fetch(sv.id, 0),
+          version_response_counts.fetch(sv.id, 0)
+        ]
       end
     end
   end
 
   private
+
+  def file_name
+    "#{@month}_#{@year}_report.csv"
+  end
 
   def total_responses_for_month
     @total_responses_for_month ||= version_response_counts_for_month
