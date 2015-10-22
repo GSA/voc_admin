@@ -8,27 +8,10 @@ class MonthlyReport
 
   def generate
     CSV.open(Rails.root + file_name,"wb") do |csv|
-      csv << ["Monthly Total",
-        total_responses_for_month,
-        "Time Period",
-        beginning_of_month.strftime(" Start: %m/%d/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["Year Total",
-        total_responses_for_year,
-        "Time Period",
-        beginning_of_month.strftime(" Start: 1/1/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["All Time Total",
-        total_responses,
-        "Time Period",
-        SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
-        end_of_month.strftime("End: %m/%d/%Y")
-      ]
-      csv << ["Survey ID", "Survey", "Survey Version",
-        "Monthly - Number of Responses", "Year - Number of Responses",
-        "Total - Number of Responses"]
+      add_monthly_total_for_all_versions(csv)
+      add_yearly_total_for_all_versions(csv)
+      add_total_responses_for_all_versions(csv)
+      add_column_headers(csv)
 
       SurveyVersion.includes(:survey)
         .where(surveys: { archived: false }, survey_versions: { archived: false })
@@ -48,6 +31,39 @@ class MonthlyReport
   end
 
   private
+
+  def add_column_headers csv
+    csv << ["Survey ID", "Survey", "Survey Version",
+      "Monthly - Number of Responses", "Year - Number of Responses",
+      "Total - Number of Responses"]
+  end
+
+  def add_monthly_total_for_all_versions csv
+    csv << ["Monthly Total",
+      total_responses_for_month,
+      "Time Period",
+      beginning_of_month.strftime(" Start: %m/%d/%Y"),
+      end_of_month.strftime("End: %m/%d/%Y")
+    ]
+  end
+
+  def add_yearly_total_for_all_versions csv
+    csv << ["Year Total",
+      total_responses_for_year,
+      "Time Period",
+      beginning_of_month.strftime(" Start: 1/1/%Y"),
+      end_of_month.strftime("End: %m/%d/%Y")
+    ]
+  end
+
+  def add_total_responses_for_all_versions csv
+    csv << ["All Time Total",
+      total_responses,
+      "Time Period",
+      SurveyResponse.first.created_at.strftime(" Start: %m/%d/%Y"),
+      end_of_month.strftime("End: %m/%d/%Y")
+    ]
+  end
 
   def file_name
     "#{@month}_#{@year}_report.csv"
