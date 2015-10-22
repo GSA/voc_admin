@@ -40,6 +40,27 @@ namespace :reporting do
     MonthlyReport.new(args.month.to_i, args.year.to_i).generate
   end
 
+  desc "create monthly reports for the last x months. [month, year, num_months]"
+  task :monthly_reports, [:month, :year, :num_reports] => [:environment] do |t, args|
+    month = args.month.to_i
+    year = args.year.to_i
+    num_reports = args.num_reports.to_i
+
+    (num_reports).times do |n|
+      y = year
+      m = if n >= month
+        y -= 1
+        12 - (n - month)
+      else
+        month - n
+      end
+
+      puts "Generating Report for #{m}-#{y}"
+      Rake::Task["reporting:csv_report"].reenable
+      Rake::Task["reporting:csv_report"].invoke(m, y)
+    end
+  end
+
   desc "Run all daily reporting tasks - counts, loading questions, and mailing recurring reports"
   task :daily => [:environment] do
     puts "Updating survey version counts..."
