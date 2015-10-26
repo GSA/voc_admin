@@ -32,11 +32,10 @@ class SurveyResponsesQuery
   #   Custom View.
   #   Default to Created By date.
   def responses_order
-    if custom_view?
-      sort_arr = custom_view.sorted_display_field_custom_views.map do |s|
-        elastic_sort("df_#{s.display_field_id}.raw", s.sort_direction)
+    if custom_view? && params[:order_column].blank?
+      custom_view.sorted_display_field_custom_views.inject({}) do |hash, s|
+        hash.merge elastic_sort("df_#{s.display_field_id}.raw", s.sort_direction)
       end
-      sort_arr.join(",")
     else # fall back on date if we have no other recourse
       elastic_sort(order_column, order_dir)
     end
