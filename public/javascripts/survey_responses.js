@@ -1,12 +1,20 @@
 $(document).ready(function() {
   /* Activating Best In Place */
   $(".best_in_place").best_in_place();
+
+  /* Setup CSRF Token */
+  $.ajaxSetup({
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
 });
 
 var search_timer_id = null;
 var last_ajax_request_id = 0;
 
 $(function(){
+
     $(".editDisplayFieldValue").live('ajax:success', function(event, data, status, xhr){
             $("#dfv_edit_modal").html(data);
             $("#dfv_edit_modal").modal();
