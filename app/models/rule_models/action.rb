@@ -5,6 +5,8 @@ class Action < ActiveRecord::Base
   belongs_to :rule
   belongs_to :display_field
 
+  validates :display_field, presence: true
+
   # Signifies that an Action is associated with a textual value.
   TEXT = "Text"
   # Signifies than an Action is tied to a RawResponse value.
