@@ -87,9 +87,6 @@ class SurveyVersionImporter
     @survey_version = survey.survey_versions.create(
       major: next_major_version_number,
       minor: 0,
-      published: false,
-      locked: false,
-      archived: false,
       notes: 'Created via Import Process',
       created_by_id: source_sv_id,
       thank_you_page: data_hash["thank_you_page"]
