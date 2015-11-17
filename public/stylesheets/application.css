@@ -107,6 +107,13 @@ br {
   *clear: both;
 }
 
+/* Asterisk */
+abbr[title=required] {
+  color: red;
+  text-decoration: none;
+  border: none;
+}
+
 /**** Links ****/
 a {
   color: #003e7a;

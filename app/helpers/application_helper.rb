@@ -68,4 +68,8 @@ module ApplicationHelper
   def pdf?
     params[:action] == 'pdf'
   end
+
+  def required_label(label_text)
+    "<abbr title='required'>*</abbr>#{label_text}".html_safe
+  end
 end
