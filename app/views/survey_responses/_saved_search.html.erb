@@ -2,13 +2,8 @@
   <div id="saved_searches">
     <div>Saved Searches</div>
     <% version.saved_searches.each do |saved_search| %>
-      <div>
-        <%= link_to saved_search.name, survey_responses_path(saved_search.query_params) %>
-        <%= link_to "(Remove)",
-          survey_survey_version_saved_search_path(version.survey, version, saved_search),
-          method: :delete, confirm: "Are you sure?"
-        %>
-      </div>
+      <%= render partial: "saved_search_info", locals: { saved_search: saved_search,
+      version: version} %>
     <% end %>
   </div>
   <%= link_to "Save Search", "javascript: void(0);", class: "managed js-saveSearch" %>

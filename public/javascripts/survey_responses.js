@@ -109,10 +109,13 @@ $(function(){
         type: 'POST',
         url: $(this).attr('action'),
         data: body,
-        success: function() {
+        success: function(data, textStatus, jqXHR) {
           $("#new_saved_search").hide();
-          $("#advanced_search_form").submit();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Error: ", errorThrown);
         }
+
       });
 
       e.preventDefault();

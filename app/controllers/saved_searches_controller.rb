@@ -10,7 +10,7 @@ class SavedSearchesController < ApplicationController
 
     if @saved_search.save
       respond_to do |format|
-        format.js { redirect_to survey_responses_path @saved_search.query_params }
+        format.js #
       end
     else
       respond_to do |format|
