@@ -2,7 +2,7 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :f_name, :l_name, :email, :site_ids, :role_id, :hhs_id
+  attr_accessible :f_name, :l_name, :email, :site_ids, :role_id, :hhs_id, :fullname
 
   has_many :site_users
   has_many :sites,      :through => :site_users
@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   validates :email,     :presence => true
   validates :f_name,    :presence => true
   validates :l_name,    :presence => true
+  validates :fullname, :presence => true
 
   scope :listing,       order("l_name ASC, f_name ASC")
 

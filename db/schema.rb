@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150311172308) do
+ActiveRecord::Schema.define(:version => 20151123192526) do
 
   create_table "actions", :force => true do |t|
     t.integer  "rule_id",          :null => false
@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(:version => 20150311172308) do
     t.integer  "role_id"
     t.string   "hhs_id",            :limit => 50
     t.datetime "last_request_at"
+    t.string   "fullname"
   end
 
 end
