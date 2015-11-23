@@ -71,14 +71,15 @@ module ApplicationHelper
     title ||= column.titleize
 
     arrows = content_tag :span, :class => "sort_arrows" do
-      ret = ""
       if column == params[:sort]
-        ret += image_tag "arrow_up_larger.png", :alt => "Sort"   if direction == "desc" && column == params[:sort]
-        ret += image_tag "arrow_down_larger.png", :alt => "Sort" if direction == "asc"  && column == params[:sort]
+        if direction == "desc"
+          image_tag "arrow_up_larger.png", :alt => "Sort"
+        else
+          image_tag "arrow_down_larger.png", :alt => "Sort"
+        end
       else
-        ret += image_tag "arrows.png", :alt => "Sort"
+        image_tag "arrows.png", :alt => "Sort"
       end
-      ret.html_safe
     end
 
     title += arrows
