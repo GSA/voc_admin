@@ -4,8 +4,8 @@ class AddFullnameToUsers < ActiveRecord::Migration
 
     puts "consolidating user names into fullname"
     User.all.each do |user|
-      puts "Updating #{user.name}"
-      user.update_column :fullname, user.name
+      puts "Updating #{user.f_name} #{user.l_name}"
+      user.update_column :fullname, "#{user.f_name} #{user.l_name}"
     end
   end
 

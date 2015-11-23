@@ -2,44 +2,44 @@
 <%= flash_messages(flash) %>
 
 <div id="showpage">
-	<div class="left_side">
-		Name:
-	</div>
-	<div class="right_side">
-		<p><%= @user.f_name %> <%= @user.l_name %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Email:
-	</div>
-	<div class="right_side">
-		<p><%= @user.email %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		HHS ID:
-	</div>
-	<div class="right_side">
-		<p><%= @user.hhs_id %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Role:
-	</div>
-	<div class="right_side">
-		<p><%= @user.role.nil? ? 'User' : @user.role.name %></p>
-	</div>
-	<br />
-	<% if @user.role.nil? %>
-		<div class="left_side">
-  		Sites:
-  	</div>
-  	<div class="right_side">
-	    <% @user.sites.each do |site| %>
-	    	<%= site.name %>
-	    <% end %>
-  	</div>
-	<% end %>
+  <div class="left_side">
+    Name:
+  </div>
+  <div class="right_side">
+    <p><%= @user.fullname %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Email:
+  </div>
+  <div class="right_side">
+    <p><%= @user.email %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    HHS ID:
+  </div>
+  <div class="right_side">
+    <p><%= @user.hhs_id %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Role:
+  </div>
+  <div class="right_side">
+    <p><%= @user.role.nil? ? 'User' : @user.role.name %></p>
+  </div>
+  <br />
+  <% if @user.role.nil? %>
+    <div class="left_side">
+      Sites:
+    </div>
+    <div class="right_side">
+      <% @user.sites.each do |site| %>
+        <%= site.name %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <div class="page-nav">

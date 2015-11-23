@@ -2,18 +2,16 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :f_name, :l_name, :email, :site_ids, :role_id, :hhs_id, :fullname
+  attr_accessible :email, :site_ids, :role_id, :hhs_id, :fullname
 
   has_many :site_users
   has_many :sites,      :through => :site_users
   belongs_to :role
 
   validates :email,     :presence => true
-  validates :f_name,    :presence => true
-  validates :l_name,    :presence => true
   validates :fullname, :presence => true
 
-  scope :listing,       order("l_name ASC, f_name ASC")
+  scope :listing,       order("fullname ASC")
 
   acts_as_authentic do |c|
     c.validate_password_field=false
@@ -47,10 +45,6 @@ class User < ActiveRecord::Base
   def admin?
     self.role_id == Role::ADMIN.id
   end
-
-  def name
-    "#{f_name} #{l_name}"
-  end
 end
 
 # == Schema Information
@@ -58,8 +52,6 @@ end
 # Table name: users
 #
 #  id                :integer          not null, primary key
-#  f_name            :string(255)      not null
-#  l_name            :string(255)      not null
 #  locked            :boolean
 #  email             :string(255)      not null
 #  crypted_password  :string(255)
