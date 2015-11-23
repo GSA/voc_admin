@@ -1,19 +1,36 @@
 <div id="navigation">
-	<p class="nav"><%= link_to "Home", surveys_url, (params[:controller] == "surveys" && params[:action] == "index" ? {:class => "navActive"} : {:class => "nav"}) %></p>
-	|
-	<p class="nav"><%= link_to "Create New Survey", new_survey_url, (params[:controller] == "surveys" && params[:action] == "new" ? {:class => "navActive"} : {:class => "nav"}) %></p>
-	|
-	<p class="nav"><%= link_to "View Responses", survey_responses_url, (params[:controller] == "survey_responses" ? {:class => "navActive"} : {:class => "nav"}) %></p>
-	<% if @current_user.admin? %>
-		|
-		<p class="nav"><%= link_to "Manage Users", users_url, (params[:controller] == "users" ? {:class => "navActive"} : {:class => "nav"}) %></p>
-	<% else %>
-		|
-		<p class="nav"><%= link_to "Manage Account", edit_user_url(@current_user), (params[:controller] == "users" ? { :class => "navActive"} : {:class => "nav"}) %></p>
-	<% end %>
+  <p class="nav">
+  <%= link_to "Home", surveys_url, 
+    class: nav_link_active_class("surveys", "index"),
+    title: "Home"
+  %>
+  </p>
+  |
+  <p class="nav">
+  <%= link_to "Create New Survey", new_survey_url,
+    class: nav_link_active_class("surveys", "new"),
+    title: "Create New Survey"
+  %>
+  </p>
+  |
+  <p class="nav">
+  <%= link_to "View Responses", survey_responses_url,
+    class: nav_link_active_class("survey_responses"),
+    title: "View Responses"
+  %>
+  </p>
 
-	<% if @current_user.admin? %>
-		|
-		<p class="nav"><%= link_to "Manage Sites", sites_url, params[:controller] == "sites" ? { :class => "navActive"} : {:class => "nav"} %></p>
-	<% end %>
+  <%= manage_users_or_account_link %>
+
+  <% if @current_user.admin? %>
+    |
+    <p class="nav">
+    <%= link_to "Manage Sites", sites_url,
+      class: nav_link_active_class("sites"),
+      title: "Manage Sites"
+    %>
+    </p>
+  <% end %>
+
+
 </div>

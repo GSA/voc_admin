@@ -3,6 +3,31 @@
 # View helper repository for helpers used across functional areas of the application.
 module ApplicationHelper
 
+  def nav_link_active_class controller, action=nil
+    if controller == params[:controller] &&
+        (action.blank? || action == params[:action])
+      "navActive"
+    else
+      "nav"
+    end
+  end
+
+  def manage_users_or_account_link
+    html = ""
+    html << "|"
+    html << content_tag("p", class: "nav") do
+      if @current_user.admin?
+        link_to "Manage Users", users_url, class: nav_link_active_class("users"),
+          title: "Manage Users"
+      else
+        link_to "Manage Account", edit_user_url(@current_user),
+          class: nav_link_active_class("users"),
+          title: "Manage Account"
+      end
+    end
+    html.html_safe
+  end
+
   # Dynamic method to build child records (e.g. ChoiceAnswers for a ChoiceQuestion)
   # via links on new/edit forms.  The partial created generates the form structure to support
   # POSTing back to create/update actions.
