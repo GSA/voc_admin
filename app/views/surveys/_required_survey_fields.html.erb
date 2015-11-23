@@ -1,0 +1,38 @@
+<div class="left_side">
+  <%= f.label :name, required_label("Name: ") %>
+</div>
+<div class="right_side">
+  <%= f.text_field :name %>
+</div>
+<br />
+
+<div class="left_side">
+  <%= f.label :site_id, required_label("Site: ") %>
+</div>
+<div class="right_side">
+  <%= f.collection_select :site_id, sorted_site_list, :id, :name, include_blank: true %>
+</div>
+<br />
+
+<div class="left_side">
+  <%= f.label :survey_type_id, required_label("Survey Type: ") %>
+</div>
+<div class="right_side">
+  <%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
+</div>
+<br />
+
+<div class="left_side">
+  <%= f.label :locale, "Survey Language: " %>
+</div>
+<div class="right_side">
+  <%= f.select :locale, [["English", "en"], ["Spanish", "es"]] %>
+</div>
+<br />
+
+<div class="left_side">
+  <%= f.label :description, required_label("Description: ") %>
+</div>
+<div class="right_side">
+  <%= f.text_area :description, :rows => 3 %>
+</div>

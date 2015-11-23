@@ -1,48 +1,11 @@
 <div id="surveys">
-	<%= form_for(@survey) do |f| %>
-	  <% if @survey.errors.any? %>
-	    <%= render :partial => 'shared/errors', :locals => {:object => @survey, :object_type => 'survey'} %>
-		<% end %>
+  <%= form_for(@survey) do |f| %>
+    <% if @survey.errors.any? %>
+      <%= render :partial => 'shared/errors', :locals => {:object => @survey, :object_type => 'survey'} %>
+    <% end %>
 
-		<div class="left_side">
-			<%= f.label :name, required_label("Name: ") %>
-		</div>
-		<div class="right_side">
-			<%= f.text_field :name %>
-		</div>
+    <%= render partial: "required_survey_fields", locals: {f: f} %>
     <br />
-
-    <div class="left_side">
-      <%= f.label :site_id, required_label("Site: ") %>
-    </div>
-    <div class="right_side">
-      <%= f.collection_select :site_id, sorted_site_list, :id, :name, include_blank: true %>
-    </div>
-		<br />
-
-    <div class="left_side">
-      <%= f.label :survey_type_id, "Survey Type: " %>
-    </div>
-    <div class="right_side">
-      <%= f.collection_select :survey_type_id, SurveyType.all, :id, :name_upcase %>
-    </div>
-    <br />
-
-    <div class="left_side">
-      <%= f.label :locale, "Survey Language: " %>
-    </div>
-    <div class="right_side">
-      <%= f.select :locale, [["English", "en"], ["Spanish", "es"]] %>
-    </div>
-    <br />
-
-		<div class="left_side">
-			<%= f.label :description, required_label("Description: ") %>
-		</div>
-		<div class="right_side">
-			<%= f.text_area :description, :rows => 3 %>
-		</div>
-		<br />
 
     <div class="left_side">
       <%= f.label :omb_expiration_date, "OMB Expiration Date: " %>
@@ -107,126 +70,7 @@
     </div>
     <br/>
 
-    <div class="left_side">
-      <%= f.label :invitation_text, "Invitation Modal HTML: " %>
-    </div>
-    <div class="right_side">
-      <%= f.text_area :invitation_text, :rows => 3 %>
-    </div>
-
-    <div class="instructions">
-      <%= link_to 'Preview', 'javascript:void(0);', id: "invitation_preview" %>
-      <div>
-        <%= f.label :invitation_preview_stylesheet, "Preview Stylesheet" %>
-        <%= f.text_field :invitation_preview_stylesheet %>
-      </div>
-      <p>
-        <em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
-        where the accept and reject buttons should be placed.  These tags will be
-        substitued with the appropriate working buttons using the specified text
-        from the fields below.
-      </p>
-      <style type="text/css">
-        #vocModalOverlay {
-            width:100%;
-            height:100%;
-            z-index:9999; /* places the modal overlay between the main page and the modal dialog*/
-            background-color:#000;
-            opacity:0.5;
-            position:fixed;
-            top:0;
-            left:0;
-            display:none;
-            margin:0;
-            padding:0;
-        }
-
-        #vocModal {
-            width:50%;
-            margin-left:auto;
-            margin-right:auto;
-            padding: 25px;
-            border: thin #000 solid;
-            background-color:#fff;
-            z-index:10000; /* places the modal dialog on top of everything else */
-            position:fixed;
-            top:25%;
-            left:25%;
-            display:none;
-        }
-        #vocModal h1 {
-            text-align:center;
-        }
-
-        #vocEnter {
-          cursor: pointer;
-        }
-
-        .vocCancelButton {
-          cursor: pointer;
-        }
-
-        .banner {
-          padding-bottom: 10px;
-          border-bottom: 1px solid black;
-        }
-
-        .modalCloseButton {
-            float:right;
-            position:absolute;
-            top:10px;
-            left:95%;
-        }
-        .modalCloseButton img {
-            border:0;
-        }
-
-        .screen-reader-offscreen {
-            position:absolute;
-            left:-999px;
-            width:1px;
-            height:1px;
-            top:auto;
-        }
-
-        .top-right {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          text-decoration: none;
-          background-color: grey;
-          color: white;
-          font-size: 11px;
-        }
-
-      </style>
-      <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle'
-        aria-describedby='modalDescription' role='dialog' tabindex='-1'>
-        <input type="button" name="cancel" id="cancel" class="vocCancelButton top-right" value="X">
-        <p>
-          Would you like to take a survey?
-        </p>
-        <input type="button" name="vocEnter" id="vocEnter" value="<%= invitation_accept_button_text %>">
-        <input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">
-      </div>
-      <div id='vocModalOverlay'></div>
-    </div>
-
-    <div class="left_side">
-      <%= f.label :invitation_accept_button_text, "Invitation Accept Button Text: " %>
-    </div>
-    <div class="right_side">
-      <%= f.text_field :invitation_accept_button_text %>
-    </div>
-    <br />
-
-    <div class="left_side">
-      <%= f.label :invitation_reject_button_text, "Invitation Reject Button Text: " %>
-    </div>
-    <div class="right_side">
-      <%= f.text_field :invitation_reject_button_text %>
-    </div>
-    <br/>
+    <%= render partial: "invitation_modal_settings", locals: {f: f} %>
 
     <div class="left_side">
       <%= f.label :start_page_title, "Survey Start Title:" %>
@@ -244,7 +88,7 @@
     </div>
 
     <div class="instructions">
-      <%= link_to 'Preview', 'javascript:void(0);', "id" => "start_page_preview",
+      <%= link_to_if @survey.persisted?, 'Preview', 'javascript:void(0);', "id" => "start_page_preview",
         "data-id" => @survey.id %>
       <div>
         <%= f.label :survey_preview_stylesheet, 'Preview Stylesheet' %>
@@ -288,16 +132,16 @@
     </div>
     <br />
 
-	  <div class="pageLink">
-			<%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
-	  	<% if f.object.new_record? %>
-	  		<%= image_submit_tag "Create-Survey.png", :alt=>"Create Survey" %>
-	  	<% else %>
-	  		<%= image_submit_tag "update-survey.png", :alt=>"Update Survey" %>
-	  	<% end %>
-		</div>
+    <div class="pageLink">
+      <%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
+      <% if f.object.new_record? %>
+        <%= image_submit_tag "Create-Survey.png", :alt=>"Create Survey" %>
+      <% else %>
+        <%= image_submit_tag "update-survey.png", :alt=>"Update Survey" %>
+      <% end %>
+    </div>
 
-	<% end %>
+  <% end %>
 </div>
 
 <%= javascript 'invitation_preview.js' %>
