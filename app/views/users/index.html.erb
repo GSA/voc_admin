@@ -1,6 +1,6 @@
 <h1>All Users</h1>
 <div class="page-nav">
-	<%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
+  <%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
 </div>
 <%= flash_messages(flash) %>
 
@@ -9,7 +9,7 @@
 <%= paginate @users %>
 
 <div class="page-nav">
-	<%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
+  <%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
 </div>
 
 <div id="modalDiv" style="display: none;"></div>
