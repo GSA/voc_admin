@@ -23,7 +23,9 @@ class SavedSearchesController < ApplicationController
     @saved_search = @survey_version.saved_searches.find params[:id]
     @saved_search.destroy
 
-    redirect_to survey_responses_path survey_version_id: @survey_version.id, survey_id: @survey.id
+    respond_to do |format|
+      format.js { render text: "", status: 200 }
+    end
   end
 
   private

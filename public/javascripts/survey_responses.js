@@ -90,6 +90,9 @@ $(function(){
     $('.js-saveSearch').live("click", function(e) {
       $('#saved_search_form').show();
     });
+    $(".js-removeSearch").live("click", function(e) {
+      $(this).parent().hide();
+    });
     $('#new_saved_search').live('submit', function(e) {
       var search_form = $('#advanced_search_form');
       var surveyId = $("#survey_id").val();
@@ -110,12 +113,13 @@ $(function(){
         url: $(this).attr('action'),
         data: body,
         success: function(data, textStatus, jqXHR) {
-          $("#new_saved_search").hide();
+          $("#saved_search_form").hide();
+          $("#new_saved_search input[type=text]").val("");
+          $("#saved_searches div:last-child a:first").focus();
         },
         error: function(jqXHR, textStatus, errorThrown) {
           console.log("Error: ", errorThrown);
         }
-
       });
 
       e.preventDefault();
