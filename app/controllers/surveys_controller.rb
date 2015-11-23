@@ -71,9 +71,13 @@ class SurveysController < ApplicationController
   def import_survey_version
     @survey = Survey.find(params[:survey_id])
     if params[:file].present?
-      @survey.import_survey_version(params[:file], current_user.id)
-      redirect_to(survey_survey_versions_path(@survey),
-        :notice => 'Survey Version was imported successfully.')
+      if @survey.import_survey_version(params[:file], current_user.id)
+        redirect_to(survey_survey_versions_path(@survey),
+          :notice => 'Survey Version was imported successfully.')
+      else
+        redirect_to survey_survey_versions_path(@survey),
+          alert: "Unable to import file.  Please make sure you are importing a survey export file"
+      end
     else
       redirect_to survey_survey_versions_path(@survey),
         :alert => "Please select a file before clicking the import button."

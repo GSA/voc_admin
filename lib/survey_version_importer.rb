@@ -149,6 +149,8 @@ class SurveyVersionImporter
 
     set_page_level_flow_control
     set_question_level_flow_control
+  rescue
+    return false
   end
 
   def set_page_level_flow_control
