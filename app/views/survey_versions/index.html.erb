@@ -29,7 +29,7 @@
   </div>
   <div class="right_side">
     <%= form_tag survey_import_survey_version_path(@survey) , multipart: true do %>
-      <%= file_field_tag :file %>
+      <%= file_field_tag :file, accept: "application/json" %>
       <%= submit_tag "Import" %>
       <% hidden_field_tag 'survey_id', @survey.id %>
     <% end %>
