@@ -6,10 +6,11 @@ CommentToolApp::Application.routes.draw do
   get 'logout' => 'user_sessions#destroy', :as => :logout
   resources :user_sessions, only: [:new, :destroy]
 
-	resources :users
-	resources :sites
+  resources :users
+  resources :sites
 
   resources :surveys do
+    get :preview, on: :collection
     get :start_page_preview, :on => :member
     get :all_questions, :on => :collection
     post 'import_survey_version'
@@ -40,6 +41,7 @@ CommentToolApp::Application.routes.draw do
       get :edit_thank_you_page, :on => :member, :as => "edit_thank_you_page"
       get :edit_notes, :on => :member, :as => :edit_notes
       get :export_survey, :on => :collection, :as => 'export_survey'
+      get :preview, on: :member
       resources :saved_searches, only: [:index, :create, :destroy]
 
       resources :rules do

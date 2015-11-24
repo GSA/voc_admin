@@ -6,6 +6,10 @@ class SurveyVersionsController < ApplicationController
   before_filter :get_survey
   include AkamaiUtilities
 
+  def preview
+    render "preview", layout: "empty"
+  end
+
   # GET    /surveys/:survey_id/survey_versions(.:format)
   def index
     @survey_versions = @survey.survey_versions.get_unarchived.order(order_clause(params[:sort], params[:direction])).page(params[:page]).per(10)

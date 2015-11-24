@@ -6,6 +6,10 @@ class SurveysController < ApplicationController
 
   before_filter :require_admin, only: :all_questions
 
+  def preview
+    @surveys = Survey.order(:name)
+  end
+
   # GET    /surveys(.:format)
   def index
     @surveys = current_user.surveys.search(params[:q])

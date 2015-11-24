@@ -331,6 +331,14 @@ class SurveyVersion < ActiveRecord::Base
     survey_version_json = describe_me.to_json
   end
 
+  def survey_name_with_version
+    "#{survey_name} v#{version_number}"
+  end
+
+  def preview_url
+    "/surveys/#{survey.id}/survey_versions/#{id}/preview"
+  end
+
   private
 
   def describe_me
