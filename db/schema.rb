@@ -516,8 +516,8 @@ ActiveRecord::Schema.define(:version => 20151123192526) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "f_name",                          :null => false
-    t.string   "l_name",                          :null => false
+    t.string   "f_name"
+    t.string   "l_name"
     t.boolean  "locked"
     t.string   "email",                           :null => false
     t.string   "crypted_password"

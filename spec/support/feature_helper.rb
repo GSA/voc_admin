@@ -3,7 +3,7 @@ module FeatureHelper
   def login_user
     create_admin_user
     visit login_path
-    click_on "Jake Admin"
+    find(:xpath, "//a[@href='/login?user_id=#{ADMIN_HHS_ID}']").click
   end
 
   def create_admin_user
