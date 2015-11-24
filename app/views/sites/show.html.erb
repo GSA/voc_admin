@@ -2,26 +2,46 @@
 <%= flash_messages(flash) %>
 
 <div id="surveys">
-	<div class="left_side">
-		Name:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @site.name %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		URL:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @site.url %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Description:
-	</div>
-	<div class="right_side">
-		<p><%= @site.description %></p>
-	</div>
+  <div class="left_side">
+    Name:
+  </div>
+  <div class="right_side">
+    <p class="blue"><%= @site.name %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    URL:
+  </div>
+  <div class="right_side">
+    <p class="blue"><%= @site.url %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Description:
+  </div>
+  <div class="right_side">
+    <p><%= @site.description %></p>
+  </div>
+  <br/>
+  <div class="left_side">
+    Users:
+  </div>
+  <div>
+    <table id="users_table">
+      <thead>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+      </thead>
+      <tbody>
+        <% @site.users.each do |user| %>
+          <tr class="<%= cycle('gray', 'white') %>">
+            <td><%= user.fullname %></td>
+            <td><%= user.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div class="page-nav">
   <%= link_to image_tag("edit.png", :alt=>"edit") + " Edit", edit_site_path(@site), :class=>"manage" %>

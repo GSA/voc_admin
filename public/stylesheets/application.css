@@ -943,6 +943,15 @@ fieldset fieldset.hide legend {
   text-align: center;
 }
 
+/* -------- User table ------- */
+#users_table {
+  width: 100%;
+}
+
+.white {
+  background-color: white;
+}
+
 /**** Footer ****/
 #footer {
   background: url(/images/footer_background.png) no-repeat top left transparent;
