@@ -12,6 +12,7 @@
     <%= yield :head %>
     <%= csrf_meta_tag %>
 
+
     <!-- Community Imports -->
     <%= yield :additional_scripts %>
 
@@ -34,6 +35,12 @@
       <%# Dynamic footer view partial. See: app/helpers/layout_helper.rb %>
       <%= render :partial => footer_partial_location %>
     </div>
+    <%= javascript_tag do %>
+      $(document).ajaxSend(function(e, xhr, options) {
+        var token = jQuery("meta[name='csrf-token']").attr("content");
+        xhr.setRequestHeader("X-CSRF-Token", token);
+      });
+    <% end %>
     <%= yield :script %>
   </body>
 </html>
