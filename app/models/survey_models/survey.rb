@@ -9,16 +9,16 @@ class Survey < ActiveRecord::Base
 
   attr_accessor :created_by_id
 
-  attr_accessible :name, :description, :survey_type_id, :site_id, 
-    :submit_button_text, :previous_page_text, :next_page_text, 
+  attr_accessible :name, :description, :survey_type_id, :site_id,
+    :submit_button_text, :previous_page_text, :next_page_text,
     :js_required_fields_error, :invitation_percent,
     :invitation_interval, :invitation_text, :invitation_accept_button_text,
-    :invitation_reject_button_text, :start_screen_button_text, :alarm, 
-    :alarm_notification_email, :holding_page, :show_numbers, :locale, 
+    :invitation_reject_button_text, :start_screen_button_text, :alarm,
+    :alarm_notification_email, :holding_page, :show_numbers, :locale,
     :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet,
     :omb_expiration_date
 
-  validates :name, :presence => true, :length => {:in => 1..255}, 
+  validates :name, :presence => true, :length => {:in => 1..255},
     :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
@@ -37,7 +37,7 @@ class Survey < ActiveRecord::Base
   scope :get_archived,            where(:archived => true)
   scope :get_unarchived,          where(:archived => false)
   scope :get_alpha_list,          order('surveys.name asc')
-  scope :search, ->(q = nil) { 
+  scope :search, ->(q = nil) {
     where("surveys.name like ?", "%#{q}%") unless q.blank?
   }
 
@@ -89,14 +89,14 @@ class Survey < ActiveRecord::Base
   end
 
   def import_survey_version(file, source_sv_id = nil)
-    SurveyVersionImporter.import(self, file, source_sv_id) 
+    SurveyVersionImporter.import(self, file, source_sv_id)
   end
 
   def flushable_urls
     [
       "http://#{APP_CONFIG['public_host']}/surveys/#{id}",
       "http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}",
-      "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"
+      "http://#{APP_CONFIG['public_host']}/widget/invitation.js"
     ]
   end
 end
