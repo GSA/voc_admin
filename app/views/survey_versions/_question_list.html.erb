@@ -5,7 +5,9 @@
 <% survey_version.pages.includes(:survey_elements => :assetable).order("pages.page_number asc").each do |page| %>
 
   <div class="page" id="page_<%=page.page_number%>">
-    <div class="page_arrows"><%= page_order_links(survey_version.survey, survey_version, page) unless survey_version.locked? %></div>
+    <div class="page_arrows">
+      <%= page_order_links(survey_version.survey, survey_version, page) unless survey_version.locked? %>
+    </div>
     <span class="page_number">Pg. <%= page.page_number %></span>
     <span class="page_next">
     <% unless is_last_page(page) || survey_version.locked? %>
@@ -13,7 +15,9 @@
       <%= select_for_next_page(page) %>
     <% end %>
     </span>
-    <span class="page_mngmnt"><%= page_management_links(survey_version.survey, survey_version, page) unless survey_version.locked? %></span>
+    <span class="page_mngmnt">
+      <%= page_management_links(survey_version.survey, survey_version, page) unless survey_version.locked? %>
+    </span>
 
     <ul class="outter">
       <% question_number = 0 %>

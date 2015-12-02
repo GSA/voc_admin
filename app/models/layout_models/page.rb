@@ -14,6 +14,10 @@ class Page < ActiveRecord::Base
   validates :survey_version, :presence => true
   validate :next_page_greater_than_current_page
 
+  def previous_pages
+    survey_version.pages.where("page_number < ?", page_number)
+  end
+
   # The next page in the survey, either by explicit flow control or incrementing current page number
   #
   # @return [Page,nil] the next page in the survey or nil if this is the last page
@@ -66,7 +70,7 @@ class Page < ActiveRecord::Base
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [Page] the cloned page
   def clone_me(target_sv)
-    new_page = Page.create!(self.attributes.merge(:survey_version=>target_sv, :clone_of_id => self.id))
+    Page.create!(self.attributes.merge(:survey_version=>target_sv, :clone_of_id => self.id))
   end
 
   def describe_me
@@ -94,6 +98,22 @@ class Page < ActiveRecord::Base
     end
 
     new_page
+  end
+
+  def target_of_flow_control?
+    target_of_page_level_flow_control? || target_of_question_flow_control?
+  end
+
+  def target_of_page_level_flow_control?
+    self.prev_pages.any? {|page| page.next_page_id == self.id}
+  end
+
+  def target_of_question_flow_control?
+    previous_pages.flat_map(&:survey_elements).
+      map(&:assetable).select {|q| q.is_a?(ChoiceQuestion)}.
+      flat_map(&:choice_answers).any? {|choice_answer|
+      choice_answer.next_page_id == self.id
+    }
   end
 
   private

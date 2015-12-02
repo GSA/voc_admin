@@ -31,14 +31,14 @@ module SurveyVersionHelper
 
   # Generates a dropdown to specify the next page for flow control purposes.
   # Note: since "Next Page" (+1) is default, numbering starts at current + 2
-  # 
+  #
   # @param [Page] page the Page instance to use
   # @return [String] HTML select and child option tags
   def select_for_next_page(page)
     select_tag(
       :next_page,
       options_for_select(
-        [["Next Page", ""]] + 
+        [["Next Page", ""]] +
         Page.where(:survey_version_id => page.survey_version_id)
             .where("pages.page_number > ?", page.page_number + 1)
             .order(:page_number).collect { |p| [ "Pg. #{p.page_number}", p.id ] },
@@ -53,7 +53,7 @@ module SurveyVersionHelper
   end
 
   # Assembles links for reordering pages.
-  # 
+  #
   # @param [Survey] survey the Survey instance
   # @param [SurveyVersion] survey_version the SurveyVersion instance
   # @param [Page] page the Page instance
@@ -65,19 +65,22 @@ module SurveyVersionHelper
   end
 
   # Assembles links for copying and deleting pages.
-  # 
+  #
   # @param [Survey] survey the Survey instance
   # @param [SurveyVersion] survey_version the SurveyVersion instance
   # @param [Page] page the Page instance
   # @return [String] assembled HTML links
   def page_management_links(survey, survey_version, page)
-		str = generate_page_copy_link( copy_page_survey_survey_version_page_path(survey, survey_version, page) )
-
-		str += generate_page_delete_link( survey_survey_version_page_path(survey, survey_version, page), page.page_number )
+    str = generate_page_copy_link( copy_page_survey_survey_version_page_path(survey, survey_version, page) )
+    str += generate_page_delete_link(
+      survey_survey_version_page_path(survey, survey_version, page),
+      page.page_number,
+      page.target_of_flow_control?
+    )
   end
 
   # Assembles links for reordering questions and other survey content.
-  # 
+  #
   # @param [Survey] survey the Survey instance
   # @param [SurveyVersion] survey_version the SurveyVersion instance
   # @param [SurveyElement] element the SurveyElement instance
@@ -93,7 +96,7 @@ module SurveyVersionHelper
   end
 
   # Assembles a link for editing a question or other survey content.
-  # 
+  #
   # @param [Survey] survey the Survey instance
   # @param [SurveyVersion] survey_version the SurveyVersion instance
   # @param [SurveyElement] element the SurveyElement instance
@@ -103,7 +106,7 @@ module SurveyVersionHelper
   end
 
   # Assembles a link for deleting a question or other survey content.
-  # 
+  #
   # @param [Survey] survey the Survey instance
   # @param [SurveyVersion] survey_version the SurveyVersion instance
   # @param [SurveyElement] element the SurveyElement instance
@@ -152,9 +155,9 @@ module SurveyVersionHelper
   def generate_page_down_arrow_link(url)
     link_to image_tag("arrow_down.png", :alt => "move down"),
             url,
-            { :method => :post, 
+            { :method => :post,
               :remote => true,
-              :title => "Move this page down in presentation order.", 
+              :title => "Move this page down in presentation order.",
               :class => "downLink" }
   end
 
@@ -175,14 +178,17 @@ module SurveyVersionHelper
   #
   # @param [String] url the target of the link
   # @return [String] the HTML link
-  def generate_page_delete_link(url, page_number)
+  def generate_page_delete_link(url, page_number, target_of_flow_control = false)
     link_to image_tag('delete.png', :alt=>"Delete"),
-            url,
-            { :method => :delete,
-              :remote => true,
-              :title => "Remove page",
-              :class=>"deleteLink",
-              :confirm => "All items on page #{page_number} will be removed as well." }
+      url,
+      {
+        :method => :delete,
+        :remote => true,
+        :title => "Remove page",
+        :class=>"deleteLink",
+        :confirm => "All items on page #{page_number} will be removed as well.",
+        :data => { :flow_control_target => target_of_flow_control }
+      }
   end
 
   # Create the element edit link.
@@ -267,20 +273,20 @@ module SurveyVersionHelper
     element.element_order.to_i == element.page.survey_elements.maximum(:element_order).to_i
   end
 
-  # Checks if the question being deleted is referenced by rules for other 
+  # Checks if the question being deleted is referenced by rules for other
   # questions (more specifically, the actions of those rules). Returns
-  # a warning message string if so.  
+  # a warning message string if so.
   #
   # @param [SurveyElement] element the SurveyElement instance
   # @return [String] the warning message, or empty string
   def rule_deletion_warning(element)
     msg = ""
-    if element.assetable_type == "ChoiceQuestion" || element.assetable_type == "TextQuestion" 
+    if element.assetable_type == "ChoiceQuestion" || element.assetable_type == "TextQuestion"
       qc = Object.const_get(element.assetable_type).find_by_id(element.assetable_id).question_content
       Action.where("value LIKE ?", qc.id).each do |a|
         if a.rule.name != qc.statement
           #msg += "\n* " + edit_survey_survey_version_rule_url(a.rule.survey_version.survey.id, a.rule.survey_version.id, a.rule.id)
-          msg += "\n* " + a.rule.name      
+          msg += "\n* " + a.rule.name
         end
       end
     elsif element.assetable_type == "MatrixQuestion"
@@ -292,14 +298,14 @@ module SurveyVersionHelper
         qc = QuestionContent.find_by_id(q)
         Action.where("value LIKE ?", q).each do |a|
           if !a.rule.name.include?(qc.statement)
-            msg += "\n* " + a.rule.name                  
-          end      
+            msg += "\n* " + a.rule.name
+          end
         end
-      end 
+      end
     end
     if !msg.empty?
       msg = "Rules referencing this question will also be DELETED. Would you like to proceed? \n\n Affected rules: \n " + msg
-    end    
+    end
     return msg
-  end   
+  end
 end
