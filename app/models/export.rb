@@ -14,6 +14,10 @@ class Export < ActiveRecord::Base
   validates_attachment :document, presence: true
   do_not_validate_attachment_file_type :document
 
+  def self.active
+    where("created_at >= ?", 25.hours.ago)
+  end
+
   private
   # Generate a unique identifier.
   #
