@@ -752,6 +752,14 @@ li.inner {
   text-align: center;
 }
 
+#criteria {
+  width: 100%;
+}
+
+.criterion select {
+  max-width: 890px;
+}
+
 /**** Display Fields ****/
 #dfTable .col1 {
   width: 30px;
