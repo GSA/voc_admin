@@ -30,6 +30,7 @@ class SurveyVersionImporter
       answer_type: choice_question_data["answer_type"],
       auto_next_page: choice_question_data["auto_next_page"],
       answer_placement: choice_question_data["answer_placement"],
+      display_results: choice_question_data["display_results"],
       survey_element_attributes: {
         page: page,
         survey_version: survey_version
