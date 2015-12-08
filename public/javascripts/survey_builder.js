@@ -9,13 +9,14 @@ $(function(){
     });
   });
 
-  $("span.page_mngmnt a.deleteLink").click(function(e) {
+  $("#overlay_container").on("click", "span.page_mngmnt a.deleteLink", function(e) {
     if($(this).data("flowControlTarget") == true ) {
       alert("Cannot delete page. Page is target of flow control. Remove flow control targeting this page before deleting.");
       e.preventDefault();
       return false;
     }
   });
+
 
   /* Selecting the checkbox to enable flow control at the page level should remove the disabled flag from the select box
    * Unchecking the box should disable the select menu and clear the next_page_id from the page model
@@ -35,8 +36,8 @@ $(function(){
       });
     } /* End else statement */
   });
-  
-  /* Functions for managing the select boxes for page and next_page 
+
+  /* Functions for managing the select boxes for page and next_page
    * for multiple choice questions.
    */
   $("#flow_control_checkbox").live('change', function(){
@@ -50,35 +51,35 @@ $(function(){
       /* Checkbox has been checked so show the page selections */
       $(".next_pages").show();
       if($("#choice_question_answer_type").val() == "radio"){
-        $("#auto_next_page_fields").show()  
+        $("#auto_next_page_fields").show()
       }
-      
+
       width = $("#edit_modal").width() + $(".next_pages:first").width();
     }
     resizeModal($("#edit_modal").height(), width);
   });
-  
+
   /*
    * When a page is chosen from the page selection for the question, remove that option
    * from the flow control page select dropdown.
    */
   // TODO: Implement this
-  
+
   $(".next_page_select").each(function(index){
     $(this).val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
   });
-  
+
   $("#choice_question_survey_element_attributes_page_id").bind('change', function(){
     $(".next_page_select").val($("#choice_question_survey_element_attributes_page_id option:selected").next('option').val());
   });
-  
+
   /* Show the spinner on ajax requests to reorder elements/pages */
   $(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:beforeSend", function(){
     toggleSpinner();
   });
 
   /* When the Choice Question Type is Radio then the auto_next_page option should show up */
-  /* When Radio or Checkbox, the Answer Placement option should show */ 
+  /* When Radio or Checkbox, the Answer Placement option should show */
   $("#choice_question_answer_type").live('change', function() {
     val = $(this).val();
 
@@ -94,7 +95,7 @@ $(function(){
       }
     }
   });
-    
+
 }); // End onLoad function
 
 function toggleSpinner() {
@@ -107,15 +108,15 @@ function remove_fields(link) {
   $(link).parent().hide();
 }
 
-function add_fields(link, association, content) {  
-  var new_id = new Date().getTime();  
-  var regexp = new RegExp("new_" + association, "g");  
-  $(link).parent().prev().after(content.replace(regexp, new_id));  
+function add_fields(link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g");
+  $(link).parent().prev().after(content.replace(regexp, new_id));
   if (association == "choice_answers" || association == "choice_questions") {
     if($("#flow_control_checkbox").is(':checked')){
       $(".next_pages").show();
     }
-    
+
     // This is for survey_builder only
     resizeModal($("#edit_modal").height(), Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
   }
@@ -125,7 +126,7 @@ function add_matrix_answers(link, content){
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_matrix_answer", "g");
   $(link).parent().before(content.replace(regexp, new_id));
-  
+
   resizeModal($("#edit_modal").height(), Math.max($("#edit_modal").width(), $(".simplemodal-container").width()));
 }
 
