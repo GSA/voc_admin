@@ -79,11 +79,9 @@ group :test do
   gem 'simplecov', :require => false
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'selenium-webdriver'
-
+  gem "capybara-webkit"
   gem 'guard-rspec'
   gem 'growl'
   gem 'shoulda-matchers'
   gem 'rb-fsevent', '~> 0.9.1'
-
 end
