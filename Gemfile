@@ -80,8 +80,10 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem "capybara-webkit"
+  gem "selenium-webdriver"
   gem 'guard-rspec'
   gem 'growl'
+  gem "launchy"
   gem 'shoulda-matchers'
   gem 'rb-fsevent', '~> 0.9.1'
 end
