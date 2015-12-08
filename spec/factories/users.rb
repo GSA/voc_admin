@@ -5,7 +5,7 @@ FactoryGirl.define do
     sequence(:hhs_id) {|n| 2000000000 + n}
 
     trait :admin do
-      role_id Role::ADMIN.id
+      role_id { Role::ADMIN.id }
     end
   end
 end
