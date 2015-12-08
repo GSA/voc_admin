@@ -1,6 +1,7 @@
 <div id="controls">
   <%= form_tag nil, id: "preview_controls" do %>
     <div class="actions">
+      <%= label_tag "version_select", "Survey:" %>
       <%= grouped_collection_select "version", "select",
         current_user.surveys,
         "survey_versions.where(archived: false)",
@@ -19,44 +20,11 @@
 </div>
 
 <div id="survey_target">
-
+  <!-- iFrame preview will be inserted here -->
 </div>
 
-<style>
-  #survey_target {
-    width: 100%;
-    height: 500px;
-  }
-  iframe {
-    width: 100%;
-    height: 100%;
-  }
-</style>
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "preview.css" %>
+<% end %>
+<%= javascript_include_tag "preview.js" %>
 
-
-<script type="text/javascript">
-  $(function() {
-    $("#preview_controls").submit(function(e) {
-      if($("#version_select").val() != "") {
-        removeExistingFrame();
-        loadIframe($("#version_select").val(), $("#stylesheet_url").val());
-      }
-      e.preventDefault;
-      return false;
-    });
-    $("#version_select").on("change", function(e) {
-      removeExistingFrame();
-      loadIframe($(this).val(), $("#stylesheet_url").val());
-    });
-  });
-
-  function removeExistingFrame() {
-    $("#survey_target").empty();
-  }
-
-  function loadIframe(previewUrl, cssUrl) {
-    var iframe = document.createElement('iframe');
-    iframe.src = previewUrl + "?stylesheetUrl=" + cssUrl;
-    $("div#survey_target").append($(iframe));
-  };
-</script>
