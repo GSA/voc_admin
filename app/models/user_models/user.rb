@@ -2,14 +2,19 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :email, :site_ids, :role_id, :hhs_id, :fullname
+  attr_accessible :email, :site_ids, :role_id, :hhs_id, :fullname, :f_name, :l_name
+
+  attr_accessor :first_name, :last_name
 
   has_many :site_users
   has_many :sites,      :through => :site_users
   belongs_to :role
 
   validates :email,     :presence => true
-  validates :fullname, :presence => true
+  validates :f_name, :presence => true
+  validates :l_name, :presence => true
+
+  before_save :set_fullname
 
   scope :listing,       order("fullname ASC")
 
@@ -44,6 +49,10 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is an admin, false otherwise
   def admin?
     self.role_id == Role::ADMIN.id
+  end
+
+  def set_fullname
+    self.fullname = "#{f_name} #{l_name}"
   end
 end
 
