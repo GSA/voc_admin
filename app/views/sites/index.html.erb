@@ -20,7 +20,10 @@
       <td class="col2"><%= link_to site.name, site %></td>
       <td class="col3"><%= site.url %></td>
       <td class="col4"><%= truncate site.description, length: 255, separator: ' ' %></td>
-      <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete"), site, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+      <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete"), site,
+        :confirm => 'Are you sure you want to delete this site?',
+        :method => :delete, :class=>"deleteLink" %>
+      </td>
     </tr>
   <% end %>
 </table>
