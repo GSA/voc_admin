@@ -13,7 +13,10 @@ class QuestionContentObserver < ActiveRecord::Observer
     return if question_content.matrix_question? || question_content.skip_observer
 
     name = question_content.statement
-    name = "#{question_content.matrix_statement}: " + name if question_content.questionable_type == "ChoiceQuestion" && question_content.questionable.matrix_question
+    if question_content.questionable_type == "ChoiceQuestion" &&
+        question_content.questionable.matrix_question
+      name = "#{question_content.matrix_statement}: " + name
+    end
 
     begin
       # DB-backed display field auto creation

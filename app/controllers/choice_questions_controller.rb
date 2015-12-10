@@ -68,12 +68,12 @@ class ChoiceQuestionsController < ApplicationController
       format.html { redirect_to survey_path(@survey_version.survey), :notice => "Successfully deleted choice question."}
       format.js { render :partial => "shared/element_destroy" }
     end
-    # Remove any rules which have actions that point to the choice question_content that just got deleted. 
+    # Remove any rules which have actions that point to the choice question_content that just got deleted.
     Action.where("value LIKE ?", question_content_id).each do |a|
       if a.rule.present?
-        a.rule.destroy      
-      end      
-    end    
+        a.rule.destroy
+      end
+    end
   end
 
   private

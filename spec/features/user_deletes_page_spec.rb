@@ -21,8 +21,6 @@ RSpec.feature "User deletes page", js: true do
       click_button "Create Question"
     end
 
-    save_and_open_page
-
     expect(page).to have_css ".page_asset", count: 1
   end
 
@@ -30,26 +28,6 @@ RSpec.feature "User deletes page", js: true do
     login_user
     create_site
     create_survey
-  end
-
-  def create_site
-    visit root_path
-    click_link "Manage Sites"
-    first(:link, "New Site").click
-    fill_in "Name:", with: "Test"
-    fill_in "site_url", with: "http://www.test.com"
-    fill_in "Description:", with: "Test Site"
-    click_button "Create Site"
-  end
-
-  def create_survey
-    visit root_path
-    click_link "Create New Survey"
-    fill_in "Name:", with: "Example Survey"
-    fill_in "Description:", with: "Example Survey Description"
-    select Site.first.name, from: "survey_site_id"
-    click_button "Create Survey"
-    expect(page).to have_content "Edit Survey Version"
   end
 
   def add_new_page
