@@ -11,7 +11,7 @@ class SurveysController < ApplicationController
     @surveys = current_user.surveys.search(params[:q])
       .order("surveys.name #{sort_direction}").page(params[:page]).per(10)
     if @surveys.count == 0 && params[:q].present?
-      flash[:notice] = "No surveys were found with search."
+      flash.now[:notice] = "No surveys were found with search."
     end
   end
 
