@@ -12,6 +12,10 @@
       %>
     </div>
     <div class="actions">
+      <%= label_tag :custom_stylesheet, "Pre-made Stylesheet:" %>
+      <%= select_tag :custom_stylesheet, options_from_collection_for_select(
+        @css_files, :path, :filename
+      ), include_blank: true%>
       <%= label_tag :stylesheet_url, "Stylesheet Url:" %>
       <%= text_field_tag :stylesheet_url %>
       <%= submit_tag "Update" %>

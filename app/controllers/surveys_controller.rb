@@ -1,3 +1,4 @@
+require "Pathname"
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Manages the Survey lifecycle.
@@ -7,6 +8,9 @@ class SurveysController < ApplicationController
   before_filter :require_admin, only: :all_questions
 
   def preview
+    @css_files = Dir.glob("public/stylesheets/custom/*.css").map {|stylesheet|
+      PremadeCss.new(stylesheet)
+    }
     @surveys = Survey.order(:name)
   end
 
