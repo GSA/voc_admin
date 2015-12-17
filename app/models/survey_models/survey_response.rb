@@ -71,7 +71,7 @@ class SurveyResponse < ActiveRecord::Base
   #used for alarm notifications
   scope :created_between, lambda {|start_date, end_date| where("created_at >= ? AND created_at <= ?", start_date, end_date )}
 
-  scope :processed, where(:status_id => Status::DONE)
+  scope :processed, -> { where(:status_id => Status::DONE) }
 
   # kaminari setting
   paginates_per 50

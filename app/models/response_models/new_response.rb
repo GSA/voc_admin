@@ -7,7 +7,11 @@ class NewResponse < ActiveRecord::Base
 
   belongs_to :survey_response
 
-  scope :next_response, joins(:survey_response).where('survey_responses.status_id = ?', Status::NEW).order('new_responses.created_at ASC').limit(1)
+  scope :next_response, -> {
+    joins(:survey_response)
+      .where('survey_responses.status_id = ?', Status::NEW)
+      .order('new_responses.created_at ASC').limit(1)
+  }
 
 end
 

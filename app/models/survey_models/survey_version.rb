@@ -40,9 +40,9 @@ class SurveyVersion < ActiveRecord::Base
   validates :survey, :presence => true
 
   # Scopes for partitioning survey versions
-  scope :published, where(:published => true)
-  scope :unpublished, where(:published => false)
-  scope :locked, where(:locked => true)
+  scope :published, -> { where(:published => true) }
+  scope :unpublished, -> { where(:published => false) }
+  scope :locked, -> { where(:locked => true) }
 
   # these need updated to make sure the survey hasn't been archved
   scope :get_archived, where(:archived => true)
@@ -328,7 +328,7 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def export_survey_definition
-    survey_version_json = describe_me.to_json
+    describe_me.to_json
   end
 
   def survey_name_with_version

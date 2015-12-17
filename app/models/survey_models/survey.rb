@@ -34,9 +34,9 @@ class Survey < ActiveRecord::Base
   validates :next_page_text, length: { maximum: 255 }
   validates :submit_button_text, length: { maximum: 255 }
 
-  scope :get_archived,            where(:archived => true)
-  scope :get_unarchived,          where(:archived => false)
-  scope :get_alpha_list,          order('surveys.name asc')
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
+  scope :get_alpha_list, -> { order('surveys.name asc') }
   scope :search, ->(q = nil) {
     where("surveys.name like ?", "%#{q}%") unless q.blank?
   }

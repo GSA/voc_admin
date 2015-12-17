@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   before_save :set_fullname
 
-  scope :listing,       order("fullname ASC")
+  scope :listing, -> { order("fullname ASC") }
 
   acts_as_authentic do |c|
     c.validate_password_field=false

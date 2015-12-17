@@ -35,8 +35,14 @@ class SurveyElement < ActiveRecord::Base
   after_save :update_survey_version_updated_at
 
   default_scope order(:element_order)
-  scope :questions, where('survey_elements.assetable_type in (?)', %w(TextQuestion ChoiceQuestion MatrixQuestion)).includes(:assetable => :question_content)
-  scope :assets, where('survey_elements.assetable_type in (?)', %w(Asset)).includes(:assetable)
+  scope :questions, -> {
+    where('survey_elements.assetable_type in (?)',
+          %w(TextQuestion ChoiceQuestion MatrixQuestion))
+    .includes(:assetable => :question_content)
+  }
+  scope :assets, -> {
+    where('survey_elements.assetable_type in (?)', %w(Asset)).includes(:assetable)
+  }
 
   delegate :reporter, to: :assetable
 
