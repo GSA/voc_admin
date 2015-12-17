@@ -33,12 +33,9 @@ gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use m
 
 gem 'test-unit'
 
-# Needed for the new asset pipeline
-group :assets do
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'coffee-rails', '~> 3.2.2'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails', '~> 3.2.6'
+gem 'coffee-rails', '~> 3.2.2'
+gem 'uglifier', '>= 1.0.3'
 
 platform :ruby do
   gem 'unicorn-rails'
