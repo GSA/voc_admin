@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.21'
+gem 'rails', '4.0.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -33,18 +33,14 @@ gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use m
 
 gem 'test-unit'
 
-gem 'sass-rails', '~> 3.2.6'
-gem 'coffee-rails', '~> 3.2.2'
+gem 'sass-rails'
+gem 'coffee-rails'
 gem 'uglifier', '>= 1.0.3'
 
 platform :ruby do
   gem 'unicorn-rails'
   gem 'mysql2', '~> 0.3'
   gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
-
-  group :test do
-    gem 'rails_best_practices'
-  end
 end
 
 platform :jruby do
@@ -75,12 +71,8 @@ end
 group :test do
   gem 'simplecov', :require => false
   gem 'database_cleaner'
-  gem 'capybara'
   gem "capybara-webkit"
   gem "selenium-webdriver"
-  gem 'guard-rspec'
-  gem 'growl'
   gem "launchy"
   gem 'shoulda-matchers'
-  gem 'rb-fsevent', '~> 0.9.1'
 end
