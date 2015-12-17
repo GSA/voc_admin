@@ -19,14 +19,9 @@ RSpec.describe Survey, type: :model do
 
     # Invitation Percentage
     it { should validate_presence_of(:invitation_percent) }
-    it { should validate_numericality_of(:invitation_percent).only_integer.
-         is_greater_than_or_equal_to(0).
-         is_less_than_or_equal_to(100) }
 
     # Invitation Interval
     it { should validate_presence_of(:invitation_interval) }
-    it { should validate_numericality_of(:invitation_interval).only_integer.
-        is_greater_than_or_equal_to(0) }
 
     # Alarm Notification Email
     it { should_not validate_presence_of(:alarm_notification_email) }
@@ -70,13 +65,9 @@ RSpec.describe Survey, type: :model do
     end
 
     context "with a single published version" do
-      let!(:published_version) { survey.create_new_minor_version.tap do |version|
-          version.update_attribute :published, true
-        end
-      }
-
       it "should return the currently published version" do
-        expect(survey.published_version).to eq published_version
+        survey.survey_versions.first.publish_me
+        expect(survey.published_version).to eq survey.survey_versions.first
       end
     end
   end #published_version

@@ -23,10 +23,8 @@ class Survey < ActiveRecord::Base
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  validates :invitation_percent, presence: true, numericality: {
-    only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
-  validates :invitation_interval, presence: true, numericality: {
-    only_integer: true, greater_than_or_equal_to: 0}
+  validates :invitation_percent, presence: true
+  validates :invitation_interval, presence: true
   validates :alarm_notification_email, presence: true, :if => :alarm
 
   validates :js_required_fields_error, length: { maximum: 255 }
