@@ -41,7 +41,7 @@ class Survey < ActiveRecord::Base
     where("surveys.name like ?", "%#{q}%") unless q.blank?
   }
 
-  default_scope where(:archived => false)
+  default_scope { where(:archived => false) }
 
   after_create :create_new_major_version
 

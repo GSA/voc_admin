@@ -45,8 +45,8 @@ class SurveyVersion < ActiveRecord::Base
   scope :locked, -> { where(:locked => true) }
 
   # these need updated to make sure the survey hasn't been archved
-  scope :get_archived, where(:archived => true)
-  scope :get_unarchived, where(:archived => false)
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
 
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
@@ -249,7 +249,7 @@ class SurveyVersion < ActiveRecord::Base
       end
 
       # Fix the next_page_ids for page level flow control
-      new_sv.pages.where("pages.next_page_id is not null").all.select {|page| page.next_page.survey_version_id != new_sv.id}.each do |page|
+      new_sv.pages.where("pages.next_page_id is not null").scoped.select {|page| page.next_page.survey_version_id != new_sv.id}.each do |page|
         page.update_attributes(:next_page_id => new_sv.pages.find_by_clone_of_id(page.next_page_id).try(:id)) # Use try so that if something goes wrong and you can't find the correct page it will just blank out the flow control
       end
 

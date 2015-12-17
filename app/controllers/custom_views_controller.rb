@@ -3,7 +3,7 @@
 # Manages the lifecycle of SurveyResponse CustomViews.
 class CustomViewsController < ApplicationController
   before_filter :get_survey_version
-  
+
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/custom_views(.:format)
   def index
     @custom_views = @survey_version.custom_views.all
@@ -44,11 +44,11 @@ class CustomViewsController < ApplicationController
       render :edit
     end
   end
-  
+
   # DELETE /surveys/:survey_id/survey_versions/:survey_version_id/custom_views/:id(.:format)
   def destroy
     @custom_view = @survey_version.custom_views.find(params[:id])
-    
+
     @custom_view.destroy
     flash[:notice] = "Successfully deleted custom view."
 

@@ -51,7 +51,7 @@ class ReportableSurveyResponseSearch
   end
 
   def search(base_scope = nil)
-    base_scope ||= ReportableSurveyResponse.scoped
+    base_scope ||= ReportableSurveyResponse.all
 
     criteria.each do |k, criterion|
       query_hash = criterion['include_exclude'] == '0' ? NEGATION_CONDITIONS : CONDITIONS

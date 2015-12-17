@@ -34,7 +34,7 @@ class SurveyElement < ActiveRecord::Base
   after_destroy :reorder_page_elements_on_destroy
   after_save :update_survey_version_updated_at
 
-  default_scope order(:element_order)
+  default_scope  { order(:element_order) }
   scope :questions, -> {
     where('survey_elements.assetable_type in (?)',
           %w(TextQuestion ChoiceQuestion MatrixQuestion))
@@ -186,10 +186,12 @@ class SurveyElement < ActiveRecord::Base
         .where(:pages => { :page_number => page.page_number })
         .maximum(:element_order).to_i + 1
 
-      self.survey_version.survey_elements.update_all(
+      self.survey_version.survey_elements
+        .where([
+          'survey_elements.element_order >= ? and page_id = ?',
+          new_element_order, page.id])
+        .update_all(
         'survey_elements.element_order = survey_elements.element_order + 1',
-        ['survey_elements.element_order >= ? and page_id = ?', new_element_order,
-          page.id]
       )
       self.element_order = new_element_order
 

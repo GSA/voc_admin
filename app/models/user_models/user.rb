@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   # @return [ActiveRecord::Relation] surveys the user has access to
   def surveys
     if self.admin?
-      Survey.scoped
+      Survey.all
     else
       Survey.includes(:site => :site_users).where(:site_users => { :user_id => self.id })
     end
