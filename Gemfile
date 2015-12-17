@@ -19,9 +19,8 @@ gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
 
-gem 'bson_ext'
 gem 'escape_utils'
-gem 'mongoid'
+gem 'mongoid', "~> 5.0"
 gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'

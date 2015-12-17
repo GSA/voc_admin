@@ -58,10 +58,8 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bson (1.12.5)
-    bson (1.12.5-java)
-    bson_ext (1.12.5)
-      bson (~> 1.12.5)
+    bson (4.0.0)
+    bson (4.0.0-java)
     builder (3.1.4)
     capybara (2.5.0)
       mime-types (>= 1.16)
@@ -98,7 +96,6 @@ GEM
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    durran-validatable (2.0.1)
     elasticsearch (1.0.15)
       elasticsearch-api (= 1.0.15)
       elasticsearch-transport (= 1.0.15)
@@ -146,7 +143,6 @@ GEM
     launchy (2.4.3-java)
       addressable (~> 2.3)
       spoon (~> 0.0.1)
-    leshill-will_paginate (2.3.11)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     memcache-client (1.8.5)
@@ -154,13 +150,13 @@ GEM
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (4.7.5)
-    mongo (1.12.5)
-      bson (= 1.12.5)
-    mongoid (1.0.6)
-      activesupport (>= 2.2.2)
-      durran-validatable (>= 2.0.1)
-      leshill-will_paginate (>= 2.3.11)
-      mongo (>= 0.18.2)
+    mongo (2.2.1)
+      bson (~> 4.0)
+    mongoid (5.0.1)
+      activemodel (~> 4.0)
+      mongo (~> 2.1)
+      origin (~> 2.1)
+      tzinfo (>= 0.3.37)
     mono_logger (1.1.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
@@ -170,6 +166,7 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     nokogiri (1.6.7.1-java)
     open_uri_redirections (0.2.1)
+    origin (2.1.1)
     paperclip (4.3.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -315,7 +312,6 @@ DEPENDENCIES
   best_in_place
   better_errors
   binding_of_caller
-  bson_ext
   capybara-webkit
   coffee-rails
   daemons
@@ -333,7 +329,7 @@ DEPENDENCIES
   kaminari
   launchy
   memcache-client
-  mongoid
+  mongoid (~> 5.0)
   mysql2 (~> 0.3)
   open_uri_redirections
   openam!
