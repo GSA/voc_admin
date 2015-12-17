@@ -19,7 +19,7 @@ class Action < ActiveRecord::Base
   # @param [SurveyResponse] survey_response the SurveyResponse to alter
   def perform(survey_response)
     #get target DFV
-    display_field_value = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(survey_response.id, self.display_field_id)
+    display_field_value = DisplayFieldValue.find_or_create_by(survey_response_id: survey_response.id, display_field_id: self.display_field_id)
     if value_type == RESPONSE
       raw_response = RawResponse.find_by_survey_response_id_and_question_content_id(display_field_value.survey_response_id, self.value.to_i)
       display_field_value.update_attributes(:value=> (raw_response.nil? ? '' : raw_response.get_true_value))

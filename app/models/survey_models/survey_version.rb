@@ -114,7 +114,7 @@ class SurveyVersion < ActiveRecord::Base
       date = Date.parse(date_string)
       count = count_string.to_i
       if count > 0
-        svc = survey_version_counts.find_or_create_by_count_date(date)
+        svc = survey_version_counts.find_or_create_by(count_date: date)
         SurveyVersionCount.update_counters svc.id, attr_name => count
       end
       if date < yesterday

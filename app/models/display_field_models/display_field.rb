@@ -134,7 +134,7 @@ class DisplayField < ActiveRecord::Base
   def check_condition(survey_response, conditional_id, test_value)
 
     #find the existing value displayfieldvalue
-    display_field_value = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(survey_response.id, self.id)
+    display_field_value = DisplayFieldValue.find_or_create_by(survey_response_id: survey_response.id, display_field_id: self.id)
     return(false) unless display_field_value
     answer = display_field_value.value || ''
 
