@@ -8,10 +8,9 @@
     <%= stylesheet_link_tag main_stylesheet_location %>
     <%= stylesheet_link_tag 'simplemodal' %>
     <%= stylesheet_link_tag 'jquery-ui.min' %>
-    <%= javascript_include_tag :defaults, 'jquery.simplemodal', 'jquery.ui' %>
+    <%= javascript_include_tag "application" %>
     <%= yield :head %>
     <%= csrf_meta_tag %>
-
 
     <!-- Community Imports -->
     <%= yield :additional_scripts %>
