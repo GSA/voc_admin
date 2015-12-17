@@ -75,7 +75,7 @@ class Rule < ActiveRecord::Base
 
   # Applies this Rule to all SurveyResponses in turn.
   def apply_me_all
-    SurveyResponse.find_all_by_survey_version_id(self.survey_version_id).each do |sr|
+    SurveyResponse.where(survey_version_id: self.survey_version_id).each do |sr|
       self.apply_me(sr)
     end
   end

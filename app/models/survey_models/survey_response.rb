@@ -114,7 +114,7 @@ class SurveyResponse < ActiveRecord::Base
 
     begin
       ActiveRecord::Base.transaction do
-        Rule.find_all_by_survey_version_id(self.survey_version_id).each do |rule|
+        Rule.where(survey_version_id: self.survey_version_id).each do |rule|
           begin
             rule.apply_me(self)
             self.update_attributes(:status_id => Status::DONE, :last_processed => Time.now)
@@ -181,8 +181,8 @@ class SurveyResponse < ActiveRecord::Base
 
   # Ensure that there is a DisplayFieldValue ("cell") for every column in the SurveyResponse.
   def create_dfvs
-    DisplayField.find_all_by_survey_version_id(self.survey_version_id).each do |df|
-      dfv = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(self.id, df.id)
+    DisplayField.where(survey_vesion_id: self.survey_version_id).each do |df|
+      dfv = DisplayFieldValue.find_or_create_by(survey_response_id: self.id, display_field_id: df.id)
       dfv.update_attributes(:value => df.default_value)
     end
   end

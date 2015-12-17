@@ -93,7 +93,7 @@ class Page < ActiveRecord::Base
     new_page = Page.create!(page_attribs)
 
     #Copy current page assetables
-    SurveyElement.find_all_by_survey_version_id_and_page_id(survey_version_id , self.id).each do |se|
+    SurveyElement.where(survey_version_id: survey_version_id, page_id: id).each do |se|
       se.copy_to_page(new_page)
     end
 
