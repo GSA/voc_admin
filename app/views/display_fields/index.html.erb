@@ -1,62 +1,62 @@
 <h1>Display Fields</h1>
 <%= flash_messages(flash) %>
 <div id="showpage">
-	<div class="left_side">
-		Survey:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @survey.name.titleize %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Version:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= @survey_version.version_number%></p>
-	</div>
+  <div class="left_side">
+    Survey:
+  </div>
+  <div class="right_side">
+    <p class="blue"><%= @survey.name.titleize %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Version:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @survey_version.version_number%></p>
+  </div>
 </div>
 
 <div class="pageNav">
-	<%= link_to "Add New Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"newlink" %>
-	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"manage" %>
+  <%= link_to "Add New Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"newlink" %>
+  <%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"manage" %>
 </div>
 
 <table id="dfTable">
-	<tr>
-		<th class="col1" scope="col">Edit</th>
-		<th class="col2-3" scope="col" colspan="2">Display Field</th>
-		<th class="col4" scope="col">Type</th>
-		<th class="col5" scope="col">Move Up</th>
-		<th class="col6" scope="col">Move Down</th>
-		<th class="col7" scope="col"></th>
-	</tr>
-	
-	<% @display_fields.each do |df| %>
-	<tr class="<%= cycle('gray','white') %>">
-		<% if df.editable? %>
-			<td class="col1">
-				<%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_survey_version_display_field_path(@survey, @survey_version, df) %>
-			</td>
-		<% else %>
-			<td class="col1"></td>
-		<% end %>
-		<td class="col2"><%= df.display_order %></td>
-		<td class="col3"><%= df.name %></td>
-		<td class="col4"><%= df.type %></td>
-		<td class="col5"><%= link_to image_tag('arrow_up_larger.png', :alt=>"move up"), 	decrement_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
-		<td class="col6"><%= link_to image_tag('arrow_down_larger.png', :alt=>"move down"), increment_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
-		<% if df.editable? %>
-			<td class="col7">
-				<%= link_to image_tag("delete.png", :alt=>"Delete"), survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete, :class=>"deleteLink" %>
-			</td>
-		<% else %>
-			<td class="col7"></td>
-		<% end %>
-	 </tr>
-	<% end %>
+  <tr>
+    <th class="col1" scope="col">Edit</th>
+    <th class="col2-3" scope="col" colspan="2">Display Field</th>
+    <th class="col4" scope="col">Type</th>
+    <th class="col5" scope="col">Move Up</th>
+    <th class="col6" scope="col">Move Down</th>
+    <th class="col7" scope="col"></th>
+  </tr>
+
+  <% @display_fields.each do |df| %>
+  <tr class="<%= cycle('gray','white') %>">
+    <% if df.editable? %>
+      <td class="col1">
+        <%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_survey_version_display_field_path(@survey, @survey_version, df) %>
+      </td>
+    <% else %>
+      <td class="col1"></td>
+    <% end %>
+    <td class="col2"><%= df.display_order %></td>
+    <td class="col3"><%= df.name %></td>
+    <td class="col4"><%= df.type %></td>
+    <td class="col5"><%= link_to image_tag('arrow_up_larger.png', :alt=>"move up"),   decrement_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
+    <td class="col6"><%= link_to image_tag('arrow_down_larger.png', :alt=>"move down"), increment_display_order_survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :put %></td>
+    <% if df.editable? %>
+      <td class="col7">
+        <%= link_to image_tag("delete.png", :alt=>"Delete"), survey_survey_version_display_field_path(@survey, @survey_version, df), :method => :delete, :class=>"deleteLink" %>
+      </td>
+    <% else %>
+      <td class="col7"></td>
+    <% end %>
+   </tr>
+  <% end %>
 </table>
 
 <div class="pageNav">
-	<%= link_to "Add New Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"newlink" %>
-	<%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"manage" %>
+  <%= link_to "Add New Display Field", new_survey_survey_version_display_field_path(@survey, @survey_version), :class=>"newlink" %>
+  <%= link_to "View Survey Responses", survey_responses_path(:survey_id => @survey.id, :survey_version_id => @survey_version.id), :class=>"manage" %>
 </div>
