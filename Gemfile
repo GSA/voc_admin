@@ -38,24 +38,9 @@ gem 'uglifier', '>= 1.0.3'
 
 gem "rails-observers"
 
-platform :ruby do
-  gem 'unicorn-rails'
-  gem 'mysql2', '~> 0.3'
-  gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
-end
-
-platform :jruby do
-  gem 'activerecord-jdbc-adapter'
-  gem 'jdbc-mysql'
-  gem 'activerecord-jdbcmysql-adapter'
-
-  gem 'jruby-openssl', :require => false
-
-  gem 'jruby-rack', :require => false
-  gem 'jruby-rack-worker', :require => false
-
-  gem 'warbler'
-end
+gem 'mysql2', '~> 0.3.18'
+gem 'unicorn-rails'
+gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
 
 group :development do
   gem 'annotate'
