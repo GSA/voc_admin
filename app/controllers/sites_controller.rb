@@ -21,7 +21,7 @@ class SitesController < ApplicationController
 
   # POST   /sites(.:format)
   def create
-    @site = Site.new params[:site]
+    @site = Site.new site_params
 
     if @site.save
       redirect_to @site, :notice => "Successfully created new site."
@@ -39,7 +39,7 @@ class SitesController < ApplicationController
   def update
     @site = Site.find(params[:id])
 
-    if @site.update_attributes(params[:site])
+    if @site.update_attributes(site_params)
       redirect_to @site, :notice => "Successfully updated site."
     else
       render :edit
@@ -56,5 +56,11 @@ class SitesController < ApplicationController
       @site.destroy
       redirect_to sites_path, :notice => "Successfully removed site."
     end
+  end
+
+  private
+
+  def site_params
+    params.require(:site).permit(:name, :url, :description)
   end
 end
