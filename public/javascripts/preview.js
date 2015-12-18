@@ -1,7 +1,6 @@
 (function($) {
   $(function() {
     bindOnSubmitForFormControls();
-    bindOnChangeForStylesheetSelect();
   });
 
   function bindOnSubmitForFormControls() {
