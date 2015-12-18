@@ -2,6 +2,8 @@
 #
 # A Page is a container for one screen's worth of SurveyElements.
 class Page < ActiveRecord::Base
+  attr_accessible :page_number, :survey_version
+
   belongs_to :survey_version, :touch => true
   has_many :survey_elements, :dependent => :destroy
 
@@ -56,10 +58,20 @@ class Page < ActiveRecord::Base
 
     if current_page_number > target_page_number.to_i
       # 1 2 3 target_page_number  5 6 current_page_number
-      self.survey_version.pages.update_all('pages.page_number = pages.page_number + 1', ['pages.page_number >= ? AND pages.page_number < ?', target_page_number, current_page_number])
+      self.survey_version.pages
+        .where([
+            'pages.page_number >= ? AND pages.page_number < ?',
+            target_page_number, current_page_number
+        ])
+        .update_all('pages.page_number = pages.page_number + 1')
     else
       # 1 2 3 current_page_number 5 6 target_page_number
-      self.survey_version.pages.update_all('pages.page_number = pages.page_number - 1', ['pages.page_number > ? AND pages.page_number <= ?', current_page_number, target_page_number])
+      self.survey_version.pages
+        .where([
+          'pages.page_number > ? AND pages.page_number <= ?',
+          current_page_number, target_page_number
+        ])
+        .update_all('pages.page_number = pages.page_number - 1')
     end
 
     self.update_attribute(:page_number, target_page_number)
@@ -124,7 +136,9 @@ class Page < ActiveRecord::Base
 
   # Ensures that successive pages are renumbered properly on page destroy
   def renumber_pages
-    self.survey_version.pages.update_all('pages.page_number = pages.page_number - 1', ['page_number > ?', self.page_number])
+    self.survey_version.pages
+      .where(['page_number > ?', self.page_number])
+      .update_all('pages.page_number = pages.page_number - 1')
   end
 
 end
