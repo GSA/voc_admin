@@ -1,3 +1,4 @@
+require 'pathname'
 class PremadeCss
   attr_reader :filepath
   def initialize filepath

@@ -1,4 +1,3 @@
-require "Pathname"
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Manages the Survey lifecycle.
