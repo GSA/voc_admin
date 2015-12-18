@@ -32,7 +32,7 @@ module FeatureHelper
 
   def add_execution_triggers
     %w(add update delete nightly).each_with_index do |trigger, index|
-      ExecutionTrigger.find_or_create_by_name(trigger) do |et|
+      ExecutionTrigger.find_or_create_by(name: trigger) do |et|
         et.id = index + 1
       end
     end
