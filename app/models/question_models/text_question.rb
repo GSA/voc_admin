@@ -23,7 +23,7 @@ class TextQuestion < ActiveRecord::Base
 
   delegate :statement, :required, :flow_control, :to => :question_content
 
-  default_scope includes(:question_content)
+  default_scope { includes(:question_content) }
 
   # Delegated method for Questionable.
   def get_true_value(string_value)
