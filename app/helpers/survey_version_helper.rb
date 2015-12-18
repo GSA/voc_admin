@@ -186,8 +186,10 @@ module SurveyVersionHelper
         :remote => true,
         :title => "Remove page",
         :class=>"deleteLink",
-        :confirm => "All items on page #{page_number} will be removed as well.",
-        :data => { :flow_control_target => target_of_flow_control }
+        :data => {
+          :confirm => "All items on page #{page_number} will be removed as well.",
+          :flow_control_target => target_of_flow_control
+        }
       }
   end
 
@@ -243,12 +245,14 @@ module SurveyVersionHelper
       msg = "Are you sure?"
     end
     link_to image_tag("delete.png", :alt=>"Delete"),
-            url,
-            { :method => :delete,
-              :remote => true,
-              :title => "Delete page element",
-              :class=>"deleteLink",
-              :confirm => msg}
+      url,
+      {
+        :method => :delete,
+        :remote => true,
+        :title => "Delete page element",
+        :class=>"deleteLink",
+        :data => { :confirm => msg }
+      }
   end
 
   # Detects whether a question contains flow control and moving it up would
