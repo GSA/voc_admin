@@ -88,8 +88,8 @@
     </div>
 
     <div class="instructions">
-      <%= link_to_if @survey.persisted?, 'Preview', 'javascript:void(0);', "id" => "start_page_preview",
-        "data-id" => @survey.id %>
+      <%= button_tag "Preview", id: "start_page_preview", data: { id: @survey.id },
+        disabled: @survey.new_record? %>
       <div>
         <%= f.label :survey_preview_stylesheet, 'Preview Stylesheet' %>
         <%= f.text_field :survey_preview_stylesheet %>

@@ -4,8 +4,9 @@
   jQuery(function() {
     jQuery('#invitation_preview').on('click', function(e) {
       loadModal('vocModal');
+      e.preventDefault();
+      return false;
     });
-    console.log("on click added.");
   });
 
   /*
