@@ -22,7 +22,7 @@ $(function(){
    * Unchecking the box should disable the select menu and clear the next_page_id from the page model
    * 4/22/2013 - Dead code branch?
    */
-  $(".page_level_flow_control").live("change", function () {
+   $(document).on("change", ".page_level_flow_control", function() {
     if( $(this).attr('checked') == true ) {
       /* The checkbox is checked and the select box shoudl be enabled */
       $(this).prev(".NextPageSelect").attr('disabled', null);
@@ -40,7 +40,7 @@ $(function(){
   /* Functions for managing the select boxes for page and next_page
    * for multiple choice questions.
    */
-  $("#flow_control_checkbox").live('change', function(){
+  $(document).on("change", "#flow_control_checkbox", function() {
     var width = 0;
     /* If checkbox is selected then hide the next page dropdown for answers. */
     if(!$(this).is(':checked')){
@@ -74,13 +74,13 @@ $(function(){
   });
 
   /* Show the spinner on ajax requests to reorder elements/pages */
-  $(".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page").live("ajax:beforeSend", function(){
+  $(document).on("ajax:beforeSend", ".element_order_up, .move_page_up, .element_order_down, .move_page_down, .link_to_new_page, .remove_page_link, .remove_question_link, .copy_page", function(){
     toggleSpinner();
   });
 
   /* When the Choice Question Type is Radio then the auto_next_page option should show up */
   /* When Radio or Checkbox, the Answer Placement option should show */
-  $("#choice_question_answer_type").live('change', function() {
+  $(document).on('change', "#choice_question_answer_type", function() {
     val = $(this).val();
 
     if (val == "radio") {
