@@ -45,7 +45,8 @@ module ApplicationHelper
       render(:partial => partial_name, :locals => {:f => builder, :survey_version => @survey_version, :survey => @survey})
     end
 
-    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"newlink")
+    link_to name, "javascript:void(0)", onclick: "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")",
+      class: "newlink"
   end
 
   # (see link_to_add_fields)
