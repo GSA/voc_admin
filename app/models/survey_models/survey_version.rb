@@ -232,7 +232,7 @@ class SurveyVersion < ActiveRecord::Base
       minor_version = self.survey.survey_versions.where(:major => self.major)
         .order('survey_versions.minor desc').first.minor + 1
       new_attributes = self.attributes.except(
-        "id", "survey_id", "published", "locked", "archived", "created_at", 
+        "id", "survey_id", "published", "locked", "archived", "created_at",
         "updated_at", "counts_updated_at", "dirty_reports"
       )
       new_sv = survey.survey_versions.build(new_attributes.merge(:minor => minor_version))
@@ -333,10 +333,6 @@ class SurveyVersion < ActiveRecord::Base
 
   def survey_name_with_version
     "#{survey_name} v#{version_number}"
-  end
-
-  def preview_url
-    "/surveys/#{survey.id}/survey_versions/#{id}/preview"
   end
 
   private

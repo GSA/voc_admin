@@ -10,7 +10,7 @@ class SurveysController < ApplicationController
     @css_files = Dir.glob("public/stylesheets/custom/*.css").map {|stylesheet|
       PremadeCss.new(stylesheet)
     }
-    @surveys = Survey.order(:name)
+    @surveys = current_user.surveys.order(:name)
   end
 
   # GET    /surveys(.:format)
