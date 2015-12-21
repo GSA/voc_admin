@@ -1,6 +1,6 @@
 $(function(){
   /* NextPage should submit an ajax update for the page to set the next_page_id */
-  $(".NextPageSelect").live("change", function() {
+  $(document).on("change", ".NextPageSelect", function() {
     toggleSpinner();
     $.ajax({
       type: "PUT",

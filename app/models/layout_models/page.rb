@@ -2,7 +2,7 @@
 #
 # A Page is a container for one screen's worth of SurveyElements.
 class Page < ActiveRecord::Base
-  attr_accessible :page_number, :survey_version
+  attr_accessible :page_number, :survey_version, :next_page_id, :survey_version_id
 
   belongs_to :survey_version, :touch => true
   has_many :survey_elements, :dependent => :destroy
