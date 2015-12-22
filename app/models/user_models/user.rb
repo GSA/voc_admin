@@ -2,7 +2,8 @@
 #
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
-  attr_accessible :email, :site_ids, :role_id, :hhs_id, :fullname, :f_name, :l_name
+  attr_accessible :email, :site_ids, :role_id, :hhs_id, :fullname, :f_name, :l_name,
+    :sites
 
   attr_accessor :first_name, :last_name
 
@@ -51,7 +52,7 @@ class User < ActiveRecord::Base
   #
   # @return [Boolean] true if the user is an admin, false otherwise
   def admin?
-    self.role_id == Role::ADMIN.id
+    self.role_id.present? && self.role_id == Role::ADMIN.id
   end
 
   def set_fullname
