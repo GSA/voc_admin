@@ -4,6 +4,7 @@ FactoryGirl.define do
     f_name "John"
     l_name "Doe"
     sequence(:hhs_id) {|n| 2000000000 + n}
+    role_id { nil }
 
     trait :admin do
       role_id { Role::ADMIN.id }
