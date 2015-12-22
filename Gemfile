@@ -64,4 +64,5 @@ group :test do
   gem "selenium-webdriver"
   gem "launchy"
   gem 'shoulda-matchers'
+  gem "guard-rspec", require: false
 end
