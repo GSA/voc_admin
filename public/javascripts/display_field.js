@@ -1,10 +1,10 @@
 $(function(){
-	$('select#display_field_model_type').live('change', function(){
+	$(document).on('change', 'select#display_field_model_type', function(e) {
 		if($(this).val() == "DisplayFieldText"){
 			text_type_actions();
 		} else if($(this).val() == "DisplayFieldChoiceSingle") {
 			dropdown_type_actions();
-		} else if(($(this).val() == "DisplayFieldChoiceMultiselect")) { 
+		} else if(($(this).val() == "DisplayFieldChoiceMultiselect")) {
 			multiselect_type_actions();
 		}
 	});

@@ -25,7 +25,7 @@ gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
-gem "best_in_place"#, :git => 'https://github.com/eLafo/best_in_place', :branch => 'rails-3.0' # This version is require for < Rails 3.1
+gem "best_in_place"
 gem 'httparty'
 
 gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
