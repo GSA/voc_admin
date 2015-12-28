@@ -10,7 +10,7 @@ RSpec.feature "User edits survey version" do
   end
 
   def create_open_ended_question
-    first(:link, "Add an open-ended question").click
+    click_link "Add an open-ended question"
     choose "Field"
     fill_in "Question:", with: "Example Text Question"
     click_button "Create Question"

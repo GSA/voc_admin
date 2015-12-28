@@ -18,6 +18,7 @@ module FeatureHelper
     fill_in "site_url", with: "http://test.com"
     fill_in "Description:", with: "Test Description"
     click_button "Create Site"
+    expect(page).to have_content("Edit")
   end
 
   def create_survey
