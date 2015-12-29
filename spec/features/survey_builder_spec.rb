@@ -3,17 +3,17 @@ require "rails_helper"
 RSpec.feature "Survey builder", js: true do
   context "text question" do
     scenario "User adds a text question with valid attributes" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_text_question statement: "Example Question"
       expect(page).to have_css ".page_asset", text: "Example Question", count: 1
     end
 
     scenario "User adds a text question with invalid attributes" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_text_question statement: ""
       expect(page).to_not have_css ".page_asset"
     end
@@ -21,9 +21,9 @@ RSpec.feature "Survey builder", js: true do
 
   context "choice question" do
     scenario "User adds a choice question with valid attributes" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_choice_question statement: "Example Question", answer: "foo"
       expect(page).to have_css(".page_asset", text: "Example Question", count: 1)
     end
@@ -163,7 +163,7 @@ RSpec.feature "Survey builder", js: true do
     click_button "Create Question"
   end
 
-  def add_text_question statement
+  def add_text_question statement:
     click_link "Add an open-ended question"
     choose "Field"
     fill_in "Question:", with: statement

@@ -28,7 +28,6 @@ module FeatureHelper
   end
 
   def create_survey survey_type: "Site"
-    add_execution_triggers
     create_survey_types
     visit root_path
     click_link "Create New Survey"
@@ -39,11 +38,4 @@ module FeatureHelper
     click_button "Create Survey"
   end
 
-  def add_execution_triggers
-    %w(add update delete nightly).each_with_index do |trigger, index|
-      ExecutionTrigger.find_or_create_by(name: trigger) do |et|
-        et.id = index + 1
-      end
-    end
-  end
 end

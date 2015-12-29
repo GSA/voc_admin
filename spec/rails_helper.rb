@@ -24,6 +24,7 @@ RSpec.configure do |config|
     if Role::ADMIN.nil?
       Role.remove_const ADMIN
     end
+    add_execution_triggers
   end
 
   # DatabaseCleaner Configuration
@@ -39,5 +40,13 @@ RSpec.configure do |config|
 
   config.after(:each) do |example|
     DatabaseCleaner.clean
+  end
+
+  def add_execution_triggers
+    %w(add update delete nightly).each_with_index do |trigger, index|
+      ExecutionTrigger.find_or_create_by(name: trigger) do |et|
+        et.id = index + 1
+      end
+    end
   end
 end
