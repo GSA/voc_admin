@@ -21,13 +21,21 @@ module FeatureHelper
     expect(page).to have_content("Edit")
   end
 
-  def create_survey
+  def create_survey_types
+    SurveyType.create id: SurveyType::POLL, name: "Poll"
+    SurveyType.create id: SurveyType::SITE, name: "Site"
+    SurveyType.create id: SurveyType::PAGE, name: "Page"
+  end
+
+  def create_survey survey_type: "Site"
     add_execution_triggers
+    create_survey_types
     visit root_path
     click_link "Create New Survey"
     fill_in "Name:", with: "Test Survey"
     fill_in "Description:", with: "Test Survey Description"
     select "Test", from: "survey_site_id"
+    select survey_type, from: "survey_survey_type_id"
     click_button "Create Survey"
   end
 

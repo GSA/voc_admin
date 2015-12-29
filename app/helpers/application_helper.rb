@@ -58,7 +58,8 @@ module ApplicationHelper
   def link_to_add_matrix_answer(name)
     fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer", :answer => nil})
 
-    link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"newlink")
+    link_to name, "javascript:void(0);", onclick: "add_matrix_answers(this, \"#{escape_javascript(fields)}\")",
+      class: "newlink"
   end
 
   # Adds sort arrow images to table DisplayField columns.
