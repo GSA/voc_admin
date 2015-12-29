@@ -28,6 +28,25 @@ RSpec.feature "Survey builder", js: true do
       expect(page).to have_css(".page_asset", text: "Example Question", count: 1)
     end
 
+    scenario "User adds answer fields" do
+      login_user
+      create_site
+      create_survey
+      click_link "Add a multiple-choice question"
+      expect(page).to have_css ".answer_fields input[type=text]", count: 4
+      click_link "Add Answer"
+      expect(page).to have_css ".answer_fields input[type=text]", count: 5
+    end
+
+    scenario "selecting flow control shows the target page dropdowns" do
+      login_user
+      create_site
+      create_survey
+      click_link "Add a multiple-choice question"
+      check "Flow control"
+      expect(page).to have_css ".next_pages", count: 4
+    end
+
     scenario "User adds a choice question with invalid attributes" do
       login_user
       create_site
@@ -46,6 +65,16 @@ RSpec.feature "Survey builder", js: true do
         questions: ["Question 1"],
         answers: ["foo", "bar"]
       expect(page).to have_css ".page_asset"
+    end
+
+    scenario "User adds new question input fields" do
+      login_user
+      create_site
+      create_survey
+      click_link "Add matrix question"
+      expect(page).to have_css ".ChoiceQuestionContent input", count: 1
+      click_link "Add Question"
+      expect(page).to have_css ".ChoiceQuestionContent input", count: 2
     end
 
     scenario "User adds multiple questions to the matrix question" do
@@ -76,6 +105,28 @@ RSpec.feature "Survey builder", js: true do
       add_matrix_question statement: "",
         questions: ["Question 1"],
         answers: ["foo", "bar"]
+      expect(page).to_not have_css ".page_asset"
+    end
+  end
+
+  context "Add HTML Snippet" do
+    scenario "with valid attributes" do
+      login_user
+      create_site
+      create_survey
+      click_link "Add snippet"
+      fill_in "Snippet:", with: "<p>Example Snippet</p>"
+      click_button "Create Snippet"
+      expect(page).to have_css ".page_asset", text: "Example Snippet"
+    end
+
+    scenario "with invalid attributes" do
+      login_user
+      create_site
+      create_survey
+      click_link "Add snippet"
+      fill_in "Snippet:", with: ""
+      click_button "Create Snippet"
       expect(page).to_not have_css ".page_asset"
     end
   end

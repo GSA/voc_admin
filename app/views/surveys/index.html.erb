@@ -35,7 +35,11 @@
     <td class="col4"><%= truncate survey.description, length: 255, separator: ' ' %></td>
     <td class="col5"><%= survey.survey_type.name.titleize %></td>
     <td class="col6"><%= survey.site.name %></td>
-    <td class="col7"><%= link_to image_tag("delete.png", :alt=>"Delete"), survey, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+    <td class="col7">
+      <%= link_to image_tag("delete.png", :alt=>"Delete"), survey,
+        data: { confirm: 'Are you sure?' }, :method => :delete,
+        :class=>"deleteLink" %>
+    </td>
   </tr>
 <% end %>
 </table>
