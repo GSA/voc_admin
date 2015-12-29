@@ -207,14 +207,17 @@ RSpec.describe SurveysController, type: :controller do
 
   context "GET /all_questions", "#all_questions" do
     it "redirects to the surveys index when user is not an admin" do
+      expect(Role::ADMIN).to_not be_nil
       login_user user: FactoryGirl.create(:user)
       get :all_questions
       expect(response).to redirect_to surveys_path
     end
     it "shows only published versions" do
+      expect(Role::ADMIN.id).to_not be_nil
       published_version = FactoryGirl.create :survey_version, :published
       login_user user: FactoryGirl.create(:user, role_id: Role::ADMIN.id)
       get :all_questions
+      expect(assigns(:current_user).admin?).to be true
       expect(assigns(:published_versions)).to eq [published_version]
       expect(response).to render_template("all_questions")
     end
@@ -259,5 +262,6 @@ RSpec.describe SurveysController, type: :controller do
 
   def login_user user:
     UserSession.create user, false
+    expect(UserSession.find.user).to eq user
   end
 end
