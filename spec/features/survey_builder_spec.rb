@@ -29,9 +29,9 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds answer fields" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add a multiple-choice question"
       expect(page).to have_css ".answer_fields input[type=text]", count: 4
       click_link "Add Answer"
@@ -39,18 +39,18 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "selecting flow control shows the target page dropdowns" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add a multiple-choice question"
       check "Flow control"
       expect(page).to have_css ".next_pages", count: 4
     end
 
     scenario "User adds a choice question with invalid attributes" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_choice_question statement: "", answer: "foo"
       expect(page).to_not have_css ".page_asset"
     end
@@ -58,9 +58,9 @@ RSpec.feature "Survey builder", js: true do
 
   context "matrix question" do
     scenario "User adds a matrix question with valid attributs" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_matrix_question statement: "Example QUestion",
         questions: ["Question 1"],
         answers: ["foo", "bar"]
@@ -68,9 +68,9 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds new question input fields" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add matrix question"
       expect(page).to have_css ".ChoiceQuestionContent input", count: 1
       click_link "Add Question"
@@ -78,9 +78,9 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds multiple questions to the matrix question" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_matrix_question statement: "Example Question",
         questions: ["Foo", "Bar"],
         answers: ["1", "2"]
@@ -89,9 +89,9 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds new answer fields to the matrix question" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add matrix question"
       expect(page).to have_css ".answer_fields input", count: 4
       click_link "Add Answer"
@@ -99,9 +99,9 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds an invalid matrix question" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_matrix_question statement: "",
         questions: ["Question 1"],
         answers: ["foo", "bar"]
@@ -111,9 +111,9 @@ RSpec.feature "Survey builder", js: true do
 
   context "Add HTML Snippet" do
     scenario "with valid attributes" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add snippet"
       fill_in "Snippet:", with: "<p>Example Snippet</p>"
       click_button "Create Snippet"
@@ -121,9 +121,9 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "with invalid attributes" do
+      survey = create :survey
       login_user
-      create_site
-      create_survey
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add snippet"
       fill_in "Snippet:", with: ""
       click_button "Create Snippet"
