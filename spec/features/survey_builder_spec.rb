@@ -48,6 +48,27 @@ RSpec.feature "Survey builder", js: true do
       expect(page).to have_css ".page_asset"
     end
 
+    scenario "User adds multiple questions to the matrix question" do
+      login_user
+      create_site
+      create_survey
+      add_matrix_question statement: "Example Question",
+        questions: ["Foo", "Bar"],
+        answers: ["1", "2"]
+      expect(page).to have_content "Foo"
+      expect(page).to have_content "Bar"
+    end
+
+    scenario "User adds new answer fields to the matrix question" do
+      login_user
+      create_site
+      create_survey
+      click_link "Add matrix question"
+      expect(page).to have_css ".answer_fields input", count: 4
+      click_link "Add Answer"
+      expect(page).to have_css ".answer_fields input", count: 5
+    end
+
     scenario "User adds an invalid matrix question" do
       login_user
       create_site
@@ -62,10 +83,23 @@ RSpec.feature "Survey builder", js: true do
   def add_matrix_question statement:, questions:, answers:
     click_link "Add matrix question"
     fill_in "Statement:", with: statement
-    page.all(:css, ".ChoiceQuestionContent textarea").zip(questions).each do |element, value|
+    question_inputs = page.all(:css, ".ChoiceQuestionContent textarea")
+    if questions.size > question_inputs.count
+      (questions.size - question_inputs.count).times do
+        click_link "Add Question"
+      end
+      question_inputs = page.all(:css, ".ChoiceQuestionContent textarea")
+    end
+    answer_fields = page.all(:css, ".answer_fields input")
+    if answers.size > answer_fields.count
+      click_link "Add Answer"
+      answer_fields = page.all(:css, ".answer_fields input")
+    end
+
+    question_inputs.zip(questions).each do |element, value|
       fill_in element[:name], with: value
     end
-    page.all(:css, ".answer_fields input").zip(answers).each do |element, value|
+    answer_fields.zip(answers).each do |element, value|
       fill_in element[:name], with: value
     end
     click_button "Create Question"
