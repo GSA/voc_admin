@@ -4,5 +4,9 @@ FactoryGirl.define do
     description     "This is a test survey created by RSpec and FactoryGirl"
     association(:site)
     association(:survey_type)
+
+    trait :site do
+      association(:survey_type, id: SurveyType::Site, name: "Site")
+    end
   end
 end
