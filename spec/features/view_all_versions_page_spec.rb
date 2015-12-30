@@ -21,7 +21,9 @@ RSpec.feature "View all versions page" do
     survey = create :survey, name: "Example"
     login_user
     visit survey_survey_versions_path(survey)
-    find(:css, ".col11 a").click
+    within find('tr', text: "1.0") do
+      click_link "Clone Survey"
+    end
     expect(page).to have_content "1.1"
   end
 
@@ -29,8 +31,9 @@ RSpec.feature "View all versions page" do
     survey = create :survey
     login_user
     visit survey_survey_versions_path(survey)
-    expect(page).to have_content("1.0")
-    find(:css, "a.deleteLink").click
+    within find('tr', text: '1.0') do
+      click_link "Delete"
+    end
     expect(page).to_not have_content("1.0")
   end
 
