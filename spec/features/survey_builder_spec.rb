@@ -58,7 +58,7 @@ RSpec.feature "Survey builder", js: true do
 
   context "matrix question" do
     scenario "User adds a matrix question with valid attributs" do
-      survey = create :survey
+      survey = create :survey, :site
       login_user
       visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_matrix_question statement: "Example QUestion",
@@ -68,7 +68,7 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds new question input fields" do
-      survey = create :survey
+      survey = create :survey, :site
       login_user
       visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add matrix question"
@@ -78,7 +78,7 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds multiple questions to the matrix question" do
-      survey = create :survey
+      survey = create :survey, :site
       login_user
       visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_matrix_question statement: "Example Question",
@@ -89,7 +89,7 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds new answer fields to the matrix question" do
-      survey = create :survey
+      survey = create :survey, :site
       login_user
       visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       click_link "Add matrix question"
@@ -99,7 +99,7 @@ RSpec.feature "Survey builder", js: true do
     end
 
     scenario "User adds an invalid matrix question" do
-      survey = create :survey
+      survey = create :survey, :site
       login_user
       visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
       add_matrix_question statement: "",
