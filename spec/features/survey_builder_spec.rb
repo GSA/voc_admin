@@ -65,6 +65,17 @@ RSpec.feature "Survey builder", js: true do
       add_choice_question statement: "", answer: "foo"
       expect(page).to_not have_css ".page_asset"
     end
+
+    scenario "User deletes a choice question" do
+      survey = create :survey
+      login_user
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
+      add_choice_question statement: "example", answer: "foo"
+      within ".page_asset", text: "example" do
+        click_link "Delete"
+      end
+      expect(page).to_not have_css ".page_asset", text: "example"
+    end
   end
 
   context "matrix question" do
@@ -118,6 +129,20 @@ RSpec.feature "Survey builder", js: true do
         answers: ["foo", "bar"]
       expect(page).to_not have_css ".page_asset"
     end
+
+    scenario "User deletes a matrix question" do
+      survey = create :survey, :site
+      login_user
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
+      add_matrix_question statement: "example",
+        questions: ["foo"],
+        answers: ["bar"]
+      expect(page).to have_css ".page_asset", text: "example"
+      within find(".page_asset", text: "example") do
+        click_link "Delete"
+      end
+      expect(page).to_not have_css ".page_asset", text: "example"
+    end
   end
 
   context "Add HTML Snippet" do
@@ -139,6 +164,20 @@ RSpec.feature "Survey builder", js: true do
       fill_in "Snippet:", with: ""
       click_button "Create Snippet"
       expect(page).to_not have_css ".page_asset"
+    end
+
+    scenario "user deletes the HTML Snippet" do
+      survey = create :survey
+      login_user
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
+      click_link "Add snippet"
+      fill_in "Snippet", with: "Test"
+      click_button "Create Snippet"
+      expect(page).to have_css ".page_asset", text: "Test"
+      within find(".page_asset", text: "Test") do
+        click_link "Delete"
+      end
+      expect(page).to_not have_css ".page_asset", text: "Test"
     end
   end
 
