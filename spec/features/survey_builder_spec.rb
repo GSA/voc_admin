@@ -17,6 +17,17 @@ RSpec.feature "Survey builder", js: true do
       add_text_question statement: ""
       expect(page).to_not have_css ".page_asset"
     end
+
+    scenario "User deletes a text question" do
+      survey = create :survey
+      login_user
+      visit edit_survey_survey_version_path(survey, survey.survey_versions.first)
+      add_text_question statement: "Example Question"
+      within find('div.page_asset', text: "Example Question") do
+        click_link "Delete"
+      end
+      expect(page).to_not have_css ".page_asset", text: "Example Question"
+    end
   end
 
   context "choice question" do

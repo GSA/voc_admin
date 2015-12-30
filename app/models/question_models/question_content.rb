@@ -3,7 +3,7 @@
 # QuestionContent contains fields shared between all question types (ChoiceQuestion,
 # TextQuestion, MatrixQuestion) and delegates behavior where appropriate.
 class QuestionContent < ActiveRecord::Base
-  belongs_to :questionable, :polymorphic => true, :dependent => :destroy
+  belongs_to :questionable, :polymorphic => true#, :dependent => :destroy
   has_many :criteria, :as => :source
   has_many :raw_responses, :foreign_key => "question_content_id" # likely currently unused. had a typo
   has_many :question_content_display_fields

@@ -4,7 +4,7 @@
 # which exists on a Page within a SurveyVersion.
 class SurveyElement < ActiveRecord::Base
   belongs_to :page
-  belongs_to :assetable, :polymorphic => true, :dependent => :destroy
+  belongs_to :assetable, :polymorphic => true#, :dependent => :destroy
   belongs_to :survey_version, :touch => true
   has_many :dashboard_elements, :dependent => :destroy
 
