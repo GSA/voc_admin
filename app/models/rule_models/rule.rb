@@ -151,7 +151,8 @@ class Rule < ActiveRecord::Base
 
   # Decrement all later rules when this rule is destroyed.
   def reorder_rules
-    self.survey_version.rules.update_all('rules.rule_order = rules.rule_order - 1', ['rules.rule_order > ?', self.rule_order])
+    self.survey_version.rules.where(['rules.rule_order > ?', self.rule_order])
+      .update_all('rules.rule_order = rules.rule_order - 1')
   end
 end
 
