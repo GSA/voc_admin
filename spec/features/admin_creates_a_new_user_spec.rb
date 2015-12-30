@@ -23,6 +23,7 @@ RSpec.feature "Admin creates a new user" do
     submit_user first_name: "Example", last_name: "User", email: "example@test.com",
       hhs_id: "", role: "Admin"
     expect(page).to_not have_content "Example User"
+    expect(page).to have_content "can't be blank"
   end
 
 
