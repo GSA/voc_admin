@@ -1,5 +1,5 @@
 class DashboardElement < ActiveRecord::Base
-  include ActionView::Helpers::TextHelper 
+  include ActionView::Helpers::TextHelper
 
   belongs_to :dashboard
   belongs_to :survey_element
@@ -9,7 +9,7 @@ class DashboardElement < ActiveRecord::Base
   include RankedModel
   ranks :sort_order, :with_same => :dashboard_id
 
-  default_scope order(:sort_order)
+  default_scope { order(:sort_order) }
 
   # dashboard element types
   DISPLAY_TYPES = {
