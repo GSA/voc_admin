@@ -9,12 +9,17 @@
   </tr>
   <% for user in users %>
     <tr class="<%= cycle('gray','white') %>">
-      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit icon"), edit_user_path(user), :remote => true %></td>
+      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit icon"),
+        edit_user_path(user), :remote => true %>
+      </td>
       <td class="col2"><%= link_to user.fullname, user %></td>
       <td class="col3"><%= user.role.nil? ? 'User' : user.role.name %></td>
       <td class="col4"><%= user.email %></td>
       <td class="col5"><%= user.hhs_id %></td>
-      <td class="col6"><%= link_to image_tag('delete.png', :alt=>"delete icon"), user, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+      <td class="col6"><%= link_to image_tag('delete.png', :alt=>"delete icon"),
+        user, data: { :confirm => 'Are you sure?' }, :method => :delete,
+        :class=>"deleteLink" %>
+      </td>
     </tr>
   <% end %>
 </table>
