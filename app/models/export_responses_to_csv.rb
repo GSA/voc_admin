@@ -26,7 +26,6 @@ class ExportResponsesToCsv
       csv << ["Date", "Page URL"].concat(ordered_columns.map(&:name))
 
       survey_responses_in_batches do |batch|
-        puts "Exporting batch to CSV"
         batch.each do |response|
           # Write the completed row to the CSV
           csv << [response.created_at.in_time_zone("Eastern Time (US & Canada)"),

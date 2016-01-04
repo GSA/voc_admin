@@ -72,7 +72,6 @@ class Survey < ActiveRecord::Base
     new_sv.archived = false
     new_sv.created_by_id = created_by_id || self.created_by_id
     new_sv.pages.build :page_number => 1, :survey_version => new_sv
-    puts new_sv.pages.first.errors unless new_sv.valid?
     new_sv.tap {|sv| sv.save!}
   end
 

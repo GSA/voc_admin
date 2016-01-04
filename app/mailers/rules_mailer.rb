@@ -10,7 +10,7 @@ class RulesMailer < ActionMailer::Base
   end
 
   # Send an email notification due to a Rule with an EmailAction firing.
-  # 
+  #
   # @param [String] email_string the email address of the recipient
   # @param [String] subject the subject of the email
   # @param [String] body the body of the email
@@ -18,8 +18,7 @@ class RulesMailer < ActionMailer::Base
   def email_action_notification(email_string, subject, body, survey_response_id)
     @survey_response = SurveyResponse.find(survey_response_id)
     @msg = body
-    puts "Body: #{@msg}"
 
-    puts mail(:to => email_string, :subject => subject)
+    mail(:to => email_string, :subject => subject)
   end
 end

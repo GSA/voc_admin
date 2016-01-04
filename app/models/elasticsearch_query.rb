@@ -35,7 +35,6 @@ class ElasticsearchQuery
   end
 
   def search(opts = {})
-    puts "Searching Elasticsearch with: #{search_criteria.deep_merge(opts).to_json}"
     results = ELASTIC_SEARCH_CLIENT.search(search_criteria.deep_merge(opts))
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
     responses = SurveyResponse.where(id: ids)

@@ -159,8 +159,6 @@ class MatrixQuestion < ActiveRecord::Base
       )
     end
 
-    puts choice_questions.inspect
-
     mq_attribs = mq_attribs.merge(:choice_questions_attributes => choice_questions, :survey_element_attributes => se_attribs)
     MatrixQuestion.create!(mq_attribs)
   end

@@ -44,8 +44,6 @@ class ElasticSearchResponse
     args[:body][:size] = options[:size] || SurveyResponse.default_per_page
     args[:body][:from] = (options[:page] || 0) * args[:body][:size]
 
-    puts "Searching elasticsearch with body: #{args.inspect}"
-
     results = ELASTIC_SEARCH_CLIENT.search args
     ids = results['hits']['hits'].map {|hit| hit['_source']['survey_response_id']}
     responses = SurveyResponse.where(id: ids)
