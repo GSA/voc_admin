@@ -10,7 +10,8 @@ class CustomView < ActiveRecord::Base
   belongs_to :survey_version
 
   has_many :display_field_custom_views, :dependent => :destroy
-  has_many :display_fields, :through => :display_field_custom_views, :order => "display_field_custom_views.display_order"
+  has_many :display_fields, -> { order("display_field_custom_views.display_order") },
+    through: :display_field_custom_views
 
   validates :name, presence: true, uniqueness: { scope: :survey_version_id }, length: { maximum: 255 }
   validates :default, uniqueness: { scope: :survey_version_id }, :if => :default
@@ -25,9 +26,9 @@ class CustomView < ActiveRecord::Base
   #
   # @param [Hash] params a Hash containing two strings: DisplayField ids in display order, and sort directives
   def ordered_display_fields=(params)
-    
+
     # separate the hash and split the arrays by delimiters.
-    # 
+    #
     # selected DisplayField columns are a simple comma-delimited list.
     #
     # sort orders come in "id1:asc,id2:desc,id3:asc" format.  Since they're pairs,

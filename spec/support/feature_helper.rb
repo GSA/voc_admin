@@ -27,11 +27,11 @@ module FeatureHelper
     SurveyType.create id: SurveyType::PAGE, name: "Page"
   end
 
-  def create_survey survey_type: "Site"
+  def create_survey survey_type: "Site", name: "Test Survey"
     create_survey_types
     visit root_path
     click_link "Create New Survey"
-    fill_in "Name:", with: "Test Survey"
+    fill_in "Name:", with: name
     fill_in "Description:", with: "Test Survey Description"
     select "Test", from: "survey_site_id"
     select survey_type, from: "survey_survey_type_id"

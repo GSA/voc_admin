@@ -1,32 +1,33 @@
 <div class="SearchCriteria">
-	<% unless index == 0 %>
-		<div class="andor">
-			<%= radio_button_tag "search[criteria][#{criteria_index}][clause_join]", 'AND', !(criteria_index != 'new_criteria_index' and params[:search].present? && params[:search][:criteria]["#{criteria_index}"][:clause_join] != 'AND'), :id => "criteria_#{criteria_index}_AND" %><%= label_tag "criteria_#{criteria_index}_AND", "AND" %>
-			<%= radio_button_tag "search[criteria][#{criteria_index}][clause_join]", 'OR',  (criteria_index != 'new_criteria_index' and params[:search].present? && params[:search][:criteria]["#{criteria_index}"][:clause_join] == 'OR'), :id => "criteria_#{criteria_index}_OR" %><%= label_tag "criteria_#{criteria_index}_OR", "OR" %>
-		</div>
-	<% end %>
+  <% unless index == 0 %>
+    <div class="andor">
+      <%= radio_button_tag "search[criteria][#{criteria_index}][clause_join]", 'AND', !(criteria_index != 'new_criteria_index' and params[:search].present? && params[:search][:criteria]["#{criteria_index}"][:clause_join] != 'AND'), :id => "criteria_#{criteria_index}_AND" %><%= label_tag "criteria_#{criteria_index}_AND", "AND" %>
+      <%= radio_button_tag "search[criteria][#{criteria_index}][clause_join]", 'OR',  (criteria_index != 'new_criteria_index' and params[:search].present? && params[:search][:criteria]["#{criteria_index}"][:clause_join] == 'OR'), :id => "criteria_#{criteria_index}_OR" %><%= label_tag "criteria_#{criteria_index}_OR", "OR" %>
+    </div>
+  <% end %>
 
-	<%= select_tag "search[criteria][#{criteria_index}][include_exclude]",
-		options_for_include_exclude(
-			(params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:include_exclude].to_i)) %>
+  <%= select_tag "search[criteria][#{criteria_index}][include_exclude]",
+    options_for_include_exclude(
+      (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:include_exclude].to_i)) %>
 
-	<%= select_tag "search[criteria][#{criteria_index}][display_field_id]",
-	  options_from_collection_for_select(
-	  	[
-	  		Struct.new(:id, :name).new('page_url', 'Page URL'),
-	  		Struct.new(:id, :name).new('created_at', 'Date')
-	  	].concat(
-	  		version.display_fields.map {|df|
+  <%= select_tag "search[criteria][#{criteria_index}][display_field_id]",
+    options_from_collection_for_select(
+      [
+        Struct.new(:id, :name).new('page_url', 'Page URL'),
+        Struct.new(:id, :name).new('created_at', 'Date')
+      ].concat(
+        version.display_fields.map {|df|
           Struct.new(:id, :name).new("df_#{df.id}", df.name)
         }
-	  	),
-	   :id,
-	   :name,
-	   :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:display_field_id])
-	  )
-	%>
-	<%= select_tag "search[criteria][#{criteria_index}][condition]", options_for_conditions((params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:condition]) ) %>
-	<%= text_field_tag "search[criteria][#{criteria_index}][value]", ((params[:search].blank? or criteria_index == 'new_criteria_index') ? '' : params[:search][:criteria]["#{criteria_index}"][:value]) %>
+      ),
+     :id,
+     :name,
+     :selected => (params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:display_field_id])
+    )
+  %>
+  <%= select_tag "search[criteria][#{criteria_index}][condition]", options_for_conditions((params[:search].blank? or criteria_index == 'new_criteria_index' ? '' : params[:search][:criteria]["#{criteria_index}"][:condition]) ) %>
+  <%= text_field_tag "search[criteria][#{criteria_index}][value]", ((params[:search].blank? or criteria_index == 'new_criteria_index') ? '' : params[:search][:criteria]["#{criteria_index}"][:value]) %>
 
-	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_search_criteria(this); return false;", :class=>"deleteLink" %>
+  <%= link_to image_tag("delete.png", alt: "Delete"), "javascript:void(0);",
+    onclick: "remove_search_criteria(this);return false;", class: "deleteLink" %>
 </div>

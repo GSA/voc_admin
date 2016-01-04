@@ -16,7 +16,7 @@ class SurveyResponse < ActiveRecord::Base
 
   validates :survey_version, :presence => true
 
-  default_scope where(:archived => false)
+  default_scope { where(:archived => false) }
 
   accepts_nested_attributes_for :raw_responses, :reject_if => :invalid_raw_response?
   accepts_nested_attributes_for :display_field_values

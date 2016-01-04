@@ -50,10 +50,17 @@
     </div>
     <br />
     <div>
-      <%= link_to_function "Add Criteria",
-        "add_search_criteria(this, '#{escape_javascript(render(:partial => 'survey_responses/criteria_fields', :locals => {:version => version, :criteria_index => 'new_criteria_index', :index => 'new_index'}))}')",
-        :class=>"manage"
-      %>
+      <%= link_to "Add Criteria", "javascript:void(0);", class: "manage",
+        onclick: "add_search_criteria(this, '#{escape_javascript(
+          render(
+            partial: 'survey_responses/criteria_fields',
+            locals: {
+              version: version,
+              criteria_index: 'new_criteria_index',
+              index: 'new_index'
+            }
+          )
+        )}');" %>
     </div>
     <br />
     <div>

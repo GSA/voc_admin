@@ -26,7 +26,8 @@
         <%= submit_tag "Search" %>
       <% end -%>
     </div>
-    <%= link_to_function "Advanced Search", "$('#advanced_search').toggle();return false;", :class=>"manage" %>
+    <%= link_to "Advanced Search", "javascript:void(0);", class: "manage",
+      onclick: "$('#advanced_search').toggle();return false" %>
   </div>
 
   <%= render partial: 'advanced_search', locals: { version: version } %>
