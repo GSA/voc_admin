@@ -26,7 +26,8 @@ module SurveyResponsesHelper
 
     title += arrows
 
-    link_to_function title.html_safe, "sortByDisplayField('#{CGI.escape(column)}', '#{direction}')"
+    link_to title.html_safe, "javascript:void(0);",
+      onclick: "sortByDisplayField('#{CGI.escape(column)}', '#{direction}')"
   end
 
   # Retrieve the edit link for the current CustomView (or static text if no CustomView.)
