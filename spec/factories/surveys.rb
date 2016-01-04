@@ -6,7 +6,7 @@ FactoryGirl.define do
     association(:survey_type)
 
     trait :site do
-      association(:survey_type, id: SurveyType::Site, name: "Site")
+      association(:survey_type, id: SurveyType::SITE, name: "Site")
     end
   end
 end

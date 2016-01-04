@@ -4,7 +4,7 @@ RSpec.feature "View Responses Page", js: true do
   it "Updates the version select dropdown when a survey is selected" do
     login_user
     create_site
-    create_survey name: "Test Site"
+    setup_survey name: "Test Site"
     visit survey_responses_path
     expect(page).to_not have_select "survey_version_id", with_options: ["1.0"]
 
@@ -16,7 +16,7 @@ RSpec.feature "View Responses Page", js: true do
   it "Updates the responses table when a version is selected" do
     login_user
     create_site
-    create_survey name: "Example"
+    setup_survey name: "Example"
 
     load_responses_for survey_name: "Example", version_number: "1.0"
 
@@ -27,7 +27,7 @@ RSpec.feature "View Responses Page", js: true do
     it "Shows the advanced search fields if not already shown" do
       login_user
       create_site
-      create_survey name: "Example"
+      setup_survey name: "Example"
       load_responses_for survey_name: "Example", version_number: "1.0"
       expect(page).to_not have_css "div#advanced_search"
 
@@ -39,7 +39,7 @@ RSpec.feature "View Responses Page", js: true do
     it "Hides the advanced search fields if it is already showing" do
       login_user
       create_site
-      create_survey name: "Example"
+      setup_survey name: "Example"
       load_responses_for survey_name: "Example", version_number: "1.0"
       click_link "Advanced Search"
       expect(page).to have_css "div#advanced_search"
@@ -50,7 +50,14 @@ RSpec.feature "View Responses Page", js: true do
     end
   end
 
-
+  def setup_survey name:, site: FactoryGirl.create(:site),
+    survey_type: FactoryGirl.create(:survey_type)
+    FactoryGirl.create(:survey,
+                       name: name,
+                       site: site,
+                       survey_type: survey_type
+                      )
+  end
 
   def load_responses_for survey_name:, version_number:
     visit survey_responses_path
