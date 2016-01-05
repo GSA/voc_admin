@@ -41,7 +41,7 @@ namespace :resque do
       logfile.sync = true
 
       # Create a new buffered logger
-      Resque.logger = ActiveSupport::BufferedLogger.new(logfile)
+      Resque.logger = ActiveSupport::Logger.new(logfile)
       Resque.logger.level = Logger::WARN
     }
   end
