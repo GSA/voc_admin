@@ -29,7 +29,12 @@
       <% else %>
         <%= f.select :default_value, f.object.choices.split %>
       <% end %>
-      <%= link_to_function "Refresh", "refresh_default_value_dropdown(); return false;", :id => "refresh_link", :style => f.object.type=="DisplayFieldChoiceSingle" ? "display:show;" : "display:none;", :class=>"manage" %>
+      <%= link_to "Refresh", "javascript:void(0);", id: "refresh_link",
+        style: f.object.type == "DisplayFieldChoiceSingle" ? "display:show;" :
+        "display: none;",
+        class: "manage",
+        onclick: "refresh_default_value_dropdown();"
+      %>
     </div>
   </div>
 </div>
