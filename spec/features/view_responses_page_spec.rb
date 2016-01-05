@@ -49,19 +49,4 @@ RSpec.feature "View Responses Page", js: true do
       expect(page).to_not have_css "div#advanced_search"
     end
   end
-
-  def setup_survey name:, site: FactoryGirl.create(:site),
-    survey_type: FactoryGirl.create(:survey_type)
-    FactoryGirl.create(:survey,
-                       name: name,
-                       site: site,
-                       survey_type: survey_type
-                      )
-  end
-
-  def load_responses_for survey_name:, version_number:
-    visit survey_responses_path
-    select survey_name, from: "survey_id"
-    select version_number, from: "survey_version_id"
-  end
 end

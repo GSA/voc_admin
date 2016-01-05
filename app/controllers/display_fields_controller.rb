@@ -16,7 +16,7 @@ class DisplayFieldsController < ApplicationController
 
   # POST   /surveys/:survey_id/survey_versions/:survey_version_id/display_fields(.:format)
   def create
-    @display_field = @survey_version.display_fields.build params[:display_field]
+    @display_field = @survey_version.display_fields.build display_field_params
     @display_field.type = params[:display_field][:model_type]
     @display_field.display_order = @survey_version.display_fields.maximum(:display_order).to_i + 1
 
@@ -40,7 +40,7 @@ class DisplayFieldsController < ApplicationController
   def update
     @display_field = DisplayField.find(params[:id])
 
-    if @display_field.update_attributes(params[:display_field])
+    if @display_field.update_attributes(display_field_params)
       redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field"
     else
       render :edit
@@ -78,5 +78,11 @@ class DisplayFieldsController < ApplicationController
     @display_field.decrement_display_order
 
     redirect_to survey_survey_version_display_fields_path, :notice => "Successfully updated display field order"
+  end
+
+  private
+
+  def display_field_params
+    params.require(:display_field).permit(:name, :model_type, :default_value, :choices)
   end
 end
