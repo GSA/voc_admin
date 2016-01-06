@@ -46,7 +46,7 @@ class RulesController < ApplicationController
   def update
     @rule = @survey_version.rules.find(params[:id])
 
-    if @rule.update_attributes(params[:rule])
+    if @rule.update_attributes(rule_params)
       redirect_to survey_survey_version_rule_path(@survey, @survey_version, @rule), :notice  => "Successfully updated rule."
     else
       build_source_array
