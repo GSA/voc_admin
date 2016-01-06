@@ -30,7 +30,7 @@
     Criteria:
   </div>
   <div class="bottom_side">
-    <ol>
+    <ol class="criteria">
       <% for criterion in @rule.criteria %>
         <li>
           <%= criterion.source.get_display_field_header %>
@@ -44,7 +44,7 @@
     Actions:
   </div>
   <div class="bottom_side">
-    <ol>
+    <ol class="actions">
       <% for action in @rule.actions %>
         <li>
           Set <%= action.display_field.name %>
