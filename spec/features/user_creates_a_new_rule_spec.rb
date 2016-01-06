@@ -9,9 +9,52 @@ RSpec.feature "User creates a new rule", js: true do
       criteria: [{ source: "Text Question(Question)", conditional: "=", value: "Test" }],
       actions: [{update: "Text Question", value: "Test"}]
 
-
     expect(page).to have_content "Custom Rule"
+    expect(page).to have_content "Successfully created rule."
   end
+
+  context "with 'Email Action' rule type" do
+    scenario "shows the email action fields" do
+      create_test_survey_with_text_question statement: "Text Question"
+
+      click_link "Manage Rules", match: :first
+      click_link "Add New Rule", match: :first
+      choose "Email Notification"
+
+      expect(page).to have_css "div#email_action"
+      expect(page).to_not have_css "div#db_actions"
+    end
+
+    scenario "and valid attributes" do
+      create_test_survey_with_text_question statement: "Text Question"
+      Conditional.create! name: "="
+
+      add_rule name: "Custom Rule", action: "Email Notification", trigger: "Add",
+        criteria: [
+          { source: "Text Question(Question)", conditional: "=", value: "Test" }
+        ],
+        actions: [{to: "test@example.com", subject: "Test", body: "Test"}]
+
+      expect(page).to have_content "Custom Rule"
+      expect(page).to have_content "Successfully created rule."
+    end
+
+    scenario "and invalid action attributes" do
+      create_test_survey_with_text_question statement: "Text Question"
+      Conditional.create! name: "="
+
+      add_rule name: "Custom Rule", action: "Email Notification", trigger: "Add",
+        criteria: [
+          { source: "Text Question(Question)", conditional: "=", value: "Test" }
+        ],
+        actions: [{to: "", subject: "Test", body: "Test"}]
+
+      expect(page).to have_content "can't be blank"
+      expect(page).to_not have_content "Successfully created rule."
+    end
+  end
+
+
 
   scenario "with multiple criteria" do
     create_test_survey_with_text_question statement: "Text Question"
@@ -91,13 +134,21 @@ RSpec.feature "User creates a new rule", js: true do
     end
 
     # Build the action objects
-    if actions.size > 1
-      (actions.size-1).times { click_link("Add Action") }
-    end
-    actions.zip(page.all(:css, ".db_action")) do |action, fields|
-      within fields do
-        select action.fetch(:update), from: "Update"
-        fill_in "value_text", with: action.fetch(:value)
+    if action == "Database Action"
+      if actions.size > 1
+        (actions.size-1).times { click_link("Add Action") }
+      end
+      actions.zip(page.all(:css, ".db_action")) do |action, fields|
+        within fields do
+          select action.fetch(:update), from: "Update"
+          fill_in "value_text", with: action.fetch(:value)
+        end
+      end
+    elsif action == "Email Notification"
+      within "#actions" do
+        fill_in "Send email to", with: actions.first.fetch(:to)
+        fill_in "Subject Line", with: actions.first.fetch(:subject)
+        fill_in "Message Content", with: actions.first.fetch(:body)
       end
     end
 
