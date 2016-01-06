@@ -15,7 +15,7 @@ class RawResponse < ActiveRecord::Base
   validates :status_id, :presence => true
   validates :answer, :presence => true
 
-  default_scope :order => 'created_at DESC'
+  default_scope -> { order('created_at DESC') }
   scope :status_new, -> { where(:status_id => Status::NEW) }
   scope :status_processing, -> { where(:status_id => Status::PROCESSING) }
   scope :status_error, -> { where(:status_id => Status::ERROR) }

@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.integer  "survey_version_id"
     t.string   "name"
     t.boolean  "default"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "dashboard_elements", force: true do |t|
     t.integer  "dashboard_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "survey_element_id"
     t.integer  "sort_order"
     t.string   "display_type"
@@ -114,8 +114,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
   create_table "dashboards", force: true do |t|
     t.string   "name"
     t.integer  "survey_version_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.date     "start_date"
     t.date     "end_date"
   end
@@ -150,8 +150,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.integer  "display_field_id"
     t.integer  "custom_view_id"
     t.integer  "display_order"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "sort_order"
     t.string   "sort_direction"
   end
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.text     "body"
     t.integer  "rule_id"
     t.integer  "clone_of_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "email_actions", ["clone_of_id"], name: "index_email_actions_on_clone_of_id", using: :btree
@@ -216,8 +216,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
 
   create_table "exports", force: true do |t|
     t.string   "access_token"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "document_file_name"
     t.string   "document_content_type"
     t.integer  "document_file_size"
@@ -261,20 +261,20 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.integer  "question_bank_id"
     t.integer  "bankable_id"
     t.string   "bankable_type"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "question_banks", force: true do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "question_content_display_fields", force: true do |t|
     t.integer  "question_content_id"
     t.integer  "display_field_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "question_contents", force: true do |t|
@@ -311,8 +311,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.integer  "survey_version_id"
     t.text     "post"
     t.boolean  "submitted",         default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "recurring_reports", force: true do |t|
@@ -327,8 +327,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.string   "emails",                   limit: 1000
     t.boolean  "pdf"
     t.datetime "last_sent_at"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "report_elements", force: true do |t|
@@ -337,15 +337,15 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.integer  "choice_question_id"
     t.integer  "text_question_id"
     t.integer  "matrix_question_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "reports", force: true do |t|
     t.string   "name"
     t.integer  "survey_version_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.date     "start_date"
     t.date     "end_date"
     t.boolean  "limit_answers",     default: false
@@ -365,14 +365,14 @@ ActiveRecord::Schema.define(version: 20151123192526) do
   create_table "resqued_jobs", force: true do |t|
     t.string   "class_name"
     t.text     "job_arguments", limit: 2147483647
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "roles", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rules", force: true do |t|
@@ -392,15 +392,15 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.string   "name"
     t.integer  "survey_version_id"
     t.text     "search_params"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", force: true do |t|
     t.string   "session_id", null: false
     t.text     "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
@@ -409,8 +409,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
   create_table "site_users", force: true do |t|
     t.integer  "site_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "site_users", ["site_id"], name: "index_site_users_on_site_id", using: :btree
@@ -420,8 +420,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.string   "name"
     t.string   "url"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "statuses", force: true do |t|
@@ -470,16 +470,16 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.integer  "survey_version_id"
     t.date     "count_date"
     t.integer  "visits",               default: 0
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "questions_skipped",    default: 0
     t.integer  "questions_asked",      default: 0
     t.integer  "invitations",          default: 0
     t.integer  "invitations_accepted", default: 0
   end
 
-  add_index "survey_version_counts", ["survey_version_id", "count_date"], name: "index_survey_visit_counts_on_survey_version_id_and_visit_date", unique: true, using: :btree
-  add_index "survey_version_counts", ["survey_version_id"], name: "index_survey_visit_counts_on_survey_version_id", using: :btree
+  add_index "survey_version_counts", ["survey_version_id", "count_date"], name: "index_survey_version_counts_on_survey_version_id_and_count_date", unique: true, using: :btree
+  add_index "survey_version_counts", ["survey_version_id"], name: "index_survey_version_counts_on_survey_version_id", using: :btree
 
   create_table "survey_versions", force: true do |t|
     t.integer  "survey_id",                         null: false
@@ -551,8 +551,8 @@ ActiveRecord::Schema.define(version: 20151123192526) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token",            null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "role_id"
     t.string   "hhs_id",            limit: 50
     t.datetime "last_request_at"

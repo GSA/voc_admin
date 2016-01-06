@@ -181,7 +181,7 @@ class SurveyResponse < ActiveRecord::Base
 
   # Ensure that there is a DisplayFieldValue ("cell") for every column in the SurveyResponse.
   def create_dfvs
-    DisplayField.where(survey_vesion_id: self.survey_version_id).each do |df|
+    DisplayField.where(survey_version_id: self.survey_version_id).each do |df|
       dfv = DisplayFieldValue.find_or_create_by(survey_response_id: self.id, display_field_id: df.id)
       dfv.update_attributes(:value => df.default_value)
     end
@@ -192,9 +192,9 @@ class SurveyResponse < ActiveRecord::Base
     return @question_content_ids unless @question_content_ids.nil?
     @question_content_ids = survey_version.try(:questions).try(:map) do |q|
       if q.is_a?(MatrixQuestion) # get the ids of questins associated with MatrixQuestion
-        q.choice_questions.map {|cq| cq.question_content.try(:id).to_s}
+        q.choice_questions.map {|cq| cq.question_content.try(:id)}
       else
-        q.question_content.try(:id).to_s
+        q.question_content.try(:id)
       end
     end
     @question_content_ids ||= []
