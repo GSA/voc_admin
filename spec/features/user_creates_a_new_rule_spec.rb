@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.feature "User creates a new rule", js: true do
   scenario "with valid attributes" do
     create_test_survey_with_text_question statement: "Text Question"
+    Conditional.create! name: "="
 
     add_rule name: "Custom Rule", action: "Database Action", trigger: "Add",
       criteria: [{ source: "Text Question(Question)", conditional: "=", value: "Test" }],
@@ -14,6 +15,8 @@ RSpec.feature "User creates a new rule", js: true do
 
   scenario "with multiple criteria" do
     create_test_survey_with_text_question statement: "Text Question"
+    Conditional.create! name: "="
+    Conditional.create! name: ">"
 
     add_rule name: "Custom Rule", action: "Database Action", trigger: "Add",
       criteria: [
@@ -25,8 +28,25 @@ RSpec.feature "User creates a new rule", js: true do
     expect(page).to have_css(".criteria li", text: "Test", count: 2)
   end
 
+  scenario "with multiple actions" do
+    create_test_survey_with_text_question statement: "Text Question"
+    Conditional.create! name: "="
+
+    add_rule name: "Custom Rule", action: "Database Action", trigger: "Add",
+      criteria: [
+        {source: "Text Question(Question)", conditional: "=", value: "Test"}
+      ],
+      actions: [
+        {update: "Text Question", value: "Test"},
+        {update: "Text Question", value: "Foo"}
+      ]
+
+    expect(page).to have_css ".actions li", count: 2
+  end
+
   scenario "with invalid attributes" do
     create_test_survey_with_text_question statement: "Text Question"
+    Conditional.create! name: "="
 
     add_rule name: "", action: "Database Action", trigger: "Add",
       criteria: [{ source: "Text Question(Question)", conditional: "=", value: "Test" }],
@@ -40,10 +60,13 @@ RSpec.feature "User creates a new rule", js: true do
     create_site
     survey = setup_survey name: "Example"
     load_responses_for survey_name: "Example", version_number: "1.0"
-    Conditional.create! name: "="
-    Conditional.create! name: ">"
+    add_text_question survey_version: survey.survey_versions.first,
+      statement: statement
+  end
+
+  def add_text_question survey_version:, statement:
     FactoryGirl.create(:text_question,
-      survey_version: survey.survey_versions.first,
+      survey_version: survey_version,
       question_content: FactoryGirl.create(:question_content, statement: statement)
     )
   end
