@@ -28,6 +28,30 @@ RSpec.feature "Survey builder", js: true do
       end
       expect(page).to_not have_css ".page_asset", text: "Example Question"
     end
+
+    scenario "Creating a new question also creates a display field" do
+      survey = create :survey
+      survey_version = survey.survey_versions.first
+      login_user
+      visit edit_survey_survey_version_path(survey, survey_version)
+      add_text_question statement: "Example Question"
+      visit survey_responses_path(survey_id: survey.id, survey_version_id: survey_version.id)
+      click_link "Manage Display Fields", match: :first
+      expect(page).to have_content "Example Question"
+    end
+
+    scenario "Creating a new question also creates a new rule" do
+      survey = create :survey
+      survey_version = survey.survey_versions.first
+      login_user
+
+      visit edit_survey_survey_version_path(survey, survey_version)
+      add_text_question statement: "Example Question"
+      visit survey_responses_path(survey_id: survey.id, survey_version_id: survey_version.id)
+      click_link "Manage Rules", match: :first
+
+      expect(page).to have_content "Example Question"
+    end
   end
 
   context "choice question" do
