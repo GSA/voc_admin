@@ -51,7 +51,10 @@
       <% objects.each do |sr| %>
         <tr class="<%= cycle('gray','white')%> SurveyResponse">
           <td class="col1">
-            <%= link_to image_tag("delete.png", :alt=>"Delete"), survey_response_path(sr, params.slice(*SurveyResponsesController::POST_PARAMS)), :method => :delete, :remote => true, :confirm => "Please confirm", :class=>"deleteLink" %>
+            <%= link_to image_tag("delete.png", :alt=>"Delete"), survey_response_path(sr, params.slice(*SurveyResponsesController::POST_PARAMS)), :method => :delete,
+              :remote => true, :data => {:confirm => "Please confirm"},
+              :class=>"deleteLink"
+            %>
             <%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_response_path(sr.id, {:survey_id => version.survey_id}.merge(params.slice(*SurveyResponsesController::POST_PARAMS))) %>
           </td>
           <td><%= sr.created_at.in_time_zone.strftime("%m/%d/%Y - %T") %></td>
