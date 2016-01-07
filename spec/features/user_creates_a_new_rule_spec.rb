@@ -98,21 +98,6 @@ RSpec.feature "User creates a new rule", js: true do
     expect(page).to have_content "can't be blank"
   end
 
-  def create_test_survey_with_text_question statement:
-    login_user
-    create_site
-    survey = setup_survey name: "Example"
-    load_responses_for survey_name: "Example", version_number: "1.0"
-    add_text_question survey_version: survey.survey_versions.first,
-      statement: statement
-  end
-
-  def add_text_question survey_version:, statement:
-    FactoryGirl.create(:text_question,
-      survey_version: survey_version,
-      question_content: FactoryGirl.create(:question_content, statement: statement)
-    )
-  end
 
   def add_rule name:, action:, trigger:, criteria:, actions:
     click_link "Manage Rules", match: :first

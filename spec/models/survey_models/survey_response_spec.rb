@@ -34,5 +34,28 @@ RSpec.describe SurveyResponse, type: :model do
       expect{SurveyResponse.process_response(response_params, survey_version.id)}
         .to change {RawResponse.count}.by(1)
     end
+
+    it "creates a display field value with the answer text" do
+      survey_version = create :survey_version
+      text_question = create :text_question, survey_version: survey_version,
+        question_content: create(:question_content, statement: "Text Question")
+
+      response_params = {
+        "page_url" => "http://example.com",
+        "device" => "Desktop",
+        "raw_responses_attributes" => {
+          "0" => {
+            "question_content_id" => text_question.question_content.id,
+            "answer" => "Test Answer"
+          }
+        }
+      }
+
+      expect{SurveyResponse.process_response(response_params, survey_version.id)}
+        .to change {DisplayFieldValue.count}.by(1)
+
+      dfv = DisplayFieldValue.last
+      expect(dfv.value).to eq "Test Answer"
+    end
   end
 end
