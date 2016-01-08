@@ -25,6 +25,7 @@ RSpec.configure do |config|
       Role.remove_const ADMIN
     end
     add_execution_triggers
+    truncate_elasticsearch_index
   end
 
   # DatabaseCleaner Configuration
@@ -48,5 +49,11 @@ RSpec.configure do |config|
         et.id = index + 1
       end
     end
+  end
+
+  def truncate_elasticsearch_index
+    ELASTIC_SEARCH_CLIENT.indices.delete index: ELASTIC_SEARCH_INDEX_NAME
+    ELASTIC_SEARCH_CLIENT.indices.create index: ELASTIC_SEARCH_INDEX_NAME,
+      body: ELASTIC_SEARCH_MAPPINGS[:survey_responses]
   end
 end

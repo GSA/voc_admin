@@ -14,8 +14,8 @@ namespace :elasticsearch do
 
   desc "Truncate survey_responses index"
   task :truncate_survey_responses_index => [:environment] do
-    Rake::Task['elasticsearch:remove_index'].invoke 'survey_responses'
-    Rake::Task['elasticsearch:create_index'].invoke 'survey_responses'
+    Rake::Task['elasticsearch:remove_index'].invoke ELASTIC_SEARCH_INDEX_NAME
+    Rake::Task['elasticsearch:create_index'].invoke ELASTIC_SEARCH_INDEX_NAME
   end
 
   desc "Export to elastic search"

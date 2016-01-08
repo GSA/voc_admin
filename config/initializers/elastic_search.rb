@@ -1,6 +1,7 @@
 require 'elasticsearch'
 config = YAML.load_file("#{Rails.root}/config/app_config.yml")[Rails.env]
 ELASTIC_SEARCH_HOSTS = config["elastic-search-hosts"] || "localhost:9200"
+ELASTIC_SEARCH_INDEX_NAME = "survey_responses_#{Rails.env}"
 
 ELASTIC_SEARCH_CLIENT = Elasticsearch::Client.new({
   hosts: ELASTIC_SEARCH_HOSTS,
@@ -54,7 +55,7 @@ ELASTIC_SEARCH_MAPPINGS = {
   }
 }
 
-unless ELASTIC_SEARCH_CLIENT.indices.exists index: 'survey_responses'
-  ELASTIC_SEARCH_CLIENT.indices.create index: 'survey_responses', body: ELASTIC_SEARCH_MAPPINGS[:survey_responses]
+unless ELASTIC_SEARCH_CLIENT.indices.exists index: ELASTIC_SEARCH_INDEX_NAME
+  ELASTIC_SEARCH_CLIENT.indices.create index: ELASTIC_SEARCH_INDEX_NAME, body: ELASTIC_SEARCH_MAPPINGS[:survey_responses]
 end
 
