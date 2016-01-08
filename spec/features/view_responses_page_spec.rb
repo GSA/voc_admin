@@ -23,6 +23,30 @@ RSpec.feature "View Responses Page", js: true do
     expect(page).to have_css "#survey_response_table_div table"
   end
 
+  it "Shows the submitted responses to the survey" do
+    login_user
+    create_site
+    survey = setup_survey name: "Example"
+    survey_version = survey.survey_versions.first
+    question = add_text_question statement: "Text Question",
+      survey_version: survey_version
+    response_params = {
+      "page_url" => "http://example.com",
+      "device" => "Desktop",
+      "raw_responses_attributes" => {
+        "0" => {
+          "question_content_id" => question.question_content.id,
+          "answer" => "Test Answer"
+        }
+      }
+    }
+    SurveyResponse.process_response response_params, survey_version.id
+    load_responses_for survey_name: "Example", version_number: "1.0"
+
+    visit survey_responses_path(survey_id: survey.id, survey_version_id: survey_version.id)
+    expect(page).to have_content "Test Answer"
+  end
+
   context "clicking on the Advanced Search link" do
     it "Shows the advanced search fields if not already shown" do
       login_user
