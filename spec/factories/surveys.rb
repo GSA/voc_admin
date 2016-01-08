@@ -8,5 +8,9 @@ FactoryGirl.define do
     trait :site do
       association(:survey_type, id: SurveyType::SITE, name: "Site")
     end
+
+    trait :archived do
+      after(:create) { |survey| survey.update_attribute(:archived, true) }
+    end
   end
 end

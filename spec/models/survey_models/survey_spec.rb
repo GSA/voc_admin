@@ -2,8 +2,6 @@ require "rails_helper"
 
 RSpec.describe Survey, type: :model do
   describe "Validations" do
-    subject { FactoryGirl.build :survey }
-
     # Name
     it { should validate_presence_of(:name) }
     it { should validate_length_of(:name).is_at_most(255) }
@@ -39,6 +37,11 @@ RSpec.describe Survey, type: :model do
     it { should validate_length_of(:next_page_text).is_at_most(255) }
     it { should validate_length_of(:submit_button_text).is_at_most(255) }
   end #Validations
+
+  it "should have a default scope where archived: false" do
+    create :survey, :archived
+    expect(Survey.count).to eq 0
+  end
 
   context "after_create callback" do
     let(:survey) { build :survey }
