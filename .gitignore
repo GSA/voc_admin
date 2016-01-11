@@ -17,3 +17,4 @@ db/schema.rb
 db/dumps
 spec.old/
 *.rdb
+public/assets/
