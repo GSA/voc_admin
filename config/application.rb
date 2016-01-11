@@ -55,7 +55,7 @@ module CommentToolApp
     # config.action_controller.relative_url_root = '/vocsub'
 
     # Required configuration for the asset pipeline
-    config.assets.enabled = false
+    config.assets.enabled = true
     config.assets.version = '1.0'
   end
 end
