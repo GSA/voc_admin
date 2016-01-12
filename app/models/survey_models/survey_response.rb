@@ -86,7 +86,10 @@ class SurveyResponse < ActiveRecord::Base
 
     # Remove extraneous data from the response
     response.slice!('page_url', 'raw_responses_attributes', 'device')
-    response['raw_responses_attributes'].try(:values).try(:each) {|rr| rr.slice!('question_content_id', 'answer')}
+    response['raw_responses_attributes'].try(:values).try(:each) do |rr|
+      rr.slice!('question_content_id', 'answer')
+      rr['question_content_id'] = rr['question_content_id'].to_i
+    end
 
     survey_response = SurveyResponse.new({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
 
