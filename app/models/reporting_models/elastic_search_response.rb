@@ -2,7 +2,7 @@ class ElasticSearchResponse
 
   def self.create!(reportable_survey_response)
     ELASTIC_SEARCH_CLIENT.index({
-      index: "survey_responses",
+      index: ELASTIC_SEARCH_INDEX_NAME,
       type: "sv_id_#{reportable_survey_response.survey_version_id}",
       id: reportable_survey_response.id,
       body: self.transform(reportable_survey_response)
@@ -24,7 +24,7 @@ class ElasticSearchResponse
 
   def self.search(survey_version_id, search = nil, sort = nil, options = {})
     args = {
-      index: 'survey_responses',
+      index: ELASTIC_SEARCH_INDEX_NAME,
       type: "sv_id_#{survey_version_id}",
       body: {}
     }
@@ -58,7 +58,7 @@ class ElasticSearchResponse
   end
 
   def self.delete(reportable_survey_response)
-    ELASTIC_SEARCH_CLIENT.delete index: 'survey_responses', type: "sv_id_#{survey_version_id}",
+    ELASTIC_SEARCH_CLIENT.delete index: ELASTIC_SEARCH_INDEX_NAME, type: "sv_id_#{survey_version_id}",
       id: reportable_survey_response.id
   end
 
