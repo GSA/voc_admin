@@ -25,7 +25,7 @@ RSpec.describe SurveyResponse, type: :model do
         "device" => "Desktop",
         "raw_responses_attributes" => {
           "0" => {
-            "question_content_id" => text_question.question_content.id,
+            "question_content_id" => text_question.question_content.id.to_s,
             "answer" => "Test Answer"
           }
         }

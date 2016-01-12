@@ -35,7 +35,7 @@ RSpec.feature "View Responses Page", js: true do
       "device" => "Desktop",
       "raw_responses_attributes" => {
         "0" => {
-          "question_content_id" => question.question_content.id,
+          "question_content_id" => question.question_content.id.to_s,
           "answer" => "Test Answer"
         }
       }
