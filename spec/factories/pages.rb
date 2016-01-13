@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :page do
-    page_number 1
+    sequence(:page_number) {|n| n}
     association(:survey_version)
   end
 end

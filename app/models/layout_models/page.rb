@@ -8,8 +8,10 @@ class Page < ActiveRecord::Base
   belongs_to :survey_version, :touch => true
   has_many :survey_elements, :dependent => :destroy
 
-  belongs_to :next_page, :foreign_key => :next_page_id, :class_name => "Page", :inverse_of => :prev_pages
-  has_many :prev_pages, :foreign_key => :next_page_id, :class_name => "Page", :inverse_of => :next_page
+  belongs_to :next_page, :foreign_key => :next_page_id, :class_name => "Page",
+    :inverse_of => :prev_pages
+  has_many :prev_pages, :foreign_key => :next_page_id, :class_name => "Page",
+    :inverse_of => :next_page
 
   before_destroy :renumber_pages
 
@@ -115,7 +117,7 @@ class Page < ActiveRecord::Base
     new_page = Page.create!(page_attribs)
 
     #Copy current page assetables
-    SurveyElement.where(survey_version_id: survey_version_id, page_id: id).each do |se|
+    self.survey_elements.each do |se|
       se.copy_to_page(new_page)
     end
 
