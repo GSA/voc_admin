@@ -2,7 +2,8 @@
 #
 # A Page is a container for one screen's worth of SurveyElements.
 class Page < ActiveRecord::Base
-  attr_accessible :page_number, :survey_version, :next_page_id, :survey_version_id
+  attr_accessible :page_number, :survey_version, :next_page_id,
+    :survey_version_id, :clone_of_id
 
   belongs_to :survey_version, :touch => true
   has_many :survey_elements, :dependent => :destroy
@@ -82,7 +83,16 @@ class Page < ActiveRecord::Base
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [Page] the cloned page
   def clone_me(target_sv)
-    Page.create!(self.attributes.merge(:survey_version=>target_sv, :clone_of_id => self.id))
+    target_sv.pages.create(
+      self.attributes.except(
+        "created_at",
+        "updated_at",
+        "id",
+        "survey_version_id",
+        "survey_version",
+        "clone_of_id"
+      ).merge("clone_of_id" => self.id)
+    )
   end
 
   def describe_me
