@@ -44,7 +44,7 @@ class SurveyResponsesController < ApplicationController
   # PUT    /survey_responses/:id(.:format)
   def update
     @survey_response = SurveyResponse.find(params[:id])
-    if @survey_response.update_attributes(params[:survey_response])
+    if @survey_response.update_attributes(survey_response_params)
       redirect_to survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS).except(:survey_response)), :notice => "Successfully updated the record."
     else
       render :action => 'edit'
@@ -90,7 +90,7 @@ class SurveyResponsesController < ApplicationController
       search_responses
       # Paginate the results
       @survey_responses = paginate_responses(
-        @survey_responses.includes(:display_field_values), 
+        @survey_responses.includes(:display_field_values),
         params[:page].to_i
       )
     else
@@ -135,6 +135,12 @@ class SurveyResponsesController < ApplicationController
       {page: params[:page].present? ? params[:page].to_i - 1 : 0 })
     @es_results, @survey_responses = survey_response_query.search
     @search = survey_response_query.search_criteria
+  end
+
+  def survey_response_params
+    params.require(:survey_response).permit(
+      display_field_values_attributes: [:id, :value]
+    )
   end
 
 end
