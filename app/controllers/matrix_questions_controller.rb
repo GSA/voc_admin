@@ -4,7 +4,7 @@
 class MatrixQuestionsController < ApplicationController
   before_filter :get_survey_version
 
-  # GET    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/new(.:format)
+  # GET /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/new(.:format)
   def new
     @matrix_question = @survey_version.matrix_questions.build
     @page = Page.find_by_id(params[:page_id])
@@ -15,36 +15,55 @@ class MatrixQuestionsController < ApplicationController
     end
   end
 
-  # POST   /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions(.:format)
+  # POST /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions(.:format)
   def create
     choice_questions = params[:matrix_question][:choice_questions_attributes]
 
     choice_answer_attributes = params[:choice_answer_attributes] || {}
-    choice_questions.each {|key, value| value.merge!({:choice_answers_attributes => choice_answer_attributes, :answer_type => "radio"})}
+    choice_questions.each { |key, value|
+      value.merge!({
+        :choice_answers_attributes => choice_answer_attributes,
+        :answer_type => "radio"
+      })
+    }
 
-    @matrix_question = @survey_version.matrix_questions.build(params[:matrix_question].merge({:survey_version_id => @survey_version.id}))
+    @matrix_question = @survey_version.matrix_questions.build(
+      params[:matrix_question].merge({:survey_version_id => @survey_version.id})
+    )
     @matrix_question.survey_element.survey_version_id = @survey_version.id
 
-    # This sets a virtual attribute on each choice question's question content in order to create the correct name for display fields in the
-    # after_create observer to get around the issue of the choice questions being saved before the matrix question's question content is saved
-    # in the transaction.  This was causing matrix_question.statement to return an error in the after_create observer
+    # This sets a virtual attribute on each choice question's question content
+    # in order to create the correct name for display fields in the
+    # after_create observer to get around the issue of the choice questions
+    # being saved before the matrix question's question content is saved
+    # in the transaction.  This was causing matrix_question.statement to return
+    # an error in the after_create observer
     @matrix_question.choice_questions.each do |cq|
-      cq.question_content.matrix_statement = @matrix_question.question_content.try(:statement)
+      cq.question_content.matrix_statement = @matrix_question.question_content
+        .try(:statement)
     end
 
     respond_to do |format|
       if @matrix_question.save
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added Matrix question."}
+        format.html {
+          redirect_to survey_path(@survey_version.survey),
+            :notice => "Successfully added Matrix question."
+        }
       else
         format.html {render :new }
       end
-      format.js { render :partial => "shared/element_create", :object => @matrix_question, :as => :element }
+      format.js {
+        render :partial => "shared/element_create", :object => @matrix_question,
+        :as => :element
+      }
     end
   end
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/matrix_questions/:id/edit(.:format)
   def edit
-    @matrix_question = @survey_version.matrix_questions.includes(:choice_questions => [:question_content, :choice_answers]).find(params[:id])
+    @matrix_question = @survey_version.matrix_questions
+      .includes(:choice_questions => [:question_content, :choice_answers])
+      .find(params[:id])
 
     respond_to do |format|
       format.html #
@@ -92,11 +111,11 @@ class MatrixQuestionsController < ApplicationController
       if !QuestionContent.find_by_id(q).present?
         Action.where("value LIKE ?", q).each do |a|
           if a.rule.present?
-            a.rule.destroy      
-          end      
+            a.rule.destroy
+          end
         end
       end
-    end     
+    end
   end
 
   private
