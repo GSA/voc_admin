@@ -3,15 +3,15 @@
 <% end %>
 
 <div id="surveys">
-  <div class="left_side"><%= f.label :name, "Name: " %></div>
+  <div class="left_side"><%= f.label :name, "Name*: " %></div>
   <div class="right_side"><%= f.text_field :name, :disabled => disabled %></div>
   <br />
-  <div class="left_side"><%= f.label :model_type, "Type: " %></div>
+  <div class="left_side"><%= f.label :model_type, "Type*: " %></div>
   <div class="right_side"><%= f.select :model_type, DisplayField.select_options %></div>
   <br />
   <div id='choices_fields' style="<%= (f.object.type=="DisplayFieldChoiceSingle" or f.object.type=="DisplayFieldChoiceMultiselect") ? 'display:show;' : "display:none  ;" %>">
     <div class="left_side">
-      <%= f.label :choices, "Choices: " %>
+      <%= f.label :choices, "Choices*: " %>
       <span class="notation">(Separate<br />entries should each appear<br />on individual lines.)</span>
     </div>
     <div class="right_side">
