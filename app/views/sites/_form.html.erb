@@ -1,40 +1,38 @@
 <%= form_for @site do |f| %>
-	<% if @site.errors.any? %>
-	  <div id="error_explanation">
-	    <%= render('shared/errors', {object: @site, object_type: 'site'}) %>
-	  </div>
-	<% end %>
+  <% if @site.errors.any? %>
+    <div id="error_explanation">
+      <%= render('shared/errors', {object: @site, object_type: 'site'}) %>
+    </div>
+  <% end %>
 
-	<div id="surveys">
-		<div class="left_side">
-			<%= f.label :name, "Name: " %>
-		</div>
-		<div class="right_side">
-			<%= f.text_field :name %>
-		</div>
-		<br />
-	  <div class="left_side">
-			<%= f.label :url, "URL: " %><span class="notation">(format: http://www.site.gov)</span>
-		</div>
-		<div class="right_side">
-			<%= f.text_field :url %>
-		</div>
-		<br />
-	  <div class="left_side">
-			<%= f.label :description, "Description: " %>
-		</div>
-		<div class="right_side">
-			<%= f.text_area :description %>
-		</div>
-	</div>
-	<div class="pageLink">
-		<%= link_to "Cancel", sites_path, :class => "cancelLink" %>
-		<% if f.object.new_record? %>
-			<%= image_submit_tag "create-site.png", :alt=>"Create Site" %>
-			<%#= f.submit "Create Site", :type => :image, :src=>"/images/create-site.png", :alt=>"Create Site" #%>
-		<% else %>
-			<%= image_submit_tag "update-site.png", :alt=>"Update Site" %>
-			<%#= f.submit "Update Site", :type => :image, :src=>"/images/update-site.png", :alt=>"Update Site" #%>
-		<% end %>
-	</div>
+  <div id="surveys">
+    <div class="left_side">
+      <%= f.label :name, "Name*: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :name %>
+    </div>
+    <br />
+    <div class="left_side">
+      <%= f.label :url, "URL*: " %><span class="notation">(format: http://www.site.gov)</span>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :url %>
+    </div>
+    <br />
+    <div class="left_side">
+      <%= f.label :description, "Description*: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_area :description %>
+    </div>
+  </div>
+  <div class="pageLink">
+    <%= link_to "Cancel", sites_path, :class => "cancelLink" %>
+    <% if f.object.new_record? %>
+      <%= image_submit_tag "create-site.png", :alt=>"Create Site" %>
+    <% else %>
+      <%= image_submit_tag "update-site.png", :alt=>"Update Site" %>
+    <% end %>
+  </div>
 <% end %>
