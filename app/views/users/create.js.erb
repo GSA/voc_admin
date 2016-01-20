@@ -1,10 +1,19 @@
 
 <% if @user.errors.any? %>
-	$("#modalDiv form").prepend( "<%= escape_javascript( render('shared/errors', {object: @user, object_type: 'user'}) ) %>");
-	$("#simplemodal-container").height($("#modalDiv").height());
-	$("#simplemodal-container").width($("#modalDiv").width());
+  $("#modalDiv form").prepend( "<%= escape_javascript( render('shared/errors', {object: @user, object_type: 'user'}) ) %>");
+  $("#simplemodal-container").height($("#modalDiv").height());
+  $("#simplemodal-container").width($("#modalDiv").width());
 <% else %>
-	$("#usersTable").replaceWith( "<%= escape_javascript( render(partial: 'users_table', locals: { users: User.listing.page(params[:page]).per(10) }) ) %>");
-	$.modal.close();
-	alert("Successfully Added A New User");
+  $("#usersTable").replaceWith( "<%= escape_javascript( render(partial: 'users_table', locals: { users: User.listing.page(params[:page]).per(10) }) ) %>");
+  $.modal.close();
+
+  $(".flash_location_upper").remove();
+
+  $("#usersTable").before(
+    "<div class='flash_location_upper'><p id='flash_notice'>Successfully created new user</p></div>"
+  );
+
+  setTimeout(function() {
+    $(".flash_location_upper").hide();
+  }, 5000);
 <% end %>
