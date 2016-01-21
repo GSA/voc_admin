@@ -11,6 +11,7 @@ class ElasticSearchResponse
 
   def self.transform(reportable_survey_response)
     reportable_survey_response = reportable_survey_response.attributes.to_hash
+    reportable_survey_response["_id"] = reportable_survey_response["_id"].to_s
     reportable_survey_response["answers"].try(:each) do |key, value|
       reportable_survey_response["df_#{key}"] = value
     end
