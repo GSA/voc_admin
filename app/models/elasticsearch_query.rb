@@ -49,7 +49,7 @@ class ElasticsearchQuery
   end
 
   def in_batches(batch_size = limit)
-    return to_enum(__callee__) unless block_given?
+    return to_enum(__callee__, batch_size) unless block_given?
     num_batches = (count / batch_size.to_f).ceil
     num_batches.times do |batch|
       _, responses = search({body: {from: (batch_size * batch), size: batch_size}})
@@ -58,7 +58,7 @@ class ElasticsearchQuery
   end
 
   def reportable_survey_responses_in_batches(batch_size = limit)
-    return to_enum(__callee__) unless block_given?
+    return to_enum(__callee__, batch_size) unless block_given?
     num_batches = (count / batch_size.to_f).ceil
     num_batches.times do |batch|
       es_results, _ = search({body: {from: (batch_size * batch), size: batch_size}})

@@ -14,8 +14,8 @@ class ExportResponsesToCsv
   end
 
   def survey_responses_in_batches(batch_size = DEFAULT_BATCH_SIZE, &block)
-    return survey_response_query.reportable_survey_responses_in_batches unless block_given?
-    survey_response_query.reportable_survey_responses_in_batches(&block)
+    return survey_response_query.reportable_survey_responses_in_batches(batch_size) unless block_given?
+    survey_response_query.reportable_survey_responses_in_batches(batch_size, &block)
   end
 
   def export_csv
