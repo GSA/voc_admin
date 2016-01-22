@@ -14,9 +14,9 @@ module FeatureHelper
   def create_site
     visit sites_path
     first(:link, "New Site").click
-    fill_in "Name:", with: "Test"
+    fill_in "Name", with: "Test"
     fill_in "site_url", with: "http://test.com"
-    fill_in "Description:", with: "Test Description"
+    fill_in "Description", with: "Test Description"
     click_button "Create Site"
     expect(page).to have_content("Edit")
   end
@@ -31,8 +31,8 @@ module FeatureHelper
     create_survey_types
     visit root_path
     click_link "Create New Survey"
-    fill_in "Name:", with: name
-    fill_in "Description:", with: "Test Survey Description"
+    fill_in "Name", with: name
+    fill_in "Description", with: "Test Survey Description"
     select "Test", from: "survey_site_id"
     select survey_type, from: "survey_survey_type_id"
     click_button "Create Survey"

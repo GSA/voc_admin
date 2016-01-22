@@ -41,6 +41,7 @@ RSpec.feature "View Responses Page", js: true do
       }
     }
     SurveyResponse.process_response response_params, survey_version.id
+    sleep 1 # Give elasticsearch time to index the response
     load_responses_for survey_name: "Example", version_number: "1.0"
 
     visit survey_responses_path(survey_id: survey.id, survey_version_id: survey_version.id)
