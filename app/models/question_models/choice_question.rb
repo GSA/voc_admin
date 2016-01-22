@@ -24,8 +24,7 @@ class ChoiceQuestion < ActiveRecord::Base
     :choice_answers, :auto_next_page, :display_results, :answer_placement,
     :multiselect, :matrix_question_id
 
-  accepts_nested_attributes_for :question_content, :allow_destroy => true,
-    :reject_if => :all_blank
+  accepts_nested_attributes_for :question_content, :allow_destroy => true
   accepts_nested_attributes_for :survey_element
   accepts_nested_attributes_for :choice_answers, :allow_destroy => true,
     :reject_if => proc { |obj| obj['answer'].blank? }
@@ -219,4 +218,3 @@ end
 #  display_results    :boolean
 #  answer_placement   :boolean
 #
-

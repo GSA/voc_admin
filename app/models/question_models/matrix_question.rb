@@ -16,7 +16,7 @@ class MatrixQuestion < ActiveRecord::Base
   attr_accessible :choice_questions_attributes, :question_content_attributes,
     :survey_element_attributes, :clone_of_id, :survey_version_id
 
-  accepts_nested_attributes_for :question_content, :allow_destroy => false, :reject_if => :all_blank
+  accepts_nested_attributes_for :question_content, :allow_destroy => false
   accepts_nested_attributes_for :choice_questions, :allow_destroy => true
   accepts_nested_attributes_for :survey_element
 
@@ -228,4 +228,3 @@ end
 #  survey_version_id :integer
 #  clone_of_id       :integer
 #
-
