@@ -131,8 +131,13 @@ class SurveyResponsesController < ApplicationController
 
   # If search parameters are sent in, use them to build the proper WHERE clause.
   def search_responses
-    survey_response_query = SurveyResponsesQuery.new(@survey_version, @custom_view, params,
-      {page: params[:page].present? ? params[:page].to_i - 1 : 0 })
+    if params[:search].present? && params[:search][:criteria].all? {|k,v| v[:value].blank?}
+      params[:search] = nil
+    end
+    survey_response_query = SurveyResponsesQuery.new(
+      @survey_version, @custom_view, params,
+      {page: params[:page].present? ? params[:page].to_i - 1 : 0 }
+    )
     @es_results, @survey_responses = survey_response_query.search
     @search = survey_response_query.search_criteria
   end
