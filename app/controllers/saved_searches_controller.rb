@@ -6,7 +6,7 @@ class SavedSearchesController < ApplicationController
   end
 
   def create
-    @saved_search = @survey_version.saved_searches.build params[:saved_search]
+    @saved_search = @survey_version.saved_searches.build saved_search_params
 
     if @saved_search.save
       respond_to do |format|
@@ -32,5 +32,9 @@ class SavedSearchesController < ApplicationController
   def set_survey_and_survey_version
     @survey = Survey.find params[:survey_id]
     @survey_version = @survey.survey_versions.find params[:survey_version_id]
+  end
+
+  def saved_search_params
+    params.require(:saved_search).permit(:name, :search_params)
   end
 end
