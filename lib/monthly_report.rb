@@ -15,10 +15,8 @@ class MonthlyReport
 
       SurveyVersion.includes(:survey)
         .where(surveys: { archived: false }, survey_versions: { archived: false })
-        .order(
-          surveys: { id: :asc },
-          survey_responses: { major: :asc, minor: :asc },
-        ).each do |sv|
+        .order("surveys.id asc, survey_versions.major asc, survey_versions.minor asc")
+        .each do |sv|
         csv << [sv.survey_id,
           sv.survey_name,
           "v#{sv.version_number}",
