@@ -16,7 +16,7 @@ class ElasticsearchQuery
   def args
     @args ||= begin
       search_criteria = {
-        index: 'survey_responses',
+        index: ELASTIC_SEARCH_INDEX_NAME,
         type: "sv_id_#{survey_version_id}",
         body: {}
       }
