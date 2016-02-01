@@ -81,7 +81,7 @@ class SurveyResponse < ActiveRecord::Base
   #
   # @param [Hash] response the response parameter hash to process from the controller
   # @param [Integer] survey_version_id the id of the SurveyVersion
-  def self.process_response(response, survey_version_id)
+  def self.process_response(response, survey_version_id, submitted_at = Time.now)
     client_id = SecureRandom.hex(64)
 
     # Remove extraneous data from the response
@@ -98,6 +98,8 @@ class SurveyResponse < ActiveRecord::Base
       raw_response.client_id = client_id
       raw_response.survey_response = survey_response
     end
+
+    survey_response.created_at = submitted_at
 
     survey_response.save!
 
