@@ -67,7 +67,7 @@ module ApplicationHelper
   # @param [String] column the name of the column being sorted
   # @param [String] title optional alternate display text for the column
   # @return [String] HTML link for the column header text, with sort toggle information
-  def sortable(column, title = nil)
+  def sortable(column, title = nil, additional_params = {})
     direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
 
     title ||= column.titleize
@@ -86,7 +86,9 @@ module ApplicationHelper
 
     title += arrows
 
-    link_to title.html_safe, {:sort => column, :direction => direction}
+    link_to title.html_safe, additional_params.merge(
+      {:sort => column, :direction => direction}
+    )
   end
 
   def get_reporting_link(survey, version)

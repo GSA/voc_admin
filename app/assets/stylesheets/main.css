@@ -1,15 +1,4 @@
 /**** Copied from hh's style_2009 ****/
-/* div#skipNav {
-position: relative;
-}
-div#skipNav a#skip, div#skipNav a#rightNav {
-position: absolute;
-top: -1000px;
-left: -1000px;
-height: 1px;
-width: 1px;
-overflow: hidden;
-} */
 
 /**** General ****/
 body {
@@ -373,6 +362,10 @@ a.navActive {
 }
 #surveyTable .col7 {
   width: 11px;
+}
+
+.search {
+  text-align: right;
 }
 
 /** Advance Search Box **/

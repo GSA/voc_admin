@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   before_save :set_fullname
 
   scope :listing, -> { order("fullname ASC") }
+  scope :search, ->(q = nil) {
+    where("CONCAT(f_name, ' ', l_name) LIKE ?", "%#{q}%") unless q.blank?
+  }
 
   acts_as_authentic do |c|
     c.validate_password_field=false

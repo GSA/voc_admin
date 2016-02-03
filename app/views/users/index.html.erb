@@ -4,6 +4,13 @@
 </div>
 <%= flash_messages(flash) %>
 
+<div class="search">
+  <%= form_tag users_path, method: :get do |f| %>
+    <%= label_tag :q, "Search:" %>
+    <%= text_field_tag :q %>
+  <% end %>
+</div>
+
 <%= render partial: 'users_table', locals: {users: @users} %>
 
 <%= paginate @users %>

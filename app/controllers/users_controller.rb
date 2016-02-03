@@ -6,11 +6,14 @@ class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
   # GET    /users(.:format)
   def index
+    @users = User.search(params[:q])
+
     if params[:sort]
-      @users = User.order("#{sort_column} #{sort_direction}").listing.page(params[:page]).per(10)
-    else
-      @users = User.listing.page(params[:page]).per(10)
+      @users = @users.order("#{sort_column} #{sort_direction}")
     end
+
+    @users = @users.listing
+    @users = @users.page(params[:page]).per(10)
 
     respond_to do |format|
       format.html
