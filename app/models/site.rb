@@ -11,6 +11,10 @@ class Site < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :url, presence: true, uniqueness: true, length: { maximum: 255 }, url: true
   validates :description, presence: true, length: { maximum: 4000 }
+
+  scope :search, ->(q = nil) {
+    where("sites.name LIKE ?", "%#{q}%") unless q.blank?
+  }
 end
 
 # == Schema Information

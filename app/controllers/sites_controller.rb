@@ -6,7 +6,13 @@ class SitesController < ApplicationController
 
   # GET    /sites(.:format)
   def index
-    @sites = Site.order("name asc").page(params[:page]).per(10)
+    @sites = Site.search(params[:q])
+    if params[:sort]
+      @sites = @sites.order("#{sort_column} #{sort_direction}")
+    else
+      @sites.order("name desc")
+    end
+    @sites = @sites.page(params[:page]).per(10)
   end
 
   # GET    /sites/:id(.:format)
@@ -62,5 +68,13 @@ class SitesController < ApplicationController
 
   def site_params
     params.require(:site).permit(:name, :url, :description)
+  end
+
+  def sort_column
+    Site.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

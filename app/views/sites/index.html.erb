@@ -6,11 +6,18 @@
   <%= link_to "New Site", new_site_path, :class => "newlink" %>
 </div>
 
+<div class="search">
+  <%= form_tag sites_path, method: :get do %>
+    <%= label_tag :q, "Search:" %>
+    <%= text_field_tag :q, params[:q] %>
+  <% end %>
+</div>
+
 <table id="sitesTable" summary="this table lists sites">
   <tr>
     <th scope="col" class="col1">Edit</th>
-    <th scope="col" class="col2"><%= sortable :name, "Name" %></th>
-    <th scope="col" class="col3"><%= sortable :url, "URL" %></th>
+    <th scope="col" class="col2"><%= sortable "name", "Name", {q: params[:q]} %></th>
+    <th scope="col" class="col3"><%= sortable "url", "URL", {q: params[:q]} %></th>
     <th scope="col" class="col4">Description</th>
     <th scope="col" class="col5"></th>
   </tr>
