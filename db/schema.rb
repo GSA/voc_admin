@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123192526) do
+ActiveRecord::Schema.define(version: 20160208142712) do
 
   create_table "actions", force: true do |t|
     t.integer  "rule_id",          null: false
@@ -242,6 +242,12 @@ ActiveRecord::Schema.define(version: 20151123192526) do
   end
 
   add_index "new_responses", ["survey_response_id"], name: "index_nrs_survey_response_id", using: :btree
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pages", force: true do |t|
     t.integer  "page_number"
