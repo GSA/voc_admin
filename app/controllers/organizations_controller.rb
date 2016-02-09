@@ -19,6 +19,26 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def edit
+    @organization = Organization.find params[:id]
+  end
+
+  def update
+    @organization = Organization.find params[:id]
+
+    if @organization.update(organization_params)
+      redirect_to organizations_path
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @organization = Organization.find params[:id]
+    @organization.destroy
+    redirect_to organizations_path, notice: "Successfully deleted organization"
+  end
+
   private
 
   def organization_params
