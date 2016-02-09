@@ -1,0 +1,18 @@
+<%= form_for @organization do |f| %>
+  <% if @organization.errors.any? %>
+    <%= render('shared/errors', {object: @organization, object_type: 'organization'}) %>
+  <% end %>
+
+  <div id="surveys">
+    <div class="left_side">
+      <%= f.label :name, "Name*: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <div class="pageLink">
+    <%= link_to "Cancel", organizations_path, :class => "cancelLink" %>
+    <%= f.submit %>
+  </div>
+<% end %>

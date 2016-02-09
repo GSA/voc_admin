@@ -8,6 +8,7 @@ CommentToolApp::Application.routes.draw do
 
   resources :users
   resources :sites
+  resources :organizations
 
   resources :surveys do
     get :preview, on: :collection
