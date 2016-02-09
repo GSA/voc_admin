@@ -3,13 +3,14 @@
 # A system user.  Ties into Authlogic.
 class User < ActiveRecord::Base
   attr_accessible :email, :site_ids, :role_id, :hhs_id, :fullname, :f_name, :l_name,
-    :sites
+    :sites, :organization_id
 
   attr_accessor :first_name, :last_name
 
   has_many :site_users
   has_many :sites,      :through => :site_users
   belongs_to :role
+  belongs_to :organization
 
   validates :email,  :presence => true
   validates :f_name, :presence => true

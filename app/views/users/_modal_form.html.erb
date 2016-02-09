@@ -52,6 +52,12 @@
         </div>
         <br />
       </div>
+      <div class="left_side">
+        <%= f.label :organization, "Organization: " %>
+      </div>
+      <div class="right_side">
+        <%= f.collection_select :organization_id, Organization.all, :id, :name %>
+      </div>
     <% end %>
 
     <div class="submitButton">

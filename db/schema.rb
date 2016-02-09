@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208142712) do
+ActiveRecord::Schema.define(version: 20160209141601) do
 
   create_table "actions", force: true do |t|
     t.integer  "rule_id",          null: false
@@ -563,8 +563,10 @@ ActiveRecord::Schema.define(version: 20160208142712) do
     t.string   "hhs_id",            limit: 50
     t.datetime "last_request_at"
     t.string   "fullname"
+    t.integer  "organization_id"
   end
 
+  add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
 end

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
   # GET    /users(.:format)
   def index
-    @users = User.search(params[:q])
+    @users = User.includes(:organization).search(params[:q])
 
     if params[:sort]
       @users = @users.order("#{sort_column} #{sort_direction}")

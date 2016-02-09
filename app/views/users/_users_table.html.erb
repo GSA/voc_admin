@@ -10,6 +10,9 @@
     <th class="col4" scope="col">
       <%= sortable "email", "Email", {q: params[:q] } %>
     </th>
+    <th class="col5" scope="col">
+      <%= sortable "organization_id", "Organization", {q: params[:q]} %>
+    </th>
     <th class="col5" scope="col">HHS ID</th>
     <th class="col6" scope="col">Delete</th>
   </tr>
@@ -21,6 +24,7 @@
       <td class="col2"><%= link_to user.fullname, user %></td>
       <td class="col3"><%= user.role.nil? ? 'User' : user.role.name %></td>
       <td class="col4"><%= user.email %></td>
+      <td class="col5"><%= user.organization.try(:name) %></td>
       <td class="col5"><%= user.hhs_id %></td>
       <td class="col6"><%= link_to image_tag('delete.png', :alt=>"delete icon"),
         user, data: { :confirm => 'Are you sure?' }, :method => :delete,
