@@ -16,7 +16,7 @@ class Survey < ActiveRecord::Base
     :invitation_reject_button_text, :start_screen_button_text, :alarm,
     :alarm_notification_email, :holding_page, :show_numbers, :locale,
     :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet,
-    :omb_expiration_date
+    :omb_expiration_date, :suppress_invitation
 
   validates :name, :presence => true, :length => {:in => 1..255},
     :uniqueness => true

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209141601) do
+ActiveRecord::Schema.define(version: 20160209165746) do
 
   create_table "actions", force: true do |t|
     t.integer  "rule_id",          null: false
@@ -532,6 +532,7 @@ ActiveRecord::Schema.define(version: 20160209141601) do
     t.string   "invitation_preview_stylesheet"
     t.string   "survey_preview_stylesheet"
     t.string   "omb_expiration_date"
+    t.boolean  "suppress_invitation",           default: false, null: false
   end
 
   add_index "surveys", ["site_id"], name: "index_surveys_on_site_id", using: :btree
