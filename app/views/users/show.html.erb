@@ -35,9 +35,11 @@
       Sites:
     </div>
     <div class="right_side">
+      <ul class="sites">
       <% @user.sites.each do |site| %>
-        <%= site.name %>
+        <li><%= site.name %></li>
       <% end %>
+      </ul>
     </div>
   <% end %>
 </div>
