@@ -56,7 +56,7 @@
         <%= f.label :organization, "Organization: " %>
       </div>
       <div class="right_side">
-        <%= f.collection_select :organization_id, Organization.all, :id, :name, prompt: "" %>
+        <%= f.collection_select :organization_id, Organization.all, :id, :name, prompt: true %>
       </div>
     <% end %>
 
