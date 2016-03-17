@@ -7,6 +7,9 @@ class OrganizationsController < ApplicationController
       @organizations = @organizations.order("#{sort_column} #{sort_direction}")
     end
     @organizations = @organizations.page(params[:page]).per(25)
+    if @organizations.count == 0 && params[:q].present?
+      flash.now[:notice] = "No organizations were found with search."
+    end
   end
 
   def new

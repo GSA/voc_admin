@@ -15,6 +15,10 @@ class UsersController < ApplicationController
     @users = @users.listing
     @users = @users.page(params[:page]).per(10)
 
+    if @users.count == 0 && params[:q].present?
+      flash.now[:notice] = "No users were found with search."
+    end
+
     respond_to do |format|
       format.html
       format.js

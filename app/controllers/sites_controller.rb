@@ -13,6 +13,10 @@ class SitesController < ApplicationController
       @sites.order("name desc")
     end
     @sites = @sites.page(params[:page]).per(10)
+
+    if @sites.count == 0 && params[:q]
+      flash.now[:notice] = "No sites were found with search."
+    end
   end
 
   # GET    /sites/:id(.:format)

@@ -1,7 +1,8 @@
 <h1>All Sites</h1>
-<div class="notice">
-<%= notice %>
-</div>
+<% flash.each do |msg, name| %>
+  <%= flash[name] %>
+<% end %>
+<%= flash_messages(flash) %>
 <div class="page-nav">
   <%= link_to "New Site", new_site_path, :class => "newlink" %>
 </div>
