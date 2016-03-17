@@ -12,6 +12,7 @@
   <%= form_tag organizations_path, method: :get do %>
     <%= label_tag :q, "Search:" %>
     <%= text_field_tag :q, params[:q] %>
+    <%= link_to "View all organizations", organizations_path, class: "manage" %>
   <% end %>
 </div>
 
