@@ -67,6 +67,12 @@ ELASTIC_SEARCH_MAPPINGS = {
   }
 }
 
-unless ELASTIC_SEARCH_CLIENT.indices.exists index: ELASTIC_SEARCH_INDEX_NAME
-  ELASTIC_SEARCH_CLIENT.indices.create index: ELASTIC_SEARCH_INDEX_NAME, body: ELASTIC_SEARCH_MAPPINGS[ELASTIC_SEARCH_INDEX_NAME.to_sym]
+begin
+  unless ELASTIC_SEARCH_CLIENT.indices.exists index: ELASTIC_SEARCH_INDEX_NAME
+    ELASTIC_SEARCH_CLIENT.indices.create index: ELASTIC_SEARCH_INDEX_NAME, body: ELASTIC_SEARCH_MAPPINGS[ELASTIC_SEARCH_INDEX_NAME.to_sym]
+  end
+rescue Faraday::ClientError => e
+  puts "Can't connect to ElasticSearch Server"
+  puts e.message
+  exit
 end
