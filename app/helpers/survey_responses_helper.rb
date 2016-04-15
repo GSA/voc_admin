@@ -104,12 +104,14 @@ module SurveyResponsesHelper
     else
       new_id = @survey_responses[current_survey_response_location - 1].id
     end
-    previous_path = edit_survey_response_path(new_id, {:survey_id => params[:survey_id]}.merge(params.slice(*SurveyResponsesController::POST_PARAMS)))
+    previous_path = edit_survey_response_path({
+      id: new_id
+    }.merge(params.slice(:simple_search, :survey_id, :survey_version_id))
+    )
     link_to "Previous", previous_path
   end
 
   def next_survey_response_link
-    return unless @survey_responses.try(:size) > 0 && current_survey_response_location
     if current_survey_response_location == @survey_responses.size - 1
       if @survey_responses.last_page?
         return
@@ -119,7 +121,10 @@ module SurveyResponsesHelper
     else
       new_id = @survey_responses[current_survey_response_location + 1].id
     end
-    next_path = edit_survey_response_path(new_id, {:survey_id => params[:survey_id]}.merge(params.slice(*SurveyResponsesController::POST_PARAMS)))
+    next_path = edit_survey_response_path({
+      id: new_id
+    }.merge(params.slice(:simple_search, :survey_id, :survey_version_id))
+    )
     link_to "Next", next_path
   end
 

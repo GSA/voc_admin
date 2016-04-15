@@ -32,7 +32,6 @@
               <span><%= check_box_tag "survey_response[display_field_values_attributes][#{i}][value_array][]", val, (dfv.object.value and dfv.object.value.include?(val)), {:id => "survey_response[display_field_values_attributes][#{i}][value_array][]"} %><%= val %></span>
             <% end %>
             <%= dfv.hidden_field :id, :value => dfv.object.id %>
-            <!-- <input type="hidden" value="<%= df.id %>" name="survey_response[display_field_values_attributes][<%= dfv.object.id %>][display_field_id]" id="survey_response_display_field_values_attributes_<%= dfv.object.id %>_display_field_id"> -->
           <% end %>
         <% else %>
           <%= dfv.object.value %>
@@ -45,8 +44,6 @@
   <%= next_survey_response_link %>
   <p class="submitButton">
     <%= image_submit_tag "update-record.png", :alt=>"Submit" %>
-    
-    <%#= f.submit "Submit", :type => :image, :src=>"images/update-record.png", :alt=>"Submit" #%>
   </p>
   <div class="align_cancel">
     <%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"cancelLink" %>
