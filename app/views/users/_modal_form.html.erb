@@ -3,6 +3,8 @@
     <%= render('shared/errors', {object: @user, object_type: 'user'}) %>
   <% end %>
 
+  <%= hidden_field_tag :page, params[:page] %>
+
   <div id="surveys">
     <div class="left_side">
       <%= f.label :f_name, "First Name*: "%>
