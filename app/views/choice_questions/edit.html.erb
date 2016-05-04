@@ -7,7 +7,7 @@
   <% unless @survey_version.locked? %>
     <p>
       <%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
-      <%= f.check_box :auto_next_page, {}, true, false %>
+      <%= f.check_box :auto_next_page %>
     </p>
 
     <%= f.label :answer_type, "Answer Type: " %>

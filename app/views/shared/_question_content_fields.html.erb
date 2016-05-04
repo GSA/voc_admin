@@ -1,10 +1,10 @@
 <% unless @survey_version.try(:locked?) %>
-  <%= f.check_box :required, {}, true, false %>
+  <%= f.check_box :required, {} %>
   <%= f.label :required, "Require an answer to this question (optional)" %>
   <% if f.object.questionable_type == "ChoiceQuestion" && !defined? matrix_question %>
     <div id="flow_control_settings">
       <%= f.hidden_field :flow_control, :value => f.object.flow_control %>
-      <%= f.check_box :flow_control, {:id => "flow_control_checkbox"}, true, false %>
+      <%= f.check_box :flow_control, {:id => "flow_control_checkbox"} %>
       <%= f.label :flow_control, "Flow control", :for=>"flow_control_checkbox"%>
     </div>
   <% end %>

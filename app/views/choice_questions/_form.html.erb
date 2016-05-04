@@ -27,7 +27,7 @@
     </div>
 
     <div id="allow_multiple" class="displayNone">
-      <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect, {}, true, false %><br/>
+      <%= f.label :multiselect, "Allow Multiple answers?"%><%= f.check_box :multiselect %><br/>
     </div>
 
     <% if survey.survey_type_id == SurveyType::POLL %>
@@ -35,7 +35,7 @@
     <% end %>
     <br /><br />
     <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
-  <% end %> 
+  <% end %>
 
   <br /><br />
   <div class="pageLink">
