@@ -1,21 +1,21 @@
 <%= form_for [survey, survey_version, choice_question], :remote => true do |f| %>
-	<%= f.fields_for :question_content do |builder| %>
-		<%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
-	<% end -%>
-	<br />
+  <%= f.fields_for :question_content do |builder| %>
+    <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
+  <% end -%>
+  <br />
   <% unless survey_version.locked? %>
     <%= f.label :answer_type, "Answer Type: " %>
     <%= f.select :answer_type, options_for_answer_type(f.object.answer_type), :id => "answer_type_dropdown" %>
     <br /><br />
     <p id="auto_next_page_fields" <%= auto_next_page_visibility(f, choice_question) %>>
       <%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
-      <%= f.check_box :auto_next_page, {}, true, false %>
+      <%= f.check_box :auto_next_page %>
     </p>
   <% end %>
 
-	<%= f.fields_for :choice_answers do |answer_builder| %>
-		<%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey, :survey_version => survey_version} %>
-	<% end %>
+  <%= f.fields_for :choice_answers do |answer_builder| %>
+    <%= render :partial => 'shared/choice_answer_fields', :locals => {:f => answer_builder, :survey => survey, :survey_version => survey_version} %>
+  <% end %>
 
   <% unless survey_version.locked? %>
     <span><%= link_to_add_fields "Add Answer", f, :choice_answers %></span>
@@ -37,15 +37,15 @@
     <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => choice_question, :survey => survey, :survey_version => survey_version}%>
   <% end %> 
 
-	<br /><br />
-	<div class="pageLink">
-		<%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close" %>
-		<% if f.object.new_record? %>
-		    <%= image_submit_tag "create-question.png", :alt=>"Create Question" %>
-			<%#= f.submit "Create Question", :type => :image, :src=>"images/create-question.png", :alt=>"Create Question"# %>
-		<% else %>
-			<%= image_submit_tag "update-question.png", :alt=>"Update Question" %>
-			<%#= f.submit "Update Question", :type => :image, :src=>"images/update-question.png", :alt=>"Update Question" #%>
-		<% end %>
-	</div>
+  <br /><br />
+  <div class="pageLink">
+    <%= link_to "Cancel", nil, :class => "cancelLink simplemodal-close" %>
+    <% if f.object.new_record? %>
+        <%= image_submit_tag "create-question.png", :alt=>"Create Question" %>
+      <%#= f.submit "Create Question", :type => :image, :src=>"images/create-question.png", :alt=>"Create Question"# %>
+    <% else %>
+      <%= image_submit_tag "update-question.png", :alt=>"Update Question" %>
+      <%#= f.submit "Update Question", :type => :image, :src=>"images/update-question.png", :alt=>"Update Question" #%>
+    <% end %>
+  </div>
 <% end -%>
