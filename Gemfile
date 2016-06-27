@@ -34,9 +34,9 @@ platform :ruby do
   gem 'mysql2', '< 0.3'
   gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
 
-  group :test do
-    gem 'rails_best_practices'
-  end
+  # group :test do
+  #   gem 'rails_best_practices'
+  # end
 end
 
 platform :jruby do

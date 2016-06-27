@@ -1,10 +1,8 @@
 .bundle
 .idea/
 .ruby-gemset
-.ruby-version
 .rvmrc
 config/*.conf
-config/*.yml
 coverage/
 db/*.sqlite3
 db/dumps/
@@ -12,4 +10,5 @@ db/mongo_data/
 exports/
 log/
 mails/
+vendor/cache/
 tmp/

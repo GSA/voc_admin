@@ -1,0 +1,28 @@
+# format of the file is as follows:
+
+# environment:
+#   public_host: this is the hostname and/or port of the PUBLIC application
+#   admin_host: this is the hostname and/or port of the ADMIN application
+#   relative_url:
+
+development:
+  public_host: <%= ENV['APP_PUBLIC_HOST_PORT'] %>
+  admin_host: <%= ENV['APP_ADMIN_HOST_PORT'] %>
+  redis: <%= ENV['REDIS_HOST_PORT'] %>
+  redis-expire: <%= ENV['REDIS_EXPIRE'] %>
+#  branding:		# optional block, defaults shown
+#    css-filename: application        # (minus the .css extension)
+#    header-layout: voc_header
+#    footer-layout: voc_footer
+
+test:
+  public_host: <%= ENV['APP_PUBLIC_HOST_PORT'] %>
+  admin_host: <%= ENV['APP_ADMIN_HOST_PORT'] %>
+  redis: <%= ENV['REDIS_HOST_PORT'] %>
+  redis-expire: <%= ENV['REDIS_EXPIRE'] %>
+
+production:
+  public_host: <%= ENV['APP_PUBLIC_HOST_PORT'] %>
+  admin_host: <%= ENV['APP_ADMIN_HOST_PORT'] %>
+  redis: <%= ENV['REDIS_HOST_PORT'] %>
+  redis-expire: <%= ENV['REDIS_EXPIRE'] %>

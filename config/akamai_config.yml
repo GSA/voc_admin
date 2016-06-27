@@ -1,0 +1,11 @@
+development:
+  development_mode: true
+
+test:
+  development_mode: true
+
+production:
+  user_name: <%= ENV['AKAMAI_USER'] %>
+  password: <%= ENV['AKAMAI_PASSWORD'] %>
+  base_uri: <%= ENV['AKAMAI_BASE_URI'] %>
+  domain: <%= ENV['AKAMAI_DOMAIN'] %>
