@@ -1,7 +1,9 @@
 secret_token_loaded = false
 
 begin
-  SecretConfig = YAML.load_file("#{Rails.root}/config/secret_settings.yml")
+  require 'yaml_erb_loader'
+
+  SecretConfig = YamlErbLoader.load_from_config("#{Rails.root}/config/secret_settings.yml")
 
   unless SecretConfig.blank? or (token = SecretConfig["secret"]).nil?
     CommentToolApp::Application.config.secret_token = token
