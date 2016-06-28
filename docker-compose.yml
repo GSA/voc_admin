@@ -33,22 +33,22 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: 173024e489c10d4d4ae2b573eda1ca55a5057943d087c3147a71d9fb201c8249197bf5f9cd34b2f2be10561f6e3334b589b0ff225009c8c9e9011d508a90f8d4
-  # public:
-  #   build:
-  #     context: ../gsa_comment_tool_public
-  #     dockerfile: Dockerfile
-  #     args:
-  #       # build-time ENV parameters
-  #       RAILS_ENV: development
-  #   depends_on:
-  #     - mysql
-  #     - mongo
-  #     - redis
-  #   entrypoint: ../gsa_comment_tool_public/development.sh
-  #   env_file: ../gsa_comment_tool_public/env
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     # runtime ENV parameters
-  #     RAILS_ENV: development
-  #     RAILS_COOKIE_TOKEN: 2dae529320f622ab8a7501f899aab112b000748a6060959d26fdc0146aed1dc2cc7ba52712542cfddfb9064218ce052d754f22150785dd09566ea7201a061f80
+  public:
+    build:
+      context: ../gsa_comment_tool_public
+      dockerfile: Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    entrypoint: ./development.sh
+    env_file: ./env
+    ports:
+      - "8080:8080"
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: 2dae529320f622ab8a7501f899aab112b000748a6060959d26fdc0146aed1dc2cc7ba52712542cfddfb9064218ce052d754f22150785dd09566ea7201a061f80
