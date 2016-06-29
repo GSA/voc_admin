@@ -1,7 +1,8 @@
 FROM ctac/ruby-base:1.9
 
 ARG RAILS_ENV=production
-ENV APP_HOME /voc_admin
+ENV APP_HOME /voc_admin_worker
+ENV QUEUES=voc_report_email,voc_rules,voc_dfs
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
@@ -17,7 +18,5 @@ RUN bundle install
 
 ADD . $APP_HOME
 
-RUN rm -f tmp/pids/unicorn.pid tmp/pids/server.pid
-
 EXPOSE 80
-ENTRYPOINT [ "unicorn", "-c", "config/unicorn.rb" ]
+ENTRYPOINT [ "rake", "resque:work" ]

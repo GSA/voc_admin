@@ -1,0 +1,15 @@
+.bundle/
+.git/
+doc/
+docker/
+log/**
+spec/
+tmp/
+yard/
+
+.gitignore
+.rspec
+.ruby-*
+Brewfile
+sync_uploads.sh
+war_*.*
