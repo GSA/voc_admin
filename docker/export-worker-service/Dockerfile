@@ -1,7 +1,7 @@
 FROM ctac/ruby-base:1.9
 
 ARG RAILS_ENV=production
-ENV APP_HOME /voc_admin_worker
+ENV APP_HOME /voc
 ENV QUEUE=voc_csv
 
 RUN mkdir $APP_HOME

@@ -1,7 +1,7 @@
 FROM ctac/ruby-base:1.9
 
 ARG RAILS_ENV=production
-ENV APP_HOME /voc_admin
+ENV APP_HOME /voc
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
