@@ -108,3 +108,20 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: f60647f854940b2c60b69675b8727a037a9fc830d4b561b8f5d656979a8c2a4e04eef80fb4a5e465f66a1b4121b6c1c94ffb804e523650f093da36eb42e8efa9
+  nightly_worker:
+    build:
+      context: .
+      dockerfile: docker/nightly-worker-service/Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    env_file: ./.env
+    entrypoint: ./wait-for-it.sh -t 0 admin:80 -- bundle exec rake reporting:daily
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: f60647f854940b2c60b69675b8727a037a9fc830d4b561b8f5d656979a8c2a4e04eef80fb4a5e465f66a1b4121b6c1c94ffb804e523650f093da36eb42e8efa9

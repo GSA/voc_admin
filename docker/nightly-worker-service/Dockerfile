@@ -2,7 +2,6 @@ FROM ctac/ruby-base:1.9
 
 ARG RAILS_ENV=production
 ENV APP_HOME /voc
-ENV QUEUE=voc_csv
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
@@ -19,4 +18,4 @@ RUN bundle install
 ADD . $APP_HOME
 
 EXPOSE 80
-ENTRYPOINT [ "bundle", "exec", "rake", "resque:work" ]
+ENTRYPOINT [ "bundle", "exec", "rake", "reporting:daily" ]

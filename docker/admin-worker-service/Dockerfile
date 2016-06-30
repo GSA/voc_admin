@@ -19,4 +19,4 @@ RUN bundle install
 ADD . $APP_HOME
 
 EXPOSE 80
-ENTRYPOINT [ "rake", "resque:work" ]
+ENTRYPOINT [ "bundle", "exec", "rake", "resque:work" ]
