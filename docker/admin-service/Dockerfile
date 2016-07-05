@@ -17,7 +17,10 @@ RUN bundle install
 
 ADD . $APP_HOME
 
+EXPOSE 80
+
+# DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
+
 RUN rm -f tmp/pids/unicorn.pid tmp/pids/server.pid
 
-EXPOSE 80
 ENTRYPOINT [ "unicorn", "-c", "config/unicorn.rb" ]

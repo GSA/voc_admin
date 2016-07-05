@@ -53,5 +53,11 @@ module CommentToolApp
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
 
     # config.action_controller.relative_url_root = '/vocsub'
+    # Added by Jake, 7/5/2016: tag logging for Docker
+    config.log_level = :debug
+    config.log_tags  = [:subdomain, :uuid]
+
+    # RAILS 3.2+:
+    # config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   end
 end

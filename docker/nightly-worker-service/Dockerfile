@@ -18,4 +18,7 @@ RUN bundle install
 ADD . $APP_HOME
 
 EXPOSE 80
+
+# DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
+
 ENTRYPOINT [ "bundle", "exec", "rake", "reporting:daily" ]
