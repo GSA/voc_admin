@@ -4,7 +4,7 @@ CommentToolApp::Application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-  resources :user_sessions, only: [:new, :destroy]
+  resources :user_sessions, only: [:new, :create, :destroy]
 
   resources :users
   resources :sites
