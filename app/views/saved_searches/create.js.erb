@@ -1,0 +1,1 @@
+$("#saved_searches").append("<%= escape_javascript(render(partial: 'survey_responses/saved_search_info', locals: { saved_search: @saved_search, version: @survey_version}, formats: [:html])) %>");

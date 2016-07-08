@@ -24,7 +24,7 @@ class RulesController < ApplicationController
   # POST   /rules(.:format)
   def create
     build_source_array
-    @rule = @survey_version.rules.build params[:rule]
+    @rule = @survey_version.rules.build rule_params
     @rule.rule_order = @survey_version.rules.count + 1
 
     if @rule.save
@@ -46,7 +46,7 @@ class RulesController < ApplicationController
   def update
     @rule = @survey_version.rules.find(params[:id])
 
-    if @rule.update_attributes(params[:rule])
+    if @rule.update_attributes(rule_params)
       redirect_to survey_survey_version_rule_path(@survey, @survey_version, @rule), :notice  => "Successfully updated rule."
     else
       build_source_array
@@ -106,5 +106,16 @@ class RulesController < ApplicationController
   def build_source_array
     @source_array = @survey_version.sources
     @source_array.concat(@survey_version.display_fields.collect {|df| ["#{df.id},#{df.type}", df.name + "(display field)"]})
+    @source_array << ["#{PageUrl::ID},PageUrl", PageUrl::DISPLAY_FIELD_HEADER]
+  end
+
+  def rule_params
+    params.require(:rule).permit(
+      :name, :action_type,
+      criteria_attributes: [:source_select, :conditional_id, :value, :_destroy],
+      email_action_attributes: [:emails, :subject, :body, :_destroy],
+      actions_attributes: [:display_field_id, :value_type, :value, :_destroy],
+      execution_trigger_ids: []
+    )
   end
 end

@@ -15,6 +15,6 @@ class ExportMailer < ActionMailer::Base
   def export_download(emails, export_id)
       @export_file = Export.find export_id
 
-      mail to: emails, subject: "VOC Tool - Export Download"
+      mail to: emails, subject: "VOC Tool - Export Download - #{@export_file.survey_version.survey_name}"
   end
 end

@@ -4,11 +4,11 @@
       <%= render('shared/errors', {object: @rule, object_type: 'rule'}) %>
     </div>
   <% end %>
-  
+
   <div id="survey_info">
     <div class="top_side"><%= f.label :name, "Name: " %></div>
     <div class="bottom_side"><%= f.text_field :name%></div>
-    
+
     <%= field_set_tag "Type" do %>
       <div id="type">
         <%= f.radio_button :action_type, "db", :id => "db_action_rule" %><label for="db_action_rule"><span class="bold">Database Action:</span> allows you to update or set a field value</label>
@@ -16,7 +16,7 @@
         <%= f.radio_button :action_type, "email", :id => "email_action_rule" %><label for="email_action_rule"><span class="bold">Email Notification:</span> allows you to send out an automated email when something happens</label>
       </div>
     <% end %>
-    
+
     <%= field_set_tag "This rule will execute when a survey is" do %>
       <div id="execute">
         <input name="rule[execution_trigger_ids][]" type='hidden' />

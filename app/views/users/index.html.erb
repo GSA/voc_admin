@@ -1,15 +1,23 @@
 <h1>All Users</h1>
-<div class="page-nav">
-	<%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
-</div>
 <%= flash_messages(flash) %>
+<div class="page-nav">
+  <%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
+</div>
+
+<div class="search">
+  <%= form_tag users_path, method: :get do |f| %>
+    <%= label_tag :q, "Search:" %>
+    <%= text_field_tag :q, params[:q] %>
+    <%= link_to "View all users", users_path, class: "manage" %>
+  <% end %>
+</div>
 
 <%= render partial: 'users_table', locals: {users: @users} %>
 
 <%= paginate @users %>
 
 <div class="page-nav">
-	<%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
+  <%= link_to "New User", new_user_path, :class => "newlink", :remote => true %>
 </div>
 
 <div id="modalDiv" style="display: none;"></div>

@@ -1,0 +1,44 @@
+<h1>All Organizations</h1>
+<% flash.each do |msg, name| %>
+  <%= flash[name] %>
+<% end %>
+<%= flash_messages(flash) %>
+
+<div class="page-nav">
+  <%= link_to "New Organization", new_organization_path, :class => "newlink" %>
+</div>
+
+<div class="search">
+  <%= form_tag organizations_path, method: :get do %>
+    <%= label_tag :q, "Search:" %>
+    <%= text_field_tag :q, params[:q] %>
+    <%= link_to "View all organizations", organizations_path, class: "manage" %>
+  <% end %>
+</div>
+
+<table id="organizationTable" summary="this table lists organizations">
+  <tr>
+    <th scope="col" class="col1">Edit</th>
+    <th scope="col" class="col2"><%= sortable "name", "Name", {q: params[:q]} %></th>
+    <th scope="col" class="col5"></th>
+  </tr>
+  <% @organizations.each do |organization| %>
+    <tr class="<%= cycle('gray','white') %>">
+      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"),
+        edit_organization_path(organization) %></td>
+      <td class="col2"><%= truncate organization.name, length: 160 %></td>
+      <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete"),
+        organization,
+        :confirm => 'Are you sure you want to delete this organization?',
+        :method => :delete, :class=>"deleteLink" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= paginate @organizations %>
+
+<div class="page-nav">
+  <%= link_to "New Organization", new_organization_path, :class=>"newlink" %>
+</div>
+

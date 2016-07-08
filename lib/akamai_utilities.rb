@@ -5,17 +5,21 @@ module AkamaiUtilities
     logger = Logger.new('log/Akamai.log')
     logger.level = Logger::WARN
 
+    auth = {:username => AKAMAI_CONFIG['user_name'], :password => AKAMAI_CONFIG['password']}
+    request_body = {
+      :type => 'arl',
+      :action => 'remove',
+      :domain => AKAMAI_CONFIG['domain'],
+      :objects => urls
+    }.to_json
+
+    logger.warn("#{Time.now} - Requesting Akamai cache purge: #{request_body}")
+
      unless AKAMAI_CONFIG['development_mode']
-      auth = {:username => AKAMAI_CONFIG['user_name'], :password => AKAMAI_CONFIG['password']}
       response = HTTParty.post(AKAMAI_CONFIG['base_uri'].to_str,
         :basic_auth => auth,
         :headers => { 'Content-Type' => 'application/json' },
-        :body => {
-          :type => 'arl',
-          :action => 'remove',
-          :domain => AKAMAI_CONFIG['domain'],
-          :objects => urls
-        }.to_json
+        :body => request_body
       )
       begin
         parsed_response = JSON.parse(response.body)

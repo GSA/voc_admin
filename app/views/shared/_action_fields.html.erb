@@ -1,17 +1,19 @@
 <div class="db_action">
   <%= f.label :display_field_id, "Update" %>
   <%= f.collection_select :display_field_id, survey_version.display_fields, :id, :name %>
-	<br />
-	<%= label_tag :value_target, " with "%>
-	<%= f.hidden_field :value_type, :value => f.object.value_type || "Text" %>
+  <br />
+  <%= label_tag :value_target, " with "%>
+  <%= f.hidden_field :value_type, :value => f.object.value_type || "Text" %>
 
-	<%= select_tag :value_target , options_for_select(survey_version.options_for_action_select), :include_blank => true, :class => "ActionTargetSelect" %>
+  <%= select_tag :value_target , options_for_select(survey_version.options_for_action_select), :include_blank => true, :class => "ActionTargetSelect" %>
 
-	<%= label_tag :value_text, "or", {:class => "actasspan"} %>
-	<%= text_field_tag :value_text, f.object.value, {:class => "ActionManualValue"} %>
-	<%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
+  <%= label_tag :value_text, "or", {:class => "actasspan"} %>
+  <%= text_field_tag :value_text, f.object.value, {:class => "ActionManualValue"} %>
+  <%= f.hidden_field :value, :value => f.object.value, :class => "HiddenValueField" %>
 
-	<%= f.hidden_field :_destroy, :value => false, :id => "destroy_db_action" %>
-	<%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
+  <%= f.hidden_field :_destroy, :value => false, :id => "destroy_db_action" %>
+  <%= link_to image_tag("delete.png", alt: "Delete"), "javascript:void(0);",
+    class: "deleteLink", onclick: "remove_fields(this)"
+  %>
 </div>
 <br/>

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => 'git://github.com/rails/rails.git', :ref => '182d4e3719' # 3.0.21, see https://github.com/rails/rails/pull/9126
+gem 'rails', '4.0.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -18,61 +18,58 @@ gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
 
-gem 'bson_ext'
 gem 'escape_utils'
-gem 'mongoid'
+gem 'mongoid', "~> 5.0"
 gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
-gem "best_in_place", :git => 'https://github.com/eLafo/best_in_place', :branch => 'rails-3.0' # This version is require for < Rails 3.1
+gem "best_in_place"
 gem 'httparty'
 gem 'spreadsheet', '1.0.0'
 
-platform :ruby do
-  gem 'unicorn-rails'
-  gem 'mysql2', '< 0.3'
-  gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
+gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
 
-  group :test do
-    gem 'rails_best_practices'
-  end
-end
+gem 'test-unit'
 
-platform :jruby do
-  gem 'activerecord-jdbc-adapter'
-  gem 'jdbc-mysql'
-  gem 'activerecord-jdbcmysql-adapter'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier', '>= 1.0.3'
 
-  gem 'jruby-openssl', :require => false
+gem "rails-observers"
 
-  gem 'jruby-rack', :require => false
-  gem 'jruby-rack-worker', :require => false
+gem 'mysql2', '~> 0.3.18'
+gem 'unicorn-rails'
+gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
 
-  gem 'warbler'
-end
+# Add attr_accessible back so we can slowly convert to strong parameters
+gem "protected_attributes"
 
 group :development do
-	gem 'annotate'
+  gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'jazz_hands'
-  gem 'pry-remote'
+  gem "byebug"
   gem 'yard'
+  gem "pry-byebug"
+  gem "pry-rails"
+  gem "quiet_assets"
+
+  gem "spring"
+  gem "spring-commands-rspec"
 end
 
-gem 'rspec-rails', :group => [:development, :test]
-gem 'factory_girl_rails', :group => [:development, :test]
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+  gem 'factory_girl_rails'
+end
 
 group :test do
   gem 'simplecov', :require => false
   gem 'database_cleaner'
-  gem 'capybara'
-  gem 'selenium-webdriver'
-
-  gem 'guard-rspec'
-  gem 'growl'
+  gem "capybara-webkit"
+  gem "selenium-webdriver"
+  gem "launchy"
   gem 'shoulda-matchers'
-  gem 'rb-fsevent', '~> 0.9.1'
-
+  gem "guard-rspec", require: false
 end

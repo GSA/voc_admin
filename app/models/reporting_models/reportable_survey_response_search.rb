@@ -3,7 +3,7 @@ class ReportableSurveyResponseSearch
 
   CONDITIONS = {
     'equals' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => Regexp.new("^#{value}$", Regexp::IGNORECASE))
+        base_scope.where(field_name => value)
     },
     'contains' => proc {|base_scope, field_name, value|
         base_scope.where(field_name => Regexp.new("#{value}", Regexp::IGNORECASE))
@@ -24,10 +24,10 @@ class ReportableSurveyResponseSearch
 
   NEGATION_CONDITIONS = {
     'equals' => proc {|base_scope, field_name, value|
-      base_scope.where(field_name.to_sym.ne => Regexp.new("^#{value}$", Regexp::IGNORECASE))
+      base_scope.where(field_name.to_sym.ne => value)
     },
     'contains' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => { "$not" => Regexp.new("#{value}", Regexp::IGNORECASE) })
+        base_scope.where(field_name => { "$not" => Regexp.new("#{value}") })
     },
     'less_than' => proc {|base_scope, field_name, value|
       base_scope.where(:"#{field_name}".gte => value)
@@ -36,10 +36,10 @@ class ReportableSurveyResponseSearch
       base_scope.where(:"#{field_name}".lte => value)
     },
     'begins_with' => proc {|base_scope, field_name, value|
-      base_scope.where(:"#{field_name}" => { "$not" => Regexp.new("^#{value}", Regexp::IGNORECASE) })
+      base_scope.where(:"#{field_name}" => { "$not" => Regexp.new("^#{value}") })
     },
     'ends_with' => proc {|base_scope, field_name, value|
-        base_scope.where(field_name => { "$not" => Regexp.new("#{value}$", Regexp::IGNORECASE) })
+        base_scope.where(field_name => { "$not" => Regexp.new("#{value}$") })
     },
   }
 
@@ -51,7 +51,7 @@ class ReportableSurveyResponseSearch
   end
 
   def search(base_scope = nil)
-    base_scope ||= ReportableSurveyResponse.scoped
+    base_scope ||= ReportableSurveyResponse.all
 
     criteria.each do |k, criterion|
       query_hash = criterion['include_exclude'] == '0' ? NEGATION_CONDITIONS : CONDITIONS
@@ -61,17 +61,29 @@ class ReportableSurveyResponseSearch
 
       if %w( survey_responses.page_url survey_responses.device ).include?(criterion['display_field_id'])
         search_field = criterion['display_field_id'].split('.').last
-      elsif criterion['display_field_id'] == 'survey_responses.created_at'
+      elsif criterion['display_field_id'] == 'created_at'
         value = parse_date_value(criterion['value'])
         search_field = 'created_at'
       else
-        search_field = "answers.#{criterion['display_field_id']}"
+        search_field = "answers.#{criterion['display_field_id'].gsub('df_', '').last}"
       end
 
       base_scope = query_hash[condition].call(base_scope, search_field, value)
     end
 
     base_scope
+  end
+
+  def self.simple_search(passed_scope, search_term)
+    df_ids = passed_scope.first.answers.keys
+    passed_scope = passed_scope.any_of(
+      df_ids.map { |df_id|
+        { "answers.#{df_id}" => /#{search_term}/i}
+      }.concat([
+        {"page_url" => /#{search_term}/i},
+        {"device" => /#{search_term}/i}
+      ])
+    )
   end
 
   private
@@ -93,7 +105,3 @@ class ReportableSurveyResponseSearch
   end
 end
 
-# {
-  # "search"=> {
-  # { "criteria"=> { "0"=> { "include_exclude"=>"1", "display_field_id"=>"survey_responses.created_at", "condition"=>"equals", "value"=>"05/20/2014" } } }
-# }

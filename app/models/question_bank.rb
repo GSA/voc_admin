@@ -9,10 +9,20 @@ class QuestionBank < ActiveRecord::Base
 
 
   def self.instance
-    find_or_create_by_id(1)
+    find_or_create_by(id: 1)
   end
 
   def questions
     question_bank_questions.collect {|q| q.bankable }
   end
 end
+
+# == Schema Information
+#
+# Table name: question_banks
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime
+#  updated_at :datetime
+#
+

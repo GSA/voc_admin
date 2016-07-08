@@ -4,7 +4,7 @@
 # which exists on a Page within a SurveyVersion.
 class SurveyElement < ActiveRecord::Base
   belongs_to :page
-  belongs_to :assetable, :polymorphic => true, :dependent => :destroy
+  belongs_to :assetable, :polymorphic => true#, :dependent => :destroy
   belongs_to :survey_version, :touch => true
   has_many :dashboard_elements, :dependent => :destroy
 
@@ -34,9 +34,15 @@ class SurveyElement < ActiveRecord::Base
   after_destroy :reorder_page_elements_on_destroy
   after_save :update_survey_version_updated_at
 
-  default_scope order(:element_order)
-  scope :questions, where('survey_elements.assetable_type in (?)', %w(TextQuestion ChoiceQuestion MatrixQuestion)).includes(:assetable => :question_content)
-  scope :assets, where('survey_elements.assetable_type in (?)', %w(Asset)).includes(:assetable)
+  default_scope  { order(:element_order) }
+  scope :questions, -> {
+    where('survey_elements.assetable_type in (?)',
+          %w(TextQuestion ChoiceQuestion MatrixQuestion))
+    .includes(:assetable => :question_content)
+  }
+  scope :assets, -> {
+    where('survey_elements.assetable_type in (?)', %w(Asset)).includes(:assetable)
+  }
 
   delegate :reporter, to: :assetable
 
@@ -164,6 +170,10 @@ class SurveyElement < ActiveRecord::Base
     copy_of_assetable.survey_element
   end
 
+  def describe_me
+    assetable.describe_me(assetable_type, element_order)
+  end
+
   private
 
   # On create validation, sets the order of an added SurveyElement; refactors
@@ -176,10 +186,12 @@ class SurveyElement < ActiveRecord::Base
         .where(:pages => { :page_number => page.page_number })
         .maximum(:element_order).to_i + 1
 
-      self.survey_version.survey_elements.update_all(
+      self.survey_version.survey_elements
+        .where([
+          'survey_elements.element_order >= ? and page_id = ?',
+          new_element_order, page.id])
+        .update_all(
         'survey_elements.element_order = survey_elements.element_order + 1',
-        ['survey_elements.element_order >= ? and page_id = ?', new_element_order,
-          page.id]
       )
       self.element_order = new_element_order
 
@@ -194,15 +206,16 @@ class SurveyElement < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110413183938
 #
 # Table name: survey_elements
 #
-#  id                :integer(4)      not null, primary key
-#  page_id           :integer(4)
-#  element_order     :integer(4)
-#  assetable_id      :integer(4)
+#  id                :integer          not null, primary key
+#  page_id           :integer
+#  element_order     :integer
+#  assetable_id      :integer
 #  assetable_type    :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
-#  survey_version_id :integer(4)
+#  survey_version_id :integer
+#
+

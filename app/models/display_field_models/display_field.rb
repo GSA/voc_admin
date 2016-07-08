@@ -134,7 +134,7 @@ class DisplayField < ActiveRecord::Base
   def check_condition(survey_response, conditional_id, test_value)
 
     #find the existing value displayfieldvalue
-    display_field_value = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(survey_response.id, self.id)
+    display_field_value = DisplayFieldValue.find_or_create_by(survey_response_id: survey_response.id, display_field_id: self.id)
     return(false) unless display_field_value
     answer = display_field_value.value || ''
 
@@ -153,7 +153,9 @@ class DisplayField < ActiveRecord::Base
   def clone_me(target_sv)
     df = target_sv.display_fields.find_by_name(self.name)
     return df if df
-    DisplayField.create!(self.attributes.merge(
+    cloneable_attributes = self.attributes
+      .except("id", "type", "created_at", "updated_at")
+    DisplayField.create!(cloneable_attributes.merge(
         :clone_of_id=>self.id,
         :survey_version_id =>target_sv.id,
         :model_type=>self.type,
@@ -167,7 +169,7 @@ class DisplayField < ActiveRecord::Base
   # @param [SurveyVersion] target_sv the SurveyVersion to search for the cloned copy.
   # @return [DisplayField] the original DisplayField
   def find_my_clone_for(target_sv)
-    df = target_sv.display_fields.find_by_clone_of_id(self.id)
+    target_sv.display_fields.find_by_clone_of_id(self.id)
   end
 
   # Creates default DisplayFieldValue mappings on the current SurveyVersion's SurveyResponses.
@@ -183,22 +185,22 @@ class DisplayField < ActiveRecord::Base
   end
 end
 
-
 # == Schema Information
 #
 # Table name: display_fields
 #
-#  id                :integer(4)      not null, primary key
-#  name              :string(255)     not null
-#  type              :string(255)     not null
-#  required          :boolean(1)      default(FALSE)
-#  searchable        :boolean(1)      default(FALSE)
+#  id                :integer          not null, primary key
+#  name              :string(255)      not null
+#  type              :string(255)      not null
+#  required          :boolean          default(FALSE)
+#  searchable        :boolean          default(FALSE)
 #  default_value     :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
-#  display_order     :integer(4)      not null
-#  survey_version_id :integer(4)
-#  clone_of_id       :integer(4)
+#  display_order     :integer          not null
+#  survey_version_id :integer
+#  clone_of_id       :integer
 #  choices           :string(255)
-#  editable          :boolean(1)      default(TRUE)
+#  editable          :boolean          default(TRUE)
 #
+

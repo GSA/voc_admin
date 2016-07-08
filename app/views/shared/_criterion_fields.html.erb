@@ -1,11 +1,13 @@
 <div class="criterion">
-	<div class="hidden_label"><%= f.label :source_select %><%= f.label :conditional_id %></div>
+  <div class="hidden_label"><%= f.label :source_select %><%= f.label :conditional_id %><%= f.label :value %></div>
   <%= f.collection_select :source_select, @source_array, :first, :last, {:selected => "#{f.object.source_id},#{f.object.source_type}"} %>
   <%= f.collection_select :conditional_id, Conditional.all, :id, :name %>
 
    <%= f.text_field :value %>
 
-	  <%= f.hidden_field :_destroy, :value => "" %>
-    <%= link_to_function image_tag("delete.png", :alt=>"Delete"), "remove_fields(this)", :class=>"deleteLink" %>
+    <%= f.hidden_field :_destroy, :value => "" %>
+    <%= link_to image_tag("delete.png", alt: "Delete"), "javascript:void(0);",
+      class: "deleteLink", onclick: "remove_fields(this);"
+    %>
 </div>
 <br/>

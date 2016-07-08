@@ -7,10 +7,10 @@
     <%= render :partial => 'shared/question_content_fields', :locals => {:f => builder, :choice_question => true}%>
   <% end -%>
 
-	<p>
-		<%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
-		<%= f.check_box :auto_next_page, {}, true, false %>
-	</p>
+  <p>
+    <%= f.label :auto_next_page, "Go to next page when answer is chosen (will only apply to radio buttons): " %>
+    <%= f.check_box :auto_next_page %>
+  </p>
   <%= f.label :answer_type, "Answer Type: " %>
   <%= f.select :answer_type, options_for_answer_type(nil), :id => "answer_type_dropdown" %>
 
@@ -26,8 +26,8 @@
   <%= render :partial => "shared/survey_element_fields", :locals => {:f => f, :object => @choice_question, :survey => @survey, :survey_version => @survey_version}%>
   <br/><br/>
   <div class="pageLink">
-  	<%= link_to "Cancel", nil, :class => "cancelLink" %>
+    <%= link_to "Cancel", nil, :class => "cancelLink" %>
     <%= image_submit_tag "create-question.png", :alt=>"Create Question" %>
-  	<%#= f.submit "Create Question", :type => :image, :src=>"images/create-question.png", :alt=>"Create Question" #%>
+    <%#= f.submit "Create Question", :type => :image, :src=>"images/create-question.png", :alt=>"Create Question" #%>
   </div>
 <% end -%>

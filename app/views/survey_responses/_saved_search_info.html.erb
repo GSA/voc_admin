@@ -1,0 +1,7 @@
+<div>
+  <%= link_to saved_search.name, survey_responses_path(saved_search.query_params) %>
+  <%= link_to "(Remove)",
+    survey_survey_version_saved_search_path(version.survey, version, saved_search),
+    method: :delete, confirm: "Are you sure?", class: "js-removeSearch", remote: true
+  %>
+</div>

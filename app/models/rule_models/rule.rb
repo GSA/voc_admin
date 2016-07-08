@@ -75,7 +75,7 @@ class Rule < ActiveRecord::Base
 
   # Applies this Rule to all SurveyResponses in turn.
   def apply_me_all
-    SurveyResponse.find_all_by_survey_version_id(self.survey_version_id).each do |sr|
+    SurveyResponse.where(survey_version_id: self.survey_version_id).each do |sr|
       self.apply_me(sr)
     end
   end
@@ -151,7 +151,8 @@ class Rule < ActiveRecord::Base
 
   # Decrement all later rules when this rule is destroyed.
   def reorder_rules
-    self.survey_version.rules.update_all('rules.rule_order = rules.rule_order - 1', ['rules.rule_order > ?', self.rule_order])
+    self.survey_version.rules.where(['rules.rule_order > ?', self.rule_order])
+      .update_all('rules.rule_order = rules.rule_order - 1')
   end
 end
 
@@ -159,11 +160,13 @@ end
 #
 # Table name: rules
 #
-#  id                :integer(4)      not null, primary key
-#  name              :string(255)     not null
+#  id                :integer          not null, primary key
+#  name              :string(255)      not null
 #  created_at        :datetime
 #  updated_at        :datetime
-#  survey_version_id :integer(4)      not null
-#  rule_order        :integer(4)      not null
-#  clone_of_id       :integer(4)
-#  action_type       :string(255)     default("db")
+#  survey_version_id :integer          not null
+#  rule_order        :integer          not null
+#  clone_of_id       :integer
+#  action_type       :string(255)      default("db")
+#
+

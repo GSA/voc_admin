@@ -1,0 +1,150 @@
+<% javascript 'jquery' %>
+<% javascript 'survey.js' %>
+
+<% if @survey_version.nil? %>
+  <p>Could not find version <%= params[:version] %></p>
+  <%= link_to "View all", survey_path(@survey) %>
+<% else %>
+  <%= flash_messages(flash) %>
+
+<%= form_tag url_for(:controller => "survey_responses", :action => "create") do %>
+    <%= hidden_field_tag :stylesheet, params[:stylesheet] %>
+    <% index = 0 %>
+    <% for page in @survey_version.pages %>
+      <% question_number = 0 %>
+
+      <%= get_page_div_tag( page, params ) %>
+        <a name="PAGE_<%= page.page_number%>"></a>
+
+        <%= hidden_field_tag :next_page, page.next_page.try(:page_number), :id => "page_#{page.page_number}_next_page" %>
+        <%= hidden_field_tag :prev_page, (params[:page].present? && params[:page].to_i == page.page_number ? 1 : page.prev_page.try(:page_number)), :id => "page_#{page.page_number}_prev_page" %>
+
+        <%= hidden_field_tag "survey_version_id", @survey_version.id %>
+        <ul class="showList">
+        <% page.survey_elements.order("element_order asc").each do |element| %>
+          <li class="outter">
+            <% if element.assetable_type != 'Asset'
+               question_number =+ question_number + 1
+            end %>
+            <% if element.assetable_type == "MatrixQuestion" %>
+              <% if element.assetable_type != 'Asset' && @survey.show_numbers?%>
+                <span class="vocquestionnumber"><%= "#{question_number}. #{element.assetable.question_content.statement}" %></span>
+              <% end %>
+                    <table>
+                      <tr>
+                        <th></th>
+                        <% for column_header in element.assetable.choice_questions.first.choice_answers do %>
+                         <th scope="col"><%= column_header.answer %></th>
+                        <% end -%>
+                      </tr>
+                      <% for row_header in element.assetable.choice_questions do %>
+                        <tr>
+                          <th scope="row">
+                            <%= row_header.question_content.statement%><%= "*" if row_header.question_content.required? || element.assetable.required %>
+                            <%= hidden_field_tag "q_#{row_header.question_content.id}_required", row_header.question_content.required || element.assetable.question_content.required, :class => "required_question" %>
+                          </th>
+                          <% row_header.choice_answers.each do |a| %>
+                            <td>
+                            <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", row_header.question_content.id, :id => nil %>
+                            <%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", a.id, false, :class => "question_#{row_header.question_content.id}_answer" %>
+                            </td>
+                          <% end %>
+                        </tr>
+                        <% index = index + 1%>
+                      <% end -%>
+                    </table>
+            <% elsif element.assetable_type != "Asset" %>
+              <%= hidden_field_tag "response[raw_responses_attributes][#{index}][question_content_id]", element.assetable.question_content.id %>
+              <%= hidden_field_tag "q_#{element.assetable.question_content.id}_required", element.assetable.question_content.required, :class => "required_question" %>
+
+              <% if element.assetable.answer_type == ChoiceAnswer::DROPDOWN or element.assetable_type == "TextQuestion"
+                answer_tag_id = "response[raw_responses_attributes][#{index}][answer]"
+                 elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT
+                  answer_tag_id = "response[raw_responses_attributes][#{index}][answer][]"
+                 end -%>
+
+              <div class="vocquestiontext"><% if @survey.show_numbers? %><span class="vocquestionnumber"><%= "#{question_number}." %> </span><% end %>
+              <%= answer_tag_id ? label_tag(answer_tag_id, element.assetable.question_content.statement) : element.assetable.question_content.statement %>
+              <%= "*" if element.assetable.question_content.required%></div>
+              <% if element.assetable_type == "ChoiceQuestion" %>
+                <% if element.assetable.answer_type == ChoiceAnswer::RADIO
+                  choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
+                  %>
+                  <div class="vocradios<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
+                    <% for answer in element.assetable.choice_answers %>
+                      <span class="vocradio"><%= radio_button_tag "response[raw_responses_attributes][#{index}][answer]", answer.id, false,
+                                    :onclick => generate_onclick(element, page, answer),
+                        :class => "question_#{element.assetable.question_content.id}_answer",
+                        :checked => answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer),
+                        :id => "response_#{index}_#{answer.id}"
+                      %>
+                      <%=label_tag "response_#{index}_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
+                      <% if element.assetable.answer_placement %><br/><% end %>
+                    <% end -%>
+                  </div>
+                <% elsif element.assetable.answer_type == ChoiceAnswer::DROPDOWN %>
+                  <span class="vocdropdown"><%= select_tag answer_tag_id,
+                    options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
+                    :include_blank => true, :onchange => generate_next_page_on_change(element),
+                    :class => "question_#{element.assetable.question_content.id}_answer" %></span>
+                <% elsif element.assetable.answer_type == ChoiceAnswer::MULTISELECT %>
+                  <span class="vocmultiselect"><%= select_tag answer_tag_id,
+                    options_from_collection_for_select(element.assetable.choice_answers, "id", "answer", :selected=>Proc.new {|obj| obj.is_default}),
+                    :multiple => true,
+                    :style => "width: 100px",
+                    :class => "question_#{element.assetable.question_content.id}_answer" %></span>
+                <% elsif element.assetable.answer_type == ChoiceAnswer::CHECKBOX
+                  choice_a_size = (element.assetable.choice_answers.map {|x| x.answer}).join('----').size
+                  %>
+                  <div class="voccheckboxes<%= choice_a_size <= 90 ? 'short' : 'long' %><%= element.assetable.answer_placement ? " place_vert" : " place_horiz" %>">
+                    <% for answer in element.assetable.choice_answers %>
+                      <span class="voccheckbox"><%= check_box_tag "response[raw_responses_attributes][#{index}][answer][]",
+                                            answer.id,
+                                            false,
+                                            :id => "answer_#{answer.id}",
+                                            :class => "question_#{element.assetable.question_content.id}_answer",
+                                            :checked=> answer.is_default || (params[element.assetable.statement.gsub('?', '').gsub(' ', '_').downcase.to_s] == answer.answer) %>
+                      <%= label_tag "answer_#{answer.id}", sanitize(answer.answer, :attributes => %w(id class target style href)) %></span>
+                      <% if element.assetable.answer_placement %><br/><% end %>
+                    <% end -%>
+                  </div>
+                <% end # if ChoiceQuestion %>
+
+              <% elsif element.assetable_type == "TextQuestion" %>
+                <% if element.assetable.answer_type == "field" %>
+                <span class="voctextfield"><%= text_field_tag answer_tag_id, nil, :class => "text_question_field question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size %></span>
+                <% elsif element.assetable.answer_type == "area" %>
+                  <span class="voctextarea"><%= text_area_tag answer_tag_id, nil, :class => "text_question_area question_#{element.assetable.question_content.id}_answer", :maxlength => element.assetable.answer_size, :rows => (element.assetable.row_size || ""), :cols => (element.assetable.column_size  || "") %></span>
+
+                <% end -%>
+              <% end -%>
+            <% else %>
+                      <%= element.assetable.snippet.html_safe%>
+            <% end %>
+          </li>
+          <% index = index + 1%>
+        <% end %>
+        </ul>
+        <div class="surveyNav">
+          <% unless page.page_number == 1 or (params[:noback].to_s.downcase=="true") %>
+            <% previous_page_text = @survey.previous_page_text.blank? ? "Previous Page" : @survey.previous_page_text %>
+            <span class="surveyNavPrev"><%= link_to_function previous_page_text, "show_prev_page(#{page.page_number})", :class=>"surveyNav"  %></span> |
+          <% end %>
+          <% unless page.page_number == @survey_version.pages.count %>
+            <% next_page_text = @survey.next_page_text.blank? ? "Next Page" : @survey.next_page_text %>
+            <span class="surveyNavNext"><%= link_to_function next_page_text, "show_next_page(#{page.page_number})", :class=>"surveyNav" %></span>
+          <% end %>
+          <% submit_button_text = @survey.submit_button_text.blank? ? "Submit Survey" : @survey.submit_button_text %>
+          <span class="surveyNavSub"><%= submit_tag(submit_button_text, :onclick=>"return validate_before_submit(#{page.page_number})", disabled: 'disabled') if page.page_number == @survey_version.pages.count %></span>
+        </div>
+        <script>
+        <% if @survey.js_required_fields_error.blank? %>
+          var survey_required_fields_error = "Please answer all required questions before moving on to the next page."
+        <% else %>
+          var survey_required_fields_error = "<%== @survey.js_required_fields_error %>";
+        <% end %>
+        </script>
+      </div> <!-- close page div -->
+    <% end -%>
+  <% end -%>
+<% end -%>

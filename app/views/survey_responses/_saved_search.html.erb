@@ -1,0 +1,16 @@
+<div>
+  <div id="saved_searches">
+    <div>Saved Searches</div>
+    <% version.saved_searches.each do |saved_search| %>
+      <%= render partial: "saved_search_info", locals: { saved_search: saved_search,
+      version: version} %>
+    <% end %>
+  </div>
+  <%= link_to "Save Search", "javascript: void(0);", class: "managed js-saveSearch" %>
+  <div id="saved_search_form" style="display: none">
+    <%= form_for [version.survey, version, SavedSearch.new] do |f| %>
+      <%= f.text_field :name %>
+      <%= f.submit "Save" %>
+    <% end %>
+  </div>
+</div>

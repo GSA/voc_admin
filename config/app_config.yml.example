@@ -10,6 +10,7 @@ development:
   admin_host: localhost:3001
   redis: localhost:6379
   redis-expire: 86400
+  elastic-search-hosts: localhost:9200
 #  branding:		# optional block, defaults shown
 #    css-filename: application        # (minus the .css extension)
 #    header-layout: voc_header
@@ -20,10 +21,12 @@ test:
   admin_host: localhost:3001
   redis: localhost:6379
   redis-expire: 86400
+  elastic-search-hosts: localhost:9200
 
 production:
   public_host: your_public_server.domain.local
   admin_host: your_admin_server.domain.local
   redis: localhost:6379
   redis-expire: 86400
+  elastic-search-hosts: localhost:9200
 

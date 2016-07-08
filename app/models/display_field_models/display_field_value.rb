@@ -4,7 +4,7 @@
 # It is a single data point within a SurveyResponse and can represent a respondent's answer to a question
 # or admin-defined data.
 class DisplayFieldValue < ActiveRecord::Base
-  include ActionView::Helpers::SanitizeHelper 
+  include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::TextHelper
 
   belongs_to :display_field
@@ -20,7 +20,7 @@ class DisplayFieldValue < ActiveRecord::Base
   scope :value_not_matches, ->(val) { arel_table[:value].not_matches(val) }
 
   # Search the DisplayFieldValues
-  # 
+  #
   # @param [Hash] criteria should be of the format: { "0" => { 'include_exclude' => [0/1], 'condition' => [equals, contains...], '} }
   # @return [Array<DisplayFieldValue>] any matching DisplayFieldValues
   def self.search(criteria = {})
@@ -33,7 +33,7 @@ class DisplayFieldValue < ActiveRecord::Base
 
   # Used to store an array of data within the value field, e.g. selected checkbox values.
   # Joins the array using a delimiter very unlikely to be entered by a respondent.
-  # 
+  #
   # @param [Array<String>] arg the Array to store
   # @return [String] the serialized field value
   def value_array=(arg)
@@ -60,9 +60,11 @@ end
 #
 # Table name: display_field_values
 #
-#  id                 :integer(4)      not null, primary key
-#  display_field_id   :integer(4)      not null
-#  survey_response_id :integer(4)      not null
+#  id                 :integer          not null, primary key
+#  display_field_id   :integer          not null
+#  survey_response_id :integer          not null
 #  value              :text
 #  created_at         :datetime
 #  updated_at         :datetime
+#
+

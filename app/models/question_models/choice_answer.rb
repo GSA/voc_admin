@@ -20,6 +20,17 @@ class ChoiceAnswer < ActiveRecord::Base
 
   before_save :chomp_answer
 
+  def describe_me
+    {
+      id: id,
+      answer: answer,
+      choice_question_id: choice_question_id,
+      answer_order: answer_order,
+      next_page: page.try(:page_number),
+      clone_of_id: clone_of_id,
+      is_default: is_default
+    }.reject {|k, v| v.blank? }
+  end
   private
   # Before save, removes any trailing record separators or carriage returns.
   def chomp_answer
@@ -43,12 +54,14 @@ end
 #
 # Table name: choice_answers
 #
-#  id                 :integer(4)      not null, primary key
+#  id                 :integer          not null, primary key
 #  answer             :string(255)
-#  choice_question_id :integer(4)
-#  answer_order       :integer(4)
-#  next_page_id       :integer(4)
+#  choice_question_id :integer
+#  answer_order       :integer
+#  next_page_id       :integer
 #  created_at         :datetime
 #  updated_at         :datetime
-#  clone_of_id        :integer(4)
-#  is_default         :boolean(1)      default(FALSE)
+#  clone_of_id        :integer
+#  is_default         :boolean          default(FALSE)
+#
+

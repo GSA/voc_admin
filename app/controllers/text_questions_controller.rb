@@ -31,11 +31,16 @@ class TextQuestionsController < ApplicationController
 
     respond_to do |format|
       if @text_question.save
-        format.html {redirect_to survey_path(@survey_version.survey), :notice => "Successfully added text question."}
+        format.html {
+          redirect_to survey_path(@survey_version.survey),
+            :notice => "Successfully added text question."
+        }
       else
         format.html {render :action => 'new'}
       end
-      format.js { render :partial => "shared/element_create", :object => @text_question, :as => :element }
+      format.js {
+        render :partial => "shared/element_create", :object => @text_question, :as => :element
+      }
     end
   end
 
@@ -77,9 +82,9 @@ class TextQuestionsController < ApplicationController
     # Remove any rules which have actions that point to the text question_content that just got deleted.
     Action.where("value LIKE ?", question_content_id).each do |a|
       if a.rule.present?
-        a.rule.destroy      
-      end      
-    end     
+        a.rule.destroy
+      end
+    end
   end
 
   private

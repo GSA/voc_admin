@@ -11,6 +11,8 @@ class SurveyVersion < ActiveRecord::Base
   @queue = :voc_csv
 
   belongs_to :survey, :touch => true
+  belongs_to :created_by, class_name: 'User'
+  has_many :saved_searches, :dependent => :destroy
   has_many :pages,           :dependent => :destroy
   has_many :survey_elements, :dependent => :destroy
 
@@ -27,8 +29,9 @@ class SurveyVersion < ActiveRecord::Base
   has_many :dashboards,       :dependent => :destroy
   has_many :reports,          :dependent => :destroy
   has_many :survey_version_counts,    :dependent => :destroy
+  has_many :exports
 
-  attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page
+  attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page, :created_by_id
 
   accepts_nested_attributes_for :survey
 
@@ -38,13 +41,13 @@ class SurveyVersion < ActiveRecord::Base
   validates :survey, :presence => true
 
   # Scopes for partitioning survey versions
-  scope :published, where(:published => true)
-  scope :unpublished, where(:published => false)
-  scope :locked, where(:locked => true)
+  scope :published, -> { where(:published => true) }
+  scope :unpublished, -> { where(:published => false) }
+  scope :locked, -> { where(:locked => true) }
 
   # these need updated to make sure the survey hasn't been archved
-  scope :get_archived, where(:archived => true)
-  scope :get_unarchived, where(:archived => false)
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
 
   # Add methods to access the name and description of a survey from a version instance
   delegate :name, :description, :to => :survey, :prefix => true
@@ -121,7 +124,7 @@ class SurveyVersion < ActiveRecord::Base
       date = Date.parse(date_string)
       count = count_string.to_i
       if count > 0
-        svc = survey_version_counts.find_or_create_by_count_date(date)
+        svc = survey_version_counts.find_or_create_by(count_date: date)
         SurveyVersionCount.update_counters svc.id, attr_name => count
       end
       if date < yesterday
@@ -135,111 +138,7 @@ class SurveyVersion < ActiveRecord::Base
   NOSQL_BATCH = 1000
 
   def generate_responses_csv(filter_params, user_id)
-    survey_response_query = ReportableSurveyResponse.where(survey_version_id: id).order_by(:created_at => "asc")
-
-    unless filter_params['simple_search'].blank?
-      # TODO: come back to simple search later
-    end
-
-    unless filter_params['search'].blank?
-      response_search = ReportableSurveyResponseSearch.new filter_params['search']
-      survey_response_query = response_search.search(survey_response_query)
-    end
-
-    custom_view, sort_orders = nil
-    if filter_params[:custom_view_id].blank?
-      custom_view = custom_views.find_by_default(true)
-    else
-      # Use find_by_id in order to return nil if a custom view with the specified id
-      # cannot be found instead of raising an error.
-      custom_view = custom_views.find_by_id(filter_params[:custom_view_id])
-    end
-
-    # Ensures the responses are coming back in the proper order before batching
-    ordered_columns = custom_view.ordered_display_fields if custom_view.present?
-    ordered_columns ||= display_fields.order(:display_order)
-
-    # Check for file_type format
-    if filter_params["file_type"]
-      if filter_params["file_type"].downcase == 'xls'
-        options = {col_sep: '\t'}
-        file_extension = "xls"
-      else
-        options = {}
-        file_extension = "csv"
-      end
-    else
-      options = {}
-      file_extension = "csv"
-    end
-
-    # Write the survey responses to a temporary CSV file which will be used to create the
-    # Export instance.  The document will be copied to the correct location by paperclip
-    # when the Export instance is created.
-
-    file_name = "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey.name[0..10]}-#{version_number}." + file_extension
-    data = Array.new
-    header = Array.new
-    header = ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
-    0.step(survey_response_query.count, SurveyVersion::NOSQL_BATCH) do |offset|
-      survey_response_query.limit(SurveyVersion::NOSQL_BATCH).skip(offset).each do |response|
-
-        # For each column we're looking to export...
-        response_record = ordered_columns.map do |df|
-
-          # Ask for the answer keyed on DisplayField id, fall back on default
-          response_answer = response.answers[df.id.to_s].presence || df.default_value.to_s
-
-          # Pass the entire array through a filter to break up multiple selection answers when done
-        end.map! {|rr| rr.gsub("{%delim%}", ", ")}
-
-        # Write the completed row to the CSV
-        data << [response.created_at.in_time_zone.strftime("%m/%d/%Y - %H:%M:%S"), response.page_url, response.device].concat(response_record)
-      end
-    end
-
-    if filter_params["file_type"] && filter_params["file_type"].downcase == 'xls'
-      body_format = Spreadsheet::Format.new(:text_wrap => true)
-      header_format = Spreadsheet::Format.new(:bold => true, :color => :black, :text_wrap => true)
-      col_width = 20
-      book = Spreadsheet::Workbook.new
-      sheet = book.create_worksheet
-      sheet.column(0).width = col_width
-      sheet.column(1).width = col_width
-      (3..header.count).each do |n|
-          sheet.column(n).width = col_width
-          sheet.column(n).default_format = body_format
-      end
-      sheet.row(0).default_format = header_format
-      sheet.row(0).concat header
-      data.each_with_index do |val, index|
-        sheet.row(index+1).concat val
-      end
-      book.write("#{Rails.root}/tmp/#{file_name}")
-    else
-      CSV.open("#{Rails.root}/tmp/#{file_name}", "wb", options) do |csv|
-        csv << header
-        data.map do |d|
-          csv << d
-        end
-      end
-    end
-
-    export_file = Export.create! :document => File.open("#{Rails.root}/tmp/#{file_name}")
-
-    # Notify the user that the export has been successful and is available for download
-    if export_file.persisted?
-      resque_args = User.find(user_id).email, export_file.id
-
-      begin
-        Resque.enqueue(ExportMailer, *resque_args)
-      rescue
-        ResquedJob.create(class_name: "ExportMailer", job_arguments: resque_args)
-      end
-    end
-
-    # Remove the temporary file used to create this export
-    File.delete("#{Rails.root}/tmp/#{file_name}")
+    ExportResponsesToCsv.new(self, filter_params, user_id).export_csv
   end
 
   # Get all the SurveyElements that are Question elements.
@@ -328,21 +227,28 @@ class SurveyVersion < ActiveRecord::Base
     self.save
   end
 
+
   # Clone all elements of the SurveyVersion into a new minor version.
   #
   # All Pages, SurveyElements, DisplayFields, and Rules will be cloned into the new
   # SurveyVersion.
   #
   # @return [SurveyVersion] a new minor version of the SurveyVersion which is an exact copy of the cloned SurveyVersion
-  def clone_me
+  def clone_me(created_by_id = nil)
     ActiveRecord::Base.transaction do
       survey = self.survey
 
       #get greatest minor version
-      minor_version = self.survey.survey_versions.where(:major => self.major).order('survey_versions.minor desc').first.minor + 1
-      new_sv = survey.survey_versions.build(self.attributes.merge(:minor => minor_version))
+      minor_version = self.survey.survey_versions.where(:major => self.major)
+        .order('survey_versions.minor desc').first.minor + 1
+      new_attributes = self.attributes.except(
+        "id", "survey_id", "published", "locked", "archived", "created_at",
+        "updated_at", "counts_updated_at", "dirty_reports"
+      )
+      new_sv = survey.survey_versions.build(new_attributes.merge(:minor => minor_version))
       new_sv.published = false
       new_sv.locked = false
+      new_sv.created_by_id = created_by_id
       new_sv.save!
 
       #clone members
@@ -353,7 +259,7 @@ class SurveyVersion < ActiveRecord::Base
       end
 
       # Fix the next_page_ids for page level flow control
-      new_sv.pages.where("pages.next_page_id is not null").all.select {|page| page.next_page.survey_version_id != new_sv.id}.each do |page|
+      new_sv.pages.where("pages.next_page_id is not null").to_a.select {|page| page.next_page.survey_version_id != new_sv.id}.each do |page|
         page.update_attributes(:next_page_id => new_sv.pages.find_by_clone_of_id(page.next_page_id).try(:id)) # Use try so that if something goes wrong and you can't find the correct page it will just blank out the flow control
       end
 
@@ -424,14 +330,27 @@ class SurveyVersion < ActiveRecord::Base
   def run_rules_for_display_field(display_field)
     rules.includes(:actions).where(actions: { display_field_id: display_field.id })
         .each do |rule|
-      puts "*"*100
-      puts "Starting job for rule: #{rule.id}"
-      puts "*"*100
       RuleJob.create id: rule.id
     end
   end
 
+  def export_survey_definition
+    describe_me.to_json
+  end
+
+  def survey_name_with_version
+    "#{survey_name} v#{version_number}"
+  end
+
   private
+
+  def describe_me
+    {
+      survey_id: survey_id, major: major, minor: minor,
+      published: published, locked: locked, archived: archived,
+      notes: notes, created_at: created_at, updated_at: updated_at,
+      thank_you_page: thank_you_page, pages: pages.map(&:describe_me)}.reject {|k, v| v.blank? }
+  end
 
   # hash of question used by pages_for_survey_version
   def question_hash(question, matrix_question = false)
@@ -457,15 +376,18 @@ end
 #
 # Table name: survey_versions
 #
-#  id                :integer(4)      not null, primary key
-#  survey_id         :integer(4)      not null
-#  major             :integer(4)
-#  minor             :integer(4)
-#  published         :boolean(1)      default(FALSE)
-#  locked            :boolean(1)      default(FALSE)
-#  archived          :boolean(1)      default(FALSE)
+#  id                :integer          not null, primary key
+#  survey_id         :integer          not null
+#  major             :integer
+#  minor             :integer
+#  published         :boolean          default(FALSE)
+#  locked            :boolean          default(FALSE)
+#  archived          :boolean          default(FALSE)
 #  notes             :text
-#  counts_updated_at :datetime
 #  created_at        :datetime
 #  updated_at        :datetime
 #  thank_you_page    :text
+#  counts_updated_at :datetime
+#  dirty_reports     :boolean
+#  created_by_id     :integer
+#

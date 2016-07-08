@@ -4,10 +4,20 @@
 # own profile, but the remainder of functionality is reserved for admins.
 class UsersController < ApplicationController
   before_filter :require_admin, :except => [:edit, :update]
-
   # GET    /users(.:format)
   def index
-    @users = User.listing.page(params[:page]).per(10)
+    @users = User.includes(:organization).search(params[:q])
+
+    if params[:sort]
+      @users = @users.order("#{sort_column} #{sort_direction}")
+    end
+
+    @users = @users.listing
+    @users = @users.page(params[:page]).per(10)
+
+    if @users.count == 0 && params[:q].present?
+      flash.now[:notice] = "No users were found with search."
+    end
 
     respond_to do |format|
       format.html
@@ -84,4 +94,13 @@ class UsersController < ApplicationController
   def filtered_params(user_attributes)
     current_user.admin? ? user_attributes : user_attributes.except("role_id", "site_ids")
   end
+
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "role_id"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 end

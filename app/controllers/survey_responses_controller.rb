@@ -10,6 +10,7 @@ class SurveyResponsesController < ApplicationController
 
   # GET    /survey_responses(.:format)
   def index
+    params.reject! {|k,v| v.blank?}
     build_survey_version_and_responses
 
     respond_to do |format|
@@ -43,7 +44,7 @@ class SurveyResponsesController < ApplicationController
   # PUT    /survey_responses/:id(.:format)
   def update
     @survey_response = SurveyResponse.find(params[:id])
-    if @survey_response.update_attributes(params[:survey_response])
+    if @survey_response.update_attributes(survey_response_params)
       redirect_to survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS).except(:survey_response)), :notice => "Successfully updated the record."
     else
       render :action => 'edit'
@@ -83,16 +84,13 @@ class SurveyResponsesController < ApplicationController
     @survey_version = params[:survey_version_id].nil? ? nil : SurveyVersion.find(params[:survey_version_id])
 
     if @survey_version.present?
-      @survey_responses = @survey_version.survey_responses.processed
-
       set_custom_view
-
-      order_responses
-
       search_responses
-
       # Paginate the results
-      @survey_responses = paginate_responses(@survey_responses.includes(:display_field_values), params[:page].to_i)
+      @survey_responses = paginate_responses(
+        @survey_responses.includes(:display_field_values),
+        params[:page].to_i
+      )
     else
       @survey_responses = []
     end
@@ -107,9 +105,11 @@ class SurveyResponsesController < ApplicationController
   # @return [ActiveRecord::Relation] the paginated Relation
   def paginate_responses(responses, pages)
     # decrement the requested page if the response count falls below the pagination threshold
-    pages -= 1 if (pages - 1 > 0 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
-
-    responses.page(pages)
+    # pages -= 1 if (pages > 2 && responses.count <= SurveyResponse.default_per_page * (pages - 1))
+    total_count = @es_results["hits"]["total"]
+    Kaminari.paginate_array(responses, total_count: total_count)
+      .page(pages)
+      .per(SurveyResponse.default_per_page)
   end
 
   # Uses the query parameter CustomView, the default CustomView for
@@ -127,45 +127,23 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
-  # Calculate the proper ordering of the SurveyResponse grid. Order of precedence:
-  #   Explicit query parameter.
-  #   Created By date or Page Url fields.
-  #   Custom View.
-  #   Default to Created By date.
-  def order_responses
-    # Get the order column and direction
-    @order_column_id = @survey_version.display_fields.find_by_name(params[:order_column]).try(:id)
-    @order_dir = %w(asc desc).include?(params[:order_dir].try(:downcase)) ? params[:order_dir] : 'asc'
-
-    # if we have an order column, then order by that column
-    if @order_column_id
-      @survey_responses = @survey_responses.order_by_display_field(@order_column_id, @order_dir)
-
-    # if we're specifically sorting by date or page url
-  elsif %w(survey_responses.created_at page_url device).include?(params[:order_column])
-      @survey_responses = @survey_responses.order("#{params[:order_column]} #{@order_dir}")
-
-    # custom view!
-    elsif @custom_view
-      columns, orders = @custom_view.sorted_display_field_custom_views.map {|s| [s.display_field_id, s.sort_direction] }.transpose
-      @survey_responses = @survey_responses.order_by_display_field(columns, orders)
-
-    # fall back on date if we have no other recourse
-    else
-      @survey_responses = @survey_responses.order("survey_responses.created_at #{@order_dir}")
-    end
-  end
-
   # If search parameters are sent in, use them to build the proper WHERE clause.
   def search_responses
-    if params[:search].present?
-      @search = SurveyResponseSearch.new(params[:search])
-
-      @survey_responses = @search.search(@survey_responses)
-    elsif params[:simple_search].present?
-      @survey_responses = @survey_responses.search(params[:simple_search])
-    elsif params[:search_rr].present?
-      @survey_responses = @survey_responses.search_rr(params[:qc_id], params[:search_rr])
+    if params[:search].present? && params[:search][:criteria].all? {|k,v| v[:value].blank?}
+      params[:search] = nil
     end
+    survey_response_query = SurveyResponsesQuery.new(
+      @survey_version, @custom_view, params,
+      {page: params[:page].present? ? params[:page].to_i - 1 : 0 }
+    )
+    @es_results, @survey_responses = survey_response_query.search
+    @search = survey_response_query.search_criteria
   end
+
+  def survey_response_params
+    params.require(:survey_response).permit(
+      display_field_values_attributes: [:id, :value]
+    )
+  end
+
 end

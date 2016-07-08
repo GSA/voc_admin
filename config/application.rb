@@ -7,7 +7,7 @@ require 'rails/all'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(*Rails.groups)
 
 module CommentToolApp
   class Application < Rails::Application
@@ -53,5 +53,9 @@ module CommentToolApp
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
 
     # config.action_controller.relative_url_root = '/vocsub'
+
+    # Required configuration for the asset pipeline
+    config.assets.enabled = true
+    config.assets.version = '1.0'
   end
 end

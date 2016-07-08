@@ -1,0 +1,32 @@
+<div id="controls">
+  <%= form_tag nil, id: "preview_controls" do %>
+    <div class="actions">
+      <%= label_tag "survey_id", "Survey: " %>
+      <%= select_tag "survey_id", options_from_collection_for_select(
+        current_user.surveys.get_alpha_list, :id, :name,
+        params[:survey_id].to_i), :include_blank => true %>
+
+      <%= label_tag "survey_version_id", "Version: "%>
+      <%= select_tag "survey_version_id", "", :include_blank => true %>
+    </div>
+
+    <div class="actions">
+      <%= label_tag :custom_stylesheet, "Pre-made Stylesheet:" %>
+      <%= select_tag :custom_stylesheet, options_from_collection_for_select(
+        @css_files, :path, :filename
+      ), include_blank: true%>
+      <%= label_tag :stylesheet_url, "Stylesheet Url:" %>
+      <%= text_field_tag :stylesheet_url %>
+      <%= submit_tag "Update" %>
+    </div>
+  <% end %>
+</div>
+
+<div id="survey_target">
+  <!-- iFrame preview will be inserted here -->
+</div>
+
+<%= content_for :head do %>
+  <%= stylesheet_link_tag "preview.css" %>
+<% end %>
+<%= javascript_include_tag "preview.js" %>

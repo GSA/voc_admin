@@ -10,7 +10,7 @@ class Asset < ActiveRecord::Base
   validates :snippet, :presence => true
 
   # There is no associated Answer, so it's never required
-  # 
+  #
   # @return [false]
   def required
     false
@@ -27,7 +27,7 @@ class Asset < ActiveRecord::Base
   end
 
   # Duplicates the Asset upon cloning a SurveyVersion.
-  # 
+  #
   # @param [SurveyVersion] target_sv the SurveyVersion destination for the new cloned copy
   # @return [Asset] the cloned Asset
   def clone_me(target_sv)
@@ -39,27 +39,40 @@ class Asset < ActiveRecord::Base
   end
 
   # Duplicates the Asset upon cloning the Page.
-  # 
+  #
   # @param [Page] page the Page destination for the new cloned copy
   # @return [Asset] the newly-copied Asset
   def copy_to_page(page)
-    se_attribs = self.survey_element.attributes.merge(:page_id=>page.id)
-    se_attribs.delete("id")
-    Asset.create!(self.attributes.merge(:survey_element_attributes=>se_attribs))
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(:page_id=>page.id)
+    Asset.create!(self.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(:survey_element_attributes=>se_attribs)
+    )
   end
 
   def reporter
     nil
   end
+
+  def describe_me(assetable_type, element_order)
+    {
+      id: id,
+      assetable_type: assetable_type,
+      element_order: element_order,
+      snippet: snippet
+    }.reject {|k, v| v.blank? }
+  end
 end
 
 # == Schema Information
-# Schema version: 20110415192145
 #
 # Table name: assets
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer          not null, primary key
 #  snippet    :text
 #  created_at :datetime
 #  updated_at :datetime
 #
+

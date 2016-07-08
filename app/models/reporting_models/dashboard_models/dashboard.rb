@@ -12,10 +12,12 @@ end
 #
 # Table name: dashboards
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  name              :string(255)
-#  survey_version_id :integer(4)      not null
-#  start_date        :date
-#  end_date          :date
+#  survey_version_id :integer
 #  created_at        :datetime
 #  updated_at        :datetime
+#  start_date        :date
+#  end_date          :date
+#
+

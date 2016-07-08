@@ -13,13 +13,14 @@ class MatrixQuestion < ActiveRecord::Base
   validates :question_content, :presence => true
   validate :has_choice_questions
 
-  attr_accessible :choice_questions_attributes, :question_content_attributes, :survey_element_attributes, :clone_of_id, :survey_version_id
+  attr_accessible :choice_questions_attributes, :question_content_attributes,
+    :survey_element_attributes, :clone_of_id, :survey_version_id
 
-  accepts_nested_attributes_for :question_content, :allow_destroy => false, :reject_if => :all_blank
+  accepts_nested_attributes_for :question_content, :allow_destroy => false
   accepts_nested_attributes_for :choice_questions, :allow_destroy => true
   accepts_nested_attributes_for :survey_element
 
-  after_validation :remove_old_answers
+  before_update :remove_old_answers
 
   delegate :statement, :statement=, :required, :to => :question_content
 
@@ -51,37 +52,39 @@ class MatrixQuestion < ActiveRecord::Base
   def clone_me(target_sv, target_page = nil, sv_clone = true)
     #start matrix hash
     mq_qc_attribs = self.question_content.attributes
-    mq_qc_attribs.delete("id")
-    mq_attribs = self.attributes.merge(
+      .except("id", "created_at", "updated_at", "questionable_id")
+    cloneable_attributes = self.attributes
+      .except("id", "created_at", "updated_at", "statement")
+    mq_attribs = cloneable_attributes.merge(
                   :clone_of_id => (self.id),
                   :survey_version_id => (target_sv.id),
                   :question_content_attributes => mq_qc_attribs
                  )
-    mq_attribs.delete("id")
-    mq_attribs.delete("statement")
 
     target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
 
     #build se hash
-    se_attribs = self.survey_element.attributes.merge(
-                  :survey_version_id => target_sv.id,
-                  :page_id => (target_page.id)
-                 )
-    se_attribs.delete("id")
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        :survey_version_id => target_sv.id,
+        :page_id => (target_page.id)
+      )
 
     #build content question hash
     choice_questions = self.choice_questions.map do |choice_question|
-      qc_attribs = choice_question.question_content.attributes.merge(:matrix_statement => self.statement)
-      qc_attribs.merge!(:skip_observer => true) if sv_clone
-      qc_attribs.delete("id")
+      qc_attribs = choice_question.question_content.attributes
+        .except("id", "created_at", "updated_at", "questionable_id")
+        .merge({:matrix_statement => self.statement, :skip_observer => true})
 
       cq_attribs = choice_question.attributes
-      cq_attribs.delete("id")
+        .except("id", "created_at", "updated_at")
       ca_attribs = choice_question.choice_answers.map do |choice_answer|
-        answer_hash = choice_answer.attributes.merge(
-                        :clone_of_id => (choice_answer.id)
-                      )
-        answer_hash.delete("id")
+        answer_hash = choice_answer.attributes
+          .except("id", "updated_at", "created_at")
+          .merge(
+            :clone_of_id => (choice_answer.id)
+          )
 
         #update the next page pointer
         if answer_hash["next_page_id"]
@@ -97,7 +100,10 @@ class MatrixQuestion < ActiveRecord::Base
       )
     end
 
-    mq_attribs = mq_attribs.merge(:choice_questions_attributes => choice_questions, :survey_element_attributes => se_attribs)
+    mq_attribs = mq_attribs.merge(
+      :choice_questions_attributes => choice_questions,
+      :survey_element_attributes => se_attribs
+    )
     MatrixQuestion.create!(mq_attribs)
   end
 
@@ -108,40 +114,50 @@ class MatrixQuestion < ActiveRecord::Base
   def copy_to_page(page)
     #start matrix hash
     mq_qc_attribs = self.question_content.attributes
-    mq_qc_attribs.delete("id")
-    mq_attribs = self.attributes.merge(:clone_of_id => nil, :question_content_attributes => mq_qc_attribs.merge(:statement => "#{self.question_content.statement} (copy)"))
-    mq_attribs.delete("id")
+      .except("id", "created_at", "updated_at", "questionable_id")
+
+    cloneable_attributes = self.attributes
+      .except("id", "created_at", "updated_at", "statement")
+    mq_attribs = cloneable_attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        :clone_of_id => nil,
+        :question_content_attributes => mq_qc_attribs.merge("statement" => "#{self.question_content.statement} (copy)")
+      )
 
 
     #build se hash
-    se_attribs = self.survey_element.attributes.merge(:page_id => page.id)
-    se_attribs.delete("id")
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at", "questionable_id")
+      .merge("page_id" => page.id)
 
     #build content question hash
     choice_questions = self.choice_questions.map do |choice_question|
-      qc_attribs = choice_question.question_content.attributes.merge({:matrix_statement => "#{self.question_content.statement} (copy)"})
-      qc_attribs = qc_attribs.merge(:statement => "#{choice_question.question_content.statement} (copy)")
-      qc_attribs.delete("id")
+      qc_attribs = choice_question.question_content.attributes
+        .except("id", "created_at", "updated_at", "questionable_id")
+        .merge(
+          "matrix_statement" => "#{self.question_content.statement} (copy)",
+          "statement" => "#{choice_question.question_content.statement} (copy)"
+        )
 
       cq_attribs = choice_question.attributes
-      cq_attribs.delete("id")
+        .except("id", "created_at", "updated_at")
       ca_attribs = choice_question.choice_answers.map do |choice_answer|
-        answer_hash = choice_answer.attributes.merge(
-          :clone_of_id => nil
-        )
-        answer_hash.delete("id")
+        answer_hash = choice_answer.attributes
+          .except("id", "updated_at", "created_at")
+          .merge("clone_of_id" => nil)
 
         #update the next page pointer
         if answer_hash["next_page_id"]
-          answer_hash["next_page_id"] = nil #clear pointer since copied question pointers would be invalid
+          answer_hash["next_page_id"] = nil
         end
         answer_hash
       end
-      cq_attribs = cq_attribs.merge(
-                    :question_content_attributes => qc_attribs,
-                    :choice_answers_attributes => ca_attribs,
-                    :clone_of_id => (choice_question.id)
-                   )
+      cq_attribs.merge(
+        :question_content_attributes => qc_attribs,
+        :choice_answers_attributes => ca_attribs,
+        :clone_of_id => (choice_question.id)
+      )
     end
 
     mq_attribs = mq_attribs.merge(:choice_questions_attributes => choice_questions, :survey_element_attributes => se_attribs)
@@ -159,6 +175,18 @@ class MatrixQuestion < ActiveRecord::Base
 
   def reporter
     nil
+  end
+
+  def describe_me(assetable_type, element_order)
+    {id: id,
+     assetable_type: assetable_type,
+     element_order: element_order,
+     statement: question_content.statement,
+     required: question_content.required,
+     survey_version_id: survey_version_id,
+     clone_of_id: clone_of_id,
+     choice_questions: choice_questions.map {|cq| cq.describe_me("ChoiceQuestion", nil)}
+     }.reject {|k, v| v.blank? }
   end
 
   private
@@ -185,17 +213,19 @@ class MatrixQuestion < ActiveRecord::Base
 
   # MatrixQuestions need to rebuild the ChoiceAnswers on update. This method does this after validation.
   def remove_old_answers
-    self.choice_questions.includes(:choice_answers).each {|x| x.choice_answers.each(&:destroy)}
+    if self.valid?
+      self.choice_questions.includes(:choice_answers).each {|x| x.choice_answers.each(&:destroy)}
+    end
   end
 end
 
 # == Schema Information
-# Schema version: 20110524182200
 #
 # Table name: matrix_questions
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  created_at        :datetime
 #  updated_at        :datetime
-#  survey_version_id :integer(4)
-#  clone_of_id       :integer(4)
+#  survey_version_id :integer
+#  clone_of_id       :integer
+#

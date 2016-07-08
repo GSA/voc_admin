@@ -6,17 +6,6 @@ class Conditional < ActiveRecord::Base
 
   validates :name, :presence=>true, :uniqueness=>true
 end
-
-# == Schema Information
-# Schema version: 20110420193126
-#
-# Table name: conditionals
-#
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)     not null
-#  created_at :datetime
-#  updated_at :datetime
-
 # placed here for informational purposes only:
 #  Conditional.create! :id=>1, :name=>"="
 #  Conditional.create! :id=>2, :name=>"!="
@@ -28,3 +17,14 @@ end
 #  Conditional.create! :id=>8, :name=>">"
 #  Conditional.create! :id=>9, :name=>"empty"
 #  Conditional.create! :id=>10, :name=>"not empty"
+
+# == Schema Information
+#
+# Table name: conditionals
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+

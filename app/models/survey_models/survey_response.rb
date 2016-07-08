@@ -17,7 +17,7 @@ class SurveyResponse < ActiveRecord::Base
 
   validates :survey_version, :presence => true
 
-  default_scope where(:archived => false)
+  default_scope { where(:archived => false) }
 
   accepts_nested_attributes_for :raw_responses, :reject_if => :invalid_raw_response?
   accepts_nested_attributes_for :display_field_values
@@ -72,30 +72,35 @@ class SurveyResponse < ActiveRecord::Base
   #used for alarm notifications
   scope :created_between, lambda {|start_date, end_date| where("created_at >= ? AND created_at <= ?", start_date, end_date )}
 
-  scope :processed, where(:status_id => Status::DONE)
+  scope :processed, -> { where(:status_id => Status::DONE) }
 
   # kaminari setting
-  paginates_per 10
+  paginates_per 50
 
   # Create a SurveyResponse from the RawResponse.  This is used by Resque to process the
   # survey responses asynchronously.
   #
   # @param [Hash] response the response parameter hash to process from the controller
   # @param [Integer] survey_version_id the id of the SurveyVersion
-  def self.process_response(response, survey_version_id)
+  def self.process_response(response, survey_version_id, submitted_at = Time.now)
     client_id = SecureRandom.hex(64)
 
     # Remove extraneous data from the response
     response.slice!('page_url', 'raw_responses_attributes', 'device')
-    response['raw_responses_attributes'].try(:values).try(:each) {|rr| rr.slice!('question_content_id', 'answer')}
+    response['raw_responses_attributes'].try(:values).try(:each) do |rr|
+      rr.slice!('question_content_id', 'answer')
+      rr['question_content_id'] = rr['question_content_id'].to_i
+    end
 
-    survey_response = SurveyResponse.new ({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
+    survey_response = SurveyResponse.new({:client_id => client_id, :survey_version_id => survey_version_id}.merge(response))
 
     ## Work around for associating the child raw responses with the survey_response
     survey_response.raw_responses.each do |raw_response|
       raw_response.client_id = client_id
       raw_response.survey_response = survey_response
     end
+
+    survey_response.created_at = submitted_at
 
     survey_response.save!
 
@@ -115,7 +120,7 @@ class SurveyResponse < ActiveRecord::Base
 
     begin
       ActiveRecord::Base.transaction do
-        Rule.find_all_by_survey_version_id(self.survey_version_id).each do |rule|
+        Rule.where(survey_version_id: self.survey_version_id).each do |rule|
           begin
             rule.apply_me(self)
             self.update_attributes(:status_id => Status::DONE, :last_processed => Time.now)
@@ -144,6 +149,7 @@ class SurveyResponse < ActiveRecord::Base
   # Mark the SurveyResponse as archived (soft deleted.)
   def archive
     self.archived = true
+    reportable_survey_response = ReportableSurveyResponse.where(survey_response_id: id).first.try(:delete)
     self.save!
     resp = ReportableSurveyResponse.unscoped.where(survey_response_id: self.id).first
     if resp
@@ -153,18 +159,23 @@ class SurveyResponse < ActiveRecord::Base
   end
 
   def export_values_for_reporting
-    resp = ReportableSurveyResponse.find_or_create_by(survey_response_id: self.id)
+    resp = ReportableSurveyResponse.find_or_initialize_by(survey_response_id: self.id)
 
     resp.survey_id = self.survey_version.survey_id
     resp.survey_version_id = self.survey_version_id
 
     answers = {}
-
     self.display_field_values.each do |dfv|
       answers[dfv.display_field_id.to_s] = dfv.value
     end
 
+    raw_answers = {}
+    raw_responses.each do |rr|
+      raw_answers[rr.question_content_id.to_s] = rr.answer
+    end
+
     resp.answers = answers
+    resp.raw_answers = raw_answers
 
     resp.created_at = self.created_at
     resp.page_url = self.page_url
@@ -182,8 +193,8 @@ class SurveyResponse < ActiveRecord::Base
 
   # Ensure that there is a DisplayFieldValue ("cell") for every column in the SurveyResponse.
   def create_dfvs
-    DisplayField.find_all_by_survey_version_id(self.survey_version_id).each do |df|
-      dfv = DisplayFieldValue.find_or_create_by_survey_response_id_and_display_field_id(self.id, df.id)
+    DisplayField.where(survey_version_id: self.survey_version_id).each do |df|
+      dfv = DisplayFieldValue.find_or_create_by(survey_response_id: self.id, display_field_id: df.id)
       dfv.update_attributes(:value => df.default_value)
     end
   end
@@ -193,9 +204,9 @@ class SurveyResponse < ActiveRecord::Base
     return @question_content_ids unless @question_content_ids.nil?
     @question_content_ids = survey_version.try(:questions).try(:map) do |q|
       if q.is_a?(MatrixQuestion) # get the ids of questins associated with MatrixQuestion
-        q.choice_questions.map {|cq| cq.question_content.try(:id).to_s}
+        q.choice_questions.map {|cq| cq.question_content.try(:id)}
       else
-        q.question_content.try(:id).to_s
+        q.question_content.try(:id)
       end
     end
     @question_content_ids ||= []
@@ -214,13 +225,15 @@ end
 #
 # Table name: survey_responses
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  client_id         :string(255)
-#  survey_version_id :integer(4)
+#  survey_version_id :integer
 #  created_at        :datetime
 #  updated_at        :datetime
-#  status_id         :integer(4)      default(1), not null
+#  status_id         :integer          default(1), not null
 #  last_processed    :datetime
 #  worker_name       :string(255)
 #  page_url          :text
-#  archived          :boolean(1)      default(FALSE)
+#  archived          :boolean          default(FALSE)
+#  device            :string(255)      default("Desktop")
+#

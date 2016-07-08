@@ -2,7 +2,12 @@
 
   <% if dfv.display_field.editable %>
     <%= image_tag("/images/edit.png", :alt=>"edit") %>
-    <%= best_in_place dfv, :value, nil: '&nbsp;', display_as: :truncated_display_value, html_attrs: {size: 12}, activator: "#displayFieldValue_#{dfv.id}" , path: survey_survey_version_display_field_value_path(version.survey, version, dfv) %>
+    <%= best_in_place dfv, :value,
+      url: survey_survey_version_display_field_value_path(version.survey, version, dfv),
+      activator: "#displayFieldValue_#{dfv.id}",
+      display_as: :truncated_display_value
+    %>
+    <%#= best_in_place dfv, :value, nil: '&nbsp;', display_as: :truncated_display_value, html_attrs: {size: 12}, activator: "#displayFieldValue_#{dfv.id}" , path: survey_survey_version_display_field_value_path(version.survey, version, dfv) %>
   <% else %>
     <%= dfv.truncated_display_value %>
   <% end %>

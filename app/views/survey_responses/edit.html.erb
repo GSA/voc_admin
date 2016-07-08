@@ -1,54 +1,51 @@
 <h1>Edit Record</h1>
 
 <%= field_set_tag :Response do %>
-	<div class="left_side">Date/Time:</div>
-	<div class="right_side"><%= @survey_response.created_at.strftime("%m/%d/%Y - %T") %></div>
-	<br />
+  <div class="left_side">Date/Time:</div>
+  <div class="right_side"><%= @survey_response.created_at.strftime("%m/%d/%Y - %T") %></div>
+  <br />
 
-	<div class="left_side">Page URL:</div>
-	<div class="right_side"><%= @survey_response.page_url %></div>
-	<br />
+  <div class="left_side">Page URL:</div>
+  <div class="right_side"><%= @survey_response.page_url %></div>
+  <br />
 
-	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", false).each do |dfv| %>
-		<div class="left_side"><%= dfv.display_field.name %>:</div>
-		<div class="right_side"><%= split_multiple_answer_selections(dfv.value) %></div>
-	<% end %>
+  <% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", false).each do |dfv| %>
+    <div class="left_side"><%= dfv.display_field.name %>:</div>
+    <div class="right_side"><%= split_multiple_answer_selections(dfv.value) %></div>
+  <% end %>
 <% end %>
 
 <%= form_for @survey_response, :url => survey_response_path(@survey_response, params.slice(*SurveyResponsesController::POST_PARAMS)), :html => { :method => :put } do |f| %>
-	<div id="survey_info">
-	<% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", true).each_with_index do |display_field_value, i| %>
-		<%= f.fields_for :display_field_values, display_field_value do |dfv| %>
-			<% df = dfv.object.display_field %>
-			<div class="top_side"><%= df.name.titleize %>:</div>
-			<div class="bottom_side">
-				<% if df.editable? %>
-					<% if df.type == "DisplayFieldText" %>
-						<%= dfv.text_field :value %>
-					<% elsif df.type == "DisplayFieldChoiceSingle" %>
-						<%= dfv.select :value, df.choices.split %>
-					<% elsif df.type == "DisplayFieldChoiceMultiselect" %>
-			  		<% df.choices.split.each_with_index do |val, index| %>
-			  			<span><%= check_box_tag "survey_response[display_field_values_attributes][#{i}][value_array][]", val, (dfv.object.value and dfv.object.value.include?(val)), {:id => "survey_response[display_field_values_attributes][#{i}][value_array][]"} %><%= val %></span>
-			  		<% end %>
-			  		<%= dfv.hidden_field :id, :value => dfv.object.id %>
-						<!-- <input type="hidden" value="<%= df.id %>" name="survey_response[display_field_values_attributes][<%= dfv.object.id %>][display_field_id]" id="survey_response_display_field_values_attributes_<%= dfv.object.id %>_display_field_id"> -->
-					<% end %>
-				<% else %>
-					<%= dfv.object.value %>
-				<% end %>
-			</div>
-		<% end %>
-	<% end %>
-	</div>
+  <div id="survey_info">
+  <% @survey_response.display_field_values.includes(:display_field).where("display_fields.editable = ?", true).each_with_index do |display_field_value, i| %>
+    <%= f.fields_for :display_field_values, display_field_value do |dfv| %>
+      <% df = dfv.object.display_field %>
+      <div class="top_side"><%= df.name.titleize %>:</div>
+      <div class="bottom_side">
+        <% if df.editable? %>
+          <% if df.type == "DisplayFieldText" %>
+            <%= dfv.text_field :value %>
+          <% elsif df.type == "DisplayFieldChoiceSingle" %>
+            <%= dfv.select :value, df.choices.split %>
+          <% elsif df.type == "DisplayFieldChoiceMultiselect" %>
+            <% df.choices.split.each_with_index do |val, index| %>
+              <span><%= check_box_tag "survey_response[display_field_values_attributes][#{i}][value_array][]", val, (dfv.object.value and dfv.object.value.include?(val)), {:id => "survey_response[display_field_values_attributes][#{i}][value_array][]"} %><%= val %></span>
+            <% end %>
+            <%= dfv.hidden_field :id, :value => dfv.object.id %>
+          <% end %>
+        <% else %>
+          <%= dfv.object.value %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
   <%= previous_survey_response_link %>
   <%= next_survey_response_link %>
-	<p class="submitButton">
-		<%= image_submit_tag "update-record.png", :alt=>"Submit" %>
-		
-		<%#= f.submit "Submit", :type => :image, :src=>"images/update-record.png", :alt=>"Submit" #%>
-	</p>
-	<div class="align_cancel">
-		<%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"cancelLink" %>
-	</div>
+  <p class="submitButton">
+    <%= image_submit_tag "update-record.png", :alt=>"Submit" %>
+  </p>
+  <div class="align_cancel">
+    <%= link_to "Cancel", survey_responses_path(params.slice(*SurveyResponsesController::POST_PARAMS)), :class=>"cancelLink" %>
+  </div>
 <% end %>

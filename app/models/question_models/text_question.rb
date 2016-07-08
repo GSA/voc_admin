@@ -15,13 +15,15 @@ class TextQuestion < ActiveRecord::Base
   validates :answer_type, :presence => true
   validates :question_content, :presence => true
 
-  attr_accessible :answer_type, :question_content_attributes, :survey_element_attributes, :clone_of_id, :row_size, :answer_size
+  attr_accessible :answer_type, :question_content_attributes,
+    :survey_element_attributes, :clone_of_id, :row_size, :answer_size,
+    :column_size
   accepts_nested_attributes_for :question_content
   accepts_nested_attributes_for :survey_element
 
   delegate :statement, :required, :flow_control, :to => :question_content
 
-  default_scope includes(:question_content)
+  default_scope { includes(:question_content) }
 
   # Delegated method for Questionable.
   def get_true_value(string_value)
@@ -46,19 +48,20 @@ class TextQuestion < ActiveRecord::Base
   #
   # @param [SurveyVersion] target_sv the SurveyVersion destination
   # @return [TextQuestion] the cloned TextQuestion
-  def clone_me(target_sv, target_page = nil, sv_clone = true)
+  def clone_me(target_sv, target_page = nil)
     qc_attribs = self.question_content.attributes
-    qc_attribs.merge!(:skip_observer => true) if sv_clone
-    qc_attribs.delete("id")
-    
+      .except("id", "created_at", "updated_at", "questionable_id")
+      .merge(:skip_observer => true)
     target_page ||= target_sv.pages.find_by_clone_of_id(self.survey_element.page_id)
-    se_attribs = self.survey_element.attributes.merge(
-                  :survey_version_id=>target_sv.id,
-                  :page_id=> target_page.id,
-                  :element_order => (target_page.survey_elements.maximum(:element_order) || 0) + 1
-                 )
-    se_attribs.delete("id")
-    cloned_question = TextQuestion.new(self.attributes.merge(
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        :survey_version_id=>target_sv.id,
+        :page_id=> target_page.id,
+        :element_order => (target_page.survey_elements.maximum(:element_order) || 0) + 1
+    )
+    cloneable_attributes = self.attributes.except("id", "created_at", "updated_at")
+    cloned_question = TextQuestion.new(cloneable_attributes.merge(
                         :question_content_attributes=>qc_attribs,
                         :survey_element_attributes=>se_attribs,
                         :clone_of_id => (self.id)
@@ -67,21 +70,42 @@ class TextQuestion < ActiveRecord::Base
     cloned_question
   end
 
+  def describe_me(assetable_type, element_order)
+    {
+      id: id,
+      assetable_type: assetable_type,
+      element_order: element_order,
+      statement: question_content.statement,
+      required: question_content.required,
+      answer_type: answer_type,
+      clone_of_id: clone_of_id,
+      row_size: row_size,
+      column_size: column_size,
+      answer_size: answer_size
+    }.reject {|k, v| v.blank? }
+  end
+
   # Makes a deep copy of the TextQuestion (when cloning a Page)
   #
   # @param [Page] page the page to be cloned onto
   # @return [TextQuestion] the cloned copy
   def copy_to_page(page)
-      qc_attribs = self.question_content.attributes
-      qc_attribs = qc_attribs.merge(:statement => "#{self.question_content.statement} (copy)")
-      qc_attribs.delete("id")
-      se_attribs = self.survey_element.attributes.merge(:page_id=>page.id)
-      se_attribs.delete("id")
-      TextQuestion.create!(self.attributes.merge(
-                            :question_content_attributes=>qc_attribs,
-                            :survey_element_attributes=>se_attribs,
-                            :clone_of_id => nil
-                          ))
+    qc_attribs = self.question_content.attributes
+      .except("id", "created_at", "updated_at", "questionable_id")
+      .merge("statement" => "#{self.question_content.statement} (copy)")
+
+    se_attribs = self.survey_element.attributes
+      .except("id", "created_at", "updated_at")
+      .merge("page_id" => page.id)
+
+    new_question_attributes = self.attributes
+      .except("id", "created_at", "updated_at")
+      .merge(
+        "question_content_attributes" => qc_attribs,
+        "survey_element_attributes" => se_attribs,
+        "clone_of_id" => nil
+      )
+    TextQuestion.create!(new_question_attributes)
   end
 
   def reporter
@@ -93,11 +117,13 @@ end
 #
 # Table name: text_questions
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer          not null, primary key
 #  answer_type :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
-#  clone_of_id :integer(4)
-#  row_size    :integer(4)
-#  column_size :integer(4)
-#  answer_size :integer(4)
+#  clone_of_id :integer
+#  row_size    :integer
+#  column_size :integer
+#  answer_size :integer
+#
+

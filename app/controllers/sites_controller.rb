@@ -6,7 +6,17 @@ class SitesController < ApplicationController
 
   # GET    /sites(.:format)
   def index
-    @sites = Site.order("name asc").page(params[:page]).per(10)
+    @sites = Site.search(params[:q])
+    if params[:sort]
+      @sites = @sites.order("#{sort_column} #{sort_direction}")
+    else
+      @sites.order("name desc")
+    end
+    @sites = @sites.page(params[:page]).per(10)
+
+    if @sites.count == 0 && params[:q]
+      flash.now[:notice] = "No sites were found with search."
+    end
   end
 
   # GET    /sites/:id(.:format)
@@ -21,7 +31,7 @@ class SitesController < ApplicationController
 
   # POST   /sites(.:format)
   def create
-    @site = Site.new params[:site]
+    @site = Site.new site_params
 
     if @site.save
       redirect_to @site, :notice => "Successfully created new site."
@@ -39,7 +49,7 @@ class SitesController < ApplicationController
   def update
     @site = Site.find(params[:id])
 
-    if @site.update_attributes(params[:site])
+    if @site.update_attributes(site_params)
       redirect_to @site, :notice => "Successfully updated site."
     else
       render :edit
@@ -50,8 +60,25 @@ class SitesController < ApplicationController
   def destroy
     @site = Site.find params[:id]
 
-    @site.destroy
+    if @site.surveys.size > 0
+      redirect_to sites_path, :notice => "Cannot delete a site with surveys."
+    else
+      @site.destroy
+      redirect_to sites_path, :notice => "Successfully removed site."
+    end
+  end
 
-    redirect_to sites_path, :notice => "Successfully removed site."
+  private
+
+  def site_params
+    params.require(:site).permit(:name, :url, :description)
+  end
+
+  def sort_column
+    Site.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

@@ -26,11 +26,12 @@ class SurveyType < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110408150334
 #
 # Table name: survey_types
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#
+

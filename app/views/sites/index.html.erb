@@ -1,29 +1,44 @@
 <h1>All Sites</h1>
+<% flash.each do |msg, name| %>
+  <%= flash[name] %>
+<% end %>
+<%= flash_messages(flash) %>
 <div class="page-nav">
-	<%= link_to "New Site", new_site_path, :class => "newlink" %>
+  <%= link_to "New Site", new_site_path, :class => "newlink" %>
+</div>
+
+<div class="search">
+  <%= form_tag sites_path, method: :get do %>
+    <%= label_tag :q, "Search:" %>
+    <%= text_field_tag :q, params[:q] %>
+    <%= link_to "View all sites", sites_path, class: "manage" %>
+  <% end %>
 </div>
 
 <table id="sitesTable" summary="this table lists sites">
-	<tr>
-		<th scope="col" class="col1">Edit</th>
-		<th scope="col" class="col2">Name</th>
-		<th scope="col" class="col3">URL</th>
-		<th scope="col" class="col4">Description</th>
-		<th scope="col" class="col5"></th>
-	</tr>
-	<% @sites.each do |site| %>
-		<tr class="<%= cycle('gray','white') %>">
-      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_site_path(site) %></td>			
-			<td class="col2"><%= link_to site.name, site %></td>
-			<td class="col3"><%= site.url %></td>
-			<td class="col4"><%= site.description %></td>
-      <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete"), site, :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
-		</tr>
-	<% end %>
+  <tr>
+    <th scope="col" class="col1">Edit</th>
+    <th scope="col" class="col2"><%= sortable "name", "Name", {q: params[:q]} %></th>
+    <th scope="col" class="col3"><%= sortable "url", "URL", {q: params[:q]} %></th>
+    <th scope="col" class="col4">Description</th>
+    <th scope="col" class="col5"></th>
+  </tr>
+  <% @sites.each do |site| %>
+    <tr class="<%= cycle('gray','white') %>">
+      <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_site_path(site) %></td>
+      <td class="col2"><%= link_to site.name, site %></td>
+      <td class="col3"><%= site.url %></td>
+      <td class="col4"><%= truncate site.description, length: 255, separator: ' ' %></td>
+      <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete"), site,
+        :confirm => 'Are you sure you want to delete this site?',
+        :method => :delete, :class=>"deleteLink" %>
+      </td>
+    </tr>
+  <% end %>
 </table>
 
 <%= paginate @sites %>
 
 <div class="page-nav">
-	<%= link_to "New Site", new_site_path, :class=>"newlink" %>
+  <%= link_to "New Site", new_site_path, :class=>"newlink" %>
 </div>

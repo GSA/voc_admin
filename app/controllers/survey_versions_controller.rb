@@ -1,9 +1,14 @@
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
 # Manages the SurveyVersion lifecycle.
+
 class SurveyVersionsController < ApplicationController
   before_filter :get_survey
   include AkamaiUtilities
+
+  def preview
+    render "preview", layout: "empty"
+  end
 
   # GET    /surveys/:survey_id/survey_versions(.:format)
   def index
@@ -36,14 +41,23 @@ class SurveyVersionsController < ApplicationController
   def edit_thank_you_page
   end
 
+  # GET    /surveys/:survey_id/survey_versions/:id/edit_notes(.:format)
+  def edit_notes
+  end
+
   # PUT    /surveys/:survey_id/survey_versions/:id(.:format)
   def update
-    if @survey_version.update_attributes params[:survey_version].slice("thank_you_page")
+    if params[:edit_notes].present?
+      if @survey_version.update_attributes(params[:survey_version].slice("notes"))
+        redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated notes"
+        return
+      end
+    elsif @survey_version.update_attributes(params[:survey_version].slice("thank_you_page"))
       flush_akamai(@survey.flushable_urls) if @survey_version.published?
       redirect_to survey_survey_versions_path(@survey), :notice => "Successfully updated the thank you page"
-    else
-      render :edit
+      return
     end
+    render :edit
   end
 
   # DELETE /surveys/:survey_id/survey_versions/:id(.:format)
@@ -55,9 +69,18 @@ class SurveyVersionsController < ApplicationController
     end
   end
 
+  def export_survey
+    @survey_version = SurveyVersion.find(params[:survey_version_id])
+
+
+    send_data @survey_version.export_survey_definition, :type => 'application/json',
+      :filename => "#{@survey.name.gsub(' ', '_')[0..20]}_#{@survey_version.version_number}_Export.json"
+    # redirect_to(survey_survey_versions_path(@survey_version.survey), :notice => 'Survey Version was exported successfully.')
+  end
+
   # GET    /surveys/:survey_id/survey_versions/create_new_major_version(.:format)
   def create_new_major_version
-    @survey.create_new_major_version
+    @survey.create_new_major_version(@current_user.id)
     respond_to do |format|
       format.html { redirect_to(survey_survey_versions_path(@survey), :notice => 'Major Survey Version was successfully created.') }
       format.xml  { head :ok }
@@ -70,8 +93,13 @@ class SurveyVersionsController < ApplicationController
       redirect_to survey_survey_versions_path(@survey), :flash => {:error => "Cannot publish an empty survey."}
     else
       @survey_version.publish_me
-      flush_akamai(@survey.flushable_urls)
-      redirect_to survey_survey_versions_path(@survey), :notice => "Successfully published survey version."
+      Rails.cache.clear if Rails.cache
+      if flush_akamai(@survey.flushable_urls)
+        msg = "Successfully published survey and cache will be purged in 7 minutes."
+      else
+        msg = "Successfully published survey but there was a problem purging cache."
+      end
+      redirect_to survey_survey_versions_path(@survey), :notice => msg
     end
   end
 
@@ -79,13 +107,12 @@ class SurveyVersionsController < ApplicationController
   def unpublish
     flushable_urls = @survey.flushable_urls
     @survey_version.unpublish_me
-    flush_akamai(flushable_urls)
-    redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version"
+    redirect_to survey_survey_versions_path(@survey), :notice => "Successfully unpublished survey version and cache will be purged in 15 minutes."
   end
 
   # GET    /surveys/:survey_id/survey_versions/:id/clone_version(.:format)
   def clone_version
-    @minor_version = @survey_version.clone_me
+    @minor_version = @survey_version.clone_me(@current_user.id)
 
     redirect_to survey_survey_versions_path(@survey), :notice => "Successfully cloned new minor version"
   end

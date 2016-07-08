@@ -1,20 +1,20 @@
 CommentToolApp::Application.routes.draw do
-  match '/exports/:id/download' => "exports#download",
+  get '/exports/:id/download' => "exports#download",
     :as => 'exports_download'
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-  get 'reset_password' => 'user_sessions#reset_password',
-    :as => :reset_password
-  resources :user_sessions, only: [:new, :create, :destroy] do
-    post :do_pw_reset, :on => :collection
-  end
+  resources :user_sessions, only: [:new, :destroy]
 
-	resources :users
-	resources :sites
+  resources :users
+  resources :sites
+  resources :organizations
 
   resources :surveys do
+    get :preview, on: :collection
     get :start_page_preview, :on => :member
+    get :all_questions, :on => :collection
+    post 'import_survey_version'
   end
 
   resource :question_bank do
@@ -40,6 +40,10 @@ CommentToolApp::Application.routes.draw do
       get :unpublish, :on => :member, :as => "unpublish"
       get :clone_version, :on => :member, :as => "clone"
       get :edit_thank_you_page, :on => :member, :as => "edit_thank_you_page"
+      get :edit_notes, :on => :member, :as => :edit_notes
+      get :export_survey, :on => :collection, :as => 'export_survey'
+      get :preview, on: :member
+      resources :saved_searches, only: [:index, :create, :destroy]
 
       resources :rules do
         put :increment_rule_order, :on => :member
@@ -79,18 +83,20 @@ CommentToolApp::Application.routes.draw do
       get :create_new_major_version, :on => :collection
       get :create_new_minor_version, :on => :member
 
-      get :reporting, :on => :member
-      resources :dashboards
-      get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
-      resources :reports do
-        resources :recurring_reports, :except => :show
-        member do
-          post :email_csv
-          post :email_pdf
-          get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
-        end
-      end
-      get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
+      # Reporting routes, currently disabled for HHS:
+      # ---------------------------------------------
+      # get :reporting, :on => :member
+      # resources :dashboards
+      # get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
+      # resources :reports do
+      #   resources :recurring_reports, :except => :show
+      #   member do
+      #     post :email_csv
+      #     post :email_pdf
+      #     get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
+      #   end
+      # end
+      # get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
     end
   end
 
@@ -104,11 +110,4 @@ CommentToolApp::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => "user_sessions#new"
 
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful
-  # applications.
-  # Note: This route will make all actions in every controller accessible via
-  # GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end

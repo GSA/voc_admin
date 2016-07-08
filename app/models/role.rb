@@ -10,14 +10,16 @@ class Role < ActiveRecord::Base
 
   # The administrative user. Capable of managing users and sites,
   # has access to all surveys.
-  ADMIN = Role.find_or_create_by_name("Admin")
+  ADMIN = Role.find_or_create_by(name: "Admin")
 end
 
 # == Schema Information
 #
 # Table name: roles
 #
-#  id         :integer(4)      not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string(255)
 #  created_at :datetime
 #  updated_at :datetime
+#
+

@@ -7,12 +7,13 @@ class ExecutionTriggerRule < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110420193126
 #
 # Table name: execution_trigger_rules
 #
-#  id                   :integer(4)      not null, primary key
-#  rule_id              :integer(4)      not null
-#  execution_trigger_id :integer(4)      not null
+#  id                   :integer          not null, primary key
+#  rule_id              :integer          not null
+#  execution_trigger_id :integer          not null
 #  created_at           :datetime
 #  updated_at           :datetime
+#
+

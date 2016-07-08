@@ -1,5 +1,28 @@
 CommentToolApp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  #
+  config.eager_load = true
+
+  # Asset pipeline configuration
+  config.assets.serve_static_assets = true
+  config.assets.compile = true
+
+  # Compress JavaScripts and CSS
+  config.assets.compress = true
+
+  # Generate digests for assets URLs
+  config.assets.digest = true
+
+  # Defaults to Rails.root.join("public/assets")
+  # config.assets.manifest = YOUR_PATH
+
+  # Precompile additional assets (application.js, application.css, and all
+  # non-JS/CSS are already added)
+  config.assets.precompile += %w( *.js *.css )
+
+  # Force all access to the app over SSL, use Strict-Transport-Security,
+  # and use secure cookies.
+  # config.force_ssl = true
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
@@ -26,10 +49,6 @@ CommentToolApp::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
-
-  # Disable Rails's static asset server
-  # In production, Apache or nginx will already do this
-  config.serve_static_assets = true
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"

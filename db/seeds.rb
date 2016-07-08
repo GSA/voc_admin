@@ -61,15 +61,14 @@ end
 puts "done"
 
 print "creating default roles..."
-role = Role.find_or_create_by_name("Admin")
+Role.find_or_create_by_name("Admin")
 puts "done"
 
 print "Creating user: sysadmin@YOURCOMPANYURL.com..."
 User.find_or_create_by_email("sysadmin@YOURCOMPANYURL.com") do |user|
   user.f_name = "System"
-	user.l_name = "Administrator"
-	user.password = "password"
-	user.password_confirmation = "password"
-	user.role_id = Role.find_by_name("Admin").id
+  user.l_name = "Administrator"
+  user.hhs_id = "2100000000"
+  user.role_id = Role.find_by_name("Admin").id
 end
 puts "done"

@@ -15,10 +15,10 @@ class RawResponse < ActiveRecord::Base
   validates :status_id, :presence => true
   validates :answer, :presence => true
 
-  default_scope :order => 'created_at DESC'
-  scope :status_new, where(:status_id => Status::NEW)
-  scope :status_processing, where(:status_id => Status::PROCESSING)
-  scope :status_error, where(:status_id => Status::ERROR)
+  default_scope -> { order('created_at DESC') }
+  scope :status_new, -> { where(:status_id => Status::NEW) }
+  scope :status_processing, -> { where(:status_id => Status::PROCESSING) }
+  scope :status_error, -> { where(:status_id => Status::ERROR) }
 
   scope :not_archived, joins(:survey_response).where('survey_responses.archived = 0')
 
@@ -30,7 +30,7 @@ class RawResponse < ActiveRecord::Base
   end
 
   # A simple setter used to ensure Arrays are stored correctly.
-  # 
+  #
   # @param [Number, String, Array] value the value to be set
   def answer=(value)
     if value.class == Array
@@ -43,16 +43,17 @@ class RawResponse < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20110511142805
 #
 # Table name: raw_responses
 #
-#  id                  :integer(4)      not null, primary key
+#  id                  :integer          not null, primary key
 #  client_id           :string(255)
 #  answer              :text
-#  question_content_id :integer(4)
-#  status_id           :integer(4)      default(1), not null
+#  question_content_id :integer
+#  status_id           :integer          default(1), not null
 #  created_at          :datetime
 #  updated_at          :datetime
 #  worker_name         :string(255)
-#  survey_response_id  :integer(4)      not null
+#  survey_response_id  :integer          not null
+#
+

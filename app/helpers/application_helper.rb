@@ -3,6 +3,31 @@
 # View helper repository for helpers used across functional areas of the application.
 module ApplicationHelper
 
+  def nav_link_active_class controller, action=nil
+    if controller == params[:controller] &&
+        (action.blank? || action == params[:action])
+      "navActive"
+    else
+      "nav"
+    end
+  end
+
+  def manage_users_or_account_link
+    html = ""
+    html << "|"
+    html << content_tag("p", class: "nav") do
+      if @current_user.admin?
+        link_to "Manage Users", users_url, class: nav_link_active_class("users"),
+          title: "Manage Users"
+      else
+        link_to "Manage Account", edit_user_url(@current_user),
+          class: nav_link_active_class("users"),
+          title: "Manage Account"
+      end
+    end
+    html.html_safe
+  end
+
   # Dynamic method to build child records (e.g. ChoiceAnswers for a ChoiceQuestion)
   # via links on new/edit forms.  The partial created generates the form structure to support
   # POSTing back to create/update actions.
@@ -20,7 +45,8 @@ module ApplicationHelper
       render(:partial => partial_name, :locals => {:f => builder, :survey_version => @survey_version, :survey => @survey})
     end
 
-    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"newlink")
+    link_to name, "javascript:void(0)", onclick: "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")",
+      class: "newlink"
   end
 
   # (see link_to_add_fields)
@@ -32,7 +58,8 @@ module ApplicationHelper
   def link_to_add_matrix_answer(name)
     fields = render(:partial => "shared/matrix_answers_fields", :locals => {:i => "new_matrix_answer", :answer => nil})
 
-    link_to_function(name, "add_matrix_answers(this, \"#{escape_javascript(fields)}\")", :class=>"newlink")
+    link_to name, "javascript:void(0);", onclick: "add_matrix_answers(this, \"#{escape_javascript(fields)}\")",
+      class: "newlink"
   end
 
   # Adds sort arrow images to table DisplayField columns.
@@ -40,25 +67,28 @@ module ApplicationHelper
   # @param [String] column the name of the column being sorted
   # @param [String] title optional alternate display text for the column
   # @return [String] HTML link for the column header text, with sort toggle information
-  def sortable(column, title = nil)
+  def sortable(column, title = nil, additional_params = {})
     direction = (column == params[:sort] && params[:direction] == "asc") ? "desc" : "asc"
 
     title ||= column.titleize
 
     arrows = content_tag :span, :class => "sort_arrows" do
-      ret = ""
       if column == params[:sort]
-        ret += image_tag "arrow_up_larger.png", :alt => "Sort"   if direction == "desc" && column == params[:sort]
-        ret += image_tag "arrow_down_larger.png", :alt => "Sort" if direction == "asc"  && column == params[:sort]
+        if direction == "desc"
+          image_tag "arrow_up_larger.png", :alt => "Sort"
+        else
+          image_tag "arrow_down_larger.png", :alt => "Sort"
+        end
       else
-        ret += image_tag "arrows.png", :alt => "Sort"
+        image_tag "arrows.png", :alt => "Sort"
       end
-      ret.html_safe
     end
 
     title += arrows
 
-    link_to title.html_safe, {:sort => column, :direction => direction}
+    link_to title.html_safe, additional_params.merge(
+      {:sort => column, :direction => direction}
+    )
   end
 
   def get_reporting_link(survey, version)
@@ -67,5 +97,9 @@ module ApplicationHelper
 
   def pdf?
     params[:action] == 'pdf'
+  end
+
+  def required_label(label_text)
+    "<abbr title='required'>*</abbr>#{label_text}".html_safe
   end
 end

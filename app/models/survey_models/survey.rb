@@ -7,19 +7,29 @@ class Survey < ActiveRecord::Base
   belongs_to :survey_type
   belongs_to :site
 
-  attr_accessible :name, :description, :survey_type_id, :site_id, :submit_button_text,
-  :previous_page_text, :next_page_text, :js_required_fields_error, :invitation_percent,
-  :invitation_interval, :invitation_text, :invitation_accept_button_text,
-  :invitation_reject_button_text, :start_screen_button_text, :alarm, :alarm_notification_email, :holding_page,
-  :show_numbers, :locale, :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet
+  attr_accessor :created_by_id
 
-  validates :name, :presence => true, :length => {:in => 1..255}, :uniqueness => true
+  attr_accessible :name, :description, :survey_type_id, :site_id,
+    :submit_button_text, :previous_page_text, :next_page_text,
+    :js_required_fields_error, :invitation_percent,
+    :invitation_interval, :invitation_text, :invitation_accept_button_text,
+    :invitation_reject_button_text, :start_screen_button_text, :alarm,
+    :alarm_notification_email, :holding_page, :show_numbers, :locale,
+    :start_page_title, :invitation_preview_stylesheet, :survey_preview_stylesheet,
+    :omb_expiration_date, :suppress_invitation
+
+  validates :name, :presence => true, :length => {:in => 1..255},
+    :uniqueness => true
   validates :description, :presence => true, :length => {:in => 1..65535}
   validates :site, presence: true
 
-  validates :invitation_percent, presence: true, :format => { :with => /\A((100(\.0{1,2})?)|(\d{0,2})(\.\d{1,2})?)\z/ },
-                                                 :numericality => {:greater_than => 0.01, :less_than_or_equal_to => 100}
-  validates :invitation_interval, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 0}
+  validates :invitation_percent, presence: true,
+    :format => {
+      :with => /\A((100(\.0{1,2})?)|(\d{0,2})(\.\d{1,2})?)\z/
+    },
+    :numericality => { :greater_than => 0.01, :less_than_or_equal_to => 100 }
+  validates :invitation_interval, presence: true,
+    numericality: {only_integer: true, greater_than_or_equal_to: 0}
   validates :alarm_notification_email, presence: true, :if => :alarm
 
   validates :js_required_fields_error, length: { maximum: 255 }
@@ -27,12 +37,14 @@ class Survey < ActiveRecord::Base
   validates :next_page_text, length: { maximum: 255 }
   validates :submit_button_text, length: { maximum: 255 }
 
-  scope :get_archived,            where(:archived => true)
-  scope :get_unarchived,          where(:archived => false)
-  scope :get_alpha_list,          order('surveys.name asc')
-  scope :search,          ->(q = nil) { where("surveys.name like ?", "%#{q}%") unless q.blank?}
+  scope :get_archived, -> { where(:archived => true) }
+  scope :get_unarchived, -> { where(:archived => false) }
+  scope :get_alpha_list, -> { order('surveys.name asc') }
+  scope :search, ->(q = nil) {
+    where("surveys.name like ?", "%#{q}%") unless q.blank?
+  }
 
-  default_scope where(:archived => false)
+  default_scope { where(:archived => false) }
 
   after_create :create_new_major_version
 
@@ -54,14 +66,17 @@ class Survey < ActiveRecord::Base
   # new major version.
   #
   # @return [SurveyVersion] the new empty SurveyVersion.
-  def create_new_major_version
+  def create_new_major_version(created_by_id = nil)
     #get most recent version number
     new_maj_ver = self.survey_versions.maximum(:major).to_i + 1
 
     #create new version
-    new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0, :published=>false, :locked => false, :archived => false)
+    new_sv = self.survey_versions.build(:major=>new_maj_ver, :minor=>0)
+    new_sv.published = false
+    new_sv.locked = false
+    new_sv.archived = false
+    new_sv.created_by_id = created_by_id || self.created_by_id
     new_sv.pages.build :page_number => 1, :survey_version => new_sv
-    puts new_sv.pages.first.errors unless new_sv.valid?
     new_sv.tap {|sv| sv.save!}
   end
 
@@ -75,11 +90,16 @@ class Survey < ActiveRecord::Base
     source_sv.clone_me
   end
 
+  def import_survey_version(file, source_sv_id = nil)
+    SurveyVersionImporter.import(self, file, source_sv_id)
+  end
+
   def flushable_urls
-    urls = ["http://#{APP_CONFIG['public_host']}/surveys/#{id}", "http://#{APP_CONFIG['public_host']}/widget/#{id}/invitation.js"]
-    if published_version.present?
-      urls.push("http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}")
-    end
+    [
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}",
+      "http://#{APP_CONFIG['public_host']}/surveys/#{id}?version=#{published_version.version_number}",
+      "http://#{APP_CONFIG['public_host']}/widget/invitation.js"
+    ]
   end
 end
 
@@ -87,18 +107,30 @@ end
 #
 # Table name: surveys
 #
-#  id                       :integer(4)      not null, primary key
-#  name                     :string(255)
-#  description              :text
-#  survey_type_id           :integer(4)
-#  created_at               :datetime
-#  updated_at               :datetime
-#  archived                 :boolean(1)      default(FALSE)
-#  site_id                  :integer(4)
-#  submit_button_text       :string(255)
-#  previous_page_text       :string(255)
-#  next_page_text           :string(255)
-#  js_required_fields_error :string(255)
-#  invitation_percent       :integer(4)      not null, default(100)
-#  invitation_interval      :integer(4)      not null, default(30)
+#  id                            :integer          not null, primary key
+#  name                          :string(255)
+#  description                   :text
+#  survey_type_id                :integer
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  archived                      :boolean          default(FALSE)
+#  site_id                       :integer
+#  submit_button_text            :string(255)
+#  previous_page_text            :string(255)
+#  next_page_text                :string(255)
+#  js_required_fields_error      :string(255)
+#  invitation_percent            :integer          default(100), not null
+#  invitation_interval           :integer          default(30), not null
+#  invitation_text               :text
+#  invitation_accept_button_text :string(255)
+#  invitation_reject_button_text :string(255)
+#  alarm                         :boolean
+#  alarm_notification_email      :string(255)
+#  holding_page                  :text
+#  show_numbers                  :boolean          default(TRUE)
+#  locale                        :string(255)
+#  start_screen_button_text      :string(255)
+#  start_page_title              :string(255)
+#  invitation_preview_stylesheet :string(255)
+#  survey_preview_stylesheet     :string(255)
 #

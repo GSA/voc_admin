@@ -3,7 +3,9 @@
 
   jQuery(function() {
     jQuery('#invitation_preview').on('click', function(e) {
-      showPreview();
+      loadModal('vocModal');
+      e.preventDefault();
+      return false;
     });
   });
 

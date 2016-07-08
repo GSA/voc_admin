@@ -1,7 +1,64 @@
 namespace :reporting do
-  desc "Reset all reporting counts"
-  task :reset_counts => [:environment] do
-    SurveyVersion.all.each { |sv| sv.reset_counts! }
+  desc <<-EOS
+  Export SurveyResponses created between <start_date> and <end_date>
+  Dates must be formatted as YYYY-mm-dd
+  EOS
+  task :export_in_range, [:start_date_str, :end_date_str] => [:environment] do |t, args|
+    TIMEZONE_STR = "Eastern Time (US & Canada)"
+    DATE_FORMAT_REGEX = /\A\d{4}-\d{1,2}-\d{1,2}\z/
+    USAGE = <<-EOS
+      usage: rake reporting:export_in_range[<start_date>,<end_date>]
+
+      start_date and end_date must be in the format YYYY-mm-dd and are inclusive dates.
+    EOS
+
+    raise USAGE if args.start_date_str.blank? || args.end_date_str.blank?
+
+    start_date_str = args.start_date_str
+    end_date_str = args.end_date_str
+
+    raise "Start date must use format YYYY-mm-dd" unless start_date_str.match(DATE_FORMAT_REGEX)
+    raise "End date must use format YYYY-mm-dd" unless end_date_str.match(DATE_FORMAT_REGEX)
+
+    start_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(start_date_str)
+    end_date = ActiveSupport::TimeZone[TIMEZONE_STR].parse(end_date_str).end_of_day
+
+    survey_responses = SurveyResponse.where("created_at >= ? AND created_at <= ?", start_date, end_date)
+    total_to_export = survey_responses.count
+
+    puts "Exporting #{total_to_export} responses between #{start_date} and #{end_date} to MongoDB"
+
+    total_exported = 0
+    survey_responses.find_in_batches do |batch|
+      batch.each(&:export_values_for_reporting)
+      puts "exported #{total_exported += batch.size}/#{total_to_export}"
+    end
+  end
+
+  desc "create csv with counts in root dir"
+  task :csv_report, [:month, :year] => [:environment] do |t,args|
+    MonthlyReport.new(args.month.to_i, args.year.to_i).generate
+  end
+
+  desc "create monthly reports for the last x months. [month, year, num_months]"
+  task :monthly_reports, [:month, :year, :num_reports] => [:environment] do |t, args|
+    month = args.month.to_i
+    year = args.year.to_i
+    num_reports = args.num_reports.to_i
+
+    (num_reports).times do |n|
+      y = year
+      m = if n >= month
+        y -= 1
+        12 - (n - month)
+      else
+        month - n
+      end
+
+      puts "Generating Report for #{m}-#{y}"
+      Rake::Task["reporting:csv_report"].reenable
+      Rake::Task["reporting:csv_report"].invoke(m, y)
+    end
   end
 
   desc "Run all daily reporting tasks - counts, loading questions, and mailing recurring reports"
@@ -93,6 +150,7 @@ namespace :reporting do
       end
 
       print "\n  ...batch #{num} finished.\n"
+      sleep 10
     end
 
     puts "...export finished. #{errors} errors."

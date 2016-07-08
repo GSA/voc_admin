@@ -2,15 +2,21 @@
 #
 # Defines a SurveyResponse CSV data Export file.
 class Export < ActiveRecord::Base
+  belongs_to :survey_version
   has_attached_file :document,
                     :processors => [],
-                    :path => ":rails_root/exports/:filename",
+                    :path => ":rails_root/public/system/exports/:filename",
                     :url  => "/exports/:access_token/download"
 
   before_validation :generate_access_token
 
   validates :access_token, presence: true, uniqueness: true, length: { maximum: 255 }
-  validates_attachment_presence :document
+  validates_attachment :document, presence: true
+  do_not_validate_attachment_file_type :document
+
+  def self.active
+    where("created_at >= ?", 25.hours.ago)
+  end
 
   private
   # Generate a unique identifier.
@@ -25,11 +31,14 @@ end
 #
 # Table name: exports
 #
-#  id                    :integer(4)      not null, primary key
+#  id                    :integer          not null, primary key
 #  access_token          :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime
 #  document_file_name    :string(255)
 #  document_content_type :string(255)
-#  document_file_size    :integer(4)
+#  document_file_size    :integer
 #  document_updated_at   :datetime
+#  survey_version_id     :integer
+#
+

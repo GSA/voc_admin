@@ -1,66 +1,85 @@
-<%= form_for @user, :remote => true do |f| %>
-	<% if @user.errors.any? %>
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
     <%= render('shared/errors', {object: @user, object_type: 'user'}) %>
-	<% end %>
+  <% end %>
 
-	<div id="surveys">
-		<div class="left_side">
-	    <%= f.label :f_name, "First Name: "%>
-	  </div>
-		<div class="right_side">
-	    <%= f.text_field :f_name %>
-	  </div>
-	  <br />
-		<div class="left_side">
-	    <%= f.label :l_name, "Last Name: " %>
-	  </div>
-		<div class="right_side">
-	    <%= f.text_field :l_name %>
-	  </div>
-		<br />
+  <div id="surveys">
     <div class="left_side">
-      <%= f.label :username, "LDAP Username: " %>
+      <%= f.label :f_name, "First Name*: "%>
     </div>
     <div class="right_side">
-      <%= f.text_field :username %>
+      <%= f.text_field :f_name %>
     </div>
     <br />
-	  <div class="left_side">
-	  	<%= f.label :email, "Email: " %>
-	  </div>
-	  <div class="right_side">
-	  	<%= f.text_field :email %>
-	  </div>
-		<br />
-		<%= f.hidden_field :password, value: "see_ldap" %>
-	  <% if @current_user.admin? %>
-			<div class="left_side">
-				<%= f.label :role_id, "Role: " %>
-			</div>
-			<div class="right_side">
-				<%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
-				<%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
-			</div>
-			<div id="sites_div" class="<%= @user.role.nil? ? '' : 'displayNone'%>">
-				<div class="left_side">
-					<%= f.label :site_ids, "Sites:" %>
-				</div>
-				<div class="right_side">
-		    	<%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
-		  	</div>
-		  	<br />
-			</div>
-	  <% end %>
+    <div class="left_side">
+      <%= f.label :l_name, "Last Name*: "%>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :l_name %>
+    </div>
+    <br />
+    <div class="left_side">
+      <%= f.label :email, "Email*: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :email %>
+    </div>
+    <br />
+    <br />
+    <% if @user.new_record? || @user == @current_user %>
+      <div class="left_side">
+        <%= f.label :password, "Password: " %>
+      </div>
+      <div class="right_side">
+        <%= f.password_field :password%>
+      </div>
+      <br />
+      <div class="left_side">
+        <%= f.label :password_confirmation, "Password Confirmation: " %>
+      </div>
+      <div class="right_side">
+        <%= f.password_field :password_confirmation%>
+      </div>
+      <br />
+    <% end -%>
 
-		<div class="submitButton">
-			<% if f.object.new_record? %>
-				<%= image_submit_tag "create-user.png", :alt=>"Create User" %>
+    <% if @current_user.admin? %>
+      <fieldset class="hide">
+        <div class="left_side">
+          <legend class="label-like">Role:</legend>
+        </div>
+        <div class="right_side">
+          <%= radio_button :user, :role_id, Role::ADMIN.id, :id => "admin_role", :onclick => "$('#sites_div').hide();" %><%= label_tag "admin_role", "Admin" %>
+          <%= radio_button :user, :role_id, nil, :id => "user_role", :checked => @user.role.nil?, :onclick => "$('#sites_div').show()" %><%= label_tag "user_role", "User" %>
+        </div>
+      </fieldset>
+      <div id="sites_div" class="<%= @user.role.nil? ? '' : 'displayNone'%>">
+        <div class="left_side">
+          <%= f.label "sites", "Sites:" %>
+        </div>
+        <div class="right_side">
+          <%= f.collection_select :site_ids, Site.all, :id, :name, {width: 180}, multiple: true, id: "user_sites" %>
+        </div>
+        <br />
+      </div>
+      <br />
+      <div class="left_side">
+        <%= f.label :organization_id, "Organization: " %>
+      </div>
+      <div class="right_side">
+        <%= f.collection_select :organization_id, Organization.all, :id, :name, prompt: true %>
+      </div>
+    <% end %>
 
-				<%#= f.submit "Create User", :type => :image, :src=>"/images/create-user.png", :alt=>"Create User" #%>
-			<% else %>
-				<%= image_submit_tag "update-user.png", :alt=>"Update User" %>
-				<%#= f.submit "Update User", :type => :image, :src=>"/images/update-user.png", :alt=>"Update User" #%>
-			<% end %>
-		</div>
-	</div>
+    <div class="submitButton">
+      <% if f.object.new_record? %>
+        <%= image_submit_tag "create-user.png", :alt=>"Create User" %>
+
+        <%#= f.submit "Create User", :type => :image, :src=>"/images/create-user.png", :alt=>"Create User" #%>
+      <% else %>
+        <%= image_submit_tag "update-user.png", :alt=>"Update User" %>
+        <%#= f.submit "Update User", :type => :image, :src=>"/images/update-user.png", :alt=>"Update User" #%>
+      <% end %>
+    </div>
+  </div>
 <% end %>

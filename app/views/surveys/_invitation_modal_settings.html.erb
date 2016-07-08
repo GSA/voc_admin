@@ -1,0 +1,49 @@
+<div class="left_side">
+  <%= f.label :invitation_text, "Invitation Modal HTML: " %>
+</div>
+<div class="right_side">
+  <%= f.text_area :invitation_text, :rows => 3 %>
+</div>
+
+<div class="instructions">
+  <%= button_tag "Preview", id: "invitation_preview" %>
+  <div>
+    <%= f.label :invitation_preview_stylesheet, "Preview Stylesheet" %>
+    <%= f.text_field :invitation_preview_stylesheet %>
+  </div>
+  <p>
+    <em>{{accept}} {{reject}}</em> tags may be inserted into the html in the locations
+    where the accept and reject buttons should be placed.  These tags will be
+    substitued with the appropriate working buttons using the specified text
+    from the fields below.
+  </p>
+
+  <%= render "default_invitation_preview_style" %>
+
+  <div id='vocModal' aria-hidden='true' aria-labelledby='modalTitle'
+    aria-describedby='modalDescription' role='dialog' tabindex='-1'>
+    <input type="button" name="cancel" id="cancel" class="vocCancelButton top-right" value="X">
+    <p>
+      Would you like to take a survey?
+    </p>
+    <input type="button" name="vocEnter" id="vocEnter" value="<%= invitation_accept_button_text %>">
+    <input type="button" name="vocCancelButton" class="vocCancelButton" value="<%= invitation_reject_button_text %>">
+  </div>
+  <div id='vocModalOverlay'></div>
+</div>
+
+<div class="left_side">
+  <%= f.label :invitation_accept_button_text, "Invitation Accept Button Text: " %>
+</div>
+<div class="right_side">
+  <%= f.text_field :invitation_accept_button_text %>
+</div>
+<br />
+
+<div class="left_side">
+  <%= f.label :invitation_reject_button_text, "Invitation Reject Button Text: " %>
+</div>
+<div class="right_side">
+  <%= f.text_field :invitation_reject_button_text %>
+</div>
+<br/>
