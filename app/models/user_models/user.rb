@@ -16,9 +16,6 @@ class User < ActiveRecord::Base
   validates :email,  :presence => true
   validates :f_name, :presence => true
   validates :l_name, :presence => true
-  validates :hhs_id, :presence => true, numericality: {
-    only_integer: true
-  }, length: { is: 10 }
 
   before_save :set_fullname
 
