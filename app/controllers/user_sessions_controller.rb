@@ -7,9 +7,6 @@ class UserSessionsController < ApplicationController
   skip_before_filter :require_user, :only => [:new, :create, :reset_password, :do_pw_reset]
   before_filter :redirect_if_logged_in, :only => :new
 
-  before_filter :openam_login, only: :new
-  before_filter :openam_logout, only: :destroy
-
   # NEW comes from the OpenAM gem now!
   # GET    /user_sessions/new(.:format)
   def new
