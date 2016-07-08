@@ -40,15 +40,15 @@ module SurveyVersionHelper
       options_for_select(
         [["Next Page", ""]] +
         Page.where(:survey_version_id => page.survey_version_id)
-            .where("pages.page_number > ?", page.page_number + 1)
-            .order(:page_number).collect { |p| [ "Pg. #{p.page_number}", p.id ] },
-        page.next_page_id
-      ),
-      :include_blank => false,
-      :id => "next_page_#{page.page_number}",
-      :class => "NextPageSelect",
-      :name => "next_page",
-      "data-url" => survey_survey_version_page_path(page.survey_version.survey, page.survey_version, page)
+      .where("pages.page_number > ?", page.page_number + 1)
+      .order(:page_number).collect { |p| [ "Pg. #{p.page_number}", p.id ] },
+    page.next_page_id
+    ),
+    :include_blank => false,
+    :id => "next_page_#{page.page_number}",
+    :class => "NextPageSelect",
+    :name => "next_page",
+    "data-url" => survey_survey_version_page_path(page.survey_version.survey, page.survey_version, page)
     )
   end
 
@@ -102,10 +102,10 @@ module SurveyVersionHelper
     confirm_move_msg = "This action will remove the flow control from this question. Continue?"
 
     str = generate_element_move_up_link( up_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element),
-                                          confirm_element_move_up(element) ? confirm_move_msg : nil )
+                                        confirm_element_move_up(element) ? confirm_move_msg : nil )
 
     str += generate_element_move_down_link( down_survey_survey_version_survey_element_path(survey_version.survey, survey_version, element),
-                                            confirm_element_move_down(element) ? confirm_move_msg : nil )
+                                           confirm_element_move_down(element) ? confirm_move_msg : nil )
   end
 
   # Assembles a link for editing a question or other survey content.
@@ -154,11 +154,11 @@ module SurveyVersionHelper
   # @return [String] the link-wrapped image HTML
   def generate_page_up_arrow_link(url)
     link_to image_tag("arrow_up.png", :alt => "move up"),
-            url,
-            { :method => :post,
-              :remote => true,
-              :title => "Move this page up in presentation order.",
-              :class => "upLink" }
+      url,
+      { :method => :post,
+        :remote => true,
+        :title => "Move this page up in presentation order.",
+        :class => "upLink" }
   end
 
   # Create the page move down link.
@@ -167,11 +167,11 @@ module SurveyVersionHelper
   # @return [String] the link-wrapped image HTML
   def generate_page_down_arrow_link(url)
     link_to image_tag("arrow_down.png", :alt => "move down"),
-            url,
-            { :method => :post,
-              :remote => true,
-              :title => "Move this page down in presentation order.",
-              :class => "downLink" }
+      url,
+      { :method => :post,
+        :remote => true,
+        :title => "Move this page down in presentation order.",
+        :class => "downLink" }
   end
 
   # Create the page copy link.
@@ -180,11 +180,11 @@ module SurveyVersionHelper
   # @return [String] the HTML link
   def generate_page_copy_link(url)
     link_to image_tag("clone.png", :alt=>"Copy Page"),
-            url,
-            { :method => :post,
-              :remote => true,
-              :class => "copyLink",
-              :title => "Create a copy of this page." }
+      url,
+      { :method => :post,
+        :remote => true,
+        :class => "copyLink",
+        :title => "Create a copy of this page." }
   end
 
   # Create the page delete link.
@@ -195,15 +195,15 @@ module SurveyVersionHelper
     link_to image_tag('delete.png', :alt=>"Delete"),
       url,
       {
-        :method => :delete,
-        :remote => true,
-        :title => "Remove page",
-        :class=>"deleteLink",
-        :data => {
-          :confirm => "All items on page #{page_number} will be removed as well.",
-          :flow_control_target => target_of_flow_control
-        }
-      }
+      :method => :delete,
+      :remote => true,
+      :title => "Remove page",
+      :class=>"deleteLink",
+      :data => {
+      :confirm => "All items on page #{page_number} will be removed as well.",
+      :flow_control_target => target_of_flow_control
+    }
+    }
   end
 
   # Create the element edit link.
@@ -212,11 +212,11 @@ module SurveyVersionHelper
   # @return [String] the link-wrapped image HTML
   def generate_element_edit_link(url)
     link_to image_tag('edit.png', :alt=>"edit"),
-            url,
-            { :method => :get,
-              :remote => true,
-              :title => "Edit the questions and other survey content on the page.",
-              :class => "edit_asset_link" }
+      url,
+      { :method => :get,
+        :remote => true,
+        :title => "Edit the questions and other survey content on the page.",
+        :class => "edit_asset_link" }
   end
 
   # Create the element move up link.
@@ -226,12 +226,12 @@ module SurveyVersionHelper
   # @return [String] the link-wrapped image HTML
   def generate_element_move_up_link(url, confirm_move_msg)
     link_to image_tag("arrow_up.png", :alt => "move up"),
-            url,
-            { :method => :post,
-              :remote => true,
-              :title => "Move up",
-              :class => "element_order_up",
-              :confirm => confirm_move_msg }
+      url,
+      { :method => :post,
+        :remote => true,
+        :title => "Move up",
+        :class => "element_order_up",
+        :confirm => confirm_move_msg }
   end
 
   # Create the element move down link.
@@ -241,12 +241,12 @@ module SurveyVersionHelper
   # @return [String] the link-wrapped image HTML
   def generate_element_move_down_link(url, confirm_move_msg)
     link_to image_tag("arrow_down.png", :alt => "move down"),
-            url,
-            { :method => :post,
-              :remote => true,
-              :title => "Move down",
-              :class => "element_order_up",
-              :confirm => confirm_move_msg }
+      url,
+      { :method => :post,
+        :remote => true,
+        :title => "Move down",
+        :class => "element_order_up",
+        :confirm => confirm_move_msg }
   end
 
   # Create the element delete link.
@@ -260,12 +260,12 @@ module SurveyVersionHelper
     link_to image_tag("delete.png", :alt=>"Delete"),
       url,
       {
-        :method => :delete,
-        :remote => true,
-        :title => "Delete page element",
-        :class=>"deleteLink",
-        :data => { :confirm => msg }
-      }
+      :method => :delete,
+      :remote => true,
+      :title => "Delete page element",
+      :class=>"deleteLink",
+      :data => { :confirm => msg }
+    }
   end
 
   # Detects whether a question contains flow control and moving it up would
@@ -275,8 +275,8 @@ module SurveyVersionHelper
   # @return [Boolean] the evaluated value
   def confirm_element_move_up(element)
     element.assetable_type == "ChoiceQuestion" &&
-    element.assetable.question_content.flow_control &&
-    element.element_order == 1
+      element.assetable.question_content.flow_control &&
+      element.element_order == 1
   end
 
   # Detects whether a question contains flow control and moving it down would
@@ -286,38 +286,24 @@ module SurveyVersionHelper
   # @return [Boolean] the evaluated value
   def confirm_element_move_down(element)
     element.assetable_type == "ChoiceQuestion" &&
-    element.assetable.question_content.flow_control &&
-    element.element_order.to_i == element.page.survey_elements.maximum(:element_order).to_i
+      element.assetable.question_content.flow_control &&
+      element.element_order.to_i == element.page.survey_elements.maximum(:element_order).to_i
   end
 
-<<<<<<< HEAD
-  # Checks if the question being deleted is referenced by rules for other 
-  # questions (more specifically, the actions of those rules). Returns
-  # a warning message string if so.  
-=======
   # Checks if the question being deleted is referenced by rules for other
   # questions (more specifically, the actions of those rules). Returns
   # a warning message string if so.
->>>>>>> hhs-voc/develop
   #
   # @param [SurveyElement] element the SurveyElement instance
   # @return [String] the warning message, or empty string
   def rule_deletion_warning(element)
     msg = ""
-<<<<<<< HEAD
-    if element.assetable_type == "ChoiceQuestion" || element.assetable_type == "TextQuestion" 
-=======
     if element.assetable_type == "ChoiceQuestion" || element.assetable_type == "TextQuestion"
->>>>>>> hhs-voc/develop
       qc = Object.const_get(element.assetable_type).find_by_id(element.assetable_id).question_content
       Action.where("value LIKE ?", qc.id).each do |a|
         if a.rule.name != qc.statement
           #msg += "\n* " + edit_survey_survey_version_rule_url(a.rule.survey_version.survey.id, a.rule.survey_version.id, a.rule.id)
-<<<<<<< HEAD
-          msg += "\n* " + a.rule.name      
-=======
           msg += "\n* " + a.rule.name
->>>>>>> hhs-voc/develop
         end
       end
     elsif element.assetable_type == "MatrixQuestion"
@@ -329,18 +315,6 @@ module SurveyVersionHelper
         qc = QuestionContent.find_by_id(q)
         Action.where("value LIKE ?", q).each do |a|
           if !a.rule.name.include?(qc.statement)
-<<<<<<< HEAD
-            msg += "\n* " + a.rule.name                  
-          end      
-        end
-      end 
-    end
-    if !msg.empty?
-      msg = "Rules referencing this question will also be DELETED. Would you like to proceed? \n\n Affected rules: \n " + msg
-    end    
-    return msg
-  end   
-=======
             msg += "\n* " + a.rule.name
           end
         end
@@ -351,5 +325,4 @@ module SurveyVersionHelper
     end
     return msg
   end
->>>>>>> hhs-voc/develop
 end
