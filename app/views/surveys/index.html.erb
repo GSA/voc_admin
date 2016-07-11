@@ -20,6 +20,7 @@
   <tr>
     <th class="col1" scope="col">Edit</th>
     <th class="col2" scope="col">Ver.</th>
+    <th scope="col">Reports</th>
     <th class="col3" scope="col"><%= sortable "Survey" %> <span class="notation">(click to view responses)</span></th>
     <th class="col4" scope="col">Description</th>
     <th class="col5" scope="col">Type</th>
@@ -31,6 +32,7 @@
   <tr class="<%= cycle('gray','white') %>">
     <td class="col1"><%= link_to image_tag('edit.png', :alt=>"edit"), edit_survey_path(survey) %></td>
     <td class="col2"><%= link_to image_tag('version.png', :alt=>"view versions"), survey_survey_versions_path(survey)%></td>
+    <td><%= get_reporting_link(survey, survey.published_version || survey.newest_version) %></td>
     <td class="col3"><%= link_to survey.name, survey_responses_path(:survey_version_id => survey.published_version.try(:id) || survey.survey_versions.last.id, :survey_id => survey.id) %></td>
     <td class="col4"><%= truncate survey.description, length: 255, separator: ' ' %></td>
     <td class="col5"><%= survey.survey_type.name.titleize %></td>
