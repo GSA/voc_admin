@@ -85,18 +85,18 @@ CommentToolApp::Application.routes.draw do
 
       # Reporting routes, currently disabled for HHS:
       # ---------------------------------------------
-      # get :reporting, :on => :member
-      # resources :dashboards
-      # get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
-      # resources :reports do
-      #   resources :recurring_reports, :except => :show
-      #   member do
-      #     post :email_csv
-      #     post :email_pdf
-      #     get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
-      #   end
-      # end
-      # get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
+       get :reporting, :on => :member
+       resources :dashboards
+       get "/dashboards/pdf/:id(.:format)" => "dashboards#pdf", :as => "pdf_dashboard"
+       resources :reports do
+         resources :recurring_reports, :except => :show
+         member do
+           post :email_csv
+           post :email_pdf
+           get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
+         end
+       end
+       get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
     end
   end
 
