@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
     :password_confirmation, :site_ids, :role_id, :username, :fullname,
     :organization_id
 
-  attr_accessor :first_name, :last_name
+  attr_accessor :first_name, :last_name, :password_confirmation
 
   has_many :site_users
   has_many :sites,      :through => :site_users
