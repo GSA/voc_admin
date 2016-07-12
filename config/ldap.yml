@@ -1,0 +1,26 @@
+development:
+  host: <%= ENV['LDAP_HOST'] %>
+  port: <%= ENV['LDAP_PORT'] %>
+  base: <%= ENV['LDAP_BASE'] %>
+  uid_name: <%= ENV['LDAP_UID_NAME'] %>
+  user_group: <%= ENV['LDAP_USER_GROUP'] %>
+  admin_user: <%= ENV['LDAP_ADMIN_USER'] %>
+  admin_pass: <%= ENV['LDAP_ADMIN_PASS'] %>
+
+test:
+  host: <%= ENV['LDAP_HOST'] %>
+  port: <%= ENV['LDAP_PORT'] %>
+  base: <%= ENV['LDAP_BASE'] %>
+  uid_name: <%= ENV['LDAP_UID_NAME'] %>
+  user_group: <%= ENV['LDAP_USER_GROUP'] %>
+  admin_user: <%= ENV['LDAP_ADMIN_USER'] %>
+  admin_pass: <%= ENV['LDAP_ADMIN_PASS'] %>
+
+production:
+  host: <%= ENV['LDAP_HOST'] %>
+  port: <%= ENV['LDAP_PORT'] %>
+  base: <%= ENV['LDAP_BASE'] %>
+  uid_name: <%= ENV['LDAP_UID_NAME'] %>
+  user_group: <%= ENV['LDAP_USER_GROUP'] %>
+  admin_user: <%= ENV['LDAP_ADMIN_USER'] %>
+  admin_pass: <%= ENV['LDAP_ADMIN_PASS'] %>

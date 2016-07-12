@@ -1,0 +1,127 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+  mongo:
+    image: mongo:2.6
+    command: --smallfiles
+    ports:
+      - "27017:27017"
+  redis:
+    image: redis:3.0
+    ports:
+      - "6379:6379"
+  admin:
+    build:
+      context: .
+      dockerfile: docker/admin-service/Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    entrypoint: ./development.sh
+    env_file: ./.env
+    ports:
+      - "80:80"
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: 173024e489c10d4d4ae2b573eda1ca55a5057943d087c3147a71d9fb201c8249197bf5f9cd34b2f2be10561f6e3334b589b0ff225009c8c9e9011d508a90f8d4
+  public:
+    build:
+      context: ../gsa_comment_tool_public
+      dockerfile: Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    entrypoint: ./development.sh
+    env_file: ./.env
+    ports:
+      - "8080:8080"
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: 2dae529320f622ab8a7501f899aab112b000748a6060959d26fdc0146aed1dc2cc7ba52712542cfddfb9064218ce052d754f22150785dd09566ea7201a061f80
+  admin_worker:
+    build:
+      context: .
+      dockerfile: docker/admin-worker-service/Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    env_file: ./.env
+    entrypoint: ./wait-for-it.sh -t 0 admin:80 -- bundle exec rake resque:work
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: 6f1d70d3424620e9007f62d2a8ee3d023b728ae15e57035de9f026e4874ba80d9b8968b1cd3321e58f4fb04aac07f8fee9b7ea543b305240dea6814e6ecec3ca
+    volumes:
+      - ./tmp:/voc/tmp
+  export_worker:
+    build:
+      context: .
+      dockerfile: docker/export-worker-service/Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    env_file: ./.env
+    entrypoint: ./wait-for-it.sh -t 0 admin:80 -- bundle exec rake resque:work
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: 77cc973baa7f9b0117893d937fba7da55d509f986dce189fe47f5b0e998a0ece5f087d5df6a662a57247b6dcea8ab775b90dec4db563e56877f65af18ace4b09
+    volumes:
+      - ./tmp:/voc/tmp
+  response_worker:
+    build:
+      context: .
+      dockerfile: docker/response-worker-service/Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    env_file: ./.env
+    entrypoint: ./wait-for-it.sh -t 0 admin:80 -- bundle exec rake resque:work
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: f60647f854940b2c60b69675b8727a037a9fc830d4b561b8f5d656979a8c2a4e04eef80fb4a5e465f66a1b4121b6c1c94ffb804e523650f093da36eb42e8efa9
+  nightly_worker:
+    build:
+      context: .
+      dockerfile: docker/nightly-worker-service/Dockerfile
+      args:
+        # build-time ENV parameters
+        RAILS_ENV: development
+    depends_on:
+      - mysql
+      - mongo
+      - redis
+    env_file: ./.env
+    entrypoint: ./wait-for-it.sh -t 0 admin:80 -- bundle exec rake reporting:daily
+    environment:
+      # runtime ENV parameters
+      RAILS_ENV: development
+      RAILS_COOKIE_TOKEN: f60647f854940b2c60b69675b8727a037a9fc830d4b561b8f5d656979a8c2a4e04eef80fb4a5e465f66a1b4121b6c1c94ffb804e523650f093da36eb42e8efa9

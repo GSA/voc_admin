@@ -34,15 +34,8 @@ namespace :resque do
     Resque.before_fork = Proc.new {
       ActiveRecord::Base.establish_connection
 
-      # Open the new separate log file
-      logfile = File.open(File.join(Rails.root, 'log', 'resque.log'), 'a')
-
-      # Activate file synchronization
-      logfile.sync = true
-
-      # Create a new buffered logger
-      Resque.logger = ActiveSupport::Logger.new(logfile)
-      Resque.logger.level = Logger::WARN
+      Resque.logger = Logger.new($stdout)
+      Resque.logger.level = Logger::INFO
     }
   end
 

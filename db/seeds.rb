@@ -68,7 +68,9 @@ print "Creating user: sysadmin@YOURCOMPANYURL.com..."
 User.find_or_create_by_email("sysadmin@YOURCOMPANYURL.com") do |user|
   user.f_name = "System"
   user.l_name = "Administrator"
-  user.hhs_id = "2100000000"
+  user.username = "admin"
+  user.password = "password"
+  #user.password_confirmation = "password"
   user.role_id = Role.find_by_name("Admin").id
 end
 puts "done"

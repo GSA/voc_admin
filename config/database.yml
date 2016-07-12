@@ -7,12 +7,13 @@
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
   adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: comment_tool_app_development
+  host:     <%= ENV['MYSQL_DB_HOST'] %>
+  port:     <%= ENV['MYSQL_DB_PORT'] %>
+  database: <%= ENV['MYSQL_DB_NAME'] %>
+  username: <%= ENV['MYSQL_DB_USER'] %>
+  password: <%= ENV['MYSQL_DB_PASS'] %>
   pool: 5
-  username: root
-  password:
+  timeout: 5000
 #  socket: /opt/local/var/run/mysql5/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -20,20 +21,22 @@ development:
 # Do not set this db to the same as development or production.
 test:
   adapter: mysql2
-  encoding: utf8
-  reconnect: false
+  host:     <%= ENV['MYSQL_DB_HOST'] %>
+  port:     <%= ENV['MYSQL_DB_PORT'] %>
   database: comment_tool_app_test
+  username: <%= ENV['MYSQL_DB_USER'] %>
+  password: <%= ENV['MYSQL_DB_PASS'] %>
   pool: 5
-  username: root
-  password:
+  timeout: 5000
   #socket: /opt/local/var/run/mysql5/mysqld.sock
 
 production:
   adapter: mysql2
-  encoding: utf8
-  reconnect: false
-  database: comment_tool_app_production
+  host:     <%= ENV['MYSQL_DB_HOST'] %>
+  port:     <%= ENV['MYSQL_DB_PORT'] %>
+  database: <%= ENV['MYSQL_DB_NAME'] %>
+  username: <%= ENV['MYSQL_DB_USER'] %>
+  password: <%= ENV['MYSQL_DB_PASS'] %>
   pool: 5
-  username: root
-  password:
+  timeout: 5000
   #socket: /opt/local/var/run/mysql5/mysqld.sock

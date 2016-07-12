@@ -57,5 +57,11 @@ module CommentToolApp
     # Required configuration for the asset pipeline
     config.assets.enabled = true
     config.assets.version = '1.0'
+    # Added by Jake, 7/5/2016: tag logging for Docker
+    config.log_level = :debug
+    config.log_tags  = [:subdomain, :uuid]
+
+    # RAILS 3.2+:
+    # config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   end
 end

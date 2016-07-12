@@ -23,7 +23,9 @@
 #   file_settings: { :location: <directory to write emails> }
 
 begin
-  MailConfig = YAML.load_file("#{Rails.root}/config/mailer_settings.yml")[Rails.env]
+  require 'yaml_erb_loader'
+
+  MailConfig = YamlErbLoader.load_from_config("#{Rails.root}/config/mailer_settings.yml")[Rails.env]
 
   unless MailConfig.blank?
     MailConfig.each_pair do |key, value|
