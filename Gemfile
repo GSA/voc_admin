@@ -35,6 +35,7 @@ gem 'test-unit'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier', '>= 1.0.3'
+gem 'therubyracer'
 
 gem "rails-observers"
 
@@ -44,6 +45,8 @@ gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
 
 # Add attr_accessible back so we can slowly convert to strong parameters
 gem "protected_attributes"
+
+gem "dotenv-rails"
 
 group :development do
   gem 'annotate'
