@@ -15,6 +15,12 @@ services:
     image: redis:3.0
     ports:
       - "6379:6379"
+  elasticsearch:
+    image: elasticsearch:2.3
+    command: elasticsearch -Des.network.host=0.0.0.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   admin:
     build:
       context: .
@@ -23,6 +29,7 @@ services:
         # build-time ENV parameters
         RAILS_ENV: development
     depends_on:
+      - elasticsearch
       - mysql
       - mongo
       - redis
