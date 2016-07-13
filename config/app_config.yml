@@ -10,6 +10,8 @@ development:
   admin_host: <%= ENV['APP_ADMIN_HOST_PORT'] %>
   redis: <%= ENV['REDIS_HOST_PORT'] %>
   redis-expire: <%= ENV['REDIS_EXPIRE'] %>
+  elasticsearch_hosts: <%= ENV['ELASTICSEARCH_HOST'] %>
+  elasticsearch_port: <%= ENV['ELASTICSEARCH_PORT'] %>
 #  branding:		# optional block, defaults shown
 #    css-filename: application        # (minus the .css extension)
 #    header-layout: voc_header
