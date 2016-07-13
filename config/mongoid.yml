@@ -1,22 +1,31 @@
 development:
-  host: <%= ENV['MONGO_DB_HOST'] %>
-  database: <%= ENV['MONGO_DB_NAME'] %>
-  logger: false
+  clients:
+    default:
+      hosts:
+        - <%= ENV['MONGO_DB_HOST'] %>
+      database: <%= ENV['MONGO_DB_NAME'] %>
+      logger: false
 
 test:
-  host: <%= ENV['MONGO_DB_HOST'] %>
-  database: comment_tool_reporting_test
-  logger: false
+  clients:
+    default:
+      hosts:
+        - <%= ENV['MONGO_DB_HOST'] %>
+      database: comment_tool_reporting_test
+      logger: false
 
 # set these environment variables on your prod server
 production:
-  host: <%= ENV['MONGO_DB_HOST'] %>
-  port: <%= ENV['MONGO_DB_PORT'] %>
-  database: <%= ENV['MONGO_DB_NAME'] %>
-  username: <%= ENV['MONGO_DB_USER'] %>
-  password: <%= ENV['MONGO_DB_PASS'] %>
-  # slaves:
-  #   - host: slave1.local
-  #     port: 27018
-  #   - host: slave2.local
-  #     port: 27019
+  clients:
+    default:
+      hosts:
+        - <%= ENV['MONGO_DB_HOST'] %>
+      port: <%= ENV['MONGO_DB_PORT'] %>
+      database: <%= ENV['MONGO_DB_NAME'] %>
+      username: <%= ENV['MONGO_DB_USER'] %>
+      password: <%= ENV['MONGO_DB_PASS'] %>
+      # slaves:
+      #   - host: slave1.local
+      #     port: 27018
+      #   - host: slave2.local
+      #     port: 27019
