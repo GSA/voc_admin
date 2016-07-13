@@ -12,3 +12,4 @@ yard/
 Brewfile
 sync_uploads.sh
 war_*.*
+.env.local
