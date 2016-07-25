@@ -4,6 +4,8 @@ services:
     image: mysql:5.6
     ports:
       - "3306:3306"
+    volumes:
+      - ./database/mysql:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
   mongo:
