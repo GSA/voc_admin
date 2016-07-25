@@ -12,3 +12,4 @@ log/
 mails/
 vendor/cache/
 tmp/
+database/
