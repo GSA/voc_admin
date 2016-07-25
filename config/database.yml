@@ -23,7 +23,7 @@ test:
   adapter: mysql2
   host:     <%= ENV['MYSQL_DB_HOST'] %>
   port:     <%= ENV['MYSQL_DB_PORT'] %>
-  database: comment_tool_app_test
+  database: gsa_voc_test
   username: <%= ENV['MYSQL_DB_USER'] %>
   password: <%= ENV['MYSQL_DB_PASS'] %>
   pool: 5

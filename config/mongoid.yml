@@ -11,7 +11,7 @@ test:
     default:
       hosts:
         - <%= ENV['MONGO_DB_HOST'] %>
-      database: comment_tool_reporting_test
+      database: gsa_voc_reporting_test
       logger: false
 
 # set these environment variables on your prod server
