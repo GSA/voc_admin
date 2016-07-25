@@ -17,7 +17,7 @@ class ReportableSurveyResponse
   field :answers, type: Hash
   field :archived, type: Boolean, default: false
 
-  default_scope where(:archived => false)
+  default_scope -> { where(:archived => false) }
 
   def elastic_search_persist
     ElasticSearchResponse.create!(self)

@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   validates :email,  :presence => true
   validates :f_name, :presence => true
   validates :l_name, :presence => true
+  validates :username, presence: true
 
   before_save :set_fullname
 
@@ -64,7 +65,6 @@ class User < ActiveRecord::Base
   protected
 
   def valid_ldap_credentials?(password)
-    puts "checking user"
     ldap = Ldap.new(self.username,password)
     if ldap.valid_connection?
       return ldap.valid_user?
