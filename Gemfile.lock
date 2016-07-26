@@ -35,6 +35,11 @@ GEM
       activesupport (>= 3.2)
       request_store (~> 1.0)
       scrypt (>= 1.2, < 3.0)
+    aws-sdk (1.66.0)
+      aws-sdk-v1 (= 1.66.0)
+    aws-sdk-v1 (1.66.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     best_in_place (3.1.0)
       actionpack (>= 3.2)
       railties (>= 3.2)
@@ -338,6 +343,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   authlogic
+  aws-sdk (< 2.0)
   best_in_place
   better_errors
   binding_of_caller

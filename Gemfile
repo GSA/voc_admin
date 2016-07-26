@@ -11,8 +11,9 @@ gem 'delayed_job_active_record'
 gem 'authlogic'
 gem 'net-ldap'
 gem 'memcache-client'
-gem 'paperclip'
 gem 'daemons', :require => false
+gem 'paperclip'
+gem 'aws-sdk', '< 2.0'
 
 gem 'resque_mailer'
 gem 'resque-status'
