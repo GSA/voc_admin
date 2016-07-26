@@ -11,7 +11,7 @@ class ExportsController < ApplicationController
     @export_file = Export.active.find_by_access_token params[:id]
 
     if @export_file
-      send_file @export_file.document.path, :type => @export_file.document_content_type, :disposition => 'attachment', :filename => @export_file.document_file_name
+      redirect_to @export_file.document.url
     else
       raise ActiveRecord::RecordNotFound
     end
