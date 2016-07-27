@@ -9,6 +9,7 @@ class Ldap
   end
 
   def valid_connection?
+    return true if ENV.fetch("SKIP_LDAP_AUTHENTICATION") == "true"
     unless @ldap.bind
       Rails.logger.fatal "Unable to authenticate LDAP service account #{LDAP_CONFIG['service_user']}"
       return false
@@ -18,6 +19,7 @@ class Ldap
   end
 
   def valid_user?
+    return true if ENV.fetch('SKIP_LDAP_AUTHENTICATION') == 'true'
     # search ldap based on given username. this is because different
     # ldap methods store it other ways. openldap = uid, ad = sAMAccountName
     filter =Net::LDAP::Filter.eq("#{LDAP_CONFIG['uid_name']}", username)
@@ -41,6 +43,7 @@ class Ldap
   protected
 
   def authenticate_admin!
+    return User.find_by_username(username).admin? if ENV.fetch('SKIP_LDAP_AUTHENTICATION') == 'true'
     # create an administrator connection to LDAP
     @ldap = Net::LDAP.new(:host => "#{LDAP_CONFIG['host']}",
       :port => "#{LDAP_CONFIG['port']}")
