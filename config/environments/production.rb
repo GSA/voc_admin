@@ -1,6 +1,14 @@
 CommentToolApp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-  #
+
+  # Paperclip S3 configuration
+  config.paperclip_defaults = {
+    storage: :s3,
+    bucket: ENV.fetch('S3_BUCKET_NAME'),
+    path: "#{ENV.fetch('S3_PATH_PREFIX')}/:filename",
+    s3_permissions: :private
+  }
+
   config.eager_load = true
 
   # Asset pipeline configuration

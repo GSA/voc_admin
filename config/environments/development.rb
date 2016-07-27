@@ -1,6 +1,21 @@
 CommentToolApp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Paperclip S3 configuration.
+  # Uncomment this section to use s3 in development
+  #  config.paperclip_defaults = {
+  #    storage: :s3,
+  #    bucket: ENV.fetch('S3_BUCKET_NAME'),
+  #    path: "#{ENV.fetch('S3_PATH_PREFIX')}/:filename",
+  #    s3_permissions: :private
+  #  }
+
+  # Comment out this section if using S3 to store files
+  config.paperclip_defaults = {
+    :path => ":rails_root/exports/:filename",
+    :url  => "/exports/:access_token/download"
+  }
+
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the webserver when you make code changes.

@@ -4,12 +4,8 @@
 class Export < ActiveRecord::Base
   belongs_to :survey_version
   # S3 credentials are read from config/aws.yml
-  has_attached_file :document,
-    storage: :s3,
-    bucket: ENV.fetch('S3_BUCKET_NAME'),
-    processors: [],
-    path: "/sandbox/:filename",
-    s3_permissions: :private
+  # S3 configuration options are set in environments/production.rb
+  has_attached_file :document, processors: []
 
   before_validation :generate_access_token
 
