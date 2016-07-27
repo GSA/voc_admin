@@ -3,9 +3,13 @@
 # Defines a SurveyResponse CSV data Export file.
 class Export < ActiveRecord::Base
   belongs_to :survey_version
+  # S3 credentials are read from config/aws.yml
   has_attached_file :document,
-                    :processors => [],
-                    :path => "/:filename"
+    storage: :s3,
+    bucket: ENV.fetch('S3_BUCKET_NAME'),
+    processors: [],
+    path: "/sandbox/:filename",
+    s3_permissions: :private
 
   before_validation :generate_access_token
 
