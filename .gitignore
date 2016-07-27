@@ -13,3 +13,4 @@ mails/
 vendor/cache/
 tmp/
 database/
+.env.local
