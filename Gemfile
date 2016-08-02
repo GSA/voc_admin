@@ -7,6 +7,7 @@ gem 'rails', '4.0.13'
 
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'kaminari-mongoid'
 gem 'delayed_job_active_record'
 gem 'authlogic'
 gem 'net-ldap'

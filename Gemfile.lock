@@ -139,6 +139,8 @@ GEM
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kaminari-mongoid (0.1.2)
+      kaminari
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -361,6 +363,7 @@ DEPENDENCIES
   httparty
   jquery-rails
   kaminari
+  kaminari-mongoid
   launchy
   memcache-client
   mongoid (~> 5.0)

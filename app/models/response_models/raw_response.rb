@@ -20,7 +20,7 @@ class RawResponse < ActiveRecord::Base
   scope :status_processing, -> { where(:status_id => Status::PROCESSING) }
   scope :status_error, -> { where(:status_id => Status::ERROR) }
 
-  scope :not_archived, joins(:survey_response).where('survey_responses.archived = 0')
+  scope :not_archived, -> { joins(:survey_response).where('survey_responses.archived = 0') }
 
   # Allows Question types to handle the parsing of answers.
   #
