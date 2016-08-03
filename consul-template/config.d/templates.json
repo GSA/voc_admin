@@ -1,0 +1,5 @@
+template {
+  source = "/consul-template/templates/dotenv.ctmpl"
+  destination = "/.env"
+  command = "unicorn -c /config/unicorn.rb"
+}
