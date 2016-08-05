@@ -16,10 +16,14 @@ class SurveyVersion < ActiveRecord::Base
   has_many :pages,           :dependent => :destroy
   has_many :survey_elements, :dependent => :destroy
 
-  has_many :text_questions,     :through => :survey_elements, :source => :assetable, :source_type => "TextQuestion",    :dependent => :destroy
-  has_many :choice_questions,   :through => :survey_elements, :source => :assetable, :source_type => "ChoiceQuestion",  :dependent => :destroy
-  has_many :assets,             :through => :survey_elements, :source => :assetable, :source_type => "Asset",           :dependent => :destroy
-  has_many :matrix_questions,   :through => :survey_elements, :source => :assetable, :source_type => "MatrixQuestion",  :dependent => :destroy
+  has_many :text_questions, :through => :survey_elements, :source => :assetable,
+    :source_type => "TextQuestion",    :dependent => :destroy
+  has_many :choice_questions, :through => :survey_elements, :source => :assetable,
+    :source_type => "ChoiceQuestion",  :dependent => :destroy
+  has_many :assets, :through => :survey_elements, :source => :assetable,
+    :source_type => "Asset", :dependent => :destroy
+  has_many :matrix_questions, :through => :survey_elements, :source => :assetable,
+    :source_type => "MatrixQuestion",  :dependent => :destroy
 
   has_many :rules,            :dependent => :destroy
   has_many :display_fields,   :dependent => :destroy
@@ -31,12 +35,15 @@ class SurveyVersion < ActiveRecord::Base
   has_many :survey_version_counts,    :dependent => :destroy
   has_many :exports
 
-  attr_accessible :major, :minor, :notes, :survey_attributes, :version_number, :survey, :thank_you_page, :created_by_id
+  attr_accessible :major, :minor, :notes, :survey_attributes, :version_number,
+    :survey, :thank_you_page, :created_by_id
 
   accepts_nested_attributes_for :survey
 
-  validates :major, :presence => true, :numericality => true, :uniqueness => {:scope => [:survey_id, :minor]}
-  validates :minor, :presence => true, :numericality => true, :uniqueness => {:scope => [:survey_id, :major]}
+  validates :major, :presence => true, :numericality => true,
+    :uniqueness => {:scope => [:survey_id, :minor]}
+  validates :minor, :presence => true, :numericality => true,
+    :uniqueness => {:scope => [:survey_id, :major]}
   validates :notes, :length => {:maximum => 65535}
   validates :survey, :presence => true
 
@@ -69,15 +76,18 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def total_temp_visit_count
-    @total_temp_visit_count ||= temp_visit_count.values.inject(0) {|result, element| result + element.to_i}
+    @total_temp_visit_count ||= temp_visit_count.values
+      .inject(0) {|result, element| result + element.to_i}
   end
 
   def total_temp_invitation_count
-    @total_temp_invitation_count ||= temp_invitation_count.values.inject(0) {|result, element| result + element.to_i}
+    @total_temp_invitation_count ||= temp_invitation_count.values
+      .inject(0) {|result, element| result + element.to_i}
   end
 
   def total_temp_invitation_accepted_count
-    @total_temp_invitation_accepted_count ||= temp_invitation_accepted_count.values.inject(0) {|result, element| result + element.to_i}
+    @total_temp_invitation_accepted_count ||= temp_invitation_accepted_count
+      .values.inject(0) {|result, element| result + element.to_i}
   end
 
   def total_visit_count
@@ -85,11 +95,13 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def total_invitation_count
-    @total_invitation_count ||= survey_version_counts.sum(:invitations) + total_temp_invitation_count
+    @total_invitation_count ||= survey_version_counts
+      .sum(:invitations) + total_temp_invitation_count
   end
 
   def total_invitation_accepted_count
-    @total_invitation_accepted_count ||= survey_version_counts.sum(:invitations_accepted) + total_temp_invitation_accepted_count
+    @total_invitation_accepted_count ||= survey_version_counts
+      .sum(:invitations_accepted) + total_temp_invitation_accepted_count
   end
 
   def total_questions_asked
@@ -145,7 +157,9 @@ class SurveyVersion < ActiveRecord::Base
   #
   # @return [Array<SurveyElement>] array containing all the question survey elements
   def question_elements
-    self.survey_elements.where("assetable_type in (?)", %w(TextQuestion ChoiceQuestion MatrixQuestion)).order("element_order asc")
+    self.survey_elements
+      .where("assetable_type in (?)", %w(TextQuestion ChoiceQuestion MatrixQuestion))
+      .order("element_order asc")
   end
 
   # Returns a collection of Assetable questions.
@@ -157,29 +171,48 @@ class SurveyVersion < ActiveRecord::Base
 
   # Get all the available question content ids for the survey version for use as Rule sources.
   #
-  # @return [Array<Array<String, String>>] array of available question id and display text pair arrays for use as Rule sources
+  # @return [Array<Array<String, String>>] array of available question id and 
+  # display text pair arrays for use as Rule sources
   def sources
     source_array = []
     self.questions.each do |q|
       if q.class == MatrixQuestion
-        q.choice_questions.each {|cq| source_array << ["#{cq.question_content.id},QuestionContent", "#{q.question_content.statement}: #{cq.question_content.statement}(matrix answer)"]}
+        q.choice_questions.each { |cq| 
+          source_array << [
+            "#{cq.question_content.id},QuestionContent",
+            "#{q.question_content.statement}: #{cq.question_content.statement}(matrix answer)"
+          ]
+        }
       else
-        source_array << ["#{q.question_content.id},QuestionContent", "#{q.question_content.statement}(Question)"]
+        source_array << [
+          "#{q.question_content.id},QuestionContent",
+          "#{q.question_content.statement}(Question)"
+        ]
       end
     end
     source_array
   end
 
-  # Used to present available question content ids for the survey version for use as Rule DB action targets.
+  # Used to present available question content ids for the survey version for use 
+  # as Rule DB action targets.
   #
-  # @return [Array<Array<String, String>>] an array of available question display text and id pair arrays for use as action targets
+  # @return [Array<Array<String, String>>] an array of available question display 
+  # text and id pair arrays for use as action targets
   def options_for_action_select
     source_array = []
     self.questions.each do |q|
       if q.class == MatrixQuestion
-        q.choice_questions.each {|cq| source_array << ["#{q.question_content.statement}: #{cq.question_content.statement} response", "#{cq.question_content.id}"]}
+        q.choice_questions.each { |cq| 
+          source_array << [
+            "#{q.question_content.statement}: #{cq.question_content.statement} response",
+            "#{cq.question_content.id}"
+          ]
+        }
       else
-        source_array << ["#{q.question_content.statement} response", "#{q.question_content.id}"]
+        source_array << [
+          "#{q.question_content.statement} response",
+          "#{q.question_content.id}"
+        ]
       end
     end
     source_array
@@ -233,7 +266,8 @@ class SurveyVersion < ActiveRecord::Base
   # All Pages, SurveyElements, DisplayFields, and Rules will be cloned into the new
   # SurveyVersion.
   #
-  # @return [SurveyVersion] a new minor version of the SurveyVersion which is an exact copy of the cloned SurveyVersion
+  # @return [SurveyVersion] a new minor version of the SurveyVersion which is an
+  # exact copy of the cloned SurveyVersion
   def clone_me(created_by_id = nil)
     ActiveRecord::Base.transaction do
       survey = self.survey
@@ -259,8 +293,16 @@ class SurveyVersion < ActiveRecord::Base
       end
 
       # Fix the next_page_ids for page level flow control
-      new_sv.pages.where("pages.next_page_id is not null").to_a.select {|page| page.next_page.survey_version_id != new_sv.id}.each do |page|
-        page.update_attributes(:next_page_id => new_sv.pages.find_by_clone_of_id(page.next_page_id).try(:id)) # Use try so that if something goes wrong and you can't find the correct page it will just blank out the flow control
+      # Use try so that if something goes wrong and you can't find the correct 
+      # page it will just blank out the flow control
+      flow_control_pages = new_sv.pages.where("pages.next_page_id is not null").to_a
+      pages_pointing_to_old_survey = flow_control_pages.select {|page| 
+        page.next_page.survey_version_id != new_sv.id
+      }
+      pages_pointing_to_old_survey.each do |page|
+        page.update_attributes(
+          next_page_id: new_sv.pages.find_by_clone_of_id(page.next_page_id).try(:id)
+        )
       end
 
       new_sv
@@ -307,14 +349,22 @@ class SurveyVersion < ActiveRecord::Base
     pages.each do |page|
       questions = []
       page.survey_elements.questions.each do |element|
-        element.assetable.reload # for some reason this is necessary to get some question content
+        # for some reason this is necessary to get some question content
+        element.assetable.reload
         if element.assetable_type == "MatrixQuestion"
-          element.assetable.choice_questions.each {|cq| questions << question_hash(cq, true)}
+          element.assetable.choice_questions.each do |cq|
+            questions << question_hash(cq, true)
+          end
         else
           questions << question_hash(element.assetable)
         end
       end
-      @page_hash[page.id] = {page_id: page.id, page_number: page.page_number, next_page_id: page.next_page.try(:id), questions: questions}
+      @page_hash[page.id] = {
+        page_id: page.id,
+        page_number: page.page_number,
+        next_page_id: page.next_page.try(:id),
+        questions: questions
+      }
     end
     @page_hash
   end
@@ -328,8 +378,10 @@ class SurveyVersion < ActiveRecord::Base
   end
 
   def run_rules_for_display_field(display_field)
-    rules.includes(:actions).where(actions: { display_field_id: display_field.id })
-        .each do |rule|
+    df_rules = rules.includes(:actions).where(
+      actions: { display_field_id: display_field.id }
+    )
+    df_rules.each do |rule|
       RuleJob.create id: rule.id
     end
   end
@@ -349,14 +401,21 @@ class SurveyVersion < ActiveRecord::Base
       survey_id: survey_id, major: major, minor: minor,
       published: published, locked: locked, archived: archived,
       notes: notes, created_at: created_at, updated_at: updated_at,
-      thank_you_page: thank_you_page, pages: pages.map(&:describe_me)}.reject {|k, v| v.blank? }
+      thank_you_page: thank_you_page,
+      pages: pages.map(&:describe_me)
+    }.reject {|k, v| v.blank? }
   end
 
   # hash of question used by pages_for_survey_version
   def question_hash(question, matrix_question = false)
     qc = question.question_content
     questionable_type = matrix_question ? "MatrixChoiceQuestion" : qc.questionable_type
-    hash = {qc_id: qc.id, questionable_type: questionable_type, questionable_id: qc.questionable_id, flow_control: qc.flow_control?}
+    hash = {
+      qc_id: qc.id,
+      questionable_type: questionable_type,
+      questionable_id: qc.questionable_id,
+      flow_control: qc.flow_control?
+    }
     if qc.flow_control?
       hash[:flow_map] = Hash[question.choice_answers.map {|ca| [ca.id.to_s, ca.next_page_id]}]
     end
