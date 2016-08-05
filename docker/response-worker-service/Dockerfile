@@ -9,6 +9,7 @@ WORKDIR $APP_HOME
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   git \
+  zip unzip \
   qt5-default \
   libqt5webkit5-dev \
   gstreamer1.0-plugins-base \
@@ -24,6 +25,7 @@ ADD Gemfile* $APP_HOME/
 RUN bundle install
 
 ADD . $APP_HOME
+RUN mkdir log
 
 EXPOSE 80
 
