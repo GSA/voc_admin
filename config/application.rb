@@ -61,7 +61,5 @@ module CommentToolApp
     config.log_level = :debug
     config.log_tags  = [:subdomain, :uuid]
 
-    # RAILS 3.2+:
-    config.logger    = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
   end
 end
