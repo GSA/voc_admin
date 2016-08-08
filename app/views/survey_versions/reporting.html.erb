@@ -3,68 +3,68 @@
 <%= flash_messages(flash) %>
 
 <div id="showpage" class="report-showpage">
-	<div class="left_side">
-		Survey:
-	</div>
-	<div class="right_side">
-		<p class="blue"><%= @survey.name.titleize %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Version:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= @survey_version.version_number%></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Visits:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@survey_version.total_visit_count) %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Invitations:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@survey_version.total_invitation_count) %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Invitations Accepted:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@survey_version.total_invitation_accepted_count) %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Responses<%= " After #{(@first_count_date - 1.day).to_s(:text_field)}"unless @first_count_date.nil? %>:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@response_count) %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Response Rate:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_to_percentage(@response_rate, :precision => 1) %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Questions Skipped:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_with_delimiter(@survey_version.total_questions_skipped) %></p>
-	</div>
-	<br />
-	<div class="left_side">
-		Question Skip Rate:
-	</div>
-	<div class="right_side">
-		<p class="version"><%= number_to_percentage(@question_skip_rate, :precision => 1) %></p>
-	</div>
+  <div class="left_side">
+    Survey:
+  </div>
+  <div class="right_side">
+    <p class="blue"><%= @survey.name.titleize %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Version:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= @survey_version.version_number%></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Visits:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_with_delimiter(@survey_version.total_visit_count) %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Invitations:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_with_delimiter(@survey_version.total_invitation_count) %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Invitations Accepted:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_with_delimiter(@survey_version.total_invitation_accepted_count) %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Responses<%= " After #{(@first_count_date - 1.day).to_s(:text_field)}"unless @first_count_date.nil? %>:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_with_delimiter(@response_count) %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Response Rate:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_to_percentage(@response_rate, :precision => 1) %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Questions Skipped:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_with_delimiter(@survey_version.total_questions_skipped) %></p>
+  </div>
+  <br />
+  <div class="left_side">
+    Question Skip Rate:
+  </div>
+  <div class="right_side">
+    <p class="version"><%= number_to_percentage(@question_skip_rate, :precision => 1) %></p>
+  </div>
 </div>
 
 <div class="pageNav">
@@ -72,51 +72,51 @@
 </div>
 
 <div id="dashboards">
-	<h2>Dashboards</h2>
+  <h2>Dashboards</h2>
 
-	<table id="dashboardsTable">
-		<tr>
-			<th class="col1" scope="col">Name</th>
-			<th class="col2" scope="col">Start Date</th>
-			<th class="col3" scope="col">End Date</th>
-			<th class="col4-5" scope="col" colspan="2"></th>
-		</tr>
-		<% for dashboard in @survey_version.dashboards %>
-			<tr class="<%= cycle('gray','white') %>">
-				<td class="col1"><%= link_to dashboard.name, survey_survey_version_dashboard_path(@survey, @survey_version, dashboard) %></td>
-				<td class="col2"><%= dashboard.start_date_str %></td>
-				<td class="col3"><%= dashboard.end_date_str %></td>
-				<td class="col4"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
-				<td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
-			</tr>
-		<% end %>
-	</table>
+  <table id="dashboardsTable">
+    <tr>
+      <th class="col1" scope="col">Name</th>
+      <th class="col2" scope="col">Start Date</th>
+      <th class="col3" scope="col">End Date</th>
+      <th class="col4-5" scope="col" colspan="2"></th>
+    </tr>
+    <% for dashboard in @survey_version.dashboards %>
+      <tr class="<%= cycle('gray','white') %>">
+        <td class="col1"><%= link_to dashboard.name, survey_survey_version_dashboard_path(@survey, @survey_version, dashboard) %></td>
+        <td class="col2"><%= dashboard.start_date_str %></td>
+        <td class="col3"><%= dashboard.end_date_str %></td>
+        <td class="col4"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :class=>"copyLink"  %></td>
+        <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_dashboard_path(@survey, @survey_version, dashboard), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+      </tr>
+    <% end %>
+  </table>
 
-	<%= link_to "New Dashboard", new_survey_survey_version_dashboard_path(@survey, @survey_version), :class => "newlink" %>
+  <%= link_to "New Dashboard", new_survey_survey_version_dashboard_path(@survey, @survey_version), :class => "newlink" %>
 </div>
 
 <div id="reports">
-	<h2>Reports</h2>
+  <h2>Reports</h2>
 
-	<table id="dashboardsTable">
-		<tr>
-			<th class="col1" scope="col">Name</th>
-			<th class="col2" scope="col">Start Date</th>
-			<th class="col3" scope="col">End Date</th>
-			<th class="col4-5" scope="col" colspan="2"></th>
-		</tr>
-		<% for report in @survey_version.reports %>
-			<tr class="<%= cycle('gray','white') %>">
-				<td class="col1"><%= link_to report.name, survey_survey_version_report_path(@survey, @survey_version, report) %></td>
-				<td class="col2"><%= report.start_date_str %></td>
-				<td class="col3"><%= report.end_date_str %></td>
-				<td class="col4"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_report_path(@survey, @survey_version, report), :class=>"copyLink"  %></td>
-				<td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_report_path(@survey, @survey_version, report), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
-			</tr>
-		<% end %>
-	</table>
+  <table id="dashboardsTable">
+    <tr>
+      <th class="col1" scope="col">Name</th>
+      <th class="col2" scope="col">Start Date</th>
+      <th class="col3" scope="col">End Date</th>
+      <th class="col4-5" scope="col" colspan="2"></th>
+    </tr>
+    <% for report in @survey_version.reports %>
+      <tr class="<%= cycle('gray','white') %>">
+        <td class="col1"><%= link_to report.name, survey_survey_version_report_path(@survey, @survey_version, report) %></td>
+        <td class="col2"><%= report.start_date_str %></td>
+        <td class="col3"><%= report.end_date_str %></td>
+        <td class="col4"><%= link_to image_tag("edit.png", :alt=>"Edit Dashboard"), edit_survey_survey_version_report_path(@survey, @survey_version, report), :class=>"copyLink"  %></td>
+        <td class="col5"><%= link_to image_tag("delete.png", :alt=>"Delete Dashboard"), survey_survey_version_report_path(@survey, @survey_version, report), :confirm => 'Are you sure?', :method => :delete, :class=>"deleteLink" %></td>
+      </tr>
+    <% end %>
+  </table>
 
-	<%= link_to "New Report", new_survey_survey_version_report_path(@survey, @survey_version), :class => "newlink" %>
+  <%= link_to "New Report", new_survey_survey_version_report_path(@survey, @survey_version), :class => "newlink" %>
 </div>
 
 <div class="pageNav">

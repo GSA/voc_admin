@@ -13,10 +13,11 @@ class DashboardsController < ApplicationController
 
   # POST   /surveys/:survey_id/survey_versions/:survey_version_id/dashboards(.:format)
   def create
-    @dashboard = @survey_version.dashboards.build params[:dashboard]
+    @dashboard = @survey_version.dashboards.build dashboard_params
 
     if @dashboard.save
-      redirect_to survey_survey_version_dashboard_path(@survey, @survey_version, @dashboard), :notice  => "Successfully created dashboard."
+      redirect_to survey_survey_version_dashboard_path(@survey, @survey_version, @dashboard),
+        :notice  => "Successfully created dashboard."
     else
       render :new
     end
@@ -28,7 +29,7 @@ class DashboardsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/pdf/:id(.:format)
   def pdf
-    render 'show', layout: 'pdf'
+    render 'show', layout: 'pdf', formats: ['html']
   end
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/:id/edit(.:format)
@@ -37,7 +38,7 @@ class DashboardsController < ApplicationController
 
   # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/dashboards/:id(.:format)
   def update
-    if @dashboard.update_attributes(params[:dashboard])
+    if @dashboard.update_attributes(dashboard_params)
       redirect_to survey_survey_version_dashboard_path(@survey, @survey_version, @dashboard), :notice  => "Successfully updated dashboard."
     else
       render :edit
@@ -52,6 +53,21 @@ class DashboardsController < ApplicationController
   end
 
   private
+  
+  def dashboard_params
+    params.require(:dashboard).permit(
+      :name,
+      :start_date,
+      :end_date,
+      dashboard_elements_attributes: [
+        :id,
+        :"_destroy",
+        :survey_element_id,
+        :sort_order_position,
+        :display_type
+      ]
+    )
+  end
 
   def get_dashboard
     @dashboard = @survey_version.dashboards.find(params[:id])
