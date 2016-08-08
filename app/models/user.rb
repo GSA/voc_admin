@@ -1,22 +1,22 @@
 # @author Communication Training Analysis Corporation <info@ctacorp.com>
 #
-# A system user.  Ties into Authlogic.
+# A system user.  Ties into Devise.
 class User < ActiveRecord::Base
-  attr_accessible :f_name, :l_name, :password, :email,
-    :password_confirmation, :site_ids, :role_id, :username, :fullname,
-    :organization_id
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :omniauthable, :trackable, omniauth_providers: [ :saml ]
+
+  attr_accessible :f_name, :l_name, :password, :email, :password_confirmation,
+                  :site_ids, :role_id, :username, :fullname, :organization_id
 
   attr_accessor :first_name, :last_name, :password_confirmation
 
   has_many :site_users
-  has_many :sites,      :through => :site_users
+  has_many :sites, through: :site_users
   belongs_to :role
   belongs_to :organization
 
-  validates :email,  :presence => true
-  validates :f_name, :presence => true
-  validates :l_name, :presence => true
-  validates :username, presence: true
+  validates :email, :f_name, :l_name, :username, presence: true
 
   before_save :set_fullname
 
@@ -25,22 +25,20 @@ class User < ActiveRecord::Base
     where("CONCAT(f_name, ' ', l_name) LIKE ?", "%#{q}%") unless q.blank?
   }
 
-  acts_as_authentic do |c|
-    c.validate_password_field=false
-    c.ignore_blank_passwords=true
-    c.require_password_confirmation = false
-    c.logged_in_timeout = 30.minutes
+  def self.from_omniauth(params)
+    User.find_by(email: params['info']['email'])
   end
 
-  # Gets all the surveys a user has access to.  Admins are able to see all surveys;
-  # users are only able to see surveys which belong to sites they have access to.
+  # Gets all the surveys a user has access to.  Admins are able to see all
+  # surveys; users are only able to see surveys which belong to sites they have
+  # access to.
   #
   # @return [ActiveRecord::Relation] surveys the user has access to
   def surveys
-    if self.admin?
+    if admin?
       Survey.all
     else
-      Survey.includes(:site => :site_users).where(:site_users => { :user_id => self.id })
+      Survey.includes(site: :site_users).where(site_users: { user_id: id })
     end
   end
 
@@ -55,22 +53,11 @@ class User < ActiveRecord::Base
   #
   # @return [Boolean] true if the user is an admin, false otherwise
   def admin?
-    self.role_id.present? && self.role_id == Role::ADMIN.id
+    role_id.present? && role_id == Role::ADMIN.id
   end
 
   def set_fullname
     self.fullname = "#{f_name} #{l_name}"
-  end
-
-  protected
-
-  def valid_ldap_credentials?(password)
-    ldap = Ldap.new(self.username,password)
-    if ldap.valid_connection?
-      return ldap.valid_user?
-    else
-      return false
-    end
   end
 end
 
@@ -90,4 +77,3 @@ end
 #  hhs_id            :string(50)
 #  last_request_at   :datetime
 #
-

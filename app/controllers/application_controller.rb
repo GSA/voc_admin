@@ -3,10 +3,13 @@
 # Base Controller class; integrates Authlogic and provides gate keeper
 # before_filter functions.
 class ApplicationController < ActionController::Base
+  def new_session_path(scope)
+    new_user_session_path
+  end
+
   config.relative_url_root = ""
   protect_from_forgery
   before_filter :require_user
-  helper_method :current_user_session, :current_user
   include TokenAndSalt
 
   private
@@ -20,27 +23,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Retrieves the UserSession.
-  def current_user_session
-    logger.debug "ApplicationController::current_user_session"
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-    # return nil
-  end
-
-  # Retrieves the User from the UserSession.
-  def current_user
-    logger.debug "ApplicationController::current_user"
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.user
-  end
-
   # Used to restrict application functionality to logged-in Users.
   def require_user
     logger.debug "ApplicationController::require_user"
     unless current_user
       flash[:error] = "You must be logged in to access this page."
-      redirect_to login_url
+      redirect_to user_omniauth_authorize_path(:saml)
       return false
     end
   end
@@ -78,13 +66,5 @@ class ApplicationController < ActionController::Base
       @survey = Survey.find(params[:survey_id])
     end
     @survey_version = @survey.survey_versions.find(params[:survey_version_id])
-  end
-
-  # Additional CSRF protection on unverified (pre-login) requests
-  # (Authlogic fix per https://github.com/binarylogic/authlogic/issues/310)
-  def handle_unverified_request
-    super
-    cookies.delete 'user_credentials'
-    @current_user_session = @current_user = nil
   end
 end
