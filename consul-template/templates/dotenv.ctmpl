@@ -17,11 +17,6 @@ MONGO_DB_USER={{key_or_default (printf "service_app_busa/%s/mongo/user" $env_id)
 REDIS_HOST_PORT={{key_or_default (printf "service_app_busa/%s/redis/host_port" $env_id) ""}}
 REDIS_EXPIRE={{key_or_default (printf "service_app_busa/%s/redis/expire" $env_id) ""}}
 
-# LDAP Authentication configuration options
-LDAP_HOST={{key_or_default (printf "service_app_busa/%s/ldap/host" $env_id) ""}}
-LDAP_PORT={{key_or_default (printf "service_app_busa/%s/ldap/port" $env_id) ""}}
-LDAP_ADMIN_USER={{key_or_default (printf "service_app_busa/%s/ldap/admin_user" $env_id) ""}}
-
 # Amazon S3 configuration for exports
 S3_BUCKET_NAME={{key_or_default (printf "service_app_busa/%s/s3/bucket_name" $env_id) ""}}
 S3_ACCESS_KEY_ID={{key_or_default (printf "service_app_busa/%s/s3/access_key" $env_id) ""}}
@@ -34,6 +29,9 @@ SMTP_USER={{key_or_default (printf "service_app_busa/%s/smtp/user" $env_id) ""}}
 # Akamai cache configuration
 AKAMAI_USER={{key_or_default (printf "service_app_busa/%s/akamai/user" $env_id) ""}}
 AKAMAI_PASSWORD={{key_or_default (printf "service_app_busa/%s/akamai/password" $env_id) ""}}
+
+SSO_TARGET_URL={{key_or_default (printf "service_app_busa/%s/saml/target_url" $env_id) ""}}
+SAML_APP_NAME={{key_or_default (printf "service_app_busa/%s/saml/app_name" $env_id) ""}}
 
 # Project config:
 # ---------------
@@ -91,8 +89,8 @@ SMTP_PASS={{if secret (printf "secret/project/app_voc/{dev,stg,prod}/smtp/pass" 
   {{end -}}
 {{end -}}
 
-LDAP_ADMIN_PASS={{if secret (printf "secret/project/app_voc/{dev,stg,prod}/ldap/admin_pass" $env_id) -}}
-  {{with secret (printf "secret/project/app_voc/{dev,stg,prod}/ldap/admin_pass" $env_id) -}}
+SAML_CERT={{if secret (printf "secret/project/app_voc/{dev,stg,prod}/saml/cert" $env_id) -}}
+  {{with secret (printf "secret/project/app_voc/{dev,stg,prod}/saml/cert" $env_id) -}}
     {{.Data.value}}
   {{end -}}
 {{end -}}
