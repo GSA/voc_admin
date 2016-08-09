@@ -32,7 +32,7 @@ worker_processes 5
 # Listen on both a Unix domain socket and a TCP port.
 # If you are load-balancing multiple Unicorn masters, lower the backlog
 # setting to e.g. 64 for faster failover.
-listen "0.0.0.0:80", :tcp_nopush => true
+listen "0.0.0.0:#{ENV.fetch('UNICORN_PORT', 80)}", :tcp_nopush => true
 
 # nuke workers after 30 seconds instead of 60 seconds (the default)
 #
