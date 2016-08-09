@@ -26,13 +26,6 @@ SMTP_PORT={{key_or_default (printf "service_app_busa/%s/smtp/port" $env_id) ""}}
 SMTP_DOMAIN={{key_or_default (printf "service_app_busa/%s/smtp/domain" $env_id) ""}}
 SMTP_USER={{key_or_default (printf "service_app_busa/%s/smtp/user" $env_id) ""}}
 
-# Akamai cache configuration
-AKAMAI_USER={{key_or_default (printf "service_app_busa/%s/akamai/user" $env_id) ""}}
-AKAMAI_PASSWORD={{key_or_default (printf "service_app_busa/%s/akamai/password" $env_id) ""}}
-
-SSO_TARGET_URL={{key_or_default (printf "service_app_busa/%s/saml/target_url" $env_id) ""}}
-SAML_APP_NAME={{key_or_default (printf "service_app_busa/%s/saml/app_name" $env_id) ""}}
-
 # Project config:
 # ---------------
 
@@ -52,9 +45,15 @@ LDAP_BASE={{key_or_default (printf "project_app_busa/%s/ldap/base" $env_id) ""}}
 LDAP_UID_NAME={{key_or_default (printf "project_app_busa/%s/ldap/uid_name" $env_id) ""}}
 LDAP_USER_GROUP={{key_or_default (printf "project_app_busa/%s/ldap/user_group" $env_id) ""}}
 
+# Akamai cache configuration
+AKAMAI_USER={{key_or_default (printf "project_app_busa/%s/akamai/user" $env_id) ""}}
+AKAMAI_PASSWORD={{key_or_default (printf "project_app_busa/%s/akamai/password" $env_id) ""}}
 AKAMAI_BASE_URI={{key_or_default (printf "project_app_busa/%s/akamai/base_uri" $env_id) ""}}
 AKAMAI_DOMAIN={{key_or_default (printf "project_app_busa/%s/akamai/domain" $env_id) ""}}
 # AKAMAI_DOMAIN={{key_or_default (printf "project_app_busa/%s/akamai/domain" $env_id) ""}}
+
+SSO_TARGET_URL={{key_or_default (printf "project_app_busa/%s/saml/target_url" $env_id) ""}}
+SAML_APP_NAME={{key_or_default (printf "project_app_busa/%s/saml/app_name" $env_id) ""}}
 
 Secret config:
 # ---------------
