@@ -10,19 +10,13 @@ RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   git \
   zip unzip \
-  qt5-default \
-  libqt5webkit5-dev \
-  gstreamer1.0-plugins-base \
-  gstreamer1.0-tools \
-  gstreamer1.0-x \
   build-essential \
-  g++ \
   && apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD Gemfile* $APP_HOME/
 
-RUN bundle install
+RUN bundle install --without test development
 
 ADD . $APP_HOME
 RUN mkdir log
@@ -51,10 +45,10 @@ COPY consul-template/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
 COPY s6/rake-resque-work /etc/services.d/rake-resque-work
+COPY s6/consul-template /etc/services/consul-template
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
 ENV QUEUE=voc_csv
 
 CMD [ "/init" ]
-

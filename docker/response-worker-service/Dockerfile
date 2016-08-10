@@ -51,6 +51,7 @@ COPY consul-template/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
 COPY s6/rake-resque-work /etc/services.d/rake-resque-work
+COPY s6/consul-template /etc/services/consul-template
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
