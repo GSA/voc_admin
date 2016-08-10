@@ -62,7 +62,7 @@ RAILS_COOKIE_TOKEN={{if secret (printf "secret/project/app_voc/%s/rails_cookie_t
   {{with secret (printf "secret/project/app_voc/%s/rails_cookie_token" $env_id) -}}
     {{.Data.value}}
   {{end -}}
-{{end -}}
+{{end}}
 
 MYSQL_DB_PASS={{if secret (printf "secret/service/app_voc/%s/database/password" $env_id) -}}
   {{with secret (printf "secret/service/app_voc/%s/database/password" $env_id) -}}
