@@ -45,7 +45,7 @@ COPY consul-template/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
 COPY s6/unicorn /etc/services.d/unicorn
-COPY s6/consul-template /etc/services/consul-template
+COPY s6/consul-template /etc/services.d/consul-template
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
