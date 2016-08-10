@@ -50,12 +50,10 @@ RUN unzip -d / /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
 COPY consul-template/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
-COPY s6 /etc/services.d/
+COPY s6/rake-resque-work /etc/services.d/rake-resque-work
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
 ENV QUEUE=voc_responses
 
-ENTRYPOINT [ "bundle", "exec" ]
-
-CMD [ "rake", "resque:work" ]
+CMD [ "/init" ]
