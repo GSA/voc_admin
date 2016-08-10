@@ -3,7 +3,8 @@ doc/
 docker/
 log/
 spec/
-tmp/**/*
+tmp/assets
+tmp/pids/*.pid
 yard/
 
 .gitignore
