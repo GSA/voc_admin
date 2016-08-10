@@ -50,10 +50,10 @@ RUN unzip -d / /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
 COPY consul-template/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
-COPY s6/unicorn /etc/services.d/
+COPY s6/unicorn /etc/services.d/unicorn
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
-ENTRYPOINT [ "/init" ]
+CMD [ "/init" ]
 
-CMD [ "unicorn", "-c", "config/unicorn.rb" ]
+#CMD [ "unicorn", "-c", "config/unicorn.rb" ]
