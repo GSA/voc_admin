@@ -38,7 +38,7 @@ services:
     entrypoint: ./development.sh
     env_file: ./.env
     ports:
-      - "80:80"
+      - "3000:80"
     environment:
       # runtime ENV parameters
       RAILS_ENV: development
@@ -58,7 +58,7 @@ services:
     entrypoint: ./development.sh
     env_file: ./.env
     ports:
-      - "8080:8080"
+      - "4000:8080"
     environment:
       # runtime ENV parameters
       RAILS_ENV: development
