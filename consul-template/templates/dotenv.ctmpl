@@ -64,8 +64,8 @@ RAILS_COOKIE_TOKEN={{if secret (printf "secret/project/app_voc/%s/rails_cookie_t
   {{end -}}
 {{end -}}
 
-MYSQL_DB_PASS={{if secret (printf "secret/project/app_voc/%s/database/pass" $env_id) -}}
-  {{with secret (printf "secret/project/app_voc/%s/database/pass" $env_id) -}}
+MYSQL_DB_PASS={{if secret (printf "secret/service/app_voc/%s/database/pass" $env_id) -}}
+  {{with secret (printf "secret/service/app_voc/%s/database/pass" $env_id) -}}
     {{.Data.value}}
   {{end -}}
 {{end -}}
@@ -76,8 +76,8 @@ MONGO_DB_PASS={{if secret (printf "secret/project/app_voc/%s/mongo/pass" $env_id
   {{end -}}
 {{end -}}
 
-S3_SECRET_ACCESS_KEY={{if secret (printf "secret/project/app_voc/%s/s3/secret_key" $env_id) -}}
-  {{with secret (printf "secret/project/app_voc/%s/s3/secret_key" $env_id) -}}
+S3_SECRET_ACCESS_KEY={{if secret (printf "secret/service/app_voc/%s/s3/secret_key" $env_id) -}}
+  {{with secret (printf "secret/service/app_voc/%s/s3/secret_key" $env_id) -}}
     {{.Data.value}}
   {{end -}}
 {{end -}}
