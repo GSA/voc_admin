@@ -1,59 +1,59 @@
 {{$env_id := env "APP_ENVIRONMENT" -}}
 
 # Database configuration options
-MYSQL_DB_HOST={{key_or_default (printf "service_app_busa/%s/database/host" $env_id) ""}}
-MYSQL_DB_PORT={{key_or_default (printf "service_app_busa/%s/database/port" $env_id) ""}}
-MYSQL_DB_NAME={{key_or_default (printf "service_app_busa/%s/database/name" $env_id) ""}}
-MYSQL_DB_USER={{key_or_default (printf "service_app_busa/%s/database/user" $env_id) ""}}
+MYSQL_DB_HOST={{key_or_default (printf "service_app_voc/%s/database/host" $env_id) ""}}
+MYSQL_DB_PORT={{key_or_default (printf "service_app_voc/%s/database/port" $env_id) ""}}
+MYSQL_DB_NAME={{key_or_default (printf "service_app_voc/%s/database/name" $env_id) ""}}
+MYSQL_DB_USER={{key_or_default (printf "service_app_voc/%s/database/user" $env_id) ""}}
 
-ELASTICSEARCH_HOST={{key_or_default (printf "service_app_busa/%s/elasticsearch/host" $env_id) ""}}
-ELASTICSEARCH_PORT={{key_or_default (printf "service_app_busa/%s/elasticsearch/port" $env_id) ""}}
+ELASTICSEARCH_HOST={{key_or_default (printf "service_app_voc/%s/elasticsearch/host" $env_id) ""}}
+ELASTICSEARCH_PORT={{key_or_default (printf "service_app_voc/%s/elasticsearch/port" $env_id) ""}}
 
-MONGO_DB_HOST={{key_or_default (printf "service_app_busa/%s/mongo/host" $env_id) ""}}
-MONGO_DB_PORT={{key_or_default (printf "service_app_busa/%s/mongo/port" $env_id) ""}}
-MONGO_DB_NAME={{key_or_default (printf "service_app_busa/%s/mongo/name" $env_id) ""}}
-MONGO_DB_USER={{key_or_default (printf "service_app_busa/%s/mongo/user" $env_id) ""}}
+MONGO_DB_HOST={{key_or_default (printf "service_app_voc/%s/mongo/host" $env_id) ""}}
+MONGO_DB_PORT={{key_or_default (printf "service_app_voc/%s/mongo/port" $env_id) ""}}
+MONGO_DB_NAME={{key_or_default (printf "service_app_voc/%s/mongo/name" $env_id) ""}}
+MONGO_DB_USER={{key_or_default (printf "service_app_voc/%s/mongo/user" $env_id) ""}}
 
-REDIS_HOST_PORT={{key_or_default (printf "service_app_busa/%s/redis/host_port" $env_id) ""}}
-REDIS_EXPIRE={{key_or_default (printf "service_app_busa/%s/redis/expire" $env_id) ""}}
+REDIS_HOST_PORT={{key_or_default (printf "service_app_voc/%s/redis/host_port" $env_id) ""}}
+REDIS_EXPIRE={{key_or_default (printf "service_app_voc/%s/redis/expire" $env_id) ""}}
 
 # Amazon S3 configuration for exports
-S3_BUCKET_NAME={{key_or_default (printf "service_app_busa/%s/s3/bucket_name" $env_id) ""}}
-S3_ACCESS_KEY_ID={{key_or_default (printf "service_app_busa/%s/s3/access_key" $env_id) ""}}
+S3_BUCKET_NAME={{key_or_default (printf "service_app_voc/%s/s3/bucket_name" $env_id) ""}}
+S3_ACCESS_KEY_ID={{key_or_default (printf "service_app_voc/%s/s3/access_key" $env_id) ""}}
 
-SMTP_ADDRESS={{key_or_default (printf "service_app_busa/%s/smtp/address" $env_id) ""}}
-SMTP_PORT={{key_or_default (printf "service_app_busa/%s/smtp/port" $env_id) ""}}
-SMTP_DOMAIN={{key_or_default (printf "service_app_busa/%s/smtp/domain" $env_id) ""}}
-SMTP_USER={{key_or_default (printf "service_app_busa/%s/smtp/user" $env_id) ""}}
+SMTP_ADDRESS={{key_or_default (printf "service_app_voc/%s/smtp/address" $env_id) ""}}
+SMTP_PORT={{key_or_default (printf "service_app_voc/%s/smtp/port" $env_id) ""}}
+SMTP_DOMAIN={{key_or_default (printf "service_app_voc/%s/smtp/domain" $env_id) ""}}
+SMTP_USER={{key_or_default (printf "service_app_voc/%s/smtp/user" $env_id) ""}}
 
 # Project config:
 # ---------------
 
-RAILS_ENV={{key_or_default (printf "project_app_busa/%s/rails_env" $env_id) ""}}
+RAILS_ENV={{key_or_default (printf "project_app_voc/%s/rails_env" $env_id) ""}}
 
 # public DNS for public and admin apps
-APP_PUBLIC_HOST_PORT={{key_or_default (printf "project_app_busa/%s/public_port" $env_id) ""}}
-APP_ADMIN_HOST_PORT={{key_or_default (printf "project_app_busa/%s/admin_port" $env_id) ""}}
+APP_PUBLIC_HOST_PORT={{key_or_default (printf "project_app_voc/%s/public_port" $env_id) ""}}
+APP_ADMIN_HOST_PORT={{key_or_default (printf "project_app_voc/%s/admin_port" $env_id) ""}}
 
-S3_PATH_PREFIX={{key_or_default (printf "project_app_busa/%s/s3/path_prefix" $env_id) ""}}
+S3_PATH_PREFIX={{key_or_default (printf "project_app_voc/%s/s3/path_prefix" $env_id) ""}}
 
 # Rails mailer configuration options
-MAILER_HOST={{key_or_default (printf "project_app_busa/%s/smtp/mailer_host" $env_id) ""}}
-SMTP_AUTH={{key_or_default (printf "project_app_busa/%s/smtp/auth" $env_id) ""}}
+MAILER_HOST={{key_or_default (printf "project_app_voc/%s/smtp/mailer_host" $env_id) ""}}
+SMTP_AUTH={{key_or_default (printf "project_app_voc/%s/smtp/auth" $env_id) ""}}
 
-LDAP_BASE={{key_or_default (printf "project_app_busa/%s/ldap/base" $env_id) ""}}
-LDAP_UID_NAME={{key_or_default (printf "project_app_busa/%s/ldap/uid_name" $env_id) ""}}
-LDAP_USER_GROUP={{key_or_default (printf "project_app_busa/%s/ldap/user_group" $env_id) ""}}
+LDAP_BASE={{key_or_default (printf "project_app_voc/%s/ldap/base" $env_id) ""}}
+LDAP_UID_NAME={{key_or_default (printf "project_app_voc/%s/ldap/uid_name" $env_id) ""}}
+LDAP_USER_GROUP={{key_or_default (printf "project_app_voc/%s/ldap/user_group" $env_id) ""}}
 
 # Akamai cache configuration
-AKAMAI_USER={{key_or_default (printf "project_app_busa/%s/akamai/user" $env_id) ""}}
-AKAMAI_PASSWORD={{key_or_default (printf "project_app_busa/%s/akamai/password" $env_id) ""}}
-AKAMAI_BASE_URI={{key_or_default (printf "project_app_busa/%s/akamai/base_uri" $env_id) ""}}
-AKAMAI_DOMAIN={{key_or_default (printf "project_app_busa/%s/akamai/domain" $env_id) ""}}
-# AKAMAI_DOMAIN={{key_or_default (printf "project_app_busa/%s/akamai/domain" $env_id) ""}}
+AKAMAI_USER={{key_or_default (printf "project_app_voc/%s/akamai/user" $env_id) ""}}
+AKAMAI_PASSWORD={{key_or_default (printf "project_app_voc/%s/akamai/password" $env_id) ""}}
+AKAMAI_BASE_URI={{key_or_default (printf "project_app_voc/%s/akamai/base_uri" $env_id) ""}}
+AKAMAI_DOMAIN={{key_or_default (printf "project_app_voc/%s/akamai/domain" $env_id) ""}}
+# AKAMAI_DOMAIN={{key_or_default (printf "project_app_voc/%s/akamai/domain" $env_id) ""}}
 
-SSO_TARGET_URL={{key_or_default (printf "project_app_busa/%s/saml/target_url" $env_id) ""}}
-SAML_APP_NAME={{key_or_default (printf "project_app_busa/%s/saml/app_name" $env_id) ""}}
+SSO_TARGET_URL={{key_or_default (printf "project_app_voc/%s/saml/target_url" $env_id) ""}}
+SAML_APP_NAME={{key_or_default (printf "project_app_voc/%s/saml/app_name" $env_id) ""}}
 
 Secret config:
 # ---------------
