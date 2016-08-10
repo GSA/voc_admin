@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv /bin/sh
+
+exec bundle exec unicorn -c config/unicorn.rb

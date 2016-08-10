@@ -3,7 +3,7 @@ doc/
 docker/
 log/
 spec/
-tmp/
+tmp/**/*
 yard/
 
 .gitignore

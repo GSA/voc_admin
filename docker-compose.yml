@@ -35,7 +35,7 @@ services:
       - mysql
       - mongo
       - redis
-    entrypoint: ./development.sh
+    #entrypoint: "bundle exec"
     env_file: ./.env
     ports:
       - "3000:80"
