@@ -6,6 +6,7 @@ spec/
 tmp/assets
 tmp/pids/*.pid
 yard/
+multi_scm_public/
 
 .gitignore
 .rspec
