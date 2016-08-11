@@ -513,8 +513,8 @@ ActiveRecord::Schema.define(version: 201408191627092) do
     t.integer  "invitations_accepted", default: 0
   end
 
-  add_index "survey_version_counts", ["survey_version_id", "count_date"], name: "index_survey_visit_counts_on_survey_version_id_and_visit_date", unique: true, using: :btree
-  add_index "survey_version_counts", ["survey_version_id"], name: "index_survey_visit_counts_on_survey_version_id", using: :btree
+  add_index "survey_version_counts", ["survey_version_id", "count_date"], name: "index_survey_version_counts_on_survey_version_id_and_count_date", unique: true, using: :btree
+  add_index "survey_version_counts", ["survey_version_id"], name: "index_survey_version_counts_on_survey_version_id", using: :btree
 
   create_table "survey_versions", force: true do |t|
     t.integer  "survey_id",                         null: false
@@ -586,13 +586,13 @@ ActiveRecord::Schema.define(version: 201408191627092) do
     t.string   "email",                                     null: false
     t.string   "crypted_password"
     t.string   "password_salt"
-    t.string   "persistence_token",                         null: false
+    t.string   "persistence_token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role_id"
+    t.string   "hhs_id",             limit: 50
     t.string   "username",           limit: 50
     t.datetime "last_request_at"
-    t.string   "hhs_id",             limit: 50
     t.string   "fullname"
     t.integer  "organization_id"
     t.integer  "sign_in_count",                 default: 0, null: false

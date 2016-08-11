@@ -10,6 +10,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     set_flash_message(:notice, :success, :kind => "Saml") if is_navigational_format?
   end
 
+  def developer
+    @user = User.from_omniauth(request.env['omniauth.auth'])
+    sign_in_and_redirect @user, event: :authentication
+  end
+
   def failure
     redirect_to root_path
   end

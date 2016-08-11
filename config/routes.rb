@@ -1,10 +1,12 @@
 CommentToolApp::Application.routes.draw do
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   get '/exports/:id/download' => "exports#download",
     :as => 'exports_download'
 
   devise_scope :user do
+    match '/users/auth/:action/callback', to: "users/omniauth_callbacks", via: [:get, :post]
     get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
     get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
 

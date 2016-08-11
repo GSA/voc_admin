@@ -3,6 +3,14 @@
 # View helper repository for helpers used across functional areas of the application.
 module ApplicationHelper
 
+  def logout_link title:, classes: ""
+    if Rails.env == "development"
+      link_to title, destroy_user_session_path, :class => "#{classes}"
+    else
+      link_to title, destroy_user_session_path, :class => "#{classes}"
+    end
+  end
+
   def nav_link_active_class controller, action=nil
     if controller == params[:controller] &&
         (action.blank? || action == params[:action])
