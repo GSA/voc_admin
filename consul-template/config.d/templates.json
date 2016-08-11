@@ -1,5 +1,5 @@
 template {
   source = "/consul-template/templates/dotenv.ctmpl"
   destination = "/.env"
-  command = "unicorn -c /config/unicorn.rb"
+  command = "s6-svc -t /var/run/s6/services/unicorn"
 }
