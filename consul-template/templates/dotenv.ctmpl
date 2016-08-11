@@ -9,8 +9,8 @@ MYSQL_DB_USER={{key_or_default (printf "service_app_voc/%s/database/username" $e
 ELASTICSEARCH_HOST={{key_or_default (printf "service_app_voc/%s/elasticsearch/host" $env_id) ""}}
 ELASTICSEARCH_PORT={{key_or_default (printf "service_app_voc/%s/elasticsearch/port" $env_id) ""}}
 
-{{ if service (printf "voc_mongo_%s" $env_id) }}
-{{ range service (printf "voc_mongo_%s" $env_id) }}
+{{ if service (printf "voc-mongo-%s" $env_id) }}
+{{ range service (printf "voc-mongo-%s" $env_id) }}
 MONGO_DB_HOST={{.Address}}
 MONGO_DB_PORT={{.Port}}
 {{end}}
