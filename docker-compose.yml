@@ -26,7 +26,7 @@ services:
   admin:
     build:
       context: .
-      dockerfile: docker/admin-service/Dockerfile
+      dockerfile: docker/admin-service/Dockerfile.local
       args:
         # build-time ENV parameters
         RAILS_ENV: development
