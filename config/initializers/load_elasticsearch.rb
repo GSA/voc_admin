@@ -1,10 +1,11 @@
 require 'elasticsearch'
-#config = YAML.load_file("#{Rails.root}/config/app_config.yml")[Rails.env]
-ELASTIC_SEARCH_HOSTS = APP_CONFIG["elasticsearch_hosts"]
+ELASTIC_SEARCH_HOST = "#{APP_CONFIG['elasticsearch_hosts']}:#{APP_CONFIG['elasticsearch_port']}"
 ELASTIC_SEARCH_INDEX_NAME = "survey_responses_#{Rails.env}"
 
+puts "Connecting to Elasticsearch: #{ELASTIC_SEARCH_HOST}"
+
 ELASTIC_SEARCH_CLIENT = Elasticsearch::Client.new({
-  hosts: ELASTIC_SEARCH_HOSTS,
+  host: ELASTIC_SEARCH_HOST,
   log: false
 })
 
