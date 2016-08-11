@@ -17,7 +17,9 @@ class ApplicationController < ActionController::Base
   # Used to restrict access to User and Site functionality.
   def require_admin
     logger.debug "ApplicationController::require_user"
-    unless current_user.admin?
+    if current_user.admin?
+      return true
+    else
       flash[:error] = "You do not have permissions to view this page"
       redirect_to surveys_path
     end
@@ -26,7 +28,9 @@ class ApplicationController < ActionController::Base
   # Used to restrict application functionality to logged-in Users.
   def require_user
     logger.debug "ApplicationController::require_user"
-    unless current_user
+    if current_user
+      return true
+    else
       flash[:error] = "You must be logged in to access this page."
       redirect_to user_omniauth_authorize_path(:saml)
       return false

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   }
 
   def self.from_omniauth(params)
-    User.find_by(email: params['info']['email'])
+    User.find_by(email: params['uid'])
   end
 
   # Gets all the surveys a user has access to.  Admins are able to see all
