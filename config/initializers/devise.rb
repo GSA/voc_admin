@@ -8,9 +8,13 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   config.secret_key = '4295ef3138a3994f56047667358ca7f778925fa30dc6d9278d8eeb6bd7f2b6d9e0d62da37f90a31c7f31b9a7a06ed82dab011b198e43e09b9990afe154d42ed7'
 
-  config.omniauth :saml,
-    idp_cert: ENV.fetch('SAML_CERT'),
-    idp_sso_target_url: ENV.fetch('SSO_TARGET_URL')
+  if Rails.env == 'development'
+    config.omniauth :developer
+  else
+    config.omniauth :saml,
+      idp_cert: ENV.fetch('SAML_CERT'),
+      idp_sso_target_url: ENV.fetch('SSO_TARGET_URL')
+  end
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class

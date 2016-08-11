@@ -586,7 +586,7 @@ ActiveRecord::Schema.define(version: 201408191627092) do
     t.string   "email",                                     null: false
     t.string   "crypted_password"
     t.string   "password_salt"
-    t.string   "persistence_token",                         null: false
+    t.string   "persistence_token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role_id"

@@ -6,7 +6,7 @@
     <div class="user_details">
       <p class="user"><%= current_user.email %></p>
       <%= image_tag "half_separator.png", :class=>"separator", :alt=>"separator" %>
-      <%= link_to "Logout", destroy_user_session_path, :class => "logout" %>
+      <%= logout_link title: "Logout", classes: "logout" %>
     </div>
   <% end %>
 </div>
