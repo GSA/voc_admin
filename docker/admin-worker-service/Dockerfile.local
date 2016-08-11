@@ -1,0 +1,38 @@
+FROM ctac/ruby-base:2.2
+
+ARG RAILS_ENV=production
+ENV APP_HOME /voc
+
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  git \
+  zip unzip \
+  build-essential \
+  && apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ADD Gemfile* $APP_HOME/
+
+RUN bundle install --without test development
+
+ADD . $APP_HOME
+RUN mkdir log
+
+EXPOSE 80
+
+COPY vendor/s6-overlay-amd64.tar.gz /tmp/s6-overlay-amd64.tar.gz
+ADD  https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem /etc/ssl/certs/rds-combined-ca-bundle.pem
+
+RUN tar xfz /tmp/s6-overlay-amd64.tar.gz -sC / \
+    && rm /tmp/s6-overlay-amd64.tar.gz
+
+COPY s6/rake-resque-work /etc/services.d/rake-resque-work
+
+# DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
+
+ENV QUEUES=voc_report_email,voc_rules,voc_dfs
+
+CMD [ "/init" ]

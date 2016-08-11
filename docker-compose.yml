@@ -43,7 +43,6 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: 173024e489c10d4d4ae2b573eda1ca55a5057943d087c3147a71d9fb201c8249197bf5f9cd34b2f2be10561f6e3334b589b0ff225009c8c9e9011d508a90f8d4
-      SKIP_LDAP_AUTHENTICATION: 'true'
   public:
     build:
       context: ../gsa_comment_tool_public
@@ -66,10 +65,10 @@ services:
   admin_worker:
     build:
       context: .
-      dockerfile: docker/admin-worker-service/Dockerfile
+      dockerfile: docker/admin-worker-service/Dockerfile.local
       args:
         # build-time ENV parameters
-        RAILS_ENV: development
+        RAILS_ENV: staging
     depends_on:
       - mysql
       - mongo
@@ -80,7 +79,6 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: 6f1d70d3424620e9007f62d2a8ee3d023b728ae15e57035de9f026e4874ba80d9b8968b1cd3321e58f4fb04aac07f8fee9b7ea543b305240dea6814e6ecec3ca
-      SKIP_LDAP_AUTHENTICATION: 'true'
     volumes:
       - ./tmp:/voc/tmp
   export_worker:
@@ -100,7 +98,6 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: 77cc973baa7f9b0117893d937fba7da55d509f986dce189fe47f5b0e998a0ece5f087d5df6a662a57247b6dcea8ab775b90dec4db563e56877f65af18ace4b09
-      SKIP_LDAP_AUTHENTICATION: 'true'
     volumes:
       - ./tmp:/voc/tmp
   response_worker:
@@ -120,7 +117,6 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: f60647f854940b2c60b69675b8727a037a9fc830d4b561b8f5d656979a8c2a4e04eef80fb4a5e465f66a1b4121b6c1c94ffb804e523650f093da36eb42e8efa9
-      SKIP_LDAP_AUTHENTICATION: 'true'
   nightly_worker:
     build:
       context: .
@@ -138,4 +134,3 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: f60647f854940b2c60b69675b8727a037a9fc830d4b561b8f5d656979a8c2a4e04eef80fb4a5e465f66a1b4121b6c1c94ffb804e523650f093da36eb42e8efa9
-      SKIP_LDAP_AUTHENTICATION: 'true'
