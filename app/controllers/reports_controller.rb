@@ -33,7 +33,7 @@ class ReportsController < ApplicationController
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/pdf/:id(.:format)
   def pdf
-    render 'show', layout: 'pdf', format: [:html]
+    render 'show', layout: 'pdf', formats: [:html]
   end
 
   # GET    /surveys/:survey_id/survey_versions/:survey_version_id/reports/:id/edit(.:format)
@@ -82,6 +82,10 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def report_params
+    params.require(:report).permit()
+  end
 
   def get_report
     @report = @survey_version.reports.find(params[:id])
