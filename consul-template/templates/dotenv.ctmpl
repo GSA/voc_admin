@@ -61,6 +61,7 @@ AKAMAI_DOMAIN={{key_or_default (printf "project_app_voc/%s/akamai/domain" $env_i
 
 SSO_TARGET_URL={{key_or_default (printf "project_app_voc/%s/saml/target_url" $env_id) ""}}
 SAML_APP_NAME={{key_or_default (printf "project_app_voc/%s/saml/app_name" $env_id) ""}}
+SESSION_TIMEOUT={{key_or_default (printf "project_app_voc/%s/saml/timeout" $env_id) ""}}
 
 # Secret config:
 # ---------------

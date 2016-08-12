@@ -4,7 +4,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :omniauthable, :trackable, omniauth_providers: [ :saml ]
+  devise :omniauthable, :trackable, :timeoutable, omniauth_providers: [ :saml ]
 
   attr_accessible :f_name, :l_name, :password, :email, :password_confirmation,
                   :site_ids, :role_id, :username, :fullname, :organization_id
