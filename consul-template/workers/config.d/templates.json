@@ -1,0 +1,5 @@
+template {
+  source = "/consul-template/templates/dotenv.ctmpl"
+  destination = "/voc/.env"
+  command = "s6-svc -t /var/run/s6/services/rake-resque-work"
+}
