@@ -14,7 +14,7 @@ class ReportsController < ApplicationController
 
   # POST   /surveys/:survey_id/survey_versions/:survey_version_id/reports(.:format)
   def create
-    @report = @survey_version.reports.build params[:report]
+    @report = @survey_version.reports.build report_params
 
     if @report.save
       redirect_to survey_survey_version_report_path(@survey, @survey_version, @report), :notice  => "Successfully created report."
@@ -42,7 +42,7 @@ class ReportsController < ApplicationController
 
   # PUT    /surveys/:survey_id/survey_versions/:survey_version_id/reports/:id(.:format)
   def update
-    if @report.update_attributes(params[:report])
+    if @report.update_attributes(report_params)
       redirect_to survey_survey_version_report_path(@survey, @survey_version, @report), :notice  => "Successfully updated report."
     else
       render :edit
@@ -84,7 +84,18 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit()
+    params.require(:report).permit(
+      :name, :survey_version_id, :start_date, :end_date,
+      :limit_answers, report_elements_attributes: [
+        :id,
+        :"_destroy",
+        :type,
+        :report_id,
+        :choice_question_id,
+        :text_question_id,
+        :matrix_question_id
+      ]
+    )
   end
 
   def get_report
