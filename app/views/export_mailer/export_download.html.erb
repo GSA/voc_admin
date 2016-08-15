@@ -1,6 +1,6 @@
 <p>Your requested export is now ready for pickup.</p>
 
-<p><%= link_to "Click here to download the CSV file.", exports_download_url(:id => @export_file.access_token, :host => MailConfig["default_url_options"]["host"]) %></p>
+<p><%= link_to "Click here to download the CSV file.", exports_download_url(:id => @export_file.access_token, :host => ENV['APP_ADMIN_HOST_PORT']) %></p>
 
 <p>NOTE: The file will be available for 25 hours. After that, you will need to run the export request again</p>
 
