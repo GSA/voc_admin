@@ -5,4 +5,4 @@
 <p>NOTE: The file will be available for 25 hours. After that, you will need to run the export request again</p>
 
 <p>If you are having trouble clicking on the link above, you can copy and paste the following URL on your browser:</p>
-<p><%= exports_download_url(:id => @export_file.access_token, :host => MailConfig["default_url_options"]["host"]) %></p>
+<p><%= exports_download_url(:id => @export_file.access_token, :host => ENV['APP_ADMIN_HOST_PORT']) %></p>
