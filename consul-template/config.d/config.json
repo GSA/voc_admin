@@ -8,5 +8,5 @@ retry = "10s"
 log_level = "err"
 vault {
   address = "http://vault.service.consul:8200"
-  renew = true
+  renew = false
 }
