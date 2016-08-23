@@ -72,8 +72,12 @@ namespace :reporting do
     puts "Mailing recurring reports..."
     Rake::Task["reporting:mail_recurring_reports"].execute
     puts "  Finished recurring reports."
-    puts "Sending out alarm notifications for surveys..."
-    Rake::Task["alarm:notifications"].execute
+
+    if ENV['SEND_ALARMS'].present?
+      puts "Sending out alarm notifications for surveys..."
+      Rake::Task["alarm:notifications"].execute
+    end
+
     puts " Finished sending alarm notifications"
     puts "Sweeping Partials..."
     Rake::Task["partial_sweeper:sweep"].execute

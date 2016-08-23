@@ -47,6 +47,7 @@ S3_PATH_PREFIX={{key_or_default (printf "project_app_voc/%s/s3/path_prefix" $env
 # Rails mailer configuration options
 MAILER_HOST={{key_or_default (printf "project_app_voc/%s/smtp/mailer_host" $env_id) ""}}
 SMTP_AUTH={{key_or_default (printf "project_app_voc/%s/smtp/auth" $env_id) ""}}
+SEND_ALARMS={{key_or_default (printf "project_app_voc/%s/smtp/send_alarms" $env_id) ""}}
 
 LDAP_BASE={{key_or_default (printf "project_app_voc/%s/ldap/base" $env_id) ""}}
 LDAP_UID_NAME={{key_or_default (printf "project_app_voc/%s/ldap/uid_name" $env_id) ""}}
