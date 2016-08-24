@@ -8,7 +8,7 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   config.secret_key = '4295ef3138a3994f56047667358ca7f778925fa30dc6d9278d8eeb6bd7f2b6d9e0d62da37f90a31c7f31b9a7a06ed82dab011b198e43e09b9990afe154d42ed7'
 
-  if Rails.env == 'development'
+  if Rails.env.development? || ENV['DEBUG_ACCESS'].present?
     config.omniauth :developer
   else
     config.omniauth :saml,

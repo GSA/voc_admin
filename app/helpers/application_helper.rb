@@ -4,7 +4,7 @@
 module ApplicationHelper
 
   def logout_link title:, classes: ""
-    if Rails.env == "development"
+    if Rails.env.development? || ENV['DEBUG_ACCESS'].present?
       link_to title, destroy_user_session_path, :class => "#{classes}"
     else
       link_to title, destroy_user_session_path, :class => "#{classes}"

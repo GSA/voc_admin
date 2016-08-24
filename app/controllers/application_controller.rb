@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       return true
     else
       flash[:error] = "You must be logged in to access this page."
-      if Rails.env == "development"
+      if Rails.env.development? || ENV['DEBUG_ACCESS'].present?
         redirect_to "/users/auth/developer"
       else
         redirect_to user_omniauth_authorize_path(:saml)

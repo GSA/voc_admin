@@ -1,5 +1,5 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  if Rails.env == 'development'
+  if Rails.env.development? || ENV['DEBUG_ACCESS'].present?
     provider :developer
   else
     provider :saml,
