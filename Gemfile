@@ -27,6 +27,7 @@ gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
 gem "best_in_place"
 gem 'httparty'
 gem 'spreadsheet', '1.0.0'
@@ -44,7 +45,6 @@ gem "rails-observers"
 
 gem 'mysql2', '~> 0.3.18'
 gem 'unicorn-rails'
-gem 'wkhtmltopdf-binary', "~> 0.9.9.1"
 
 # Add attr_accessible back so we can slowly convert to strong parameters
 gem "protected_attributes"
