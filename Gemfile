@@ -27,7 +27,6 @@ gem 'open_uri_redirections'
 gem "ranked-model", "~> 0.2.1"
 gem 'redis-objects'
 gem 'pdfkit'
-gem 'wkhtmltopdf-binary'
 gem "best_in_place"
 gem 'httparty'
 gem 'spreadsheet', '1.0.0'

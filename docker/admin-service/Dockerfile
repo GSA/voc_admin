@@ -8,6 +8,7 @@ RUN apt-get update && \
   git \
   zip unzip \
   build-essential \
+  zlib1g libfontconfig1 libfreetype6 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6 libxext6 libxrender1 \
   && apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -47,6 +48,13 @@ COPY s6/unicorn /etc/services.d/unicorn
 COPY s6/consul-template /etc/services.d/consul-template
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
+
+COPY vendor/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz /tmp
+WORKDIR /tmp
+RUN tar xvf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz && \
+    mv wkhtmltox/bin/wkhtmlto* /usr/bin/ && \
+    rm -rf wkhtmltox*
+WORKDIR $APP_HOME
 
 CMD [ "/init" ]
 
