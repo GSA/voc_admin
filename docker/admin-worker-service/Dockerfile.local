@@ -3,21 +3,21 @@ FROM ctac/ruby-base:2.2
 ARG RAILS_ENV=production
 ENV APP_HOME /voc
 
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
   git \
   zip unzip \
   build-essential \
+  zlib1g libfontconfig1 libfreetype6 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6 libxext6 libxrender1 \
   && apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD Gemfile* $APP_HOME/
-
+COPY Gemfile* /tmp/
+WORKDIR /tmp
 RUN bundle install --without test development
 
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
 ADD . $APP_HOME
 RUN mkdir log
 
@@ -32,6 +32,13 @@ RUN tar xfz /tmp/s6-overlay-amd64.tar.gz -sC / \
 COPY s6/rake-resque-work /etc/services.d/rake-resque-work
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
+
+COPY vendor/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz /tmp
+WORKDIR /tmp
+RUN tar xvf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz && \
+    mv wkhtmltox/bin/wkhtmlto* /usr/bin/ && \
+    rm -rf wkhtmltox*
+WORKDIR $APP_HOME
 
 ENV QUEUES=voc_report_email,voc_rules,voc_dfs
 
