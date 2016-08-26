@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv /bin/sh
 
+sleep 30s
 cd /voc
 
-exec bundle exec rake resque:work
+exec bundle exec rake reporting:daily
