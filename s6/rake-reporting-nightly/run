@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv /bin/sh
+
+cd /voc
+
+exec bundle exec rake resque:work

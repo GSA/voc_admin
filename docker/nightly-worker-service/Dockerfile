@@ -43,10 +43,11 @@ RUN unzip -d / /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
 COPY consul-template/workers/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
-COPY s6/rake-resque-work /etc/services.d/rake-resque-work
+COPY s6/rake-reporting-nightly /etc/services.d/rake-reporting-nightly
 COPY s6/consul-template /etc/services.d/consul-template
 
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
-ENTRYPOINT [ "bundle", "exec", "rake", "reporting:daily" ]
+#ENTRYPOINT [ "bundle", "exec", "rake", "reporting:daily" ]
+CMD [ "/init" ]
