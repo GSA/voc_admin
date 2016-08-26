@@ -5,17 +5,11 @@
   <head>
     <title>HHS VOC Tool Application</title>
 
-    <%= stylesheet_link_tag main_stylesheet_location %> 
-    <%= stylesheet_link_tag 'simplemodal' %>
-    <%= stylesheet_link_tag 'jquery-ui.min' %>
-    <%= stylesheet_link_tag 'pdf' %>
-    <%= javascript_include_tag :defaults, 'jquery.simplemodal', 'jquery.ui' %>
+    <link href="<%= "#{request.protocol}#{ENV.fetch('APP_ADMIN_HOST_PORT')}/assets/application.css" %>" media="screen" rel="stylesheet" />
+    <link href="<%= "#{request.protocol}#{ENV.fetch('APP_ADMIN_HOST_PORT')}/assets/simplemodal.css" %>" media="screen" rel="stylesheet" />
+    <link href="<%= "#{request.protocol}#{ENV.fetch('APP_ADMIN_HOST_PORT')}/assets/jquery-ui.min.css" %>" media="screen" rel="stylesheet" />
+    <link href="<%= "#{request.protocol}#{ENV.fetch('APP_ADMIN_HOST_PORT')}/assets/pdf.css" %>" media="screen" rel="stylesheet" />
     <%= yield :head %>
-    <%= csrf_meta_tag %>
-
-    <!-- Community Imports -->
-  <%= yield :additional_scripts %>
-
   </head>
   <body>
     <div id="container">
@@ -23,6 +17,5 @@
         <%= yield %>
       </div>
     </div>
-    <%= yield :script %>
   </body>
 </html>

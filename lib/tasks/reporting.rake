@@ -76,9 +76,9 @@ namespace :reporting do
     if ENV['SEND_ALARMS'].present?
       puts "Sending out alarm notifications for surveys..."
       Rake::Task["alarm:notifications"].execute
+      puts " Finished sending alarm notifications"
     end
 
-    puts " Finished sending alarm notifications"
     puts "Sweeping Partials..."
     Rake::Task["partial_sweeper:sweep"].execute
     puts "  Finished sweeping partials."
