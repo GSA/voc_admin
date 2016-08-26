@@ -40,7 +40,7 @@ RUN unzip -d / /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
     rm -rf /consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
     mkdir -p /consul-template /consul-template/config.d /consul-template/templates
 
-COPY consul-template/workers/config.d /consul-template/config.d/
+COPY consul-template/nightly/config.d /consul-template/config.d/
 COPY consul-template/templates /consul-template/templates/
 
 COPY s6/rake-reporting-nightly /etc/services.d/rake-reporting-nightly
