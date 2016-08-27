@@ -11,8 +11,8 @@ class ChoiceAnswerReporter
 
   def add_day(date)
     day = choice_answer_days.find_or_create_by(date: date)
-    day.inc(:count, 1)    
-    inc(:count, 1)
+    day.inc(count: 1)
+    inc(count: 1)
   end
 
   def days_for_date_range(start_date, end_date)

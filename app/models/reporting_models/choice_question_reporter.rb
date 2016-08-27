@@ -211,10 +211,10 @@ class ChoiceQuestionReporter < QuestionReporter
 
   def add_day(date, chosen_count)
     day = choice_question_days.find_or_create_by(date: date)
-    day.inc(:answered, 1)
-    day.inc(:chosen, chosen_count)
-    inc(:answered, 1)
-    inc(:chosen, chosen_count)
+    day.inc(answered: 1)
+    day.inc(chosen: chosen_count)
+    inc(answered: 1)
+    inc(chosen: chosen_count)
   end
 
   def answer_percent(count, total, precision = 2)
