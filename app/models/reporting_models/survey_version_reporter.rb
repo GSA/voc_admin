@@ -155,8 +155,8 @@ class SurveyVersionReporter
       day.questions_asked = hash[:total]
       day.questions_skipped = hash[:skip]
     end
-    self.questions_asked = survey_version_days.sum(:questions_asked)
-    self.questions_skipped = survey_version_days.sum(:questions_skipped)
+    self.questions_asked = survey_version_days.pluck(:questions_asked).compact.sum
+    self.questions_skipped = survey_version_days.pluck(:questions_skipped).compact.sum
     save
     skips_hash[:choice_days].each do |id, days|
       cqr = choice_question_reporters.where(q_id: id).first
@@ -166,8 +166,8 @@ class SurveyVersionReporter
         day.questions_asked = hash[:total]
         day.questions_skipped = hash[:skip]
       end
-      cqr.questions_asked = cqr.choice_question_days.sum(:questions_asked)
-      cqr.questions_skipped = cqr.choice_question_days.sum(:questions_skipped)
+      cqr.questions_asked = cqr.choice_question_days.pluck(:questions_asked).compact.sum
+      cqr.questions_skipped = cqr.choice_question_days.pluck(:questions_skipped).compact.sum
       cqr.save
     end
     skips_hash[:text_days].each do |id, days|
@@ -178,8 +178,8 @@ class SurveyVersionReporter
         day.questions_asked = hash[:total]
         day.questions_skipped = hash[:skip]
       end
-      tqr.questions_asked = tqr.text_question_days.sum(:questions_asked)
-      tqr.questions_skipped = tqr.text_question_days.sum(:questions_skipped)
+      tqr.questions_asked = tqr.text_question_days.pluck(:questions_asked).compact.sum
+      tqr.questions_skipped = tqr.text_question_days.pluck(:questions_skipped).compact.sum
       tqr.save
     end
   end
