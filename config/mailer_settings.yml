@@ -5,7 +5,7 @@ development:
   raise_delivery_errors: false
   default_url_options:
     host: <%= ENV['MAILER_HOST'] %> # required parameter, determines FROM address
-  delivery_method: :sendmail
+  delivery_method: :file
 
 production:
   raise_delivery_errors: false

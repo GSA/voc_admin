@@ -41,6 +41,7 @@ RAILS_ENV={{key_or_default (printf "project_app_voc/%s/rails_env" $env_id) ""}}
 # public DNS for public and admin apps
 APP_PUBLIC_HOST_PORT={{key_or_default (printf "project_app_voc/%s/public_port" $env_id) ""}}
 APP_ADMIN_HOST_PORT={{key_or_default (printf "project_app_voc/%s/admin_port" $env_id) ""}}
+USE_START_PAGE={{key_or_default (printf "project_app_voc/%s/use_start_page" $env_id) ""}}
 
 S3_PATH_PREFIX={{key_or_default (printf "project_app_voc/%s/s3/path_prefix" $env_id) ""}}
 
