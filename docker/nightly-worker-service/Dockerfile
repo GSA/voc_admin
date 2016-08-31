@@ -13,7 +13,9 @@ RUN apt-get update && \
 
 COPY Gemfile* /tmp/
 WORKDIR /tmp
-RUN bundle install --without test development
+RUN bundle config timeout 20 && \
+  bundle config retry 6 && \
+  bundle install --without test development
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
