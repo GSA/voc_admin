@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 COPY Gemfile* /tmp/
 WORKDIR /tmp
-RUN bundle install --without test development
+RUN bash bundle.sh
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
