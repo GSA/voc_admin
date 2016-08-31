@@ -11,7 +11,9 @@ RUN apt-get update && \
   && apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY Gemfile* /tmp/
+COPY Gemfile /tmp/Gemfile
+COPY Gemfile.lock /tmp/Gemfile.lock
+COPY bundle.sh /tmp/bundle.sh
 WORKDIR /tmp
 RUN bash bundle.sh
 
