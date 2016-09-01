@@ -104,14 +104,14 @@ CommentToolApp::Application.routes.draw do
       end
     end
 
-    get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
-
     resources :images do
       get :display, :on => :collection
       delete :remove, :on => :collection
       post :save_file, :on => :collection
     end
   end
+
+  get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
