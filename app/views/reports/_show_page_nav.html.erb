@@ -4,7 +4,7 @@
     :class=>"manage"
   %>
   <%= link_to "PDF for Report",
-    pdf_report_path(@survey, @survey_version, @report, :format => :pdf),
+    survey_survey_version_pdf_report_path(@survey, @survey_version, @report, :format => :pdf),
     :class => "manage"
   %>
   <%= link_to "Email PDF", '#', :class => 'reportingEmailPdf manage' %>

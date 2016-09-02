@@ -101,10 +101,9 @@ CommentToolApp::Application.routes.draw do
              get "/:reporter_type/:reporter_id.:format" => "reports#question_csv", :as => "question_csv"
            end
          end
+         get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
       end
     end
-
-    get "/reports/pdf/:id(.:format)" => "reports#pdf", :as => "pdf_report"
 
     resources :images do
       get :display, :on => :collection
