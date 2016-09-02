@@ -2,9 +2,7 @@
 #
 # Manages the Report lifecycle.
 class ReportsController < ApplicationController
-  skip_before_filter :require_user, only: :pdf
-  skip_before_filter :login_required, only: :pdf
-  skip_before_filter :authenticate_user!, only: :pdf
+  skip_before_filter :require_user, :login_required, :authenticate_user!, only: :pdf
   before_filter :require_token_or_user, :get_survey_version_with_token, only: :pdf
   before_filter :get_survey_version, except: :pdf
   before_filter :get_report, except: [:new, :create]
