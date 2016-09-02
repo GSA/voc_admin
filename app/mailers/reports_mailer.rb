@@ -12,7 +12,7 @@ class ReportsMailer < ActionMailer::Base
     attach_question_reporter_csvs(@report.choice_question_reporters)
     attach_question_reporter_csvs(@report.text_question_reporters)
     @report_type = 'CSV'
-    mail :to => emails, 
+    mail :to => emails,
          :subject => "Report CSV: #{@report.name}",
          :template_name => "report"
   end
@@ -24,7 +24,7 @@ class ReportsMailer < ActionMailer::Base
     file = open("#{url}&token=#{token}&salt=#{salt}", :allow_redirections => :safe, "Accept:" => "application/pdf").read
     attachments["report_#{@report.id}.pdf"] = {:mime_type => 'application/pdf', :content => file}
     @report_type = 'PDF'
-    mail :to => emails, 
+    mail :to => emails,
          :subject => "Report PDF: #{@report.name}",
          :template_name => "report"
   end
