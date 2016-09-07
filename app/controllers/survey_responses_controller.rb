@@ -66,14 +66,25 @@ class SurveyResponsesController < ApplicationController
     end
   end
 
-  # GET    /survey_responses/export_all(.:format)
-  def export_all
+  # GET    /survey_responses/export_csv(.:format)
+  def export_csv
     @survey_version = SurveyVersion.find(params[:survey_version_id])
     # Generate the csv file in the background in case there are a large number of responses
     @survey_version.async(:generate_responses_csv, params, current_user.id)
     respond_to do |format|
       format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
-      format.js
+      format.js { render 'export_all', layout: false }
+    end
+  end
+
+  # GET    /survey_responses/export_xls(.:format)
+  def export_xls
+    @survey_version = SurveyVersion.find(params[:survey_version_id])
+    # Generate the csv file in the background in case there are a large number of responses
+    @survey_version.async(:generate_responses_xls, params, current_user.id)
+    respond_to do |format|
+      format.html {redirect_to survey_responses_path(:survey_id => @survey_version.survey_id, :survey_version_id => @survey_version.id)}
+      format.js { render 'export_all', layout: false }
     end
   end
 

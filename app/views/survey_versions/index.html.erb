@@ -77,7 +77,10 @@
         <%= link_to @survey.name.titleize, survey_survey_version_path(@survey, version) %>
       </td>
       <td class="col4">
-        <%= link_to "csv", export_all_survey_responses_path(:survey_version_id => version),
+        <%= link_to "csv", export_csv_survey_responses_path(:survey_version_id => version),
+          :remote => true %>
+        &nbsp;
+        <%= link_to "xls", export_xls_survey_responses_path(:survey_version_id => version),
           :remote => true %>
       </td>
       <td class="col4">
@@ -110,7 +113,7 @@
       <td class="col9"><%= version.created_at.strftime("%m/%d/%Y") %></td>
       <td class="col10"><%= version.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
       <td class="col11">
-        <%= link_to image_tag("clone.png", :alt=>"Clone Survey"), 
+        <%= link_to image_tag("clone.png", :alt=>"Clone Survey"),
           clone_survey_survey_version_path(@survey, version),
           data: { confirm: "Are you sure you wish to clone this version" },
           :class=>"copyLink"  %>

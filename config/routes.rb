@@ -32,7 +32,8 @@ CommentToolApp::Application.routes.draw do
 
   resources :survey_responses,
             only: [:create, :index, :edit, :update, :destroy] do
-    get :export_all, on: :collection, as: 'export_all'
+    get :export_csv, on: :collection, as: 'export_csv'
+    get :export_xls, on: :collection, as: 'export_xls'
   end
 
   resources :rules do

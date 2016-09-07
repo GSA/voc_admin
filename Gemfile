@@ -29,7 +29,7 @@ gem 'redis-objects'
 gem 'pdfkit'
 gem "best_in_place"
 gem 'httparty'
-gem 'spreadsheet', '1.0.0'
+gem 'spreadsheet'
 
 gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
 
