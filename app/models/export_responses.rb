@@ -2,7 +2,7 @@ require 'spreadsheet'
 Spreadsheet.client_encoding = 'UTF-8'
 
 class ExportResponses
-  attr_accessor :filter_params, :user_id, :survey_version, :export
+  attr_accessor :filter_params, :user_id, :survey_version, :export_file
 
   DEFAULT_BATCH_SIZE = 1000
 
@@ -137,12 +137,12 @@ class ExportResponses
   end
 
   def create_export
-    @export = survey_version.exports.create! :document => File.open(absolute_file_name)
+    @export_file = survey_version.exports.create! :document => File.open(absolute_file_name)
   end
 
   def send_export_file
     # Notify the user that the export has been successful and is available for download
-    if export.persisted?
+    if export_file.persisted?
       resque_args = User.find(user_id).email, export.id
 
       begin
