@@ -13,6 +13,8 @@ services:
     command: --smallfiles
     ports:
       - "27017:27017"
+    volumes:
+      - ./database/mongo:/data/db
   redis:
     image: redis:3.0
     ports:
@@ -23,6 +25,8 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    volumes:
+      - ./database/elasticsearch:/usr/share/elasticsearch/data
   admin:
     build:
       context: .
@@ -35,7 +39,6 @@ services:
       - mysql
       - mongo
       - redis
-    #entrypoint: "bundle exec"
     env_file: ./.env
     ports:
       - "3000:80"
