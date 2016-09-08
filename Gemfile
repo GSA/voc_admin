@@ -17,6 +17,8 @@ gem 'daemons', :require => false
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 
+gem 'redis', '~> 3.2.2' # https://github.com/resque/resque/issues/1452
+gem 'resque'
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
