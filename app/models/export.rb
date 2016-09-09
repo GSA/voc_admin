@@ -5,10 +5,17 @@ class Export < ActiveRecord::Base
   belongs_to :survey_version
   # S3 credentials are read from config/aws.yml
   # S3 configuration options are set in environments/production.rb
-  has_attached_file :document, processors: []
+  has_attached_file :document, {
+    processors: [],
+    s3_headers: lambda { |document|
+      {
+        "Content-Disposition" => %(attachment; filename="#{document.name}),
+        "Content-Type" => Mime::Type.lookup_by_extension(document.name.split('.').last).to_s
+      }
+    }
+  }
 
   before_validation :generate_access_token
-  before_post_process :set_content_type
 
   validates :access_token, presence: true, uniqueness: true, length: { maximum: 255 }
   validates_attachment :document, presence: true
@@ -25,13 +32,6 @@ class Export < ActiveRecord::Base
   # @return [String] a 128-character hex string unique identifier.
   def generate_access_token
     self.access_token = SecureRandom.hex(64)
-  end
-
-  def set_content_type
-    document.instance_write(
-      :content_type,
-      Mime::Type.lookup_by_extension(document_file_name.split('.').last).to_s
-    )
   end
 end
 
