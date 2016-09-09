@@ -28,10 +28,12 @@ class Export < ActiveRecord::Base
   end
 
   def set_content_type
+    filename = self.document.original_filename
+
     self.document.options.merge!(
       s3_headers: {
-        "Content-Disposition" => %(attachment; filename="#{self.document.name}"),
-        "Content-Type" => Mime::Type.lookup_by_extension(self.document.name.split('.').last).to_s
+        "Content-Disposition" => %(attachment; filename="#{filename}"),
+        "Content-Type" => Mime::Type.lookup_by_extension(filename.split('.').last).to_s
       }
     )
   end
