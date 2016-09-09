@@ -96,7 +96,7 @@ class ExportResponses
   end
 
   def file_name
-    @file_name ||= "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey_name}-#{version_number}.#{@format}"
+    @file_name ||= "#{Time.now.strftime("%Y%m%d%H%M")}-#{survey_name}-#{version_number}.#{@file_format}"
   end
 
   def version_number
