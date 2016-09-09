@@ -143,7 +143,7 @@ class ExportResponses
   def send_export_file
     # Notify the user that the export has been successful and is available for download
     if export_file.persisted?
-      resque_args = User.find(user_id).email, export_file.id
+      resque_args = User.find(user_id).email, export_file.id, format
 
       begin
         Resque.enqueue(ExportMailer, *resque_args)
