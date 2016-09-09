@@ -8,6 +8,7 @@ class Export < ActiveRecord::Base
   has_attached_file :document, processors: []
 
   before_validation :generate_access_token
+  before_post_process :set_content_type
 
   validates :access_token, presence: true, uniqueness: true, length: { maximum: 255 }
   validates_attachment :document, presence: true
@@ -18,11 +19,19 @@ class Export < ActiveRecord::Base
   end
 
   private
+
   # Generate a unique identifier.
   #
   # @return [String] a 128-character hex string unique identifier.
   def generate_access_token
     self.access_token = SecureRandom.hex(64)
+  end
+
+  def set_content_type
+    document.instance_write(
+      :content_type,
+      Mime::Type.lookup_by_extension(document_file_name.split('.').last).to_s
+    )
   end
 end
 
@@ -40,4 +49,3 @@ end
 #  document_updated_at   :datetime
 #  survey_version_id     :integer
 #
-
