@@ -22,6 +22,7 @@ gem 'resque'
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
+gem 'resque-backtrace', require: false
 
 gem 'escape_utils'
 gem 'mongoid', "~> 5.0"

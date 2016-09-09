@@ -6,11 +6,11 @@ class ExportResponses
 
   DEFAULT_BATCH_SIZE = 1000
 
-  def initialize(survey_version, filter_params, user_id, format)
+  def initialize(survey_version, filter_params, user_id, file_format)
     @survey_version = survey_version
     @filter_params = filter_params
     @user_id = user_id
-    @format = format
+    @file_format = file_format
   end
 
   def survey_response_query
@@ -26,7 +26,7 @@ class ExportResponses
     # Write the survey responses to a temporary CSV/XLS file which will be used to create the
     # Export instance.  The document will be copied to the correct location by paperclip
     # when the Export instance is created.
-    method("write_#{@format}").call
+    method("write_#{@file_format}").call
 
     create_export
     send_export_file
@@ -62,7 +62,7 @@ class ExportResponses
           batch.each do |response|
             # Write the completed row to the CSV
             sheet.row(row).concat formatted_response_array(response)
-            sheet.row(row).set_format 0, Spreadsheet::Format.new(:number_format => 'D-MMM-YYYY')
+            sheet.row(row).set_format(0, Spreadsheet::Format.new(number_format: 'D-MMM-YYYY'))
 
             row += 1
           end
@@ -143,7 +143,7 @@ class ExportResponses
   def send_export_file
     # Notify the user that the export has been successful and is available for download
     if export_file.persisted?
-      resque_args = User.find(user_id).email, export_file.id, format
+      resque_args = User.find(user_id).email, export_file.id, @file_format
 
       begin
         Resque.enqueue(ExportMailer, *resque_args)
