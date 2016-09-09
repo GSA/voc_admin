@@ -101,6 +101,7 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: 77cc973baa7f9b0117893d937fba7da55d509f986dce189fe47f5b0e998a0ece5f087d5df6a662a57247b6dcea8ab775b90dec4db563e56877f65af18ace4b09
+      #VVERBOSE: 1
     volumes:
       - ./tmp:/voc/tmp
   response_worker:
