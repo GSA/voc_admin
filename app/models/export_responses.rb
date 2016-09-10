@@ -137,10 +137,7 @@ class ExportResponses
   end
 
   def create_export
-    @export_file = survey_version.exports.build(document: File.open(absolute_file_name)) do |export|
-      export.document_content_type = Mime::Type.lookup_by_extension(absolute_file_name.split('.').last).to_s
-      export.save!
-    end
+    @export_file = survey_version.exports.create! :document => File.open(absolute_file_name)
   end
 
   def send_export_file
