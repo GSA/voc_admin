@@ -5,14 +5,7 @@ class Export < ActiveRecord::Base
   belongs_to :survey_version
   # S3 credentials are read from config/aws.yml
   # S3 configuration options are set in environments/production.rb
-  has_attached_file :document,
-                    processors: [],
-                    s3_headers: proc { |instance|
-                      {
-                        content_disposition: %(attachment; filename="#{File.basename(instance.path)}"),
-                        content_type: Mime::Type.lookup_by_extension(instance.path.split('.').last).to_s || 'text/html'
-                      }
-                    }
+  has_attached_file :document, processors: []
 
   before_validation :generate_access_token
 
