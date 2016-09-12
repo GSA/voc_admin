@@ -6,6 +6,8 @@ require 'csv'
 class ExportsController < ApplicationController
   DOWNLOAD_AVAILABLE_FOR_IN_SECONDS = 86400 # 1 day
 
+  skip_before_filter :require_user
+
   # /exports/:id/download(.:format)
   # Endpoint to start the download process.
   def download
