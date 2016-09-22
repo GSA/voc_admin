@@ -1,4 +1,5 @@
 .git/
+database/
 doc/
 docker/
 log/
@@ -15,3 +16,5 @@ Brewfile
 sync_uploads.sh
 war_*.*
 .env.local
+*.dump
+dump.*

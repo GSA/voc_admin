@@ -15,3 +15,5 @@ vendor/cache/
 tmp/
 database/
 .env.local
+*.dump
+dump.*

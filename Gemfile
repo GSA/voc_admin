@@ -47,6 +47,7 @@ gem "rails-observers"
 
 gem 'mysql2', '~> 0.3.18'
 gem 'unicorn-rails'
+gem 'unicorn-worker-killer'
 
 # Add attr_accessible back so we can slowly convert to strong parameters
 gem "protected_attributes"
