@@ -140,6 +140,22 @@
     </div>
     <br />
 
+    <div class="left_side">
+      <%= f.label :radio_selection_legend, "Radio Button Select Legend: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :radio_selection_legend %>
+    </div>
+    <br />
+
+    <div class="left_side">
+      <%= f.label :checkbox_selection_legend, "Checkbox Select Legend: " %>
+    </div>
+    <div class="right_side">
+      <%= f.text_field :checkbox_selection_legend %>
+    </div>
+    <br />
+
     <div class="pageLink">
       <%= link_to 'Cancel', surveys_url, :class=>"cancelLink" %>
       <% if f.object.new_record? %>

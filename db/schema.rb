@@ -562,6 +562,8 @@ ActiveRecord::Schema.define(version: 201408191627092) do
     t.string   "survey_preview_stylesheet"
     t.string   "omb_expiration_date"
     t.boolean  "suppress_invitation",                                   default: false, null: false
+    t.string   "radio_selection_legend"
+    t.string   "checkbox_selection_legend"
   end
 
   add_index "surveys", ["site_id"], name: "index_surveys_on_site_id", using: :btree
