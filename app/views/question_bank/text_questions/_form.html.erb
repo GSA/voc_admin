@@ -9,7 +9,7 @@
     <%= f.radio_button :answer_type, "area", :id => "@text_question_area_radio_button" %><%= f.label :area_radio_button, "Area" %>
   </fieldset>
   <%= f.label :answer_size, "Answer Size: " %>
-  <%= f.select :answer_size, options_for_select( [ ["50 Characters", 50], ["75 Characters", 75], ["100 Characters", 100], ["1,000 Characters", 1000], ["5,000 Characters", 5000] ], @text_question.answer_size) %>
+  <%= f.select :answer_size, options_for_select( [ ["50 Characters", 50], ["75 Characters", 75], ["100 Characters", 100], ["250 Characters", 250], ["500 Characters", 500], ["1,000 Characters", 1000], ["5,000 Characters", 5000] ], @text_question.answer_size) %>
   <%= f.label :row_size, "Row Size: ", :class => "HiddenLabel", :for=>"RowCountSelect" %>
   <%= f.select :row_size, options_for_select( [ ["", nil],["3 Lines", 3], ["4 Lines", 4], ["5 Lines", 5] ], @text_question.row_size), {}, :id => "RowCountSelect" %>
 
