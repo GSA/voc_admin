@@ -48,6 +48,7 @@ COPY consul-template/templates /consul-template/templates/
 COPY s6/rake-reporting-nightly /etc/services.d/rake-reporting-nightly
 COPY s6/consul-template /etc/services.d/consul-template
 
+RUN df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2 > /dev/null | xargs chmod a+t
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
