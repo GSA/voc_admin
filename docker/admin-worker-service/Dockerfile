@@ -57,7 +57,7 @@ RUN tar xvf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz && \
     mv wkhtmltox/bin/wkhtmlto* /usr/bin/ && \
     rm -rf wkhtmltox*
 
-RUN df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2 > /dev/null | xargs chmod a+t
+RUN df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t
 
 WORKDIR $APP_HOME
 
