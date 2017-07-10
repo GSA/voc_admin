@@ -48,7 +48,7 @@ COPY consul-template/templates /consul-template/templates/
 COPY s6/rake-reporting-nightly /etc/services.d/rake-reporting-nightly
 COPY s6/consul-template /etc/services.d/consul-template
 
-RUN chmod a+t \usr\local\bundle && chmod a+t \usr\local\bundle\bin
+RUN chmod a+t /usr/local/bundle && chmod a+t /usr/local/bundle/bin
 
 # DON'T CLEAN UP INTERMEDIARY IMAGES. DEPENDENT BUILD. MODIFY ONLY BELOW.
 
