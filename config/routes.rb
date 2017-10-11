@@ -1,6 +1,6 @@
 CommentToolApp::Application.routes.draw do
   devise_for :users,
-             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
+             controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "sessions" },
              timeout_in: ENV.fetch('SESSION_TIMEOUT').to_i.minutes
 
   get '/exports/:id/download' => 'exports#download',
@@ -9,8 +9,7 @@ CommentToolApp::Application.routes.draw do
   devise_scope :user do
     match '/users/auth/:action/callback', to: 'users/omniauth_callbacks', via: [:get, :post]
     get 'sign_in', to: 'devise/sessions#new', as: :new_user_session
-    get 'sign_out', to: 'devise/sessions#destroy', as: :destroy_user_session
-  end
+    get 'sign_out', :to => 'sessions#destroy', :as => :destroy_user_session
 
   resources :users
   resources :sites
