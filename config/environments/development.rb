@@ -70,3 +70,5 @@ end
 ActionDispatch::Callbacks.after do
   bootstrap_display_field_callbacks
 end
+
+Rails.application.routes.default_url_options[:protocol] = 'https'
