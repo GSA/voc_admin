@@ -5,8 +5,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def saml
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.from_omniauth(request.env["omniauth.auth"])
-    l = Logger.new(STDOUT)
-    l.info("LoginSAML id:#{@user.id} email:#{@user.email}")
+    #l = Logger.new(STDOUT)
+    #l.info("LoginSAML id:#{@user.id} email:#{@user.email}")
     sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
     set_flash_message(:notice, :success, :kind => "Saml") if is_navigational_format?
   end
