@@ -13,8 +13,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def developer
     @user = User.from_omniauth(request.env['omniauth.auth'])
-    l = Logger.new(STDOUT)
-    l.info("LoginDEV id:#{@user.id} email:#{@user.email}")
+    #l = Logger.new(STDOUT)
+    #l.info("LoginDEV id:#{@user.id} email:#{@user.email}")
     sign_in_and_redirect @user, event: :authentication
   end
 

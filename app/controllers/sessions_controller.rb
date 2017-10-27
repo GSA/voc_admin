@@ -10,8 +10,8 @@ class SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    l = Logger.new(STDOUT)
-    l.info("Logout id:#{current_user.id} email:#{current_user.email}")
+    #l = Logger.new(STDOUT)
+    #l.info("Logout id:#{current_user.id} email:#{current_user.email}")
     super
   end
 
