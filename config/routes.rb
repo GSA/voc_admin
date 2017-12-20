@@ -3,8 +3,7 @@ CommentToolApp::Application.routes.draw do
              controllers: { omniauth_callbacks: "users/omniauth_callbacks", sessions: "sessions" },
              timeout_in: ENV.fetch('SESSION_TIMEOUT').to_i.minutes
 
-  get '/exports/:id/download' => 'exports#download',
-      :as => 'exports_download'
+  get '/exports/:id/download' => 'exports#download', :as => 'exports_download'
 
   devise_scope :user do
     match '/users/auth/:action/callback', to: 'users/omniauth_callbacks', via: [:get, :post]
@@ -105,7 +104,7 @@ CommentToolApp::Application.routes.draw do
       get '/reports/pdf/:id(.:format)' => 'reports#pdf', :as => 'pdf_report'
     end
   end
-
+end
   resources :images do
     get :display, on: :collection
     delete :remove, on: :collection
