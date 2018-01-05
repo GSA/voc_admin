@@ -69,6 +69,13 @@ namespace :reporting do
     puts "Loading question reporting DB..."
     Rake::Task["reporting:load_questions"].execute
     puts "  Finished loading question reporting DB."
+
+    today = Date.today.strftime
+    five_days_ago = (Date.today - 5).strftime
+    puts "Re-exporting last 5 days..."
+    Rake::Task["reporting:export_in_range"].invoke(five_days_ago, today)
+    puts "  Finished re-exporting."
+
     puts "Mailing recurring reports..."
     Rake::Task["reporting:mail_recurring_reports"].execute
     puts "  Finished recurring reports."
