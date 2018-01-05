@@ -180,6 +180,7 @@ class SurveyResponse < ActiveRecord::Base
     resp.created_at = self.created_at
     resp.page_url = self.page_url
     resp.device = self.device
+    resp.uuid_key = self.raw_submission.try(:uuid_key) || self.raw_responses.first.try(:client_id)
     resp.archived = self.archived
 
     resp.save

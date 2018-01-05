@@ -12,6 +12,7 @@ class ReportableSurveyResponse
   field :created_at, type: DateTime
   field :page_url, type: String
   field :device, type: String
+  field :uuid_key, type: String
 
   field :raw_answers, type: Hash
   field :answers, type: Hash
