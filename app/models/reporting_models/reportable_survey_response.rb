@@ -13,6 +13,8 @@ class ReportableSurveyResponse
   field :page_url, type: String
   field :device, type: String
   field :uuid_key, type: String
+  field :referrer, type: String
+  field :user_agent, type: String
 
   field :raw_answers, type: Hash
   field :answers, type: Hash

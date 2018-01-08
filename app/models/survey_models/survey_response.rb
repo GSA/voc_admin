@@ -86,7 +86,7 @@ class SurveyResponse < ActiveRecord::Base
     client_id = SecureRandom.hex(64)
 
     # Remove extraneous data from the response
-    response.slice!('page_url', 'raw_responses_attributes', 'device')
+    response.slice!('page_url', 'raw_responses_attributes', 'device', 'referrer', 'user_agent')
     response['raw_responses_attributes'].try(:values).try(:each) do |rr|
       rr.slice!('question_content_id', 'answer')
       rr['question_content_id'] = rr['question_content_id'].to_i
@@ -181,6 +181,8 @@ class SurveyResponse < ActiveRecord::Base
     resp.page_url = self.page_url
     resp.device = self.device
     resp.uuid_key = self.raw_submission.try(:uuid_key) || self.raw_responses.first.try(:client_id)
+    resp.referrer = self.referrer
+    resp.user_agent = self.user_agent
     resp.archived = self.archived
 
     resp.save
