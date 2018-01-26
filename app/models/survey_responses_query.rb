@@ -54,7 +54,7 @@ class SurveyResponsesQuery
     if column_id = survey_version.display_fields.find_by_name(params[:order_column]).try(:id)
       "df_#{column_id}.raw"
     else
-      %w(created_at page_url device referrer user_agent).include?(params[:order_column]) ? params[:order_column] : 'created_at'
+      %w(created_at page_url device).include?(params[:order_column]) ? params[:order_column] : 'created_at'
     end
   end
 

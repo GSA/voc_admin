@@ -108,7 +108,7 @@ class ExportResponses
   end
 
   def formatted_header_array
-    ["Date", "Page URL", "Device", "UUID", "Referrer", "User Agent"].concat(ordered_columns.map(&:name))
+    ["Date", "Page URL", "Device", "UUID"].concat(ordered_columns.map(&:name))
   end
 
   def ordered_columns
@@ -124,9 +124,7 @@ class ExportResponses
       response.created_at.in_time_zone("Eastern Time (US & Canada)"),
       response.page_url,
       response.device,
-      normalize_uuid_key(response),
-      response.referrer,
-      response.user_agent
+      normalize_uuid_key(response)
     ].concat(response_record(response))
   end
 

@@ -490,8 +490,6 @@ ActiveRecord::Schema.define(version: 201408191627092) do
     t.boolean  "archived",          default: false
     t.string   "device",            default: "Desktop"
     t.integer  "raw_submission_id"
-    t.string   "referrer"
-    t.string   "user_agent"
   end
 
   add_index "survey_responses", ["status_id"], name: "index_srs_status_id", using: :btree

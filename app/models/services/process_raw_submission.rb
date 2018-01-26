@@ -5,7 +5,7 @@ class ProcessRawSubmission
     response = raw_submission.post['response']
     
     # Remove extraneous data from the response
-    response.slice!('page_url', 'raw_responses_attributes', 'device', 'referrer', 'user_agent')
+    response.slice!('page_url', 'raw_responses_attributes', 'device')
     response['raw_responses_attributes'].try(:values).try(:each) {|rr| rr.slice!('question_content_id', 'answer')}
 
     survey_response = SurveyResponse.new({
