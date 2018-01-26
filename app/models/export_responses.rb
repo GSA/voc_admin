@@ -108,7 +108,7 @@ class ExportResponses
   end
 
   def formatted_header_array
-    ["Date", "Page URL", "Device", "UUID"].concat(ordered_columns.map(&:name))
+    ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
   end
 
   def ordered_columns
@@ -123,21 +123,8 @@ class ExportResponses
     [
       response.created_at.in_time_zone("Eastern Time (US & Canada)"),
       response.page_url,
-      response.device,
-      normalize_uuid_key(response)
+      response.device
     ].concat(response_record(response))
-  end
-
-  def normalize_uuid_key(response)
-    uuid = response.try(:uuid_key)
-
-    if uuid && uuid.length > 36
-      uuid = uuid.truncate(32, omission: '')
-
-      uuid = "#{uuid[0..7]}-#{uuid[8..11]}-#{uuid[12..15]}-#{uuid[16..19]}-#{uuid[20..31]}"
-    end
-
-    uuid
   end
 
   def response_record(response)
