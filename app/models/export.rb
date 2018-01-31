@@ -18,6 +18,7 @@ class Export < ActiveRecord::Base
   end
 
   private
+
   # Generate a unique identifier.
   #
   # @return [String] a 128-character hex string unique identifier.
@@ -40,4 +41,3 @@ end
 #  document_updated_at   :datetime
 #  survey_version_id     :integer
 #
-

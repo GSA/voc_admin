@@ -1,5 +1,16 @@
 <div class="page-nav">
-    <%= link_to "Export to CSV", export_all_survey_responses_path(
+    <%= link_to "Export to CSV", export_csv_survey_responses_path(
+        :survey_version_id => version,
+        :order_column => params[:order_column],
+        :order_dir => params[:order_dir],
+        :search => params[:search],
+        :custom_view_id => params[:custom_view_id],
+        :simple_search => params[:simple_search]
+      ),
+      :class => "manage",
+      :remote => true
+    %>
+    <%= link_to "Export to XLS", export_xls_survey_responses_path(
         :survey_version_id => version,
         :order_column => params[:order_column],
         :order_dir => params[:order_dir],

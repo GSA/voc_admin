@@ -32,22 +32,6 @@
       <%= f.text_field :username %>
     </div>
     <br />
-    <% if @user.new_record? || @user == @current_user %>
-      <div class="left_side">
-        <%= f.label :password, "Password: " %>
-      </div>
-      <div class="right_side">
-        <%= f.password_field :password%>
-      </div>
-      <br />
-      <div class="left_side">
-        <%= f.label :password_confirmation, "Password Confirmation: " %>
-      </div>
-      <div class="right_side">
-        <%= f.password_field :password_confirmation%>
-      </div>
-      <br />
-    <% end -%>
 
     <% if @current_user.admin? %>
       <fieldset class="hide">

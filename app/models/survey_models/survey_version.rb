@@ -150,7 +150,11 @@ class SurveyVersion < ActiveRecord::Base
   NOSQL_BATCH = 1000
 
   def generate_responses_csv(filter_params, user_id)
-    ExportResponsesToCsv.new(self, filter_params, user_id).export_csv
+    ExportResponses.new(self, filter_params, user_id, :csv).export
+  end
+
+  def generate_responses_xls(filter_params, user_id)
+    ExportResponses.new(self, filter_params, user_id, :xls).export
   end
 
   # Get all the SurveyElements that are Question elements.
@@ -171,13 +175,13 @@ class SurveyVersion < ActiveRecord::Base
 
   # Get all the available question content ids for the survey version for use as Rule sources.
   #
-  # @return [Array<Array<String, String>>] array of available question id and 
+  # @return [Array<Array<String, String>>] array of available question id and
   # display text pair arrays for use as Rule sources
   def sources
     source_array = []
     self.questions.each do |q|
       if q.class == MatrixQuestion
-        q.choice_questions.each { |cq| 
+        q.choice_questions.each { |cq|
           source_array << [
             "#{cq.question_content.id},QuestionContent",
             "#{q.question_content.statement}: #{cq.question_content.statement}(matrix answer)"
@@ -193,16 +197,16 @@ class SurveyVersion < ActiveRecord::Base
     source_array
   end
 
-  # Used to present available question content ids for the survey version for use 
+  # Used to present available question content ids for the survey version for use
   # as Rule DB action targets.
   #
-  # @return [Array<Array<String, String>>] an array of available question display 
+  # @return [Array<Array<String, String>>] an array of available question display
   # text and id pair arrays for use as action targets
   def options_for_action_select
     source_array = []
     self.questions.each do |q|
       if q.class == MatrixQuestion
-        q.choice_questions.each { |cq| 
+        q.choice_questions.each { |cq|
           source_array << [
             "#{q.question_content.statement}: #{cq.question_content.statement} response",
             "#{cq.question_content.id}"
@@ -293,10 +297,10 @@ class SurveyVersion < ActiveRecord::Base
       end
 
       # Fix the next_page_ids for page level flow control
-      # Use try so that if something goes wrong and you can't find the correct 
+      # Use try so that if something goes wrong and you can't find the correct
       # page it will just blank out the flow control
       flow_control_pages = new_sv.pages.where("pages.next_page_id is not null").to_a
-      pages_pointing_to_old_survey = flow_control_pages.select {|page| 
+      pages_pointing_to_old_survey = flow_control_pages.select {|page|
         page.next_page.survey_version_id != new_sv.id
       }
       pages_pointing_to_old_survey.each do |page|

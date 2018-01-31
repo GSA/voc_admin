@@ -17,9 +17,12 @@ gem 'daemons', :require => false
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
 
+gem 'redis', '~> 3.2.2' # https://github.com/resque/resque/issues/1452
+gem 'resque'
 gem 'resque_mailer'
 gem 'resque-status'
 gem 'resque_unit', :group => :test
+gem 'resque-backtrace', require: false
 
 gem 'escape_utils'
 gem 'mongoid', "~> 5.0"
@@ -29,7 +32,7 @@ gem 'redis-objects'
 gem 'pdfkit'
 gem "best_in_place"
 gem 'httparty'
-gem 'spreadsheet', '1.0.0'
+gem 'spreadsheet'
 
 gem 'elasticsearch' #using base elasticsearch gem for now.  we may want to use model later, but this isn't a traditional use case of search
 
@@ -44,6 +47,7 @@ gem "rails-observers"
 
 gem 'mysql2', '~> 0.3.18'
 gem 'unicorn-rails'
+gem 'unicorn-worker-killer'
 
 # Add attr_accessible back so we can slowly convert to strong parameters
 gem "protected_attributes"

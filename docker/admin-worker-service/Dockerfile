@@ -56,6 +56,9 @@ WORKDIR /tmp
 RUN tar xvf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz && \
     mv wkhtmltox/bin/wkhtmlto* /usr/bin/ && \
     rm -rf wkhtmltox*
+
+RUN chmod a+t /usr/local/bundle && chmod a+t /usr/local/bundle/bin
+
 WORKDIR $APP_HOME
 
 ENV QUEUES=voc_report_email,voc_rules,voc_dfs

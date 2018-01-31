@@ -80,3 +80,5 @@ CommentToolApp::Application.configure do
   # Enable memcached
   #config.cache_store = :mem_cache_store, "#{MemcachedServerConfig::Server}:#{MemcachedServerConfig::Port}", { :namespace => 'VOC', :expires_in => 1.day, :compress => true }
 end
+
+Rails.application.routes.default_url_options[:protocol] = 'https'
