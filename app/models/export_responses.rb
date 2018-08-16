@@ -62,7 +62,6 @@ class ExportResponses
           batch.each do |response|
             # Write the completed row to the CSV
             sheet.row(row).concat formatted_response_array(response)
-            sheet.row(row).set_format(0, Spreadsheet::Format.new(number_format: 'D-MMM-YYYY'))
 
             row += 1
           end
@@ -121,10 +120,15 @@ class ExportResponses
 
   def formatted_response_array(response)
     [
-      response.created_at.in_time_zone("Eastern Time (US & Canada)"),
+      format_date(response.created_at),
       response.page_url,
       response.device
     ].concat(response_record(response))
+  end
+
+  def self.format_date(date)
+    date.in_time_zone("Eastern Time (US & Canada)")
+        .to_formatted_s(:export_ready)
   end
 
   def response_record(response)
