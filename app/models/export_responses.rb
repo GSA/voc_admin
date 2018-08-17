@@ -126,9 +126,9 @@ class ExportResponses
     ].concat(response_record(response))
   end
 
-  def self.format_date(date)
-    date.in_time_zone("Eastern Time (US & Canada)")
-        .to_formatted_s(:export_ready)
+  def format_date(input_date)
+    input_date.in_time_zone("Eastern Time (US & Canada)")
+              .to_formatted_s(:export_ready)
   end
 
   def response_record(response)
