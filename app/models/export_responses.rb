@@ -62,11 +62,12 @@ class ExportResponses
           batch.each do |response|
             # Write the completed row to the CSV
             sheet.row(row).concat formatted_response_array(response)
-            sheet.row(row).set_format(0, Spreadsheet::Format.new(number_format: 'D-MMM-YYYY'))
 
             row += 1
           end
         end
+
+        sheet.column(1).set_format(0, Spreadsheet::Format.new(number_format: 'MM/dd/yy HH:mm'))
       end
 
       book.write absolute_file_name
