@@ -52,8 +52,15 @@ class ExportResponses
   end
 
   def write_xls
+    date_format = Spreadsheet::Format.new(number_format: 'mm/d/yy h:mm')
+
     Spreadsheet::Workbook.new.tap do |book|
       book.create_worksheet.tap do |sheet|
+        begin
+          sheet.column(0).default_format = date_format
+        rescue
+        end
+
         sheet.row(0).concat formatted_header_array
 
         row = 1
@@ -62,12 +69,12 @@ class ExportResponses
           batch.each do |response|
             # Write the completed row to the CSV
             sheet.row(row).concat formatted_response_array(response)
+            sheet.row(row).set_format(0, date_format)
 
             row += 1
           end
         end
 
-        sheet.column(0).set_format(0, Spreadsheet::Format.new(number_format: 'MM/dd/yy HH:mm'))
       end
 
       book.write absolute_file_name
