@@ -67,7 +67,7 @@ class ExportResponses
           end
         end
 
-        sheet.column(1).set_format(0, Spreadsheet::Format.new(number_format: 'MM/dd/yy HH:mm'))
+        sheet.column(0).set_format(0, Spreadsheet::Format.new(number_format: 'MM/dd/yy HH:mm'))
       end
 
       book.write absolute_file_name
