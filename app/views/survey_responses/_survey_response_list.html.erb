@@ -38,6 +38,7 @@
     <table summary="this table is used to display the results of a survey">
       <tr>
         <th scope="col" class="col1">Delete/ Edit</th>
+        <th scope="col"><%= sortable_display_field 'id', 'ID' %></th>
         <th scope="col"><%= sortable_display_field 'created_at', 'Date' %></th>
         <th scope="col"><%= sortable_display_field 'page_url', 'Page URL' %></th>
         <th scope="col"><%= sortable_display_field 'device', 'Device' %></th>
@@ -57,6 +58,7 @@
             %>
             <%= link_to image_tag("edit.png", :alt=>"edit"), edit_survey_response_path(sr.id, {:survey_id => version.survey_id}.merge(params.slice(*SurveyResponsesController::POST_PARAMS))) %>
           </td>
+          <td><%= sr.id %></td>
           <td><%= sr.created_at.in_time_zone.strftime("%m/%d/%Y - %T") %></td>
           <td><%= sr.page_url %></td>
           <td><%= sr.device %></td>
