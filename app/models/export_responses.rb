@@ -57,7 +57,7 @@ class ExportResponses
     Spreadsheet::Workbook.new.tap do |book|
       book.create_worksheet.tap do |sheet|
         begin
-          sheet.column(0).default_format = date_format
+          sheet.column(1).default_format = date_format
         rescue
         end
 
@@ -69,7 +69,7 @@ class ExportResponses
           batch.each do |response|
             # Write the completed row to the CSV
             sheet.row(row).concat formatted_response_array(response)
-            sheet.row(row).set_format(0, date_format)
+            sheet.row(row).set_format(1, date_format)
 
             row += 1
           end
@@ -116,7 +116,7 @@ class ExportResponses
   end
 
   def formatted_header_array
-    ["Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
+    ["Survey Response ID", "Date", "Page URL", "Device"].concat(ordered_columns.map(&:name))
   end
 
   def ordered_columns
@@ -129,6 +129,7 @@ class ExportResponses
 
   def formatted_response_array(response)
     [
+      response.id,
       response.created_at.in_time_zone("Eastern Time (US & Canada)"),
       response.page_url,
       response.device
