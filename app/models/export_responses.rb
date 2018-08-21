@@ -129,7 +129,7 @@ class ExportResponses
 
   def formatted_response_array(response)
     [
-      response.id,
+      response.try(:survey_response_id),
       response.created_at.in_time_zone("Eastern Time (US & Canada)"),
       response.page_url,
       response.device
