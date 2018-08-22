@@ -2,20 +2,16 @@ version: '2'
 services:
   mysql:
     image: mysql:5.6
-    logging:
-      driver: none
     ports:
       - "3306:3306"
     volumes:
       - ./database/mysql:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
   mongo:
     image: mongo:2.6
-    logging:
-      driver: none
     command: --smallfiles
     ports:
       - "27017:27017"
@@ -25,16 +21,12 @@ services:
       driver: none
   redis:
     image: redis:3.0
-    logging:
-      driver: none
     ports:
       - "6379:6379"
     logging:
       driver: none
   elasticsearch:
     image: elasticsearch:1.7
-    logging:
-      driver: none
     command: elasticsearch -Des.network.host=0.0.0.0
     ports:
       - "9200:9200"
@@ -55,25 +47,23 @@ services:
       - mysql
       - mongo
       - redis
+    entrypoint: ./development.sh
     env_file: ./.env
     ports:
       - "3000:80"
     environment:
       # runtime ENV parameters
       RAILS_ENV: development
-      RAILS_COOKIE_TOKEN: 173024e489c10d4d4ae2b573eda1ca55a5057943d087c3147a71d9fb201c8249197bf5f9cd34b2f2be10561f6e3334b589b0ff225009c8c9e9011d508a90f8d4
+      RAILS_COOKIE_TOKEN: 6f1d70d3424620e9007f62d2a8ee3d023b728ae15e57035de9f026e4874ba80d9b8968b1cd3321e58f4fb04aac07f8fee9b7ea543b305240dea6814e6ecec3ca
     volumes:
       - ./:/voc:rw
   public:
     build:
-      context: ../voc_public
-      #context: ../gsa_comment_tool_public
+      context: ../gsa_comment_tool_public
       dockerfile: Dockerfile
       args:
         # build-time ENV parameters
         RAILS_ENV: development
-    logging:
-      driver: none
     depends_on:
       - mysql
       - mongo

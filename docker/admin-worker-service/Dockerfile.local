@@ -42,6 +42,6 @@ RUN tar xvf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz && \
     rm -rf wkhtmltox*
 WORKDIR $APP_HOME
 
-ENV QUEUES=voc_report_email,voc_rules,voc_dfs
+ENV QUEUES=voc_report_email,voc_rules,voc_dfs,voc_csv,voc_responses
 
 CMD [ "/init" ]
