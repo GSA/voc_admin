@@ -14,7 +14,8 @@
     options_from_collection_for_select(
       [
         Struct.new(:id, :name).new('page_url', 'Page URL'),
-        Struct.new(:id, :name).new('created_at', 'Date')
+        Struct.new(:id, :name).new('created_at', 'Date'),
+        Struct.new(:id, :name).new('id', "Response ID")
       ].concat(
         version.display_fields.map {|df|
           Struct.new(:id, :name).new("df_#{df.id}", df.name)
