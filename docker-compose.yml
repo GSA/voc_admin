@@ -57,6 +57,8 @@ services:
       RAILS_COOKIE_TOKEN: 6f1d70d3424620e9007f62d2a8ee3d023b728ae15e57035de9f026e4874ba80d9b8968b1cd3321e58f4fb04aac07f8fee9b7ea543b305240dea6814e6ecec3ca
     volumes:
       - ./:/voc:rw
+    tty: true
+    stdin_open: true
   public:
     build:
       context: ../gsa_comment_tool_public

@@ -16,7 +16,15 @@
 # Read about unicorn workers here:
 # http://doc.gitlab.com/ee/install/requirements.html#unicorn-workers
 #
-worker_processes 5
+
+if Rails.env.development?
+  worker_processes 1
+  timeout 10000
+else
+  worker_processes 5
+  timeout 60
+  preload_app true
+end
 
 # Since Unicorn is never exposed to outside clients, it does not need to
 # run on the standard HTTP port (80), there is no reason to start Unicorn
@@ -49,7 +57,6 @@ listen "0.0.0.0:#{ENV.fetch('UNICORN_PORT', 80)}", :tcp_nopush => true
 #
 # For more information see http://stackoverflow.com/a/21682112/752049
 #
-timeout 60
 
 # feel free to point this anywhere accessible on the filesystem
 pid "tmp/pids/unicorn.pid"

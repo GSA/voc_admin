@@ -1,6 +1,6 @@
 FROM ctac/ruby-base:2.2
 
-ARG RAILS_ENV=production
+ARG RAILS_ENV=development
 ENV APP_HOME /voc
 
 RUN apt-get update && \
@@ -14,9 +14,8 @@ RUN apt-get update && \
 
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
-COPY bundle.sh /tmp/bundle.sh
 WORKDIR /tmp
-RUN bash bundle.sh
+RUN bundle install --without test
 
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME

@@ -56,16 +56,9 @@ gem "dotenv-rails"
 
 group :development do
   gem 'annotate'
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem "byebug"
   gem 'yard'
-  gem "pry-byebug"
   gem "pry-rails"
   gem "quiet_assets"
-
-  gem "spring"
-  gem "spring-commands-rspec"
 end
 
 group :development, :test do
