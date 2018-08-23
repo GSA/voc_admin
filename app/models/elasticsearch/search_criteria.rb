@@ -25,6 +25,10 @@ class Elasticsearch::SearchCriteria
     column == 'created_at'
   end
 
+  def id_search?
+    column == "survey_response_id"
+  end
+
   def time_string
     @time_string ||= if /\A\d{1,2}\/\d{1,2}\/\d{4}\s\d{2}:\d{2}:\d{2}\z/.match(criteria_hash.fetch('value', nil))
       "%m/%d/%Y %H:%M:%S"
@@ -46,6 +50,8 @@ class Elasticsearch::SearchCriteria
   def filter_proc
     if date_search?
       DATE_CONDITIONS[condition].call(column, value, time_string)
+    elsif id_search?
+      ID_CONDITIONS[condition].call(column, value)
     else
       CONDITIONS[condition].call(column, value)
     end
@@ -135,6 +141,41 @@ class Elasticsearch::SearchCriteria
     "ends_with" => proc {|column, value|
       {
         "regexp" => { "#{column}.raw" => ".*#{value}" }
+      }
+    },
+    "greater_than" => proc {|column, value|
+      {
+        "range" => { column => { "gt" => value } }
+      }
+    },
+    "less_than" => proc { |column, value|
+      {
+        "range" => { column => { "lt" => value } }
+      }
+    }
+  }
+
+  ID_CONDITIONS = {
+    "equals" => proc {|column, value|
+      {
+        "query" => {
+          "match" => { column => value }
+        }
+      }
+    },
+    "contains" => proc { |column, value|
+      {
+        "regexp" => { column => ".*#{value}.*" }
+      }
+    },
+    "begins_with" => proc {|column, value|
+      {
+        "regexp" => { column => "#{value}.*" }
+      }
+    },
+    "ends_with" => proc {|column, value|
+      {
+        "regexp" => { column => ".*#{value}" }
       }
     },
     "greater_than" => proc {|column, value|

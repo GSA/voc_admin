@@ -90,10 +90,11 @@ class SurveyResponseSearch
       condition_sql = ""
       condition_params = []
 
-      if %w(survey_responses.id survey_responses.page_url survey_responses.created_at survey_responses.device).include?(criteria_fields['display_field_id'])
+      if %w(survey_response_id survey_responses.page_url survey_responses.created_at survey_responses.device).include?(criteria_fields['display_field_id'])
 
         # The display_field_id is actually the full column name we want to use in the where clause
         operator = sql_condition(criteria_fields['include_exclude'], criteria_fields['condition'])
+
         condition_sql = "#{criteria_fields['display_field_id']} #{operator} ?"
 
         if criteria_fields['display_field_id'] == 'survey_responses.created_at'

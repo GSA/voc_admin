@@ -6,7 +6,7 @@ require 'csv'
 class SurveyResponsesController < ApplicationController
 
   # Used to limit the passthrough effects of params when updating or deleting SurveyResponses and the grid needs updating.
-  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr, :file_type]
+  POST_PARAMS = [:survey_id, :survey_version_id, :page, :id, :survey_response_id, :survey_response, :response, :search, :simple_search, :order_column, :order_dir, :custom_view_id, :qc_id, :search_rr, :file_type]
 
   # GET    /survey_responses(.:format)
   def index
