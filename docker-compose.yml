@@ -62,7 +62,7 @@ services:
   public:
     build:
       context: ../gsa_comment_tool_public
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
       args:
         # build-time ENV parameters
         RAILS_ENV: development
@@ -78,6 +78,8 @@ services:
       # runtime ENV parameters
       RAILS_ENV: development
       RAILS_COOKIE_TOKEN: 2dae529320f622ab8a7501f899aab112b000748a6060959d26fdc0146aed1dc2cc7ba52712542cfddfb9064218ce052d754f22150785dd09566ea7201a061f80
+    tty: true
+    stdin_open: true
   admin_worker:
     build:
       context: .
